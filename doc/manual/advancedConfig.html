@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<!--
+* 
+* Hyperbox - Enterprise Virtualization Manager
+* Copyright (C) 2013 Maxime Dor
+* 
+* http://hyperbox.altherian.org
+* 
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+* 
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Affero General Public License for more details.
+* 
+* You should have received a copy of the GNU Affero General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*  
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="icon" type="image/png" href="hyperbox.png">
+	<link rel="stylesheet" type="text/css" href="hyperbox.css">
+	<title>Hyperbox - Advanced Configuration</title>
+</head>
+
+<body>
+<div>
+	<h1><a id="advancedConfig">Advanced Configuration</a></h1>
+	
+	<div>
+		<h2>Common</h2>
+		<table border="1">
+			<thead>
+				<td>Name</td>
+				<td>Command-Line option</td>
+				<td>Environment Variable</td>
+				<td>Daemon Config File</td>
+				<td>Purpose</td>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Log File</td>
+					<td>-Dlog.file</td>
+					<td>HBOX_LOG_FILE</td>
+					<td>log.file</td>
+					<td>Define where Hyperbox will log messages. Relative paths will start from the installation directory.</td>
+				</tr>
+				<tr>
+					<td>Log Output Level</td>
+					<td>-Dlog.level</td>
+					<td>HBOX_LOG_LEVEL</td>
+					<td>log.level</td>
+					<td>
+						Define the maximum loging level for Hyperbox. A level include all the levels above (in terms of verbosity). The following levels are available in increasing verbosity order :<br>
+						FatalException - Only log exceptions stack traces that caused the server to stop. This is currently not used.<br>
+						Exception - Log exceptions stack traces that are not fatal. This is tightly linked to Error level as each error will also produce an exception entry.<br>
+						Error - Log errors that occured. This is tightly linked to Exception level as the message will be the exception message.<br>
+						Warning - Log warnings.<br>
+						Info - Log regular info messages. This is the default level.<br>
+						Verbose - Log precises info messages.<br>
+						Debug - Log debug info for each server activity, task and client request: This can be quite verbose and should not be kept on in live environement due to the performance penality.<br>
+						Tracking - Log code tracking info: This is very verbose and WILL inflict a high performance penality but will provide very detailed info for debugging.
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div>
+		<h2>Server</h2>
+		<table border="1">
+			<thead>
+				<td>Name</td>
+				<td>Command-Line option</td>
+				<td>Environment Variable</td>
+				<td>Daemon Config File</td>
+				<td>Purpose</td>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Server Name</td>
+					<td>-Dserver.name</td>
+					<td>HBOX_SERVER_NAME</td>
+					<td>server.name</td>
+					<td>Configure a name for the server that will be display in the client.<br>The hostname will be used as default value.</td>
+				</tr>
+				<tr>
+					<td>Kryonet Connector Port</td>
+					<td>-Dfront.kryonet.port</td>
+					<td>HBOX_FRONT_KRYONET_PORT</td>
+					<td>front.kryonet.port</td>
+					<td>Define the listening port for the default client connector using <a href="https://github.com/EsotericSoftware/kryonet" target="_blank">Kryonet</a>.<br>Default value is 45612</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<hr>
+<div>
+	<a href="index.html">Main</a>
+</div>
+</body>
+</html>
