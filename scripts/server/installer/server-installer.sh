@@ -121,6 +121,9 @@ function checkRequirements {
 		logandout "Debian-based system detected"
 		log $(cat /etc/debian-release)
 		IS_DEBIAN_BASED=true
+	elif [ -f /usr/bin/apt-get ]; then
+		logandout "Debian-based system detected"
+		IS_DEBIAN_BASED=true
 	elif [ -f /etc/redhat-release ]; then
 		logandout "Redhat-based system detected"
 		log $(cat /etc/redhat-release)

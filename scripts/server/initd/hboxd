@@ -57,9 +57,9 @@ log_success() {
 	if $IS_DEBIAN_BASED; then
 		log_success_msg "$@"
 	elif $IS_REDHAT_BASED; then
-		success "$@"
+		success " $@"
 	else
-		echo "$@"
+		echo " $@"
 	fi
 	echo
 }
@@ -68,9 +68,9 @@ log_failure() {
 	if $IS_DEBIAN_BASED; then
 		log_failure_msg "$@"
 	elif $IS_REDHAT_BASED; then
-		failure "$@"
+		failure " $@"
 	else
-		echo "$@"
+		echo " $@"
 	fi
 	echo
 }
