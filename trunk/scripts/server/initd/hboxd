@@ -177,11 +177,11 @@ hboxd_restart() {
 	hboxd_start
 }
 
-if [ -f /etc/debian-release ]; then
+if [ -f /lib/lsb/init-functions ]; then
 	IS_DEBIAN_BASED=true
 	. /lib/lsb/init-functions
 fi
-if [ -f /etc/redhat-release ]; then
+if [ -f /etc/init.d/functions ]; then
 	IS_REDHAT_BASED=true
 	. /etc/init.d/functions
 fi
