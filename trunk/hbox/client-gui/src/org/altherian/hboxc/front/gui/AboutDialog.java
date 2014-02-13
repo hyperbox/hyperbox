@@ -74,7 +74,10 @@ public class AboutDialog {
       text.append("For more information, please visit http://hyperbox.altherian.org\n");
       text.append("\n\n");
       text.append("This software is made possible thanks to several open-source projects.\n");
-      text.append("Refer to the User Manual for detailed information.");
+      text.append("Refer to the User Manual for detailed names and licensing information.");
+      text.append("\n\n");
+      text.append("Special thanks for their undying support and contribution to this project:\n");
+      text.append("Perryg, klaus-vb");
       
       JPanel textPanel = new JPanel(new MigLayout("ins 50"));
       textPanel.setBackground(dialog.getContentPane().getBackground());

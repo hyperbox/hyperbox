@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <!--
 * 
@@ -33,32 +33,33 @@
 <h2>Server</h2>
 	<div>
 		<h3>Virtualbox</h3>
-		Install Virtualbox 4.3.4/4.2.20 or later from <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank">Virtualbox website</a> - any older version are not supported at this time.<br>
-		Choose a dedicated user to run Virtualbox under, in this case : virtualbox. Hyperbox will run as root via the init.d script.<br>
-		<code>$ sudo useradd -m virtualbox</code>
+		Install Virtualbox 4.3.4/4.2.20 or later from <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank">Virtualbox website</a> - any older version are not tested and might break.<br>
+		Choose a dedicated user to run Virtualbox & Hyperbox under, in this case : hyperbox. This is required to isolate and manage the environment under a single user.<br>
+		<code>sudo useradd -m virtualbox</code>
 		Remove WebSrv Authentication as it is not supported yet:
-		<code>$ sudo su - virtualbox -c "vboxmanage setproperty websrvauthlibrary null"</code>
+		<code>sudo su - hyperbox -c "vboxmanage setproperty websrvauthlibrary null"</code>
 		Configure WebSvc<br>
-		<code>$ sudo nano /etc/default/virtualbox</code>
-		Recommanded config to add (virtualbox user must exist before)<br>
-		<code>VBOXWEB_USER=virtualbox</code>
-		Start WebSrv : <code>$ sudo service vboxweb-service start</code>
+		<code>sudo nano /etc/default/virtualbox</code>
+		Recommanded config to add (hyperbox user must exist before)<br>
+		<code>VBOXWEB_USER=hyperbox</code>
+		Start WebSrv
+		<code>sudo service vboxweb-service start</code>
 	</div>
 	<div>
 		<h3>Java</h3>
-		Install : <code>$ sudo yum install java-1.6.0-openjdk.x86_64</code>
+		Install : <code>sudo yum install java-1.6.0-openjdk.x86_64</code>
 		Check as root that you get a successful version info: <code>$ sudo java -version</code>
 		You should get something along these lines :
 		<code>java version "1.6.0_27"<br>OpenJDK Runtime Environment (IcedTea6 1.12.6) (6b27-1.12.6-1~deb7u1)<br>OpenJDK 64-Bit Server VM (build 20.0-b12, mixed mode)</code>
 	</div>
 	<div>
 		<h3>Hyperbox</h3>
-		Download the Hyperbox installer for your OS & architecture
-		<code>curl -O http://hyperbox.altherian.org/download/linux.amd64/hbox_server-latest-amd64.run</code>
+		Download the latest Hyperbox
+		<code>curl -O http://hyperbox.altherian.org/download/hbox_server-latest-linux_amd64.run</code>
 		Run the installer<br>
-		<code>$ sudo sh ./hbox_server-latest-amd64.run</code>
+		<code>sudo sh hbox_server-latest-linux_amd64.run</code>
 		Start Hyperbox Daemon<br>
-		<code>$ sudo /etc/init.d/hboxd start</code>
+		<code>service hboxd start</code>
 		Output and errors are logged to &#60;INSTALL_DIR&#62;/log/hboxd.log by default
 	</div>
 </body>

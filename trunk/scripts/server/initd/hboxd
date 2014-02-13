@@ -30,49 +30,49 @@
 # Short-Description: Start/Stop the Hyperbox Server as daemon
 ### END INIT INFO
 
-INSTALL_DIR="/opt/hboxd"
-CLASSPATH="$INSTALL_DIR/bin/*:$INSTALL_DIR/lib/*:$INSTALL_DIR/modules/*"
-DAEMON_CLASS="org.altherian.hboxd.HyperboxDaemon"
-PID_FILE="/var/run/hboxd.pid"
-ARGS_START="-cwd $INSTALL_DIR -pidfile $PID_FILE -wait 30 -keepstdin -cp $CLASSPATH -Xmx75m -Xss2048k"
-ARGS_STOP="-stop -pidfile $PID_FILE $DAEMON_CLASS"
-EXEC="hboxd"
-DAEMON="$INSTALL_DIR/bin/$EXEC"
 RETVAL=0
-
 IS_DEBIAN_BASED=false
 IS_REDHAT_BASED=false
+
+INSTALL_DIR="/opt/hboxd"
+EXEC="hboxd"
+DAEMON_CLASS="org.altherian.hboxd.HyperboxDaemon"
+PID_FILE="/var/run/hboxd.pid"
+RUNAS="hyperbox"
+
+DAEMON="$INSTALL_DIR/bin/$EXEC"
+CLASSPATH="$INSTALL_DIR/bin/*:$INSTALL_DIR/lib/*:$INSTALL_DIR/modules/*"
+ARGS_START="-user $RUNAS -cwd $INSTALL_DIR -pidfile $PID_FILE -wait 30 -keepstdin -procname $EXEC -cp $CLASSPATH -Xmx75m -Xss2048k"
+ARGS_STOP="-stop -pidfile $PID_FILE $DAEMON_CLASS"
 
 log_start() {
 	if $IS_DEBIAN_BASED; then
 		log_daemon_msg "$@"
 	elif $IS_REDHAT_BASED; then
-		echo -n "$@"
+		echo -n "$@:"
 	else
-		echo -n "$@"
+		echo -n "$@:"
 	fi
 }
 
 log_success() {
 	if $IS_DEBIAN_BASED; then
-		log_success_msg "$@"
+		log_success_msg " $@"
 	elif $IS_REDHAT_BASED; then
 		success " $@"
 	else
 		echo " $@"
 	fi
-	echo
 }
 
 log_failure() {
 	if $IS_DEBIAN_BASED; then
-		log_failure_msg "$@"
+		log_failure_msg " $@"
 	elif $IS_REDHAT_BASED; then
 		failure " $@"
 	else
 		echo " $@"
 	fi
-	echo
 }
 
 checkRoot() {
@@ -113,10 +113,12 @@ hboxd_isRunning() {
 }
 
 hboxd_start() {
-	log_start "Starting Hyperbox Server $EXEC"
 	checkRoot
 	RETVAL=$?
-	if [ $RETVAL -eq 0 ]; then
+	if ! checkRoot; then
+		log_failure "This script must run as root"
+	else
+		log_start "Starting Hyperbox Server $EXEC"
 		hboxd_isRunning
 		if [ $? -eq 0 ]; then
 			log_failure "already running"
@@ -131,29 +133,24 @@ hboxd_start() {
 			RETVAL=$?
 			if [ $RETVAL -eq 0 ]; then
 				chmod +r $PID_FILE
-				log_success "Success"
+				log_success "Ok"
 			else
 				log_failure "Unable to start Daemon"
 			fi
-		fi
-	else
-		log_failure "This script must run as root"
+		fi	
 	fi
 }
 
 hboxd_stop() {
 	log_start "Stopping Hyperbox Server $EXEC"
-	hboxd_isRunning
-	if [ $? -gt 0 ]; then
+	if ! hboxd_isRunning; then
 		log_failure "Already stopped"
 	else
 		$DAEMON $ARGS_STOP
-
-		RETVAL=$?
-		if [ $RETVAL -eq 0 ]; then
-			log_success "Success"
+		if [ $? -eq 0 ]; then
+			log_success "Ok"
 		else
-			log_failure "Unable to stop hboxc"
+			log_failure "Unable to stop Hyperbox Server"
 		fi
 	fi
 }
@@ -161,11 +158,9 @@ hboxd_stop() {
 hboxd_status() {
 	hboxd_isRunning
 	RETVAL=$?
-	if [ $RETVAL -eq 0 ]
-	then
+	if [ $RETVAL -eq 0 ]; then
 		echo "Hyperbox Server is running (pid $(pidofproc -p $PID_FILE $EXEC))"
-	elif [ $RETVAL -eq 1 ]
-	then
+	elif [ $RETVAL -eq 1 ]; then
 		echo "Hyperbox Server is not running"
 	else
 		echo "Hyperbox Server did not shutdown properly"
@@ -173,8 +168,7 @@ hboxd_status() {
 }
 
 hboxd_restart() {
-	hboxd_stop
-	hboxd_start
+	hboxd_stop && hboxd_start
 }
 
 if [ -f /lib/lsb/init-functions ]; then

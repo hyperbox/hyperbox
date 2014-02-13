@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Altherian Tools"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Server-API"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/VB-Helper"/>
+	<classpathentry kind="lib" path="lib/vboxjxpcom.jar"/>
+	<classpathentry kind="output" path="eclipse-bin"/>
+</classpath>

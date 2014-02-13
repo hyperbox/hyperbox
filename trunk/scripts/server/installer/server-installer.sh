@@ -23,8 +23,10 @@
 
 INSTALL_DIR="/opt/hboxd"
 LOG_FILE="/var/log/install-hboxd.log"
+RUNAS="hyperbox"
 IS_DEBIAN_BASED=false
 IS_REDHAT_BASED=false
+RUNAS_DECIDED=false
 
 function displayLogo {
 	echo "#       # #       # ######### ######### #########  ########   ######  #       #"
@@ -61,19 +63,22 @@ function abort {
 	log "Abording install" >> $LOG_FILE
 	echo "An error occured and the installation will now be canceled. View $LOG_FILE for more details"
 	cleanUp
+	echo "Installation finish at "$(date "+%d-%I-%Y @ %H:%m") >> $LOG_FILE
 	exit 1
 }
 
 function cleanUp {
-	logandout "Cleaning up..."
 	if [ -f $INSTALL_DIR/$0 ]; then
+		log "Removing installer script"
 		rm $INSTALL_DIR/$0 2>&1 >> $LOG_FILE
 	fi
 }
 
 function checkRoot {
 	if [ ! $(whoami) = "root" ]; then
-		abort "This script must run as root, script will now abort"
+		echo "This script must run as root, script will now abort"
+		echo "Installation finish at "$(date "+%d-%I-%Y @ %H:%m") >> $LOG_FILE
+		exit 1
 	fi
 }
 
@@ -107,12 +112,44 @@ function checkJavaVersion {
 }
 
 function askUserConf {
+	USER_CONF_MSG="Do you want to continue?"
+	if [ $# -gt 0 ]; then
+		USER_CONF_MSG="$@"
+	fi
+	
 	USER_INPUT="no"
-	read -p "Do you want to continue? [Y/n] " USER_INPUT
+	read -p "$USER_CONF_MSG [Y/n] " USER_INPUT
 	if [[ $USER_INPUT =~ ^[Yy]$ ]]; then
 		return 0
 	else
 		abort "User canceled"
+	fi
+}
+
+function askUserConfOrContinue {
+	USER_CONF_MSG="Do you want to continue?"
+	if [ $# -gt 0 ]; then
+		USER_CONF_MSG="$@"
+	fi
+	
+	USER_INPUT="no"
+	read -p "$USER_CONF_MSG [Y/n] " USER_INPUT
+	if [[ $USER_INPUT =~ ^[Yy]$ ]]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+function getDedicatedUserInput {
+	logandout "A dedicated user is required to run Hyperbox."
+	logandout "If the user does not already exist, it will be created automatically"
+	read -e -p "Please enter a dedicated username to run Hyperbox [$RUNAS]: " RUNAS_INPUT
+	if [[ $RUNAS_INPUT = "" ]]; then
+		log "User didn't enter any username, using default"
+	else
+		log "Got user input for user: $RUNAS_INPUT"
+		RUNAS=$RUNAS_INPUT	
 	fi
 }
 
@@ -170,6 +207,51 @@ function checkRequirements {
 	else
 		abort "Java is reqired by hboxd but no Java was found."
 	fi
+	
+	
+	if ! $RUNAS_DECIDED && [ -f /etc/init.d/hboxd ]; then
+		log "hbox init.d found, parsing for default value"
+		RUNAS_HBOX=$(grep "^RUNAS" /etc/init.d/hboxd | cut -d"=" -f2 | tr -d "\"")
+		log "Possible hbox user: $RUNAS_HBOX"
+		if ! [ "$RUNAS_HBOX" == "" ]; then
+			log "Dedicated user found in hbox init.d file: $RUNAS_HBOX"
+			RUNAS=$RUNAS_HBOX
+			RUNAS_DECIDED=true
+		else
+			log "No dedicated user was found in hbox init.d file"
+		fi
+	fi
+	
+	
+	if ! $RUNAS_DECIDED && [ -f /etc/default/virtualbox ]; then
+		log "vbox init.d config found, parsing for default value"
+		RUNAS_VBOX=$(grep "VBOXWEB_USER" /etc/default/virtualbox | cut -d"=" -f2)
+		if ! [ "$RUNAS_VBOX" == "" ]; then
+			log "Dedicated user found in vbox init.d file: $RUNAS_VBOX"
+			askUserConfOrContinue "$RUNAS_VBOX was detected as a dedicated user. Use it?"
+			if [ $? -eq 0 ]; then
+				log "User validated the usage of $RUNAS_VBOX as dedicated user"
+				RUNAS=$RUNAS_VBOX
+				RUNAS_DECIDED=true
+			else
+				log "User denied the usage of $RUNAS_VBOX as dedicated user"
+			fi
+		else
+			log "No dedicated user was found in vbox init.d file"
+		fi
+	fi
+	if ! $RUNAS_DECIDED; then
+		getDedicatedUserInput
+		grep $RUNAS /etc/passwd > /dev/null 2>&1
+		if [ $? -ne 0 ]; then
+			log "User $RUNAS does not exist, creating the user"
+			useradd -m $RUNAS
+		else
+			log "User $RUNAS already exists"
+		fi
+	fi
+	
+	log "Hyperbox will run under dedicated user: $RUNAS"
 }
 
 function copyFiles {
@@ -185,6 +267,11 @@ function copyFiles {
 	if [ $? -ne 0 ]; then
 	        abort "Failed to copy hboxd files"
 	fi
+	
+	chown -R $RUNAS:$RUNAS $INSTALL_DIR
+	if [ $? -ne 0 ]; then
+		abort "Failed to set permissions on install dir"
+	fi
 
 	chmod ugo+rx $INSTALL_DIR/bin/hboxd 2>&1 >> $LOG_FILE
 	if [ $? -ne 0 ]; then
@@ -194,10 +281,20 @@ function copyFiles {
 
 function installDaemon {
 	logandout "Install Daemon..."
-	sed -i "s#\$(pwd)#$INSTALL_DIR#" $INSTALL_DIR/hboxd >> $LOG_FILE 2>&1
-        if [ $? -ne 0 ]; then
-                abort "Failed to configure service init.d script"
-        fi
+	
+	INSTDIR_SED="s#.*#INSTALL_DIR=$INSTALL_DIR#"
+	INSTDIR_LN=$(grep -m 1 -n "^INSTALL_DIR=" $INSTALL_DIR/hboxd | awk -F ":" '{print $1}')
+	sed -i $INSTDIR_LN$INSTDIR_SED  $INSTALL_DIR/hboxd >> $LOG_FILE 2>&1
+	if [ $? -ne 0 ]; then
+		abort "Failed to configure service init.d script"
+    fi
+	
+	RUNAS_SED="s/.*/RUNAS=$RUNAS/"
+	RUNAS_LN=$(grep -m 1 -n "^RUNAS=" $INSTALL_DIR/hboxd | awk -F ":" '{print $1}')
+	sed -i $RUNAS_LN$RUNAS_SED $INSTALL_DIR/hboxd >> $LOG_FILE 2>&1
+    if [ $? -ne 0 ]; then
+		abort "Failed to configure service init.d script"
+    fi
 
 	mv $INSTALL_DIR/hboxd /etc/init.d/hboxd >> $LOG_FILE 2>&1
 	if [ $? -ne 0 ]; then
@@ -208,6 +305,12 @@ function installDaemon {
 	chmod ugo+rx /etc/init.d/hboxd >> $LOG_FILE 2>&1
 	if [ $? -ne 0 ]; then
 	        abort "Failed to set execute permission on init.d script"
+	fi
+	
+	log "chown root:root /etc/init.d/hboxd: $?"
+	chown root:root /etc/init.d/hboxd >> $LOG_FILE 2>&1
+	if [ $? -ne 0 ]; then
+	        abort "Failed to change owner to root on init.d script"
 	fi
 
 	if $IS_DEBIAN_BASED; then
@@ -225,10 +328,25 @@ function installDaemon {
 	if [ $INITD_REG -ne 0 ]; then
 	        abort "Failed to register init.d script with the system"
 	fi
+	
+	log "Starting hboxd daemon"
+	if $IS_REDHAT_BASED; then
+		service hboxd start
+		log "Return code of init.d start: $?"
+	else
+		/etc/init.d/hboxd start
+		log "Return code of init.d start: $?"
+	fi
+	
 }
 
 function parseParameters {
-	return 1
+	if [ $# -gt 0 ]; then
+		log "Parameters given: $@"
+		INSTALL_DIR="$@"
+	else
+		log "No parameters were given to the script"
+	fi
 }
 
 echo "Installation start at "$(date "+%d-%I-%Y @ %H:%m") > $LOG_FILE
@@ -239,10 +357,8 @@ checkRequirements
 copyFiles
 installDaemon
 cleanUp
+echo "Installation finish at "$(date "+%d-%I-%Y @ %H:%m") >> $LOG_FILE
 
-echo "hboxd is now installed!"
-echo
-echo "Use /etc/init.d/hboxd to start/stop/status the Hyperbox Server as daemon."
-echo "Within the installation directory, use ./hyperbox to start the server in console mode."
-echo "For further details, please read the User Manual located in the doc directory, or visit http://hyperbox.altherian.org"
+echo "The Hyperbox Server is now installed and running."
+echo "To get started, please read the User Manual located in the doc directory, or visit http://hyperbox.altherian.org"
 echo

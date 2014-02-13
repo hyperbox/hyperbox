@@ -49,6 +49,14 @@
 	<property name="server.vbws-4.3.lib.dir"			value="${server.vbws-4.3.dir}/${lib.dir}" />
 	<property name="server.vbws-4.3.classes.dir"		value="${classes.dir}/srv-vbws-4.3" />
 	
+	<property name="server.vbxpcom-4.3.src.dir"			value="${server.vbxpcom-4.3.dir}/${src.dir}" />
+	<property name="server.vbxpcom-4.3.lib.dir"			value="${server.vbxpcom-4.3.dir}/${lib.dir}" />
+	<property name="server.vbxpcom-4.3.classes.dir"		value="${classes.dir}/srv-vbxpcom-4.3" />
+	
+	<property name="server.vbxpcom-4.4.src.dir"			value="${server.vbxpcom-4.4.dir}/${src.dir}" />
+	<property name="server.vbxpcom-4.4.lib.dir"			value="${server.vbxpcom-4.4.dir}/${lib.dir}" />
+	<property name="server.vbxpcom-4.4.classes.dir"		value="${classes.dir}/srv-vbxpcom-4.4" />
+	
 	<property name="server.vb.helper.src.dir"			value="${server.vb.helper.dir}/${src.dir}" />
 
 	<property name="kryo.api.src.dir"					value="${kryo.api.dir}/${src.dir}" />
@@ -98,6 +106,18 @@
 		<path refid="server.api.classpath"/>
 		<pathelement location="${server.vbws-4.3.classes.dir}"/>
 		<fileset dir="${server.vbws-4.3.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="server.vbxpcom.4-3.classpath">
+		<path refid="server.api.classpath"/>
+		<pathelement location="${server.vbxpcom-4.3.classes.dir}"/>
+		<fileset dir="${server.vbxpcom-4.3.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="server.vbxpcom.4-4.classpath">
+		<path refid="server.api.classpath"/>
+		<pathelement location="${server.vbxpcom-4.4.classes.dir}"/>
+		<fileset dir="${server.vbxpcom-4.4.lib.dir}" includes="**/*.jar"/>
 	</path>
 	
 	<path id="kryo.api.classpath">
@@ -256,6 +276,7 @@
 		</copy>
 	</target>
 	
+	<!-- Virtualbox 4.2 WebServices Connector -->
 	<target name="server.vbws.4-2.compile" depends="server.api.compile">
 		<mkdir dir="${server.vbws-4.2.classes.dir}" />
 		<javac debug="on" includeantruntime="false" srcdir="${server.vb.helper.src.dir}" destdir="${server.vbws-4.2.classes.dir}" classpathref="server.vbws.4-2.classpath" />
@@ -272,7 +293,9 @@
 	
 	<target name="server.vbws.4-2.build" depends="server.vbws.4-2.deploy, server.vbws.4-2.jar">
 	</target>
+	<!--######################################-->
 	
+	<!-- Virtualbox 4.3 WebServices Connector -->
 	<target name="server.vbws.4-3.compile" depends="server.api.compile">
 		<mkdir dir="${server.vbws-4.3.classes.dir}" />
 		<javac debug="on" includeantruntime="false" srcdir="${server.vb.helper.src.dir}" destdir="${server.vbws-4.3.classes.dir}" classpathref="server.vbws.4-3.classpath" />
@@ -289,6 +312,46 @@
 	
 	<target name="server.vbws.4-3.build" depends="server.vbws.4-3.deploy, server.vbws.4-3.jar">
 	</target>
+	<!--######################################-->
+	
+	<!--    Virtualbox 4.3 XPCOM Connector    -->
+	<target name="server.vbxpcom.4-3.compile" depends="server.api.compile">
+		<mkdir dir="${server.vbxpcom-4.3.classes.dir}" />
+		<javac debug="on" includeantruntime="false" srcdir="${server.vb.helper.src.dir}" destdir="${server.vbxpcom-4.3.classes.dir}" classpathref="server.vbxpcom.4-3.classpath" />
+		<javac debug="on" includeantruntime="false" srcdir="${server.vbxpcom-4.3.src.dir}" destdir="${server.vbxpcom-4.3.classes.dir}" classpathref="server.vbxpcom.4-3.classpath" />
+	</target>
+	
+	<target name="server.vbxpcom.4-3.jar" depends="server.vbxpcom.4-3.compile, server.api.deploy">
+		<jar destfile="${out.dir}/modules/vbxpcom-4.3/vbxpcom-4.3.jar" basedir="${server.vbxpcom-4.3.classes.dir}" />
+	</target>
+	
+	<target name="server.vbxpcom.4-3.deploy" depends="server.api.deploy">
+		<copy file="${server.vbxpcom-4.3.lib.dir}/vboxjxpcom.jar" tofile="${out.dir}/modules/vbxpcom-4.3/vboxjxpcom-4.3.jar" />
+	</target>
+	
+	<target name="server.vbxpcom.4-3.build" depends="server.api.compile,server.vbxpcom.4-3.deploy, server.vbxpcom.4-3.jar">
+	</target>
+	<!--######################################-->
+	
+	<!--    Virtualbox 4.4 XPCOM Connector    -->
+	<target name="server.vbxpcom.4-4.compile" depends="server.api.compile">
+		<mkdir dir="${server.vbxpcom-4.4.classes.dir}" />
+		<javac debug="on" includeantruntime="false" srcdir="${server.vb.helper.src.dir}" destdir="${server.vbxpcom-4.4.classes.dir}" classpathref="server.vbxpcom.4-4.classpath" />
+		<javac debug="on" includeantruntime="false" srcdir="${server.vbxpcom-4.4.src.dir}" destdir="${server.vbxpcom-4.4.classes.dir}" classpathref="server.vbxpcom.4-4.classpath" />
+	</target>
+	
+	<target name="server.vbxpcom.4-4.jar" depends="server.vbxpcom.4-4.compile, server.api.deploy">
+		<jar destfile="${out.dir}/modules/vbxpcom-4.4/vbxpcom-4.4.jar" basedir="${server.vbxpcom-4.4.classes.dir}" />
+	</target>
+	
+	<target name="server.vbxpcom.4-4.deploy" depends="server.api.deploy">
+		<copy file="${server.vbxpcom-4.4.lib.dir}/vboxjxpcom.jar" tofile="${out.dir}/modules/vbxpcom-4.4/vboxjxpcom-4.4.jar" />
+	</target>
+	
+	<target name="server.vbxpcom.4-4.build" depends="server.api.compile,server.vbxpcom.4-4.deploy, server.vbxpcom.4-4.jar">
+	</target>
+	<!--######################################-->
+	
 	
 	<target name="kryo.api.compile" depends="api.compile">
 		<mkdir dir="${kryo.api.classes.dir}" />
