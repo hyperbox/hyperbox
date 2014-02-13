@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <!--
 * 
@@ -41,9 +41,13 @@
 	
 	<h2>Introduction</h2>
 	<div>
-		<p>Hyperbox is designed to be the manager of your virtualized infrastructure, and is best used on a dedicated host where no other tools accessing and/or controlling the hypervisor are running.</p>
-		<p>It is composed of a server part, which interacts with the hypervisor and abstract out all the details to present a common layer that can be used to manage hybrid environments, e.g. Virtualbox and VMware ESXi.<br>
-		The client is the user interface, where all the management takes place. Preferences are stored either in $HOME under UNIX-like systems, or Roaming profile (%APPDATA%) for Windows.</p>
+		<p>Hyperbox is designed to be the manager of your virtualized infrastructure, and is best used on a dedicated host where no other tools accessing and/or controlling the hypervisor are running.<br>
+		It is composed of 2 parts:
+			<ul>
+				<li>The Server where all the work take places and which interacts with the hypervisor and abstract out all the details to present a common layer that can be used to manage hybrid environments, e.g. Virtualbox and VMware ESXi.</li>
+				<li>The Client which send the user input to the server for processing and allow to interact with the Server and the Hypervisor</li>
+			</ul>
+		</p>
 	</div>
 	
 	<h2>Server</h2>
@@ -56,35 +60,76 @@
 	</div>
 	
 	<div>
-		<a href="installDebian.html">Debian-based Install HOWTO</a> - Debian, Ubuntu, Mint<br>
-		<a href="installRedhat.html">Redhat-based Install HOWTO</a> - RHEL, Fedora, CentOS, OEL
+		<a href="installDebian.html">Debian-based Install HOWTO</a> - Debian, Ubuntu, Mint, etc.<br>
+		<a href="installRedhat.html">Redhat-based Install HOWTO</a> - RHEL, OEL, Fedora, etc.
 	</div>
 	
 	<h2>Client</h2>
 	<div>
-		<h3>Introduction</h3>
-		<p></p>
-	</div>
-	<div>
 		<h3>Installation</h3>
-		<p>To install the client, simply download its installer and run it. For Debian & Fedora based distributions, run the following :
+		To install the client, simply download its installer and run it. For Debian & Fedora based distributions, run the following :
 		<code>sudo sh ./hbox_client-*.run</code>
-		For Windows, run the installer.</p>
+		For other distros, use the zip package and perform a manual install.<br>
+		<p>For Windows, run the installer.</p>
 		<p>The Client can then be launched via the Start Menu/Main menu or by creating a shortcut poiting to &#60;INSTALL_DIR&#62;/hyperbox(.exe) and setting the working dir to &#60;INSTALL_DIR&#62;
 	</div>
 	<h2>First launch</h2>
-	Fire up the client. You will start in an empty window.<br>
-	In the menu bar, click on Server > Add...<br>
-	You will be prompted to enter the IP address of the server you want to connect to. The Hyperbox Server Kryonet listener is available on all interfaces by default. Enter the main IP of your server.<br>
-	The default username / password are : admin / hyperbox<br>
-	Click on Save once finished.<br>
-	You can now right click > Connect or double-click on the server address to initiate the connection.<br>
-	If successful, the icon will change to a stopped server icon, and the tabs on the right panel should activate. You should also see the Hyperbox Server detailed and that is it disconnected of the hypervisor.<br>
-	Right click on the server: Select Hypervisor > Connect<br>
-	Hyperbox comes with two connectors by default : Virtualbox WebServices 4.2 and Virtualbox WebService 4.3. Select the one matching your installation. You can leave the connection options field blank for now. It allows advanced configuration.<br>
-	Click on Connect.<br>
-	You should now see a new task in the bottom list showing you that Hyperbox is currently connecting and initializing the connection with the hypervisor. If successful, the server icon will change as well as the hypervisor status in the detail panel.<br>
-	You can now then manage your machines or create new ones!
+	<figure>
+		<img src="gettingStarted_client_first_launch.png" />
+		<figcaption>Fire up the client. You will start in an empty window</figcaption>
+	</figure>
+	<br>
+	<figure>	
+		<img src="gettingStarted_client_server_add.png" />
+		<figcaption>In the menu bar, click on Server > Add...</figcaption>
+	</figure>
+	<br>
+	<figure>
+		<img src="gettingStarted_client_server_add_info.png" />
+		<figcaption>
+			You will be prompted to enter the hostname/IP address of the server you want to connect to. The Hyperbox Server default listener is available on all interfaces by default.<br>
+			The default username / password are : admin / hyperbox<br>
+			Click on Save once finished.
+		</figcaption>
+	</figure>
+	<br>
+	<figure>
+		<img src="gettingStarted_client_server_connected_hyp_offline.png" />
+		<figcaption>
+			You can now right click > Connect or double-click on the server address to initiate the connection.<br>
+			If successful, the icon will change to a stopped server icon, and the tabs on the right panel should activate. You should also see the Hyperbox Server detailed and that is it disconnected of the hypervisor.<br>
+		</figcaption>
+	</figure>
+	<br>
+	<figure>
+		<img src="gettingStarted_client_server_connected_hyp_connect.png" />
+		<figcaption>Right click on the server: Select Hypervisor > Connect</figcaption>
+	</figure>
+	<br>
+	<figure>
+		<img src="gettingStarted_client_server_connected_hyp_connect_dialog.png" />
+		<figcaption>
+			Hyperbox comes with two connectors by default :
+			<ul>
+				<li>Virtualbox WebServices 4.2</li>
+				<li>Virtualbox WebService 4.3</li>
+			</ul>
+			Select the one matching your installation. You can leave the connection options field blank for now, it is used for advanced configuration.<br>
+			Click on Connect.
+		</figcaption>
+	</figure>
+	<br>
+	<figure>
+		<img src="gettingStarted_client_server_connected_hyp_connecting.png" />
+		<figcaption>You should now see a new task in the bottom list showing you that Hyperbox is currently connecting and initializing the connection with the hypervisor.</figcaption>
+	</figure>
+	<br>
+	<figure>
+		<img src="gettingStarted_client_server_connected_hyp_connected.png" />
+		<figcaption>If successful, the server icon will change as well as the hypervisor status in the detail panel.</figcaption>
+	</figure>
+	<br>
+	You can now then manage your machines or create new ones by right clicking on the server list item in the left panel!
 </div>
 <hr>
 <div>

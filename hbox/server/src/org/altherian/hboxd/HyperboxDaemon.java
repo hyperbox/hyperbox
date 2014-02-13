@@ -39,12 +39,11 @@ public final class HyperboxDaemon implements Daemon {
    @Override
    public void init(DaemonContext dc) throws DaemonInitException, Exception {
       c = new Controller();
-      c.start();
    }
    
    @Override
    public void start() throws Exception {
-      // nothing to do here
+      c.start();
    }
    
    @Override
