@@ -100,13 +100,13 @@ public abstract class ObjectOutputTableModel<T extends ObjectOutput> extends Abs
     * @param name The name to display to the user
     * @param settingName The setting ID to link this column to on the output object
     */
-   protected void addColum(String name, Object settingName) {
+   protected void addColumn(String name, Object settingName) {
       columnNames.add(name);
       columnSettings.add(settingName);
    }
    
    /**
-    * Use {@link #addColum(String, Object)}
+    * Use {@link #addColumn(String, Object)}
     */
    protected abstract void addColumns();
    

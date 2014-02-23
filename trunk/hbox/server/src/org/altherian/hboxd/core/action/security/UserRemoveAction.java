@@ -47,7 +47,7 @@ public class UserRemoveAction extends ASingleTaskAction {
    @Override
    public void run(Request request, _Hyperbox hbox) {
       UserInput usrIn = request.get(UserInput.class);
-      hbox.getSecurityManager().removeUser(usrIn);
+      hbox.getSecurityManager().removeUser(usrIn.getId());
    }
    
 }

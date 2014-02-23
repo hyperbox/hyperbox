@@ -41,6 +41,7 @@ public abstract class ObjectOutput {
    private Map<String, SettingIO> settingsMap = new HashMap<String, SettingIO>(5);
    
    protected ObjectOutput() {
+      // used for (de)serialisation
    }
    
    public ObjectOutput(String id) {

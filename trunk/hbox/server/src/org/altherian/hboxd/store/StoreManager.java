@@ -21,11 +21,14 @@
 
 package org.altherian.hboxd.store;
 
+import org.altherian.hbox.comm.SecurityAction;
+import org.altherian.hbox.comm.SecurityItem;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.states.StoreState;
 import org.altherian.hboxd.factory.StoreFactory;
 import org.altherian.hboxd.persistence._StorePersistor;
+import org.altherian.hboxd.security.SecurityContext;
 import org.altherian.tool.logging.Logger;
 
 import java.io.File;
@@ -96,11 +99,15 @@ public final class StoreManager implements _StoreManager {
    
    @Override
    public List<_Store> listStores() {
+      SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.List);
+      
       return new ArrayList<_Store>(stores.values());
    }
    
    @Override
    public _Store getStore(String id) {
+      SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.Get, id);
+      
       if (!stores.containsKey(id)) {
          throw new HyperboxRuntimeException("Cannot find a Store with \"" + id + "\" as ID");
       }
@@ -111,6 +118,8 @@ public final class StoreManager implements _StoreManager {
    @Override
    public _Store createStore(String location, String label) {
       Logger.track();
+      
+      SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.Add);
       
       File path = new File(location);
       
@@ -128,6 +137,8 @@ public final class StoreManager implements _StoreManager {
    public _Store registerStore(String location, String label) {
       Logger.track();
       
+      SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.Add);
+      
       File path = new File(location);
       
       Logger.debug("Trying to register " + path.getAbsolutePath() + " under " + label);
@@ -142,7 +153,7 @@ public final class StoreManager implements _StoreManager {
       }
       
       // TODO implement registration event
-      _Store s = StoreFactory.get("localFolder", IdGen.get(), label, path.getAbsolutePath(), StoreState.Close.toString());
+      _Store s = StoreFactory.get("localFolder", IdGen.get(), label, path.getAbsolutePath(), StoreState.Closed.toString());
       persistor.insertStore(s);
       stores.put(s.getId(), s);
       s.open();
@@ -154,6 +165,8 @@ public final class StoreManager implements _StoreManager {
    public void unregisterStore(String id) {
       Logger.track();
       
+      SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.Delete, id);
+
       _Store s = getStore(id);
       s.close();
       persistor.deleteStore(s);
@@ -165,6 +178,8 @@ public final class StoreManager implements _StoreManager {
    public void deleteStore(String id) {
       Logger.track();
       
+      SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.Delete, id);
+
       if (!new File(getStore(id).getLocation()).delete()) {
          throw new HyperboxRuntimeException("Unable to delete the store");
       }

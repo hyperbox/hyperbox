@@ -28,7 +28,7 @@ import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.input.UserInput;
-import org.altherian.hbox.comm.output.UserOutput;
+import org.altherian.hbox.comm.output.security.UserOutput;
 import org.altherian.hboxd.comm.io.factory.UserIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;

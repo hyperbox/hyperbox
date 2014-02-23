@@ -27,8 +27,8 @@ import org.altherian.hbox.comm.input.MachineInput;
 import org.altherian.hbox.comm.input.SessionInput;
 import org.altherian.hbox.comm.input.UserInput;
 import org.altherian.hbox.comm.output.SessionOutput;
-import org.altherian.hbox.comm.output.UserOutput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.output.security.UserOutput;
 import org.altherian.hboxc.comm.utils.Transaction;
 import org.altherian.hboxc.exception.ServerDisconnectedException;
 

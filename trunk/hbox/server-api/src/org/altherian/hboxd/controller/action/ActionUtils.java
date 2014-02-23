@@ -23,8 +23,8 @@ package org.altherian.hboxd.controller.action;
 
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hboxd.business._VM;
 import org.altherian.hboxd.core._Hyperbox;
+import org.altherian.hboxd.core.model._Machine;
 
 /**
  * Utils to extract & manipulate well-known information from Request objects.
@@ -42,7 +42,7 @@ public class ActionUtils {
     * @param req The Request object where the MachineIO object is referenced
     * @return a _Machine object usable for task
     */
-   public static _VM extractMachine(_Hyperbox core, Request req) {
+   public static _Machine extractMachine(_Hyperbox core, Request req) {
       return null;
    }
    

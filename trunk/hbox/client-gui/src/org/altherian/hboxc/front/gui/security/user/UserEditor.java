@@ -25,13 +25,14 @@ package org.altherian.hboxc.front.gui.security.user;
 import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.input.UserInput;
-import org.altherian.hbox.comm.output.UserOutput;
+import org.altherian.hbox.comm.output.security.UserOutput;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.front.gui._Cancelable;
 import org.altherian.hboxc.front.gui._Saveable;
 import org.altherian.hboxc.front.gui.action.CancelAction;
 import org.altherian.hboxc.front.gui.action.SaveAction;
 import org.altherian.hboxc.front.gui.builder.JDialogBuilder;
+import org.altherian.hboxc.front.gui.security.perm.UserPermissionEditor;
 import org.altherian.tool.logging.Logger;
 
 import java.util.Arrays;
@@ -44,6 +45,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class UserEditor implements _Saveable, _Cancelable {
+   
+   private UserPermissionEditor permEditor;
    
    private JLabel domainLabel;
    private JTextField domainValue;
@@ -64,6 +67,8 @@ public class UserEditor implements _Saveable, _Cancelable {
    private UserOutput usrOut;
    
    public UserEditor() {
+      permEditor = new UserPermissionEditor();
+      
       domainValue = new JTextField();
       domainLabel = new JLabel("Domain");
       domainLabel.setLabelFor(domainValue);
@@ -94,6 +99,7 @@ public class UserEditor implements _Saveable, _Cancelable {
       dialog.add(firstPassValue, "growx, pushx, wrap");
       dialog.add(secondPassLabel);
       dialog.add(secondPassValue, "growx, pushx, wrap");
+      dialog.add(permEditor.getComponent(), "hidemode 3,span 2, growx, pushx, wrap");
       dialog.add(buttonPanel, "span 2, center, bottom");
    }
    
@@ -101,11 +107,12 @@ public class UserEditor implements _Saveable, _Cancelable {
       Logger.track();
       
       dialog.setTitle("Create new User");
+      permEditor.getComponent().setVisible(false);
       show();
       return usrIn;
    }
    
-   public UserInput edit(UserOutput usrOut) {
+   public UserInput edit(String serverId, UserOutput usrOut) {
       Logger.track();
       
       dialog.setTitle("Editing user " + usrOut.getDomainLogonName());
@@ -113,6 +120,8 @@ public class UserEditor implements _Saveable, _Cancelable {
       
       domainValue.setText(usrOut.getDomain());
       usernameValue.setText(usrOut.getUsername());
+      
+      permEditor.show(serverId, usrOut);
       
       show();
       return usrIn;
@@ -124,10 +133,10 @@ public class UserEditor implements _Saveable, _Cancelable {
       return new UserEditor().create();
    }
    
-   public static UserInput getInput(UserOutput usrOut) {
+   public static UserInput getInput(String serverId, UserOutput usrOut) {
       Logger.track();
       
-      return new UserEditor().edit(usrOut);
+      return new UserEditor().edit(serverId, usrOut);
    }
    
    private void show() {
@@ -158,6 +167,7 @@ public class UserEditor implements _Saveable, _Cancelable {
       
       if (usrOut != null) {
          usrIn = new UserInput(usrOut.getId());
+         permEditor.save();
       } else {
          usrIn = new UserInput();
          

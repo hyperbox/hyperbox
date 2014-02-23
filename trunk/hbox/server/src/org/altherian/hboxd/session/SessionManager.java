@@ -143,7 +143,7 @@ public final class SessionManager implements _RootSessionManager {
       
       EventOutput evOut = EventIoFactory.get(hbox, event);
       for (_Session sess : sessions.values()) {
-         if (hbox.getSecurityManager().isAuthorized(event, sess.getUser())) {
+         if (hbox.getSecurityManager().isAuthorized(sess.getUser(), event)) {
             sess.post(evOut);
          }
       }

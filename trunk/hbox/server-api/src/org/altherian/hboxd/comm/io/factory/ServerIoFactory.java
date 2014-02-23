@@ -41,7 +41,7 @@ public class ServerIoFactory {
    public static ServerOutput get(_Server srv) {
       List<SettingIO> settings = new ArrayList<SettingIO>();
       settings.add(new StringSettingIO(ServerAttributes.Name, srv.getName()));
-      settings.add(new StringSettingIO(ServerAttributes.Type, srv.getType()));
+      settings.add(new StringSettingIO(ServerAttributes.Type, srv.getType().getId()));
       settings.add(new StringSettingIO(ServerAttributes.Version, srv.getVersion()));
       settings.add(new BooleanSettingIO(ServerAttributes.IsHypervisorConnected, srv.isConnected()));
       ServerOutput srvOut = new ServerOutput(srv.getId(), settings);
@@ -51,5 +51,5 @@ public class ServerIoFactory {
    public static ServerOutput get() {
       return get(HBoxServer.get());
    }
-
+   
 }

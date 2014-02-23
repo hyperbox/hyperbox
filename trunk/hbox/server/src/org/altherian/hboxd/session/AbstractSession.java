@@ -144,11 +144,12 @@ public abstract class AbstractSession implements _Session {
    public void run() {
       Logger.track();
       
-      running = true;
-      Logger.debug("Session ID #" + getId() + " | " + getUser().getDomainLogonName() + " | Message Queue Runner started");
       
       SecurityContext.setUser(new AnonymousUser());
       SessionContext.setClient(client);
+      running = true;
+      
+      Logger.debug("Session ID #" + getId() + " | " + getUser().getDomainLogonName() + " | Message Queue Runner started");
       
       while (running) {
          try {

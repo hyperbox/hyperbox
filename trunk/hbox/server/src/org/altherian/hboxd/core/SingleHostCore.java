@@ -26,26 +26,32 @@ import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
+import org.altherian.hbox.comm.SecurityAction;
+import org.altherian.hbox.comm.SecurityItem;
 import org.altherian.hbox.comm._Client;
 import org.altherian.hbox.comm.input.HypervisorInput;
 import org.altherian.hbox.comm.output.event.EventOutput;
+import org.altherian.hbox.constant.ServerType;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.states.ServerState;
 import org.altherian.hboxd.HBoxServer;
 import org.altherian.hboxd.Hyperbox;
 import org.altherian.hboxd.core.action._ActionManager;
+import org.altherian.hboxd.core.model._Machine;
 import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event.hypervisor.HypervisorConnectedEvent;
 import org.altherian.hboxd.event.hypervisor.HypervisorDisconnectedEvent;
 import org.altherian.hboxd.event.system.SystemStateEvent;
 import org.altherian.hboxd.exception.ServerNotFoundException;
+import org.altherian.hboxd.factory.MachineFactory;
 import org.altherian.hboxd.factory.SecurityManagerFactory;
 import org.altherian.hboxd.front._RequestReceiver;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 import org.altherian.hboxd.hypervisor._HypervisorLoader;
-import org.altherian.hboxd.persistence.H2SqlPersistor;
+import org.altherian.hboxd.hypervisor.vm._RawVM;
 import org.altherian.hboxd.persistence._Persistor;
+import org.altherian.hboxd.persistence.sql.h2.H2SqlPersistor;
 import org.altherian.hboxd.security.RootUser;
 import org.altherian.hboxd.security.SecurityContext;
 import org.altherian.hboxd.security._SecurityManager;
@@ -73,7 +79,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public class SingleHostCore implements _Hyperbox, _Server, _ServerManager {
+public class SingleHostCore implements _Hyperbox, _Server {
    
    private ServerState state;
    
@@ -95,6 +101,7 @@ public class SingleHostCore implements _Hyperbox, _Server, _ServerManager {
    public static final String CFGKEY_CORE_HYP_ID = "core.hypervisor.id";
    public static final String CFGKEY_CORE_HYP_OPTS = "core.hypervisor.options";
    public static final String CFGKEY_CORE_HYP_AUTO = "core.hypervisor.autoconnect";
+   public static final String CFGKEY_CORE_PERSISTOR_CLASS = "core.persistor.class";
    
    private String id;
    private String name;
@@ -113,7 +120,7 @@ public class SingleHostCore implements _Hyperbox, _Server, _ServerManager {
    private void loadPersistors() throws HyperboxException {
       Logger.track();
       
-      persistor = HBoxServer.loadClass(_Persistor.class, Configuration.getSetting("core.persistor.class", H2SqlPersistor.class.getName()));
+      persistor = HBoxServer.loadClass(_Persistor.class, Configuration.getSetting(CFGKEY_CORE_PERSISTOR_CLASS, H2SqlPersistor.class.getName()));
       persistor.init();
    }
    
@@ -121,15 +128,18 @@ public class SingleHostCore implements _Hyperbox, _Server, _ServerManager {
    public void init() throws HyperboxException {
       Logger.track();
       
+      SessionContext.setClient(system);
+      SecurityContext.setUser(rootUsr);
+      
       HBoxServer.initServer(this);
       
-      EventManager.start();
+      EventManager.start(rootUsr);
       EventManager.register(this);
       
       loadPersistors();
       
       secMgr = SecurityManagerFactory.get();
-      secMgr.init(persistor);
+      secMgr.init(persistor, rootUsr);
       
       actionMgr = new DefaultActionManager();
       taskMgr = new TaskManager();
@@ -169,9 +179,6 @@ public class SingleHostCore implements _Hyperbox, _Server, _ServerManager {
       taskMgr.start(this);
       sessMgr.start(this);
       storeMgr.start();
-      
-      SessionContext.setClient(system);
-      SecurityContext.setUser(rootUsr);
       
       if (HBoxServer.hasSetting(CFGKEY_CORE_HYP_ID)) {
          Logger.info("Loading Hypervisor configuration");
@@ -288,8 +295,8 @@ public class SingleHostCore implements _Hyperbox, _Server, _ServerManager {
    }
    
    @Override
-   public String getType() {
-      return "Server";
+   public ServerType getType() {
+      return ServerType.Host;
    }
    
    @Override
@@ -307,7 +314,7 @@ public class SingleHostCore implements _Hyperbox, _Server, _ServerManager {
          Logger.error("Found no hypervisor module - make sure your classpath is correct and the Hypervisor module is properly located");
          Logger.warning("Hyperbox will not be able to connect to any hypervisor and will require a restart if this is needed");
       }
-
+      
       for (_HypervisorLoader hypLoader : subTypes) {
          for (String scheme : hypLoader.getSupportedSchemes()) {
             try {
@@ -323,6 +330,8 @@ public class SingleHostCore implements _Hyperbox, _Server, _ServerManager {
    
    @Override
    public void connect(String hypervisorId, String options) {
+      secMgr.authorize(SecurityItem.Hypervisor, SecurityAction.Connect);
+
       if (!hypervisors.containsKey(hypervisorId)) {
          throw new HyperboxRuntimeException("Invalid Hypervisor ID");
       }
@@ -351,6 +360,8 @@ public class SingleHostCore implements _Hyperbox, _Server, _ServerManager {
    
    @Override
    public void disconnect() {
+      secMgr.authorize(SecurityItem.Hypervisor, SecurityAction.Disconnect);
+
       hypervisor.disconnect();
       hypervisor = null;
       EventManager.post(new HypervisorDisconnectedEvent(this));
@@ -412,5 +423,39 @@ public class SingleHostCore implements _Hyperbox, _Server, _ServerManager {
       }
       
    }
+   
+   @Override
+   public List<_Machine> listMachines() {
+      List<_Machine> vms = new ArrayList<_Machine>();
+      for (_RawVM rawVm : hypervisor.listMachines()) {
+         if (secMgr.isAuthorized(SecurityItem.Machine, SecurityAction.List, rawVm.getUuid())) {
+            vms.add(MachineFactory.get(this, hypervisor, rawVm));
+         }
+      }
+      
+      return vms;
+   }
+   
+   @Override
+   public _Machine getMachine(String id) {
+      secMgr.authorize(SecurityItem.Machine, SecurityAction.Get, id);
+      return MachineFactory.get(this, hypervisor, hypervisor.getMachine(id));
+   }
+   
+   @Override
+   public _Machine findMachine(String idOrName) {
+      return getMachine(idOrName);
+   }
+   
+   @Override
+   public void unregisterMachine(String id) {
+      hypervisor.unregisterMachine(id);
+   }
+   
+   @Override
+   public void deleteMachine(String id) {
+      hypervisor.deleteMachine(id);
+   }
+   
    
 }

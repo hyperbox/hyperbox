@@ -26,7 +26,7 @@ import org.altherian.hbox.comm._Client;
 public final class SessionContext {
    
    private static ThreadLocal<_Client> clientHolder = new ThreadLocal<_Client>();
-
+   
    private SessionContext() {
       // we don't want instances.
    }

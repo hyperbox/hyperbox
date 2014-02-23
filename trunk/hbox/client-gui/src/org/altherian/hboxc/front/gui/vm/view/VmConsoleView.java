@@ -117,7 +117,7 @@ public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
    
    @Override
    public void refresh() {
-
+      
       if (isDisplayAvailable()) {
          MachineGetScreenshotWorker.get(this, mOut);
       } else {
@@ -137,14 +137,11 @@ public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
    }
    
    @Override
-   public void loadingFinished() {
-      statusLabel.setText(null);
-   }
-   
-   @Override
-   public void loadingFailed(String message) {
-      statusLabel.setText("Error when trying to get the Console: " + message);
-      stop();
+   public void loadingFinished(boolean isSuccessful, String message) {
+      statusLabel.setText(message);
+      if (isSuccessful) {
+         stop();
+      }
    }
    
    @Override

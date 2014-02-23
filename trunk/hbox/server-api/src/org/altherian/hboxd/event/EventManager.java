@@ -25,6 +25,7 @@ import org.altherian.hbox.Configuration;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxd.HBoxServer;
+import org.altherian.hboxd.security._User;
 import org.altherian.tool.logging.Logger;
 
 public final class EventManager {
@@ -45,8 +46,8 @@ public final class EventManager {
       return evMgr;
    }
    
-   public static void start() throws HyperboxException {
-      get().start();
+   public static void start(_User usr) throws HyperboxException {
+      get().start(usr);
    }
    
    public static void stop() {

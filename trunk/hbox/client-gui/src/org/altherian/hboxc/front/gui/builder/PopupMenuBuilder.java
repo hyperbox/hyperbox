@@ -84,9 +84,9 @@ public class PopupMenuBuilder {
       Logger.track();
       
       JMenu machineMenu = new JMenu("Machine");
-      machineMenu.setIcon(IconBuilder.getDeviceType(EntityTypes.Machine));
+      machineMenu.setIcon(IconBuilder.getEntityType(EntityTypes.Machine));
       JMenu guestMenu = new JMenu("Guest");
-      machineMenu.setIcon(IconBuilder.getDeviceType(EntityTypes.Guest));
+      machineMenu.setIcon(IconBuilder.getEntityType(EntityTypes.Guest));
       machineMenu.add(new JMenuItem(new MachineStartAction(select)));
       machineMenu.add(new JMenuItem(new MachineStopAction(select)));
       machineMenu.add(new JMenuItem(new MachineResetAction(select)));
@@ -154,7 +154,7 @@ public class PopupMenuBuilder {
       Action close = new StoreCloseAction(stoSelect);
       close.setEnabled(stoOut.getState().equals(StoreState.Open));
       Action open = new StoreOpenAction(stoSelect);
-      open.setEnabled(stoOut.getState().equals(StoreState.Close));
+      open.setEnabled(stoOut.getState().equals(StoreState.Closed));
       Action unregister = new StoreUnregisterAction(stoSelect);
       Action delete = new StoreDeleteAction(stoSelect);
       

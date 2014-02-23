@@ -22,8 +22,12 @@
 
 package org.altherian.hboxd.persistence;
 
+import org.altherian.hbox.comm.SecurityAction;
+import org.altherian.hbox.comm.SecurityItem;
 import org.altherian.hbox.exception.FeatureNotImplementedException;
 import org.altherian.hboxd.exception.PersistorException;
+import org.altherian.hboxd.security._ActionPermission;
+import org.altherian.hboxd.security._ItemPermission;
 import org.altherian.hboxd.security._User;
 import org.altherian.hboxd.security._UserGroup;
 import org.altherian.hboxd.store._Store;
@@ -41,6 +45,31 @@ public class DummyPersistor implements _Persistor {
    private static Map<String, _UserGroup> userGroups = new HashMap<String, _UserGroup>();
    
    private static Map<String, _Store> stores = new HashMap<String, _Store>();
+   
+   private static Map<String, String> settings = new HashMap<String, String>();
+   
+   private static Map<String, _ActionPermission> actPerms = new HashMap<String, _ActionPermission>();
+   private static Map<String, _ItemPermission> itemPerms = new HashMap<String, _ItemPermission>();
+   
+   @Override
+   public void init() throws PersistorException {
+      // nothing to do here
+   }
+   
+   @Override
+   public void start() throws PersistorException {
+      // nothing to do here
+   }
+   
+   @Override
+   public void stop() {
+      // nothing to do here
+   }
+   
+   @Override
+   public void destroy() {
+      // nothing to do here
+   }
    
    @Override
    public void insertUser(_User user) {
@@ -143,35 +172,65 @@ public class DummyPersistor implements _Persistor {
    }
    
    @Override
-   public void init() throws PersistorException {
-      // nothing to do here
-   }
-   
-   @Override
-   public void start() throws PersistorException {
-      // nothing to do here
-   }
-   
-   @Override
-   public void stop() {
-      // nothing to do here
-   }
-   
-   @Override
-   public void destroy() {
-      // nothing to do here
-   }
-   
-   @Override
    public void storeSetting(String name, String value) {
+      settings.put(name, value);
+   }
+   
+   @Override
+   public String loadSetting(String name) {
+      return settings.get(name);
+   }
+   
+   @Override
+   public _ActionPermission getPermission(_User usr, SecurityItem item, SecurityAction action) {
+      return actPerms.get(usr.getDomainLogonName() + item.toString() + action.toString());
+   }
+   
+   @Override
+   public _ItemPermission getPermission(_User usr, SecurityItem item, SecurityAction action, String itemId) {
+      return itemPerms.get(usr.getDomainLogonName() + item.toString() + action.toString() + itemId);
+   }
+   
+   @Override
+   public void insertPermission(_User usr, SecurityItem item, SecurityAction action, boolean isAllowed) {
       // TODO Auto-generated method stub
       
    }
    
    @Override
-   public String loadSetting(String name) {
+   public void insertPermission(_User usr, SecurityItem item, SecurityAction action, String itemId, boolean isAllowed) {
+      // TODO Auto-generated method stub
+      
+   }
+   
+   @Override
+   public List<_ActionPermission> listActionPermissions(_User usr) {
       // TODO Auto-generated method stub
       return null;
+   }
+   
+   @Override
+   public List<_ItemPermission> listItemPermissions(_User usr) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+   
+   @Override
+   public void deletePermission(_User usr) {
+      // TODO Auto-generated method stub
+      
+   }
+   
+   @Override
+   public void deletePermission(_User usr, SecurityItem item, SecurityAction action) {
+      // TODO Auto-generated method stub
+      
+   }
+   
+   @Override
+   public void deletePermission(_User usr, SecurityItem item, SecurityAction action, String itemId) {
+      // TODO Auto-generated method stub
+      
    }
    
 }

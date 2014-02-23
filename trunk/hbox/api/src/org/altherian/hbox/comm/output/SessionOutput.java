@@ -21,6 +21,8 @@
 
 package org.altherian.hbox.comm.output;
 
+import org.altherian.hbox.comm.output.security.UserOutput;
+
 import java.util.Date;
 
 public class SessionOutput extends ObjectOutput {
@@ -31,7 +33,7 @@ public class SessionOutput extends ObjectOutput {
    
    @SuppressWarnings("unused")
    private SessionOutput() {
-      // do not use
+      // used for (de)serialisation
    }
    
    public SessionOutput(String id, UserOutput user, String state, Date createTime) {

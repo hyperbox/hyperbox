@@ -21,6 +21,8 @@
 
 package org.altherian.hboxd.server;
 
+import org.altherian.hbox.constant.ServerType;
+import org.altherian.hboxd.core.model._Machine;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 import org.altherian.hboxd.hypervisor._HypervisorLoader;
 
@@ -34,17 +36,36 @@ import java.util.List;
 public interface _Server {
    
    /**
-    * Get this server unique ID, by default its hostname or its main IP
+    * Get this server unique ID, by default a randomly generated UUID.<br>
+    * This must be unique in an organisation structure.
     * 
     * @return The unique ID as String
     */
    public String getId();
    
+   /**
+    * Get the server defined name, which is by default the hostname of the machine.<br>
+    * This does not have to be unique in an organisation/cluster but should be to avoid user mistakes.
+    * 
+    * @return The name as String
+    */
    public String getName();
    
-   public void setName(String name);
+   /**
+    * Change the server name to another value.
+    * 
+    * @param newName The new name as String
+    */
+   public void setName(String newName);
    
-   public String getType();
+   /**
+    * Get the type of server this is.
+    * 
+    * @return The Type of server as ServerType
+    * 
+    * @see ServerType
+    */
+   public ServerType getType();
    
    public String getVersion();
    
@@ -57,5 +78,15 @@ public interface _Server {
    public _Hypervisor getHypervisor();
    
    public List<_HypervisorLoader> listHypervisors();
+   
+   public List<_Machine> listMachines();
+   
+   public _Machine getMachine(String id);
+   
+   public _Machine findMachine(String idOrName);
+   
+   public void unregisterMachine(String id);
+
+   public void deleteMachine(String id);
    
 }

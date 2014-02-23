@@ -22,6 +22,10 @@
 
 package org.altherian.hboxd.persistence;
 
+import org.altherian.hbox.comm.SecurityAction;
+import org.altherian.hbox.comm.SecurityItem;
+import org.altherian.hboxd.security._ActionPermission;
+import org.altherian.hboxd.security._ItemPermission;
 import org.altherian.hboxd.security._User;
 import org.altherian.hboxd.security._UserGroup;
 
@@ -29,34 +33,58 @@ import java.util.List;
 
 public interface _SecurityPersistor {
    
+   /*--- User Management ---*/
+   public List<_User> listUsers();
+   
+   public _User getUser(String userId);
+   
    public void insertUser(_User user);
    
+   public void updateUser(_User user);
+   
+   public void deleteUser(_User user);
+   
+   /*--- Password Management ---*/
+   public byte[] getUserPassword(String userId);
+   
+   public void setUserPassword(_User user, byte[] password);
+   
+   
+   /*--- Group Management ---*/
+   public List<_UserGroup> listGroups();
+   
+   public _UserGroup getGroup(String groupId);
+   
    public void insertGroup(_UserGroup group);
+   
+   public void updateGroup(_UserGroup group);
+   
+   public void deleteGroup(_UserGroup group);
+   
+   
+   /*--- Group Membership ---*/
+   public List<_User> listUsers(_UserGroup group);
    
    public void link(_User user, _UserGroup group);
    
    public void unlink(_User user, _UserGroup group);
    
-   public _User getUser(String userId);
+   /*-- Permissions Management ---*/
+   public void insertPermission(_User usr, SecurityItem item, SecurityAction action, boolean isAllowed);
    
-   public byte[] getUserPassword(String userId);
+   public void insertPermission(_User usr, SecurityItem item, SecurityAction action, String itemId, boolean isAllowed);
    
-   public void setUserPassword(_User user, byte[] password);
+   public void deletePermission(_User usr);
    
-   public _UserGroup getGroup(String groupId);
+   public void deletePermission(_User usr, SecurityItem item, SecurityAction action);
    
-   public List<_User> listUsers(_UserGroup group);
+   public void deletePermission(_User usr, SecurityItem item, SecurityAction action, String itemId);
+
+   public List<_ActionPermission> listActionPermissions(_User usr);
    
-   public List<_User> listUsers();
+   public List<_ItemPermission> listItemPermissions(_User usr);
    
-   public List<_UserGroup> listGroups();
+   public _ActionPermission getPermission(_User usr, SecurityItem item, SecurityAction action);
    
-   public void deleteUser(_User user);
-   
-   public void deleteGroup(_UserGroup group);
-   
-   public void updateUser(_User user);
-   
-   public void updateGroup(_UserGroup group);
-   
+   public _ItemPermission getPermission(_User usr, SecurityItem item, SecurityAction action, String itemId);
 }

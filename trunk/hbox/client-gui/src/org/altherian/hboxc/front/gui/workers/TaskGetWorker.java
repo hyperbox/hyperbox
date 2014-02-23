@@ -32,10 +32,9 @@ public class TaskGetWorker extends SwingWorker<Void, Void> {
       
       try {
          get();
-         recv.loadingFinished();
+         recv.loadingFinished(true, null);
       } catch (Throwable e) {
-         Logger.exception(e);
-         recv.loadingFailed(e.getMessage());
+         recv.loadingFinished(false, e.getMessage());
       }
    }
    

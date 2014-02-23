@@ -108,6 +108,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       treeModel = new DefaultTreeModel(topNode);
       tree = new JTree(treeModel);
       tree.setRootVisible(false);
+      tree.setShowsRootHandles(true);
       tree.setCellRenderer(new TreeCellRenderer());
       tree.addTreeSelectionListener(new TreeListener());
       tree.addMouseListener(new TreeMouseListener());

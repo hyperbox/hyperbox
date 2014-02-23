@@ -31,9 +31,9 @@ public class ConsoleViewerTableModel extends ObjectOutputTableModel<ConsoleViewe
    
    @Override
    protected void addColumns() {
-      addColum("Hypervisor", ConsoleViewerAttributes.HypervisorTypeId);
-      addColum("Module", ConsoleViewerAttributes.ModuleId);
-      addColum("Viewer", ConsoleViewerAttributes.ViewerPath);
+      addColumn("Hypervisor", ConsoleViewerAttributes.HypervisorTypeId);
+      addColumn("Module", ConsoleViewerAttributes.ModuleId);
+      addColumn("Viewer", ConsoleViewerAttributes.ViewerPath);
    }
    
 }

@@ -159,19 +159,19 @@ public class StorageVmEdit {
    
    private void initMedMenu() {
       addDvdDriveMenuItem = new JMenuItem("Empty CD/DVD Drive");
-      addDvdDriveMenuItem.setIcon(IconBuilder.getDeviceType(EntityTypes.DvdDrive));
+      addDvdDriveMenuItem.setIcon(IconBuilder.getEntityType(EntityTypes.DvdDrive));
       addDvdDriveMenuItem.addActionListener(new AddDeviceListener());
       
       addDvdImgMenuItem = new JMenuItem("Existing CD/DVD Image");
-      addDvdImgMenuItem.setIcon(IconBuilder.getDeviceType(EntityTypes.DvdDrive));
+      addDvdImgMenuItem.setIcon(IconBuilder.getEntityType(EntityTypes.DvdDrive));
       addDvdImgMenuItem.addActionListener(new AddDeviceListener());
       
       addFloppyDriveMenuItem = new JMenuItem("Empty Floppy Drive");
-      addFloppyDriveMenuItem.setIcon(IconBuilder.getDeviceType(EntityTypes.FloppyDrive));
+      addFloppyDriveMenuItem.setIcon(IconBuilder.getEntityType(EntityTypes.FloppyDrive));
       addFloppyDriveMenuItem.addActionListener(new AddDeviceListener());
       
       addFloppyImgMenuItem = new JMenuItem("Existing Floppy Image");
-      addFloppyImgMenuItem.setIcon(IconBuilder.getDeviceType(EntityTypes.FloppyDrive));
+      addFloppyImgMenuItem.setIcon(IconBuilder.getEntityType(EntityTypes.FloppyDrive));
       addFloppyImgMenuItem.addActionListener(new AddDeviceListener());
       
       addDiskNewMenuItem = new JMenuItem("New Disk Image");

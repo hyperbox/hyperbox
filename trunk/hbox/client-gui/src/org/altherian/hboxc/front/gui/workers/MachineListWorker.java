@@ -34,17 +34,17 @@ import javax.swing.SwingWorker;
 public class MachineListWorker extends SwingWorker<Void, MachineOutput> {
    
    private _MachineListReceiver recv;
-   private ServerOutput srvOut;
+   private String serverId;
    
-   public MachineListWorker(_MachineListReceiver recv, ServerOutput srvOut) {
+   public MachineListWorker(_MachineListReceiver recv, String serverId) {
       this.recv = recv;
-      this.srvOut = srvOut;
+      this.serverId = serverId;
    }
    
    @Override
    protected Void doInBackground() throws Exception {
       recv.loadingStarted();
-      for (MachineOutput mOut : Gui.getServer(srvOut).listMachines()) {
+      for (MachineOutput mOut : Gui.getServer(serverId).listMachines()) {
          publish(mOut);
       }
       
@@ -62,14 +62,18 @@ public class MachineListWorker extends SwingWorker<Void, MachineOutput> {
       
       try {
          get();
-         recv.loadingFinished();
+         recv.loadingFinished(true, null);
       } catch (Throwable e) {
-         recv.loadingFailed(e.getMessage());
+         recv.loadingFinished(false, e.getMessage());
       }
    }
    
    public static void get(_MachineListReceiver recv, ServerOutput srvOut) {
-      new MachineListWorker(recv, srvOut).execute();
+      get(recv, srvOut.getId());
+   }
+   
+   public static void get(_MachineListReceiver recv, String serverId) {
+      new MachineListWorker(recv, serverId).execute();
    }
    
 }

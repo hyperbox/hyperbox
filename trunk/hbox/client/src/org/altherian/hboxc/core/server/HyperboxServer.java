@@ -50,7 +50,6 @@ import org.altherian.hbox.comm.output.SessionOutput;
 import org.altherian.hbox.comm.output.StoreItemOutput;
 import org.altherian.hbox.comm.output.StoreOutput;
 import org.altherian.hbox.comm.output.TaskOutput;
-import org.altherian.hbox.comm.output.UserOutput;
 import org.altherian.hbox.comm.output.event.EventOutput;
 import org.altherian.hbox.comm.output.event.hypervisor.HypervisorEventOutput;
 import org.altherian.hbox.comm.output.event.machine.MachineDataChangeEventOutput;
@@ -65,6 +64,8 @@ import org.altherian.hbox.comm.output.network.NetworkAttachModeOutput;
 import org.altherian.hbox.comm.output.network.NetworkAttachNameOutput;
 import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
 import org.altherian.hbox.comm.output.network.NetworkInterfaceTypeOutput;
+import org.altherian.hbox.comm.output.security.PermissionOutput;
+import org.altherian.hbox.comm.output.security.UserOutput;
 import org.altherian.hbox.comm.output.storage.MediumOutput;
 import org.altherian.hbox.comm.output.storage.StorageControllerSubTypeOutput;
 import org.altherian.hbox.comm.output.storage.StorageControllerTypeOutput;
@@ -259,6 +260,11 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       
       MachineOutput mOut = t.extractItem(MachineOutput.class);
       return mOut;
+   }
+   
+   @Override
+   public MachineOutput getMachine(String machineId) {
+      return getMachine(new MachineInput(machineId));
    }
    
    @Override
@@ -869,6 +875,17 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
    public _GuestReader getGuest(String machineUuid) {
       // TODO Add machine validation
       return new GuestReader(this, machineUuid);
+   }
+   
+   @Override
+   public List<PermissionOutput> listPermissions(UserInput usrIn) {
+      Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.PermissionList, usrIn));
+      if (!trans.sendAndWait()) {
+         throw new HyperboxRuntimeException("Unable to retrieve list of permissions : " + trans.getError());
+      }
+      
+      List<PermissionOutput> permOutList = trans.extractItems(PermissionOutput.class);
+      return permOutList;
    }
    
 }

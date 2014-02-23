@@ -22,7 +22,7 @@
 
 package org.altherian.hboxc.front.gui.security.user;
 
-import org.altherian.hbox.comm.output.UserOutput;
+import org.altherian.hbox.comm.output.security.UserOutput;
 import org.altherian.hbox.constant.UserAttributes;
 import org.altherian.hboxc.front.gui.utils.ObjectOutputTableModel;
 
@@ -31,8 +31,8 @@ public class UserTableModel extends ObjectOutputTableModel<UserOutput> {
    
    @Override
    protected void addColumns() {
-      addColum("ID", UserAttributes.Id);
-      addColum("Username", UserAttributes.Username);
+      addColumn("ID", UserAttributes.Id);
+      addColumn("Username", UserAttributes.Username);
    }
    
 }

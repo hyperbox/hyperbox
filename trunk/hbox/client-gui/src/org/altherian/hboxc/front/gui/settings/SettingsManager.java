@@ -161,9 +161,9 @@ public class SettingsManager implements _Saveable, _Cancelable {
          JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
          
          if (label.getText() == GENERAL) {
-            label.setIcon(IconBuilder.getDeviceType(EntityTypes.Machine));
+            label.setIcon(IconBuilder.getEntityType(EntityTypes.Machine));
          } else if (label.getText() == VIEWERS) {
-            label.setIcon(IconBuilder.getDeviceType(EntityTypes.Display));
+            label.setIcon(IconBuilder.getEntityType(EntityTypes.Display));
          } else {
             label.setIcon(null);
          }

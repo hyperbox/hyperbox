@@ -52,8 +52,8 @@ public class IconBuilder {
    
    private static Map<MachineStates, ImageIcon> machineStates;
    
-   private static Map<EntityTypes, ImageIcon> devTypes;
-   private static ImageIcon unknownDevType;
+   private static Map<EntityTypes, ImageIcon> entTypes;
+   private static ImageIcon unknownEntType;
    
    private static Map<String, ImageIcon> scTypes;
    private static ImageIcon unknownScType;
@@ -68,7 +68,7 @@ public class IconBuilder {
       initVbTasks();
       initMachineStates();
       initStorageControllerTypes();
-      initDeviceTypes();
+      initEntityTypes();
    }
    
    private static void initClientTasks() {
@@ -150,24 +150,24 @@ public class IconBuilder {
       scTypes.put(StorageControllerType.SCSI.getId(), new ImageIcon(ICONS_PATH + "controller.png"));
    }
    
-   private static void initDeviceTypes() {
-      devTypes = new EnumMap<EntityTypes, ImageIcon>(EntityTypes.class);
-      devTypes.put(EntityTypes.Guest, new ImageIcon(ICONS_PATH + "monitor.png"));
-      devTypes.put(EntityTypes.Machine, new ImageIcon(ICONS_PATH + "computer.png"));
-      devTypes.put(EntityTypes.DVD, new ImageIcon(ICONS_PATH + "cd.png"));
-      devTypes.put(EntityTypes.HardDisk, new ImageIcon(ICONS_PATH + "harddisk.png"));
-      devTypes.put(EntityTypes.Floppy, new ImageIcon(ICONS_PATH + "disk.png"));
-      devTypes.put(EntityTypes.Server, new ImageIcon(ICONS_PATH + "server.png"));
-      devTypes.put(EntityTypes.Display, new ImageIcon(ICONS_PATH + "monitor.png"));
-      devTypes.put(EntityTypes.CPU, new ImageIcon(ICONS_PATH + "shape_shadow.png"));
-      devTypes.put(EntityTypes.Audio, new ImageIcon(ICONS_PATH + "sound.png"));
-      devTypes.put(EntityTypes.Network, new ImageIcon(ICONS_PATH + "world.png"));
-      devTypes.put(EntityTypes.DiskDrive, new ImageIcon(ICONS_PATH + "drive.png"));
-      devTypes.put(EntityTypes.DvdDrive, new ImageIcon(ICONS_PATH + "drive_cd.png"));
-      devTypes.put(EntityTypes.FloppyDrive, new ImageIcon(ICONS_PATH + "drive_disk.png"));
-      devTypes.put(EntityTypes.User, new ImageIcon(ICONS_PATH + "user.png"));
-      devTypes.put(EntityTypes.Store, new ImageIcon(ICONS_PATH + "store.png"));
-      devTypes.put(EntityTypes.Task, new ImageIcon(ICONS_PATH + "task.png"));
+   private static void initEntityTypes() {
+      entTypes = new EnumMap<EntityTypes, ImageIcon>(EntityTypes.class);
+      entTypes.put(EntityTypes.Guest, new ImageIcon(ICONS_PATH + "monitor.png"));
+      entTypes.put(EntityTypes.Machine, new ImageIcon(ICONS_PATH + "computer.png"));
+      entTypes.put(EntityTypes.DVD, new ImageIcon(ICONS_PATH + "cd.png"));
+      entTypes.put(EntityTypes.HardDisk, new ImageIcon(ICONS_PATH + "harddisk.png"));
+      entTypes.put(EntityTypes.Floppy, new ImageIcon(ICONS_PATH + "disk.png"));
+      entTypes.put(EntityTypes.Server, new ImageIcon(ICONS_PATH + "server.png"));
+      entTypes.put(EntityTypes.Display, new ImageIcon(ICONS_PATH + "monitor.png"));
+      entTypes.put(EntityTypes.CPU, new ImageIcon(ICONS_PATH + "shape_shadow.png"));
+      entTypes.put(EntityTypes.Audio, new ImageIcon(ICONS_PATH + "sound.png"));
+      entTypes.put(EntityTypes.Network, new ImageIcon(ICONS_PATH + "world.png"));
+      entTypes.put(EntityTypes.DiskDrive, new ImageIcon(ICONS_PATH + "drive.png"));
+      entTypes.put(EntityTypes.DvdDrive, new ImageIcon(ICONS_PATH + "drive_cd.png"));
+      entTypes.put(EntityTypes.FloppyDrive, new ImageIcon(ICONS_PATH + "drive_disk.png"));
+      entTypes.put(EntityTypes.User, new ImageIcon(ICONS_PATH + "user.png"));
+      entTypes.put(EntityTypes.Store, new ImageIcon(ICONS_PATH + "store.png"));
+      entTypes.put(EntityTypes.Task, new ImageIcon(ICONS_PATH + "task.png"));
    }
    
    public static ImageIcon getHyperbox() {
@@ -227,17 +227,17 @@ public class IconBuilder {
       }
    }
    
-   public static ImageIcon getDeviceType(EntityTypes type) {
-      if (devTypes.containsKey(type)) {
-         return devTypes.get(type);
+   public static ImageIcon getEntityType(EntityTypes type) {
+      if (entTypes.containsKey(type)) {
+         return entTypes.get(type);
       } else {
-         Logger.debug("No icon found for Device Type: " + type);
-         return unknownDevType;
+         Logger.debug("No icon found for Entity Type: " + type);
+         return unknownEntType;
       }
    }
    
    public static ImageIcon getDeviceType(String type) {
-      return getDeviceType(EntityTypes.valueOf(type));
+      return getEntityType(EntityTypes.valueOf(type));
    }
    
    public static ImageIcon getSnapshot(SnapshotOutput snapOut) {

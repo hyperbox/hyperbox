@@ -23,6 +23,8 @@
 package org.altherian.hboxd.security;
 
 import org.altherian.hbox.comm.Request;
+import org.altherian.hbox.comm.SecurityAction;
+import org.altherian.hbox.comm.SecurityItem;
 import org.altherian.hbox.comm.input.UserInput;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxException;
@@ -31,9 +33,12 @@ import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event.security.UserAddedEvent;
 import org.altherian.hboxd.event.security.UserModifiedEvent;
 import org.altherian.hboxd.event.security.UserRemovedEvent;
+import org.altherian.hboxd.exception.security.AccessDeniedException;
+import org.altherian.hboxd.exception.security.InvalidCredentialsException;
 import org.altherian.hboxd.factory.SecurityUserFactory;
 import org.altherian.hboxd.persistence._SecurityPersistor;
 import org.altherian.security.PasswordEncryptionService;
+import org.altherian.tool.StringTools;
 import org.altherian.tool.logging.Logger;
 
 import java.security.NoSuchAlgorithmException;
@@ -46,15 +51,56 @@ import java.util.Map;
 
 public class SecurityManager implements _SecurityManager {
    
+   private static final String permSeparator = "/";
    private UserIdGenerator userIdGen;
+   
+   private _User superUsr;
    private Map<String, _User> users;
    private Map<String, _User> usernames;
    private _SecurityPersistor persistor;
+   private Map<String, Boolean> perms;
    
-   @Override
-   public void init(_SecurityPersistor persistor) throws HyperboxException {
+   private String getPermissionId(_User usr, SecurityItem item, String itemId) {
+      return usr.getId() + permSeparator + item + permSeparator + SecurityAction.Any + permSeparator + itemId;
+   }
+   
+   private String getPermissionId(_User usr, SecurityItem item, SecurityAction action) {
+      return usr.getId() + permSeparator + item + permSeparator + action;
+   }
+   
+   private String getPermissionId(_User usr, SecurityItem item, SecurityAction action, String itemId) {
+      return getPermissionId(usr, item, action) + permSeparator + itemId;
+   }
+   
+   private void loadPerm(_User usr, _ActionPermission acPerm) {
       Logger.track();
       
+      perms.put(getPermissionId(usr, acPerm.getItemType(), acPerm.getAction()), acPerm.isAllowed());
+   }
+   
+   private void loadPerm(_User usr, _ItemPermission itemPerm) {
+      Logger.track();
+      
+      perms.put(getPermissionId(usr, itemPerm.getItemType(), itemPerm.getAction(), itemPerm.getItemId()), itemPerm.isAllowed());
+   }
+   
+   private void loadPerms(_User usr) {
+      Logger.track();
+      
+      for (_ActionPermission perm : listActionPermissions(usr)) {
+         loadPerm(usr, perm);
+      }
+      
+      for (_ItemPermission perm : listItemPermissions(usr)) {
+         loadPerm(usr, perm);
+      }
+   }
+   
+   @Override
+   public void init(_SecurityPersistor persistor, _User superUsr) throws HyperboxException {
+      Logger.track();
+      
+      this.superUsr = superUsr;
       this.persistor = persistor;
    }
    
@@ -65,22 +111,33 @@ public class SecurityManager implements _SecurityManager {
       userIdGen = new UserIdGenerator();
       users = new HashMap<String, _User>();
       usernames = new HashMap<String, _User>();
+      perms = new HashMap<String, Boolean>();
       
       List<_User> userList = persistor.listUsers();
       
       // We assume this is an empty database
       if (userList.isEmpty()) {
-         _User u = SecurityUserFactory.get("0", "admin");
-         persistor.insertUser(u);
-         setUserPassword(u, "hyperbox".toCharArray());
-         
-         userList.add(u);
-         Logger.info("Created initial account");
+         try {
+            _User u = SecurityUserFactory.get("0", "admin");
+            persistor.insertUser(u);
+            setUserPassword(u, "hyperbox".toCharArray());
+            
+            userList.add(u);
+            Logger.verbose("Created initial account");
+            
+            set(u, SecurityItem.Any, SecurityAction.Any, true);
+            Logger.verbose("Granted full priviledges to initial account");
+         } catch (Throwable t) {
+            Logger.error("Unable to create initial admin account");
+            Logger.exception(t);
+            throw new HyperboxException(t);
+         }
       }
       
       for (_User u : userList) {
          users.put(u.getId(), u);
          usernames.put(u.getDomainLogonName(), u);
+         loadPerms(u);
       }
    }
    
@@ -99,7 +156,7 @@ public class SecurityManager implements _SecurityManager {
       
       if (!usernames.containsKey(login)) {
          Logger.debug("Unknown login: " + login);
-         throw new HyperboxRuntimeException("Invalid credentials");
+         throw new InvalidCredentialsException();
       }
       
       _User user = usernames.get(login);
@@ -110,7 +167,7 @@ public class SecurityManager implements _SecurityManager {
          
          if (!Arrays.equals(encryptSubmitPass, encryptPass)) {
             Logger.debug("Invalid password for user " + user.getDomainLogonName());
-            throw new HyperboxRuntimeException("Invalid credentials");
+            throw new InvalidCredentialsException();
          }
       } catch (NoSuchAlgorithmException e) {
          throw new HyperboxRuntimeException("Unable to authenticate, internal error - " + e.getMessage(), e);
@@ -126,65 +183,112 @@ public class SecurityManager implements _SecurityManager {
       Logger.track();
       
       // TODO Auto-generated method stub
-      
    }
    
    @Override
-   public boolean isAuthorized(_Event ev, _User u) {
+   public boolean isAuthorized(_User u, _Event ev) {
       Logger.track();
       
-      // TODO Auto-generated method stub
+      // TODO complete
       return true;
    }
    
-   @Override
-   public void authorize(SecurityAction action, SecurityItem item) {
-      Logger.track();
-      
-      // TODO Auto-generated method stub
-      
+   private boolean isAuthorized() {
+      Logger.debug("Possible values:");
+      for (String key : perms.keySet()) {
+         Logger.debug(key);
+      }
+      Logger.debug("-----------------------");
+      String permId = getPermissionId(SecurityContext.getUser(), SecurityItem.Any, SecurityAction.Any);
+      Logger.debug("Checking for permission ID " + permId);
+      return superUsr.equals(SecurityContext.getUser()) || (perms.containsKey(permId) && perms.get(permId));
+   }
+   
+   private boolean isAuthorized(SecurityItem item) {
+      String permId = getPermissionId(SecurityContext.getUser(), item, SecurityAction.Any);
+      Logger.debug("Checking for permission ID " + permId);
+      return isAuthorized() || (perms.containsKey(permId) && perms.get(permId));
+   }
+   
+   private boolean isAuthorized(SecurityItem item, String itemId) {
+      String permId = getPermissionId(SecurityContext.getUser(), item, itemId);
+      Logger.debug("Checking for permission ID " + permId);
+      return (perms.containsKey(permId) && perms.get(permId));
    }
    
    @Override
-   public boolean isAuthorized(SecurityAction action, SecurityItem item) {
+   public boolean isAuthorized(SecurityItem item, SecurityAction action) {
       Logger.track();
       
-      // TODO Auto-generated method stub
-      return true;
+      String permId = getPermissionId(SecurityContext.getUser(), item, action);
+      Logger.debug("Checking for permission ID " + permId);
+      return isAuthorized(item) || (perms.containsKey(permId) && perms.get(permId));
+   }
+   
+   @Override
+   public boolean isAuthorized(SecurityItem item, SecurityAction action, String itemId) {
+      Logger.track();
+      
+      String permId = getPermissionId(SecurityContext.getUser(), item, action, itemId);
+      Logger.debug("Checking for permission ID " + permId);
+      return isAuthorized(item, itemId) || isAuthorized(item, action) || (perms.containsKey(permId) && perms.get(permId));
+   }
+   
+   @Override
+   public void authorize(SecurityItem item, SecurityAction action) {
+      Logger.track();
+      
+      if (!isAuthorized(item, action)) {
+         throw new AccessDeniedException();
+      }
+   }
+   
+   
+   @Override
+   public void authorize(SecurityItem item, SecurityAction action, String itemId) {
+      Logger.track();
+      
+      if (!isAuthorized(item, action, itemId)) {
+         throw new AccessDeniedException();
+      }
    }
    
    @Override
    public List<_User> listUsers() {
+      authorize(SecurityItem.User, SecurityAction.List);
+      
       return new ArrayList<_User>(users.values());
    }
    
    protected void loadUser(String id) {
+      Logger.track();
+      
       _User u = persistor.getUser(id);
       users.put(u.getId(), u);
       usernames.put(u.getDomainLogonName(), u);
    }
    
    protected void unloadUser(String id) {
+      Logger.track();
+      
       usernames.remove(id);
       users.remove(id);
    }
    
    @Override
-   public _User getUser(UserInput uIn) {
-      return getUser(uIn.getId());
-   }
-   
-   protected _User getUser(String userId) {
-      if (!users.containsKey(userId)) {
-         loadUser(userId);
+   public _User getUser(String usrId) {
+      if (!users.containsKey(usrId)) {
+         loadUser(usrId);
       }
       
-      return users.get(userId);
+      return users.get(usrId);
    }
    
    @Override
    public _User addUser(UserInput uIn) {
       Logger.track();
+      
+      authorize(SecurityItem.User, SecurityAction.Add);
       
       String id = userIdGen.get();
       
@@ -204,11 +308,14 @@ public class SecurityManager implements _SecurityManager {
    }
    
    @Override
-   public void removeUser(UserInput uIn) {
+   public void removeUser(String usrId) {
       Logger.track();
       
-      _User user = getUser(uIn);
+      authorize(SecurityItem.User, SecurityAction.Delete);
+      
+      _User user = getUser(usrId);
       user.delete();
+      removePermission(user);
       persistor.deleteUser(user);
       unloadUser(user.getId());
       
@@ -219,6 +326,8 @@ public class SecurityManager implements _SecurityManager {
    public _User modifyUser(UserInput uIn) {
       Logger.track();
       
+      authorize(SecurityItem.User, SecurityAction.Modify);
+
       _User user = persistor.getUser(uIn.getId());
       
       if (uIn.getUsername() != null) {
@@ -267,6 +376,68 @@ public class SecurityManager implements _SecurityManager {
       setUserPassword(user, password);
    }
    
+   private void set(String permId, Boolean isAllowed) {
+      Logger.debug("Setting Permission: " + permId + " - " + isAllowed);
+      perms.put(permId, isAllowed);
+   }
    
+   @Override
+   public void set(_User usr, SecurityItem itemType, SecurityAction action, boolean isAllowed) {
+      Logger.debug("Setting permission: " + itemType + " - " + action + " : " + isAllowed);
+      persistor.insertPermission(usr, itemType, action, isAllowed);
+      set(getPermissionId(usr, itemType, action), isAllowed);
+   }
+   
+   @Override
+   public void remove(_User usr, SecurityItem itemType, SecurityAction action) {
+      persistor.deletePermission(usr, itemType, action);
+      perms.remove(getPermissionId(usr, itemType, action));
+   }
+   
+   @Override
+   public void set(_User usr, SecurityItem itemType, SecurityAction action, String itemId, boolean isAllowed) {
+      if (StringTools.isEmpty(itemId)) {
+         set(usr, itemType, action, isAllowed);
+      } else {
+         Logger.debug("Setting permission: " + itemType + " - " + action + " - " + itemId + " : " + isAllowed);
+         persistor.insertPermission(usr, itemType, action, itemId, isAllowed);
+         set(getPermissionId(usr, itemType, action, itemId), isAllowed);
+      }
+   }
+   
+   @Override
+   public void remove(_User usr, SecurityItem itemType, SecurityAction action, String itemId) {
+      if (StringTools.isEmpty(itemId)) {
+         remove(usr, itemType, action);
+      } else {
+         persistor.deletePermission(usr, itemType, action, itemId);
+         perms.remove(getPermissionId(usr, itemType, action, itemId));
+      }
+   }
+   
+   @Override
+   public List<_ActionPermission> listActionPermissions(_User usr) {
+      return persistor.listActionPermissions(usr);
+   }
+   
+   @Override
+   public List<_ItemPermission> listItemPermissions(_User usr) {
+      return persistor.listItemPermissions(usr);
+   }
+   
+   @Override
+   public List<_ActionPermission> listActionPermissions() {
+      return listActionPermissions(SecurityContext.getUser());
+   }
+   
+   @Override
+   public List<_ItemPermission> listItemPermissions() {
+      return listItemPermissions(SecurityContext.getUser());
+   }
+   
+   @Override
+   public void removePermission(_User usr) {
+      persistor.deletePermission(usr);
+   }
    
 }

@@ -30,7 +30,7 @@ import org.altherian.hbox.states.MachineStates;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.AbstractHyperboxMultiTaskAction;
 import org.altherian.hboxd.exception.ActionCanceledException;
-import org.altherian.hboxd.exception.TaskInvalidStateException;
+import org.altherian.hboxd.exception.task.TaskInvalidStateException;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
 import org.altherian.tool.logging.Logger;
 

@@ -40,7 +40,7 @@ public class HypervisorGetCurrentAction extends AbstractHyperboxMultiTaskAction 
    
    @Override
    public List<String> getRegistrations() {
-      return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.HypervisorGetCurrent.getId());
+      return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.HypervisorGet.getId());
    }
    
    @Override

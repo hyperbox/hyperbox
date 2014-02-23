@@ -22,7 +22,7 @@
 package org.altherian.hboxd.comm.io.factory;
 
 import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
-import org.altherian.hboxd.business._StorageController;
+import org.altherian.hboxd.core.model._StorageController;
 import org.altherian.hboxd.hypervisor.storage._RawStorageController;
 
 public final class StorageControllerIoFactory {

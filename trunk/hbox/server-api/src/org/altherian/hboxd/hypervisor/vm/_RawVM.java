@@ -50,7 +50,7 @@ public interface _RawVM extends _RawItem {
    public String getLocation();
    
    public MachineStates getState();
-   
+
    public String getName();
    
    /**
@@ -147,5 +147,5 @@ public interface _RawVM extends _RawItem {
    public byte[] takeScreenshot();
    
    public _RawGuest getGuest();
-
+   
 }

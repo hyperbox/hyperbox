@@ -22,8 +22,8 @@
 package org.altherian.hboxd.core.action.machine;
 
 import org.altherian.hbox.comm.Command;
-import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.HypervisorTasks;
+import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.input.MachineInput;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
@@ -46,7 +46,7 @@ public final class MachineDeleteAction extends ASingleTaskAction {
    @Override
    public void run(Request request, _Hyperbox hbox) {
       MachineInput mIn = request.get(MachineInput.class);
-      hbox.getHypervisor().deleteMachine(mIn.getUuid());
+      hbox.getServer(mIn.getServerId()).deleteMachine(mIn.getUuid());
    }
    
 }

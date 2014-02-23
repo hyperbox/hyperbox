@@ -21,17 +21,27 @@
 
 package org.altherian.hbox.comm.input;
 
+import org.altherian.hbox.comm.output.security.UserOutput;
+
+import java.util.HashSet;
+import java.util.Set;
+
 public final class UserInput extends ObjectInput {
    
    private String domain;
    private String username;
    private char[] password;
+   private Set<PermissionInput> perms = new HashSet<PermissionInput>();
    
    public UserInput() {
    }
    
    public UserInput(String id) {
       super(id);
+   }
+   
+   public UserInput(UserOutput usrOut) {
+      this(usrOut.getId());
    }
    
    public UserInput(String username, char[] password) {
@@ -84,6 +94,14 @@ public final class UserInput extends ObjectInput {
     */
    public void setPassword(char[] password) {
       this.password = password;
+   }
+   
+   public void addPermission(PermissionInput permIn) {
+      perms.add(permIn);
+   }
+   
+   public void removePermission(PermissionInput permIn) {
+      perms.remove(permIn);
    }
    
 }

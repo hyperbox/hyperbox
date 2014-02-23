@@ -27,7 +27,7 @@ import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.input.ServerInput;
 import org.altherian.hbox.comm.input.UserInput;
-import org.altherian.hbox.comm.output.UserOutput;
+import org.altherian.hbox.comm.output.security.UserOutput;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.security.user.UserEditor;
@@ -58,7 +58,7 @@ public class UserModifyAction extends AbstractAction {
       List<String> selection = selector.getSelection();
       if (!selection.isEmpty()) {
          UserOutput usrOut = Gui.getReader().getServerReader(selector.getServerId()).getUser(new UserInput(selector.getSelection().get(0)));
-         UserInput usrIn = UserEditor.getInput(usrOut);
+         UserInput usrIn = UserEditor.getInput(selector.getServerId(), usrOut);
          if (usrIn != null) {
             Logger.debug("Got user input");
             Gui.post(new Request(Command.HBOX, HyperboxTasks.UserModify, new ServerInput(selector.getServerId()), usrIn));

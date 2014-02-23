@@ -76,16 +76,6 @@ public enum HyperboxTasks {
    
    HypervisorList,
    HypervisorGet,
-   /**
-    * Retrieve the hypervisor information about a server
-    * <p>
-    * Request Object: {@link ServerInput} for a specific server, none for the current server<br/>
-    * Answer Object: {@link HypervisorOutput}<br/>
-    * Answer Type: Single<br/>
-    * Queueable: No
-    * </p>
-    */
-   HypervisorGetCurrent,
    HypervisorConfigure,
    HypervisorConnect,
    HypervisorDisconnect,
@@ -93,25 +83,10 @@ public enum HyperboxTasks {
    Login,
    Logout,
    
-   /**
-    * Not implemented
-    */
    StoreList,
-   /**
-    * Not implemented
-    */
    StoreGet,
-   /**
-    * Not implemented
-    */
    StoreCreate,
-   /**
-    * Not implemented
-    */
    StoreModify,
-   /**
-    * Not implemented
-    */
    StoreDelete,
    
    StoreRegister,
@@ -174,10 +149,10 @@ public enum HyperboxTasks {
    GuestRestart,
    GuestShutdown,
    
-   /**
-    * Not implemented
-    */
-   MachineCreateWithSettings;
+   PermissionSet,
+   PermissionDelete,
+   PermissionList,
+   PermissionGet;
    
    public String getId() {
       return toString();

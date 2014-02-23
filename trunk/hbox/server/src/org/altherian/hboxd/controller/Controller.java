@@ -113,6 +113,11 @@ public final class Controller implements _Controller {
          Logger.info("Hyperbox Init Sequence started");
          
          ShutdownAction.setController(this);
+         
+         for (String name : System.getenv().keySet()) {
+            Logger.info(name + ": " + System.getenv(name));
+         }
+
          startBack();
          startFront();
          Long endTime = System.currentTimeMillis();

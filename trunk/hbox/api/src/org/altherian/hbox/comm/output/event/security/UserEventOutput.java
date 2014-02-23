@@ -23,8 +23,8 @@
 package org.altherian.hbox.comm.output.event.security;
 
 import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.UserOutput;
 import org.altherian.hbox.comm.output.event.EventOutput;
+import org.altherian.hbox.comm.output.security.UserOutput;
 
 import java.util.Date;
 
