@@ -53,9 +53,9 @@ public class MachineGetWorker extends SwingWorker<MachineOutput, Void> {
       try {
          MachineOutput mOut = get();
          recv.put(mOut);
-         recv.loadingFinished();
+         recv.loadingFinished(true, null);
       } catch (Throwable e) {
-         recv.loadingFailed(e.getMessage());
+         recv.loadingFinished(false, e.getMessage());
       }
    }
    

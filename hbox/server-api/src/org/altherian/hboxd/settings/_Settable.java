@@ -28,8 +28,6 @@ public interface _Settable {
    
    public List<_Setting> getSettings();
    
-   public List<String> getSettingIds();
-   
    public _Setting getSetting(String settingId);
    
    public void setSetting(_Setting setting);

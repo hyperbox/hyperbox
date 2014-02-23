@@ -31,7 +31,7 @@ public class ProgressTrackerOutput extends ObjectInput {
    
    @SuppressWarnings("unused")
    private ProgressTrackerOutput() {
-      // used only for (de)serialisation
+      // used for (de)serialisation
    }
    
    public ProgressTrackerOutput(String id, String type, String state) {

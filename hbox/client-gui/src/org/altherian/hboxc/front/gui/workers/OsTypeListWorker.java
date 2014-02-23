@@ -63,9 +63,9 @@ public class OsTypeListWorker extends SwingWorker<Void, OsTypeOutput> {
       
       try {
          get();
-         recv.loadingFinished();
+         recv.loadingFinished(true, null);
       } catch (Throwable e) {
-         recv.loadingFailed(e.getMessage());
+         recv.loadingFinished(false, e.getMessage());
       }
    }
    

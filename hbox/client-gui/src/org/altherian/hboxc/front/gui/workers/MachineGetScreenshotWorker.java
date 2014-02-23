@@ -52,9 +52,9 @@ public class MachineGetScreenshotWorker extends SwingWorker<ScreenshotOutput, Vo
       try {
          ScreenshotOutput scrOut = get();
          recv.put(scrOut);
-         recv.loadingFinished();
+         recv.loadingFinished(true, null);
       } catch (Throwable e) {
-         recv.loadingFailed(e.getMessage());
+         recv.loadingFinished(false, e.getMessage());
       }
    }
    

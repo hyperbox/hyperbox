@@ -62,6 +62,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
    private JLabel loadingLabel = new JLabel("Loading...");
    private ServerTaskListTableModel itemListModel;
    private JTable itemList;
+   private JScrollPane scrollPane;
    private JPanel panel;
    
    private JPopupMenu actions;
@@ -78,7 +79,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       itemList.getRowSorter().setSortKeys(Arrays.asList(new RowSorter.SortKey(4, SortOrder.DESCENDING)));
       itemList.addMouseListener(new ItemListMouseListener());
       
-      JScrollPane scrollPane = new JScrollPane(itemList);
+      scrollPane = new JScrollPane(itemList);
       
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(loadingLabel, "growx,pushx,wrap,hidemode 3");
@@ -179,19 +180,15 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       }
       
       @Override
-      public void loadingFinished() {
+      public void loadingFinished(boolean isSuccessful, String message) {
          Logger.track();
          
          finish();
-         loadingLabel.setVisible(false);
-      }
-      
-      @Override
-      public void loadingFailed(String message) {
-         Logger.track();
-         
-         finish();
-         loadingLabel.setText("Error when loading tasks: " + message);
+         if (isSuccessful) {
+            loadingLabel.setVisible(false);
+         } else {
+            loadingLabel.setText("Error when loading tasks: " + message);
+         }
       }
       
       @Override

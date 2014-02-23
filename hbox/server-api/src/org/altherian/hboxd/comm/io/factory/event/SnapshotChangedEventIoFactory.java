@@ -29,12 +29,13 @@ import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.event._Event;
+import org.altherian.hboxd.HBoxServer;
 import org.altherian.hboxd.comm.io.factory.MachineIoFactory;
 import org.altherian.hboxd.comm.io.factory.ServerIoFactory;
 import org.altherian.hboxd.comm.io.factory.SnapshotIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
+import org.altherian.hboxd.core.model._Machine;
 import org.altherian.hboxd.event.snapshot.SnapshotEvent;
-import org.altherian.hboxd.hypervisor.vm._RawVM;
 
 public class SnapshotChangedEventIoFactory implements _EventIoFactory {
    
@@ -51,12 +52,12 @@ public class SnapshotChangedEventIoFactory implements _EventIoFactory {
    public EventOutput get(_Hyperbox hbox, _Event ev) {
       SnapshotEvent sEv = (SnapshotEvent) ev;
       
-      _RawVM vm = hbox.getHypervisor().getMachine(sEv.getMachineUuid());
+      _Machine vm = HBoxServer.get().getMachine(sEv.getMachineUuid());
       MachineOutput mOut = MachineIoFactory.get(vm);
       SnapshotOutput snapOut = SnapshotIoFactory.get(vm.getSnapshot(sEv.getSnapshotUuid()));
       
       switch ((HyperboxEvents) sEv.getEventId()) {
-
+         
          case SnapshotModified:
             return new SnapshotModifiedEventOutput(sEv.getTime(), ServerIoFactory.get(), mOut, snapOut);
          case SnapshotRestored:

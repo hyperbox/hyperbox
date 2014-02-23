@@ -24,15 +24,14 @@ package org.altherian.hboxd.core.action.machine;
 import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
-import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.HypervisorTasks;
+import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.input.ServerInput;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxd.comm.io.factory.MachineIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.AbstractHyperboxMultiTaskAction;
-import org.altherian.hboxd.hypervisor.vm._RawVM;
-import org.altherian.hboxd.server._Server;
+import org.altherian.hboxd.core.model._Machine;
 import org.altherian.hboxd.session.SessionContext;
 
 import java.util.Arrays;
@@ -56,10 +55,10 @@ public final class MachineListAction extends AbstractHyperboxMultiTaskAction {
          throw new HyperboxRuntimeException("missing serverinput");
       }
       ServerInput srvIn = request.get(ServerInput.class);
-      _Server srv = hbox.getServerManager().getServer(srvIn.getId());
-      List<_RawVM> vms = srv.getHypervisor().listMachines();
       
-      for (_RawVM vm : vms) {
+      List<_Machine> vms = hbox.getServer(srvIn.getId()).listMachines();
+
+      for (_Machine vm : vms) {
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, MachineIoFactory.getSimple(vm)));
       }
    }

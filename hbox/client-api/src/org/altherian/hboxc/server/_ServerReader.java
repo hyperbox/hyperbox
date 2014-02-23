@@ -37,7 +37,6 @@ import org.altherian.hbox.comm.output.SessionOutput;
 import org.altherian.hbox.comm.output.StoreItemOutput;
 import org.altherian.hbox.comm.output.StoreOutput;
 import org.altherian.hbox.comm.output.TaskOutput;
-import org.altherian.hbox.comm.output.UserOutput;
 import org.altherian.hbox.comm.output.hypervisor.HypervisorLoaderOutput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hbox.comm.output.hypervisor.OsTypeOutput;
@@ -47,6 +46,8 @@ import org.altherian.hbox.comm.output.network.NetworkAttachModeOutput;
 import org.altherian.hbox.comm.output.network.NetworkAttachNameOutput;
 import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
 import org.altherian.hbox.comm.output.network.NetworkInterfaceTypeOutput;
+import org.altherian.hbox.comm.output.security.PermissionOutput;
+import org.altherian.hbox.comm.output.security.UserOutput;
 import org.altherian.hbox.comm.output.storage.MediumOutput;
 import org.altherian.hbox.comm.output.storage.StorageControllerSubTypeOutput;
 import org.altherian.hbox.comm.output.storage.StorageControllerTypeOutput;
@@ -65,8 +66,10 @@ public interface _ServerReader {
    public String getVersion();
    
    public _GuestReader getGuest(String machineUuid);
-
+   
    public MachineOutput getMachine(MachineInput mIn);
+
+   public MachineOutput getMachine(String machineId);
    
    public MediumOutput getMedium(MediumInput mIn);
    
@@ -123,6 +126,8 @@ public interface _ServerReader {
    public List<TaskOutput> listTasks();
    
    public List<UserOutput> listUsers();
+   
+   public List<PermissionOutput> listPermissions(UserInput usrIn);
    
    public SnapshotOutput getRootSnapshot(MachineInput mIn);
    

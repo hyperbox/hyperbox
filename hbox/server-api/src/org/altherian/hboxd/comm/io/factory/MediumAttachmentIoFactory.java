@@ -22,7 +22,7 @@
 package org.altherian.hboxd.comm.io.factory;
 
 import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
-import org.altherian.hboxd.business._MediumAttachment;
+import org.altherian.hboxd.core.model._MediumAttachment;
 import org.altherian.hboxd.hypervisor.storage._RawMediumAttachment;
 
 public class MediumAttachmentIoFactory {

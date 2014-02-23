@@ -23,7 +23,7 @@ package org.altherian.hboxd.comm.io.factory;
 
 import org.altherian.hbox.comm.output.ExceptionOutput;
 import org.altherian.hbox.comm.output.TaskOutput;
-import org.altherian.hbox.comm.output.UserOutput;
+import org.altherian.hbox.comm.output.security.UserOutput;
 import org.altherian.hboxd.HBoxServer;
 import org.altherian.hboxd.task._Task;
 

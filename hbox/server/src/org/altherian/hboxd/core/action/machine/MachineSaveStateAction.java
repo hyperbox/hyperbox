@@ -22,11 +22,13 @@
 package org.altherian.hboxd.core.action.machine;
 
 import org.altherian.hbox.comm.Command;
-import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.HypervisorTasks;
+import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.input.MachineInput;
+import org.altherian.hbox.comm.input.ServerInput;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
+import org.altherian.hboxd.core.model._Machine;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,8 +47,11 @@ public class MachineSaveStateAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
+      ServerInput srvIn = request.get(ServerInput.class);
       MachineInput mIn = request.get(MachineInput.class);
-      hbox.getHypervisor().getMachine(mIn.getUuid()).saveState();
+      
+      _Machine vm = hbox.getServer(srvIn.getId()).getMachine(mIn.getUuid());
+      vm.saveState();
    }
    
 }

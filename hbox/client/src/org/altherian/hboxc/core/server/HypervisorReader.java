@@ -20,7 +20,7 @@ public class HypervisorReader implements _HypervisorReader {
    private HypervisorOutput hypData;
    
    private void refresh() {
-      Transaction t = srv.sendRequest(new Request(Command.HBOX, HyperboxTasks.HypervisorGetCurrent));
+      Transaction t = srv.sendRequest(new Request(Command.HBOX, HyperboxTasks.HypervisorGet));
       hypData = t.extractItem(HypervisorOutput.class);
    }
    

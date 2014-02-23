@@ -25,7 +25,7 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.states.StoreState;
 import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event.store.StoreStateEvent;
-import org.altherian.hboxd.exception.StoreNotOpenException;
+import org.altherian.hboxd.exception.store.StoreNotOpenException;
 import org.altherian.hboxd.store._Store;
 import org.altherian.hboxd.store._StoreItem;
 
@@ -39,7 +39,7 @@ public final class FolderStore implements _Store {
    private StoreState state;
    
    public FolderStore(String id, String name, File path) {
-      state = StoreState.Close;
+      state = StoreState.Closed;
       this.id = id;
       this.name = name;
       location = path;
@@ -72,7 +72,7 @@ public final class FolderStore implements _Store {
    
    @Override
    public void open() {
-      if (!getState().equals(StoreState.Close)) {
+      if (!getState().equals(StoreState.Closed)) {
          throw new HyperboxRuntimeException("Cannot open a store that is not closed.");
       }
       setState(StoreState.Opening);
@@ -100,7 +100,7 @@ public final class FolderStore implements _Store {
       }
 
       setState(StoreState.Closing);
-      setState(StoreState.Close);
+      setState(StoreState.Closed);
    }
    
    @Override

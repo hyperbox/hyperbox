@@ -30,7 +30,9 @@ import org.altherian.hbox.comm.output.hypervisor.OsTypeOutput;
 import org.altherian.hbox.constant.MachineAttributes;
 import org.altherian.hboxc.HyperboxClient;
 import org.altherian.hboxc.front.gui.Gui;
+import org.altherian.hboxc.front.gui.workers.KeyboardTypeListWorker;
 import org.altherian.hboxc.front.gui.workers.OsTypeListWorker;
+import org.altherian.hboxc.front.gui.workers._KeyboardTypeListReceiver;
 import org.altherian.hboxc.front.gui.workers._OsTypeListReceiver;
 
 import java.awt.Component;
@@ -106,15 +108,8 @@ public class GeneralVmEdit {
       nameField.setText(mOut.getName());
       descArea.setText(mOut.getSetting(MachineAttributes.Description).getString());
       
-      try {
-         keyboardTypeBox.removeAllItems();
-         for (String keyboard : Gui.getServer(mOut.getServerId()).listKeyboardMode(new MachineInput(mOut))) {
-            keyboardTypeBox.addItem(keyboard);
-         }
-         keyboardTypeBox.setSelectedItem(mOut.getSetting(MachineAttributes.KeyboardMode).getRawValue());
-      } catch (Throwable t) {
-         HyperboxClient.getView().postError("Unable to retrieve list of Keyboard Modes", t);
-      }
+      KeyboardTypeListWorker.get(new KeyboardListReceiver(), mOut.getServerId(), mOut.getUuid());
+      
       try {
          mouseTypeBox.removeAllItems();
          for (String mouse : Gui.getServer(mOut.getServerId()).listMouseMode(new MachineInput(mOut))) {
@@ -156,23 +151,53 @@ public class GeneralVmEdit {
       }
       
       @Override
-      public void loadingFinished() {
-         osTypeField.setSelectedItem(mOut.getSetting(MachineAttributes.OsType).getRawValue());
-         osTypeField.removeItem("Loading...");
+      public void loadingFinished(boolean isSuccess, String message) {
          osTypeField.setEnabled(true);
-      }
-      
-      @Override
-      public void loadingFailed(String message) {
-         osTypeField.removeAllItems();
-         osTypeField.addItem("Failed to load: " + message);
-         osTypeField.setEnabled(true);
+         
+         if (isSuccess) {
+            osTypeField.setSelectedItem(mOut.getSetting(MachineAttributes.OsType).getRawValue());
+            osTypeField.removeItem("Loading...");
+         } else {
+            osTypeField.removeAllItems();
+            osTypeField.addItem("Failed to load: " + message);
+         }
       }
       
       @Override
       public void add(List<OsTypeOutput> ostOuttList) {
          for (OsTypeOutput osOut : ostOuttList) {
             osTypeField.addItem(osOut.getId());
+         }
+      }
+      
+   }
+   
+   private class KeyboardListReceiver implements _KeyboardTypeListReceiver {
+      
+      @Override
+      public void loadingStarted() {
+         keyboardTypeBox.setEnabled(false);
+         keyboardTypeBox.removeAllItems();
+         keyboardTypeBox.addItem("Loading...");
+         keyboardTypeBox.setSelectedItem("Loading...");
+      }
+      
+      @Override
+      public void loadingFinished(boolean isSuccessful, String message) {
+         keyboardTypeBox.removeItem("Loading...");
+         keyboardTypeBox.setEnabled(isSuccessful);
+         if (isSuccessful) {
+            keyboardTypeBox.setSelectedItem(mOut.getSetting(MachineAttributes.KeyboardMode).getRawValue());
+         } else {
+            keyboardTypeBox.removeAllItems();
+            keyboardTypeBox.addItem("Failed to load Keyboard Types list: " + message);
+         }
+      }
+      
+      @Override
+      public void add(List<String> keyboardList) {
+         for (String keyboard : keyboardList) {
+            keyboardTypeBox.addItem(keyboard);
          }
       }
       

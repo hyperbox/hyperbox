@@ -30,7 +30,7 @@ public class ExceptionOutput extends ObjectOutput {
    
    @SuppressWarnings("unused")
    private ExceptionOutput() {
-      // not used
+      // used for (de)serialisation
    }
    
    public ExceptionOutput(String errno, String error, String stackTrace) {

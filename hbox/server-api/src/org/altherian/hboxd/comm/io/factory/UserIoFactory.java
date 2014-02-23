@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.output.UserOutput;
+import org.altherian.hbox.comm.output.security.UserOutput;
 import org.altherian.hboxd.security._User;
 
 public class UserIoFactory {

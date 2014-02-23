@@ -22,13 +22,13 @@
 package org.altherian.hboxd.core.action.machine;
 
 import org.altherian.hbox.comm.Command;
-import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.HypervisorTasks;
+import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.input.MachineInput;
 import org.altherian.hbox.states.ACPI;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
-import org.altherian.hboxd.hypervisor.vm._RawVM;
+import org.altherian.hboxd.core.model._Machine;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +48,7 @@ public final class MachineAcpiPowerAction extends ASingleTaskAction {
    @Override
    public void run(Request request, _Hyperbox hbox) {
       MachineInput mIn = request.get(MachineInput.class);
-      _RawVM machine = hbox.getHypervisor().getMachine(mIn.getUuid());
+      _Machine machine = hbox.getServer(mIn.getServerId()).getMachine(mIn.getUuid());
       machine.sendAcpi(ACPI.PowerButton);
    }
    

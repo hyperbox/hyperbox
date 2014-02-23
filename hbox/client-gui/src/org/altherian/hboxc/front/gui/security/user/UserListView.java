@@ -27,8 +27,8 @@ import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.UserOutput;
 import org.altherian.hbox.comm.output.event.security.UserEventOutput;
+import org.altherian.hbox.comm.output.security.UserOutput;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
@@ -43,6 +43,7 @@ import org.altherian.tool.logging.Logger;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -52,6 +53,8 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 
 public class UserListView implements _UserSelector, _Refreshable, _SingleServerSelector {
    
@@ -73,6 +76,7 @@ public class UserListView implements _UserSelector, _Refreshable, _SingleServerS
       itemList = new JTable(itemListModel);
       itemList.setAutoCreateRowSorter(true);
       itemList.setFillsViewportHeight(true);
+      itemList.getRowSorter().setSortKeys(Arrays.asList(new RowSorter.SortKey(0, SortOrder.ASCENDING)));
       itemList.addMouseListener(new ItemListMouseListener());
       
       JScrollPane scrollPane = new JScrollPane(itemList);

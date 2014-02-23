@@ -22,9 +22,10 @@
 package org.altherian.hboxd.core.action.machine;
 
 import org.altherian.hbox.comm.Command;
-import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.HypervisorTasks;
+import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.input.MachineInput;
+import org.altherian.hbox.comm.input.ServerInput;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 
@@ -45,8 +46,10 @@ public final class MachineUnregisterAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
+      ServerInput srvIn = request.get(ServerInput.class);
       MachineInput mIn = request.get(MachineInput.class);
-      hbox.getHypervisor().unregisterMachine(mIn.getUuid());
+      
+      hbox.getServer(srvIn.getId()).unregisterMachine(mIn.getUuid());
    }
    
 }

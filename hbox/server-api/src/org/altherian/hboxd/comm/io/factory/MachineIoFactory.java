@@ -26,10 +26,9 @@ import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
 import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
 import org.altherian.hbox.constant.MachineAttributes;
 import org.altherian.hboxd.HBoxServer;
-import org.altherian.hboxd.business._VM;
-import org.altherian.hboxd.hypervisor.storage._RawStorageController;
-import org.altherian.hboxd.hypervisor.vm._RawVM;
-import org.altherian.hboxd.hypervisor.vm.device._RawNetworkInterface;
+import org.altherian.hboxd.core.model._Machine;
+import org.altherian.hboxd.core.model._NetworkInterface;
+import org.altherian.hboxd.core.model._StorageController;
 import org.altherian.hboxd.settings._Setting;
 
 import java.util.ArrayList;
@@ -50,36 +49,27 @@ public final class MachineIoFactory {
       return new MachineOutput(HBoxServer.get().getId(), uuid, state, SettingIoFactory.getList(settings));
    }
    
-   public static MachineOutput getSimple(_VM m) {
-      return getSimple(m.getUuid(), m.getState().getId(), null);
-   }
-   
-   public static MachineOutput getSimple(_RawVM m) {
+   public static MachineOutput getSimple(_Machine m) {
       List<_Setting> settings = Arrays.asList(
-            m.getSetting(MachineAttributes.Name),
-            m.getSetting(MachineAttributes.CurrentSnapshotUuid),
-            m.getSetting(MachineAttributes.HasSnapshot));
+            m.getSetting(MachineAttributes.Name.getId()),
+            m.getSetting(MachineAttributes.CurrentSnapshotUuid.getId()),
+            m.getSetting(MachineAttributes.HasSnapshot.getId()));
       return getSimple(m.getUuid(), m.getState().getId(), settings);
    }
    
-   public static MachineOutput get(_VM m) {
-      // TODO update settings in mOut
-      return getSimple(m);
-   }
-   
-   public static MachineOutput get(_RawVM m) {
+   public static MachineOutput get(_Machine m) {
       String serverId = HBoxServer.get().getId();
       List<StorageControllerOutput> scOutList = new ArrayList<StorageControllerOutput>();
-      for (_RawStorageController sc : m.listStoroageControllers()) {
+      for (_StorageController sc : m.listStorageControllers()) {
          scOutList.add(StorageControllerIoFactory.get(sc));
       }
       
       List<NetworkInterfaceOutput> nicOutList = new ArrayList<NetworkInterfaceOutput>();
-      for (_RawNetworkInterface nic : m.listNetworkInterfaces()) {
+      for (_NetworkInterface nic : m.listNetworkInterfaces()) {
          nicOutList.add(NetworkInterfaceIoFactory.get(nic));
       }
       
-      MachineOutput mOut = new MachineOutput(serverId, m.getUuid(), m.getState(), SettingIoFactory.getList(m.listSettings()), scOutList, nicOutList);
+      MachineOutput mOut = new MachineOutput(serverId, m.getUuid(), m.getState(), SettingIoFactory.getList(m.getSettings()), scOutList, nicOutList);
       return mOut;
    }
    

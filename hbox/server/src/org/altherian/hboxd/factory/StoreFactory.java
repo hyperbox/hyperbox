@@ -32,7 +32,7 @@ public class StoreFactory {
    
    public static _Store get(String moduleId, String storeId, String storeName, String storePath, String storeStatus) {
       if (moduleId.equalsIgnoreCase("localFolder")) {
-         return new FolderStore(storeId, storeName, new File(storePath));
+         return new FolderStore(storeId, storeName, new File(storePath), storeStatus);
       } else {
          throw new HyperboxRuntimeException("Unsupported Store Type : " + moduleId);
       }

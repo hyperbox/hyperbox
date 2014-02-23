@@ -30,7 +30,7 @@ public final class StoreOutput extends ObjectOutput {
    
    @SuppressWarnings("unused")
    private StoreOutput() {
-      // do not use
+      // used for (de)serialisation
    }
    
    public StoreOutput(String id, String label, String location, StoreState state) {

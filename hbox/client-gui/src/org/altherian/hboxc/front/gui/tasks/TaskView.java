@@ -102,7 +102,7 @@ public class TaskView implements _Cancelable {
       errorField = JTextFieldUtils.createNonEditable();
       
       
-      dialog = JDialogBuilder.get(IconBuilder.getDeviceType(EntityTypes.Task).getImage());
+      dialog = JDialogBuilder.get(IconBuilder.getEntityType(EntityTypes.Task).getImage());
       dialog.setIconImage(IconBuilder.getHyperbox().getImage());
       
       dialog.getContentPane().setLayout(new MigLayout());
@@ -161,29 +161,28 @@ public class TaskView implements _Cancelable {
       }
       
       @Override
-      public void loadingFinished() {
-         dialog.setTitle("Task Details - #" + tskOut.getTaskId());
-         actionField.setText(tskOut.getActionId());
-         createField.setText(tskOut.getCreateTime().toString());
-         endField.setText(tskOut.getStopTime().toString());
-         if (tskOut.getError() != null) {
-            errorField.setText(tskOut.getError().getError());
+      public void loadingFinished(boolean isSuccessful, String message) {
+         if (isSuccessful) {
+            dialog.setTitle("Task Details - #" + tskOut.getTaskId());
+            actionField.setText(tskOut.getActionId());
+            createField.setText(tskOut.getCreateTime().toString());
+            endField.setText(tskOut.getStopTime().toString());
+            if (tskOut.getError() != null) {
+               errorField.setText(tskOut.getError().getError());
+            } else {
+               errorField.setText("N/A");
+            }
+            idField.setText(tskOut.getTaskId());
+            queueField.setText(tskOut.getQueueTime().toString());
+            reqIdField.setText(tskOut.getRequestId());
+            srvField.setText(srvName);
+            startField.setText(tskOut.getStartTime().toString());
+            stateField.setText(tskOut.getState().getId());
+            userField.setText(tskOut.getUser().getDomainLogonName());
          } else {
-            errorField.setText("N/A");
+            dialog.setTitle("Task Details - Loading failed");
+            errorField.setText(message);
          }
-         idField.setText(tskOut.getTaskId());
-         queueField.setText(tskOut.getQueueTime().toString());
-         reqIdField.setText(tskOut.getRequestId());
-         srvField.setText(srvName);
-         startField.setText(tskOut.getStartTime().toString());
-         stateField.setText(tskOut.getState().getId());
-         userField.setText(tskOut.getUser().getDomainLogonName());
-      }
-      
-      @Override
-      public void loadingFailed(String message) {
-         dialog.setTitle("Task Details - Loading failed");
-         errorField.setText(message);
       }
       
       @Override

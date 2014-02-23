@@ -31,8 +31,8 @@ public class StoreItemBrowserTableModel extends ObjectOutputTableModel<StoreItem
    
    @Override
    protected void addColumns() {
-      addColum("Name", StoreItemAttributes.Name);
-      addColum("Size", StoreItemAttributes.Size);
+      addColumn("Name", StoreItemAttributes.Name);
+      addColumn("Size", StoreItemAttributes.Size);
    }
    
 }

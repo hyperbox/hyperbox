@@ -33,7 +33,7 @@ public class MachineMetricOutput extends ObjectInput {
    
    @SuppressWarnings("unused")
    private MachineMetricOutput() {
-      // used only for (de)serialisation
+      // used for (de)serialisation
    }
    
    public MachineMetricOutput(String machineUuid, Date time, double value) {

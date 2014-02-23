@@ -176,7 +176,7 @@ public enum HypervisorTasks {
     * Unregister the VM, without deleting any file
     * <p>
     * Request Object : {@link MachineInput}<br/>
-    * Answer Object : {@link MachineOutput}<br/>
+    * Answer Object : None<br/>
     * Answer Type : Single
     * </p>
     */

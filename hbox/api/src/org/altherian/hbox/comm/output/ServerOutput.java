@@ -29,7 +29,7 @@ import java.util.Collection;
 public class ServerOutput extends ObjectOutput {
    
    protected ServerOutput() {
-      // do not use
+      // used for (de)serialisation
    }
    
    public ServerOutput(String id) {
@@ -59,4 +59,9 @@ public class ServerOutput extends ObjectOutput {
       return getSetting(ServerAttributes.IsHypervisorConnected).getBoolean();
    }
    
+   @Override
+   public String toString() {
+      return getName();
+   }
+
 }

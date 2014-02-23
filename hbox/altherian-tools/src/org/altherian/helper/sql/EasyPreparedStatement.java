@@ -64,7 +64,7 @@ public class EasyPreparedStatement {
       if (b == null) {
          stmt.setNull(count, java.sql.Types.INTEGER);
       } else {
-         setBoolean(b);
+         stmt.setBoolean(count, b);
       }
       count++;
    }

@@ -21,6 +21,7 @@
 
 package org.altherian.hbox.comm.output;
 
+import org.altherian.hbox.comm.output.security.UserOutput;
 import org.altherian.hbox.states.TaskState;
 
 import java.util.Date;
@@ -43,7 +44,7 @@ public class TaskOutput extends ObjectOutput {
    
    @SuppressWarnings("unused")
    private TaskOutput() {
-      // do not use
+      // used for (de)serialisation
    }
    
    public TaskOutput(String serverId, String taskId) {

@@ -26,6 +26,6 @@ public enum StoreState {
    Opening,
    Open,
    Closing,
-   Close
+   Closed
    
 }

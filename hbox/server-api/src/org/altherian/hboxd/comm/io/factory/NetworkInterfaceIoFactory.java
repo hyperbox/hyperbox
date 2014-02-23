@@ -22,7 +22,7 @@
 package org.altherian.hboxd.comm.io.factory;
 
 import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
-import org.altherian.hboxd.business._NIC;
+import org.altherian.hboxd.core.model._NetworkInterface;
 import org.altherian.hboxd.hypervisor.vm.device._RawNetworkInterface;
 
 public final class NetworkInterfaceIoFactory {
@@ -31,7 +31,7 @@ public final class NetworkInterfaceIoFactory {
       // static class - cannot be instantiated
    }
    
-   public static NetworkInterfaceOutput get(_NIC nic) {
+   public static NetworkInterfaceOutput get(_NetworkInterface nic) {
       NetworkInterfaceOutput nicIo = new NetworkInterfaceOutput(nic.getNicId(), SettingIoFactory.getList(nic.getSettings()));
       return nicIo;
    }

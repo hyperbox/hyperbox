@@ -24,6 +24,8 @@ package org.altherian.hboxd.core.action;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
+import org.altherian.hbox.comm.SecurityAction;
+import org.altherian.hbox.comm.SecurityItem;
 import org.altherian.hboxd.controller._Controller;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.security.SecurityContext;
@@ -58,6 +60,8 @@ public class ShutdownAction extends ASingleTaskAction {
    public void run(Request request, _Hyperbox hbox) {
       Logger.track();
       
+      hbox.getSecurityManager().authorize(SecurityItem.Server, SecurityAction.Stop);
+
       Logger.info("Server shutdown requested by " + SecurityContext.getUser().getDomainLogonName());
       c.stop();
    }

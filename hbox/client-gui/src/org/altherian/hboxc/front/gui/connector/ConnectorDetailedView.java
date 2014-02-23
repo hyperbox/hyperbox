@@ -62,10 +62,10 @@ public class ConnectorDetailedView implements _Refreshable {
       userView = new UserListView();
       
       tabs = new JTabbedPane();
-      tabs.addTab("Summary", IconBuilder.getDeviceType(EntityTypes.Server), summaryView.getComponent());
-      tabs.addTab("Tasks", IconBuilder.getDeviceType(EntityTypes.Task), taskView.getComponent());
-      tabs.addTab("Stores", IconBuilder.getDeviceType(EntityTypes.Store), storeView.getComponent());
-      tabs.addTab("Users", IconBuilder.getDeviceType(EntityTypes.User), userView.getComponent());
+      tabs.addTab("Summary", IconBuilder.getEntityType(EntityTypes.Server), summaryView.getComponent());
+      tabs.addTab("Tasks", IconBuilder.getEntityType(EntityTypes.Task), taskView.getComponent());
+      tabs.addTab("Stores", IconBuilder.getEntityType(EntityTypes.Store), storeView.getComponent());
+      tabs.addTab("Users", IconBuilder.getEntityType(EntityTypes.User), userView.getComponent());
       
       loadingLabel = new JLabel("Loading...");
       loadingLabel.setVisible(false);

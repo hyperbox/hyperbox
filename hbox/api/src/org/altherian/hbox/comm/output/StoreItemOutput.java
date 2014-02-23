@@ -30,7 +30,7 @@ public final class StoreItemOutput extends ObjectOutput {
    
    @SuppressWarnings("unused")
    private StoreItemOutput() {
-      // do not use
+      // used for (de)serialisation
    }
    
    public StoreItemOutput(String storeId, String name, String path, long size, boolean isContainer) {
@@ -45,7 +45,7 @@ public final class StoreItemOutput extends ObjectOutput {
    public String getStoreId() {
       return getSetting(StoreItemAttributes.StoreId).getString();
    }
-
+   
    public String getName() {
       return getSetting(StoreItemAttributes.Name).getString();
    }

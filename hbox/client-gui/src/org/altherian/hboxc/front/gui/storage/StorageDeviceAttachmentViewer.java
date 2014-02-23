@@ -29,6 +29,7 @@ import org.altherian.hbox.comm.input.StorageDeviceAttachmentInput;
 import org.altherian.hbox.comm.output.storage.StorageControllerTypeOutput;
 import org.altherian.hbox.constant.MediumAttribute;
 import org.altherian.hboxc.front.gui.Gui;
+import org.altherian.tool.FileSizeNumber;
 import org.altherian.tool.logging.Logger;
 
 import java.awt.Color;
@@ -151,10 +152,20 @@ public class StorageDeviceAttachmentViewer {
          formatValue.setText(medIn.getSetting(MediumAttribute.Format).getString());
       }
       if (medIn.hasSetting(MediumAttribute.LogicalSize)) {
-         sizeValue.setText(medIn.getSetting(MediumAttribute.LogicalSize).getString());
+         try {
+            FileSizeNumber size = new FileSizeNumber(medIn.getSetting(MediumAttribute.LogicalSize).getString());
+            sizeValue.setText(size.getHumanSize() + " " + size.getHumanUnit());
+         } catch (NumberFormatException e) {
+            sizeValue.setText("NaN - " + medIn.getSetting(MediumAttribute.LogicalSize).getString());
+         }
       }
       if (medIn.hasSetting(MediumAttribute.Size)) {
-         diskSizeValue.setText(medIn.getSetting(MediumAttribute.Size).getString());
+         try {
+            FileSizeNumber size = new FileSizeNumber(medIn.getSetting(MediumAttribute.Size).getString());
+            diskSizeValue.setText(size.getHumanSize() + " " + size.getHumanUnit());
+         } catch (NumberFormatException e) {
+            diskSizeValue.setText("NaN - " + medIn.getSetting(MediumAttribute.Size).getString());
+         }
       }
       if (medIn.hasSetting(MediumAttribute.Location)) {
          locationValue.setText(medIn.getSetting(MediumAttribute.Location).getString());

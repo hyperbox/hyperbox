@@ -36,6 +36,7 @@ public enum EntityTypes {
    DvdDrive,
    FloppyDrive,
    Network,
+   NetworkInterace,
    StorageController,
    CPU,
    Audio,

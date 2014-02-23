@@ -23,13 +23,16 @@ package org.altherian.hboxc.front.gui.network;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.NetworkAttachModeInput;
 import org.altherian.hbox.comm.input.NetworkInterfaceInput;
 import org.altherian.hbox.comm.output.network.NetworkAttachModeOutput;
 import org.altherian.hbox.comm.output.network.NetworkAttachNameOutput;
 import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
 import org.altherian.hbox.comm.output.network.NetworkInterfaceTypeOutput;
 import org.altherian.hboxc.front.gui.Gui;
+import org.altherian.hboxc.front.gui.workers.NetworkAttachModeListWorker;
+import org.altherian.hboxc.front.gui.workers.NetworkAttachNameListWorker;
+import org.altherian.hboxc.front.gui.workers._NetworkAttachModeReceiver;
+import org.altherian.hboxc.front.gui.workers._NetworkAttachNameReceiver;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -120,11 +123,7 @@ public class NetworkInterfaceViewer {
    }
    
    private void apply(NetworkInterfaceOutput nicOut) {
-      attachModeValue.removeAllItems();
-      List<NetworkAttachModeOutput> attachModes = Gui.getServer(srvId).listNetworkAttachModes();
-      for (NetworkAttachModeOutput attachMode : attachModes) {
-         attachModeValue.addItem(attachMode.getId());
-      }
+      NetworkAttachModeListWorker.run(new NetworkModeReceiver(), srvId);
       
       adapaterTypeValue.removeAllItems();
       List<NetworkInterfaceTypeOutput> adapterTypes = Gui.getServer(srvId).listNetworkInterfaceTypes();
@@ -134,7 +133,7 @@ public class NetworkInterfaceViewer {
       
       enableNicValue.setSelected(nicOut.isEnabled());
       connectedValue.setSelected(nicOut.isCableConnected());
-      attachModeValue.setSelectedItem(nicOut.getAttachMode());
+      
       attachNameValue.setSelectedItem(nicOut.getAttachName());
       adapaterTypeValue.setSelectedItem(nicOut.getAdapterType());
       macAddrValue.setText(nicOut.getMacAddress());
@@ -157,7 +156,8 @@ public class NetworkInterfaceViewer {
                nicIn.setAttachMode(attachModeValue.getSelectedItem().toString());
             }
             
-            if (attachNameValue.isEnabled() && !attachNameValue.getSelectedItem().toString().contentEquals(nicOut.getAttachName())) {
+            if (attachNameValue.isEnabled() && (attachNameValue.getSelectedItem() != null)
+                  && !attachNameValue.getSelectedItem().toString().contentEquals(nicOut.getAttachName())) {
                nicIn.setAttachName(attachNameValue.getSelectedItem().toString());
             }
             
@@ -182,19 +182,79 @@ public class NetworkInterfaceViewer {
       
       @Override
       public void itemStateChanged(ItemEvent itEv) {
-         String attachTypeId = attachModeValue.getSelectedItem().toString();
-         if ((attachTypeId != null) && !attachTypeId.isEmpty()) {
-            List<NetworkAttachNameOutput> attachNames = Gui.getServer(srvId).listNetworkAttachNames(new NetworkAttachModeInput(attachTypeId));
-            attachNameValue.setEnabled(false);
-            attachNameValue.removeAllItems();
-            if (!attachNames.isEmpty()) {
-               for (NetworkAttachNameOutput attachName : attachNames) {
-                  attachNameValue.addItem(attachName.getId());
-               }
-               attachNameValue.setEnabled(true);
+         if (attachModeValue.isEnabled()) {
+            String attachTypeId = attachModeValue.getSelectedItem().toString();
+            if ((attachTypeId != null) && !attachTypeId.isEmpty()) {
+               NetworkAttachNameListWorker.run(new NetworkAttachNameReceiver(), srvId, attachTypeId);
             }
          }
       }
+   }
+   
+   private class NetworkModeReceiver implements _NetworkAttachModeReceiver {
+      
+      @Override
+      public void loadingStarted() {
+         attachModeValue.setEnabled(false);
+         attachModeValue.removeAllItems();
+         attachModeValue.addItem("Loading...");
+      }
+      
+      @Override
+      public void loadingFinished(boolean isSuccessful, String message) {
+         if (isSuccessful) {
+            attachModeValue.removeItem("Loading...");
+            attachModeValue.setSelectedItem(nicOut.getAttachMode());
+         } else {
+            attachModeValue.removeAllItems();
+            attachModeValue.addItem("Error loading attach modes: " + message);
+         }
+         attachModeValue.setEnabled(true);
+      }
+      
+      @Override
+      public void add(List<NetworkAttachModeOutput> attachModes) {
+         for (NetworkAttachModeOutput attachMode : attachModes) {
+            attachModeValue.addItem(attachMode.getId());
+         }
+      }
+      
+   }
+   
+   private class NetworkAttachNameReceiver implements _NetworkAttachNameReceiver {
+      
+      @Override
+      public void loadingStarted() {
+         attachModeValue.setEnabled(false);
+         attachNameValue.setEnabled(false);
+         attachNameValue.removeAllItems();
+         attachNameValue.addItem("Loading...");
+      }
+      
+      @Override
+      public void loadingFinished(boolean isSuccessful, String message) {
+         if (isSuccessful) {
+            attachNameValue.removeItem("Loading...");
+            if (attachModeValue.getSelectedItem().equals(nicOut.getAttachMode())) {
+               attachNameValue.setSelectedItem(nicOut.getAttachName());
+            } else {
+               attachNameValue.setSelectedIndex(-1);
+            }
+         } else {
+            attachNameValue.removeAllItems();
+            attachNameValue.addItem("Error loading attach names: " + message);
+         }
+         attachNameValue.setEnabled(true);
+         attachModeValue.setEnabled(true);
+      }
+      
+      @Override
+      public void add(List<NetworkAttachNameOutput> nanOut) {
+         for (NetworkAttachNameOutput attachName : nanOut) {
+            attachNameValue.addItem(attachName.getId());
+         }
+      }
+      
    }
    
 }

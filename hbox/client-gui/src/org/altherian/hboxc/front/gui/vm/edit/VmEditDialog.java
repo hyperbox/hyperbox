@@ -242,17 +242,17 @@ public class VmEditDialog {
          JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
          
          if (label.getText() == GENERAL) {
-            label.setIcon(IconBuilder.getDeviceType(EntityTypes.Machine));
+            label.setIcon(IconBuilder.getEntityType(EntityTypes.Machine));
          } else if (label.getText() == SYSTEM) {
-            label.setIcon(IconBuilder.getDeviceType(EntityTypes.CPU));
+            label.setIcon(IconBuilder.getEntityType(EntityTypes.CPU));
          } else if (label.getText() == DISPLAY) {
-            label.setIcon(IconBuilder.getDeviceType(EntityTypes.Display));
+            label.setIcon(IconBuilder.getEntityType(EntityTypes.Display));
          } else if (label.getText() == STORAGE) {
-            label.setIcon(IconBuilder.getDeviceType(EntityTypes.HardDisk));
+            label.setIcon(IconBuilder.getEntityType(EntityTypes.HardDisk));
          } else if (label.getText() == AUDIO) {
-            label.setIcon(IconBuilder.getDeviceType(EntityTypes.Audio));
+            label.setIcon(IconBuilder.getEntityType(EntityTypes.Audio));
          } else if (label.getText() == NETWORK) {
-            label.setIcon(IconBuilder.getDeviceType(EntityTypes.Network));
+            label.setIcon(IconBuilder.getEntityType(EntityTypes.Network));
          } else {
             label.setIcon(null);
          }
@@ -271,15 +271,9 @@ public class VmEditDialog {
       }
       
       @Override
-      public void loadingFinished() {
+      public void loadingFinished(boolean isFinished, String message) {
          refreshProgress.setVisible(false);
          refreshProgress.setIndeterminate(false);
-      }
-      
-      @Override
-      public void loadingFailed(String message) {
-         // TODO add error display
-         loadingFinished();
       }
       
       @Override

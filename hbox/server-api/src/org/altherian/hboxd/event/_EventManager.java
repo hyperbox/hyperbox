@@ -23,10 +23,11 @@ package org.altherian.hboxd.event;
 
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxException;
+import org.altherian.hboxd.security._User;
 
 public interface _EventManager {
    
-   public void start() throws HyperboxException;
+   public void start(_User usr) throws HyperboxException;
    
    public void stop();
    

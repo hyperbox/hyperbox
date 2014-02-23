@@ -129,13 +129,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    }
    
    @Override
-   public void loadingFinished() {
-      loadingLabel.setVisible(false);
-      tabs.setEnabled(true);
-   }
-   
-   @Override
-   public void loadingFailed(String message) {
+   public void loadingFinished(boolean isSuccessful, String message) {
       loadingLabel.setVisible(false);
       tabs.setEnabled(true);
    }

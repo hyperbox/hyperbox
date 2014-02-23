@@ -22,16 +22,19 @@
 package org.altherian.hboxd.security;
 
 import org.altherian.hbox.comm.Request;
+import org.altherian.hbox.comm.SecurityAction;
+import org.altherian.hbox.comm.SecurityItem;
 import org.altherian.hbox.comm.input.UserInput;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxException;
+import org.altherian.hboxd.exception.security.SecurityException;
 import org.altherian.hboxd.persistence._SecurityPersistor;
 
 import java.util.List;
 
 public interface _SecurityManager {
    
-   public void init(_SecurityPersistor persistor) throws HyperboxException;
+   public void init(_SecurityPersistor persistor, _User superUser) throws HyperboxException;
    
    public void start() throws HyperboxException;
    
@@ -39,24 +42,56 @@ public interface _SecurityManager {
    
    public void authenticate(String login, char[] password);
    
-   public void authorize(Request req);
+   public void authorize(Request req) throws SecurityException;
    
-   public boolean isAuthorized(_Event ev, _User u);
+   public boolean isAuthorized(_User u, _Event ev);
    
-   public void authorize(SecurityAction action, SecurityItem item);
+   public void authorize(SecurityItem item, SecurityAction action);
    
-   public boolean isAuthorized(SecurityAction action, SecurityItem item);
+   public boolean isAuthorized(SecurityItem item, SecurityAction action);
+   
+   public void authorize(SecurityItem item, SecurityAction action, String itemId);
+   
+   public boolean isAuthorized(SecurityItem item, SecurityAction action, String itemId);
    
    public List<_User> listUsers();
    
-   public _User getUser(UserInput uIn);
+   public _User getUser(String usrId);
    
    public _User addUser(UserInput uIn);
    
-   public void removeUser(UserInput uIn);
+   public void removeUser(String usrId);
    
    public _User modifyUser(UserInput uIn);
    
    public void setUserPassword(String userId, char[] password);
+   
+   public void set(_User usr, SecurityItem itemType, SecurityAction action, boolean isAllowed);
+   
+   public void removePermission(_User usr);
+   
+   public void remove(_User usr, SecurityItem itemType, SecurityAction action);
+   
+   public void set(_User usr, SecurityItem itemType, SecurityAction action, String itemId, boolean isAllowed);
+   
+   public void remove(_User usr, SecurityItem itemType, SecurityAction action, String itemId);
+   
+   public List<_ActionPermission> listActionPermissions(_User usr);
+   
+   public List<_ItemPermission> listItemPermissions(_User usr);
+   
+   /**
+    * For current user
+    * 
+    * @return list of permissions
+    */
+   public List<_ActionPermission> listActionPermissions();
+   
+   /**
+    * For current user
+    * 
+    * @return list of permissions
+    */
+   public List<_ItemPermission> listItemPermissions();
    
 }
