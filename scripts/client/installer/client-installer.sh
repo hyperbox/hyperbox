@@ -36,9 +36,9 @@ fi
 
 cp -r ./* $INSTALL_DIR
 if [ $? -eq 0 ]; then
-	echo Copy server file
+	echo Copy client files
 else
-	echo Fail copy server file
+	echo Fail copy client files
 	exit 1
 fi
 

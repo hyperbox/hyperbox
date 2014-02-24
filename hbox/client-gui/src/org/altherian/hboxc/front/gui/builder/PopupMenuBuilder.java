@@ -33,8 +33,6 @@ import org.altherian.hboxc.front.gui.action.connector.ConnectorConnectAction;
 import org.altherian.hboxc.front.gui.action.connector.ConnectorDisconnectAction;
 import org.altherian.hboxc.front.gui.action.connector.ConnectorModifyAction;
 import org.altherian.hboxc.front.gui.action.connector.ConnectorRemoveAction;
-import org.altherian.hboxc.front.gui.action.guest.GuestRestartAction;
-import org.altherian.hboxc.front.gui.action.guest.GuestShutdownAction;
 import org.altherian.hboxc.front.gui.action.hypervisor.HypervisorConnectAction;
 import org.altherian.hboxc.front.gui.action.hypervisor.HypervisorDisconnectAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineAcpiPowerAction;
@@ -49,7 +47,6 @@ import org.altherian.hboxc.front.gui.action.machine.MachineSaveStateAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineStartAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineStopAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineUnregisterAction;
-import org.altherian.hboxc.front.gui.action.server.ServerShutdownAction;
 import org.altherian.hboxc.front.gui.action.storage.HypervisorToolsMediumAttachAction;
 import org.altherian.hboxc.front.gui.action.storage.MediumAttachAction;
 import org.altherian.hboxc.front.gui.action.storage.MediumDettachAction;
@@ -85,8 +82,6 @@ public class PopupMenuBuilder {
       
       JMenu machineMenu = new JMenu("Machine");
       machineMenu.setIcon(IconBuilder.getEntityType(EntityTypes.Machine));
-      JMenu guestMenu = new JMenu("Guest");
-      machineMenu.setIcon(IconBuilder.getEntityType(EntityTypes.Guest));
       machineMenu.add(new JMenuItem(new MachineStartAction(select)));
       machineMenu.add(new JMenuItem(new MachineStopAction(select)));
       machineMenu.add(new JMenuItem(new MachineResetAction(select)));
@@ -99,12 +94,16 @@ public class PopupMenuBuilder {
       machineMenu.add(new JMenuItem(new MachineUnregisterAction(select)));
       machineMenu.add(new JMenuItem(new MachineDeleteAction(select)));
       
+      /*
+      JMenu guestMenu = new JMenu("Guest");
+      machineMenu.setIcon(IconBuilder.getEntityType(EntityTypes.Guest));
       guestMenu.add(new JMenuItem(new GuestRestartAction(select)));
       guestMenu.add(new JMenuItem(new GuestShutdownAction(select)));
+       */
       
       JPopupMenu vmPopupMenu = new JPopupMenu();
       vmPopupMenu.add(machineMenu);
-      vmPopupMenu.add(guestMenu);
+      //vmPopupMenu.add(guestMenu);
       vmPopupMenu.add(new JMenuItem(new MachineEditAction(select)));
       
       return vmPopupMenu;
@@ -119,9 +118,13 @@ public class PopupMenuBuilder {
    public static JPopupMenu get(_ConnectorSelector conSelect, _ServerSelector srvSelect, ConnectorOutput conOut) {
       JPopupMenu conPopupMenu = new JPopupMenu();
       if (conOut.isConnected()) {
+         conPopupMenu.add(new JMenuItem(new ConnectorDisconnectAction(conSelect)));
+         conPopupMenu.add(new JSeparator());
+         /*
          JMenu srvMenu = new JMenu("Server");
          srvMenu.add(new JMenuItem(new ServerShutdownAction(srvSelect)));
          conPopupMenu.add(srvMenu);
+          */
          JMenu hypActions = new JMenu("Hypervisor");
          if (conOut.getServer().isHypervisorConnected()) {
             hypActions.add(new JMenuItem(new HypervisorDisconnectAction(srvSelect)));
@@ -135,15 +138,11 @@ public class PopupMenuBuilder {
             vmActions.add(new JMenuItem(new MachineRegisterAction(srvSelect)));
             conPopupMenu.add(vmActions);
          }
-      }
-      if (conOut.isConnected()) {
-         conPopupMenu.add(new JMenuItem(new ConnectorDisconnectAction(conSelect)));
       } else {
          conPopupMenu.add(new JMenuItem(new ConnectorConnectAction(conSelect)));
+         conPopupMenu.add(new JMenuItem(new ConnectorModifyAction(conSelect, !conOut.isConnected())));
+         conPopupMenu.add(new JMenuItem(new ConnectorRemoveAction(conSelect)));
       }
-      conPopupMenu.add(new JMenuItem(new ConnectorModifyAction(conSelect, !conOut.isConnected())));
-      conPopupMenu.add(new JMenuItem(new ConnectorRemoveAction(conSelect)));
-      
       return conPopupMenu;
    }
    
