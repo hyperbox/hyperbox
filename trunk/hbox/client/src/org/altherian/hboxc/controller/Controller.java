@@ -72,7 +72,7 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
    
    public static String getHeader() {
       StringBuilder header = new StringBuilder();
-      header.append("Hyperbox " + Hyperbox.getVersion());
+      header.append("Hyperbox " + Hyperbox.getVersion() + " r" + Hyperbox.getRevision());
       header.append(" - ");
       header.append("Java " + System.getProperty("java.version") + " " + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version"));
       header.append(" - ");
@@ -115,11 +115,15 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
             String logFile = Configuration.getSetting("log.file", defaultLogFilePath);
             if (!logFile.toLowerCase().contentEquals("none")) {
                Logger.log(logFile, 4);
-               Logger.put(getHeader());
             }
+            Logger.put(getHeader());
          } catch (IOException e) {
             front.postError(e, "Launch error: " + e.getMessage());
             System.exit(1);
+         }
+         
+         for (String name : System.getenv().keySet()) {
+            Logger.debug(name + ": " + System.getenv(name));
          }
          
          FrontEventManager.get().start();

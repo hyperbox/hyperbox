@@ -74,12 +74,21 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    }
    
    private void update() {
-      summaryTab.show(mOut);
-      tabs.setEnabledAt(tabs.indexOfComponent(summaryTab.getComponent()), true);
-      snapTab.show(mOut);
-      tabs.setEnabledAt(tabs.indexOfComponent(snapTab.getComponent()), true);
-      displayTab.show(mOut);
-      tabs.setEnabledAt(tabs.indexOfComponent(displayTab.getComponent()), true);
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               clear();
+            }
+         });
+      } else {
+         summaryTab.show(mOut);
+         tabs.setEnabledAt(tabs.indexOfComponent(summaryTab.getComponent()), true);
+         snapTab.show(mOut);
+         tabs.setEnabledAt(tabs.indexOfComponent(snapTab.getComponent()), true);
+         displayTab.show(mOut);
+         tabs.setEnabledAt(tabs.indexOfComponent(displayTab.getComponent()), true);
+      }
    }
    
    public void setUserSelection(MachineOutput mOut) {
@@ -106,8 +115,17 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    }
    
    private void clear() {
-      summaryTab.clear();
-      displayTab.clear();
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               clear();
+            }
+         });
+      } else {
+         summaryTab.clear();
+         displayTab.clear();
+      }
    }
    
    @Override

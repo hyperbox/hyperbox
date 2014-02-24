@@ -41,6 +41,7 @@ import org.altherian.tool.logging.Logger;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -49,6 +50,8 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.SwingUtilities;
 
 public final class StoreListView implements _StoreSelector, _Refreshable, _SingleServerSelector {
@@ -72,6 +75,7 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
       itemList = new JTable(itemListModel);
       itemList.setAutoCreateRowSorter(true);
       itemList.setFillsViewportHeight(true);
+      itemList.getRowSorter().setSortKeys(Arrays.asList(new RowSorter.SortKey(1, SortOrder.ASCENDING)));
       itemList.addMouseListener(new ItemListMouseListener());
       scrollPane = new JScrollPane(itemList);
       MouseWheelController.install(scrollPane);

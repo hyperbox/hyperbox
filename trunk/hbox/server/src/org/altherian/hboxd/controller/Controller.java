@@ -27,6 +27,7 @@ import org.altherian.hbox.comm.output.event.server.ServerShutdownEventOutput;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxd.HBoxServer;
+import org.altherian.hboxd.Hyperbox;
 import org.altherian.hboxd.comm.io.factory.ServerIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ShutdownAction;
@@ -56,6 +57,17 @@ public final class Controller implements _Controller {
          }
       };
       Runtime.getRuntime().addShutdownHook(shutdownHook);
+   }
+   
+   public static String getHeader() {
+      StringBuilder header = new StringBuilder();
+      header.append("Hyperbox " + Hyperbox.getVersion() + " r" + Hyperbox.getRevision());
+      header.append(" - ");
+      header.append("Java " + System.getProperty("java.version") + " " + System.getProperty("java.vm.name") + " "
+            + System.getProperty("java.vm.version"));
+      header.append(" - ");
+      header.append(System.getProperty("os.name") + " " + System.getProperty("os.version") + " " + System.getProperty("os.arch"));
+      return header.toString();
    }
    
    private void startBack() {
@@ -107,17 +119,18 @@ public final class Controller implements _Controller {
          
          String logFilename = Configuration.getSetting("log.file", "log/hboxd.log");
          if (!logFilename.contentEquals("none")) {
-            Logger.log(logFilename);
+            Logger.log(logFilename, 4);
          }
          
+         Logger.put(getHeader());
          Logger.info("Hyperbox Init Sequence started");
          
          ShutdownAction.setController(this);
          
          for (String name : System.getenv().keySet()) {
-            Logger.info(name + ": " + System.getenv(name));
+            Logger.debug(name + ": " + System.getenv(name));
          }
-
+         
          startBack();
          startFront();
          Long endTime = System.currentTimeMillis();
