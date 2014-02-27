@@ -790,6 +790,12 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
          setState(ConnectionState.Disconnecting);
          try {
             if ((backend != null) && backend.isConnected()) {
+               Transaction logOffTrans = getTransaction(new Request(Command.HBOX, HyperboxTasks.Logout));
+               if (!logOffTrans.sendAndWait()) {
+                  Logger.warning("Couldn't logout from the server before disconnecting: " + logOffTrans.getError());
+               } else {
+                  Logger.verbose("Successful logout from server");
+               }
                backend.disconnect();
                backend.stop();
             }
