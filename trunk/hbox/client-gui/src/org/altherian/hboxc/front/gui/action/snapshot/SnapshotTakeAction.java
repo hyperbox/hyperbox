@@ -34,8 +34,8 @@ public class SnapshotTakeAction extends AbstractAction {
    private _SnapshotSelector selector;
    
    public SnapshotTakeAction(_SnapshotSelector selector) {
-      setEnabled(true);
       this.selector = selector;
+      putValue(SHORT_DESCRIPTION, "Take a snapshot of the machine state");
    }
    
    @Override

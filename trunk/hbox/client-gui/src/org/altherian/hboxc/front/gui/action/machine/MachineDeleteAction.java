@@ -27,6 +27,7 @@ import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.input.MachineInput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hboxc.front.gui.Gui;
+import org.altherian.hboxc.front.gui.MainView;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.vm._VmSelector;
 
@@ -49,7 +50,7 @@ public final class MachineDeleteAction extends AbstractAction {
    @Override
    public void actionPerformed(ActionEvent ev) {
       int info = JOptionPane.showConfirmDialog(
-            null,
+            MainView.getMainFrame(),
             "This will delete the selected VM and all its disks.\nThis cannot be canceled or rolled back!\nAre you sure?",
             "Delete confirmation",
             JOptionPane.WARNING_MESSAGE,

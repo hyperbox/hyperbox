@@ -40,6 +40,7 @@ public class SnapshotRestoreAction extends AbstractAction {
    
    public SnapshotRestoreAction(_SnapshotSelector selector) {
       this.selector = selector;
+      putValue(SHORT_DESCRIPTION, "Restore the machine state to the selected snapshot");
    }
    
    @Override

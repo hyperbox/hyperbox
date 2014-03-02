@@ -28,28 +28,48 @@ import org.altherian.hbox.comm.input.MachineInput;
 import org.altherian.hbox.comm.input.SnapshotInput;
 import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
 import org.altherian.hboxc.front.gui.Gui;
+import org.altherian.hboxc.front.gui.MainView;
+import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.snapshot._SnapshotSelector;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public class SnapshotDeleteAction extends AbstractAction {
    
    private _SnapshotSelector selector;
    
-   public SnapshotDeleteAction(_SnapshotSelector selector) {
+   public SnapshotDeleteAction(String label, Icon icon, String toolTip, _SnapshotSelector selector) {
+      super(label, icon);
+      putValue(SHORT_DESCRIPTION, toolTip);
       this.selector = selector;
+   }
+   
+   public SnapshotDeleteAction(_SnapshotSelector selector) {
+      this(null, IconBuilder.getTask(HypervisorTasks.SnapshotDelete), "Delete the selected snapshot(s)", selector);
    }
    
    @Override
    public void actionPerformed(ActionEvent e) {
-      for (SnapshotOutput snapOut : selector.getSelection()) {
-         Request req = new Request(Command.VBOX, HypervisorTasks.SnapshotDelete);
-         req.set(new MachineInput(selector.getMachine()));
-         req.set(new SnapshotInput(snapOut.getUuid()));
-         Gui.post(req);
+      if (selector.getSelection().size() > 0) {
+         int info = JOptionPane.showConfirmDialog(
+               MainView.getMainFrame(),
+               "This will delete the selected snapshot(s), merging the data with the previous state(s).\nThis cannot be canceled or rolled back!\nAre you sure?",
+               "Delete confirmation",
+               JOptionPane.WARNING_MESSAGE,
+               JOptionPane.OK_CANCEL_OPTION);
+         if (info == JOptionPane.YES_OPTION) {
+            for (SnapshotOutput snapOut : selector.getSelection()) {
+               Request req = new Request(Command.VBOX, HypervisorTasks.SnapshotDelete);
+               req.set(new MachineInput(selector.getMachine()));
+               req.set(new SnapshotInput(snapOut.getUuid()));
+               Gui.post(req);
+            }
+         }
       }
    }
    

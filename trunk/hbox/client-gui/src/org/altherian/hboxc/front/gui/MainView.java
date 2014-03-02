@@ -46,6 +46,7 @@ public final class MainView {
    private MainMenu mainMenu;
    
    private InfrastructureView vmListView;
+   private JSplitPane vSplit;
    
    public static JFrame getMainFrame() {
       return instance.mainFrame;
@@ -72,7 +73,7 @@ public final class MainView {
       
       JPanel listView = new JPanel(new MigLayout("ins 0"));
       listView.add(vmListView.getComponent(), "grow,push,wrap");
-      JSplitPane vSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, listView, taskList.getComponent());
+      vSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, listView, taskList.getComponent());
       vSplit.setResizeWeight(1);
       vSplit.setDividerLocation(Integer.parseInt(PreferencesManager.get(MainView.class.getName()).getProperty(
             JSplitPane.DIVIDER_LOCATION_PROPERTY, "581")));
@@ -91,11 +92,11 @@ public final class MainView {
    public void show() {
       Logger.track();
       
-      // TODO load & apply saved size & position
       int width = Integer.parseInt(PreferencesManager.get(MainView.class.getName()).getProperty("frame.width", "990"));
       int height = Integer.parseInt(PreferencesManager.get(MainView.class.getName()).getProperty("frame.height", "772"));
       mainFrame.setSize(width, height);
       
+      // FIXME make sure the position still exists, in case we go from two screens to one screen.
       if (PreferencesManager.get(MainView.class.getName()).containsKey("frame.position.x")
             && PreferencesManager.get(MainView.class.getName()).containsKey("frame.position.y")) {
          int x = Integer.parseInt(PreferencesManager.get(MainView.class.getName()).getProperty("frame.position.x"));

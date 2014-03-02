@@ -99,7 +99,6 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       restoreSnapButton = new JButton(new SnapshotRestoreAction(this));
       restoreSnapButton.setIcon(IconBuilder.getTask(HypervisorTasks.SnapshotRestore));
       delSnapButton = new JButton(new SnapshotDeleteAction(this));
-      delSnapButton.setIcon(IconBuilder.getTask(HypervisorTasks.SnapshotDelete));
       infoSnapButton = new JButton(new SnapshotModifyAction(this));
       infoSnapButton.setIcon(IconBuilder.getTask(HypervisorTasks.SnapshotGet));
       
