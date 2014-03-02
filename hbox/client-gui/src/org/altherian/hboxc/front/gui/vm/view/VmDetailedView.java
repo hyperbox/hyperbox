@@ -78,7 +78,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
          SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-               clear();
+               update();
             }
          });
       } else {
@@ -102,19 +102,25 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    
    @Handler
    public void getMachineUpdate(MachineDataChangedEvent ev) {
+      Logger.track();
       if (ev.getUuid().contentEquals(mOut.getUuid())) {
+         Logger.track();
          put(ev.getMachine());
       }
    }
    
    @Handler
    public void getMachineRemove(MachineRemovedEvent ev) {
+      Logger.track();
       if (ev.getUuid().contentEquals(mOut.getUuid())) {
+         Logger.track();
          clear();
       }
    }
    
    private void clear() {
+      Logger.track();
+      
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -123,6 +129,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
             }
          });
       } else {
+         Logger.track();
          summaryTab.clear();
          displayTab.clear();
       }
@@ -154,6 +161,8 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    
    @Override
    public void put(MachineOutput mOut) {
+      Logger.track();
+      
       this.mOut = mOut;
       update();
    }

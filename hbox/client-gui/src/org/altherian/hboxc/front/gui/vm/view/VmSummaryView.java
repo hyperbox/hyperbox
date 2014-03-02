@@ -46,7 +46,6 @@ import org.altherian.hboxc.front.gui.action.storage.StorageDeviceAttachmentMediu
 import org.altherian.hboxc.front.gui.network.NetworkInterfaceSummary;
 import org.altherian.helper.swing.BorderUtils;
 import org.altherian.helper.swing.JTextFieldUtils;
-import org.altherian.helper.swing.MouseWheelController;
 import org.altherian.tool.logging.Logger;
 
 import java.awt.Color;
@@ -55,12 +54,10 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -71,7 +68,6 @@ public final class VmSummaryView {
    private MachineOutput mOut;
    
    private JPanel panel;
-   private JScrollPane pane;
    
    private JPanel generalPanel;
    private JLabel nameLabel;
@@ -146,9 +142,6 @@ public final class VmSummaryView {
          panel.add(networkPanel, "growx,pushx,wrap");
          panel.add(descPanel, "growx,pushx,wrap");
          
-         pane = new JScrollPane(panel);
-         pane.setBorder(BorderFactory.createEmptyBorder());
-         MouseWheelController.install(pane);
          FrontEventManager.register(this);
       }
    }
@@ -508,6 +501,7 @@ public final class VmSummaryView {
       Logger.track();
       
       if (!SwingUtilities.isEventDispatchThread()) {
+         Logger.track();
          SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -515,12 +509,16 @@ public final class VmSummaryView {
             }
          });
       } else {
+         Logger.track();
          try {
             if (!isRefreshing) {
+               Logger.track();
                isRefreshing = true;
                if (mOut == null) {
+                  Logger.track();
                   clear();
                } else {
+                  Logger.track();
                   refreshGeneral();
                   refreshSystem();
                   refreshDisplay();
@@ -528,21 +526,24 @@ public final class VmSummaryView {
                   refreshAudio();
                   refreshNetwork();
                   refreshDesc();
-                  pane.revalidate();
-                  pane.repaint();
+                  panel.revalidate();
+                  panel.repaint();
                }
             } else {
+               Logger.track();
                Logger.warning("Trying to refresh VM info while already refreshing");
             }
          } finally {
+            Logger.track();
             isRefreshing = false;
          }
+         Logger.track();
       }
-      
+      Logger.track();
    }
    
    public JComponent getComponent() {
-      return pane;
+      return panel;
    }
    
    @Handler

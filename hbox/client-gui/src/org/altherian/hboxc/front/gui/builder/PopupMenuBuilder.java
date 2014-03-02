@@ -118,13 +118,12 @@ public class PopupMenuBuilder {
    public static JPopupMenu get(_ConnectorSelector conSelect, _ServerSelector srvSelect, ConnectorOutput conOut) {
       JPopupMenu conPopupMenu = new JPopupMenu();
       if (conOut.isConnected()) {
-         conPopupMenu.add(new JMenuItem(new ConnectorDisconnectAction(conSelect)));
-         conPopupMenu.add(new JSeparator());
-         /*
-         JMenu srvMenu = new JMenu("Server");
-         srvMenu.add(new JMenuItem(new ServerShutdownAction(srvSelect)));
-         conPopupMenu.add(srvMenu);
-          */
+         if (conOut.getServer().isHypervisorConnected()) {
+            JMenu vmActions = new JMenu("Machine");
+            vmActions.add(new JMenuItem(new MachineCreateAction(srvSelect)));
+            vmActions.add(new JMenuItem(new MachineRegisterAction(srvSelect)));
+            conPopupMenu.add(vmActions);
+         }
          JMenu hypActions = new JMenu("Hypervisor");
          if (conOut.getServer().isHypervisorConnected()) {
             hypActions.add(new JMenuItem(new HypervisorDisconnectAction(srvSelect)));
@@ -132,12 +131,15 @@ public class PopupMenuBuilder {
             hypActions.add(new JMenuItem(new HypervisorConnectAction(srvSelect)));
          }
          conPopupMenu.add(hypActions);
-         if (conOut.getServer().isHypervisorConnected()) {
-            JMenu vmActions = new JMenu("Machine");
-            vmActions.add(new JMenuItem(new MachineCreateAction(srvSelect)));
-            vmActions.add(new JMenuItem(new MachineRegisterAction(srvSelect)));
-            conPopupMenu.add(vmActions);
-         }
+
+         conPopupMenu.add(new JSeparator());
+         conPopupMenu.add(new JMenuItem(new ConnectorDisconnectAction(conSelect)));
+         
+         /*
+         JMenu srvMenu = new JMenu("Server");
+         srvMenu.add(new JMenuItem(new ServerShutdownAction(srvSelect)));
+         conPopupMenu.add(srvMenu);
+          */
       } else {
          conPopupMenu.add(new JMenuItem(new ConnectorConnectAction(conSelect)));
          conPopupMenu.add(new JMenuItem(new ConnectorModifyAction(conSelect, !conOut.isConnected())));

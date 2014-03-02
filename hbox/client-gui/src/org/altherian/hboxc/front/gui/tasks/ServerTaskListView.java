@@ -35,6 +35,7 @@ import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.task.TaskCancelAction;
 import org.altherian.hboxc.front.gui.workers.TaskListWorker;
 import org.altherian.hboxc.front.gui.workers._TaskListReceiver;
+import org.altherian.helper.swing.MouseWheelController;
 import org.altherian.tool.logging.Logger;
 
 import java.awt.Cursor;
@@ -44,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -64,6 +66,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
    private JTable itemList;
    private JScrollPane scrollPane;
    private JPanel panel;
+   private JScrollPane pane;
    
    private JPopupMenu actions;
    private volatile boolean isLoading;
@@ -79,12 +82,17 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       itemList.getRowSorter().setSortKeys(Arrays.asList(new RowSorter.SortKey(4, SortOrder.DESCENDING)));
       itemList.addMouseListener(new ItemListMouseListener());
       
+      loadingLabel.setVisible(false);
+      
       scrollPane = new JScrollPane(itemList);
       
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(loadingLabel, "growx,pushx,wrap,hidemode 3");
       panel.add(scrollPane, "grow,push,wrap");
-      loadingLabel.setVisible(false);
+      
+      pane = new JScrollPane(panel);
+      pane.setBorder(BorderFactory.createEmptyBorder());
+      MouseWheelController.install(pane);
       
       actions = new JPopupMenu();
       actions.add(new JMenuItem(new TaskCancelAction(this)));
@@ -93,7 +101,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
    }
    
    public JComponent getComponent() {
-      return panel;
+      return pane;
    }
    
    private class ItemListMouseListener extends MouseAdapter {
