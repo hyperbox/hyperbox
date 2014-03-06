@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-4.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jsonbeans-0.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/kryo-2.20.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/kryonet-2.18.jar" sourcepath="C:/Users/noteirak/Dropbox/Work/Altherian/Java/Librairies/kryonet-2.20/java/src">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/noteirak/Dropbox/Work/Altherian/Java/Librairies/kryonet-2.20/javadoc/javadoc.zip!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/objenesis-1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/reflectasm-1.07.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/API"/>
+	<classpathentry exported="true" kind="lib" path="lib/minlog-trace-1.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="eclipse-bin"/>
+</classpath>

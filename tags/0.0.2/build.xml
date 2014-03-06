@@ -1,0 +1,551 @@
+<!--
+ * 
+ * Hyperbox - Enterprise Virtualization Manager
+ * Copyright (C) 2013 Maxime Dor
+ * 
+ * http://hyperbox.altherian.org
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or 
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  
+-->
+
+<project name="Hyperbox" default="build">
+	
+	<property file="build.properties"/>
+	
+	<property name="build.dir"							value="${out.dir}/build" />
+	<property name="classes.dir"						value="${build.dir}/classes" />
+	
+	<property name="tools.src.dir"						value="${tools.dir}/${src.dir}" />
+	
+	<property name="api.src.dir"						value="${api.dir}/${src.dir}" />
+	<property name="api.lib.dir"						value="${api.dir}/${lib.dir}" />
+	<property name="api.classes.dir"					value="${classes.dir}/api" />
+	
+	<property name="server.api.src.dir"					value="${server.api.dir}/${src.dir}" />
+	<property name="server.api.lib.dir"					value="${server.api.dir}/${lib.dir}" />
+	<property name="server.api.classes.dir"				value="${classes.dir}/srv-api" />
+
+	<property name="client.api.src.dir"					value="${client.api.dir}/${src.dir}" />
+	<property name="client.api.lib.dir"					value="${client.api.dir}/${lib.dir}" />
+	<property name="client.api.classes.dir"				value="${classes.dir}/client-api" />
+
+	<property name="server.vbws-4.2.src.dir"			value="${server.vbws-4.2.dir}/${src.dir}" />
+	<property name="server.vbws-4.2.lib.dir"			value="${server.vbws-4.2.dir}/${lib.dir}" />
+	<property name="server.vbws-4.2.classes.dir"		value="${classes.dir}/srv-vbws-4.2" />
+	
+	<property name="server.vbws-4.3.src.dir"			value="${server.vbws-4.3.dir}/${src.dir}" />
+	<property name="server.vbws-4.3.lib.dir"			value="${server.vbws-4.3.dir}/${lib.dir}" />
+	<property name="server.vbws-4.3.classes.dir"		value="${classes.dir}/srv-vbws-4.3" />
+	
+	<property name="server.vbxpcom-4.3.src.dir"			value="${server.vbxpcom-4.3.dir}/${src.dir}" />
+	<property name="server.vbxpcom-4.3.lib.dir"			value="${server.vbxpcom-4.3.dir}/${lib.dir}" />
+	<property name="server.vbxpcom-4.3.classes.dir"		value="${classes.dir}/srv-vbxpcom-4.3" />
+	
+	<property name="server.vbxpcom-4.4.src.dir"			value="${server.vbxpcom-4.4.dir}/${src.dir}" />
+	<property name="server.vbxpcom-4.4.lib.dir"			value="${server.vbxpcom-4.4.dir}/${lib.dir}" />
+	<property name="server.vbxpcom-4.4.classes.dir"		value="${classes.dir}/srv-vbxpcom-4.4" />
+	
+	<property name="server.vb.helper.src.dir"			value="${server.vb.helper.dir}/${src.dir}" />
+
+	<property name="kryo.api.src.dir"					value="${kryo.api.dir}/${src.dir}" />
+	<property name="kryo.api.lib.dir"					value="${kryo.api.dir}/${lib.dir}" />
+	<property name="kryo.api.classes.dir"				value="${classes.dir}/kryo-api" />
+
+	<property name="server.lib.dir"						value="${server.dir}/${lib.dir}" />
+	<property name="server.classes.dir"					value="${classes.dir}/srv" />
+	<property name="server.src.dir"						value="${server.dir}/${src.dir}" />
+	
+	<property name="client.lib.dir"						value="${client.dir}/${lib.dir}" />
+	<property name="client.classes.dir"					value="${classes.dir}/client" />
+	<property name="client.src.dir"						value="${client.dir}/${src.dir}" />
+	
+	<property name="client.gui.lib.dir"					value="${client.gui.dir}/${lib.dir}" />
+	<property name="client.gui.classes.dir"				value="${classes.dir}/client-gui" />
+	<property name="client.gui.src.dir"					value="${client.gui.dir}/${src.dir}" />
+	
+	<property name="docs.out.dir"						value="${out.dir}/${docs.dir}" />
+	<property name="javadoc.out.dir"					value="${out.dir}/${docs.dir}/javadoc" />
+	<property name="media.dir.abs"						location="${media.dir}" />
+		
+	<path id="api.classpath">
+		<pathelement location="${api.classes.dir}"/>
+		<fileset dir="${api.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="server.api.classpath">
+		<path refid="api.classpath"/>
+		<pathelement location="${server.api.classes.dir}"/>
+		<fileset dir="${server.api.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="client.api.classpath">
+		<path refid="api.classpath"/>
+		<pathelement location="${client.api.classes.dir}"/>
+		<fileset dir="${client.api.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="server.vbws.4-2.classpath">
+		<path refid="server.api.classpath"/>
+		<pathelement location="${server.vbws-4.2.classes.dir}"/>
+		<fileset dir="${server.vbws-4.2.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="server.vbws.4-3.classpath">
+		<path refid="server.api.classpath"/>
+		<pathelement location="${server.vbws-4.3.classes.dir}"/>
+		<fileset dir="${server.vbws-4.3.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="server.vbxpcom.4-3.classpath">
+		<path refid="server.api.classpath"/>
+		<pathelement location="${server.vbxpcom-4.3.classes.dir}"/>
+		<fileset dir="${server.vbxpcom-4.3.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="server.vbxpcom.4-4.classpath">
+		<path refid="server.api.classpath"/>
+		<pathelement location="${server.vbxpcom-4.4.classes.dir}"/>
+		<fileset dir="${server.vbxpcom-4.4.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="kryo.api.classpath">
+		<path refid="api.classpath"/>
+		<pathelement location="${kryo.api.classes.dir}"/>
+		<fileset dir="${kryo.api.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="server.classpath">
+		<path refid="server.api.classpath"/>
+		<path refid="server.vbws.4-2.classpath"/>
+		<path refid="server.vbws.4-3.classpath"/>
+		<path refid="kryo.api.classpath"/>
+		<pathelement location="${server.classes.dir}"/>
+		<fileset dir="${server.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="client.classpath">
+		<path refid="client.api.classpath"/>
+		<path refid="kryo.api.classpath"/>
+		<pathelement location="${client.classes.dir}"/>
+		<fileset dir="${client.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="client.gui.classpath">
+		<path refid="client.api.classpath"/>
+		<pathelement location="${client.api.classes.dir}"/>
+		<pathelement location="${client.gui.classes.dir}"/>
+		<fileset dir="${client.gui.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<condition property="isWin">
+		<os family="windows" />
+	</condition>
+	
+	<condition property="isLinux">
+		<os family="unix" />
+	</condition>
+		
+	<target name="clean">
+		<delete dir="${out.dir}"/>
+	</target>
+	
+	<target name="configureWin" if="isWin">
+		<property name="os.family" value="win"/>
+		<property name="platform"							value="${os.family}.${os.arch}" />
+		<property file="tools/${platform}/build.properties" />
+		
+		<property name="client.install.dir" location="${client.install.dir.win}"/>
+		<property name="server.install.dir" location="${server.install.dir.win}"/>
+		<echo message="Launch4j path:        ${tools.launch4j.dir}" />
+		<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${tools.launch4j.dir}/launch4j.jar:${tools.launch4j.dir}/lib/xstream.jar" />
+		<property name="client.out.exe" value="hyperbox.exe"/>
+		<property name="server.out.exe" value="hyperbox.exe"/>
+	</target>
+	
+	<target name="configureLinux" if="isLinux">
+		<property name="os.family" value="linux"/>
+		<property name="platform"							value="${os.family}.${os.arch}" />
+		<property file="tools/${platform}/build.properties" />
+		
+		<property name="client.install.dir" location="${client.install.dir.linux}" />
+		<property name="server.install.dir" location="${server.install.dir.linux}" />
+	</target>
+	
+	<target name="configure" depends="configureWin,configureLinux">
+		<property name="os.type" value="${os.family}" />
+		<exec executable="svn" outputProperty="svn.info">
+			<arg line="info --xml"/>
+		</exec>
+		<echo message="${svn.info}" file="${out.dir}/svn.info"/>
+		<xmlproperty file="${out.dir}/svn.info" keeproot="no" prefix="svn"/>
+		
+		
+		<property name="hbox.revision"	value="${svn.entry(revision)}" />
+		<loadfile srcfile="VERSION" property="hbox.version" />
+		
+		<property name="server.out.dir"						value="${out.dir}/bin/${platform}/server" />
+		<property name="client.out.dir"						value="${out.dir}/bin/${platform}/client" />
+		<property name="dist.out.dir"						value="${out.dir}/dist/${platform}" />
+		
+		<property name="server.out.dir.abs"					location="${server.out.dir}" />
+		<property name="client.out.dir.abs"					location="${client.out.dir}" />
+		<property name="dist.out.dir.abs"					location="${dist.out.dir}" />
+		
+		<property name="client.out.dist.package"			value="hbox_client-${hbox.version}-${hbox.revision}-${os.type}_${os.arch}" />
+		<property name="server.out.dist.package"			value="hbox_server-${hbox.version}-${hbox.revision}-${os.type}_${os.arch}" />
+		
+		<echo message="OS Architecture:      ${os.arch}" />
+		<echo message="OS Type:              ${os.type}" />
+		<echo message="OS Name:              ${os.name}" />
+        <echo message="OS Version:           ${os.version}" />
+		<echo message="System platform:      ${platform}" />
+		
+		<echo message="Hyperbox Version:     ${hbox.version}" />
+		<echo message="Hyperbox Revision:    ${hbox.revision}" />
+	</target>
+	
+	<target name="api.compile" depends="configure">
+		<mkdir dir="${api.classes.dir}" />
+		<javac debug="on" includeantruntime="false" srcdir="${tools.src.dir}" destdir="${api.classes.dir}" classpathref="api.classpath" />
+		<javac debug="on" includeantruntime="false" srcdir="${api.src.dir}" destdir="${api.classes.dir}" classpathref="api.classpath" />
+		<echo file="${api.classes.dir}/api.build.properties" append="false">revision=${hbox.revision}${line.separator}</echo>
+		<echo file="${api.classes.dir}/api.build.properties" append="true">version=${hbox.version}${line.separator}</echo>
+	</target>
+
+	<target name="server.api.compile" depends="api.compile">
+		<mkdir dir="${server.api.classes.dir}" />
+		<javac debug="on" includeantruntime="false" srcdir="${server.api.src.dir}" destdir="${server.api.classes.dir}" classpathref="server.api.classpath" />
+	</target>
+	
+	<target name="server.api.deploy">
+		<mkdir dir="${server.out.dir}/bin" />
+		<mkdir dir="${server.out.dir}/doc" />
+		<mkdir dir="${server.out.dir}/doc/manual" />
+		<mkdir dir="${server.out.dir}/doc/legal" />
+		<mkdir dir="${server.out.dir}/lib" />
+		<mkdir dir="${server.out.dir}/modules" />
+		<copy todir="${server.out.dir}/lib" flatten="true">
+			<fileset dir="${api.lib.dir}" includes="**/*.jar" />
+		</copy>
+		<copy todir="${server.out.dir}/lib" flatten="true">
+			<fileset dir="${server.api.lib.dir}" includes="**/*.jar" />
+		</copy>
+		<copy todir="${server.out.dir}/doc/legal">
+			<fileset dir="doc/legal" includes="**/*" />
+		</copy>
+		<copy todir="${server.out.dir}/doc/manual">
+			<fileset dir="doc/manual" includes="**/*" />
+		</copy>
+	</target>
+	
+	<target name="client.api.compile" depends="api.compile">
+		<mkdir dir="${client.api.classes.dir}" />
+		<javac debug="on" includeantruntime="false" srcdir="${client.api.src.dir}" destdir="${client.api.classes.dir}" classpathref="client.api.classpath" />
+	</target>
+	
+	<target name="client.api.deploy">
+		<mkdir dir="${client.out.dir}/bin" />
+		<mkdir dir="${client.out.dir}/doc" />
+		<mkdir dir="${client.out.dir}/doc/manual" />
+		<mkdir dir="${client.out.dir}/doc/legal" />
+		<mkdir dir="${client.out.dir}/lib" />
+		<mkdir dir="${client.out.dir}/modules" />
+		<copy todir="${client.out.dir}/lib" flatten="true">
+			<fileset dir="${api.lib.dir}" includes="**/*.jar" />
+		</copy>
+		<copy todir="${server.out.dir}/lib" flatten="true">
+			<fileset dir="${client.api.lib.dir}" includes="**/*.jar" />
+		</copy>
+		<copy todir="${client.out.dir}/doc/legal">
+			<fileset dir="doc/legal" includes="**/*" />
+		</copy>
+		<copy todir="${client.out.dir}/doc/manual">
+			<fileset dir="doc/manual" includes="**/*" />
+		</copy>
+	</target>
+	
+	<!-- Virtualbox 4.2 WebServices Connector -->
+	<target name="server.vbws.4-2.compile" depends="server.api.compile">
+		<mkdir dir="${server.vbws-4.2.classes.dir}" />
+		<javac debug="on" includeantruntime="false" srcdir="${server.vb.helper.src.dir}" destdir="${server.vbws-4.2.classes.dir}" classpathref="server.vbws.4-2.classpath" />
+		<javac debug="on" includeantruntime="false" srcdir="${server.vbws-4.2.src.dir}" destdir="${server.vbws-4.2.classes.dir}" classpathref="server.vbws.4-2.classpath" />
+	</target>
+	
+	<target name="server.vbws.4-2.jar" depends="server.vbws.4-2.compile, server.api.deploy">
+		<jar destfile="${server.out.dir}/modules/vbws-4.2.jar" basedir="${server.vbws-4.2.classes.dir}" />
+	</target>
+	
+	<target name="server.vbws.4-2.deploy" depends="server.api.deploy">
+		<copy file="${server.vbws-4.2.lib.dir}/vboxjws.jar" tofile="${server.out.dir}/modules/vboxjws-4.2.jar" />
+	</target>
+	
+	<target name="server.vbws.4-2.build" depends="server.vbws.4-2.deploy, server.vbws.4-2.jar">
+	</target>
+	<!--######################################-->
+	
+	<!-- Virtualbox 4.3 WebServices Connector -->
+	<target name="server.vbws.4-3.compile" depends="server.api.compile">
+		<mkdir dir="${server.vbws-4.3.classes.dir}" />
+		<javac debug="on" includeantruntime="false" srcdir="${server.vb.helper.src.dir}" destdir="${server.vbws-4.3.classes.dir}" classpathref="server.vbws.4-3.classpath" />
+		<javac debug="on" includeantruntime="false" srcdir="${server.vbws-4.3.src.dir}" destdir="${server.vbws-4.3.classes.dir}" classpathref="server.vbws.4-3.classpath" />
+	</target>
+	
+	<target name="server.vbws.4-3.jar" depends="server.vbws.4-3.compile, server.api.deploy">
+		<jar destfile="${server.out.dir}/modules/vbws-4.3.jar" basedir="${server.vbws-4.3.classes.dir}" />
+	</target>
+	
+	<target name="server.vbws.4-3.deploy" depends="server.api.deploy">
+		<copy file="${server.vbws-4.3.lib.dir}/vboxjws.jar" tofile="${server.out.dir}/modules/vboxjws-4.3.jar" />
+	</target>
+	
+	<target name="server.vbws.4-3.build" depends="server.vbws.4-3.deploy, server.vbws.4-3.jar">
+	</target>
+	<!--######################################-->
+	
+	<!--    Virtualbox 4.3 XPCOM Connector    -->
+	<target name="server.vbxpcom.4-3.compile" depends="server.api.compile">
+		<mkdir dir="${server.vbxpcom-4.3.classes.dir}" />
+		<javac debug="on" includeantruntime="false" srcdir="${server.vb.helper.src.dir}" destdir="${server.vbxpcom-4.3.classes.dir}" classpathref="server.vbxpcom.4-3.classpath" />
+		<javac debug="on" includeantruntime="false" srcdir="${server.vbxpcom-4.3.src.dir}" destdir="${server.vbxpcom-4.3.classes.dir}" classpathref="server.vbxpcom.4-3.classpath" />
+	</target>
+	
+	<target name="server.vbxpcom.4-3.jar" depends="server.vbxpcom.4-3.compile, server.api.deploy">
+		<jar destfile="${out.dir}/modules/vbxpcom-4.3/vbxpcom-4.3.jar" basedir="${server.vbxpcom-4.3.classes.dir}" />
+	</target>
+	
+	<target name="server.vbxpcom.4-3.deploy" depends="server.api.deploy">
+		<copy file="${server.vbxpcom-4.3.lib.dir}/vboxjxpcom.jar" tofile="${out.dir}/modules/vbxpcom-4.3/vboxjxpcom-4.3.jar" />
+	</target>
+	
+	<target name="server.vbxpcom.4-3.build" depends="server.api.compile,server.vbxpcom.4-3.deploy, server.vbxpcom.4-3.jar">
+	</target>
+	<!--######################################-->
+	
+	<!--    Virtualbox 4.4 XPCOM Connector    -->
+	<target name="server.vbxpcom.4-4.compile" depends="server.api.compile">
+		<mkdir dir="${server.vbxpcom-4.4.classes.dir}" />
+		<javac debug="on" includeantruntime="false" srcdir="${server.vb.helper.src.dir}" destdir="${server.vbxpcom-4.4.classes.dir}" classpathref="server.vbxpcom.4-4.classpath" />
+		<javac debug="on" includeantruntime="false" srcdir="${server.vbxpcom-4.4.src.dir}" destdir="${server.vbxpcom-4.4.classes.dir}" classpathref="server.vbxpcom.4-4.classpath" />
+	</target>
+	
+	<target name="server.vbxpcom.4-4.jar" depends="server.vbxpcom.4-4.compile, server.api.deploy">
+		<jar destfile="${out.dir}/modules/vbxpcom-4.4/vbxpcom-4.4.jar" basedir="${server.vbxpcom-4.4.classes.dir}" />
+	</target>
+	
+	<target name="server.vbxpcom.4-4.deploy" depends="server.api.deploy">
+		<copy file="${server.vbxpcom-4.4.lib.dir}/vboxjxpcom.jar" tofile="${out.dir}/modules/vbxpcom-4.4/vboxjxpcom-4.4.jar" />
+	</target>
+	
+	<target name="server.vbxpcom.4-4.build" depends="server.api.compile,server.vbxpcom.4-4.deploy, server.vbxpcom.4-4.jar">
+	</target>
+	<!--######################################-->
+	
+	
+	<target name="kryo.api.compile" depends="api.compile">
+		<mkdir dir="${kryo.api.classes.dir}" />
+		<javac debug="on" includeantruntime="false" srcdir="${kryo.api.src.dir}" destdir="${kryo.api.classes.dir}" classpathref="kryo.api.classpath" />
+	</target>
+	
+	<target name="kryo.api.server.deploy" depends="server.api.deploy">
+		<copy todir="${server.out.dir}/lib" flatten="true">
+			<fileset dir="${kryo.api.lib.dir}" includes="**/*.jar" />
+		</copy>
+	</target>
+	
+	<target name="kryo.api.client.deploy" depends="client.api.deploy">
+		<copy todir="${client.out.dir}/lib" flatten="true">
+			<fileset dir="${kryo.api.lib.dir}" includes="**/*.jar" />
+		</copy>
+	</target>
+
+    <target name="server.compile" depends="server.api.compile, kryo.api.compile">
+    	<mkdir dir="${server.classes.dir}" />
+    	<javac debug="on" includeantruntime="false" srcdir="${server.src.dir}" destdir="${server.classes.dir}" classpathref="server.classpath" />
+		<echo file="${server.classes.dir}/server.build.properties" append="false">revision=${hbox.revision}${line.separator}</echo>
+		<echo file="${server.classes.dir}/server.build.properties" append="true">version=${hbox.version}${line.separator}</echo>
+    </target>
+
+	<target name="server.deploy" depends="server.api.deploy">
+		<copy todir="${server.out.dir}/lib" flatten="true">
+			<fileset dir="${server.lib.dir}" includes="**/*.jar" />
+		</copy>
+	</target>
+	
+	<target name="server.jar" depends="server.compile, server.deploy">
+        <jar destfile="${server.out.dir}/bin/hyperbox-server.jar">
+        	<fileset dir="${api.classes.dir}" />
+			<fileset dir="${server.api.classes.dir}" />
+        	<fileset dir="${kryo.api.classes.dir}" />
+        	<fileset dir="${server.classes.dir}" />
+        </jar>
+    </target>
+	
+	<target name="client.compile" depends="client.api.compile, kryo.api.compile">
+    	<mkdir dir="${client.classes.dir}" />
+    	<javac debug="on" includeantruntime="false" srcdir="${client.src.dir}" destdir="${client.classes.dir}" classpathref="client.classpath" />
+		<echo file="${client.classes.dir}/client.build.properties" append="false">revision=${hbox.revision}${line.separator}</echo>
+		<echo file="${client.classes.dir}/client.build.properties" append="true">version=${hbox.version}${line.separator}</echo>
+    </target>
+	
+	<target name="client.deploy" depends="client.api.deploy">
+		<copy todir="${client.out.dir}/lib" flatten="true">
+			<fileset dir="${client.lib.dir}" includes="**/*.jar" />
+		</copy>
+	</target>
+
+    <target name="client.jar" depends="client.compile, client.deploy">
+        <jar destfile="${client.out.dir}/bin/hyperbox-client.jar">
+        	<fileset dir="${api.classes.dir}" />
+			<fileset dir="${client.api.classes.dir}" />
+        	<fileset dir="${kryo.api.classes.dir}" />
+        	<fileset dir="${client.classes.dir}" />
+        </jar>
+    </target>
+	
+	<target name="client.gui.compile" depends="client.api.compile">
+		<mkdir dir="${client.gui.classes.dir}" />
+		<javac debug="on" includeantruntime="false" srcdir="${client.gui.src.dir}" destdir="${client.gui.classes.dir}" classpathref="client.gui.classpath" />
+	</target>
+	
+	<target name="client.gui.deploy" depends="client.deploy">
+		<copy todir="${client.out.dir}/lib" flatten="true">
+			<fileset dir="${client.gui.lib.dir}" includes="**/*.jar" />
+		</copy>
+		<copy todir="${client.out.dir}/icons">
+			<fileset dir="${client.dir}/icons" includes="**" />
+		</copy>
+		<copy todir="${client.out.dir}/icons" overwrite="true">
+			<fileset dir="media/img" includes="**" />
+		</copy>
+	</target>
+	
+	<target name="client.gui.jar" depends="client.gui.compile, client.gui.deploy">
+        <jar destfile="${client.out.dir}/bin/hyperbox-client-gui.jar">
+        	<fileset dir="${client.gui.classes.dir}" />
+        </jar>
+    </target>
+	
+	<target name="client.build.win" depends="client.deploy, client.jar" if="isWin">
+		<launch4j configFile="scripts/client/launch4j/main.xml" outfile="${client.out.dir}/${client.out.exe}" />
+	</target>
+	
+	<target name="client.build.linux" depends="client.jar, client.jar" if="isLinux">
+		<copy file="scripts/client/hyperbox" tofile="${client.out.dir}/hyperbox" />
+		<chmod file="${client.out.dir}/hyperbox" perm="u+rx,g+rx,o+rx"/>
+	</target>
+	
+	<target name="client.build" depends="client.build.linux, client.build.win, client.gui.jar, kryo.api.client.deploy">
+		
+	</target>
+	
+	<target name="server.build.win" depends="server.jar, server.deploy" if="isWin">
+		<launch4j configFile="scripts/server/launch4j/main.xml" outfile="${server.out.dir}/${server.out.exe}" />
+		<copy file="external/common-daemons/prunsrv.exe" tofile="${server.out.dir}/bin/hboxd.exe" />
+	</target>
+	
+	<target name="server.build.linux" depends="server.jar, server.deploy" if="isLinux">
+		<copy file="scripts/server/hyperbox" tofile="${server.out.dir}/hyperbox" />
+		<chmod file="${server.out.dir}/hyperbox" perm="ugo+rx" />
+		<copy file="scripts/server/initd/hboxd" tofile="${server.out.dir}/hboxd" />
+		<chmod file="${server.out.dir}/hboxd" perm="ugo+rx"/>
+		<copy file="external/common-daemons/jsvc" tofile="${server.out.dir}/bin/hboxd" />
+		<chmod file="${server.out.dir}/bin/hboxd" perm="ugo+rx" />
+	</target>
+	
+	<target name="server.build" depends="server.build.linux, server.build.win, kryo.api.server.deploy, server.vbws.4-2.build, server.vbws.4-3.build">
+		
+	</target>
+	
+	<target name="build" depends="server.build, client.build">
+	</target>
+	
+	<target name="server.build.zip" depends="server.build">
+		<zip destfile="${dist.out.dir.abs}/${server.out.dist.package}.zip" basedir="${server.out.dir}" />
+	</target>
+	
+	<target name="client.build.zip" depends="client.build">
+		<zip destfile="${dist.out.dir.abs}/${client.out.dist.package}.zip" basedir="${client.out.dir}" />
+	</target>
+	
+	<target name="build.zip" depends="server.build.zip, client.build.zip">
+	</target>
+	
+	<target name="configureDist" depends="configure">
+		<property name="dist.build.out.dir" value="${build.dir}/dist" />
+		<mkdir dir="${out.dir}/dist/${os.family}.${os.arch}" />
+		<mkdir dir="${dist.build.out.dir}" />
+	</target>
+	
+	<target name="client.build.dist.win" if="isWin" depends="configureDist">
+		<echo message="NSIS Dir:           ${tools.nsis.dir}" />
+		<copy file="scripts/client/installer/client-installer.nsi" tofile="${dist.build.out.dir}/client-installer.nsi" overwrite="true" />
+		<replace file="${dist.build.out.dir}/client-installer.nsi" token="@CLIENT_INSTALLER_OUTPUT@" value="${dist.out.dir.abs}/${client.out.dist.package}.exe" />
+		<replace file="${dist.build.out.dir}/client-installer.nsi" token="@CLIENT_OUT_BIN_DIR@" value="${client.out.dir.abs}" />
+		<replace file="${dist.build.out.dir}/client-installer.nsi" token="@CLIENT_INSTALL_DIR@" value="${client.install.dir}" />
+		<exec executable="${tools.nsis.dir}\makensis.exe" failonerror="true">
+			<arg value="/DPROJECT_NAME=Hyperbox Client" />
+			<arg value="/V2"/>
+			<arg value="${dist.build.out.dir}/client-installer.nsi" />
+		</exec>
+	</target>
+	
+	<target name="client.build.dist.linux" if="isLinux" depends="configureDist">
+		<copy file="${client.dir}/hyperbox-client.desktop" tofile="${client.out.dir}/hyperbox-client.desktop" overwrite="true" />
+		<copy file="scripts/client/installer/client-installer.sh" tofile="${client.out.dir}/client-installer.sh" overwrite="true" />
+		<chmod file="${client.out.dir}/client-installer.sh" perm="ugo+rx" />
+		<exec executable="makeself" failonerror="true">
+			<arg value="${client.out.dir.abs}" />
+			<arg value="${dist.out.dir.abs}/${client.out.dist.package}.run" />
+			<arg value="Hyperbox client" />
+			<arg value="./client-installer.sh" />
+		</exec>
+	</target>
+	
+	<target name="client.build.dist" depends="client.build.dist.win,client.build.dist.linux">
+	</target>
+	
+	<target name="server.build.dist.win" if="isWin" depends="configureDist">
+		<echo message="NSIS Dir:           ${tools.nsis.dir}" />
+		<echo message="Binaries Dir:       ${server.out.dir.abs}" />
+		<mkdir dir="${out.dir}/dist/${os.family}.${os.arch}" />
+		<copy file="scripts/server/installer/server-installer.nsi" tofile="${dist.build.out.dir}/server-installer.nsi" overwrite="true" />
+		<replace file="${dist.build.out.dir}/server-installer.nsi" token="@SERVER_INSTALLER_OUTPUT@" value="${dist.out.dir.abs}/${server.out.dist.package}.exe" />
+		<replace file="${dist.build.out.dir}/server-installer.nsi" token="@SERVER_OUT_BIN_DIR@" value="${server.out.dir.abs}" />
+		<replace file="${dist.build.out.dir}/server-installer.nsi" token="@SERVER_INSTALL_DIR@" value="${server.install.dir}" />
+		<exec executable="${tools.nsis.dir}\makensis.exe" failonerror="true">
+			<arg value="/DPROJECT_NAME=Hyperbox Server" />
+			<arg value="/V2"/>
+			<arg value="${dist.build.out.dir}/server-installer.nsi" />
+		</exec>
+	</target>
+	
+	<target name="server.build.dist.linux" if="isLinux" depends="configureDist">
+		<copy file="scripts/server/installer/server-installer.sh" tofile="${server.out.dir}/server-installer.sh" overwrite="true" />
+		<chmod file="${server.out.dir}/server-installer.sh" perm="ugo+rx" />
+		<exec executable="makeself" failonerror="true">
+			<arg value="${server.out.dir.abs}" />
+			<arg value="${dist.out.dir.abs}/${server.out.dist.package}.run" />
+			<arg value="Hyperbox Server" />
+			<arg value="./server-installer.sh" />
+		</exec>
+	</target>
+	
+	<target name="server.build.dist" depends="server.build.dist.win,server.build.dist.linux" />
+	
+	<target name="build.dist" depends="client.build.dist, server.build.dist" />
+	
+	<target name="build.all" depends="build, build.zip, build.dist" />
+
+</project>
