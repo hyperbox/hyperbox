@@ -27,6 +27,7 @@ import org.altherian.hbox.data.Machine;
 import org.altherian.hbox.exception.FeatureNotImplementedException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.exception.HypervisorException;
+import org.altherian.hbox.exception.MachineException;
 import org.altherian.hbox.exception.ServiceException;
 import org.altherian.hboxd.event._EventManager;
 import org.altherian.hboxd.hypervisor._Hypervisor;
@@ -78,6 +79,13 @@ import org.virtualbox_4_3.StorageControllerType;
 import org.virtualbox_4_3.VBoxException;
 
 public class VirtualboxHypervisor implements _Hypervisor {
+   
+   /**
+    * Waiting coefficient to use on ISession::getTimeRemaining() with Thread.sleep() while waiting for task in progress to finish.<br/>
+    * Virtualbox returns a waiting time in seconds, this coefficient allow to turn it into milliseconds and set a 'shorter' waiting time for a more reactive update.<br/>
+    * Default value waits half of the estimated time reported by Virtualbox.
+    */
+   private final int waitingCoef = 500;
    
    public final static String ID = "vbox-4.3-ws";
    public final static String TYPE_ID = "Web Services";
@@ -439,7 +447,18 @@ public class VirtualboxHypervisor implements _Hypervisor {
       
       try {
          List<IMedium> hdds = machine.unregister(CleanupMode.DetachAllReturnHardDisksOnly);
-         machine.deleteConfig(hdds);
+         IProgress p = machine.deleteConfig(hdds);
+         while (!p.getCompleted() || p.getCanceled()) {
+            try {
+               Thread.sleep(Math.abs(p.getTimeRemaining()) * waitingCoef);
+            } catch (InterruptedException e) {
+               Logger.exception(e);
+            }
+         }
+         Logger.debug("VBox API Return code: " + p.getResultCode());
+         if (p.getResultCode() != 0) {
+            throw new MachineException(p.getErrorInfo().getText());
+         }
       } catch (VBoxException e) {
          throw new HypervisorException("Error while deleting machine", e);
       }
@@ -481,7 +500,7 @@ public class VirtualboxHypervisor implements _Hypervisor {
       
       VbSessionManager.get().unlock(uuid);
       IMachine machine = ConnectionManager.findMachine(uuid);
-      machine.unregister(CleanupMode.DetachAllReturnHardDisksOnly);
+      machine.unregister(CleanupMode.DetachAllReturnNone);
    }
    
    @Override
