@@ -25,7 +25,6 @@ import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
 import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
 import org.altherian.hbox.constant.MachineAttributes;
-import org.altherian.hbox.states.MachineStates;
 import org.altherian.hboxd.HBoxServer;
 import org.altherian.hboxd.core.model._Machine;
 import org.altherian.hboxd.core.model._NetworkInterface;
@@ -61,7 +60,7 @@ public final class MachineIoFactory {
                m.getSetting(MachineAttributes.Name.getId()),
                m.getSetting(MachineAttributes.CurrentSnapshotUuid.getId()),
                m.getSetting(MachineAttributes.HasSnapshot.getId())));
-         return getSimple(m.getUuid(), MachineStates.Inaccessible.getId(), settings);
+         return getSimple(m.getUuid(), m.getState().getId(), settings);
       } else {
          return get(m.getUuid(), false);
       }

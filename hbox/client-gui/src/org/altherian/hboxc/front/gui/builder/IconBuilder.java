@@ -127,7 +127,6 @@ public class IconBuilder {
    private static void initMachineStates() {
       machineStates = new EnumMap<MachineStates, ImageIcon>(MachineStates.class);
       
-      
       machineStates.put(MachineStates.Aborted, new ImageIcon(ICONS_PATH + "cross.png"));
       machineStates.put(MachineStates.Inaccessible, new ImageIcon(ICONS_PATH + "delete.png"));
       machineStates.put(MachineStates.Paused, new ImageIcon(ICONS_PATH + "pause_blue.png"));
