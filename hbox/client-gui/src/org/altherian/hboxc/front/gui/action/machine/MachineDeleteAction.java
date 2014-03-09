@@ -29,7 +29,7 @@ import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.MainView;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
-import org.altherian.hboxc.front.gui.vm._VmSelector;
+import org.altherian.hboxc.front.gui.vm._MachineSelector;
 
 import java.awt.event.ActionEvent;
 
@@ -39,9 +39,9 @@ import javax.swing.JOptionPane;
 @SuppressWarnings("serial")
 public final class MachineDeleteAction extends AbstractAction {
    
-   private _VmSelector selector;
+   private _MachineSelector selector;
    
-   public MachineDeleteAction(_VmSelector selector) {
+   public MachineDeleteAction(_MachineSelector selector) {
       super("Delete", IconBuilder.getTask(HypervisorTasks.MachineDelete));
       setEnabled(true);
       this.selector = selector;

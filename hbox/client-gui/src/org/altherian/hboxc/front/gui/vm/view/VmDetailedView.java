@@ -50,6 +50,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    private JTabbedPane tabs;
    private JLabel loadingLabel;
    private JPanel panel;
+   private JLabel errorLabel;
    
    public VmDetailedView() {
       Logger.track();
@@ -66,9 +67,13 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
       loadingLabel = new JLabel("Loading...");
       loadingLabel.setVisible(false);
       
+      errorLabel = new JLabel("VM is not accessible, cannot display details");
+      errorLabel.setVisible(false);
+      
       panel = new JPanel(new MigLayout("ins 0"));
-      panel.add(loadingLabel, "growx,pushx,wrap");
-      panel.add(tabs, "grow,push,wrap");
+      panel.add(loadingLabel, "growx, pushx, wrap, hidemode 3");
+      panel.add(errorLabel, "growx, pushx, wrap, hidemode 3");
+      panel.add(tabs, "grow, push, wrap, hidemode 3");
       
       FrontEventManager.register(this);
    }
@@ -82,12 +87,16 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
             }
          });
       } else {
-         summaryTab.show(mOut);
-         tabs.setEnabledAt(tabs.indexOfComponent(summaryTab.getComponent()), true);
-         snapTab.show(mOut);
-         tabs.setEnabledAt(tabs.indexOfComponent(snapTab.getComponent()), true);
-         displayTab.show(mOut);
-         tabs.setEnabledAt(tabs.indexOfComponent(displayTab.getComponent()), true);
+         tabs.setVisible(mOut.isAvailable());
+         errorLabel.setVisible(!mOut.isAvailable());
+         if (mOut.isAvailable()) {
+            summaryTab.show(mOut);
+            tabs.setEnabledAt(tabs.indexOfComponent(summaryTab.getComponent()), true);
+            snapTab.show(mOut);
+            tabs.setEnabledAt(tabs.indexOfComponent(snapTab.getComponent()), true);
+            displayTab.show(mOut);
+            tabs.setEnabledAt(tabs.indexOfComponent(displayTab.getComponent()), true);
+         }
       }
    }
    
@@ -103,6 +112,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    @Handler
    public void getMachineUpdate(MachineDataChangedEvent ev) {
       Logger.track();
+      
       if (ev.getUuid().contentEquals(mOut.getUuid())) {
          Logger.track();
          put(ev.getMachine());
@@ -112,6 +122,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    @Handler
    public void getMachineRemove(MachineRemovedEvent ev) {
       Logger.track();
+      
       if (ev.getUuid().contentEquals(mOut.getUuid())) {
          Logger.track();
          clear();

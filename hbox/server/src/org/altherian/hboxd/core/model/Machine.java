@@ -68,6 +68,11 @@ public class Machine implements _Machine {
    }
    
    @Override
+   public boolean isAccessible() {
+      return rawVm.isAccessible();
+   }
+   
+   @Override
    public String getName() {
       return rawVm.getName();
    }
@@ -223,5 +228,6 @@ public class Machine implements _Machine {
       // TODO add security check
       return rawVm.getSnapshot(snapshotId);
    }
+   
    
 }

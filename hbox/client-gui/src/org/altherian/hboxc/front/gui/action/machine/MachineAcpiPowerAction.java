@@ -28,7 +28,7 @@ import org.altherian.hbox.comm.input.MachineInput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
-import org.altherian.hboxc.front.gui.vm._VmSelector;
+import org.altherian.hboxc.front.gui.vm._MachineSelector;
 
 import java.awt.event.ActionEvent;
 
@@ -37,9 +37,9 @@ import javax.swing.AbstractAction;
 @SuppressWarnings("serial")
 public class MachineAcpiPowerAction extends AbstractAction {
    
-   private _VmSelector selector;
+   private _MachineSelector selector;
    
-   public MachineAcpiPowerAction(_VmSelector selector) {
+   public MachineAcpiPowerAction(_MachineSelector selector) {
       super("Power Button", IconBuilder.getTask(HypervisorTasks.MachineAcpiPowerButton));
       setEnabled(true);
       this.selector = selector;

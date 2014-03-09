@@ -129,6 +129,7 @@ public class IconBuilder {
       
       
       machineStates.put(MachineStates.Aborted, new ImageIcon(ICONS_PATH + "cross.png"));
+      machineStates.put(MachineStates.Inaccessible, new ImageIcon(ICONS_PATH + "delete.png"));
       machineStates.put(MachineStates.Paused, new ImageIcon(ICONS_PATH + "pause_blue.png"));
       machineStates.put(MachineStates.PoweredOff, new ImageIcon(ICONS_PATH + "stop_red.png"));
       machineStates.put(MachineStates.Restoring, new ImageIcon(ICONS_PATH + "disk_upload.png"));
@@ -201,7 +202,7 @@ public class IconBuilder {
    }
    
    public static ImageIcon getTask(ClientTasks task) {
-      if (clientTasks.containsKey(task)) {
+      if ((task != null) && clientTasks.containsKey(task)) {
          return clientTasks.get(task);
       } else {
          Logger.debug("No icon found for ClientTask: " + task);
@@ -210,7 +211,7 @@ public class IconBuilder {
    }
    
    public static ImageIcon getMachineState(MachineStates state) {
-      if (machineStates.containsKey(state)) {
+      if ((state != null) && machineStates.containsKey(state)) {
          return machineStates.get(state);
       } else {
          Logger.debug("No icon found for Machine State: " + state);
@@ -219,7 +220,7 @@ public class IconBuilder {
    }
    
    public static ImageIcon getStorageControllerType(String type) {
-      if (scTypes.containsKey(type)) {
+      if ((type != null) && scTypes.containsKey(type)) {
          return scTypes.get(type);
       } else {
          Logger.debug("No icon found for Storage Controller Type: " + type);
@@ -228,7 +229,7 @@ public class IconBuilder {
    }
    
    public static ImageIcon getEntityType(EntityTypes type) {
-      if (entTypes.containsKey(type)) {
+      if ((type != null) && entTypes.containsKey(type)) {
          return entTypes.get(type);
       } else {
          Logger.debug("No icon found for Entity Type: " + type);

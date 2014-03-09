@@ -57,7 +57,7 @@ import org.altherian.hboxc.front.gui.server.ServerViewer;
 import org.altherian.hboxc.front.gui.server._ServerSelector;
 import org.altherian.hboxc.front.gui.utils.MachineOutputComparator;
 import org.altherian.hboxc.front.gui.utils.RefreshUtil;
-import org.altherian.hboxc.front.gui.vm._VmSelector;
+import org.altherian.hboxc.front.gui.vm._MachineSelector;
 import org.altherian.hboxc.front.gui.vm.view.VmDetailedView;
 import org.altherian.tool.logging.Logger;
 
@@ -89,7 +89,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
-public final class InfrastructureView implements _VmSelector, _ServerSelector, _ConnectorSelector, _Refreshable {
+public final class InfrastructureView implements _MachineSelector, _ServerSelector, _ConnectorSelector, _Refreshable {
    
    private static final String EmptyPanelId = "empty";
    private static final JPanel EmptyPanel = new JPanel();
@@ -140,7 +140,7 @@ public final class InfrastructureView implements _VmSelector, _ServerSelector, _
       detailViews.add(EmptyPanel, EmptyPanelId);
       detailViews.add(conView.getComponent(), EntityTypes.Connector.getId());
       detailViews.add(vmView.getComponent(), EntityTypes.Machine.getId());
-      detailViews.add(srvView.getComponent(), EntityTypes.Server.getId());
+      //detailViews.add(srvView.getComponent(), EntityTypes.Server.getId());
       JScrollPane detailPane = new JScrollPane(detailViews);
       detailPane.setBorder(BorderFactory.createEmptyBorder());
       
@@ -341,7 +341,7 @@ public final class InfrastructureView implements _VmSelector, _ServerSelector, _
             treeModel.insertNodeInto(node, srvNode, srvNode.getChildCount());
             tree.scrollPathToVisible(new TreePath(node.getPath()));
             vmNodes.get(serverId).put(mOut.getId(), node);
-            if (mOut.hasSnapshots()) {
+            if (mOut.isAvailable() && mOut.hasSnapshots()) {
                SnapshotOutput snapOut = Gui.getServer(serverId).getSnapshot(new MachineInput(mOut), new SnapshotInput(mOut.getCurrentSnapshot()));
                vmCurrentSnaps.put(mOut.getId(), snapOut);
             }
@@ -732,15 +732,20 @@ public final class InfrastructureView implements _VmSelector, _ServerSelector, _
             if (node.getUserObject() instanceof MachineOutput) {
                try {
                   MachineOutput simpleVmOut = (MachineOutput) node.getUserObject();
-                  setIcon(IconBuilder.getMachineState(MachineStates.valueOf(simpleVmOut.getState())));
-                  try {
-                     if (simpleVmOut.hasSnapshots()) {
-                        setText(simpleVmOut.getName() + " (" + vmCurrentSnaps.get(simpleVmOut.getId()).getName() + ")");
-                     } else {
+                  if (!simpleVmOut.isAvailable()) {
+                     setText("<Unavailable>");
+                     setIcon(IconBuilder.getMachineState(MachineStates.Inaccessible));
+                  } else {
+                     setIcon(IconBuilder.getMachineState(MachineStates.valueOf(simpleVmOut.getState())));
+                     try {
+                        if (simpleVmOut.hasSnapshots()) {
+                           setText(simpleVmOut.getName() + " (" + vmCurrentSnaps.get(simpleVmOut.getId()).getName() + ")");
+                        } else {
+                           setText(simpleVmOut.getName());
+                        }
+                     } catch (Throwable t) {
                         setText(simpleVmOut.getName());
                      }
-                  } catch (Throwable t) {
-                     setText(simpleVmOut.getName());
                   }
                } catch (Throwable t) {
                   Logger.exception(t);

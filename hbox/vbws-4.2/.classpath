@@ -3,12 +3,12 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Server-API"/>
-	<classpathentry exported="true" kind="lib" path="lib/vboxjws.jar" sourcepath="C:/Users/noteirak/Dropbox/Work/Altherian/Java/Librairies/vbox-4.2.20/bindings/webservice/java/jax-ws/vboxjws-src.jar">
+	<classpathentry kind="lib" path="lib/vboxjws.jar" sourcepath="C:/Users/noteirak/Dropbox/Work/Altherian/Java/Librairies/vbox-4.2.20/bindings/webservice/java/jax-ws/vboxjws-src.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:file:/C:/Users/noteirak/Dropbox/Work/Altherian/Java/Librairies/vbox-4.2.20/bindings/webservice/java/jax-ws/vboxjws-doc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/VB-Helper"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/VB-Helper"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="eclipse-bin"/>

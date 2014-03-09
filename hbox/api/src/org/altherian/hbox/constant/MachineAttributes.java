@@ -32,7 +32,8 @@ package org.altherian.hbox.constant;
 public enum MachineAttributes {
    
    ServerId(EntityTypes.Server),
-
+   IsAccessible(EntityTypes.Machine),
+   
    // ////////////////////////////////////
    // Audio Settings
    // ////////////////////////////////////

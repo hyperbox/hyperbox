@@ -662,4 +662,9 @@ public final class VBoxMachine implements _RawVM {
       return guest;
    }
    
+   @Override
+   public boolean isAccessible() {
+      return getRaw().getAccessible();
+   }
+   
 }

@@ -27,7 +27,7 @@ import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.input.MachineInput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hboxc.front.gui.Gui;
-import org.altherian.hboxc.front.gui.vm._VmSelector;
+import org.altherian.hboxc.front.gui.vm._MachineSelector;
 
 import java.awt.event.ActionEvent;
 
@@ -36,9 +36,9 @@ import javax.swing.AbstractAction;
 @SuppressWarnings("serial")
 public class GuestRestartAction extends AbstractAction {
    
-   private _VmSelector selector;
+   private _MachineSelector selector;
    
-   public GuestRestartAction(_VmSelector selector) {
+   public GuestRestartAction(_MachineSelector selector) {
       super("Restart");
       setEnabled(true);
       this.selector = selector;

@@ -24,7 +24,7 @@ package org.altherian.hboxc.front.gui.action.machine;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
-import org.altherian.hboxc.front.gui.vm._VmSelector;
+import org.altherian.hboxc.front.gui.vm._MachineSelector;
 import org.altherian.hboxc.front.gui.vm.edit.VmEditDialog;
 
 import java.awt.event.ActionEvent;
@@ -34,9 +34,9 @@ import javax.swing.AbstractAction;
 @SuppressWarnings("serial")
 public class MachineEditAction extends AbstractAction {
    
-   private _VmSelector selector;
+   private _MachineSelector selector;
    
-   public MachineEditAction(_VmSelector selector) {
+   public MachineEditAction(_MachineSelector selector) {
       super("Edit Settings", IconBuilder.getTask(HypervisorTasks.MachineModify));
       setEnabled(true);
       this.selector = selector;

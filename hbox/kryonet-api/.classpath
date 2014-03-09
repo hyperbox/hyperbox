@@ -11,7 +11,7 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/objenesis-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/reflectasm-1.07.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/API"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/API"/>
 	<classpathentry exported="true" kind="lib" path="lib/minlog-trace-1.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="eclipse-bin"/>

@@ -37,6 +37,8 @@ public interface _Machine extends _Settable {
    
    public String getUuid();
    
+   public boolean isAccessible();
+
    public String getName();
    
    public MachineStates getState();
@@ -86,5 +88,5 @@ public interface _Machine extends _Settable {
    public _USB getUsb();
    
    public _RawSnapshot getSnapshot(String snapshotId);
-
+   
 }

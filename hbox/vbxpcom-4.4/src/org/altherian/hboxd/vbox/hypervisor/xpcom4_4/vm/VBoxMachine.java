@@ -190,6 +190,11 @@ public final class VBoxMachine implements _RawVM {
    }
    
    @Override
+   public boolean isAccessible() {
+      return getRaw().getAccessible();
+   }
+   
+   @Override
    public String getName() {
       return getSetting(MachineAttributes.Name).getString();
    }

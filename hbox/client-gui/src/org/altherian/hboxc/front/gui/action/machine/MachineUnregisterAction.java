@@ -28,7 +28,7 @@ import org.altherian.hbox.comm.input.MachineInput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
-import org.altherian.hboxc.front.gui.vm._VmSelector;
+import org.altherian.hboxc.front.gui.vm._MachineSelector;
 
 import java.awt.event.ActionEvent;
 
@@ -37,9 +37,9 @@ import javax.swing.AbstractAction;
 @SuppressWarnings("serial")
 public final class MachineUnregisterAction extends AbstractAction {
    
-   private _VmSelector selector;
+   private _MachineSelector selector;
    
-   public MachineUnregisterAction(_VmSelector selector) {
+   public MachineUnregisterAction(_MachineSelector selector) {
       super("Unregister", IconBuilder.getTask(HypervisorTasks.MachineUnregister));
       setEnabled(true);
       this.selector = selector;

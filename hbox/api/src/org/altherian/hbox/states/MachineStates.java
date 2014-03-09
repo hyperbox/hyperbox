@@ -34,6 +34,11 @@ public enum MachineStates {
    UNKNOWN,
    
    /**
+    * Unable to retrieve the Machine information. This represent a broken state.
+    */
+   Inaccessible,
+   
+   /**
     * Lengthy setup operation is in progress.
     */
    SettingUp,
