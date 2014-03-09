@@ -28,7 +28,7 @@ import org.altherian.hbox.comm.input.MachineInput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
-import org.altherian.hboxc.front.gui.vm._VmSelector;
+import org.altherian.hboxc.front.gui.vm._MachineSelector;
 
 import java.awt.event.ActionEvent;
 
@@ -37,9 +37,9 @@ import javax.swing.AbstractAction;
 @SuppressWarnings("serial")
 public class MachineSaveStateAction extends AbstractAction {
    
-   private _VmSelector selector;
+   private _MachineSelector selector;
    
-   public MachineSaveStateAction(_VmSelector selector) {
+   public MachineSaveStateAction(_MachineSelector selector) {
       super("Save State", IconBuilder.getTask(HypervisorTasks.MachineSaveState));
       setEnabled(true);
       this.selector = selector;

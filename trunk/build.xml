@@ -162,38 +162,62 @@
 	</target>
 	
 	<target name="configureWin" if="isWin">
-		<property name="os.family" value="win"/>
-		<property name="platform"							value="${os.family}.${os.arch}" />
+		<property name="os.family"						value="win"/>
+		<property name="platform"						value="${os.family}.${os.arch}" />
 		<property file="tools/${platform}/build.properties" />
 		
-		<property name="client.install.dir" location="${client.install.dir.win}"/>
-		<property name="server.install.dir" location="${server.install.dir.win}"/>
+		<property name="client.install.dir"				location="${client.install.dir.win}"/>
+		<property name="server.install.dir"				location="${server.install.dir.win}"/>
 		<echo message="Launch4j path:        ${tools.launch4j.dir}" />
 		<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${tools.launch4j.dir}/launch4j.jar:${tools.launch4j.dir}/lib/xstream.jar" />
-		<property name="client.out.exe" value="hyperbox.exe"/>
-		<property name="server.out.exe" value="hyperbox.exe"/>
+		<property name="client.out.exe"					value="hyperbox.exe"/>
+		<property name="server.out.exe"					value="hyperbox.exe"/>
 	</target>
 	
 	<target name="configureLinux" if="isLinux">
 		<property name="os.family" value="linux"/>
-		<property name="platform"							value="${os.family}.${os.arch}" />
+		<property name="platform"						value="${os.family}.${os.arch}" />
 		<property file="tools/${platform}/build.properties" />
 		
-		<property name="client.install.dir" location="${client.install.dir.linux}" />
-		<property name="server.install.dir" location="${server.install.dir.linux}" />
+		<property name="client.install.dir"				location="${client.install.dir.linux}" />
+		<property name="server.install.dir"				location="${server.install.dir.linux}" />
 	</target>
 	
 	<target name="configure" depends="configureWin,configureLinux">
+		<property name="api.src.dir.abs"				location="${api.src.dir}" />
+		<property name="api.protocol.src.dir.abs"		location="${api.src.dir}/org/altherian/hbox/comm" />
+		<property name="server.src.dir.abs"				location="${server.src.dir}" />
+		<property name="client.src.dir.abs"				location="${client.src.dir}" />
+		
 		<property name="os.type" value="${os.family}" />
-		<exec executable="svn" outputProperty="svn.info">
+		<exec executable="svn" outputProperty="svn.raw.info">
 			<arg line="info --xml"/>
 		</exec>
-		<echo message="${svn.info}" file="${out.dir}/svn.info"/>
-		<xmlproperty file="${out.dir}/svn.info" keeproot="no" prefix="svn"/>
+		<echo message="${svn.raw.info}" file="${out.dir}/svn.info"/>
 		
+		<exec executable="svn" outputProperty="svn.raw.api.info">
+			<arg line="info --xml ${api.src.dir.abs}"/>
+		</exec>
+		<echo message="${svn.raw.api.info}" file="${out.dir}/svn.api.info"/>
 		
-		<property name="hbox.revision"	value="${svn.entry(revision)}" />
-		<loadfile srcfile="VERSION" property="hbox.version" />
+		<exec executable="svn" outputProperty="svn.raw.api.protocol.info">
+			<arg line="info --xml ${api.protocol.src.dir.abs}"/>
+		</exec>
+		<echo message="${svn.raw.api.protocol.info}" file="${out.dir}/svn.api.protocol.info"/>
+		
+		<xmlproperty file="${out.dir}/svn.info" keeproot="no" prefix="svn.global" />
+		<xmlproperty file="${out.dir}/svn.api.info" keeproot="no" prefix="svn.api" />
+		<xmlproperty file="${out.dir}/svn.api.protocol.info" keeproot="no" prefix="svn.api.protocol" />
+		<xmlproperty file="${out.dir}/svn.server.info" keeproot="no" prefix="svn.server" />
+		<xmlproperty file="${out.dir}/svn.client.info" keeproot="no" prefix="svn.client" />
+
+		<property name="hbox.revision"						value="${svn.global.entry(revision)}" />
+		<property name="hbox.api.revision"					value="${svn.api.entry.commit(revision)}" />
+		<property name="hbox.protocol.version"				value="${svn.api.protocol.entry.commit(revision)}" />
+		<property name="server.revision"					value="${svn.server.entry.commit(revision)}" />
+		<property name="client.revision"					value="${svn.client.entry.commit(revision)}" />
+		
+		<loadfile srcfile="VERSION"							property="hbox.version" />
 		
 		<property name="server.out.dir"						value="${out.dir}/bin/${platform}/server" />
 		<property name="client.out.dir"						value="${out.dir}/bin/${platform}/client" />
@@ -206,22 +230,25 @@
 		<property name="client.out.dist.package"			value="hbox_client-${hbox.version}-${hbox.revision}-${os.type}_${os.arch}" />
 		<property name="server.out.dist.package"			value="hbox_server-${hbox.version}-${hbox.revision}-${os.type}_${os.arch}" />
 		
-		<echo message="OS Architecture:      ${os.arch}" />
-		<echo message="OS Type:              ${os.type}" />
-		<echo message="OS Name:              ${os.name}" />
-        <echo message="OS Version:           ${os.version}" />
-		<echo message="System platform:      ${platform}" />
+		<echo message="OS Architecture:              ${os.arch}" />
+		<echo message="OS Type:                      ${os.type}" />
+		<echo message="OS Name:                      ${os.name}" />
+        <echo message="OS Version:                   ${os.version}" />
+		<echo message="System platform:              ${platform}" />
 		
-		<echo message="Hyperbox Version:     ${hbox.version}" />
-		<echo message="Hyperbox Revision:    ${hbox.revision}" />
+		<echo message="Hyperbox Version:             ${hbox.version}" />
+		<echo message="Hyperbox Revision:            ${hbox.revision}" />
+		<echo message="API Revision:                 ${hbox.api.revision}" />
+		<echo message="Network Protocol Revision:    ${hbox.protocol.version}" />
 	</target>
 	
 	<target name="api.compile" depends="configure">
 		<mkdir dir="${api.classes.dir}" />
 		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${tools.src.dir}" destdir="${api.classes.dir}" classpathref="api.classpath" />
 		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${api.src.dir}" destdir="${api.classes.dir}" classpathref="api.classpath" />
-		<echo file="${api.classes.dir}/api.build.properties" append="false">revision=${hbox.revision}${line.separator}</echo>
+		<echo file="${api.classes.dir}/api.build.properties" append="false">revision=${hbox.api.revision}${line.separator}</echo>
 		<echo file="${api.classes.dir}/api.build.properties" append="true">version=${hbox.version}${line.separator}</echo>
+		<echo file="${api.classes.dir}/api.build.properties" append="true">protocol=${hbox.protocol.version}${line.separator}</echo>
 	</target>
 
 	<target name="server.api.compile" depends="api.compile">

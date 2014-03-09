@@ -5,5 +5,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/API"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Altherian Tools"/>
 	<classpathentry kind="output" path="eclipse-bin"/>
 </classpath>

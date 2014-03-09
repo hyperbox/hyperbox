@@ -92,21 +92,21 @@ public final class MainView {
    public void show() {
       Logger.track();
       
-      int width = Integer.parseInt(PreferencesManager.get(MainView.class.getName()).getProperty("frame.width", "990"));
-      int height = Integer.parseInt(PreferencesManager.get(MainView.class.getName()).getProperty("frame.height", "772"));
+      int width = Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFrameWidth.getId(), "990"));
+      int height = Integer.parseInt(PreferencesManager.get(MainView.class.getName()).getProperty(Config.MainFrameHeight.getId(), "772"));
       mainFrame.setSize(width, height);
       
       // FIXME make sure the position still exists, in case we go from two screens to one screen.
-      if (PreferencesManager.get(MainView.class.getName()).containsKey("frame.position.x")
-            && PreferencesManager.get(MainView.class.getName()).containsKey("frame.position.y")) {
-         int x = Integer.parseInt(PreferencesManager.get(MainView.class.getName()).getProperty("frame.position.x"));
-         int y = Integer.parseInt(PreferencesManager.get(MainView.class.getName()).getProperty("frame.position.y"));
+      if (PreferencesManager.get().containsKey(Config.MainFramePosX.getId())
+            && PreferencesManager.get().containsKey(Config.MainFramePosY.getId())) {
+         int x = Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFramePosX.getId()));
+         int y = Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFramePosY.getId()));
          mainFrame.setLocation(x, y);
       } else {
          mainFrame.setLocationRelativeTo(null);
       }
       
-      mainFrame.setExtendedState(Integer.parseInt(PreferencesManager.get(MainView.class.getName()).getProperty("frame.state",
+      mainFrame.setExtendedState(Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFrameState.getId(),
             Integer.toString(JFrame.NORMAL))));
       mainFrame.setVisible(true);
    }
@@ -114,7 +114,6 @@ public final class MainView {
    public void hide() {
       Logger.track();
       
-      // TODO save the size & position
       mainFrame.setVisible(false);
    }
    
@@ -125,11 +124,13 @@ public final class MainView {
          Logger.track();
          
          mainFrame.setExtendedState(JFrame.NORMAL);
-         PreferencesManager.get(MainView.class.getName()).setProperty("frame.width", Integer.toString(mainFrame.getWidth()));
-         PreferencesManager.get(MainView.class.getName()).setProperty("frame.height", Integer.toString(mainFrame.getHeight()));
-         PreferencesManager.get(MainView.class.getName()).setProperty("frame.position.x", Integer.toString(mainFrame.getLocationOnScreen().x));
-         PreferencesManager.get(MainView.class.getName()).setProperty("frame.position.y", Integer.toString(mainFrame.getLocationOnScreen().y));
-         PreferencesManager.get(MainView.class.getName()).setProperty("frame.state", Integer.toString(mainFrame.getExtendedState()));
+         PreferencesManager.get(MainView.class.getName()).setProperty(Config.MainFrameWidth.getId(), Integer.toString(mainFrame.getWidth()));
+         PreferencesManager.get(MainView.class.getName()).setProperty(Config.MainFrameHeight.getId(), Integer.toString(mainFrame.getHeight()));
+         PreferencesManager.get(MainView.class.getName()).setProperty(Config.MainFramePosX.getId(),
+               Integer.toString(mainFrame.getLocationOnScreen().x));
+         PreferencesManager.get(MainView.class.getName()).setProperty(Config.MainFramePosY.getId(),
+               Integer.toString(mainFrame.getLocationOnScreen().y));
+         PreferencesManager.get(MainView.class.getName()).setProperty(Config.MainFrameState.getId(), Integer.toString(mainFrame.getExtendedState()));
          
          Gui.exit();
       }

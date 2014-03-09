@@ -68,6 +68,7 @@ public class AboutDialog {
       text.append("This product is released under the GPL v3.\n");
       text.append("\n\n");
       text.append("API Version " + HyperboxAPI.getVersion() + " (r " + HyperboxAPI.getRevision() + ")\n");
+      text.append("Network Protocol Version " + HyperboxAPI.getProtocolVersion() + "\n");
       text.append("Client Version " + Hyperbox.getVersion() + " (r " + Hyperbox.getRevision() + ")\n");
       text.append("\n\n");
       text.append("Hyperbox is an Enterprise Virtualization Manager.\n");

@@ -82,6 +82,8 @@ public final class VmSummaryView {
    private JPanel systemPanel;
    private JLabel cpuCountLabel;
    private JTextField cpuCountValue;
+   private JLabel memoryLabel;
+   private JTextField memoryValue;
    private JLabel accelLabel;
    private JTextField accelValue;
    
@@ -134,13 +136,13 @@ public final class VmSummaryView {
          initDesc();
          
          panel = new JPanel(new MigLayout("ins 0"));
-         panel.add(generalPanel, "growx,pushx,wrap");
-         panel.add(systemPanel, "growx,pushx,wrap");
-         panel.add(displayPanel, "growx,pushx,wrap");
-         panel.add(storagePanel, "growx,pushx,wrap");
-         panel.add(audioPanel, "growx,pushx,wrap");
-         panel.add(networkPanel, "growx,pushx,wrap");
-         panel.add(descPanel, "growx,pushx,wrap");
+         panel.add(generalPanel, "growx, pushx, wrap");
+         panel.add(systemPanel, "growx, pushx, wrap");
+         panel.add(displayPanel, "growx, pushx, wrap");
+         panel.add(storagePanel, "growx, pushx, wrap");
+         panel.add(audioPanel, "growx, pushx, wrap");
+         panel.add(networkPanel, "growx, pushx, wrap");
+         panel.add(descPanel, "growx, pushx, wrap");
          
          FrontEventManager.register(this);
       }
@@ -164,13 +166,13 @@ public final class VmSummaryView {
       generalPanel = new JPanel(new MigLayout());
       generalPanel.setBorder(BorderUtils.createTitledBorder(Color.gray, "General"));
       generalPanel.add(nameLabel);
-      generalPanel.add(nameField, "growx,pushx,wrap");
+      generalPanel.add(nameField, "growx, pushx, wrap");
       generalPanel.add(uuidLabel);
-      generalPanel.add(uuidField, "growx,pushx,wrap");
+      generalPanel.add(uuidField, "growx, pushx, wrap");
       generalPanel.add(stateLabel);
-      generalPanel.add(stateField, "growx,pushx,wrap");
+      generalPanel.add(stateField, "growx, pushx, wrap");
       generalPanel.add(osTypeLabel);
-      generalPanel.add(osTypeField, "growx,pushx,wrap");
+      generalPanel.add(osTypeField, "growx, pushx, wrap");
    }
    
    private void initSystem() {
@@ -178,15 +180,19 @@ public final class VmSummaryView {
       
       cpuCountLabel = new JLabel("vCPU");
       cpuCountValue = JTextFieldUtils.createNonEditable();
+      memoryLabel = new JLabel("Memory");
+      memoryValue = JTextFieldUtils.createNonEditable();
       accelLabel = new JLabel("Acceleration");
       accelValue = JTextFieldUtils.createNonEditable();
       
       systemPanel = new JPanel(new MigLayout());
       systemPanel.setBorder(BorderUtils.createTitledBorder(Color.gray, "System"));
       systemPanel.add(cpuCountLabel);
-      systemPanel.add(cpuCountValue, "growx,pushx,wrap");
+      systemPanel.add(cpuCountValue, "growx, pushx, wrap");
+      systemPanel.add(memoryLabel);
+      systemPanel.add(memoryValue, "growx, pushx, wrap");
       systemPanel.add(accelLabel);
-      systemPanel.add(accelValue, "growx,pushx,wrap");
+      systemPanel.add(accelValue, "growx, pushx, wrap");
    }
    
    private void initDisplay() {
@@ -205,11 +211,11 @@ public final class VmSummaryView {
       displayPanel = new JPanel(new MigLayout());
       displayPanel.setBorder(BorderUtils.createTitledBorder(Color.GRAY, "Display"));
       displayPanel.add(vramLabel);
-      displayPanel.add(vramValue, "growx,pushx,span 2, wrap");
+      displayPanel.add(vramValue, "growx, pushx,span 2, wrap");
       displayPanel.add(consoleModuleLabel);
-      displayPanel.add(consoleModuleValue, "growx,pushx, span 2, wrap");
+      displayPanel.add(consoleModuleValue, "growx, pushx, span 2, wrap");
       displayPanel.add(consoleAddressLabel);
-      displayPanel.add(consoleAddressValue, "growx,pushx");
+      displayPanel.add(consoleAddressValue, "growx, pushx");
       displayPanel.add(consoleConnectButton, "wrap");
    }
    
@@ -231,9 +237,9 @@ public final class VmSummaryView {
       audioPanel = new JPanel(new MigLayout());
       audioPanel.setBorder(BorderUtils.createTitledBorder(Color.gray, "Audio"));
       audioPanel.add(hostDriverLabel);
-      audioPanel.add(hostDriverValue, "growx,pushx,wrap");
+      audioPanel.add(hostDriverValue, "growx, pushx, wrap");
       audioPanel.add(audioControllerLabel);
-      audioPanel.add(audioControllerValue, "growx,pushx,wrap");
+      audioPanel.add(audioControllerValue, "growx, pushx, wrap");
    }
    
    private void initNetwork() {
@@ -251,7 +257,7 @@ public final class VmSummaryView {
       
       descPanel = new JPanel(new MigLayout());
       descPanel.setBorder(BorderUtils.createTitledBorder(Color.gray, "Description"));
-      descPanel.add(descArea, "grow,push,wrap");
+      descPanel.add(descArea, "grow, push, wrap");
    }
    
    private void clearGeneral() {
@@ -267,6 +273,7 @@ public final class VmSummaryView {
       Logger.track();
       
       cpuCountValue.setText(null);
+      memoryValue.setText(null);
       accelValue.setText(null);
    }
    
@@ -345,6 +352,7 @@ public final class VmSummaryView {
       Logger.track();
       
       cpuCountValue.setText(mOut.getSetting(MachineAttributes.CpuCount).getString());
+      memoryValue.setText(mOut.getSetting(MachineAttributes.Memory).getString() + " MB");
       List<String> extList = new ArrayList<String>();
       if (mOut.getSetting(MachineAttributes.HwVirtEx).getBoolean()) {
          extList.add("VT-x/AMD-V");
@@ -448,9 +456,9 @@ public final class VmSummaryView {
          audioControllerValue.setText(mOut.getSetting(MachineAttributes.AudioController).getString());
          
          audioPanel.add(hostDriverLabel);
-         audioPanel.add(hostDriverValue, "growx,pushx,wrap");
+         audioPanel.add(hostDriverValue, "growx, pushx, wrap");
          audioPanel.add(audioControllerLabel);
-         audioPanel.add(audioControllerValue, "growx,pushx,wrap");
+         audioPanel.add(audioControllerValue, "growx, pushx, wrap");
       } else {
          audioPanel.add(new JLabel("Disabled"));
       }

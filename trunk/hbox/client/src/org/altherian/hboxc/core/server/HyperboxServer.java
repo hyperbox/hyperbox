@@ -24,6 +24,7 @@ package org.altherian.hboxc.core.server;
 
 import net.engio.mbassy.listener.Handler;
 
+import org.altherian.hbox.HyperboxAPI;
 import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.CommObjets;
 import org.altherian.hbox.comm.Command;
@@ -45,6 +46,7 @@ import org.altherian.hbox.comm.input.StoreInput;
 import org.altherian.hbox.comm.input.StoreItemInput;
 import org.altherian.hbox.comm.input.TaskInput;
 import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.output.HelloOutput;
 import org.altherian.hbox.comm.output.ServerOutput;
 import org.altherian.hbox.comm.output.SessionOutput;
 import org.altherian.hbox.comm.output.StoreItemOutput;
@@ -112,7 +114,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       if (!this.state.equals(state)) {
          this.state = state;
       } else {
-         Logger.debug("Ignoring setState() - same as current");
+         Logger.debug("Ignoring setState(" + state + ") - same as current");
       }
    }
    
@@ -755,6 +757,22 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
          backend.connect(address);
          Logger.info("Connected to Hyperbox Server");
          
+         Transaction helloTrans = new Transaction(backend, new Request(Command.HBOX, HyperboxTasks.Hello));
+         if (!helloTrans.sendAndWait()) {
+            throw new HyperboxException("Unable to welcome the server : " + helloTrans.getError());
+         }
+         HelloOutput helloOut = helloTrans.extractItem(HelloOutput.class);
+         if (helloOut == null) {
+            Logger.error("Server did not send its network protocol version, will disconnect");
+            throw new HyperboxRuntimeException("Server Network Protocol is not compatible with this client. Cannot connect.");
+         }
+         Logger.info("Server Network Protocol Version: " + helloOut.getProtocolVersion());
+         if ((helloOut.getProtocolVersion() > 0) && (HyperboxAPI.getProtocolVersion() > 0)
+               && (helloOut.getProtocolVersion() != HyperboxAPI.getProtocolVersion())) {
+            throw new HyperboxRuntimeException("Client and Server Network protocol do not match, cannot connect: Local version is "
+                  + HyperboxAPI.getProtocolVersion() + " and Remove version is " + helloOut.getProtocolVersion());
+         }
+         
          Transaction loginTrans = new Transaction(backend, new Request(Command.HBOX, HyperboxTasks.Login, usrIn));
          if (!loginTrans.sendAndWait()) {
             Logger.error("Login failure : " + loginTrans.getError());
@@ -763,13 +781,6 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
          } else {
             Logger.info("Authentication successfull");
          }
-         Transaction helloTrans = new Transaction(backend, new Request(Command.HBOX, HyperboxTasks.Hello));
-         if (!helloTrans.sendAndWait()) {
-            throw new HyperboxException("Unable to welcome the server : " + helloTrans.getError());
-         }
-         Answer ans = helloTrans.getBody().poll();
-         String version = ans.get("Hello").toString();
-         Logger.debug("Got Hello packet - Version : " + version);
          
          refreshInfo();
          

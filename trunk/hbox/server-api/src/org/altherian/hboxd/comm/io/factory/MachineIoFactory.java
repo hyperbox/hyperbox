@@ -25,6 +25,7 @@ import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
 import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
 import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.states.MachineStates;
 import org.altherian.hboxd.HBoxServer;
 import org.altherian.hboxd.core.model._Machine;
 import org.altherian.hboxd.core.model._NetworkInterface;
@@ -42,7 +43,11 @@ public final class MachineIoFactory {
    }
    
    public static MachineOutput get(String uuid) {
-      return new MachineOutput(HBoxServer.get().getId(), uuid);
+      return get(uuid, true);
+   }
+   
+   public static MachineOutput get(String uuid, boolean isAvailable) {
+      return new MachineOutput(HBoxServer.get().getId(), uuid, isAvailable);
    }
    
    public static MachineOutput getSimple(String uuid, String state, List<_Setting> settings) {
@@ -50,27 +55,37 @@ public final class MachineIoFactory {
    }
    
    public static MachineOutput getSimple(_Machine m) {
-      List<_Setting> settings = Arrays.asList(
-            m.getSetting(MachineAttributes.Name.getId()),
-            m.getSetting(MachineAttributes.CurrentSnapshotUuid.getId()),
-            m.getSetting(MachineAttributes.HasSnapshot.getId()));
-      return getSimple(m.getUuid(), m.getState().getId(), settings);
+      List<_Setting> settings = new ArrayList<_Setting>();
+      if (m.isAccessible()) {
+         settings.addAll(Arrays.asList(
+               m.getSetting(MachineAttributes.Name.getId()),
+               m.getSetting(MachineAttributes.CurrentSnapshotUuid.getId()),
+               m.getSetting(MachineAttributes.HasSnapshot.getId())));
+         return getSimple(m.getUuid(), MachineStates.Inaccessible.getId(), settings);
+      } else {
+         return get(m.getUuid(), false);
+      }
+      
    }
    
    public static MachineOutput get(_Machine m) {
-      String serverId = HBoxServer.get().getId();
-      List<StorageControllerOutput> scOutList = new ArrayList<StorageControllerOutput>();
-      for (_StorageController sc : m.listStorageControllers()) {
-         scOutList.add(StorageControllerIoFactory.get(sc));
+      if (m.isAccessible()) {
+         String serverId = HBoxServer.get().getId();
+         List<StorageControllerOutput> scOutList = new ArrayList<StorageControllerOutput>();
+         for (_StorageController sc : m.listStorageControllers()) {
+            scOutList.add(StorageControllerIoFactory.get(sc));
+         }
+         
+         List<NetworkInterfaceOutput> nicOutList = new ArrayList<NetworkInterfaceOutput>();
+         for (_NetworkInterface nic : m.listNetworkInterfaces()) {
+            nicOutList.add(NetworkInterfaceIoFactory.get(nic));
+         }
+         
+         MachineOutput mOut = new MachineOutput(serverId, m.getUuid(), m.getState(), SettingIoFactory.getList(m.getSettings()), scOutList, nicOutList);
+         return mOut;
+      } else {
+         return get(m.getUuid(), false);
       }
-      
-      List<NetworkInterfaceOutput> nicOutList = new ArrayList<NetworkInterfaceOutput>();
-      for (_NetworkInterface nic : m.listNetworkInterfaces()) {
-         nicOutList.add(NetworkInterfaceIoFactory.get(nic));
-      }
-      
-      MachineOutput mOut = new MachineOutput(serverId, m.getUuid(), m.getState(), SettingIoFactory.getList(m.getSettings()), scOutList, nicOutList);
-      return mOut;
    }
    
 }

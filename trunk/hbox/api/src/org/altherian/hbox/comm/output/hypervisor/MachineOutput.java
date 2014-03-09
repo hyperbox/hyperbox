@@ -37,6 +37,7 @@ public class MachineOutput extends ObjectOutput {
    
    private String serverId;
    private String uuid;
+   private boolean isAvailable = true;
    private String state;
    private Map<Long, NetworkInterfaceOutput> nics = new HashMap<Long, NetworkInterfaceOutput>();
    private Map<String, StorageControllerOutput> strCtrs = new HashMap<String, StorageControllerOutput>();
@@ -69,6 +70,11 @@ public class MachineOutput extends ObjectOutput {
       this.serverId = serverId;
    }
    
+   public MachineOutput(String serverId, String uuid, boolean isAvailable) {
+      this(serverId, uuid);
+      this.isAvailable = isAvailable;
+   }
+
    /**
     * Build a machine message with the given UUID.
     * 
@@ -84,7 +90,7 @@ public class MachineOutput extends ObjectOutput {
    public String getServerId() {
       return serverId;
    }
-
+   
    /**
     * Get the UUID for this machine
     * 
@@ -92,6 +98,10 @@ public class MachineOutput extends ObjectOutput {
     */
    public String getUuid() {
       return uuid;
+   }
+   
+   public boolean isAvailable() {
+      return isAvailable;
    }
    
    /**

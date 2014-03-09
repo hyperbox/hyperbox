@@ -58,7 +58,7 @@ import org.altherian.hboxc.front.gui.action.store.StoreUnregisterAction;
 import org.altherian.hboxc.front.gui.connector._ConnectorSelector;
 import org.altherian.hboxc.front.gui.server._ServerSelector;
 import org.altherian.hboxc.front.gui.store._StoreSelector;
-import org.altherian.hboxc.front.gui.vm._VmSelector;
+import org.altherian.hboxc.front.gui.vm._MachineSelector;
 import org.altherian.tool.logging.Logger;
 
 import javax.swing.Action;
@@ -77,7 +77,7 @@ public class PopupMenuBuilder {
       return stoMenuActions;
    }
    
-   public static JPopupMenu get(_VmSelector select, MachineOutput mOut) {
+   public static JPopupMenu get(_MachineSelector select, MachineOutput mOut) {
       Logger.track();
       
       JMenu machineMenu = new JMenu("Machine");

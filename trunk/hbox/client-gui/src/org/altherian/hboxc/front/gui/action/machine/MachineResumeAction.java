@@ -28,7 +28,7 @@ import org.altherian.hbox.comm.input.MachineInput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
-import org.altherian.hboxc.front.gui.vm._VmSelector;
+import org.altherian.hboxc.front.gui.vm._MachineSelector;
 
 import java.awt.event.ActionEvent;
 
@@ -37,9 +37,9 @@ import javax.swing.AbstractAction;
 @SuppressWarnings("serial")
 public class MachineResumeAction extends AbstractAction {
    
-   private _VmSelector selector;
+   private _MachineSelector selector;
    
-   public MachineResumeAction(_VmSelector selector) {
+   public MachineResumeAction(_MachineSelector selector) {
       super("Resume", IconBuilder.getTask(HypervisorTasks.MachineResume));
       setEnabled(true);
       this.selector = selector;

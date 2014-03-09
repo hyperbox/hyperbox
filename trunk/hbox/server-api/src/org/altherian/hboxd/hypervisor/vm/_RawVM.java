@@ -47,10 +47,12 @@ public interface _RawVM extends _RawItem {
    
    public String getUuid();
    
+   public boolean isAccessible();
+
    public String getLocation();
    
    public MachineStates getState();
-
+   
    public String getName();
    
    /**

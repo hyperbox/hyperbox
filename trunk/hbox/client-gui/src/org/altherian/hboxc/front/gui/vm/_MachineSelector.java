@@ -25,7 +25,7 @@ import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 
 import java.util.List;
 
-public interface _VmSelector {
+public interface _MachineSelector {
    
    public List<MachineOutput> getMachines();
    

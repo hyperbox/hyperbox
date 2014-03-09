@@ -24,6 +24,7 @@ package org.altherian.hboxc;
 
 import org.altherian.hbox.Configuration;
 import org.altherian.hbox.exception.HyperboxException;
+import org.altherian.tool.JProperties;
 import org.altherian.tool.logging.Logger;
 
 import java.io.File;
@@ -40,15 +41,15 @@ public class PreferencesManager {
    private static File userPrefPath;
    private static String userPrefFilename = "global" + defaultPerfExtention;
    private static File userPrefFile;
-   private static Properties userPref;
-   private static Map<String, Properties> prefs = new HashMap<String, Properties>();
+   private static JProperties userPref;
+   private static Map<String, JProperties> prefs = new HashMap<String, JProperties>();
    
    protected PreferencesManager() {
       // static only
    }
    
-   private static Properties loadPref(File prefFile) throws HyperboxException {
-      Properties newSettings = new Properties();
+   private static JProperties loadPref(File prefFile) throws HyperboxException {
+      JProperties newSettings = new JProperties();
       try {
          if (prefFile.exists()) {
             newSettings.load(new FileReader(prefFile));
@@ -99,14 +100,18 @@ public class PreferencesManager {
     * 
     * @return Properties
     */
-   public static Properties getUserPref() {
+   public static JProperties getUserPref() {
       return userPref;
    }
    
-   public static Properties get(String namespace) {
+   public static JProperties get() {
+      return getUserPref();
+   }
+   
+   public static JProperties get(String namespace) {
       if (!prefs.containsKey(namespace)) {
          Logger.verbose("Loading " + namespace + " preferences file");
-         prefs.put(namespace, new Properties());
+         prefs.put(namespace, new JProperties());
          try {
             File configFile = new File(userPrefPath + File.separator + namespace + defaultPerfExtention);
             Logger.debug("Using " + configFile.getAbsolutePath());
