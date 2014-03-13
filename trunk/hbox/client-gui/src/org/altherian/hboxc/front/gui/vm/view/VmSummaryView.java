@@ -424,6 +424,10 @@ public final class VmSummaryView {
                      storagePanel.add(new JLabel(""));
                      if (sdaOut.hasMediumInserted()) {
                         MediumOutput medOut = Gui.getServer(mOut.getServerId()).getMedium(new MediumInput(sdaOut.getMediumUuid()));
+                        while (medOut.hasParent()) {
+                           Logger.debug(medOut.getName() + " has parent : " + medOut.getParentUuid());
+                           medOut = Gui.getServer(mOut.getServerId()).getMedium(new MediumInput(medOut.getParentUuid()));
+                        }
                         storagePanel.add(new JLabel("[" + sdaOut.getDeviceType() + "] " + medOut.getName()));
                      } else {
                         storagePanel.add(new JLabel("[" + sdaOut.getDeviceType() + "] Empty"));
