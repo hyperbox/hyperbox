@@ -25,6 +25,7 @@ import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
 import org.altherian.hbox.comm.output.ObjectOutput;
 import org.altherian.hbox.constant.MediumAttribute;
+import org.altherian.tool.StringTools;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class MediumOutput extends ObjectOutput {
    }
    
    public boolean hasParent() {
-      return hasSetting(MediumAttribute.ParentUUID);
+      return !StringTools.isEmpty(getSetting(MediumAttribute.ParentUUID).getString());
    }
    
    public String getParentUuid() {
