@@ -27,6 +27,7 @@ public enum ServerAttributes {
    Name,
    Type,
    Version,
+   NetProtocolVersion,
    Revision,
    FullVersion,
    IsHypervisorConnected,

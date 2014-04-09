@@ -24,9 +24,11 @@ package org.altherian.hboxd.vbox4_3.ws.setting.console;
 import org.altherian.hbox.constant.MachineAttributes;
 import org.altherian.hboxd.settings.StringSetting;
 import org.altherian.hboxd.settings._Setting;
+import org.altherian.hboxd.vbox4_3.ws.manager.VbSessionManager;
 import org.altherian.hboxd.vbox4_3.ws.setting._MachineSettingAction;
 
 import org.virtualbox_4_3.IMachine;
+import org.virtualbox_4_3.ISession;
 import org.virtualbox_4_3.LockType;
 
 public class VrdePortSettingAction implements _MachineSettingAction {
@@ -48,7 +50,16 @@ public class VrdePortSettingAction implements _MachineSettingAction {
    
    @Override
    public _Setting get(IMachine machine) {
-      return new StringSetting(MachineAttributes.VrdePort, machine.getVRDEServer().getVRDEProperty("TCP/Ports"));
+      ISession sess = VbSessionManager.get().lockAuto(machine.getId());
+      try {
+         if (sess.getConsole().getVRDEServerInfo().getPort() > 0) {
+            return new StringSetting(MachineAttributes.VrdePort, Integer.toString(sess.getConsole().getVRDEServerInfo().getPort()));
+         } else {
+            return new StringSetting(MachineAttributes.VrdePort, machine.getVRDEServer().getVRDEProperty("TCP/Ports"));
+         }
+      } finally {
+         VbSessionManager.get().unlockAuto(machine.getId());
+      }
    }
    
 }

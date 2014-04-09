@@ -161,6 +161,14 @@ public class ClientCore implements _Core {
       if (getCoreState().equals(CoreState.Started) || getCoreState().equals(CoreState.Starting)) {
          setState(CoreState.Stopping);
          
+         for (String connId : conns.keySet()) {
+            try {
+               disconnect(connId);
+            } catch (Throwable t) {
+               Logger.warning("Failed to disconnect servers during client shutdown: " + t.getMessage());
+            }
+         }
+         
          storage.storeViewers(consoleViewers.values());
          storage.storeConnectors(conns.values());
          

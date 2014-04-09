@@ -56,6 +56,8 @@ public class ServerViewer implements _Refreshable {
    private JTextField typeValue;
    private JLabel versionLabel;
    private JTextField versionValue;
+   private JLabel netProtocolLabel;
+   private JTextField netProtocolValue;
    
    private JPanel srvPanel;
    
@@ -66,11 +68,13 @@ public class ServerViewer implements _Refreshable {
       nameLabel = new JLabel("Name");
       typeLabel = new JLabel("Type");
       versionLabel = new JLabel("Version");
+      netProtocolLabel = new JLabel("Protocol");
       
       idValue = JTextFieldUtils.createNonEditable();
       nameValue = JTextFieldUtils.createNonEditable();
       typeValue = JTextFieldUtils.createNonEditable();
       versionValue = JTextFieldUtils.createNonEditable();
+      netProtocolValue = JTextFieldUtils.createNonEditable();
       
       hypViewer = new HypervisorViewer();
       
@@ -84,6 +88,8 @@ public class ServerViewer implements _Refreshable {
       srvPanel.add(typeValue, "growx,pushx,wrap");
       srvPanel.add(versionLabel);
       srvPanel.add(versionValue, "growx,pushx,wrap");
+      srvPanel.add(netProtocolLabel);
+      srvPanel.add(netProtocolValue, "growx,pushx,wrap");
       
       
       panel = new JPanel(new MigLayout("ins 0"));
@@ -108,6 +114,7 @@ public class ServerViewer implements _Refreshable {
       nameValue.setText(srvOut.getName());
       typeValue.setText(srvOut.getType());
       versionValue.setText(srvOut.getVersion());
+      netProtocolValue.setText(srvOut.getNetworkProtocolVersion() != null ? srvOut.getNetworkProtocolVersion() : "Unknown");
       
       if (srvOut.isHypervisorConnected()) {
          hypViewer.show(Gui.getServer(srvOut).getHypervisor().getInfo());
@@ -121,7 +128,7 @@ public class ServerViewer implements _Refreshable {
       Logger.track();
       
       if (ev.getServer().getId().equals(srvOut.getId())) {
-         show(ev.getServer());
+         show(Gui.getServerInfo(srvOut.getId()));
       }
    }
    
