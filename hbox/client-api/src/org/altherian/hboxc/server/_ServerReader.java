@@ -65,10 +65,12 @@ public interface _ServerReader {
    
    public String getVersion();
    
+   public String getProtocolVersion();
+
    public _GuestReader getGuest(String machineUuid);
    
    public MachineOutput getMachine(MachineInput mIn);
-
+   
    public MachineOutput getMachine(String machineId);
    
    public MediumOutput getMedium(MediumInput mIn);

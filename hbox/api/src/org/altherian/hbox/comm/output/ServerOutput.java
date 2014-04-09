@@ -48,13 +48,14 @@ public class ServerOutput extends ObjectOutput {
       return getSetting(ServerAttributes.Type).getString();
    }
    
-   /**
-    * @return the version
-    */
    public String getVersion() {
       return getSetting(ServerAttributes.Version).getString();
    }
    
+   public String getNetworkProtocolVersion() {
+      return getSetting(ServerAttributes.NetProtocolVersion).getString();
+   }
+
    public Boolean isHypervisorConnected() {
       return getSetting(ServerAttributes.IsHypervisorConnected).getBoolean();
    }
@@ -63,5 +64,5 @@ public class ServerOutput extends ObjectOutput {
    public String toString() {
       return getName();
    }
-
+   
 }

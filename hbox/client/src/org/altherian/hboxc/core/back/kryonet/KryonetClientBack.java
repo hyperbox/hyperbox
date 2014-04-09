@@ -199,7 +199,7 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
                   ansReceivers.remove(ans.getExchangeId());
                }
             } else {
-               Logger.warning("Oprhan answer: " + ans);
+               Logger.warning("Oprhan answer: " + ans.getExchangeId() + " - " + ans.getType() + " - " + ans.getCommand() + " - " + ans.getName());
             }
          }
          if (object instanceof EventOutput) {

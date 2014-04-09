@@ -513,7 +513,6 @@ public final class VmSummaryView {
       Logger.track();
       
       if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.track();
          SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -521,16 +520,12 @@ public final class VmSummaryView {
             }
          });
       } else {
-         Logger.track();
          try {
             if (!isRefreshing) {
-               Logger.track();
                isRefreshing = true;
                if (mOut == null) {
-                  Logger.track();
                   clear();
                } else {
-                  Logger.track();
                   refreshGeneral();
                   refreshSystem();
                   refreshDisplay();
@@ -542,16 +537,12 @@ public final class VmSummaryView {
                   panel.repaint();
                }
             } else {
-               Logger.track();
                Logger.warning("Trying to refresh VM info while already refreshing");
             }
          } finally {
-            Logger.track();
             isRefreshing = false;
          }
-         Logger.track();
       }
-      Logger.track();
    }
    
    public JComponent getComponent() {
@@ -562,6 +553,7 @@ public final class VmSummaryView {
    public void getMachineUpdate(MachineStateChangedEvent ev) {
       if (ev.getUuid().contentEquals(mOut.getUuid())) {
          stateField.setText(ev.getMachine().getState());
+         // TODO improve next line
          consoleConnectButton.setEnabled(ev.getMachine().getState().equalsIgnoreCase("running"));
       }
    }

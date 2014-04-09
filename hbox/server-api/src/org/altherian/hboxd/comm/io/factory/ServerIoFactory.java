@@ -21,6 +21,7 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
+import org.altherian.hbox.HyperboxAPI;
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
@@ -44,6 +45,7 @@ public class ServerIoFactory {
       settings.add(new StringSettingIO(ServerAttributes.Type, srv.getType().getId()));
       settings.add(new StringSettingIO(ServerAttributes.Version, srv.getVersion()));
       settings.add(new BooleanSettingIO(ServerAttributes.IsHypervisorConnected, srv.isConnected()));
+      settings.add(new StringSettingIO(ServerAttributes.NetProtocolVersion, Long.toString(HyperboxAPI.getProtocolVersion())));
       ServerOutput srvOut = new ServerOutput(srv.getId(), settings);
       return srvOut;
    }

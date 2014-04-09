@@ -105,6 +105,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
    private String name;
    private String type;
    private String version;
+   private String protocolVersion;
    private boolean isHypConnected = false;
    
    private ConnectionState state = ConnectionState.Disconnected;
@@ -136,6 +137,11 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
    @Override
    public String getVersion() {
       return version;
+   }
+   
+   @Override
+   public String getProtocolVersion() {
+      return protocolVersion;
    }
    
    @Override
@@ -733,6 +739,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       name = srvOut.getName();
       type = srvOut.getType();
       version = srvOut.getVersion();
+      protocolVersion = srvOut.getNetworkProtocolVersion();
       isHypConnected = srvOut.isHypervisorConnected();
       if (isHypConnected && (hypReader == null)) {
          hypReader = new HypervisorReader(this);
