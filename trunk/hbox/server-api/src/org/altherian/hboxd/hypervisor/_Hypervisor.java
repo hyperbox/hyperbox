@@ -30,6 +30,7 @@ import org.altherian.hboxd.hypervisor.storage._RawMedium;
 import org.altherian.hboxd.hypervisor.storage._RawStorageControllerSubType;
 import org.altherian.hboxd.hypervisor.storage._RawStorageControllerType;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
+import org.altherian.hboxd.settings._Setting;
 
 import java.util.List;
 
@@ -94,7 +95,7 @@ public interface _Hypervisor {
    public List<_RawVM> listMachines();
    
    public boolean hasToolsMedium();
-
+   
    /**
     * Get the medium for the hypervisor tools that can be attached to a machine, or null if none exists.
     * 
@@ -123,5 +124,9 @@ public interface _Hypervisor {
    public void setEventManager(_EventManager evMgr);
    
    public void unregisterMachine(String uuid);
+   
+   public List<_Setting> getSettings();
+
+   public void configure(List<_Setting> listIo);
    
 }

@@ -33,6 +33,8 @@ import org.altherian.hboxc.event.server.ServerEvent;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.hypervisor.HypervisorViewer;
+import org.altherian.hboxc.front.gui.workers.ServerGetWorker;
+import org.altherian.hboxc.front.gui.workers._ServerReceiver;
 import org.altherian.helper.swing.JTextFieldUtils;
 import org.altherian.tool.logging.Logger;
 
@@ -42,7 +44,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class ServerViewer implements _Refreshable {
+public class ServerViewer implements _Refreshable, _ServerReceiver {
    
    private ServerOutput srvOut;
    
@@ -105,11 +107,20 @@ public class ServerViewer implements _Refreshable {
    
    public void show(ServerOutput srvOut) {
       this.srvOut = srvOut;
-      refresh();
+      update();
+   }
+   
+   private void clear() {
+      // TODO implement
    }
    
    @Override
    public void refresh() {
+      clear();
+      ServerGetWorker.get(this, srvOut.getId());
+   }
+   
+   private void update() {
       idValue.setText(srvOut.getId());
       nameValue.setText(srvOut.getName());
       typeValue.setText(srvOut.getType());
@@ -128,10 +139,11 @@ public class ServerViewer implements _Refreshable {
       Logger.track();
       
       if (ev.getServer().getId().equals(srvOut.getId())) {
-         show(Gui.getServerInfo(srvOut.getId()));
+         refresh();
       }
    }
    
+   // TODO move into the HypervisorViewer class
    @Handler
    public void putHypervisorConnectEvent(HypervisorConnectedEventOutput ev) {
       if (ev.getServer().getId().equals(srvOut.getId())) {
@@ -139,11 +151,30 @@ public class ServerViewer implements _Refreshable {
       }
    }
    
+   // TODO move into the HypervisorViewer class
    @Handler
    public void putHypervisorDisconnectEvent(HypervisorDisconnectedEventOutput ev) {
       if (ev.getServer().getId().equals(srvOut.getId())) {
          hypViewer.setDisconnected();
       }
+   }
+   
+   @Override
+   public void loadingStarted() {
+      // nothing to do yet
+   }
+   
+   @Override
+   public void loadingFinished(boolean isSuccessful, String message) {
+      // TODO implement in case of error
+   }
+   
+   @Override
+   public void put(ServerOutput srvOut) {
+      Logger.track();
+      
+      this.srvOut = srvOut;
+      update();
    }
    
 }

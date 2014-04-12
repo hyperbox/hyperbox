@@ -1,4 +1,4 @@
-/* 
+/*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
  * 
@@ -32,6 +32,8 @@ public interface _Settable {
    
    public void setSetting(_Setting setting);
    
+   public void setSetting(List<_Setting> settings);
+
    public boolean hasSetting(String settingId);
    
 }

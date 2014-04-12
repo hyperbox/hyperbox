@@ -38,7 +38,9 @@ import org.altherian.hbox.states.ServerState;
 import org.altherian.hboxd.HBoxServer;
 import org.altherian.hboxd.Hyperbox;
 import org.altherian.hboxd.core.action._ActionManager;
+import org.altherian.hboxd.core.model.Medium;
 import org.altherian.hboxd.core.model._Machine;
+import org.altherian.hboxd.core.model._Medium;
 import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event.hypervisor.HypervisorConnectedEvent;
 import org.altherian.hboxd.event.hypervisor.HypervisorDisconnectedEvent;
@@ -47,8 +49,11 @@ import org.altherian.hboxd.exception.ServerNotFoundException;
 import org.altherian.hboxd.factory.MachineFactory;
 import org.altherian.hboxd.factory.SecurityManagerFactory;
 import org.altherian.hboxd.front._RequestReceiver;
+import org.altherian.hboxd.host.Host;
+import org.altherian.hboxd.host._Host;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 import org.altherian.hboxd.hypervisor._HypervisorLoader;
+import org.altherian.hboxd.hypervisor.storage._RawMedium;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
 import org.altherian.hboxd.persistence._Persistor;
 import org.altherian.hboxd.persistence.sql.h2.H2SqlPersistor;
@@ -70,6 +75,7 @@ import org.altherian.tool.BooleanUtils;
 import org.altherian.tool.SystemUtils;
 import org.altherian.tool.logging.Logger;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,6 +84,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+
+import com.google.common.io.Files;
 
 public class SingleHostCore implements _Hyperbox, _Server {
    
@@ -331,7 +339,7 @@ public class SingleHostCore implements _Hyperbox, _Server {
    @Override
    public void connect(String hypervisorId, String options) {
       secMgr.authorize(SecurityItem.Hypervisor, SecurityAction.Connect);
-
+      
       if (!hypervisors.containsKey(hypervisorId)) {
          throw new HyperboxRuntimeException("Invalid Hypervisor ID");
       }
@@ -361,7 +369,7 @@ public class SingleHostCore implements _Hyperbox, _Server {
    @Override
    public void disconnect() {
       secMgr.authorize(SecurityItem.Hypervisor, SecurityAction.Disconnect);
-
+      
       hypervisor.disconnect();
       hypervisor = null;
       EventManager.post(new HypervisorDisconnectedEvent(this));
@@ -457,5 +465,38 @@ public class SingleHostCore implements _Hyperbox, _Server {
       hypervisor.deleteMachine(id);
    }
    
+   @Override
+   public _Medium createMedium(String location, String format, Long logicalSize) {
+      Logger.debug("Creating a new hard disk at location [" + location + "] with format [" + format + "] and size ["
+            + logicalSize + "]");
+      Logger.debug("File extension: " + Files.getFileExtension(location));
+      if (Files.getFileExtension(location).isEmpty()) {
+         Logger.debug("Will add extention to filename: " + format.toLowerCase());
+         location = location + "." + format.toLowerCase();
+      } else {
+         Logger.debug("No need to add extension");
+      }
+      _RawMedium rawMed = hypervisor.createHardDisk(location, format, logicalSize);
+      _Medium med = new Medium(this, hypervisor, rawMed);
+      return med;
+   }
+   
+   @Override
+   public _Medium createMedium(String vmId, String filename, String format, Long logicalSize) {
+      if (!new File(filename).isAbsolute()) {
+         filename = getMachine(vmId).getLocation() + "/" + filename;
+      }
+      return createMedium(filename, format, logicalSize);
+   }
+   
+   @Override
+   public _Medium getMedium(String medId) {
+      return new Medium(this, hypervisor, hypervisor.getMedium(medId));
+   }
+   
+   @Override
+   public _Host getHost() {
+      return new Host(hypervisor.getHost());
+   }
    
 }

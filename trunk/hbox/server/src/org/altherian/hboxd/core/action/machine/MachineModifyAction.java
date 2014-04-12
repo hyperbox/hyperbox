@@ -24,52 +24,48 @@ package org.altherian.hboxd.core.action.machine;
 import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
-import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.HypervisorTasks;
+import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.input.Action;
 import org.altherian.hbox.comm.input.MachineInput;
 import org.altherian.hbox.comm.input.NetworkInterfaceInput;
+import org.altherian.hbox.comm.input.ServerInput;
 import org.altherian.hbox.comm.input.StorageControllerInput;
 import org.altherian.hbox.comm.input.StorageDeviceAttachmentInput;
 import org.altherian.hbox.constant.MachineAttributes;
 import org.altherian.hboxd.comm.io.factory.SettingIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
-import org.altherian.hboxd.hypervisor.storage._RawMedium;
-import org.altherian.hboxd.hypervisor.storage._RawMediumAttachment;
-import org.altherian.hboxd.hypervisor.storage._RawStorageController;
-import org.altherian.hboxd.hypervisor.vm._RawVM;
-import org.altherian.hboxd.hypervisor.vm.device._RawNetworkInterface;
+import org.altherian.hboxd.core.model._Machine;
+import org.altherian.hboxd.core.model._Medium;
+import org.altherian.hboxd.core.model._MediumAttachment;
+import org.altherian.hboxd.core.model._NetworkInterface;
+import org.altherian.hboxd.core.model._StorageController;
+import org.altherian.hboxd.server._Server;
 import org.altherian.hboxd.session.SessionContext;
 import org.altherian.tool.logging.Logger;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
 public final class MachineModifyAction extends ASingleTaskAction {
    
-   private void createMedium(_Hyperbox hbox, _RawVM vm, _RawStorageController sc, StorageDeviceAttachmentInput sdaIn) {
+   private void createMedium(_Server srv, _Machine vm, _StorageController sc, StorageDeviceAttachmentInput sdaIn) {
       Logger.track();
       
-      String fullLocation = sdaIn.getMedium().getLocation();
-      if (!new File(fullLocation).isAbsolute()) {
-         fullLocation = vm.getLocation() + "/" + fullLocation;
-      }
-      String medFormat = sdaIn.getMedium().getFormat();
-      Long medSize = sdaIn.getMedium().getLogicalSize();
-      _RawMedium rawMed = hbox.getHypervisor().createHardDisk(fullLocation, medFormat, medSize);
-      sc.attachMedium(rawMed, sdaIn.getPortId(), sdaIn.getDeviceId());
+      _Medium med = srv
+            .createMedium(vm.getUuid(), sdaIn.getMedium().getLocation(), sdaIn.getMedium().getFormat(), sdaIn.getMedium().getLogicalSize());
+      sc.attachMedium(med, sdaIn.getPortId(), sdaIn.getDeviceId());
    }
    
-   private void replaceMedium(_Hyperbox hbox, _RawStorageController sc, StorageDeviceAttachmentInput sdaIn) {
+   private void replaceMedium(_Server srv, _StorageController sc, StorageDeviceAttachmentInput sdaIn) {
       Logger.track();
       
-      _RawMedium rawMed = hbox.getHypervisor().getMedium(sdaIn.getMedium().getUuid());
-      sc.attachMedium(rawMed, sdaIn.getPortId(), sdaIn.getDeviceId());
+      _Medium med = srv.getMedium(sdaIn.getMedium().getUuid());
+      sc.attachMedium(med, sdaIn.getPortId(), sdaIn.getDeviceId());
    }
    
-   private void removeMedium(_Hyperbox hbox, _RawStorageController sc, StorageDeviceAttachmentInput sdaIn) {
+   private void removeMedium(_StorageController sc, StorageDeviceAttachmentInput sdaIn) {
       Logger.track();
       
       sc.detachMedium(sdaIn.getPortId(), sdaIn.getDeviceId());
@@ -87,9 +83,12 @@ public final class MachineModifyAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
+      ServerInput srvIn = request.get(ServerInput.class);
       MachineInput mIn = request.get(MachineInput.class);
       mIn.removeSetting(MachineAttributes.ServerId);
-      _RawVM vm = hbox.getHypervisor().getMachine(mIn.getUuid());
+      
+      _Server srv = hbox.getServer(srvIn.getId());
+      _Machine vm = srv.getMachine(mIn.getUuid());
       
       boolean success = false;
       
@@ -99,12 +98,12 @@ public final class MachineModifyAction extends ASingleTaskAction {
          vm.setSetting(SettingIoFactory.getListIo(mIn.listSettings()));
          
          for (NetworkInterfaceInput nIn : mIn.listNetworkInterface()) {
-            _RawNetworkInterface nic = vm.getNetworkInterface(nIn.getNicId());
+            _NetworkInterface nic = vm.getNetworkInterface(nIn.getNicId());
             nic.setSetting(SettingIoFactory.getListIo(nIn.listSettings()));
          }
          
          for (StorageControllerInput scIn : mIn.listStorageController()) {
-            _RawStorageController sc = null;
+            _StorageController sc = null;
             
             if (scIn.getAction().equals(Action.Delete) || scIn.getAction().equals(Action.Replace)) {
                vm.removeStorageController(scIn.getId());
@@ -125,37 +124,38 @@ public final class MachineModifyAction extends ASingleTaskAction {
                      sc.attachDevice(sdaIn.getDeviceType(), sdaIn.getPortId(), sdaIn.getDeviceId()); // TODO evaluate if still needed
                      if (sdaIn.hasMedium()) {
                         if (sdaIn.getMedium().getAction().equals(Action.Create)) {
-                           createMedium(hbox, vm, sc, sdaIn);
+                           createMedium(srv, vm, sc, sdaIn);
                         } else {
-                           replaceMedium(hbox, sc, sdaIn);
+                           replaceMedium(srv, sc, sdaIn);
                         }
                      }
                   }
                   if (sdaIn.getAction().equals(Action.Modify)) {
-                     _RawMediumAttachment rawMedAtt = sc.getMediumAttachment(sdaIn.getPortId(), sdaIn.getDeviceId());
-                     if (rawMedAtt == null) {
+                     _MediumAttachment medAtt = sc.getMediumAttachment(sdaIn.getPortId(), sdaIn.getDeviceId());
+                     if (medAtt == null) {
                         Logger.track();
                         SessionContext.getClient().putAnswer(new Answer(request, AnswerType.WARNING, "Trying to modify a storage attachment that doesn't exist, skipping"));
                      } else {
                         // We either want to replace or create or change nothing if UUID are the same
                         if (sdaIn.hasMedium() && (sdaIn.getMedium().getAction() == Action.Create)) {
-                           createMedium(hbox, vm, sc, sdaIn);
+                           createMedium(srv, vm, sc, sdaIn);
                         }
                         
                         // We attach since there is nothing attached yet
-                        else if (sdaIn.hasMedium() && !rawMedAtt.hasMedium()) {
-                           replaceMedium(hbox, sc, sdaIn);
+                        else if (sdaIn.hasMedium() && !medAtt.hasMedium()) {
+                           replaceMedium(srv, sc, sdaIn);
                         }
                         
                         // We only want to modify if the UUID is different
-                        else if (sdaIn.hasMedium() && (sdaIn.getMedium().getAction() == Action.Modify) && !sdaIn.getMedium().getUuid().contentEquals(rawMedAtt.getMedium().getUuid())) {
-                           replaceMedium(hbox, sc, sdaIn);
+                        else if (sdaIn.hasMedium() && (sdaIn.getMedium().getAction() == Action.Modify)
+                              && !sdaIn.getMedium().getUuid().contentEquals(medAtt.getMediumId())) {
+                           replaceMedium(srv, sc, sdaIn);
                         }
                         
                         // We want to remove the current medium if the ACtion is set to Delete or if the input has no medium
                         // TODO need explicit change via Action.Delete or Action.Replace
-                        else if ((sdaIn.hasMedium() && (sdaIn.getMedium().getAction() == Action.Delete)) || (rawMedAtt.hasMedium() && !sdaIn.hasMedium())) {
-                           removeMedium(hbox, sc, sdaIn);
+                        else if ((sdaIn.hasMedium() && (sdaIn.getMedium().getAction() == Action.Delete)) || (medAtt.hasMedium() && !sdaIn.hasMedium())) {
+                           removeMedium(sc, sdaIn);
                         } else {
                            Logger.debug("No medium in the current config or the input, skipping");
                         }
@@ -165,8 +165,6 @@ public final class MachineModifyAction extends ASingleTaskAction {
             }
          }
          success = true;
-      } catch (RuntimeException e) {
-         throw e;
       } finally {
          vm.unlock(success);
       }

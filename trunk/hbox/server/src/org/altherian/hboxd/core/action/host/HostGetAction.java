@@ -1,0 +1,40 @@
+package org.altherian.hboxd.core.action.host;
+
+import org.altherian.hbox.comm.Answer;
+import org.altherian.hbox.comm.AnswerType;
+import org.altherian.hbox.comm.Command;
+import org.altherian.hbox.comm.HyperboxTasks;
+import org.altherian.hbox.comm.Request;
+import org.altherian.hbox.comm.input.ServerInput;
+import org.altherian.hbox.comm.output.host.HostOutput;
+import org.altherian.hboxd.comm.io.factory.HostIoFactory;
+import org.altherian.hboxd.core._Hyperbox;
+import org.altherian.hboxd.core.action.ASingleTaskAction;
+import org.altherian.hboxd.host._Host;
+import org.altherian.hboxd.session.SessionContext;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class HostGetAction extends ASingleTaskAction {
+   
+   @Override
+   public List<String> getRegistrations() {
+      return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.HostGet.getId());
+   }
+   
+   @Override
+   public boolean isQueueable() {
+      return false;
+   }
+   
+   @Override
+   public void run(Request request, _Hyperbox hbox) {
+      ServerInput srvIn = request.get(ServerInput.class);
+      _Host host = hbox.getServer(srvIn.getId()).getHost();
+      HostOutput hostOut = HostIoFactory.get(host);
+      
+      SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, hostOut));
+   }
+   
+}

@@ -11,8 +11,10 @@ import org.altherian.hbox.comm.output.event.hypervisor.HypervisorEventOutput;
 import org.altherian.hbox.comm.output.hypervisor.HypervisorOutput;
 import org.altherian.hbox.comm.output.storage.MediumOutput;
 import org.altherian.hboxc.comm.utils.Transaction;
+import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.server._HypervisorReader;
 import org.altherian.hboxc.server._Server;
+import org.altherian.tool.logging.Logger;
 
 public class HypervisorReader implements _HypervisorReader {
    
@@ -20,15 +22,21 @@ public class HypervisorReader implements _HypervisorReader {
    private HypervisorOutput hypData;
    
    private void refresh() {
-      Transaction t = srv.sendRequest(new Request(Command.HBOX, HyperboxTasks.HypervisorGet));
-      hypData = t.extractItem(HypervisorOutput.class);
+      Logger.track();
+      
+      if (srv.isHypervisorConnected()) {
+         Transaction t = srv.sendRequest(new Request(Command.HBOX, HyperboxTasks.HypervisorGet));
+         hypData = t.extractItem(HypervisorOutput.class);
+      } else {
+         hypData = null;
+      }
+      
    }
    
    public HypervisorReader(_Server srv) {
       this.srv = srv;
-      if (srv.isHypervisorConnected()) {
-         refresh();
-      }
+      FrontEventManager.register(this);
+      refresh();
    }
    
    @Override
@@ -74,11 +82,15 @@ public class HypervisorReader implements _HypervisorReader {
    
    @Handler
    protected void putHypervisorDisconnectedEvent(HypervisorDisconnectedEventOutput ev) {
+      Logger.track();
+      
       hypData = null;
    }
    
    @Handler
    protected void putHypervisorEvent(HypervisorEventOutput ev) {
+      Logger.track();
+      
       refresh();
    }
    

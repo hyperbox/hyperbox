@@ -68,7 +68,7 @@ public class StoreEditor implements _Saveable, _Cancelable {
       storeTypeLabel = new JLabel("Type");
       storeTypeBox = new JComboBox();
       // TODO retrieve full list of supported store types.
-      storeTypeBox.addItem("Local Folder");
+      storeTypeBox.addItem("Native Folder");
       
       saveButton = new JButton(new SaveAction(this));
       cancelButton = new JButton(new CancelAction(this));

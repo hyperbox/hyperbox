@@ -99,7 +99,6 @@ public final class FolderStore implements _Store {
          throw new StoreNotOpenException();
       }
 
-      setState(StoreState.Closing);
       setState(StoreState.Closed);
    }
    

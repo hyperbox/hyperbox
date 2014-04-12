@@ -38,6 +38,8 @@ import org.altherian.hboxd.hypervisor.storage._RawStorageControllerSubType;
 import org.altherian.hboxd.hypervisor.storage._RawStorageControllerType;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
 import org.altherian.hboxd.service._Service;
+import org.altherian.hboxd.settings.StringSetting;
+import org.altherian.hboxd.settings._Setting;
 import org.altherian.hboxd.vbox.hypervisor.ws4_2.host.VirtualboxHost;
 import org.altherian.hboxd.vbox.hypervisor.ws4_2.storage.VirtualboxMedium;
 import org.altherian.hboxd.vbox.hypervisor.ws4_2.vm.VBoxMachine;
@@ -190,6 +192,7 @@ public class VirtualboxHypervisor implements _Hypervisor {
       Logger.track();
       
       mediumRegister = null;
+      osTypeCache.clear();
       
       if (evMgrSvc != null) {
          try {
@@ -589,7 +592,7 @@ public class VirtualboxHypervisor implements _Hypervisor {
    
    @Override
    public String getTypeId() {
-      return TYPE_ID;
+      return "vbox-4.2";
    }
    
    @Override
@@ -611,6 +614,26 @@ public class VirtualboxHypervisor implements _Hypervisor {
    @Override
    public boolean hasToolsMedium() {
       return !StringTools.isEmpty(ConnectionManager.getBox().getSystemProperties().getDefaultAdditionsISO());
+   }
+   
+   @Override
+   public void configure(List<_Setting> listIo) {
+      for (_Setting setting : listIo) {
+         if (setting.getName().equalsIgnoreCase("vbox.global.machineFolder")) {
+            ConnectionManager.getBox().getSystemProperties().setDefaultMachineFolder(setting.getString());
+         }
+         if (setting.getName().equalsIgnoreCase("vbox.global.consoleModule")) {
+            ConnectionManager.getBox().getSystemProperties().setDefaultVRDEExtPack(setting.getString());
+         }
+      }
+   }
+   
+   @Override
+   public List<_Setting> getSettings() {
+      List<_Setting> settings = new ArrayList<_Setting>();
+      settings.add(new StringSetting("vbox.global.machineFolder", ConnectionManager.getBox().getSystemProperties().getDefaultMachineFolder()));
+      settings.add(new StringSetting("vbox.global.consoleModule", ConnectionManager.getBox().getSystemProperties().getDefaultVRDEExtPack()));
+      return settings;
    }
    
 }

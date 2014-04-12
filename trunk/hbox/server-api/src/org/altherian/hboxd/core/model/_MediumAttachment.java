@@ -1,4 +1,4 @@
-/* 
+/*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
  * 
@@ -37,4 +37,6 @@ public interface _MediumAttachment {
    
    public boolean isPassThrough();
    
+   public boolean hasMedium();
+
 }

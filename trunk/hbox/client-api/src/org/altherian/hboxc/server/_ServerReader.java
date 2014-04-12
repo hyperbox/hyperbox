@@ -37,6 +37,7 @@ import org.altherian.hbox.comm.output.SessionOutput;
 import org.altherian.hbox.comm.output.StoreItemOutput;
 import org.altherian.hbox.comm.output.StoreOutput;
 import org.altherian.hbox.comm.output.TaskOutput;
+import org.altherian.hbox.comm.output.host.HostOutput;
 import org.altherian.hbox.comm.output.hypervisor.HypervisorLoaderOutput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hbox.comm.output.hypervisor.OsTypeOutput;
@@ -66,7 +67,7 @@ public interface _ServerReader {
    public String getVersion();
    
    public String getProtocolVersion();
-
+   
    public _GuestReader getGuest(String machineUuid);
    
    public MachineOutput getMachine(MachineInput mIn);
@@ -145,4 +146,6 @@ public interface _ServerReader {
    
    public List<HypervisorLoaderOutput> listHypervisors();
    
+   public HostOutput getHost();
+
 }

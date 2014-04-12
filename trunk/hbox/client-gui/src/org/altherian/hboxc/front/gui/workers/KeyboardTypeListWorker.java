@@ -55,7 +55,7 @@ public class KeyboardTypeListWorker extends SwingWorker<Void, String> {
          recv.loadingFinished(false, e.getMessage());
       }
    }
-
+   
    public static void get(_KeyboardTypeListReceiver recv, String serverId, String machineId) {
       new KeyboardTypeListWorker(recv, serverId, machineId).execute();
    }

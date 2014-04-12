@@ -33,6 +33,7 @@ import org.altherian.hboxc.front.gui.action.connector.ConnectorConnectAction;
 import org.altherian.hboxc.front.gui.action.connector.ConnectorDisconnectAction;
 import org.altherian.hboxc.front.gui.action.connector.ConnectorModifyAction;
 import org.altherian.hboxc.front.gui.action.connector.ConnectorRemoveAction;
+import org.altherian.hboxc.front.gui.action.hypervisor.HypervisorConfigureAction;
 import org.altherian.hboxc.front.gui.action.hypervisor.HypervisorConnectAction;
 import org.altherian.hboxc.front.gui.action.hypervisor.HypervisorDisconnectAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineAcpiPowerAction;
@@ -126,12 +127,13 @@ public class PopupMenuBuilder {
          }
          JMenu hypActions = new JMenu("Hypervisor");
          if (conOut.getServer().isHypervisorConnected()) {
+            hypActions.add(new JMenuItem(new HypervisorConfigureAction(srvSelect)));
             hypActions.add(new JMenuItem(new HypervisorDisconnectAction(srvSelect)));
          } else {
             hypActions.add(new JMenuItem(new HypervisorConnectAction(srvSelect)));
          }
          conPopupMenu.add(hypActions);
-
+         
          conPopupMenu.add(new JSeparator());
          conPopupMenu.add(new JMenuItem(new ConnectorDisconnectAction(conSelect)));
          

@@ -80,6 +80,8 @@ public enum HyperboxTasks {
    HypervisorConnect,
    HypervisorDisconnect,
    
+   HostGet,
+
    Login,
    Logout,
    

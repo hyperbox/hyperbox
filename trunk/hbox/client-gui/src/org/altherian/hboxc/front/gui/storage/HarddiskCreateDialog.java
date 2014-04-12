@@ -178,10 +178,6 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
       }
       String format = formatBox.getSelectedItem().toString();
       
-      Logger.debug("Path: " + path);
-      Logger.debug("Size: " + size);
-      Logger.debug("Format: " + format);
-      
       medIn = new MediumInput();
       medIn.setDeviceType(EntityTypes.HardDisk.getId());
       medIn.setLocation(path);

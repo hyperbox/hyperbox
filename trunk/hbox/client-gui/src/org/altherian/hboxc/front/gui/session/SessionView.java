@@ -33,7 +33,6 @@ public final class SessionView {
    private JPanel mainPanel;
    
    public void init() throws HyperboxException {
-      // TODO Auto-generated method stub
       sessionList = new SessionListView();
       sessionList.init();
       

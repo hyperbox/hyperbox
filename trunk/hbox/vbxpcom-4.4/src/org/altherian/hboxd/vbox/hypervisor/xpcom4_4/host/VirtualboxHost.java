@@ -31,4 +31,24 @@ public class VirtualboxHost implements _RawHost {
       return ConnectionManager.getHostname();
    }
    
+   @Override
+   public String getOSName() {
+      return ConnectionManager.getBox().getHost().getOperatingSystem();
+   }
+   
+   @Override
+   public String getOSVersion() {
+      return ConnectionManager.getBox().getHost().getOSVersion();
+   }
+   
+   @Override
+   public long getMemorySize() {
+      return ConnectionManager.getBox().getHost().getMemorySize();
+   }
+   
+   @Override
+   public long getMemoryAvailable() {
+      return ConnectionManager.getBox().getHost().getMemoryAvailable();
+   }
+
 }

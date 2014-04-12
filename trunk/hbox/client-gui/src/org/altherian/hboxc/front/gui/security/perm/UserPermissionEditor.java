@@ -149,6 +149,7 @@ public class UserPermissionEditor implements _Refreshable {
          refreshProgress.setIndeterminate(true);
          refreshProgress.setVisible(true);
          
+         // TODO decouple in another class
          new SwingWorker<Void, Void>() {
             
             @Override

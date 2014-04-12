@@ -47,6 +47,11 @@ public class Machine implements _Machine {
    }
    
    @Override
+   public void setSetting(List<_Setting> settings) {
+      rawVm.setSetting(settings);
+   }
+   
+   @Override
    public boolean hasSetting(String settingId) {
       try {
          rawVm.getSetting(settingId);
@@ -80,6 +85,11 @@ public class Machine implements _Machine {
    @Override
    public MachineStates getState() {
       return rawVm.getState();
+   }
+   
+   @Override
+   public String getLocation() {
+      return rawVm.getLocation();
    }
    
    @Override
@@ -229,5 +239,14 @@ public class Machine implements _Machine {
       return rawVm.getSnapshot(snapshotId);
    }
    
+   @Override
+   public void lock() {
+      rawVm.lock();
+   }
+   
+   @Override
+   public void unlock(boolean saveChanges) {
+      rawVm.unlock(saveChanges);
+   }
    
 }

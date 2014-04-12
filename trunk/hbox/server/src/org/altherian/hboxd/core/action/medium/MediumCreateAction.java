@@ -24,18 +24,22 @@ package org.altherian.hboxd.core.action.medium;
 import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
-import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.HypervisorTasks;
+import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.input.MediumInput;
+import org.altherian.hbox.comm.input.ServerInput;
 import org.altherian.hbox.comm.output.storage.MediumOutput;
 import org.altherian.hboxd.comm.io.factory.MediumIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
-import org.altherian.hboxd.hypervisor.storage._RawMedium;
+import org.altherian.hboxd.core.model._Medium;
 import org.altherian.hboxd.session.SessionContext;
+import org.altherian.tool.logging.Logger;
 
 import java.util.Arrays;
 import java.util.List;
+
+import com.google.common.io.Files;
 
 public final class MediumCreateAction extends ASingleTaskAction {
    
@@ -51,9 +55,21 @@ public final class MediumCreateAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
+      ServerInput srvIn = request.get(ServerInput.class);
       MediumInput medIn = request.get(MediumInput.class);
-      _RawMedium rawMed = hbox.getHypervisor().createHardDisk(medIn.getLocation(), medIn.getFormat(), medIn.getLogicalSize());
-      MediumOutput medOut = MediumIoFactory.get(rawMed);
+      
+      Logger.debug("Creating a new hard disk at location [" + medIn.getLocation() + "] with format [" + medIn.getFormat() + "] and size ["
+            + medIn.getLogicalSize() + "]");
+      Logger.debug("File extension: " + Files.getFileExtension(medIn.getLocation()));
+      if (Files.getFileExtension(medIn.getLocation()).isEmpty()) {
+         Logger.debug("Will add extention to filename: " + medIn.getFormat().toLowerCase());
+         medIn.setLocation(medIn.getLocation() + "." + medIn.getFormat().toLowerCase());
+      } else {
+         Logger.debug("No need to add extension");
+      }
+      
+      _Medium med = hbox.getServer(srvIn.getId()).createMedium(medIn.getLocation(), medIn.getFormat(), medIn.getLogicalSize());
+      MediumOutput medOut = MediumIoFactory.get(med);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, medOut));
    }
    
