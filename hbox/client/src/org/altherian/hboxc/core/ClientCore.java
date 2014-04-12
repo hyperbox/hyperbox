@@ -251,7 +251,7 @@ public class ClientCore implements _Core {
    @Override
    public _ConsoleViewer findConsoleViewer(String hypervisorId, String moduleId) {
       for (_ConsoleViewer conViewer : consoleViewers.values()) {
-         if (conViewer.getHypervisorId().equalsIgnoreCase(hypervisorId) && conViewer.getModuleId().equalsIgnoreCase(moduleId)) {
+         if (hypervisorId.matches(conViewer.getHypervisorId()) && moduleId.matches(conViewer.getModuleId())) {
             return conViewer;
          }
       }

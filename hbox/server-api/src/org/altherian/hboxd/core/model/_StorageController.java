@@ -87,4 +87,6 @@ public interface _StorageController extends _Device {
    
    public boolean isSlotTaken(long portNb, long deviceNb);
    
+   public _MediumAttachment getMediumAttachment(long portNb, long deviceNb);
+
 }

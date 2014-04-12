@@ -25,8 +25,6 @@ package org.altherian.hboxc.server;
 import org.altherian.hbox.comm.input.UserInput;
 import org.altherian.hboxc.state.ConnectionState;
 
-
-
 public interface _Server extends _ServerReader, _ServerWriter {
    
    public ConnectionState getState();

@@ -23,6 +23,8 @@ package org.altherian.hboxd.server;
 
 import org.altherian.hbox.constant.ServerType;
 import org.altherian.hboxd.core.model._Machine;
+import org.altherian.hboxd.core.model._Medium;
+import org.altherian.hboxd.host._Host;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 import org.altherian.hboxd.hypervisor._HypervisorLoader;
 
@@ -75,6 +77,8 @@ public interface _Server {
    
    public boolean isConnected();
    
+   public _Host getHost();
+
    public _Hypervisor getHypervisor();
    
    public List<_HypervisorLoader> listHypervisors();
@@ -86,7 +90,13 @@ public interface _Server {
    public _Machine findMachine(String idOrName);
    
    public void unregisterMachine(String id);
-
+   
    public void deleteMachine(String id);
+   
+   public _Medium createMedium(String location, String format, Long logicalSize);
+   
+   public _Medium createMedium(String vmId, String filename, String format, Long logicalSize);
+   
+   public _Medium getMedium(String medId);
    
 }

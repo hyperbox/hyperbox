@@ -25,9 +25,13 @@ package org.altherian.hboxd.core.action.hypervisor;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.exception.FeatureNotImplementedException;
+import org.altherian.hbox.comm.input.HypervisorInput;
+import org.altherian.hbox.comm.input.ServerInput;
+import org.altherian.hboxd.comm.io.factory.SettingIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
+import org.altherian.hboxd.event.EventManager;
+import org.altherian.hboxd.event.hypervisor.HypervisorConfigurationUpdateEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,12 +45,16 @@ public class HypervisorConfigureAction extends ASingleTaskAction {
    
    @Override
    public boolean isQueueable() {
-      return false;
+      return true;
    }
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      throw new FeatureNotImplementedException();
+      ServerInput srvIn = request.get(ServerInput.class);
+      HypervisorInput hypIn = request.get(HypervisorInput.class);
+      
+      hbox.getServer(srvIn.getId()).getHypervisor().configure(SettingIoFactory.getListIo(hypIn.listSettings()));
+      EventManager.post(new HypervisorConfigurationUpdateEvent(hbox.getServer(srvIn.getId())));
    }
    
 }

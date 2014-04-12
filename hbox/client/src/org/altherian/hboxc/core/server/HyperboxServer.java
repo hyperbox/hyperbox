@@ -57,6 +57,7 @@ import org.altherian.hbox.comm.output.event.hypervisor.HypervisorEventOutput;
 import org.altherian.hbox.comm.output.event.machine.MachineDataChangeEventOutput;
 import org.altherian.hbox.comm.output.event.machine.MachineStateEventOutput;
 import org.altherian.hbox.comm.output.event.server.ServerShutdownEventOutput;
+import org.altherian.hbox.comm.output.host.HostOutput;
 import org.altherian.hbox.comm.output.hypervisor.HypervisorLoaderOutput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hbox.comm.output.hypervisor.OsTypeOutput;
@@ -774,6 +775,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
             throw new HyperboxRuntimeException("Server Network Protocol is not compatible with this client. Cannot connect.");
          }
          Logger.info("Server Network Protocol Version: " + helloOut.getProtocolVersion());
+
          if ((helloOut.getProtocolVersion() > 0) && (HyperboxAPI.getProtocolVersion() > 0)
                && (helloOut.getProtocolVersion() != HyperboxAPI.getProtocolVersion())) {
             throw new HyperboxRuntimeException("Client and Server Network protocol do not match, cannot connect: Local version is "
@@ -910,6 +912,19 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       
       List<PermissionOutput> permOutList = trans.extractItems(PermissionOutput.class);
       return permOutList;
+   }
+   
+   @Override
+   public HostOutput getHost() {
+      Logger.track();
+      
+      Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.HostGet));
+      if (!trans.sendAndWait()) {
+         throw new HyperboxRuntimeException("Unable to retrieve host information: " + trans.getError());
+      }
+      
+      HostOutput hostOut = trans.extractItem(HostOutput.class);
+      return hostOut;
    }
    
 }

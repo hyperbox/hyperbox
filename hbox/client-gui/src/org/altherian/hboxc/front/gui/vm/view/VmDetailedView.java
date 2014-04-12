@@ -46,7 +46,6 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    
    private VmSummaryView summaryTab;
    private SnapshotManagementView snapTab;
-   private VmConsoleView displayTab;
    private JTabbedPane tabs;
    private JLabel loadingLabel;
    private JPanel panel;
@@ -57,12 +56,10 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
       
       summaryTab = new VmSummaryView();
       snapTab = new SnapshotManagementView();
-      displayTab = new VmConsoleView();
       
       tabs = new JTabbedPane();
       tabs.addTab("Summary", summaryTab.getComponent());
       tabs.addTab("Snapshots", snapTab.getComponent());
-      //tabs.addTab("Console", displayTab.getComponent());
       
       loadingLabel = new JLabel("Loading...");
       loadingLabel.setVisible(false);
@@ -94,8 +91,6 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
             tabs.setEnabledAt(tabs.indexOfComponent(summaryTab.getComponent()), true);
             snapTab.show(mOut);
             tabs.setEnabledAt(tabs.indexOfComponent(snapTab.getComponent()), true);
-            displayTab.show(mOut);
-            tabs.setEnabledAt(tabs.indexOfComponent(displayTab.getComponent()), true);
          }
       }
    }
@@ -140,9 +135,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
             }
          });
       } else {
-         Logger.track();
          summaryTab.clear();
-         displayTab.clear();
       }
    }
    
@@ -159,7 +152,6 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
          loadingLabel.setVisible(true);
          tabs.setEnabledAt(tabs.indexOfComponent(summaryTab.getComponent()), false);
          tabs.setEnabledAt(tabs.indexOfComponent(snapTab.getComponent()), false);
-         //tabs.setEnabledAt(tabs.indexOfComponent(displayTab.getComponent()), false);
          clear();
       }
    }

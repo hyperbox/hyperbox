@@ -38,7 +38,7 @@ import javax.swing.UIManager;
  * @author noteirak
  * 
  */
-public class MiniUI implements _Front {
+public final class MiniUI implements _Front {
    
    @Override
    public void start() throws HyperboxException {

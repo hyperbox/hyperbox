@@ -1,5 +1,7 @@
 package org.altherian.hboxd.core.model;
 
+import org.altherian.tool.StringTools;
+
 public class MediumAttachment implements _MediumAttachment {
    
    private String machineId;
@@ -54,6 +56,11 @@ public class MediumAttachment implements _MediumAttachment {
    @Override
    public boolean isPassThrough() {
       return isPassThrough;
+   }
+   
+   @Override
+   public boolean hasMedium() {
+      return !StringTools.isEmpty(mediumId);
    }
    
 }

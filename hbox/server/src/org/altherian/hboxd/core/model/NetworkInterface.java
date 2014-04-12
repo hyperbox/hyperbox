@@ -40,6 +40,12 @@ public class NetworkInterface implements _NetworkInterface {
    }
    
    @Override
+   public void setSetting(List<_Setting> settings) {
+      // TODO add security check
+      rawNic.setSetting(settings);
+   }
+   
+   @Override
    public boolean hasSetting(String settingId) {
       // TODO add security check
       try {
@@ -139,5 +145,6 @@ public class NetworkInterface implements _NetworkInterface {
       // TODO add security check
       rawNic.setAdapterType(adapterType);
    }
+
    
 }

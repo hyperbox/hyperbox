@@ -38,11 +38,17 @@ public interface _Machine extends _Settable {
    public String getUuid();
    
    public boolean isAccessible();
-
+   
    public String getName();
    
    public MachineStates getState();
    
+   public String getLocation();
+   
+   public void lock();
+   
+   public void unlock(boolean success);
+
    public void powerOn();
    
    public void powerOff();

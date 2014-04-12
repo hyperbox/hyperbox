@@ -40,6 +40,11 @@ public class Medium implements _Medium {
    }
    
    @Override
+   public void setSetting(List<_Setting> settings) {
+      rawMed.setSetting(settings);
+   }
+   
+   @Override
    public boolean hasSetting(String settingId) {
       try {
          rawMed.getSetting(settingId);
@@ -52,10 +57,14 @@ public class Medium implements _Medium {
    
    @Override
    public String getId() {
-      // TODO Auto-generated method stub
       return server.getId() + "/" + EntityTypes.Medium + "/" + rawMed.getUuid();
    }
    
+   @Override
+   public String getUuid() {
+      return rawMed.getUuid();
+   }
+
    @Override
    public String getDescription() {
       return rawMed.getDescription();
@@ -241,5 +250,6 @@ public class Medium implements _Medium {
    public void reset() {
       rawMed.reset();
    }
+   
    
 }

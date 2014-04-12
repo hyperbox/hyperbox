@@ -66,8 +66,8 @@ public class ConsoleViewerEditor implements _Saveable, _Cancelable {
    private ConsoleViewerEditor() {
       Logger.track();
       
-      hypervisorLabel = new JLabel("Hypervisor Type ID");
-      moduleLabel = new JLabel("Module ID");
+      hypervisorLabel = new JLabel("Hypervisor Type Pattern");
+      moduleLabel = new JLabel("Module Pattern");
       pathLabel = new JLabel("Viewer Path");
       argsLabel = new JLabel("Arguments");
       

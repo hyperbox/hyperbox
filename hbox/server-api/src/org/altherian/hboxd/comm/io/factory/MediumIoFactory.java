@@ -22,10 +22,8 @@
 package org.altherian.hboxd.comm.io.factory;
 
 import org.altherian.hbox.comm.output.storage.MediumOutput;
+import org.altherian.hboxd.core.model._Medium;
 import org.altherian.hboxd.hypervisor.storage._RawMedium;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class MediumIoFactory {
    
@@ -34,13 +32,12 @@ public class MediumIoFactory {
    }
    
    public static MediumOutput get(_RawMedium m) {
-      Set<String> childUuid = new HashSet<String>();
-      for (_RawMedium med : m.getChild()) {
-         childUuid.add(med.getUuid());
-      }
-      
-      // TODO incorporate childs
       MediumOutput mIo = new MediumOutput(m.getUuid(), SettingIoFactory.getList(m.listSettings()));
+      return mIo;
+   }
+   
+   public static MediumOutput get(_Medium m) {
+      MediumOutput mIo = new MediumOutput(m.getUuid(), SettingIoFactory.getList(m.getSettings()));
       return mIo;
    }
    

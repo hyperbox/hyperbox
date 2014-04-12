@@ -3,6 +3,7 @@ package org.altherian.hboxd.core.model;
 import org.altherian.hbox.constant.EntityTypes;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 import org.altherian.hboxd.hypervisor.storage._RawMedium;
+import org.altherian.hboxd.hypervisor.storage._RawMediumAttachment;
 import org.altherian.hboxd.hypervisor.storage._RawStorageController;
 import org.altherian.hboxd.settings._Setting;
 
@@ -45,6 +46,11 @@ public class StorageController implements _StorageController {
    @Override
    public void setSetting(_Setting setting) {
       rawSto.setSetting(setting);
+   }
+   
+   @Override
+   public void setSetting(List<_Setting> settings) {
+      rawSto.setSetting(settings);
    }
    
    @Override
@@ -126,7 +132,7 @@ public class StorageController implements _StorageController {
    @Override
    public Set<_Medium> listMedium() {
       Set<_Medium> mediumList = new HashSet<_Medium>();
-      for (_RawMedium med : vm.getServer().getHypervisor().listMediums()) {
+      for (_RawMedium med : hypervisor.listMediums()) {
          mediumList.add(new Medium(vm.getServer(), hypervisor, med));
       }
       return mediumList;
@@ -140,17 +146,17 @@ public class StorageController implements _StorageController {
    
    @Override
    public void attachMedium(_Medium medium) {
-      rawSto.attachMedium(vm.getServer().getHypervisor().getMedium(medium.getId()));
+      rawSto.attachMedium(hypervisor.getMedium(medium.getUuid()));
    }
    
    @Override
    public void attachMedium(_Medium medium, long portNb, long deviceNb) {
-      rawSto.attachMedium(vm.getServer().getHypervisor().getMedium(medium.getId()), portNb, deviceNb);
+      rawSto.attachMedium(hypervisor.getMedium(medium.getUuid()), portNb, deviceNb);
    }
    
    @Override
    public void detachMedium(_Medium medium) {
-      rawSto.detachMedium(vm.getServer().getHypervisor().getMedium(medium.getId()));
+      rawSto.detachMedium(hypervisor.getMedium(medium.getUuid()));
    }
    
    @Override
@@ -161,6 +167,19 @@ public class StorageController implements _StorageController {
    @Override
    public boolean isSlotTaken(long portNb, long deviceNb) {
       return rawSto.isSlotTaken(portNb, deviceNb);
+   }
+   
+   @Override
+   public _MediumAttachment getMediumAttachment(long portNb, long deviceNb) {
+      _RawMediumAttachment rawMedAtt = rawSto.getMediumAttachment(portNb, deviceNb);
+      _MediumAttachment medAtt = new MediumAttachment(
+            vm.getUuid(),
+            rawMedAtt.hasMedium() ? rawMedAtt.getMedium().getUuid() : null,
+                  rawSto.getName(),
+                  rawMedAtt.getPortId(),
+                  rawMedAtt.getDeviceId(), rawMedAtt.getDeviceType(), rawMedAtt.isPassThrough());
+      
+      return medAtt;
    }
    
 }

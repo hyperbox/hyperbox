@@ -38,6 +38,9 @@ import org.altherian.hboxd.hypervisor.storage._RawStorageControllerSubType;
 import org.altherian.hboxd.hypervisor.storage._RawStorageControllerType;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
 import org.altherian.hboxd.service._Service;
+import org.altherian.hboxd.settings.BooleanSetting;
+import org.altherian.hboxd.settings.StringSetting;
+import org.altherian.hboxd.settings._Setting;
 import org.altherian.hboxd.vbox.hypervisor.ws4_3.host.VirtualboxHost;
 import org.altherian.hboxd.vbox.hypervisor.ws4_3.storage.VirtualboxMedium;
 import org.altherian.hboxd.vbox.hypervisor.ws4_3.vm.VBoxMachine;
@@ -192,6 +195,7 @@ public class VirtualboxHypervisor implements _Hypervisor {
       Logger.track();
       
       mediumRegister = null;
+      osTypeCache.clear();
       
       if (evMgrSvc != null) {
          try {
@@ -598,7 +602,7 @@ public class VirtualboxHypervisor implements _Hypervisor {
    
    @Override
    public String getTypeId() {
-      return "virtualbox";
+      return "vbox-4.3";
    }
    
    @Override
@@ -620,6 +624,32 @@ public class VirtualboxHypervisor implements _Hypervisor {
    @Override
    public boolean hasToolsMedium() {
       return !StringTools.isEmpty(ConnectionManager.getBox().getSystemProperties().getDefaultAdditionsISO());
+   }
+   
+   @Override
+   public void configure(List<_Setting> listIo) {
+      for (_Setting setting : listIo) {
+         Logger.debug("Handling setting: " + setting.getName());
+         if (setting.getName().equalsIgnoreCase("vbox.global.machineFolder")) {
+            Logger.debug("Setting default Machine Folder to :" + setting.getString());
+            ConnectionManager.getBox().getSystemProperties().setDefaultMachineFolder(setting.getString());
+         }
+         if (setting.getName().equalsIgnoreCase("vbox.global.consoleModule")) {
+            ConnectionManager.getBox().getSystemProperties().setDefaultVRDEExtPack(setting.getString());
+         }
+         if (setting.getName().equalsIgnoreCase("vbox.global.virtEx")) {
+            ConnectionManager.getBox().getSystemProperties().setExclusiveHwVirt(setting.getBoolean());
+         }
+      }
+   }
+   
+   @Override
+   public List<_Setting> getSettings() {
+      List<_Setting> settings = new ArrayList<_Setting>();
+      settings.add(new StringSetting("vbox.global.machineFolder", ConnectionManager.getBox().getSystemProperties().getDefaultMachineFolder()));
+      settings.add(new StringSetting("vbox.global.consoleModule", ConnectionManager.getBox().getSystemProperties().getDefaultVRDEExtPack()));
+      settings.add(new BooleanSetting("vbox.global.virtEx", ConnectionManager.getBox().getSystemProperties().getExclusiveHwVirt()));
+      return settings;
    }
    
 }

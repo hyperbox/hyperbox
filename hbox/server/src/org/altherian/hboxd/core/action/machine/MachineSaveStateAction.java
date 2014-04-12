@@ -51,6 +51,7 @@ public class MachineSaveStateAction extends ASingleTaskAction {
       MachineInput mIn = request.get(MachineInput.class);
       
       _Machine vm = hbox.getServer(srvIn.getId()).getMachine(mIn.getUuid());
+
       vm.saveState();
    }
    

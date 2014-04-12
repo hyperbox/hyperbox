@@ -1,4 +1,4 @@
-/* 
+/*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
  * 
@@ -31,6 +31,8 @@ public interface _Medium extends _Settable {
    
    public String getId();
    
+   public String getUuid();
+
    public String getDescription();
    
    public void setDescription(String desc);
