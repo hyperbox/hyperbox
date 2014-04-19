@@ -1,12 +1,17 @@
 package org.altherian.hboxc.front.gui.host;
 
+import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
 
+import org.altherian.hbox.comm.output.event.hypervisor.HypervisorConnectedEventOutput;
+import org.altherian.hbox.comm.output.event.hypervisor.HypervisorDisconnectedEventOutput;
 import org.altherian.hbox.comm.output.host.HostOutput;
-import org.altherian.hboxc.front.gui.Gui;
+import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.front.gui._Refreshable;
+import org.altherian.hboxc.front.gui.workers.HostGetWorker;
 import org.altherian.hboxc.front.gui.workers._HostReceiver;
 import org.altherian.helper.swing.JTextFieldUtils;
+import org.altherian.tool.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -58,13 +63,12 @@ public class HostViewer implements _Refreshable, _HostReceiver {
       panel.add(memTotalLabel);
       panel.add(memTotalValue, "growx,pushx,wrap");
       
+      FrontEventManager.register(this);
    }
    
    public void show(String srvId) {
-      clear();
       this.srvId = srvId;
-      this.host = Gui.getReader().getServerReader(srvId).getHost();
-      update();
+      HostGetWorker.get(this, srvId);
    }
    
    @Override
@@ -115,6 +119,24 @@ public class HostViewer implements _Refreshable, _HostReceiver {
    @Override
    public void put(HostOutput hostOut) {
       host = hostOut;
+   }
+   
+   @Handler
+   public void putHypervisorConnected(final HypervisorConnectedEventOutput ev) {
+      Logger.track();
+      
+      if (srvId.contentEquals(ev.getServerId())) {
+         refresh();
+      }
+   }
+   
+   @Handler
+   public void putHypervisorDisconnected(final HypervisorDisconnectedEventOutput ev) {
+      Logger.track();
+      
+      if (srvId.contentEquals(ev.getServerId())) {
+         refresh();
+      }
    }
    
 }

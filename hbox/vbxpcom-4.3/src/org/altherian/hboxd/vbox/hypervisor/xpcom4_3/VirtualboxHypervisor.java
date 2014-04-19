@@ -187,7 +187,7 @@ public class VirtualboxHypervisor implements _Hypervisor {
       Logger.track();
       
       mediumRegister = null;
-      osTypeCache.clear();
+      osTypeCache = null;
       
       if (evMgrSvc != null) {
          try {
@@ -437,7 +437,7 @@ public class VirtualboxHypervisor implements _Hypervisor {
    
    @Override
    public void deleteMachine(String uuid) {
-      // TODO improve with multi-step exeception handling, as well as a separate method for hdd deletion
+      // TODO improve with multi-step exception handling, as well as a separate method for HDD deletion
       VbSessionManager.get().unlock(uuid);
       IMachine machine = ConnectionManager.findMachine(uuid);
       
@@ -630,5 +630,5 @@ public class VirtualboxHypervisor implements _Hypervisor {
       settings.add(new BooleanSetting("vbox.global.virtEx", ConnectionManager.getBox().getSystemProperties().getExclusiveHwVirt()));
       return settings;
    }
-
+   
 }

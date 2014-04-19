@@ -26,6 +26,7 @@ import org.altherian.hbox.comm.output.ObjectOutput;
 import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
 import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
 import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.states.MachineStates;
 
 import java.util.ArrayList;
@@ -50,6 +51,9 @@ public class MachineOutput extends ObjectOutput {
    public MachineOutput(String serverId, String uuid, MachineStates state, List<SettingIO> settings, List<StorageControllerOutput> scList,
          List<NetworkInterfaceOutput> nicList) {
       this(serverId, uuid, settings);
+      if (state == null) {
+         throw new HyperboxRuntimeException("State cannot be null or empty");
+      }
       this.state = state.getId();
       for (StorageControllerOutput scOut : scList) {
          strCtrs.put(scOut.getId(), scOut);
@@ -61,20 +65,23 @@ public class MachineOutput extends ObjectOutput {
    
    public MachineOutput(String serverId, String uuid, String state, List<SettingIO> settings) {
       this(serverId, uuid, settings);
+      if (state == null) {
+         throw new HyperboxRuntimeException("State cannot be null or empty");
+      }
       this.state = state;
    }
    
-   public MachineOutput(String serverId, String uuid, List<SettingIO> settings) {
+   private MachineOutput(String serverId, String uuid, List<SettingIO> settings) {
       super(serverId + "." + uuid, settings);
       this.uuid = uuid;
       this.serverId = serverId;
    }
    
-   public MachineOutput(String serverId, String uuid, boolean isAvailable) {
+   public MachineOutput(String serverId, String uuid, String state, boolean isAvailable) {
       this(serverId, uuid);
       this.isAvailable = isAvailable;
    }
-
+   
    /**
     * Build a machine message with the given UUID.
     * 
@@ -129,7 +136,7 @@ public class MachineOutput extends ObjectOutput {
    }
    
    public Boolean hasSnapshots() {
-      return getSetting(MachineAttributes.HasSnapshot).getBoolean();
+      return hasSetting(MachineAttributes.HasSnapshot) && getSetting(MachineAttributes.HasSnapshot).getBoolean();
    }
    
    public String getCurrentSnapshot() {
