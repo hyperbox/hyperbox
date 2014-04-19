@@ -195,7 +195,7 @@ public class VirtualboxHypervisor implements _Hypervisor {
       Logger.track();
       
       mediumRegister = null;
-      osTypeCache.clear();
+      osTypeCache = null;
       
       if (evMgrSvc != null) {
          try {

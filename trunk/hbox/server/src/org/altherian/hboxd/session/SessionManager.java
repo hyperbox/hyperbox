@@ -28,7 +28,6 @@ import org.altherian.hbox.comm._Client;
 import org.altherian.hbox.comm.output.event.EventOutput;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxException;
-import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxd.comm.io.factory.EventIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.event.EventManager;
@@ -98,13 +97,10 @@ public final class SessionManager implements _RootSessionManager {
       
       Logger.debug("Received Request from " + client.getAddress());
       if (!hasSession(client)) {
-         Logger.debug("Client is not registered yet");
-         throw new HyperboxRuntimeException("Client is not registered yet");
-      } else {
-         Logger.debug("Client has a session, passing request along");
-         getSession(client).putRequest(req);
+         register(client);
       }
       
+      getSession(client).putRequest(req);
    }
    
    @Override
@@ -120,11 +116,13 @@ public final class SessionManager implements _RootSessionManager {
    public void register(_Client client) {
       Logger.track();
       
-      Logger.debug(client.getAddress() + " connected, registering...");
-      _Session sess = new UserSession(client, hbox.getTaskManager());
-      Logger.debug("Session #" + sess.getId() + " has been created for " + client.getAddress());
-      sessions.put(client, sess);
-      Logger.debug("Session #" + sess.getId() + " has been registered for " + client.getAddress());
+      if (!hasSession(client)) {
+         Logger.debug(client.getAddress() + " connected, registering...");
+         _Session sess = new UserSession(client, hbox.getTaskManager());
+         Logger.debug("Session #" + sess.getId() + " has been created for " + client.getAddress());
+         sessions.put(client, sess);
+         Logger.debug("Session #" + sess.getId() + " has been registered for " + client.getAddress());
+      }
    }
    
    @Override

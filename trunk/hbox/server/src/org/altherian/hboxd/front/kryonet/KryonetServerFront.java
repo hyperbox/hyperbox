@@ -69,7 +69,7 @@ public class KryonetServerFront implements _Front {
          server.addListener(new MainListener());
          server.getUpdateThread().setUncaughtExceptionHandler(new ServerUncaughtExceptionHandler());
          Logger.info("Kryonet connector is listening on port " + port);
-         Logger.debug("Uncaught exception handler: " + server.getUpdateThread().getUncaughtExceptionHandler().toString());
+         Logger.debug("Uncaught exception handler: " + server.getUpdateThread().getUncaughtExceptionHandler().getClass().getName());
       } catch (NumberFormatException e) {
          stop();
          throw new HyperboxException("Unable to start the Kryonet server : " + e.getLocalizedMessage());

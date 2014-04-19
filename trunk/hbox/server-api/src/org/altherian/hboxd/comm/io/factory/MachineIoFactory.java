@@ -25,6 +25,7 @@ import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
 import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
 import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.states.MachineStates;
 import org.altherian.hboxd.HBoxServer;
 import org.altherian.hboxd.core.model._Machine;
 import org.altherian.hboxd.core.model._NetworkInterface;
@@ -41,12 +42,12 @@ public final class MachineIoFactory {
       // static class, cannot be instantiated
    }
    
-   public static MachineOutput get(String uuid) {
-      return get(uuid, true);
+   public static MachineOutput get(String uuid, String state) {
+      return get(uuid, state, true);
    }
    
-   public static MachineOutput get(String uuid, boolean isAvailable) {
-      return new MachineOutput(HBoxServer.get().getId(), uuid, isAvailable);
+   public static MachineOutput get(String uuid, String state, boolean isAvailable) {
+      return new MachineOutput(HBoxServer.get().getId(), uuid, state, isAvailable);
    }
    
    public static MachineOutput getSimple(String uuid, String state, List<_Setting> settings) {
@@ -62,7 +63,7 @@ public final class MachineIoFactory {
                m.getSetting(MachineAttributes.HasSnapshot.getId())));
          return getSimple(m.getUuid(), m.getState().getId(), settings);
       } else {
-         return get(m.getUuid(), false);
+         return get(m.getUuid(), MachineStates.Inaccessible.getId(), false);
       }
       
    }
@@ -83,7 +84,7 @@ public final class MachineIoFactory {
          MachineOutput mOut = new MachineOutput(serverId, m.getUuid(), m.getState(), SettingIoFactory.getList(m.getSettings()), scOutList, nicOutList);
          return mOut;
       } else {
-         return get(m.getUuid(), false);
+         return get(m.getUuid(), MachineStates.Inaccessible.getId(), false);
       }
    }
    

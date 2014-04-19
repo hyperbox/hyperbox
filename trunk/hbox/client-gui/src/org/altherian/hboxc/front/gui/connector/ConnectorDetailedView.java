@@ -42,6 +42,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 public class ConnectorDetailedView implements _Refreshable {
@@ -88,21 +89,30 @@ public class ConnectorDetailedView implements _Refreshable {
       refresh();
    }
    
-   private void update(ConnectorOutput conOut) {
+   private void update(final ConnectorOutput conOut) {
       Logger.track();
       
-      summaryView.show(conOut);
-      tabs.setEnabledAt(tabs.indexOfComponent(hostView.getComponent()), conOut.isConnected());
-      tabs.setEnabledAt(tabs.indexOfComponent(taskView.getComponent()), conOut.isConnected());
-      tabs.setEnabledAt(tabs.indexOfComponent(storeView.getComponent()), conOut.isConnected());
-      tabs.setEnabledAt(tabs.indexOfComponent(userView.getComponent()), conOut.isConnected());
-      if (conOut.isConnected()) {
-         hostView.show(conOut.getServerId());
-         taskView.show(conOut.getServer());
-         storeView.show(conOut.getServer());
-         userView.show(conOut.getServer());
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               update(conOut);
+            }
+         });
       } else {
-         tabs.setSelectedComponent(summaryView.getComponent());
+         summaryView.show(conOut);
+         tabs.setEnabledAt(tabs.indexOfComponent(hostView.getComponent()), conOut.isConnected());
+         tabs.setEnabledAt(tabs.indexOfComponent(taskView.getComponent()), conOut.isConnected());
+         tabs.setEnabledAt(tabs.indexOfComponent(storeView.getComponent()), conOut.isConnected());
+         tabs.setEnabledAt(tabs.indexOfComponent(userView.getComponent()), conOut.isConnected());
+         if (conOut.isConnected()) {
+            hostView.show(conOut.getServerId());
+            taskView.show(conOut.getServer());
+            storeView.show(conOut.getServer());
+            userView.show(conOut.getServer());
+         } else {
+            tabs.setSelectedComponent(summaryView.getComponent());
+         }
       }
    }
    

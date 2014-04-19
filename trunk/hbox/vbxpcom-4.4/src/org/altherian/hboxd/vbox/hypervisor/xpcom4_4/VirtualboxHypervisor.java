@@ -187,7 +187,7 @@ public class VirtualboxHypervisor implements _Hypervisor {
       Logger.track();
       
       mediumRegister = null;
-      osTypeCache.clear();
+      osTypeCache = null;
       
       if (evMgrSvc != null) {
          try {
@@ -630,5 +630,5 @@ public class VirtualboxHypervisor implements _Hypervisor {
       settings.add(new BooleanSetting("vbox.global.virtEx", ConnectionManager.getBox().getSystemProperties().getExclusiveHwVirt()));
       return settings;
    }
-
+   
 }

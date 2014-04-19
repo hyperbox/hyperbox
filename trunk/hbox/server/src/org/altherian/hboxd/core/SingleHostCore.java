@@ -496,6 +496,10 @@ public class SingleHostCore implements _Hyperbox, _Server {
    
    @Override
    public _Host getHost() {
+      if (!isConnected()) {
+         throw new HyperboxRuntimeException("Hypervisor is not connected - cannot retrieve host information");
+      }
+
       return new Host(hypervisor.getHost());
    }
    

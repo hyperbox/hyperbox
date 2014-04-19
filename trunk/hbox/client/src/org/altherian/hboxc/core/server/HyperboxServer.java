@@ -113,11 +113,11 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
    private _HypervisorReader hypReader;
    
    private void setState(ConnectionState state) {
-      if (!this.state.equals(state)) {
-         this.state = state;
-      } else {
+      if (this.state.equals(state)) {
          Logger.debug("Ignoring setState(" + state + ") - same as current");
       }
+      
+      this.state = state;
    }
    
    @Override
@@ -161,6 +161,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
          backend.putRequest(req);
       }
       Transaction t = getTransaction(req);
+      
       if (type.equals(RequestProcessType.WaitForRequest)) {
          if (!t.sendAndWait()) {
             throw new HyperboxRuntimeException(t.getError());
@@ -171,6 +172,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
             throw new HyperboxRuntimeException(t.getError());
          }
       }
+      
       return t;
    }
    
@@ -351,6 +353,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       if ((backend == null) || !backend.isConnected() || (getId() == null)) {
          throw new HyperboxRuntimeException("Not connected to the server");
       }
+      
       req.set(new ServerInput(id));
       Transaction t = new Transaction(backend, req);
       ansRecv.put(req.getExchangeId(), t);
@@ -775,11 +778,11 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
             throw new HyperboxRuntimeException("Server Network Protocol is not compatible with this client. Cannot connect.");
          }
          Logger.info("Server Network Protocol Version: " + helloOut.getProtocolVersion());
-
+         
          if ((helloOut.getProtocolVersion() > 0) && (HyperboxAPI.getProtocolVersion() > 0)
                && (helloOut.getProtocolVersion() != HyperboxAPI.getProtocolVersion())) {
             throw new HyperboxRuntimeException("Client and Server Network protocol do not match, cannot connect: Local version is "
-                  + HyperboxAPI.getProtocolVersion() + " and Remove version is " + helloOut.getProtocolVersion());
+                  + HyperboxAPI.getProtocolVersion() + " and Remote version is " + helloOut.getProtocolVersion());
          }
          
          Transaction loginTrans = new Transaction(backend, new Request(Command.HBOX, HyperboxTasks.Login, usrIn));
@@ -865,7 +868,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       Logger.track();
       
       if (id.equals(ev.getServerId())) {
-         Logger.warning("Received Unknown Event from Server " + getId() + ": " + ev.toString());
+         Logger.verbose("Received unhandled Event from Server " + getName() + " (" + getId() + ")" + " : " + ev.toString());
       }
    }
    
@@ -874,7 +877,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       Logger.track();
       
       if (id.equals(ev.getServerId())) {
-         CoreEventManager.post(new MachineDataChangedEvent(getId(), getMachine(new MachineInput(ev.getMachine()))));
+         CoreEventManager.post(new MachineDataChangedEvent(getId(), getMachine(ev.getMachine().getUuid())));
       }
    }
    
@@ -883,7 +886,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       Logger.track();
       
       if (id.equals(ev.getServerId())) {
-         CoreEventManager.post(new MachineStateChangedEvent(getId(), ev.getMachine()));
+         CoreEventManager.post(new MachineStateChangedEvent(getId(), getMachine(ev.getMachine().getUuid())));
       }
       
    }

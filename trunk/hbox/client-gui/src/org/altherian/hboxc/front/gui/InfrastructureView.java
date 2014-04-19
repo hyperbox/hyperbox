@@ -736,7 +736,11 @@ public final class InfrastructureView implements _MachineSelector, _ServerSelect
                      setText("<Unavailable>");
                      setIcon(IconBuilder.getMachineState(MachineStates.Inaccessible));
                   } else {
-                     setIcon(IconBuilder.getMachineState(MachineStates.valueOf(simpleVmOut.getState())));
+                     try {
+                        setIcon(IconBuilder.getMachineState(MachineStates.valueOf(simpleVmOut.getState())));
+                     } catch (Throwable t) {
+                        setIcon(IconBuilder.getMachineState(MachineStates.UNKNOWN));
+                     }
                      try {
                         if (simpleVmOut.hasSnapshots()) {
                            setText(simpleVmOut.getName() + " (" + vmCurrentSnaps.get(simpleVmOut.getId()).getName() + ")");

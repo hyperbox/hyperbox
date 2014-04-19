@@ -30,6 +30,7 @@ import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
+import org.altherian.hbox.states.MachineStates;
 import org.altherian.hboxd.HBoxServer;
 import org.altherian.hboxd.comm.io.factory.MachineIoFactory;
 import org.altherian.hboxd.comm.io.factory.ServerIoFactory;
@@ -57,7 +58,7 @@ public final class MachineEventIoFactory implements _EventIoFactory {
       try {
          mOut = MachineIoFactory.get(HBoxServer.get().getMachine(mEv.getMachineUuid()));
       } catch (HyperboxRuntimeException e) {
-         mOut = MachineIoFactory.get(mEv.getMachineUuid());
+         mOut = MachineIoFactory.get(mEv.getMachineUuid(), MachineStates.UNKNOWN.getId());
       }
       switch ((HyperboxEvents) ev.getEventId()) {
          case MachineState:

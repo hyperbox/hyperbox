@@ -28,6 +28,7 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.connector.ConnectorEvent;
+import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.server.ServerViewer;
 
@@ -36,6 +37,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 public class ConnectorSummaryViewer implements _Refreshable {
    
@@ -93,21 +95,35 @@ public class ConnectorSummaryViewer implements _Refreshable {
    
    @Override
    public void refresh() {
-      labelValue.setText(conOut.getLabel());
-      addressValue.setText(conOut.getAddress());
-      backendValue.setText(conOut.getBackendId());
-      stateValue.setText(conOut.getState().toString());
-      if (conOut.isConnected()) {
-         srvView.getComponent().setVisible(true);
-         srvView.show(conOut.getServer());
-      } else {
-         srvView.getComponent().setVisible(false);
-      }
+      conOut = Gui.getReader().getConnector(conOut.getId());
+      update();
    }
    
    public void show(ConnectorOutput conOut) {
       this.conOut = conOut;
       refresh();
+   }
+   
+   protected void update() {
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               update();
+            }
+         });
+      } else {
+         labelValue.setText(conOut.getLabel());
+         addressValue.setText(conOut.getAddress());
+         backendValue.setText(conOut.getBackendId());
+         stateValue.setText(conOut.getState().toString());
+         if (conOut.isConnected()) {
+            srvView.getComponent().setVisible(true);
+            srvView.show(conOut.getServer());
+         } else {
+            srvView.getComponent().setVisible(false);
+         }
+      }
    }
    
    public JComponent getComponent() {

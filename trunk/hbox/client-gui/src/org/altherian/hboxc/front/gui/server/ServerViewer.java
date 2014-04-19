@@ -43,6 +43,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 public class ServerViewer implements _Refreshable, _ServerReceiver {
    
@@ -121,16 +122,25 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    }
    
    private void update() {
-      idValue.setText(srvOut.getId());
-      nameValue.setText(srvOut.getName());
-      typeValue.setText(srvOut.getType());
-      versionValue.setText(srvOut.getVersion());
-      netProtocolValue.setText(srvOut.getNetworkProtocolVersion() != null ? srvOut.getNetworkProtocolVersion() : "Unknown");
-      
-      if (srvOut.isHypervisorConnected()) {
-         hypViewer.show(Gui.getServer(srvOut).getHypervisor().getInfo());
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               update();
+            }
+         });
       } else {
-         hypViewer.setDisconnected();
+         idValue.setText(srvOut.getId());
+         nameValue.setText(srvOut.getName());
+         typeValue.setText(srvOut.getType());
+         versionValue.setText(srvOut.getVersion());
+         netProtocolValue.setText(srvOut.getNetworkProtocolVersion() != null ? srvOut.getNetworkProtocolVersion() : "Unknown");
+         
+         if (srvOut.isHypervisorConnected()) {
+            hypViewer.show(Gui.getServer(srvOut).getHypervisor().getInfo());
+         } else {
+            hypViewer.setDisconnected();
+         }
       }
    }
    
