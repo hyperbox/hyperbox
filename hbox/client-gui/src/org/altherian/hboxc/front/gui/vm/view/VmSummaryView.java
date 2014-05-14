@@ -52,7 +52,9 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -400,23 +402,29 @@ public final class VmSummaryView {
    public void refreshStorage() {
       Logger.track();
       
-      clearStorage();
-      for (final StorageControllerOutput scOut : mOut.listStorageController()) {
-         final StorageControllerInput scIn = StorageControllerIoFactory.get(scOut);
-         scIn.setMachineUuid(mOut.getUuid());
-         new SwingWorker<List<StorageDeviceAttachmentOutput>,Void>() {
-            
-            @Override
-            protected List<StorageDeviceAttachmentOutput> doInBackground() {
-               return Gui.getServer(mOut.getServerId()).listAttachments(scIn);
+      
+      new SwingWorker<Void, Void>() {
+         
+         private Map<StorageControllerOutput, List<StorageDeviceAttachmentOutput>> attachMap = new HashMap<StorageControllerOutput, List<StorageDeviceAttachmentOutput>>();
+         
+         @Override
+         protected Void doInBackground() {
+            for (StorageControllerOutput scOut : mOut.listStorageController()) {
+               StorageControllerInput scIn = StorageControllerIoFactory.get(scOut);
+               scIn.setMachineUuid(mOut.getUuid());
+               attachMap.put(scOut, Gui.getServer(mOut.getServerId()).listAttachments(scIn));
             }
             
-            @Override
-            protected void done() {
+            return null;
+         }
+         
+         @Override
+         protected void done() {
+            clearStorage();
+            for (StorageControllerOutput scOut : mOut.listStorageController()) {
                try {
                   storagePanel.add(new JLabel(scOut.getType()), "wrap");
-                  List<StorageDeviceAttachmentOutput> matOutList = get();
-                  for (StorageDeviceAttachmentOutput sdaOut : matOutList) {
+                  for (StorageDeviceAttachmentOutput sdaOut : attachMap.get(scOut)) {
                      storagePanel.add(new JLabel(""));
                      storagePanel.add(new JLabel(sdaOut.getPortId() + ":" + sdaOut.getDeviceId()));
                      
@@ -446,9 +454,9 @@ public final class VmSummaryView {
                   storagePanel.revalidate();
                }
             }
-            
-         }.execute();
-      }
+         }
+         
+      }.execute();
    }
    
    public void refreshAudio() {

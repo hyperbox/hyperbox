@@ -22,6 +22,8 @@
 
 package org.altherian.hboxc.core;
 
+import net.engio.mbassy.listener.Handler;
+
 import org.altherian.hbox.comm.output.ServerOutput;
 import org.altherian.hboxc.comm.input.ConnectorInput;
 import org.altherian.hboxc.comm.io.factory.BackendIoFactory;
@@ -31,20 +33,27 @@ import org.altherian.hboxc.comm.io.factory.ServerIoFactory;
 import org.altherian.hboxc.comm.output.BackendOutput;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.hboxc.comm.output.ConsoleViewerOutput;
+import org.altherian.hboxc.core.server.CachedServerReader;
+import org.altherian.hboxc.event.CoreEventManager;
+import org.altherian.hboxc.event.server.ServerDisconnectedEvent;
 import org.altherian.hboxc.factory.BackendFactory;
 import org.altherian.hboxc.server._ServerReader;
 import org.altherian.hboxc.state.CoreState;
+import org.altherian.tool.logging.Logger;
 
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 public class CoreReader implements _CoreReader {
    
    private _Core core;
    
-   // private Map<_ServerReader, _ServerReader> cachedServerReaders = new WeakHashMap<_ServerReader, _ServerReader>();
+   private Map<_ServerReader, _ServerReader> cachedServerReaders = new WeakHashMap<_ServerReader, _ServerReader>();
    
    public CoreReader(_Core core) {
       this.core = core;
+      CoreEventManager.get().register(this);
    }
    
    @Override
@@ -64,15 +73,13 @@ public class CoreReader implements _CoreReader {
    
    @Override
    public _ServerReader getServerReader(String id) {
-      // TODO think of caching data in the client
-      /*
       _ServerReader cachedReader = cachedServerReaders.get(core.getServer(id));
       if (cachedReader == null) {
          cachedReader = new CachedServerReader(core.getServer(id));
          cachedServerReaders.put(core.getServer(id), cachedReader);
       }
-       */
-      return core.getServer(id);
+      
+      return cachedReader;
    }
    
    @Override
@@ -98,6 +105,13 @@ public class CoreReader implements _CoreReader {
    @Override
    public ServerOutput getServerInfo(String id) {
       return ServerIoFactory.get(core.getServer(id));
+   }
+   
+   @Handler
+   protected void putServerDisconnected(ServerDisconnectedEvent ev) {
+      Logger.track();
+      
+      cachedServerReaders.remove(core.getServer(ev.getServer().getId()));
    }
    
 }

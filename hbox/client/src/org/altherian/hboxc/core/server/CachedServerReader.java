@@ -21,10 +21,77 @@
 
 package org.altherian.hboxc.core.server;
 
+import net.engio.mbassy.listener.Handler;
 
-public class CachedServerReader /* implements _ServerReader */{
-   
-   /*
+import org.altherian.hbox.comm.input.MachineInput;
+import org.altherian.hbox.comm.input.MediumInput;
+import org.altherian.hbox.comm.input.NetworkAttachModeInput;
+import org.altherian.hbox.comm.input.SessionInput;
+import org.altherian.hbox.comm.input.SnapshotInput;
+import org.altherian.hbox.comm.input.StorageControllerInput;
+import org.altherian.hbox.comm.input.StorageControllerSubTypeInput;
+import org.altherian.hbox.comm.input.StorageControllerTypeInput;
+import org.altherian.hbox.comm.input.StoreInput;
+import org.altherian.hbox.comm.input.StoreItemInput;
+import org.altherian.hbox.comm.input.TaskInput;
+import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.output.SessionOutput;
+import org.altherian.hbox.comm.output.StoreItemOutput;
+import org.altherian.hbox.comm.output.StoreOutput;
+import org.altherian.hbox.comm.output.TaskOutput;
+import org.altherian.hbox.comm.output.event.EventOutput;
+import org.altherian.hbox.comm.output.event.machine.MachineDataChangeEventOutput;
+import org.altherian.hbox.comm.output.event.machine.MachineRegistrationEventOutput;
+import org.altherian.hbox.comm.output.event.machine.MachineSnapshotDataChangedEventOutput;
+import org.altherian.hbox.comm.output.event.machine.MachineStateEventOutput;
+import org.altherian.hbox.comm.output.event.snapshot.SnapshotDeletedEventOutput;
+import org.altherian.hbox.comm.output.event.snapshot.SnapshotModifiedEventOutput;
+import org.altherian.hbox.comm.output.event.snapshot.SnapshotRestoredEventOutput;
+import org.altherian.hbox.comm.output.event.snapshot.SnapshotTakenEventOutput;
+import org.altherian.hbox.comm.output.event.task.TaskQueueEventOutput;
+import org.altherian.hbox.comm.output.event.task.TaskStateEventOutput;
+import org.altherian.hbox.comm.output.host.HostOutput;
+import org.altherian.hbox.comm.output.hypervisor.HypervisorLoaderOutput;
+import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.output.hypervisor.OsTypeOutput;
+import org.altherian.hbox.comm.output.hypervisor.ScreenshotOutput;
+import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
+import org.altherian.hbox.comm.output.network.NetworkAttachModeOutput;
+import org.altherian.hbox.comm.output.network.NetworkAttachNameOutput;
+import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
+import org.altherian.hbox.comm.output.network.NetworkInterfaceTypeOutput;
+import org.altherian.hbox.comm.output.security.PermissionOutput;
+import org.altherian.hbox.comm.output.security.UserOutput;
+import org.altherian.hbox.comm.output.storage.MediumOutput;
+import org.altherian.hbox.comm.output.storage.StorageControllerSubTypeOutput;
+import org.altherian.hbox.comm.output.storage.StorageControllerTypeOutput;
+import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
+import org.altherian.hbox.exception.HyperboxRuntimeException;
+import org.altherian.hbox.states.TaskQueueEvents;
+import org.altherian.hboxc.event.CoreEventManager;
+import org.altherian.hboxc.event.FrontEventManager;
+import org.altherian.hboxc.event.machine.MachineAddedEvent;
+import org.altherian.hboxc.event.machine.MachineDataChangedEvent;
+import org.altherian.hboxc.event.machine.MachineRemovedEvent;
+import org.altherian.hboxc.event.machine.MachineStateChangedEvent;
+import org.altherian.hboxc.event.storage.MediumAddedEvent;
+import org.altherian.hboxc.event.storage.MediumRemovedEvent;
+import org.altherian.hboxc.event.storage.MediumUpdatedEvent;
+import org.altherian.hboxc.server._GuestReader;
+import org.altherian.hboxc.server._HypervisorReader;
+import org.altherian.hboxc.server._ServerReader;
+import org.altherian.tool.logging.Logger;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+
+public class CachedServerReader implements _ServerReader {
    
    private _ServerReader reader;
    
@@ -38,7 +105,11 @@ public class CachedServerReader /* implements _ServerReader */{
    private Map<String, TaskOutput> tOutCache;
    private Set<String> invalidTaskIdSet;
    
+   private Map<String, MediumOutput> medOutCache;
+   private Set<String> invalidMedOutSet;
+   
    private Map<String, Map<String, SnapshotOutput>> snapOutCache;
+   
    
    public CachedServerReader(_ServerReader reader) {
       this.reader = reader;
@@ -50,6 +121,9 @@ public class CachedServerReader /* implements _ServerReader */{
       tOutListCache = new ConcurrentHashMap<String, TaskOutput>();
       tOutCache = new ConcurrentHashMap<String, TaskOutput>();
       invalidTaskIdSet = new LinkedHashSet<String>();
+      
+      medOutCache = new HashMap<String, MediumOutput>();
+      invalidMedOutSet = new LinkedHashSet<String>();
       
       snapOutCache = new HashMap<String, Map<String, SnapshotOutput>>();
       
@@ -195,7 +269,7 @@ public class CachedServerReader /* implements _ServerReader */{
       MachineOutput mOut = reader.getMachine(mIn);
       mOutCache.put(mOut.getUuid(), mOut);
       mOutListCache.put(mOut.getUuid(), mOut);
-      invalidMachineUuidSet.remove(mIn.getUuid());
+      invalidMachineUuidSet.remove(mOut.getUuid());
       FrontEventManager.post(new MachineAddedEvent(reader.getId(), mOut));
    }
    
@@ -241,6 +315,40 @@ public class CachedServerReader /* implements _ServerReader */{
          return true;
       } catch (HyperboxRuntimeException e) {
          return false;
+      }
+   }
+   
+   private void insertMedium(MediumInput medIn) {
+      Logger.track();
+      
+      MediumOutput medOut = reader.getMedium(medIn);
+      medOutCache.put(medOut.getUuid(), medOut);
+      invalidMedOutSet.remove(medOut.getUuid());
+      FrontEventManager.post(new MediumAddedEvent(medOut));
+   }
+   
+   private void updateMedium(MediumInput medIn) {
+      MediumOutput medOut = reader.getMedium(medIn);
+      medOutCache.put(medOut.getUuid(), medOut);
+      FrontEventManager.post(new MediumUpdatedEvent(medOut));
+   }
+   
+   private void deleteMedium(MediumInput medIn) {
+      MediumOutput medOut = getMedium(medIn);
+      invalidMedOutSet.add(medIn.getUuid());
+      medOutCache.remove(medIn.getUuid());
+      FrontEventManager.post(new MediumRemovedEvent(medOut));
+   }
+   
+   private void refreshMedium(MediumInput medIn) {
+      try {
+         if (!medOutCache.containsKey(medIn.getUuid())) {
+            insertMedium(medIn);
+         } else {
+            updateMedium(medIn);
+         }
+      } catch (HyperboxRuntimeException e) {
+         deleteMedium(medIn);
       }
    }
    
@@ -362,8 +470,14 @@ public class CachedServerReader /* implements _ServerReader */{
    }
    
    @Override
-   public MediumOutput getMedium(MediumInput mIn) {
-      return reader.getMedium(mIn);
+   public MediumOutput getMedium(MediumInput medIn) {
+      if (invalidMedOutSet.contains(medIn.getUuid())) {
+         throw new HyperboxRuntimeException(medIn.getUuid() + " does not relate to a medium");
+      }
+      if (!medOutCache.containsKey(medIn.getUuid())) {
+         refreshMedium(medIn);
+      }
+      return medOutCache.get(medIn.getUuid());
    }
    
    @Override
@@ -506,6 +620,29 @@ public class CachedServerReader /* implements _ServerReader */{
       return reader.listAttachments(machineUuid);
    }
    
-    */
+   @Override
+   public String getProtocolVersion() {
+      return reader.getProtocolVersion();
+   }
+   
+   @Override
+   public _GuestReader getGuest(String machineUuid) {
+      return reader.getGuest(machineUuid);
+   }
+   
+   @Override
+   public MachineOutput getMachine(String machineId) {
+      return reader.getMachine(machineId);
+   }
+   
+   @Override
+   public List<PermissionOutput> listPermissions(UserInput usrIn) {
+      return reader.listPermissions(usrIn);
+   }
+   
+   @Override
+   public HostOutput getHost() {
+      return reader.getHost();
+   }
    
 }
