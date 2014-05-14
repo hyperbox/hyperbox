@@ -27,6 +27,10 @@ public enum ClientEvents {
    MachineUpdate,
    MachineRemoved,
    
+   MediumAdd,
+   MediumUpdate,
+   MediumRemoved,
+
    ConsoleViewerAdd,
    ConsoleViewerUpdate,
    ConsoleViewerRemove,
