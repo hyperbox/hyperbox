@@ -29,11 +29,7 @@ public class BooleanUtils {
    }
    
    public static boolean get(String o) {
-      if ((o != null) && (o.equalsIgnoreCase("true") || o.equalsIgnoreCase("yes") || o.equalsIgnoreCase("1"))) {
-         return true;
-      } else{
-         return false;
-      }
+      return ((o != null) && (o.equalsIgnoreCase("true") || o.equalsIgnoreCase("yes") || o.equalsIgnoreCase("1")));
    }
    
 }
