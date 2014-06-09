@@ -36,6 +36,7 @@ import org.altherian.hbox.comm.output.event.EventOutput;
 import org.altherian.hbox.constant.ServerType;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
+import org.altherian.hbox.states.ServerConnectionState;
 import org.altherian.hbox.states.ServerState;
 import org.altherian.hboxd.HBoxServer;
 import org.altherian.hboxd.Hyperbox;
@@ -44,8 +45,8 @@ import org.altherian.hboxd.core.model.Medium;
 import org.altherian.hboxd.core.model._Machine;
 import org.altherian.hboxd.core.model._Medium;
 import org.altherian.hboxd.event.EventManager;
-import org.altherian.hboxd.event.hypervisor.HypervisorConnectedEvent;
 import org.altherian.hboxd.event.hypervisor.HypervisorDisconnectedEvent;
+import org.altherian.hboxd.event.server.ServerConnectionStateEvent;
 import org.altherian.hboxd.event.system.SystemStateEvent;
 import org.altherian.hboxd.exception.ServerNotFoundException;
 import org.altherian.hboxd.exception.hypervisor.HypervisorNotConnectedException;
@@ -56,7 +57,6 @@ import org.altherian.hboxd.host.Host;
 import org.altherian.hboxd.host._Host;
 import org.altherian.hboxd.hypervisor.Hypervisor;
 import org.altherian.hboxd.hypervisor._Hypervisor;
-import org.altherian.hboxd.hypervisor.event._HypervisorDisconnected;
 import org.altherian.hboxd.hypervisor.storage._RawMedium;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
 import org.altherian.hboxd.persistence._Persistor;
@@ -356,7 +356,7 @@ public class SingleHostCore implements _Hyperbox, _Server {
          HBoxServer.setSetting(CFGKEY_CORE_HYP_ID, hypervisorId);
          HBoxServer.setSetting(CFGKEY_CORE_HYP_OPTS, options);
          HBoxServer.setSetting(CFGKEY_CORE_HYP_AUTO, 1);
-         EventManager.post(new HypervisorConnectedEvent(this));
+         EventManager.post(new ServerConnectionStateEvent(this, ServerConnectionState.Connected));
       } catch (IllegalArgumentException e) {
          throw new HyperboxRuntimeException("Hypervisor cannot be loaded due to bad format: " + e.getMessage(), e);
       } catch (SecurityException e) {
@@ -377,13 +377,13 @@ public class SingleHostCore implements _Hyperbox, _Server {
          
          hypervisor.stop();
          hypervisor = null;
-         EventManager.post(new HypervisorDisconnectedEvent(this));
+         EventManager.post(new ServerConnectionStateEvent(this, ServerConnectionState.Disconnected));
       }
    }
    
    @Override
    public boolean isConnected() {
-      return (hypervisor != null);
+      return ((hypervisor != null) && hypervisor.isRunning());
    }
    
    @Override
@@ -514,11 +514,13 @@ public class SingleHostCore implements _Hyperbox, _Server {
    }
    
    @Handler
-   public void putHypervisorDisconnectEvent(_HypervisorDisconnected ev) {
+   public void putHypervisorDisconnectEvent(HypervisorDisconnectedEvent ev) {
       Logger.track();
       
-      Logger.debug("Hypervisor disconnected, cleaning up");
-      disconnect();
+      if (ev.getHypervisor().equals(hypervisor) && isConnected()) {
+         Logger.debug("Hypervisor disconnected, cleaning up");
+         disconnect();
+      }
    }
    
 }

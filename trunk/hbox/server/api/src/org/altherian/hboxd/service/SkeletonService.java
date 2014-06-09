@@ -23,13 +23,20 @@ package org.altherian.hboxd.service;
 
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.exception.ServiceException;
+import org.altherian.hboxd.event.EventManager;
+import org.altherian.hboxd.event.service.ServiceStatusEvent;
 import org.altherian.tool.logging.Logger;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
 /**
  * <p>
- * Skeleton implementation of a service. This skeleton will handle the Thread creation as well as its basic management.
+ * Skeleton implementation of a service. This skeleton will handle the Thread creation, its basic management and part of the service events.
+ * </p>
+ * <p>
+ * This skeleton implementation events using the default Server implementation.<br/>
+ * If a different event management is required, methods starting with publish can be overwritten.<br/>
+ * This implements do NOT send the @link {@link ServiceState#Running} and @link {@link ServiceState#Stopped} state and relies on the implementation to do so.
  * </p>
  * <p>
  * The thread startup & shutdown condition must be set in starting() and stopping().<br/>
@@ -50,6 +57,24 @@ import java.lang.Thread.UncaughtExceptionHandler;
 public abstract class SkeletonService implements _Service, Runnable {
    
    protected Thread serviceThread;
+   private ServiceState state;
+   
+   protected final void setState(ServiceState state) {
+      this.state = state;
+      publishState();
+   }
+   
+   @Override
+   public final ServiceState getState() {
+      return state;
+   }
+   
+   /**
+    * Called by {@link #setState(ServiceState)} to send events about the new state
+    */
+   protected void publishState() {
+      EventManager.post(new ServiceStatusEvent(this, state));
+   }
    
    @Override
    public void start() throws HyperboxRuntimeException {
@@ -58,6 +83,7 @@ public abstract class SkeletonService implements _Service, Runnable {
       serviceThread = new Thread(this, "Service ID " + getClass().getSimpleName());
       serviceThread.setUncaughtExceptionHandler(new ServiceExceptionHander());
       starting();
+      setState(ServiceState.Starting);
       serviceThread.start();
    }
    
@@ -77,6 +103,7 @@ public abstract class SkeletonService implements _Service, Runnable {
    public void stop() {
       Logger.track();
       
+      setState(ServiceState.Stopping);
       stopping();
       if ((serviceThread != null) && serviceThread.isAlive()) {
          serviceThread.interrupt();
@@ -84,14 +111,18 @@ public abstract class SkeletonService implements _Service, Runnable {
    }
    
    @Override
-   public void stopAndDie(int timeout) throws ServiceException {
+   public boolean stopAndDie(int timeout) {
       if (isRunning()) {
          stop();
          try {
             serviceThread.join(timeout);
+            return !isRunning();
          } catch (InterruptedException e) {
             Logger.exception(e);
+            return false;
          }
+      } else {
+         return true;
       }
    }
    
@@ -150,9 +181,9 @@ public abstract class SkeletonService implements _Service, Runnable {
          
          Logger.error("The service \"" + serviceThread.getName() + "\" has crashed.");
          Logger.error("Exception caught is : " + arg1.getClass().getSimpleName() + " - " + arg1.getMessage());
-         Logger.error("The service will not be restarted.");
          Logger.exception(arg1);
          serviceThread = null;
+         setState(ServiceState.Stopped);
       }
    }
    

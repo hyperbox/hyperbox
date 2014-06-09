@@ -27,13 +27,13 @@ public class Event extends Message implements _Event {
    
    private Enum<?> id;
    
-   public Event(Enum<?> s) {
+   public Event(Enum<?> eventId) {
       super("Event");
-      id = s;
+      id = eventId;
    }
    
-   public Event(Enum<?> s, Object data) {
-      this(s);
+   public Event(Enum<?> eventId, Object data) {
+      this(eventId);
       set(data);
    }
    
@@ -46,5 +46,5 @@ public class Event extends Message implements _Event {
    public String toString() {
       return "Event ID " + getEventId() + " occured @ " + getTime();
    }
-
+   
 }

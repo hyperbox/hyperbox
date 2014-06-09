@@ -52,7 +52,7 @@ public class VrdePortSettingAction implements _MachineSettingAction {
    public _Setting get(IMachine machine) {
       ISession sess = VbSessionManager.get().lockAuto(machine.getId());
       try {
-         if (sess.getConsole().getVRDEServerInfo().getPort() > 0) {
+         if ((sess.getConsole().getVRDEServerInfo() != null) && (sess.getConsole().getVRDEServerInfo().getPort() > 0)) {
             return new StringSetting(MachineAttributes.VrdePort, Integer.toString(sess.getConsole().getVRDEServerInfo().getPort()));
          } else {
             return new StringSetting(MachineAttributes.VrdePort, machine.getVRDEServer().getVRDEProperty("TCP/Ports"));

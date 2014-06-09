@@ -44,8 +44,10 @@ public class HypervisorIoFactory {
       settings.add(new StringSettingIO(HypervisorAttributes.Type, hyp.getTypeId()));
       settings.add(new StringSettingIO(HypervisorAttributes.Vendor, hyp.getVendor()));
       settings.add(new StringSettingIO(HypervisorAttributes.Product, hyp.getProduct()));
-      settings.add(new StringSettingIO(HypervisorAttributes.Version, hyp.getVersion()));
-      settings.add(new StringSettingIO(HypervisorAttributes.Revision, hyp.getRevision()));
+      if (hyp.isRunning()) {
+         settings.add(new StringSettingIO(HypervisorAttributes.Version, hyp.getVersion()));
+         settings.add(new StringSettingIO(HypervisorAttributes.Revision, hyp.getRevision()));
+      }
       settings.addAll(SettingIoFactory.getList(hyp.getSettings()));
       return new HypervisorOutput(hyp.getId(), settings);
    }

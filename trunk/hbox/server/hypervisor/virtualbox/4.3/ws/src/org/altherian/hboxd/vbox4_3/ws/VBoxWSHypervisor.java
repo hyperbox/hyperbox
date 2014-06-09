@@ -9,6 +9,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.virtualbox_4_3.VBoxException;
+import org.virtualbox_4_3.VirtualBoxManager;
 
 @Hypervisor(
       id = "vbox-4.3-ws",
@@ -16,7 +17,7 @@ import org.virtualbox_4_3.VBoxException;
       vendor = "Oracle",
       product = "Virtualbox",
       schemes = { "vbox-4.3-ws" })
-public class VBoxWSHypervisor extends VBoxHypervisor {
+public final class VBoxWSHypervisor extends VBoxHypervisor {
    
    protected final String defaultHost = "localhost";
    protected final int defaultPort = 18083;
@@ -25,7 +26,7 @@ public class VBoxWSHypervisor extends VBoxHypervisor {
    protected String hostname;
    
    @Override
-   protected void connect(String options) {
+   protected VirtualBoxManager connect(String options) {
       String host = defaultHost;
       int port = defaultPort;
       String username = defaultUser;
@@ -58,11 +59,15 @@ public class VBoxWSHypervisor extends VBoxHypervisor {
          hostname = host;
          Logger.debug("Using Web Services");
          
+         VirtualBoxManager mgr = VirtualBoxManager.createInstance(null);
+         
          String connInfo = "http://" + host + ":" + port;
          Logger.debug("Connection info: " + connInfo);
          Logger.debug("User: " + username);
          Logger.debug("Password given: " + ((password != null) && !password.isEmpty()));
-         vbMgr.connect("http://" + host + ":" + port, username, password);
+         mgr.connect("http://" + host + ":" + port, username, password);
+
+         return mgr;
       } catch (VBoxException e) {
          throw new HypervisorException("Unable to connect to the Virtualbox WebServices : " + e.getMessage(), e);
       }

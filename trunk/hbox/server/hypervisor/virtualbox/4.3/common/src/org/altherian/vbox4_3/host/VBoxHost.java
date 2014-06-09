@@ -35,7 +35,7 @@ public class VBoxHost implements _RawHost {
    
    @Override
    public String getHostname() {
-      return "Not Implemented";
+      return host.getDomainName();
    }
    
    @Override

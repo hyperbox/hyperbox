@@ -132,9 +132,15 @@ public interface _ServerReader {
    
    public List<PermissionOutput> listPermissions(UserInput usrIn);
    
+   public SnapshotOutput getRootSnapshot(String vmUuid);
+   
    public SnapshotOutput getRootSnapshot(MachineInput mIn);
    
+   public SnapshotOutput getSnapshot(String vmUuid, String snapUuid);
+
    public SnapshotOutput getSnapshot(MachineInput mIn, SnapshotInput snapIn);
+   
+   public SnapshotOutput getCurrentSnapshot(String vmUuid);
    
    public SnapshotOutput getCurrentSnapshot(MachineInput mIn);
    
@@ -147,5 +153,5 @@ public interface _ServerReader {
    public List<HypervisorLoaderOutput> listHypervisors();
    
    public HostOutput getHost();
-
+   
 }

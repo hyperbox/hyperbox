@@ -192,11 +192,10 @@ public class VirtualboxHypervisor implements _Hypervisor {
       osTypeCache = null;
       
       if (evMgrSvc != null) {
-         try {
-            evMgrSvc.stopAndDie(15000);
-         } catch (ServiceException e) {
-            Logger.error("Error when trying to stop the Event Manager Service :" + e.getMessage());
+         if (!evMgrSvc.stopAndDie(15000)) {
+            Logger.warning("Error when trying to stop the Event Manager Service");
          }
+         evMgrSvc = null;
       }
       ConnectionManager.stop();
    }

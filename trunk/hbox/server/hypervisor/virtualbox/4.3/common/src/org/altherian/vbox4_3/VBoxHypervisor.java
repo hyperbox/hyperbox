@@ -21,6 +21,8 @@
 
 package org.altherian.vbox4_3;
 
+import net.engio.mbassy.listener.Handler;
+
 import org.altherian.hbox.Configuration;
 import org.altherian.hbox.constant.EntityTypes;
 import org.altherian.hbox.data.Machine;
@@ -28,7 +30,12 @@ import org.altherian.hbox.exception.FeatureNotImplementedException;
 import org.altherian.hbox.exception.HypervisorException;
 import org.altherian.hbox.exception.MachineException;
 import org.altherian.hbox.exception.ServiceException;
+import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event._EventManager;
+import org.altherian.hboxd.event.hypervisor.HypervisorConfigurationUpdateEvent;
+import org.altherian.hboxd.event.hypervisor.HypervisorConnectedEvent;
+import org.altherian.hboxd.event.hypervisor.HypervisorDisconnectedEvent;
+import org.altherian.hboxd.event.service.ServiceStatusEvent;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 import org.altherian.hboxd.hypervisor._RawOsType;
 import org.altherian.hboxd.hypervisor.host._RawHost;
@@ -36,6 +43,7 @@ import org.altherian.hboxd.hypervisor.storage._RawMedium;
 import org.altherian.hboxd.hypervisor.storage._RawStorageControllerSubType;
 import org.altherian.hboxd.hypervisor.storage._RawStorageControllerType;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
+import org.altherian.hboxd.service.ServiceState;
 import org.altherian.hboxd.service._Service;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings.StringSetting;
@@ -127,16 +135,26 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       this.evMgr = evMgr;
    }
    
+   /**
+    * Gets the VirtualBoxManager instance. Override to perform any custom creation of the instance (e.g. XPCOM)
+    * 
+    * @param options options given to the hypervisor to connect
+    * @return a VirtualBox Manager instance object
+    */
+   protected VirtualBoxManager getManager(String options) {
+      return VirtualBoxManager.createInstance(null);
+   }
+   
    @Override
    public void start(String options) throws HypervisorException {
       Logger.track();
       
+      EventManager.register(this);
+      
       long start = System.currentTimeMillis();
       
-      vbMgr = VirtualBoxManager.createInstance(null);
+      vbMgr = connect(options);
       VBox.set(vbMgr);
-      
-      connect(options);
       
       if (!vbMgr.getVBox().getAPIVersion().contentEquals("4_3")) {
          throw new HypervisorException("Missmatch API Connector: Server is " + vbMgr.getVBox().getAPIVersion() + " but the connector handles 4_3");
@@ -168,13 +186,15 @@ public abstract class VBoxHypervisor implements _Hypervisor {
          throw new HypervisorException("Unable to start the Event Manager Service : " + e.getMessage());
       }
       
+      EventManager.post(new HypervisorConnectedEvent(this));
+      
       Logger.info("Connected in " + (System.currentTimeMillis() - start) + "ms to " + host.getHostname());
       Logger.info("VB Version: " + vbMgr.getVBox().getVersion());
       Logger.info("VB Revision: " + vbMgr.getVBox().getRevision());
       Logger.info("Host OS: " + vbMgr.getVBox().getHost().getOperatingSystem() + " " + vbMgr.getVBox().getHost().getOSVersion());
    }
    
-   protected abstract void connect(String options);
+   protected abstract VirtualBoxManager connect(String options);
    
    protected abstract void disconnect();
    
@@ -186,21 +206,23 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       osTypeCache = null;
       
       if (evMgrSvc != null) {
-         try {
-            evMgrSvc.stopAndDie(15000);
-            evMgrSvc = null;
-         } catch (ServiceException e) {
-            Logger.error("Error when trying to stop the Event Manager Service :" + e.getMessage());
+         if (!evMgrSvc.stopAndDie(15000)) {
+            Logger.warning("Error when trying to stop the Event Manager Service");
          }
+         evMgrSvc = null;
       }
       
       disconnect();
+      vbMgr.cleanup();
+      
+      EventManager.post(new HypervisorDisconnectedEvent(this));
+      EventManager.unregister(this);
    }
    
    @Override
    public boolean isRunning() {
       try {
-         return vbMgr.getVBox().getVersion().isEmpty();
+         return !vbMgr.getVBox().getVersion().isEmpty();
       } catch (Throwable t) {
          return false;
       }
@@ -618,12 +640,20 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    
    @Override
    public String getVersion() {
-      return vbMgr.getVBox().getVersion();
+      if (vbMgr != null) {
+         return vbMgr.getVBox().getVersion();
+      } else {
+         return "Not Connected";
+      }
    }
    
    @Override
    public String getRevision() {
-      return vbMgr.getVBox().getRevision().toString();
+      if (vbMgr != null) {
+         return vbMgr.getVBox().getRevision().toString();
+      } else {
+         return "Not Connected";
+      }
    }
    
    
@@ -663,15 +693,27 @@ public abstract class VBoxHypervisor implements _Hypervisor {
             vbMgr.getVBox().getSystemProperties().setExclusiveHwVirt(setting.getBoolean());
          }
       }
+      EventManager.post(new HypervisorConfigurationUpdateEvent(this));
    }
    
    @Override
    public List<_Setting> getSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
-      settings.add(new StringSetting("vbox.global.machineFolder", vbMgr.getVBox().getSystemProperties().getDefaultMachineFolder()));
-      settings.add(new StringSetting("vbox.global.consoleModule", vbMgr.getVBox().getSystemProperties().getDefaultVRDEExtPack()));
-      settings.add(new BooleanSetting("vbox.global.virtEx", vbMgr.getVBox().getSystemProperties().getExclusiveHwVirt()));
+      if (isRunning()) {
+         settings.add(new StringSetting("vbox.global.machineFolder", vbMgr.getVBox().getSystemProperties().getDefaultMachineFolder()));
+         settings.add(new StringSetting("vbox.global.consoleModule", vbMgr.getVBox().getSystemProperties().getDefaultVRDEExtPack()));
+         settings.add(new BooleanSetting("vbox.global.virtEx", vbMgr.getVBox().getSystemProperties().getExclusiveHwVirt()));
+      }
       return settings;
+   }
+   
+   @Handler
+   public void putServiceStatusEvent(ServiceStatusEvent ev) {
+      Logger.track();
+      
+      if (ev.getService().equals(evMgrSvc) && ev.getState().equals(ServiceState.Stopped)) {
+         stop();
+      }
    }
    
 }

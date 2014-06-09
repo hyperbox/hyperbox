@@ -68,6 +68,11 @@ public class TaskOutput extends ObjectOutput {
       this.error = error;
    }
    
+   @Override
+   public String getId() {
+      return getServerId() + "." + getTaskId();
+   }
+   
    public String getServerId() {
       return serverId;
    }

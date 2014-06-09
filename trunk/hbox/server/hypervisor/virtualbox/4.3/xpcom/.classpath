@@ -2,9 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Altherian Tools"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Server-API"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/VB-Helper"/>
-	<classpathentry kind="lib" path="lib/vboxjxpcom.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/vboxjxpcom.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/VB-4.3"/>
 	<classpathentry kind="output" path="eclipse-bin"/>
 </classpath>

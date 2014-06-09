@@ -55,7 +55,6 @@ import org.altherian.hbox.comm.output.TaskOutput;
 import org.altherian.hbox.comm.output.event.EventOutput;
 import org.altherian.hbox.comm.output.event.hypervisor.HypervisorEventOutput;
 import org.altherian.hbox.comm.output.event.machine.MachineDataChangeEventOutput;
-import org.altherian.hbox.comm.output.event.machine.MachineStateEventOutput;
 import org.altherian.hbox.comm.output.event.server.ServerShutdownEventOutput;
 import org.altherian.hbox.comm.output.host.HostOutput;
 import org.altherian.hbox.comm.output.hypervisor.HypervisorLoaderOutput;
@@ -81,7 +80,6 @@ import org.altherian.hboxc.comm.utils.Transaction;
 import org.altherian.hboxc.event.CoreEventManager;
 import org.altherian.hboxc.event.backend.BackendConnectionStateEvent;
 import org.altherian.hboxc.event.machine.MachineDataChangedEvent;
-import org.altherian.hboxc.event.machine.MachineStateChangedEvent;
 import org.altherian.hboxc.event.server.ServerConnectedEvent;
 import org.altherian.hboxc.event.server.ServerDisconnectedEvent;
 import org.altherian.hboxc.event.server.ServerModifiedEvent;
@@ -881,6 +879,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       }
    }
    
+   /*
    @Handler
    protected void putMachineStateEvent(MachineStateEventOutput ev) {
       Logger.track();
@@ -890,6 +889,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       }
       
    }
+    */
    
    @Handler
    protected final void putServerShutdownEvent(ServerShutdownEventOutput ev) {
@@ -928,6 +928,21 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       
       HostOutput hostOut = trans.extractItem(HostOutput.class);
       return hostOut;
+   }
+   
+   @Override
+   public SnapshotOutput getRootSnapshot(String vmUuid) {
+      return getRootSnapshot(new MachineInput(vmUuid));
+   }
+   
+   @Override
+   public SnapshotOutput getSnapshot(String vmUuid, String snapUuid) {
+      return getSnapshot(new MachineInput(vmUuid), new SnapshotInput(snapUuid));
+   }
+   
+   @Override
+   public SnapshotOutput getCurrentSnapshot(String vmUuid) {
+      return getCurrentSnapshot(new MachineInput(vmUuid));
    }
    
 }

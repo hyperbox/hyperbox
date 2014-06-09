@@ -23,12 +23,12 @@
 package org.altherian.hboxd.event.hypervisor;
 
 import org.altherian.hbox.event.HyperboxEvents;
-import org.altherian.hboxd.server._Server;
+import org.altherian.hboxd.hypervisor._Hypervisor;
 
 public class HypervisorDisconnectedEvent extends HypervisorEvent {
    
-   public HypervisorDisconnectedEvent(_Server srv) {
-      super(HyperboxEvents.HypervisorDisconnected, srv);
+   public HypervisorDisconnectedEvent(_Hypervisor hyp) {
+      super(HyperboxEvents.HypervisorDisconnected, hyp);
    }
    
 }

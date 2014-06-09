@@ -23,12 +23,11 @@
 package org.altherian.hbox.comm.output.event.server;
 
 import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.event.EventOutput;
 import org.altherian.hbox.event.HyperboxEvents;
 
 import java.util.Date;
 
-public class ServerShutdownEventOutput extends EventOutput {
+public class ServerShutdownEventOutput extends ServerEventOutput {
    
    @SuppressWarnings("unused")
    private ServerShutdownEventOutput() {

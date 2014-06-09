@@ -175,6 +175,15 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       public void loadingStarted() {
          Logger.track();
          
+         if (!SwingUtilities.isEventDispatchThread()) {
+            SwingUtilities.invokeLater(new Runnable() {
+               @Override
+               public void run() {
+                  loadingStarted();
+               }
+            });
+         }
+
          loadingLabel.setVisible(true);
          panel.setEnabled(false);
          panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -182,6 +191,15 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       }
       
       private void finish() {
+         if (!SwingUtilities.isEventDispatchThread()) {
+            SwingUtilities.invokeLater(new Runnable() {
+               @Override
+               public void run() {
+                  finish();
+               }
+            });
+         }
+
          isLoading = false;
          panel.setEnabled(false);
          panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -236,9 +254,9 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
                add(tOut);
             }
          });
-      } else {
-         itemListModel.add(tOut);
       }
+      
+      itemListModel.add(tOut);
    }
    
    private void update(final TaskOutput tOut) {
@@ -249,9 +267,9 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
                update(tOut);
             }
          });
-      } else {
-         itemListModel.update(tOut);
       }
+      
+      itemListModel.update(tOut);
    }
    
    private void remove(final TaskOutput tOut) {
@@ -262,9 +280,9 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
                remove(tOut);
             }
          });
-      } else {
-         itemListModel.remove(tOut);
       }
+      
+      itemListModel.remove(tOut);
    }
    
 }

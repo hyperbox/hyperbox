@@ -22,12 +22,16 @@
 
 package org.altherian.hboxd.comm.io.factory.event;
 
+import org.altherian.hbox.comm.output.ServerOutput;
 import org.altherian.hbox.comm.output.event.EventOutput;
 import org.altherian.hbox.comm.output.event.hypervisor.HypervisorConfiguredEventOutput;
 import org.altherian.hbox.comm.output.event.hypervisor.HypervisorConnectedEventOutput;
 import org.altherian.hbox.comm.output.event.hypervisor.HypervisorDisconnectedEventOutput;
+import org.altherian.hbox.comm.output.hypervisor.HypervisorOutput;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.event._Event;
+import org.altherian.hboxd.comm.io.factory.HypervisorIoFactory;
+import org.altherian.hboxd.comm.io.factory.ServerIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.event.hypervisor.HypervisorEvent;
 
@@ -46,13 +50,15 @@ public class HypervisorIoEvent implements _EventIoFactory {
    public EventOutput get(_Hyperbox hbox, _Event ev) {
       if (ev instanceof HypervisorEvent) {
          HypervisorEvent hypEv = (HypervisorEvent) ev;
+         ServerOutput srvOut = ServerIoFactory.get();
+         HypervisorOutput hypOut = HypervisorIoFactory.getOut(hypEv.getHypervisor());
          switch ((HyperboxEvents) hypEv.getEventId()) {
             case HypervisorConfigured:
-               return new HypervisorConfiguredEventOutput(hypEv.getTime(), hypEv.getServer(), hypEv.getHypervisor());
+               return new HypervisorConfiguredEventOutput(hypEv.getTime(), srvOut, hypOut);
             case HypervisorConnected:
-               return new HypervisorConnectedEventOutput(hypEv.getTime(), hypEv.getServer(), hypEv.getHypervisor());
+               return new HypervisorConnectedEventOutput(hypEv.getTime(), srvOut, hypOut);
             case HypervisorDisconnected:
-               return new HypervisorDisconnectedEventOutput(hypEv.getTime(), hypEv.getServer(), hypEv.getHypervisor());
+               return new HypervisorDisconnectedEventOutput(hypEv.getTime(), srvOut, hypOut);
             default:
                return null;
          }

@@ -129,7 +129,7 @@ public enum MachineStates {
     * A machine snapshot is being deleted; this can take a long time since this may require merging differencing media. This value indicates that the machine is not running while the snapshot is being
     * deleted.
     */
-   SnapshotDemetingOff,
+   SnapshotDeletingOff,
    
    /**
     * Like SNAPSHOT_DELETING_OFF, but the merging of media is ongoing in the background while the machine is running.

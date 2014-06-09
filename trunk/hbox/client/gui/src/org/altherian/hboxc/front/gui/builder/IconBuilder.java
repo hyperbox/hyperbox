@@ -209,6 +209,18 @@ public class IconBuilder {
       }
    }
    
+   public static ImageIcon getMachineState(String state) {
+      if (state == null) {
+         return unknownElement;
+      }
+      
+      try {
+         return getMachineState(MachineStates.valueOf(state));
+      } catch (Throwable t) {
+         return unknownElement;
+      }
+   }
+
    public static ImageIcon getMachineState(MachineStates state) {
       if ((state != null) && machineStates.containsKey(state)) {
          return machineStates.get(state);

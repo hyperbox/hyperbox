@@ -22,29 +22,18 @@
 
 package org.altherian.hboxd.event.hypervisor;
 
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.hypervisor.HypervisorOutput;
 import org.altherian.hbox.event.Event;
-import org.altherian.hboxd.comm.io.factory.HypervisorIoFactory;
-import org.altherian.hboxd.comm.io.factory.ServerIoFactory;
-import org.altherian.hboxd.server._Server;
+import org.altherian.hboxd.hypervisor._Hypervisor;
 
 public abstract class HypervisorEvent extends Event {
    
-   public HypervisorEvent(Enum<?> eventId, _Server srv) {
+   public HypervisorEvent(Enum<?> eventId, _Hypervisor hyp) {
       super(eventId);
-      set(ServerIoFactory.get(srv));
-      if (srv.isConnected()) {
-         set(HypervisorIoFactory.getOut(srv.getHypervisor()));
-      }
+      set(_Hypervisor.class, hyp);
    }
    
-   public ServerOutput getServer() {
-      return get(ServerOutput.class);
-   }
-   
-   public HypervisorOutput getHypervisor() {
-      return get(HypervisorOutput.class);
+   public _Hypervisor getHypervisor() {
+      return get(_Hypervisor.class);
    }
    
 }

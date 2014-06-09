@@ -1,4 +1,4 @@
-/* 
+/*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
  * 
@@ -43,6 +43,7 @@ public abstract class SimpleLoopService extends SkeletonService {
    public final void run() {
       try {
          beforeLooping();
+         setState(ServiceState.Running);
          while (running) {
             doLoop();
             Thread.sleep(sleepingTime);
@@ -52,6 +53,7 @@ public abstract class SimpleLoopService extends SkeletonService {
          running = false;
       } finally {
          afterLooping();
+         setState(ServiceState.Stopped);
       }
    }
    

@@ -13,12 +13,7 @@ public class VBox {
    public static void set(VirtualBoxManager mgr) {
       Logger.track();
       
-      if (VBox.mgr == null) {
-         VBox.mgr = mgr;
-         Logger.track();
-      } else {
-         Logger.track();
-      }
+      VBox.mgr = mgr;
    }
    
    public static IVirtualBox get() {
@@ -29,4 +24,8 @@ public class VBox {
       return mgr.getSessionObject();
    }
    
+   public static VirtualBoxManager getManager() {
+      return mgr;
+   }
+
 }

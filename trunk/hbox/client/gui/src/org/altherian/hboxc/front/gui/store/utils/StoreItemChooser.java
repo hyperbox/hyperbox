@@ -104,7 +104,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
    private JButton cancelButton;
    
    private static StoreItemInput choosenStiIn;
-   private static StoreItemOutput choosenStiOut;
+   private StoreItemOutput choosenStiOut;
    
    protected StoreItemChooser(ServerOutput srvOut, int workingMode) {
       this.srvOut = srvOut;
@@ -269,7 +269,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       }
    }
    
-   private void getUserInput() {
+   private StoreItemOutput getUserInput() {
       choosenStiIn = null;
       loadStores();
       if (workingMode == FOLDER_NAME) {
@@ -279,6 +279,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       }
       dialog.setLocationRelativeTo(MainView.getMainFrame());
       dialog.setVisible(true);
+      return choosenStiOut;
    }
    
    private void hide() {
@@ -338,15 +339,11 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
     * @return a StoreItemOutput object or <code>null</code> if no item was chosen by the user.
     */
    public static StoreItemOutput getExisitingFile(ServerOutput srvOut) {
-      choosenStiOut = null;
-      new StoreItemChooser(srvOut, FILE_EXIST).getUserInput();
-      return choosenStiOut;
+      return new StoreItemChooser(srvOut, FILE_EXIST).getUserInput();
    }
    
    public static StoreItemOutput getExisitingFolder(ServerOutput srvOut) {
-      choosenStiOut = null;
-      new StoreItemChooser(srvOut, FOLDER_NAME).getUserInput();
-      return choosenStiOut;
+      return new StoreItemChooser(srvOut, FOLDER_NAME).getUserInput();
    }
    
    private class StoreOutputTreeNode extends DefaultMutableTreeNode {
@@ -438,10 +435,13 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
    private class BrowseMouseListener extends MouseAdapter {
       
       private StoreItemOutput getSelection() {
-         if (storeItemTable.getSelectedRow() == -1) {
+         int selectedRow = storeItemTable.getSelectedRow();
+         Logger.debug("Selected row: " + selectedRow);
+         
+         if (selectedRow == -1) {
             return null;
          } else {
-            return storeItemTableModel.getObjectAtRowId(storeItemTable.convertRowIndexToModel(storeItemTable.getSelectedRow()));
+            return storeItemTableModel.getObjectAtRowId(storeItemTable.convertRowIndexToModel(selectedRow));
          }
       }
       
@@ -454,6 +454,8 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
             if ((ev.getClickCount() == 1) && !stiOut.isContainer()) {
                System.out.println("Selecting");
                select(stiOut);
+            } else {
+               Logger.track();
             }
             if (ev.getClickCount() == 2) {
                if (stiOut.isContainer()) {
@@ -463,7 +465,11 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
                   System.out.println("Choosing");
                   choose(stiOut);
                }
+            } else {
+               Logger.track();
             }
+         } else {
+            Logger.track();
          }
       }
    }
