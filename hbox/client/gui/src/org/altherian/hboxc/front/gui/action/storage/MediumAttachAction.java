@@ -13,6 +13,7 @@ import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.storage.MediumBrowser;
+import org.altherian.tool.logging.Logger;
 
 import java.awt.event.ActionEvent;
 
@@ -38,14 +39,19 @@ public class MediumAttachAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent ae) {
+      Logger.track();
+      
       MediumOutput medOut = MediumBrowser.browse(new ServerOutput(serverId), sdaOut.getDeviceType());
       if (medOut != null) {
+         Logger.debug("Medium was choosen to be mounted: " + medOut.getName() + " - " + medOut.getLocation());
          Request req = new Request(Command.VBOX, HypervisorTasks.MediumMount);
          req.set(new ServerInput(serverId));
          req.set(new MachineInput(sdaOut.getMachineUuid()));
          req.set(new StorageDeviceAttachmentInput(sdaOut.getControllerName(), sdaOut.getPortId(), sdaOut.getDeviceId(), sdaOut.getDeviceType()));
          req.set(new MediumInput(medOut.getLocation(), medOut.getDeviceType()));
          Gui.post(req);
+      } else {
+         Logger.debug("No medium was choosen to be mounted");
       }
    }
    

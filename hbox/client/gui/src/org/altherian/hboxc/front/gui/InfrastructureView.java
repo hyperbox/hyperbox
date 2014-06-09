@@ -31,6 +31,7 @@ import org.altherian.hbox.comm.output.event.hypervisor.HypervisorConnectedEventO
 import org.altherian.hbox.comm.output.event.hypervisor.HypervisorDisconnectedEventOutput;
 import org.altherian.hbox.comm.output.event.machine.MachineRegistrationEventOutput;
 import org.altherian.hbox.comm.output.event.machine.MachineStateEventOutput;
+import org.altherian.hbox.comm.output.event.server.ServerConnectionStateEventOutput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
 import org.altherian.hbox.constant.EntityTypes;
@@ -389,15 +390,10 @@ public final class InfrastructureView implements _MachineSelector, _ServerSelect
          });
       } else {
          if (vmNodes.get(serverId).containsKey(id)) {
-            try {
-               vmCurrentSnaps.remove(id);
-               treeModel.removeNodeFromParent(vmNodes.get(serverId).remove(id));
-            } catch (IllegalArgumentException e) {
-               // It is possible that the node is already removed if we get two events in a short period of time (VM unregistered and VM deleted).
-               // Ignoring this exception until a better implementation is found
-               // TODO implement better Swing by using dispatcher thread everywhere
-            }
-            
+            vmCurrentSnaps.remove(id);
+            treeModel.removeNodeFromParent(vmNodes.get(serverId).remove(id));
+         } else {
+            Logger.debug("Trying to remove machine not in the view: " + serverId + " - " + id);
          }
       }
       
@@ -421,6 +417,22 @@ public final class InfrastructureView implements _MachineSelector, _ServerSelect
    
    @Handler
    public void putHypervisorDisconnected(final HypervisorDisconnectedEventOutput ev) {
+      Logger.track();
+      
+      new SwingWorker<Void, Void>() {
+         
+         @Override
+         protected Void doInBackground() throws Exception {
+            update(ev.getServer());
+            refresh(ev.getServer());
+            return null;
+         }
+         
+      }.execute();
+   }
+   
+   @Handler
+   public void putServerConnectionStateChange(final ServerConnectionStateEventOutput ev) {
       Logger.track();
       
       new SwingWorker<Void, Void>() {
@@ -507,7 +519,7 @@ public final class InfrastructureView implements _MachineSelector, _ServerSelect
          
          @Override
          protected Void doInBackground() throws Exception {
-            removeMachine(ev.getServerId(), ev.getMachine().getId());
+            removeMachine(ev.getServerId(), ev.getMachine().getUuid());
             return null;
          }
          

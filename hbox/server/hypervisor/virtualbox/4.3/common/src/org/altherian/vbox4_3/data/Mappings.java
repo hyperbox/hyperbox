@@ -88,7 +88,7 @@ public class Mappings {
       mappingMachine.put(MachineStates.SnapshotLive, MachineState.LiveSnapshotting);
       mappingMachine.put(MachineStates.SnapshotDeletingOnline, MachineState.DeletingSnapshotOnline);
       mappingMachine.put(MachineStates.SnapshotDeletingPaused, MachineState.DeletingSnapshotPaused);
-      mappingMachine.put(MachineStates.SnapshotDemetingOff, MachineState.DeletingSnapshot);
+      mappingMachine.put(MachineStates.SnapshotDeletingOff, MachineState.DeletingSnapshot);
       mappingMachine.put(MachineStates.SnapshotRestoring, MachineState.RestoringSnapshot);
       mappingMachine.put(MachineStates.SettingUp, MachineState.SettingUp);
       

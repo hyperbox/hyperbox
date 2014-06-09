@@ -2,8 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/vboxj.jar"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Server-API"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/VB-Helper"/>
+	<classpathentry kind="lib" path="lib/vboxjws.jar"/>
+	<classpathentry kind="lib" path="lib/vboxjxpcom.jar"/>
 	<classpathentry kind="output" path="eclipse-bin"/>
 </classpath>

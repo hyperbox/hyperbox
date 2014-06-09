@@ -527,29 +527,29 @@ public final class VmSummaryView {
                refresh();
             }
          });
-      } else {
-         try {
-            if (!isRefreshing) {
-               isRefreshing = true;
-               if (mOut == null) {
-                  clear();
-               } else {
-                  refreshGeneral();
-                  refreshSystem();
-                  refreshDisplay();
-                  refreshStorage();
-                  refreshAudio();
-                  refreshNetwork();
-                  refreshDesc();
-                  panel.revalidate();
-                  panel.repaint();
-               }
+      }
+      
+      try {
+         if (!isRefreshing) {
+            isRefreshing = true;
+            if (mOut == null) {
+               clear();
             } else {
-               Logger.warning("Trying to refresh VM info while already refreshing");
+               refreshGeneral();
+               refreshSystem();
+               refreshDisplay();
+               refreshStorage();
+               refreshAudio();
+               refreshNetwork();
+               refreshDesc();
+               panel.revalidate();
+               panel.repaint();
             }
-         } finally {
-            isRefreshing = false;
+         } else {
+            Logger.warning("Trying to refresh VM info while already refreshing");
          }
+      } finally {
+         isRefreshing = false;
       }
    }
    

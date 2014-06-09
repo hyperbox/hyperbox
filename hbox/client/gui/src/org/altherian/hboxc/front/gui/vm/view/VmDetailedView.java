@@ -62,10 +62,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
       tabs.addTab("Snapshots", snapTab.getComponent());
       
       loadingLabel = new JLabel("Loading...");
-      loadingLabel.setVisible(false);
-      
-      errorLabel = new JLabel("VM is not accessible, cannot display details");
-      errorLabel.setVisible(false);
+      errorLabel = new JLabel();
       
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(loadingLabel, "growx, pushx, wrap, hidemode 3");
@@ -76,6 +73,8 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    }
    
    private void update() {
+      Logger.track();
+      
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -83,25 +82,25 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
                update();
             }
          });
-      } else {
-         tabs.setVisible(mOut.isAvailable());
-         errorLabel.setVisible(!mOut.isAvailable());
-         if (mOut.isAvailable()) {
-            summaryTab.show(mOut);
-            tabs.setEnabledAt(tabs.indexOfComponent(summaryTab.getComponent()), true);
-            snapTab.show(mOut);
-            tabs.setEnabledAt(tabs.indexOfComponent(snapTab.getComponent()), true);
-         }
+      }
+      
+      if (mOut.isAvailable()) {
+         summaryTab.show(mOut);
+         tabs.setEnabledAt(tabs.indexOfComponent(summaryTab.getComponent()), true);
+         snapTab.show(mOut);
+         tabs.setEnabledAt(tabs.indexOfComponent(snapTab.getComponent()), true);
       }
    }
    
    public void setUserSelection(MachineOutput mOut) {
+      Logger.track();
+      
       this.mOut = mOut;
       refresh();
    }
    
    public JComponent getComponent() {
-      return tabs;
+      return panel;
    }
    
    @Handler
@@ -134,9 +133,12 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
                clear();
             }
          });
-      } else {
-         summaryTab.clear();
       }
+      
+      Logger.track();
+      errorLabel.setVisible(false);
+      tabs.setVisible(false);
+      summaryTab.clear();
    }
    
    @Override
@@ -148,18 +150,29 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
                loadingStarted();
             }
          });
-      } else {
-         loadingLabel.setVisible(true);
+      }
+      
+      clear();
+      loadingLabel.setVisible(true);
+      if (tabs.indexOfComponent(summaryTab.getComponent()) > -1) {
          tabs.setEnabledAt(tabs.indexOfComponent(summaryTab.getComponent()), false);
+      }
+      if (tabs.indexOfComponent(snapTab.getComponent()) > -1) {
          tabs.setEnabledAt(tabs.indexOfComponent(snapTab.getComponent()), false);
-         clear();
       }
    }
    
    @Override
-   public void loadingFinished(boolean isSuccessful, String message) {
+   public void loadingFinished(final boolean isSuccessful, final String message) {
+      Logger.track();
+      
       loadingLabel.setVisible(false);
-      tabs.setEnabled(true);
+      tabs.setEnabled(isSuccessful);
+      tabs.setVisible(isSuccessful && mOut.isAvailable());
+      if (!isSuccessful) {
+         errorLabel.setText("Unable to retrieve VM information: " + message);
+         errorLabel.setVisible(true);
+      }
    }
    
    @Override
@@ -172,7 +185,6 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    
    @Override
    public void refresh() {
-      clear();
       MachineGetWorker.get(this, mOut);
    }
    

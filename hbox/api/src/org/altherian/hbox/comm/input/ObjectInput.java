@@ -60,6 +60,12 @@ public abstract class ObjectInput {
       return getId();
    }
    
+   /**
+    * Get the most significant ID value for this object. The significance can change depending on the state of the object.<br/>
+    * The default behaviour returns the id value given in the constructors, or an empty string if none was given
+    * 
+    * @return The most significant ID as a String, or an empty string if no ID exists within the object.
+    */
    public String getId() {
       return id;
    }

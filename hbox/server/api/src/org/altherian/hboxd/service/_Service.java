@@ -1,4 +1,4 @@
-/* 
+/*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
  * 
@@ -26,7 +26,7 @@ import org.altherian.hbox.exception.ServiceException;
 /**
  * <p>
  * A service for Hyperbox is a module that run in its own thread(s) and is used to perform continuous and/or lengthy background activities that shouldn't be run on the main core thread.<br/>
- * A service is expected to manage its own life-cycle and events registration(s).
+ * A service is expected to manage its own life-cycle and events registration(s) if any is required.
  * </p>
  * <p>
  * Hyperbox will :
@@ -54,6 +54,13 @@ import org.altherian.hbox.exception.ServiceException;
 public interface _Service {
    
    /**
+    * Returns the current service state
+    * 
+    * @return the current service state
+    */
+   public ServiceState getState();
+   
+   /**
     * Requests the service to start. _Core expects the service to return directly after the service thread has been started.
     * 
     * @throws ServiceException If anything prevented the service to start
@@ -70,7 +77,14 @@ public interface _Service {
     */
    public void stop() throws ServiceException;
    
-   public void stopAndDie(int timeout) throws ServiceException;
+   /**
+    * Requests the service to stop by calling {@link _Service#stop()} then waits for the service thread to stop for the given milliseconds<br/>
+    * The wait is perform using @link {@link Thread#join(long)}.
+    * 
+    * @param timeout Time in milliseconds the call should wait for the service thread to stop
+    * @return true if the service stopped within the timeframe given, or false if not
+    */
+   public boolean stopAndDie(int timeout);
    
    /**
     * Requests the service to pause until further call is made.

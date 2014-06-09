@@ -26,6 +26,7 @@ import org.altherian.hbox.comm.io.PositiveNumberSettingIO;
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
 import org.altherian.hbox.constant.MediumAttribute;
+import org.altherian.tool.StringTools;
 
 import java.io.File;
 import java.util.HashSet;
@@ -80,6 +81,20 @@ public class MediumInput extends ObjectInput implements _Actionnable {
       }
    }
    
+   /**
+    * Will return in preference of order : UUID, Location then an empty string if none of the previous are set
+    */
+   @Override
+   public String getId() {
+      if (!StringTools.isEmpty(getUuid())) {
+         return getUuid();
+      } else if (!StringTools.isEmpty(getLocation())) {
+         return getLocation();
+      } else {
+         return "";
+      }
+   }
+   
    public String getUuid() {
       return getSetting(MediumAttribute.UUID).getString();
    }
@@ -95,7 +110,7 @@ public class MediumInput extends ObjectInput implements _Actionnable {
    public void setName(String name) {
       setSetting(new StringSettingIO(MediumAttribute.Name, name));
    }
-
+   
    public void setFormat(String format) {
       setSetting(new StringSettingIO(MediumAttribute.Format, format));
    }

@@ -115,7 +115,7 @@ public abstract class AbstractOutputListTableModel<T extends ObjectOutput> exten
    }
    
    public void add(T oOut) {
-      if (oOut != null) {
+      if ((oOut != null) && !has(oOut)) {
          int index = data.size();
          data.add(index, oOut);
          fireTableRowsInserted(index, index);
@@ -123,15 +123,21 @@ public abstract class AbstractOutputListTableModel<T extends ObjectOutput> exten
    }
    
    public void update(T oOut) {
-      if (oOut != null) {
+      if ((oOut != null) && has(oOut)) {
          int index = getRowForObj(oOut);
-         if (index > -1) {
-            data.set(index, oOut);
-            fireTableRowsUpdated(index, index);
-         }
+         data.set(index, oOut);
+         fireTableRowsUpdated(index, index);
       }
    }
    
+   public void remove(T oOut) {
+      if ((oOut != null) && has(oOut)) {
+         int index = getRowForObj(oOut);
+         data.remove(index);
+         fireTableRowsDeleted(index, index);
+      }
+   }
+
    public void merge(T oOut) {
       if (has(oOut)) {
          update(oOut);
@@ -143,17 +149,6 @@ public abstract class AbstractOutputListTableModel<T extends ObjectOutput> exten
    public void put(T oOut) {
       clear();
       add(oOut);
-   }
-   
-   public void remove(T oOut) {
-      if (oOut != null) {
-         int index = getRowForObj(oOut);
-         if (index > -1) {
-            Logger.track();
-            data.remove(index);
-            fireTableRowsDeleted(index, index);
-         }
-      }
    }
    
    public void add(List<T> list) {

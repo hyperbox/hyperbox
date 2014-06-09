@@ -38,7 +38,7 @@ import org.virtualbox_4_3.VBoxEventType;
 import org.virtualbox_4_3.VBoxException;
 
 /**
- * Recommended way to handle events is the pasive implementation, which required polling to get new events.<br/>
+ * Recommended way to handle events is the passive implementation, which required polling to get new events.<br/>
  * This service will keep polling, transform events and feed them into hyperbox.
  * 
  * @author noteirak
@@ -94,13 +94,17 @@ public final class EventsManagementService extends SimpleLoopService {
          }
       } catch (VBoxException e) {
          throw ErrorInterpreter.transform(e);
-      } catch (RuntimeException t) {
-         if ((t.getMessage() != null) && t.getMessage().contains("Connection refused")) {
+      } catch (RuntimeException r) {
+         if ((r.getMessage() != null) && r.getMessage().contains("Connection refused")) {
             Logger.error("Virtualbox broke the connection with us");
             stop();
          } else {
-            throw t;
+            throw r;
          }
+      } catch (Throwable t) {
+         Logger.error("Unexpected error occured in the VBox Event Manager - " + t.getMessage());
+         Logger.exception(t);
+         stop();
       }
    }
    

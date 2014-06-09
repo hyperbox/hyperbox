@@ -106,12 +106,12 @@ public class TaskListView implements _TaskSelector, _Refreshable {
                refresh(serverId);
             }
          });
-      } else {
-         try {
-            itemListModel.merge(Gui.getReader().getServerReader(serverId).listTasks());
-         } catch (HyperboxRuntimeException e) {
-            itemListModel.removeServer(serverId);
-         }
+      }
+      
+      try {
+         itemListModel.merge(Gui.getReader().getServerReader(serverId).listTasks());
+      } catch (HyperboxRuntimeException e) {
+         itemListModel.removeServer(serverId);
       }
    }
    
@@ -137,24 +137,53 @@ public class TaskListView implements _TaskSelector, _Refreshable {
       
    }
    
-   @Handler
-   private void putTaskQueueEvent(final TaskQueueEventOutput ev) {
+   private void add(final TaskOutput tOut) {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-               putTaskQueueEvent(ev);
+               add(tOut);
             }
          });
-      } else {
-         if (ev.getQueueEvent().equals(TaskQueueEvents.TaskAdded)) {
-            itemListModel.add(ev.getTask());
-         }
-         if (ev.getQueueEvent().equals(TaskQueueEvents.TaskRemoved)) {
-            itemListModel.remove(ev.getTask());
-         }
       }
       
+      itemListModel.add(tOut);
+   }
+   
+   private void update(final TaskOutput tOut) {
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               update(tOut);
+            }
+         });
+      }
+      
+      itemListModel.update(tOut);
+   }
+   
+   private void remove(final TaskOutput tOut) {
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               remove(tOut);
+            }
+         });
+      }
+      
+      itemListModel.remove(tOut);
+   }
+   
+   @Handler
+   private void putTaskQueueEvent(final TaskQueueEventOutput ev) {
+      if (ev.getQueueEvent().equals(TaskQueueEvents.TaskAdded)) {
+         add(ev.getTask());
+      }
+      if (ev.getQueueEvent().equals(TaskQueueEvents.TaskRemoved)) {
+         remove(ev.getTask());
+      }
    }
    
    // TODO don't reload everything, be more specific
@@ -162,16 +191,7 @@ public class TaskListView implements _TaskSelector, _Refreshable {
    private void postTaskState(final TaskStateEventOutput ev) {
       Logger.track();
       
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-               postTaskState(ev);
-            }
-         });
-      } else {
-         itemListModel.update(ev.getTask());
-      }
+      update(ev.getTask());
    }
    
    @Handler
@@ -223,5 +243,7 @@ public class TaskListView implements _TaskSelector, _Refreshable {
       }
       
    }
+   
+   
    
 }

@@ -55,6 +55,7 @@ public class MachineGetWorker extends SwingWorker<MachineOutput, Void> {
          recv.put(mOut);
          recv.loadingFinished(true, null);
       } catch (Throwable e) {
+         Logger.exception(e);
          recv.loadingFinished(false, e.getMessage());
       }
    }
