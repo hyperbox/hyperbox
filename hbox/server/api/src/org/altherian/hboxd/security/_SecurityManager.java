@@ -34,7 +34,7 @@ import java.util.List;
 
 public interface _SecurityManager {
    
-   public void init(_SecurityPersistor persistor, _User superUser) throws HyperboxException;
+   public _User init(_SecurityPersistor persistor) throws HyperboxException;
    
    public void start() throws HyperboxException;
    

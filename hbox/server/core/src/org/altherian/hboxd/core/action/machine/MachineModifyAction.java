@@ -88,7 +88,7 @@ public final class MachineModifyAction extends ASingleTaskAction {
       mIn.removeSetting(MachineAttributes.ServerId);
       
       _Server srv = hbox.getServer(srvIn.getId());
-      _Machine vm = srv.getMachine(mIn.getUuid());
+      _Machine vm = srv.getMachine(mIn.getId());
       
       boolean success = false;
       

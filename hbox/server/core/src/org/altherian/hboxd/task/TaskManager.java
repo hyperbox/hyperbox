@@ -76,6 +76,7 @@ public final class TaskManager implements _TaskManager {
       Logger.debug("Task history size: " + finishedTaskDeque.remainingCapacity());
       tasks = new HashMap<String, _Task>();
       worker = new Thread(queueWorker, "TaskMgrQW");
+      SecurityContext.addAdminThread(worker);
       
       EventManager.register(this);
    }
@@ -106,7 +107,7 @@ public final class TaskManager implements _TaskManager {
                + " under " + SecurityContext.getUser().getName());
          hbox.getSecurityManager().authorize(req);
          _HyperboxAction ac = hbox.getActionManager().get(req);
-         if (ac.isQueueable()) {
+         if (ac.isQueueable() && req.isQueueable()) {
             queueWorker.queue(req, ac);
          } else {
             Logger.debug("Immediate execute of Request #" + req.getExchangeId() + " [" + req.getCommand() + ":" + req.getName() + "]");
@@ -229,16 +230,9 @@ public final class TaskManager implements _TaskManager {
       public void run() {
          Logger.track();
          
-         SecurityContext.initAdminThread();
-         
-         try {
-            Thread.sleep(1000);
-            running = true;
-         } catch (InterruptedException e1) {
-            running = false;
-         }
-         
+         running = true;
          Logger.verbose("Task Queue Worker started");
+         
          while (running) {
             try {
                while ((taskQueue.peek() == null) || taskQueue.peek().getState().equals(TaskState.Created)) {

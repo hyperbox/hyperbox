@@ -27,10 +27,12 @@ public enum ClientEvents {
    MachineUpdate,
    MachineRemoved,
    
+   MachineSnapshotDataChanged,
+
    MediumAdd,
    MediumUpdate,
    MediumRemoved,
-
+   
    ConsoleViewerAdd,
    ConsoleViewerUpdate,
    ConsoleViewerRemove,
@@ -51,5 +53,14 @@ public enum ClientEvents {
    
    BackendConnected,
    BackendDisconnected,
+   
+   SnapshotTaken,
+   SnapshotDeleted,
+   SnapshotRestored,
+   SnapshotModified,
+   
+   TaskStateChanged,
+   TaskAdded,
+   TaskRemoved,
    
 }

@@ -65,6 +65,7 @@ public final class EventIoFactory {
    public static EventOutput get(_Hyperbox hbox, _Event ev) {
       try {
          if (factories.containsKey(ev.getEventId())) {
+            Logger.debug("Using " + factories.get(ev.getEventId()).getClass().getName() + " for " + ev.getEventId());
             EventOutput evOut = factories.get(ev.getEventId()).get(hbox, ev);
             if (evOut != null) {
                return evOut;
@@ -75,6 +76,7 @@ public final class EventIoFactory {
          Logger.exception(t);
       }
       
+      Logger.debug("No factory for " + ev.getEventId() + ", sending " + UnknownEventOutput.class.getName());
       return getUnknown(ev);
    }
 }

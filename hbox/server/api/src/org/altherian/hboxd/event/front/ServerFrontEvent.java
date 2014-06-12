@@ -25,7 +25,7 @@ package org.altherian.hboxd.event.front;
 import org.altherian.hbox.event.Event;
 import org.altherian.hboxd.front._Front;
 
-public class ServerFrontEvent extends Event {
+public abstract class ServerFrontEvent extends Event {
    
    public ServerFrontEvent(Enum<?> eventId, _Front front) {
       super(eventId);

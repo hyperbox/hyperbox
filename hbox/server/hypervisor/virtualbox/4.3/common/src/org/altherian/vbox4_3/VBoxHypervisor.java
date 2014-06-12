@@ -350,15 +350,16 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    }
    
    @Override
-   public _RawMedium getMedium(String uuid) {
+   public _RawMedium getMedium(String medId) {
       // use events instead of rescanning the data if data is not found
-      if (!mediumRegister.containsKey(uuid)) {
+      if (!mediumRegister.containsKey(medId)) {
          updateMediumRegistry();
       }
-      if (mediumRegister.containsKey(uuid)) {
-         return mediumRegister.get(uuid);
+      if (mediumRegister.containsKey(medId)) {
+         return mediumRegister.get(medId);
       } else {
-         throw new HypervisorException("No medium found under UUID #" + uuid);
+         // TODO logic should be in the business classes, not in hypervisor classes
+         return getMedium(medId, DeviceType.DVD.toString());
       }
    }
    

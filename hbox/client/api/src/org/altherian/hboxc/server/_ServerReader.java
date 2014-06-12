@@ -68,11 +68,11 @@ public interface _ServerReader {
    
    public String getProtocolVersion();
    
-   public _GuestReader getGuest(String machineUuid);
+   public _GuestReader getGuest(String vmId);
    
    public MachineOutput getMachine(MachineInput mIn);
    
-   public MachineOutput getMachine(String machineId);
+   public MachineOutput getMachine(String vmId);
    
    public MediumOutput getMedium(MediumInput mIn);
    
@@ -132,15 +132,13 @@ public interface _ServerReader {
    
    public List<PermissionOutput> listPermissions(UserInput usrIn);
    
-   public SnapshotOutput getRootSnapshot(String vmUuid);
+   public SnapshotOutput getRootSnapshot(String vmId);
    
-   public SnapshotOutput getRootSnapshot(MachineInput mIn);
+   public SnapshotOutput getSnapshot(String vmId, String snapUuid);
    
-   public SnapshotOutput getSnapshot(String vmUuid, String snapUuid);
-
    public SnapshotOutput getSnapshot(MachineInput mIn, SnapshotInput snapIn);
    
-   public SnapshotOutput getCurrentSnapshot(String vmUuid);
+   public SnapshotOutput getCurrentSnapshot(String vmId);
    
    public SnapshotOutput getCurrentSnapshot(MachineInput mIn);
    

@@ -103,6 +103,12 @@ public class Message implements _Container {
       return (T) data.get(c.getName());
    }
    
+   @SuppressWarnings("unchecked")
+   @Override
+   public <T> T get(Class<?> label, Class<T> type) {
+      return (T) data.get(label.getName());
+   }
+   
    /**
     * Return the object mapped under the label given, or null if no object was included in this message.
     * 

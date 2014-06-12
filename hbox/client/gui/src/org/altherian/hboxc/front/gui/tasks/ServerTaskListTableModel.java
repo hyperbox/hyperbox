@@ -52,7 +52,7 @@ public class ServerTaskListTableModel extends AbstractOutputListTableModel<TaskO
    @Override
    protected Object getValueAt(TaskOutput tOut, String columnLabel) {
       if (columnLabel == ID) {
-         return tOut.getTaskId();
+         return tOut.getId();
       }
       
       if (columnLabel == TASK) {

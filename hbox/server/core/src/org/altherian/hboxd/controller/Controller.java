@@ -22,6 +22,8 @@
 package org.altherian.hboxd.controller;
 
 import org.altherian.hbox.Configuration;
+import org.altherian.hbox.comm.Answer;
+import org.altherian.hbox.comm._Client;
 import org.altherian.hbox.comm.output.event.EventOutput;
 import org.altherian.hbox.comm.output.event.server.ServerShutdownEventOutput;
 import org.altherian.hbox.exception.HyperboxException;
@@ -33,6 +35,9 @@ import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ShutdownAction;
 import org.altherian.hboxd.factory.ModelFactory;
 import org.altherian.hboxd.front._Front;
+import org.altherian.hboxd.security.SecurityContext;
+import org.altherian.hboxd.security.SystemUser;
+import org.altherian.hboxd.session.SessionContext;
 import org.altherian.tool.logging.LogLevel;
 import org.altherian.tool.logging.Logger;
 
@@ -49,10 +54,12 @@ public final class Controller implements _Controller {
    
    private Thread shutdownHook;
    
-   public Controller() {
+   {
       shutdownHook = new Thread() {
          @Override
          public void run() {
+            SecurityContext.setUser(new SystemUser());
+            SessionContext.setClient(new Client());
             Controller.this.stop();
          }
       };
@@ -112,6 +119,10 @@ public final class Controller implements _Controller {
       
       try {
          Long startTime = System.currentTimeMillis();
+         
+         SecurityContext.init();
+         SecurityContext.addAdminThread(shutdownHook);
+         
          Configuration.init();
          
          String logLevel = Configuration.getSetting("log.level", LogLevel.Info.toString());
@@ -192,6 +203,30 @@ public final class Controller implements _Controller {
          model.stop();
       }
       Logger.info("Finished stopping back-ends");
+   }
+   
+   private class Client implements _Client {
+      
+      @Override
+      public void putAnswer(Answer ans) {
+         // stub
+      }
+      
+      @Override
+      public String getId() {
+         return "System";
+      }
+      
+      @Override
+      public String getAddress() {
+         return "System";
+      }
+      
+      @Override
+      public void post(EventOutput evOut) {
+         // stub
+      }
+      
    }
    
 }

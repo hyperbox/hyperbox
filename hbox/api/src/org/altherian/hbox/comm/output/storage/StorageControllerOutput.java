@@ -25,24 +25,32 @@ import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.output.hypervisor.DeviceOutput;
 import org.altherian.hbox.constant.StorageControllerSettings;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class StorageControllerOutput extends DeviceOutput {
    
-   private String uuid;
+   private String vmId;
+   private List<StorageDeviceAttachmentOutput> attachments;
    
    @SuppressWarnings("unused")
    private StorageControllerOutput() {
       // Used for serialization
    }
    
-   public StorageControllerOutput(String machineUuid, String name, List<SettingIO> settings) {
+   public StorageControllerOutput(String vmId, String name, List<SettingIO> settings) {
+      this(vmId, name, settings, Collections.<StorageDeviceAttachmentOutput> emptyList());
+   }
+   
+   public StorageControllerOutput(String vmId, String name, List<SettingIO> settings, List<StorageDeviceAttachmentOutput> attachments) {
       super(name, settings);
-      uuid = machineUuid;
+      this.vmId = vmId;
+      this.attachments = attachments;
    }
    
    public String getMachineUuid() {
-      return uuid;
+      return vmId;
    }
    
    public String getName() {
@@ -81,6 +89,14 @@ public class StorageControllerOutput extends DeviceOutput {
       return getSetting(StorageControllerSettings.MaxDeviceCount).getNumber();
    }
    
+   public boolean hasAttachments() {
+      return !attachments.isEmpty();
+   }
+   
+   public List<StorageDeviceAttachmentOutput> getAttachments() {
+      return new ArrayList<StorageDeviceAttachmentOutput>(attachments);
+   }
+
    @Override
    public String toString() {
       return getName();

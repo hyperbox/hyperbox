@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -19,20 +19,17 @@
  * 
  */
 
-package org.altherian.hboxd.session;
+package org.altherian.hboxc.event.snapshot;
 
-import org.altherian.hbox.comm._Client;
-import org.altherian.hbox.states.SessionStates;
-import org.altherian.hboxd.security.RootUser;
-import org.altherian.hboxd.task._TaskManager;
+import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
+import org.altherian.hboxc.event.ClientEvents;
 
-public final class RootSession extends AbstractSession implements _RootSession {
+public class SnapshotRestoredEvent extends SnapshotEvent {
    
-   public RootSession(_Client client, _TaskManager taskMgr) {
-      super("0", client, new RootUser(), taskMgr);
-      setState(SessionStates.Authenticated);
+   public SnapshotRestoredEvent(ServerOutput srvOut, MachineOutput mOut, SnapshotOutput snapOut) {
+      super(ClientEvents.SnapshotRestored, srvOut, mOut, snapOut);
    }
    
-   
-
 }

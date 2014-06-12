@@ -72,4 +72,13 @@ public enum HyperboxEvents {
    HypervisorDisconnected,
    HypervisorConfigured,
    
+   StorageControllerAdded,
+   StorageControllerModified,
+   StorageControllerRemoved,
+   StorageControllerAttachmentDataModified,
+   
+   StorageAttachmentAdded,
+   StorageAttachmentModified,
+   StorageAttachmentRemoved,
+   
 }

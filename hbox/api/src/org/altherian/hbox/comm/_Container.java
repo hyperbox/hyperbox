@@ -35,6 +35,8 @@ public interface _Container {
    
    public <T> T get(Class<T> c);
    
+   public <T> T get(Class<?> label, Class<T> type);
+
    /**
     * Return the object mapped under the label given, or null if no object was included in this message.
     * 

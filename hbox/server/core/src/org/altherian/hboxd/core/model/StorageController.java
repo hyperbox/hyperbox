@@ -1,6 +1,32 @@
+/*
+ * Hyperbox - Enterprise Virtualization Manager
+ * Copyright (C) 2014 Maxime Dor
+ * 
+ * http://hyperbox.altherian.org
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
+
 package org.altherian.hboxd.core.model;
 
 import org.altherian.hbox.constant.EntityTypes;
+import org.altherian.hboxd.event.EventManager;
+import org.altherian.hboxd.event.storage.StorageAttachmentAddedEvent;
+import org.altherian.hboxd.event.storage.StorageAttachmentModifiedEvent;
+import org.altherian.hboxd.event.storage.StorageAttachmentRemovedEvent;
+import org.altherian.hboxd.event.storage.StorageControllerAttachmentDataModifiedEvent;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 import org.altherian.hboxd.hypervisor.storage._RawMedium;
 import org.altherian.hboxd.hypervisor.storage._RawMediumAttachment;
@@ -66,7 +92,7 @@ public class StorageController implements _StorageController {
    
    @Override
    public String getId() {
-      return vm.getUuid() + "/" + rawSto.getName();
+      return rawSto.getName();
    }
    
    @Override
@@ -121,12 +147,19 @@ public class StorageController implements _StorageController {
    
    @Override
    public void attachDevice(String deviceId, long portNb, long deviceNb) {
+      boolean slotTaken = isSlotTaken(portNb, deviceNb);
       rawSto.attachDevice(deviceId, portNb, deviceNb);
+      if (slotTaken) {
+         EventManager.post(new StorageAttachmentModifiedEvent(getMachineUuid(), getId(), portNb, deviceNb));
+      } else {
+         EventManager.post(new StorageAttachmentAddedEvent(getMachineUuid(), getId(), portNb, deviceNb));
+      }
    }
    
    @Override
    public void detachDevice(long portNb, long deviceNb) {
       rawSto.detachDevice(portNb, deviceNb);
+      EventManager.post(new StorageAttachmentRemovedEvent(getMachineUuid(), getId(), portNb, deviceNb));
    }
    
    @Override
@@ -140,28 +173,40 @@ public class StorageController implements _StorageController {
    
    @Override
    public Set<_MediumAttachment> listMediumAttachment() {
-      // TODO Auto-generated method stub
-      return null;
+      Set<_MediumAttachment> maSet = new HashSet<_MediumAttachment>();
+      for (_RawMediumAttachment rawMa : rawSto.listMediumAttachment()) {
+         maSet.add(new MediumAttachment(rawMa));
+      }
+      return maSet;
    }
    
    @Override
    public void attachMedium(_Medium medium) {
       rawSto.attachMedium(hypervisor.getMedium(medium.getUuid()));
+      EventManager.post(new StorageControllerAttachmentDataModifiedEvent(getMachineUuid(), getId()));
    }
    
    @Override
    public void attachMedium(_Medium medium, long portNb, long deviceNb) {
+      boolean slotTaken = isSlotTaken(portNb, deviceNb);
       rawSto.attachMedium(hypervisor.getMedium(medium.getUuid()), portNb, deviceNb);
+      if (slotTaken) {
+         EventManager.post(new StorageAttachmentModifiedEvent(getMachineUuid(), getId(), portNb, deviceNb));
+      } else {
+         EventManager.post(new StorageAttachmentAddedEvent(getMachineUuid(), getId(), portNb, deviceNb));
+      }
    }
    
    @Override
    public void detachMedium(_Medium medium) {
       rawSto.detachMedium(hypervisor.getMedium(medium.getUuid()));
+      EventManager.post(new StorageControllerAttachmentDataModifiedEvent(getMachineUuid(), getId()));
    }
    
    @Override
    public void detachMedium(long portNb, long deviceNb) {
       rawSto.detachMedium(portNb, deviceNb);
+      EventManager.post(new StorageAttachmentRemovedEvent(vm.getUuid(), rawSto.getName(), portNb, deviceNb));
    }
    
    @Override

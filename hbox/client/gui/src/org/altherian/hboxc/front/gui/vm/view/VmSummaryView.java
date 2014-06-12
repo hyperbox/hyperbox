@@ -28,8 +28,7 @@ import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.input.MachineInput;
 import org.altherian.hbox.comm.input.MediumInput;
 import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.input.StorageControllerInput;
-import org.altherian.hbox.comm.io.factory.StorageControllerIoFactory;
+import org.altherian.hbox.comm.output.event.storage.StorageControllerAttachmentDataModifiedEventOutput;
 import org.altherian.hbox.comm.output.hypervisor.GuestNetworkInterfaceOutput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
@@ -68,6 +67,7 @@ import javax.swing.SwingWorker;
 public final class VmSummaryView {
    
    private MachineOutput mOut;
+   private Map<String, StorageControllerOutput> controllers;
    
    private JPanel panel;
    
@@ -224,6 +224,7 @@ public final class VmSummaryView {
    private void initStorage() {
       Logger.track();
       
+      controllers = new HashMap<String, StorageControllerOutput>();
       storagePanel = new JPanel(new MigLayout());
       storagePanel.setBorder(BorderUtils.createTitledBorder(Color.gray, "Storage"));
    }
@@ -337,8 +338,10 @@ public final class VmSummaryView {
    public void show(final MachineOutput mOut) {
       Logger.track();
       
-      this.mOut = mOut;
-      refresh();
+      if ((this.mOut == null) || !this.mOut.equals(mOut)) {
+         this.mOut = mOut;
+         refresh();
+      }
    }
    
    public void refreshGeneral() {
@@ -402,61 +405,56 @@ public final class VmSummaryView {
    public void refreshStorage() {
       Logger.track();
       
-      
-      new SwingWorker<Void, Void>() {
-         
-         private Map<StorageControllerOutput, List<StorageDeviceAttachmentOutput>> attachMap = new HashMap<StorageControllerOutput, List<StorageDeviceAttachmentOutput>>();
-         
-         @Override
-         protected Void doInBackground() {
-            for (StorageControllerOutput scOut : mOut.listStorageController()) {
-               StorageControllerInput scIn = StorageControllerIoFactory.get(scOut);
-               scIn.setMachineUuid(mOut.getUuid());
-               attachMap.put(scOut, Gui.getServer(mOut.getServerId()).listAttachments(scIn));
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               refreshStorage();
             }
-            
-            return null;
+         });
+      } else {
+         clearStorage();
+         if (controllers.isEmpty()) {
+            for (StorageControllerOutput scOut : mOut.listStorageController()) {
+               controllers.put(scOut.getId(), scOut);
+            }
          }
          
-         @Override
-         protected void done() {
-            clearStorage();
-            for (StorageControllerOutput scOut : mOut.listStorageController()) {
-               try {
-                  storagePanel.add(new JLabel(scOut.getType()), "wrap");
-                  for (StorageDeviceAttachmentOutput sdaOut : attachMap.get(scOut)) {
-                     storagePanel.add(new JLabel(""));
-                     storagePanel.add(new JLabel(sdaOut.getPortId() + ":" + sdaOut.getDeviceId()));
-                     
-                     storagePanel.add(new JLabel(""));
-                     storagePanel.add(new JLabel(""));
-                     if (sdaOut.hasMediumInserted()) {
-                        MediumOutput medOut = Gui.getServer(mOut.getServerId()).getMedium(new MediumInput(sdaOut.getMediumUuid()));
-                        while (medOut.hasParent()) {
-                           Logger.debug(medOut.getName() + " has parent : " + medOut.getParentUuid());
-                           medOut = Gui.getServer(mOut.getServerId()).getMedium(new MediumInput(medOut.getParentUuid()));
-                        }
-                        storagePanel.add(new JLabel("[" + sdaOut.getDeviceType() + "] " + medOut.getName()));
-                     } else {
-                        storagePanel.add(new JLabel("[" + sdaOut.getDeviceType() + "] Empty"));
+         for (StorageControllerOutput scOut : controllers.values()) {
+            try {
+               storagePanel.add(new JLabel(scOut.getType()), "wrap");
+               for (StorageDeviceAttachmentOutput sdaOut : scOut.getAttachments()) {
+                  storagePanel.add(new JLabel(""));
+                  storagePanel.add(new JLabel(sdaOut.getPortId() + ":" + sdaOut.getDeviceId()));
+                  
+                  storagePanel.add(new JLabel(""));
+                  storagePanel.add(new JLabel(""));
+                  if (sdaOut.hasMediumInserted()) {
+                     MediumOutput medOut = Gui.getServer(mOut.getServerId()).getMedium(new MediumInput(sdaOut.getMediumUuid()));
+                     while (medOut.hasParent()) {
+                        Logger.debug(medOut.getName() + " has parent : " + medOut.getParentUuid());
+                        medOut = Gui.getServer(mOut.getServerId()).getMedium(new MediumInput(medOut.getParentUuid()));
                      }
-                     if (sdaOut.getDeviceType().contentEquals(EntityTypes.DVD.getId())) {
-                        storagePanel.add(new JButton(new StorageDeviceAttachmentMediumEditAction(mOut.getServerId(), sdaOut)), "wrap");
-                     } else {
-                        storagePanel.add(new JLabel(""), "wrap");
-                     }
+                     storagePanel.add(new JLabel("[" + sdaOut.getDeviceType() + "] " + medOut.getName()));
+                  } else {
+                     storagePanel.add(new JLabel("[" + sdaOut.getDeviceType() + "] Empty"));
                   }
-               } catch (Throwable e) {
-                  storagePanel.removeAll();
-                  storagePanel.add(new JLabel("Unable to load storage info: " + e.getMessage()));
-                  storagePanel.revalidate();
-               } finally {
-                  storagePanel.revalidate();
+                  if (sdaOut.getDeviceType().contentEquals(EntityTypes.DVD.getId())) {
+                     storagePanel.add(new JButton(new StorageDeviceAttachmentMediumEditAction(mOut.getServerId(), sdaOut)), "wrap");
+                  } else {
+                     storagePanel.add(new JLabel(""), "wrap");
+                  }
                }
+            } catch (Throwable e) {
+               storagePanel.removeAll();
+               storagePanel.add(new JLabel("Unable to load storage info: " + e.getMessage()));
+               storagePanel.revalidate();
+            } finally {
+               storagePanel.repaint();
+               storagePanel.revalidate();
             }
          }
-         
-      }.execute();
+      }
    }
    
    public void refreshAudio() {
@@ -538,6 +536,7 @@ public final class VmSummaryView {
                refreshGeneral();
                refreshSystem();
                refreshDisplay();
+               controllers.clear();
                refreshStorage();
                refreshAudio();
                refreshNetwork();
@@ -558,11 +557,19 @@ public final class VmSummaryView {
    }
    
    @Handler
-   public void getMachineUpdate(MachineStateChangedEvent ev) {
+   public void putMachineStateChangedEvent(MachineStateChangedEvent ev) {
       if (ev.getUuid().contentEquals(mOut.getUuid())) {
          stateField.setText(ev.getMachine().getState());
          // TODO improve next line
          consoleConnectButton.setEnabled(ev.getMachine().getState().equalsIgnoreCase("running"));
+      }
+   }
+   
+   @Handler
+   public void putStorageControllerAttachmentDataChanged(StorageControllerAttachmentDataModifiedEventOutput ev) {
+      if (ev.getUuid().contentEquals(mOut.getUuid())) {
+         controllers.put(ev.getStorageController().getId(), ev.getStorageController());
+         refreshStorage();
       }
    }
    

@@ -25,13 +25,13 @@ import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.HypervisorTasks;
-import org.altherian.hbox.comm.output.event.machine.MachineSnapshotDataChangedEventOutput;
-import org.altherian.hbox.comm.output.event.snapshot.SnapshotDeletedEventOutput;
-import org.altherian.hbox.comm.output.event.snapshot.SnapshotTakenEventOutput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
 import org.altherian.hboxc.event.FrontEventManager;
+import org.altherian.hboxc.event.machine.MachineSnapshotDataChangedEvent;
 import org.altherian.hboxc.event.machine.MachineStateChangedEvent;
+import org.altherian.hboxc.event.snapshot.SnapshotDeletedEvent;
+import org.altherian.hboxc.event.snapshot.SnapshotTakenEvent;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.snapshot.SnapshotDeleteAction;
@@ -249,19 +249,10 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
          });
       } else {
          clear();
-         
-         refreshProgress.setIndeterminate(true);
-         refreshProgress.setVisible(true);
-         tree.setEnabled(false);
-         
          if (hasSnap) {
             addDisplay(topNode, rootSnapUuid);
          }
          setCurrentState();
-         
-         refreshProgress.setIndeterminate(false);
-         refreshProgress.setVisible(false);
-         tree.setEnabled(true);
       }
    }
    
@@ -269,25 +260,43 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    public void refresh() {
       Logger.track();
       
-      Logger.debug("Refreshing Snapshot Data for " + vmUuid);
-      new SwingWorker<Void, Void>() {
-         
-         @Override
-         protected Void doInBackground() throws Exception {
-            refreshData();
-            return null;
-         }
-         
-         @Override
-         protected void done() {
-            try {
-               get();
-               refreshDisplay();
-            } catch (Throwable t) {
-               Logger.exception(t);
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               refresh();
             }
-         }
-      }.execute();
+         });
+      } else {
+         Logger.debug("Refreshing Snapshot Data for " + vmUuid);
+         
+         refreshProgress.setIndeterminate(true);
+         refreshProgress.setVisible(true);
+         tree.setEnabled(false);
+         
+         new SwingWorker<Void, Void>() {
+            
+            @Override
+            protected Void doInBackground() throws Exception {
+               refreshData();
+               return null;
+            }
+            
+            @Override
+            protected void done() {
+               try {
+                  get();
+                  refreshDisplay();
+               } catch (Throwable t) {
+                  Logger.exception(t);
+               } finally {
+                  refreshProgress.setIndeterminate(false);
+                  refreshProgress.setVisible(false);
+                  tree.setEnabled(true);
+               }
+            }
+         }.execute();
+      }
    }
    
    public JComponent getComponent() {
@@ -392,7 +401,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    
    
    @Handler
-   public void putMachineStateChanged(final MachineStateChangedEvent ev) {
+   public void putMachineStateChanged(MachineStateChangedEvent ev) {
       Logger.track();
       
       if (isSame(ev.getMachine())) {
@@ -402,7 +411,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    }
    
    @Handler
-   public void putMachineSnapshotDataChangeEvent(final MachineSnapshotDataChangedEventOutput ev) {
+   public void putMachineSnapshotDataChangeEvent(MachineSnapshotDataChangedEvent ev) {
       Logger.track();
       
       if (isSame(ev.getMachine())) {
@@ -411,7 +420,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    }
    
    @Handler
-   public void getSnapTakenEv(final SnapshotTakenEventOutput ev) {
+   public void putSnapshotTakenEvent(SnapshotTakenEvent ev) {
       Logger.track();
       
       if (isSame(ev.getMachine())) {
@@ -420,7 +429,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    }
    
    @Handler
-   public void getSnapDelEv(SnapshotDeletedEventOutput ev) {
+   public void putSnapshotDeletedEvent(SnapshotDeletedEvent ev) {
       Logger.track();
       
       if (isSame(ev.getMachine())) {

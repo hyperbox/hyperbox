@@ -30,7 +30,6 @@ import org.altherian.hbox.comm.output.ServerOutput;
 import org.altherian.hbox.comm.output.event.hypervisor.HypervisorConnectedEventOutput;
 import org.altherian.hbox.comm.output.event.hypervisor.HypervisorDisconnectedEventOutput;
 import org.altherian.hbox.comm.output.event.machine.MachineRegistrationEventOutput;
-import org.altherian.hbox.comm.output.event.machine.MachineStateEventOutput;
 import org.altherian.hbox.comm.output.event.server.ServerConnectionStateEventOutput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
@@ -49,6 +48,7 @@ import org.altherian.hboxc.event.connector.ConnectorRemovedEvent;
 import org.altherian.hboxc.event.connector.ConnectorStateChangedEvent;
 import org.altherian.hboxc.event.machine.MachineAddedEvent;
 import org.altherian.hboxc.event.machine.MachineRemovedEvent;
+import org.altherian.hboxc.event.machine.MachineStateChangedEvent;
 import org.altherian.hboxc.event.machine.MachineUpdatedEvent;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.builder.PopupMenuBuilder;
@@ -203,7 +203,7 @@ public final class InfrastructureView implements _MachineSelector, _ServerSelect
       
       clear();
       for (ConnectorOutput conOut : conOutList) {
-         add(conOut);
+         addConnector(conOut);
       }
    }
    
@@ -251,7 +251,7 @@ public final class InfrastructureView implements _MachineSelector, _ServerSelect
             Logger.debug("Got " + mOutList.size() + " machines to display");
             Collections.sort(mOutList, new MachineOutputComparator());
             for (MachineOutput mOut : mOutList) {
-               add(srvOut.getId(), mOut);
+               addMachine(srvOut.getId(), mOut);
             }
          } else {
             Logger.debug(srvOut.getName() + " is not connected, skipping VM listing");
@@ -260,14 +260,14 @@ public final class InfrastructureView implements _MachineSelector, _ServerSelect
       
    }
    
-   private void add(final ConnectorOutput conOut) {
+   private void addConnector(final ConnectorOutput conOut) {
       Logger.track();
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-               add(conOut);
+               addConnector(conOut);
             }
          });
       } else {
@@ -280,14 +280,14 @@ public final class InfrastructureView implements _MachineSelector, _ServerSelect
       
    }
    
-   private void update(final ConnectorOutput conOut) {
+   private void updateConnector(final ConnectorOutput conOut) {
       Logger.track();
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-               update(conOut);
+               updateConnector(conOut);
             }
          });
       } else {
@@ -298,21 +298,21 @@ public final class InfrastructureView implements _MachineSelector, _ServerSelect
       
    }
    
-   private void update(ServerOutput srvOut) {
+   private void updateServer(ServerOutput srvOut) {
       Logger.track();
       
       DefaultMutableTreeNode conNode = srvNodes.get(srvOut.getId());
-      update(Gui.getReader().getConnector(((ConnectorOutput) conNode.getUserObject()).getId()));
+      updateConnector(Gui.getReader().getConnector(((ConnectorOutput) conNode.getUserObject()).getId()));
    }
    
-   private void remove(final ConnectorOutput conOut) {
+   private void removeConnector(final ConnectorOutput conOut) {
       Logger.track();
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-               remove(conOut);
+               removeConnector(conOut);
             }
          });
       } else {
@@ -322,21 +322,18 @@ public final class InfrastructureView implements _MachineSelector, _ServerSelect
       
    }
    
-   private void add(final String serverId, final MachineOutput mOut) {
+   private void addMachine(final String serverId, final MachineOutput mOut) {
       Logger.track();
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-               add(serverId, mOut);
+               addMachine(serverId, mOut);
             }
          });
       } else {
          if (!vmNodes.get(serverId).containsKey(mOut.getId())) {
-            if (!SwingUtilities.isEventDispatchThread()) {
-               Thread.dumpStack();
-            }
             DefaultMutableTreeNode srvNode = srvNodes.get(serverId);
             DefaultMutableTreeNode node = new DefaultMutableTreeNode(mOut);
             treeModel.insertNodeInto(node, srvNode, srvNode.getChildCount());
@@ -352,14 +349,14 @@ public final class InfrastructureView implements _MachineSelector, _ServerSelect
       
    }
    
-   private void update(final String serverId, final MachineOutput mOut) {
+   private void updateMachine(final String serverId, final MachineOutput mOut) {
       Logger.track();
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-               update(serverId, mOut);
+               updateMachine(serverId, mOut);
             }
          });
       } else {
@@ -393,229 +390,117 @@ public final class InfrastructureView implements _MachineSelector, _ServerSelect
             vmCurrentSnaps.remove(id);
             treeModel.removeNodeFromParent(vmNodes.get(serverId).remove(id));
          } else {
-            Logger.debug("Trying to remove machine not in the view: " + serverId + " - " + id);
+            Logger.warning("Trying to remove machine not in the view: " + serverId + " - " + id);
          }
       }
       
    }
    
    @Handler
-   public void putHypervisorConnected(final HypervisorConnectedEventOutput ev) {
+   public void putHypervisorConnected(HypervisorConnectedEventOutput ev) {
       Logger.track();
       
-      new SwingWorker<Void, Void>() {
-         
-         @Override
-         protected Void doInBackground() throws Exception {
-            update(ev.getServer());
-            refresh(ev.getServer());
-            return null;
-         }
-         
-      }.execute();
+      updateServer(ev.getServer());
+      refresh(ev.getServer());
    }
    
    @Handler
-   public void putHypervisorDisconnected(final HypervisorDisconnectedEventOutput ev) {
+   public void putHypervisorDisconnected(HypervisorDisconnectedEventOutput ev) {
       Logger.track();
       
-      new SwingWorker<Void, Void>() {
-         
-         @Override
-         protected Void doInBackground() throws Exception {
-            update(ev.getServer());
-            refresh(ev.getServer());
-            return null;
-         }
-         
-      }.execute();
+      updateServer(ev.getServer());
+      refresh(ev.getServer());
    }
    
    @Handler
-   public void putServerConnectionStateChange(final ServerConnectionStateEventOutput ev) {
+   public void putServerConnectionStateChange(ServerConnectionStateEventOutput ev) {
       Logger.track();
       
-      new SwingWorker<Void, Void>() {
-         
-         @Override
-         protected Void doInBackground() throws Exception {
-            update(ev.getServer());
-            refresh(ev.getServer());
-            return null;
-         }
-         
-      }.execute();
+      updateServer(ev.getServer());
+      refresh(ev.getServer());
    }
    
    @Handler
-   public void putMachineUpdate(final MachineUpdatedEvent ev) {
+   public void putMachineUpdate(MachineUpdatedEvent ev) {
       Logger.track();
       
-      new SwingWorker<Void, Void>() {
-         
-         @Override
-         protected Void doInBackground() throws Exception {
-            update(ev.getServerId(), ev.getMachine());
-            return null;
-         }
-         
-      }.execute();
+      updateMachine(ev.getServerId(), ev.getMachine());
    }
    
    @Handler
-   public void putMachineUpdate(final MachineStateEventOutput ev) {
+   public void putMachineUpdate(final MachineStateChangedEvent ev) {
       Logger.track();
       
-      new SwingWorker<Void, Void>() {
-         
-         @Override
-         protected Void doInBackground() throws Exception {
-            update(ev.getServerId(), ev.getMachine());
-            return null;
-         }
-         
-      }.execute();
+      updateMachine(ev.getServerId(), ev.getMachine());
    }
    
    @Handler
    public void putMachineRegistration(final MachineRegistrationEventOutput ev) {
       Logger.track();
       
-      new SwingWorker<Void, Void>() {
-         
-         @Override
-         protected Void doInBackground() throws Exception {
-            if (ev.isRegistered()) {
-               add(ev.getServerId(), ev.getMachine());
-            } else {
-               removeMachine(ev.getServerId(), ev.getMachine().getId());
-            }
-            return null;
-         }
-         
-      }.execute();
+      if (ev.isRegistered()) {
+         addMachine(ev.getServerId(), ev.getMachine());
+      } else {
+         removeMachine(ev.getServerId(), ev.getMachine().getId());
+      }
    }
    
    @Handler
    public void putMachineAdd(final MachineAddedEvent ev) {
       Logger.track();
       
-      new SwingWorker<Void, Void>() {
-         
-         @Override
-         protected Void doInBackground() throws Exception {
-            add(ev.getServerId(), ev.getMachine());
-            return null;
-         }
-         
-      }.execute();
+      addMachine(ev.getServerId(), ev.getMachine());
    }
    
    @Handler
    public void putMachineRemove(final MachineRemovedEvent ev) {
       Logger.track();
       
-      new SwingWorker<Void, Void>() {
-         
-         @Override
-         protected Void doInBackground() throws Exception {
-            removeMachine(ev.getServerId(), ev.getMachine().getUuid());
-            return null;
-         }
-         
-      }.execute();
+      removeMachine(ev.getServerId(), ev.getMachine().getUuid());
    }
    
    @Handler
    public void putConnectorAdded(final ConnectorAddedEvent ev) {
       Logger.track();
       
-      new SwingWorker<Void, Void>() {
-         
-         @Override
-         protected Void doInBackground() throws Exception {
-            add(ev.getConnector());
-            return null;
-         }
-         
-      }.execute();
+      addConnector(ev.getConnector());
    }
    
    @Handler
    public void putConnectorModified(final ConnectorModifiedEvent ev) {
       Logger.track();
       
-      new SwingWorker<Void, Void>() {
-         
-         @Override
-         protected Void doInBackground() throws Exception {
-            update(ev.getConnector());
-            return null;
-         }
-         
-      }.execute();
+      updateConnector(ev.getConnector());
    }
    
    @Handler
-   public void putConnectorRemoved(final ConnectorRemovedEvent ev) {
+   public void putConnectorRemoved(ConnectorRemovedEvent ev) {
       Logger.track();
       
-      new SwingWorker<Void, Void>() {
-         
-         @Override
-         protected Void doInBackground() throws Exception {
-            remove(ev.getConnector());
-            return null;
-         }
-         
-      }.execute();
+      removeConnector(ev.getConnector());
    }
    
    @Handler
-   public void putConnectorConnected(final ConnectorConnectedEvent ev) {
+   public void putConnectorConnected(ConnectorConnectedEvent ev) {
       Logger.track();
       
-      new SwingWorker<Void, Void>() {
-         
-         @Override
-         protected Void doInBackground() throws Exception {
-            update(ev.getConnector());
-            refresh(ev.getConnector());
-            return null;
-         }
-         
-      }.execute();
+      updateConnector(ev.getConnector());
+      refresh(ev.getConnector());
    }
    
    @Handler
-   public void putConnectorDisconnected(final ConnectorDisconnectedEvent ev) {
+   public void putConnectorDisconnected(ConnectorDisconnectedEvent ev) {
       Logger.track();
       
-      new SwingWorker<Void, Void>() {
-         
-         @Override
-         protected Void doInBackground() throws Exception {
-            update(ev.getConnector());
-            refresh(ev.getConnector());
-            return null;
-         }
-         
-      }.execute();
+      updateConnector(ev.getConnector());
+      refresh(ev.getConnector());
    }
    
    @Handler
-   public void putConnectorStateChanged(final ConnectorStateChangedEvent ev) {
+   public void putConnectorStateChanged(ConnectorStateChangedEvent ev) {
       Logger.track();
       
-      new SwingWorker<Void, Void>() {
-         
-         @Override
-         protected Void doInBackground() throws Exception {
-            update(ev.getConnector());
-            return null;
-         }
-         
-      }.execute();
+      updateConnector(ev.getConnector());
    }
    
    @Override

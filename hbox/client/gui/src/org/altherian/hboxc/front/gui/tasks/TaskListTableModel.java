@@ -65,7 +65,7 @@ public final class TaskListTableModel extends AbstractOutputListTableModel<TaskO
       }
       
       if (columnLabel == ID) {
-         return tOut.getTaskId();
+         return tOut.getId();
       }
       
       if (columnLabel == TASK) {

@@ -68,14 +68,17 @@ import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.states.TaskQueueEvents;
 import org.altherian.hboxc.event.CoreEventManager;
-import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.machine.MachineAddedEvent;
 import org.altherian.hboxc.event.machine.MachineDataChangedEvent;
 import org.altherian.hboxc.event.machine.MachineRemovedEvent;
 import org.altherian.hboxc.event.machine.MachineStateChangedEvent;
-import org.altherian.hboxc.event.storage.MediumAddedEvent;
-import org.altherian.hboxc.event.storage.MediumRemovedEvent;
-import org.altherian.hboxc.event.storage.MediumUpdatedEvent;
+import org.altherian.hboxc.event.snapshot.SnapshotDeletedEvent;
+import org.altherian.hboxc.event.snapshot.SnapshotModifiedEvent;
+import org.altherian.hboxc.event.snapshot.SnapshotRestoredEvent;
+import org.altherian.hboxc.event.snapshot.SnapshotTakenEvent;
+import org.altherian.hboxc.event.task.TaskAddedEvent;
+import org.altherian.hboxc.event.task.TaskRemovedEvent;
+import org.altherian.hboxc.event.task.TaskStateChangedEvent;
 import org.altherian.hboxc.server._GuestReader;
 import org.altherian.hboxc.server._HypervisorReader;
 import org.altherian.hboxc.server._ServerReader;
@@ -129,35 +132,33 @@ public class CachedServerReader implements _ServerReader {
       CoreEventManager.get().register(this);
    }
    
-   private void addSnap(String vmUuid, SnapshotOutput snapOut) {
+   private void insertSnapshot(String vmId, SnapshotOutput snapOut) {
       Logger.track();
       
-      if (!snapOutCache.containsKey(vmUuid)) {
-         snapOutCache.put(vmUuid, new HashMap<String, SnapshotOutput>());
+      if (!snapOutCache.containsKey(vmId)) {
+         snapOutCache.put(vmId, new HashMap<String, SnapshotOutput>());
       }
-      snapOutCache.get(vmUuid).put(snapOut.getUuid(), snapOut);
-      refreshSnapData(vmUuid, snapOut.getParentUuid());
+      snapOutCache.get(vmId).put(snapOut.getUuid(), snapOut);
    }
    
-   private void remSnap(String vmUuid, String snapUuid) {
-      SnapshotOutput snapOut = snapOutCache.get(vmUuid).remove(snapUuid);
-      if (snapOutCache.get(vmUuid).isEmpty()) {
-         snapOutCache.remove(vmUuid);
-      }
-      if (snapOut.hasParent()) {
-         refreshSnapData(vmUuid, snapOut.getParentUuid());
-      }
-      for (String child : snapOut.getChildrenUuid()) {
-         refreshSnapData(vmUuid, child);
+   private void updateSnapshot(String vmId, SnapshotOutput snapOut) {
+      if (snapOutCache.containsKey(vmId)) {
+         snapOutCache.get(vmId).put(snapOut.getUuid(), snapOut);
       }
    }
    
-   private void refreshSnapData(String vmUuid, String snapUuid) {
+   private void removeSnapshot(String vmId, String snapId) {
+      if (snapOutCache.containsKey(vmId)) {
+         snapOutCache.get(vmId).remove(snapId);
+      }
+   }
+   
+   private void refreshSnapshot(String vmUuid, String snapUuid) {
       Logger.track();
       
       try {
-         SnapshotOutput snapOut = reader.getSnapshot(new MachineInput(reader.getId(), vmUuid), new SnapshotInput(snapUuid));
-         addSnap(vmUuid, snapOut);
+         SnapshotOutput snapOut = reader.getSnapshot(vmUuid, snapUuid);
+         insertSnapshot(vmUuid, snapOut);
       } catch (Throwable t) {
          Logger.error("Unable to refresh Snapshot #" + snapUuid + " of VM #" + vmUuid + ": " + t.getMessage());
       }
@@ -184,8 +185,9 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Override
-   public SnapshotOutput getRootSnapshot(MachineInput mIn) {
-      return reader.getRootSnapshot(mIn);
+   public SnapshotOutput getRootSnapshot(String vmId) {
+      return reader.getRootSnapshot(vmId);
+      
    }
    
    @Override
@@ -193,9 +195,9 @@ public class CachedServerReader implements _ServerReader {
       Logger.track();
       
       if (!snapOutCache.containsKey(mIn.getUuid()) || !snapOutCache.get(mIn.getUuid()).containsKey(snapIn.getUuid())) {
-         Logger.track();
-         refreshSnapData(mIn.getUuid(), snapIn.getUuid());
+         refreshSnapshot(mIn.getUuid(), snapIn.getUuid());
       }
+      
       return snapOutCache.get(mIn.getUuid()).get(snapIn.getUuid());
    }
    
@@ -203,53 +205,67 @@ public class CachedServerReader implements _ServerReader {
    public SnapshotOutput getCurrentSnapshot(MachineInput mIn) {
       Logger.track();
       
-      return reader.getCurrentSnapshot(mIn);
+      if (mOutCache.containsKey(mIn.getId())) {
+         return getSnapshot(mIn.getId(), mOutCache.get(mIn.getId()).getCurrentSnapshot());
+      } else {
+         return reader.getCurrentSnapshot(mIn);
+      }
    }
    
    @Handler
    public void putMachineSnapDataChangedEvent(MachineSnapshotDataChangedEventOutput ev) {
       Logger.track();
       
-      snapOutCache.clear();
+      snapOutCache.remove(ev.getUuid());
    }
    
    @Handler
    public void putSnapshotTakenEvent(SnapshotTakenEventOutput ev) {
       Logger.track();
       
-      refreshSnapData(ev.getUuid(), ev.getSnapshotUuid());
-      FrontEventManager.post(ev);
+      updateMachine(ev.getMachine());
+      refreshSnapshot(ev.getMachine().getUuid(), ev.getSnapshotUuid());
+      refreshSnapshot(ev.getMachine().getUuid(), ev.getSnapshot().getParentUuid());
+      CoreEventManager.post(new SnapshotTakenEvent(ev.getServer(), ev.getMachine(), ev.getSnapshot()));
    }
    
    @Handler
    public void putSnashotDeletedEvent(SnapshotDeletedEventOutput ev) {
       Logger.track();
       
-      remSnap(ev.getMachine().getUuid(), ev.getSnapshotUuid());
+      SnapshotOutput deletedSnap = snapOutCache.get(ev.getUuid()).get(ev.getSnapshotUuid());
+      refreshSnapshot(ev.getMachine().getUuid(), deletedSnap.getParentUuid());
+      for (String child : deletedSnap.getChildrenUuid()) {
+         refreshSnapshot(ev.getUuid(), child);
+      }
+      updateMachine(ev.getMachine());
+      removeSnapshot(ev.getMachine().getUuid(), ev.getSnapshotUuid());
+      CoreEventManager.post(new SnapshotDeletedEvent(ev.getServer(), ev.getMachine(), ev.getSnapshot()));
    }
    
    @Handler
    public void putSnapshotRestoredEvent(SnapshotRestoredEventOutput ev) {
       Logger.track();
       
-      refreshSnapData(ev.getMachine().getUuid(), ev.getSnapshotUuid());
+      updateMachine(ev.getMachine());
+      updateSnapshot(ev.getMachine().getUuid(), ev.getSnapshot());
+      CoreEventManager.post(new SnapshotRestoredEvent(ev.getServer(), ev.getMachine(), ev.getSnapshot()));
    }
    
    @Handler
    public void putSnashopModifiedEvent(SnapshotModifiedEventOutput ev) {
       Logger.track();
       
-      refreshSnapData(ev.getMachine().getUuid(), ev.getSnapshotUuid());
+      updateSnapshot(ev.getMachine().getUuid(), ev.getSnapshot());
+      CoreEventManager.post(new SnapshotModifiedEvent(ev.getServer(), ev.getMachine(), ev.getSnapshot()));
    }
    
    @Handler
    public void putMachineDataChangedEvent(MachineDataChangeEventOutput ev) {
       Logger.track();
       
-      MachineInput mIn = new MachineInput(ev.getServerId(),ev.getUuid());
-      if (tryRefreshMachine(mIn)) {
-         FrontEventManager.post(new MachineDataChangedEvent(reader.getId(), getMachine(mIn)));
-      }
+      updateMachine(ev.getMachine());
+      CoreEventManager.post(new MachineDataChangedEvent(reader.getId(), getMachine(ev.getMachine().getUuid())));
    }
    
    @Handler
@@ -257,9 +273,11 @@ public class CachedServerReader implements _ServerReader {
       Logger.track();
       
       if (ev.isRegistered()) {
-         tryRefreshMachine(new MachineInput(ev.getServerId(), ev.getUuid()));
+         insertMachine(ev.getMachine());
+         CoreEventManager.post(new MachineAddedEvent(ev.getServerId(), ev.getMachine()));
       } else {
-         deleteMachine(new MachineInput(ev.getServerId(), ev.getUuid()));
+         deleteMachine(ev.getUuid());
+         CoreEventManager.post(new MachineRemovedEvent(ev.getServerId(), ev.getMachine()));
       }
       
    }
@@ -268,68 +286,63 @@ public class CachedServerReader implements _ServerReader {
    public void putMachineStateEvent(MachineStateEventOutput ev) {
       Logger.track();
       
-      MachineInput mIn = new MachineInput(ev.getServerId(), ev.getUuid());
-      if (tryRefreshMachine(mIn)) {
-         FrontEventManager.post(new MachineStateChangedEvent(reader.getId(), getMachine(mIn)));
-      }
+      updateMachine(ev.getMachine());
+      CoreEventManager.post(new MachineStateChangedEvent(reader.getId(), getMachine(ev.getMachine().getUuid())));
    }
    
-   private void insertMachine(MachineInput mIn) {
+   private void insertMachine(String vmId) {
       Logger.track();
       
-      MachineOutput mOut = reader.getMachine(mIn);
-      mOutCache.put(mOut.getUuid(), mOut);
-      mOutListCache.put(mOut.getUuid(), mOut);
-      invalidMachineUuidSet.remove(mOut.getUuid());
-      FrontEventManager.post(new MachineAddedEvent(reader.getId(), mOut));
+      insertMachine(reader.getMachine(vmId));
    }
    
-   private void updateMachine(MachineInput mIn) {
+   private void insertMachine(MachineOutput mOut) {
       Logger.track();
       
-      MachineOutput mOut = reader.getMachine(mIn);
-      mOutCache.put(mOut.getUuid(), mOut);
-      mOutListCache.put(mOut.getUuid(), mOut);
-      FrontEventManager.post(new MachineDataChangedEvent(reader.getId(), mOut));
+      snapOutCache.remove(mOut.getId());
+      mOutCache.put(mOut.getId(), mOut);
+      mOutListCache.put(mOut.getId(), mOut);
+      invalidMachineUuidSet.remove(mOut.getId());
    }
    
-   private void deleteMachine(MachineInput mIn) {
+   private void updateMachine(String vmId) {
       Logger.track();
       
-      MachineOutput mOut = getMachine(mIn);
-      invalidMachineUuidSet.add(mIn.getUuid());
-      mOutCache.remove(mIn.getUuid());
-      mOutListCache.remove(mIn.getUuid());
-      FrontEventManager.post(new MachineRemovedEvent(reader.getId(), mOut));
+      updateMachine(reader.getMachine(vmId));
    }
    
-   private void refreshMachine(MachineInput mIn) {
+   private void updateMachine(MachineOutput mOut) {
+      Logger.track();
+      
+      mOutCache.put(mOut.getId(), mOut);
+      mOutListCache.put(mOut.getId(), mOut);
+   }
+   
+   private void deleteMachine(String vmId) {
+      Logger.track();
+      
+      invalidMachineUuidSet.add(vmId);
+      mOutCache.remove(vmId);
+      mOutListCache.remove(vmId);
+      snapOutCache.remove(vmId);
+   }
+   
+   private void refreshMachine(String vmId) {
       Logger.track();
       
       try {
-         if (!mOutCache.containsKey(mIn.getUuid()) && !mOutListCache.containsKey(mIn.getUuid())) {
-            insertMachine(mIn);
+         if (!mOutCache.containsKey(vmId) && !mOutListCache.containsKey(vmId)) {
+            insertMachine(vmId);
          } else {
-            updateMachine(mIn);
+            updateMachine(vmId);
          }
          // TODO catch the proper exception
       } catch (HyperboxRuntimeException e) {
          // Virtualbox error meaning "Machine not found", so we remove from cache
          if (e.getMessage().contains("0x80070005") || e.getMessage().contains("0x80BB0001")) {
-            deleteMachine(mIn);
+            deleteMachine(vmId);
          }
          throw e;
-      }
-   }
-   
-   private boolean tryRefreshMachine(MachineInput mIn) {
-      Logger.track();
-      
-      try {
-         refreshMachine(mIn);
-         return true;
-      } catch (HyperboxRuntimeException e) {
-         return false;
       }
    }
    
@@ -340,23 +353,24 @@ public class CachedServerReader implements _ServerReader {
       medOutCache.put(medOut.getUuid(), medOut);
       medOutCache.put(medOut.getLocation(), medOut);
       invalidMedOutSet.remove(medOut.getUuid());
-      FrontEventManager.post(new MediumAddedEvent(medOut));
    }
    
    private void updateMedium(MediumInput medIn) {
+      Logger.track();
+      
       MediumOutput medOut = reader.getMedium(medIn);
       medOutCache.put(medOut.getUuid(), medOut);
       medOutCache.put(medOut.getLocation(), medOut);
-      FrontEventManager.post(new MediumUpdatedEvent(medOut));
    }
    
    private void deleteMedium(MediumInput medIn) {
+      Logger.track();
+      
       Logger.debug("Removing Medium ID " + medIn.getId() + " from cache");
       MediumOutput medOut = getMedium(medIn);
       invalidMedOutSet.add(medOut.getUuid());
       medOutCache.remove(medOut.getUuid());
       medOutCache.remove(medOut.getLocation());
-      FrontEventManager.post(new MediumRemovedEvent(medOut));
    }
    
    private void refreshMedium(MediumInput medIn) {
@@ -399,20 +413,15 @@ public class CachedServerReader implements _ServerReader {
    public MachineOutput getMachine(MachineInput mIn) {
       Logger.track();
       
-      if (invalidMachineUuidSet.contains(mIn.getUuid())) {
-         throw new HyperboxRuntimeException(mIn.getUuid() + " does not relate to a machine");
-      }
-      if (!mOutCache.containsKey(mIn.getUuid())) {
-         refreshMachine(mIn);
-      }
-      return mOutCache.get(mIn.getUuid());
+      return getMachine(mIn.getUuid());
    }
    
    @Handler
    public void putTaskStateChangedEvent(TaskStateEventOutput ev) {
       Logger.track();
       
-      insertTask(ev.getTask());
+      updateTask(ev.getTask());
+      CoreEventManager.post(new TaskStateChangedEvent(ev.getServer(), ev.getTask()));
    }
    
    @Handler
@@ -421,9 +430,11 @@ public class CachedServerReader implements _ServerReader {
       
       if (ev.getQueueEvent().equals(TaskQueueEvents.TaskAdded)) {
          insertTask(ev.getTask());
+         CoreEventManager.post(new TaskAddedEvent(ev.getServer(), ev.getTask()));
       }
       if (ev.getQueueEvent().equals(TaskQueueEvents.TaskRemoved)) {
          removeTask(ev.getTask());
+         CoreEventManager.post(new TaskRemovedEvent(ev.getServer(), ev.getTask()));
       }
    }
    
@@ -440,6 +451,11 @@ public class CachedServerReader implements _ServerReader {
    }
    
    private void insertTask(TaskOutput tOut) {
+      tOutListCache.put(tOut.getId(), tOut);
+      tOutCache.put(tOut.getId(), tOut);
+   }
+   
+   private void updateTask(TaskOutput tOut) {
       tOutListCache.put(tOut.getId(), tOut);
       tOutCache.put(tOut.getId(), tOut);
    }
@@ -653,8 +669,14 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Override
-   public MachineOutput getMachine(String machineId) {
-      return reader.getMachine(machineId);
+   public MachineOutput getMachine(String vmId) {
+      if (invalidMachineUuidSet.contains(vmId)) {
+         throw new HyperboxRuntimeException(vmId + " does not relate to a machine");
+      }
+      if (!mOutCache.containsKey(vmId)) {
+         refreshMachine(vmId);
+      }
+      return mOutCache.get(vmId);
    }
    
    @Override
@@ -668,18 +690,13 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Override
-   public SnapshotOutput getRootSnapshot(String vmUuid) {
-      return getRootSnapshot(new MachineInput(vmUuid));
+   public SnapshotOutput getSnapshot(String vmId, String snapId) {
+      return getSnapshot(new MachineInput(vmId), new SnapshotInput(snapId));
    }
    
    @Override
-   public SnapshotOutput getSnapshot(String vmUuid, String snapUuid) {
-      return getSnapshot(new MachineInput(vmUuid), new SnapshotInput(snapUuid));
-   }
-   
-   @Override
-   public SnapshotOutput getCurrentSnapshot(String vmUuid) {
-      return getCurrentSnapshot(new MachineInput(vmUuid));
+   public SnapshotOutput getCurrentSnapshot(String vmId) {
+      return getCurrentSnapshot(new MachineInput(vmId));
    }
    
 }

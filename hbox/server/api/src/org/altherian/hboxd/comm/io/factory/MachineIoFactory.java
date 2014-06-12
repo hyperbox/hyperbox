@@ -59,8 +59,9 @@ public final class MachineIoFactory {
       if (m.isAccessible()) {
          settings.addAll(Arrays.asList(
                m.getSetting(MachineAttributes.Name.getId()),
-               m.getSetting(MachineAttributes.CurrentSnapshotUuid.getId()),
-               m.getSetting(MachineAttributes.HasSnapshot.getId())));
+               m.getSetting(MachineAttributes.HasSnapshot.getId()),
+               m.getSetting(MachineAttributes.CurrentSnapshotUuid.getId())
+               ));
          return getSimple(m.getUuid(), m.getState().getId(), settings);
       } else {
          return get(m.getUuid(), MachineStates.Inaccessible.getId(), false);

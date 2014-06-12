@@ -21,9 +21,15 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
+import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
+import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
+import org.altherian.hboxd.core.model._MediumAttachment;
 import org.altherian.hboxd.core.model._StorageController;
 import org.altherian.hboxd.hypervisor.storage._RawStorageController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class StorageControllerIoFactory {
    
@@ -32,7 +38,14 @@ public final class StorageControllerIoFactory {
    }
    
    public static StorageControllerOutput get(_StorageController sc) {
-      StorageControllerOutput scIo = new StorageControllerOutput(sc.getMachineUuid(), sc.getId(), SettingIoFactory.getList(sc.getSettings()));
+      List<SettingIO> settingsOut = SettingIoFactory.getList(sc.getSettings());
+
+      List<StorageDeviceAttachmentOutput> attachmentsOut = new ArrayList<StorageDeviceAttachmentOutput>();
+      for (_MediumAttachment attachment : sc.listMediumAttachment()) {
+         attachmentsOut.add(MediumAttachmentIoFactory.get(attachment));
+      }
+      
+      StorageControllerOutput scIo = new StorageControllerOutput(sc.getMachineUuid(), sc.getId(), settingsOut, attachmentsOut);
       return scIo;
    }
    

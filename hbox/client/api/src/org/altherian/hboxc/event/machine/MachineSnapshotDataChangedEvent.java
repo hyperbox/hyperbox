@@ -1,6 +1,6 @@
-/* 
+/*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -19,10 +19,15 @@
  * 
  */
 
-package org.altherian.hboxd.session;
+package org.altherian.hboxc.event.machine;
 
-public interface _RootSession extends _Session {
+import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hboxc.event.ClientEvents;
+
+public class MachineSnapshotDataChangedEvent extends MachineEvent {
    
-   // nothing yet
+   public MachineSnapshotDataChangedEvent(String srvId, MachineOutput mOut) {
+      super(ClientEvents.MachineSnapshotDataChanged, srvId, mOut);
+   }
    
 }

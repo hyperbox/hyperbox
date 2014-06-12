@@ -25,15 +25,15 @@ import org.altherian.hbox.event.Event;
 
 public abstract class MachineEvent extends Event {
    
-   private String uuid;
+   private String vmId;
    
-   public MachineEvent(Enum<?> eventId, String uuid) {
+   public MachineEvent(Enum<?> eventId, String vmId) {
       super(eventId);
-      this.uuid = uuid;
+      this.vmId = vmId;
    }
    
-   public String getMachineUuid() {
-      return uuid;
+   public String getMachineId() {
+      return vmId;
    }
    
 }

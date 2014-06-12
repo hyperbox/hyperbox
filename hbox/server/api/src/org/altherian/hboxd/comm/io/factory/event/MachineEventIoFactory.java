@@ -56,9 +56,9 @@ public final class MachineEventIoFactory implements _EventIoFactory {
       MachineEvent mEv = (MachineEvent) ev;
       MachineOutput mOut = null;
       try {
-         mOut = MachineIoFactory.get(HBoxServer.get().getMachine(mEv.getMachineUuid()));
+         mOut = MachineIoFactory.get(HBoxServer.get().getMachine(mEv.getMachineId()));
       } catch (HyperboxRuntimeException e) {
-         mOut = MachineIoFactory.get(mEv.getMachineUuid(), MachineStates.UNKNOWN.getId());
+         mOut = MachineIoFactory.get(mEv.getMachineId(), MachineStates.UNKNOWN.getId());
       }
       switch ((HyperboxEvents) ev.getEventId()) {
          case MachineState:

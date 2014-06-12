@@ -23,7 +23,7 @@ package org.altherian.hboxd.event.snapshot;
 
 import org.altherian.hboxd.event.machine.MachineEvent;
 
-public class SnapshotEvent extends MachineEvent {
+public abstract class SnapshotEvent extends MachineEvent {
    
    private String snapUuid;
    
