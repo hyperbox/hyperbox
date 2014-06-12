@@ -22,7 +22,6 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.input.MachineInput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.tool.logging.Logger;
@@ -42,7 +41,7 @@ public class MachineGetWorker extends SwingWorker<MachineOutput, Void> {
    @Override
    protected MachineOutput doInBackground() throws Exception {
       recv.loadingStarted();
-      MachineOutput newMachineOut = Gui.getServer(mOut.getServerId()).getMachine(new MachineInput(mOut));
+      MachineOutput newMachineOut = Gui.getServer(mOut.getServerId()).getMachine(mOut.getUuid());
       return newMachineOut;
    }
    

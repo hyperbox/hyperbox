@@ -24,13 +24,12 @@ package org.altherian.hboxd.core;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxd.front._RequestReceiver;
 import org.altherian.hboxd.server._ServerManager;
-import org.altherian.hboxd.session._RootSessionManager;
 
 public interface _Hyperbox extends _HyperboxManipulator, _ServerManager {
    
    public void init() throws HyperboxException;
    
-   public _RootSessionManager start() throws HyperboxException;
+   public void start() throws HyperboxException;
    
    public _RequestReceiver getReceiver();
    

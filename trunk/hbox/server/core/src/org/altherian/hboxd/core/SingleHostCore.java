@@ -61,15 +61,12 @@ import org.altherian.hboxd.hypervisor.storage._RawMedium;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
 import org.altherian.hboxd.persistence._Persistor;
 import org.altherian.hboxd.persistence.sql.h2.H2SqlPersistor;
-import org.altherian.hboxd.security.RootUser;
 import org.altherian.hboxd.security.SecurityContext;
 import org.altherian.hboxd.security._SecurityManager;
-import org.altherian.hboxd.security._User;
 import org.altherian.hboxd.server._Server;
 import org.altherian.hboxd.server._ServerManager;
 import org.altherian.hboxd.session.SessionContext;
 import org.altherian.hboxd.session.SessionManager;
-import org.altherian.hboxd.session._RootSessionManager;
 import org.altherian.hboxd.session._SessionManager;
 import org.altherian.hboxd.store.StoreManager;
 import org.altherian.hboxd.store._StoreManager;
@@ -95,7 +92,7 @@ public class SingleHostCore implements _Hyperbox, _Server {
    
    private ServerState state;
    
-   private _RootSessionManager sessMgr;
+   private _SessionManager sessMgr;
    private _SecurityManager secMgr;
    private _ActionManager actionMgr;
    private _TaskManager taskMgr;
@@ -106,7 +103,6 @@ public class SingleHostCore implements _Hyperbox, _Server {
    private _Hypervisor hypervisor;
    
    private _Client system = new System();
-   private _User rootUsr = new RootUser();
    
    public static final String CFGKEY_SRV_ID = "server.id";
    public static final String CFGKEY_SRV_NAME = "server.name";
@@ -141,17 +137,16 @@ public class SingleHostCore implements _Hyperbox, _Server {
       Logger.track();
       
       SessionContext.setClient(system);
-      SecurityContext.setUser(rootUsr);
       
       HBoxServer.initServer(this);
       
-      EventManager.start(rootUsr);
+      EventManager.start();
       EventManager.register(this);
       
       loadPersistors();
       
       secMgr = SecurityManagerFactory.get();
-      secMgr.init(persistor, rootUsr);
+      SecurityContext.setAdminUser(secMgr.init(persistor));
       
       actionMgr = new DefaultActionManager();
       taskMgr = new TaskManager();
@@ -165,7 +160,7 @@ public class SingleHostCore implements _Hyperbox, _Server {
    }
    
    @Override
-   public _RootSessionManager start() throws HyperboxException {
+   public void start() throws HyperboxException {
       Logger.track();
       
       setState(ServerState.Starting);
@@ -211,12 +206,13 @@ public class SingleHostCore implements _Hyperbox, _Server {
       }
       
       setState(ServerState.Running);
-      return sessMgr;
    }
    
    @Override
    public void stop() {
       Logger.track();
+      
+      secMgr.authorize(SecurityItem.Server, SecurityAction.Stop);
       
       setState(ServerState.Stopping);
       
@@ -372,9 +368,9 @@ public class SingleHostCore implements _Hyperbox, _Server {
    
    @Override
    public void disconnect() {
+      secMgr.authorize(SecurityItem.Hypervisor, SecurityAction.Disconnect);
+      
       if (isConnected()) {
-         secMgr.authorize(SecurityItem.Hypervisor, SecurityAction.Disconnect);
-         
          hypervisor.stop();
          hypervisor = null;
          EventManager.post(new ServerConnectionStateEvent(this, ServerConnectionState.Disconnected));
@@ -444,6 +440,10 @@ public class SingleHostCore implements _Hyperbox, _Server {
    
    @Override
    public List<_Machine> listMachines() {
+      if (!isConnected()) {
+         throw new HyperboxRuntimeException("Server is not connected");
+      }
+      
       List<_Machine> vms = new ArrayList<_Machine>();
       for (_RawVM rawVm : hypervisor.listMachines()) {
          if (secMgr.isAuthorized(SecurityItem.Machine, SecurityAction.List, rawVm.getUuid())) {

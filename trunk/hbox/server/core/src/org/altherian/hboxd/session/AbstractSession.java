@@ -28,7 +28,6 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.states.SessionStates;
 import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event.session.SessionStateEvent;
-import org.altherian.hboxd.security.AnonymousUser;
 import org.altherian.hboxd.security.SecurityContext;
 import org.altherian.hboxd.security._User;
 import org.altherian.hboxd.task._TaskManager;
@@ -133,6 +132,10 @@ public abstract class AbstractSession implements _Session {
       }
    }
    
+   protected void process(Request req) {
+      taskMgr.process(req);
+   }
+   
    @Override
    public void post(EventOutput ev) {
       Logger.track();
@@ -144,8 +147,7 @@ public abstract class AbstractSession implements _Session {
    public void run() {
       Logger.track();
       
-      
-      SecurityContext.setUser(new AnonymousUser());
+      SecurityContext.setUser(user);
       SessionContext.setClient(client);
       running = true;
       
@@ -172,4 +174,8 @@ public abstract class AbstractSession implements _Session {
       return createTime;
    }
    
+   protected _Client getClient() {
+      return client;
+   }
+
 }

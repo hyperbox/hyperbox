@@ -27,8 +27,8 @@ import org.altherian.hbox.event.Event;
 
 public class ServerEvent extends Event {
    
-   public ServerEvent(Enum<?> s, ServerOutput srv) {
-      super(s);
+   public ServerEvent(Enum<?> eventId, ServerOutput srv) {
+      super(eventId);
       set(ServerOutput.class, srv);
    }
    

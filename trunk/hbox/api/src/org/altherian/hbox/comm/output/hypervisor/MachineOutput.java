@@ -72,7 +72,7 @@ public class MachineOutput extends ObjectOutput {
    }
    
    private MachineOutput(String serverId, String uuid, List<SettingIO> settings) {
-      super(serverId + "." + uuid, settings);
+      super(uuid, settings);
       this.uuid = uuid;
       this.serverId = serverId;
    }
@@ -89,7 +89,7 @@ public class MachineOutput extends ObjectOutput {
     * @param uuid The UUID of the machine to send data about.
     */
    public MachineOutput(String serverId, String uuid) {
-      super(serverId + "." + uuid);
+      super(uuid);
       this.uuid = uuid;
       this.serverId = serverId;
    }

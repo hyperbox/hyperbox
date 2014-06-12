@@ -22,7 +22,6 @@
 package org.altherian.hbox.comm.input;
 
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.comm.io.factory.Machine;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hbox.constant.MachineAttributes;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
@@ -61,10 +60,10 @@ public final class MachineInput extends ObjectInput {
       this(mOut.getServerId(), mOut.getUuid());
    }
    
-   public MachineInput(String serverId, String uuid) {
-      super(Machine.getId(serverId, uuid));
-      setServerId(serverId);
-      setUuid(uuid);
+   public MachineInput(String srvId, String vmId) {
+      super(vmId);
+      setServerId(srvId);
+      setUuid(vmId);
    }
    
    protected void setUuid(String uuid) {

@@ -163,7 +163,7 @@ public class TaskView implements _Cancelable {
       @Override
       public void loadingFinished(boolean isSuccessful, String message) {
          if (isSuccessful) {
-            dialog.setTitle("Task Details - #" + tskOut.getTaskId());
+            dialog.setTitle("Task Details - #" + tskOut.getId());
             actionField.setText(tskOut.getActionId());
             createField.setText(tskOut.getCreateTime().toString());
             endField.setText(tskOut.getStopTime().toString());
@@ -172,7 +172,7 @@ public class TaskView implements _Cancelable {
             } else {
                errorField.setText("N/A");
             }
-            idField.setText(tskOut.getTaskId());
+            idField.setText(tskOut.getId());
             queueField.setText(tskOut.getQueueTime().toString());
             reqIdField.setText(tskOut.getRequestId());
             srvField.setText(srvName);

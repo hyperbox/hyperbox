@@ -61,10 +61,18 @@ public class SecurityManager implements _SecurityManager {
    private Map<String, Boolean> perms;
    
    private String getPermissionId(_User usr, SecurityItem item, String itemId) {
+      if (usr == null) {
+         return "";
+      }
+      
       return usr.getId() + permSeparator + item + permSeparator + SecurityAction.Any + permSeparator + itemId;
    }
    
    private String getPermissionId(_User usr, SecurityItem item, SecurityAction action) {
+      if (usr == null) {
+         return "";
+      }
+      
       return usr.getId() + permSeparator + item + permSeparator + action;
    }
    
@@ -97,11 +105,12 @@ public class SecurityManager implements _SecurityManager {
    }
    
    @Override
-   public void init(_SecurityPersistor persistor, _User superUsr) throws HyperboxException {
+   public _User init(_SecurityPersistor persistor) throws HyperboxException {
       Logger.track();
       
-      this.superUsr = superUsr;
       this.persistor = persistor;
+      superUsr = new User("0", "Admin");
+      return superUsr;
    }
    
    @Override
@@ -201,7 +210,7 @@ public class SecurityManager implements _SecurityManager {
       Logger.debug("-----------------------");
       String permId = getPermissionId(SecurityContext.getUser(), SecurityItem.Any, SecurityAction.Any);
       Logger.debug("Checking for permission ID " + permId);
-      return superUsr.equals(SecurityContext.getUser()) || (perms.containsKey(permId) && perms.get(permId));
+      return perms.containsKey(permId) && perms.get(permId);
    }
    
    private boolean isAuthorized(SecurityItem item) {
@@ -213,7 +222,7 @@ public class SecurityManager implements _SecurityManager {
    private boolean isAuthorized(SecurityItem item, String itemId) {
       String permId = getPermissionId(SecurityContext.getUser(), item, itemId);
       Logger.debug("Checking for permission ID " + permId);
-      return (perms.containsKey(permId) && perms.get(permId));
+      return isAuthorized(item) || (perms.containsKey(permId) && perms.get(permId));
    }
    
    @Override
@@ -327,7 +336,7 @@ public class SecurityManager implements _SecurityManager {
       Logger.track();
       
       authorize(SecurityItem.User, SecurityAction.Modify);
-
+      
       _User user = persistor.getUser(uIn.getId());
       
       if (uIn.getUsername() != null) {

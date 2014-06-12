@@ -52,9 +52,7 @@ import org.altherian.hbox.comm.output.SessionOutput;
 import org.altherian.hbox.comm.output.StoreItemOutput;
 import org.altherian.hbox.comm.output.StoreOutput;
 import org.altherian.hbox.comm.output.TaskOutput;
-import org.altherian.hbox.comm.output.event.EventOutput;
 import org.altherian.hbox.comm.output.event.hypervisor.HypervisorEventOutput;
-import org.altherian.hbox.comm.output.event.machine.MachineDataChangeEventOutput;
 import org.altherian.hbox.comm.output.event.server.ServerShutdownEventOutput;
 import org.altherian.hbox.comm.output.host.HostOutput;
 import org.altherian.hbox.comm.output.hypervisor.HypervisorLoaderOutput;
@@ -79,7 +77,6 @@ import org.altherian.hboxc.comm.io.factory.ServerIoFactory;
 import org.altherian.hboxc.comm.utils.Transaction;
 import org.altherian.hboxc.event.CoreEventManager;
 import org.altherian.hboxc.event.backend.BackendConnectionStateEvent;
-import org.altherian.hboxc.event.machine.MachineDataChangedEvent;
 import org.altherian.hboxc.event.server.ServerConnectedEvent;
 import org.altherian.hboxc.event.server.ServerDisconnectedEvent;
 import org.altherian.hboxc.event.server.ServerModifiedEvent;
@@ -636,10 +633,10 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
    }
    
    @Override
-   public SnapshotOutput getRootSnapshot(MachineInput mIn) {
+   public SnapshotOutput getRootSnapshot(String vmId) {
       Logger.track();
       
-      Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.SnapshotGetRoot, mIn));
+      Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.SnapshotGetRoot, new MachineInput(vmId)));
       if (!trans.sendAndWait()) {
          throw new HyperboxRuntimeException("Unable to retrieve snapshot information: " + trans.getError());
       }
@@ -862,36 +859,6 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
    }
    
    @Handler
-   protected void putBackendEvent(EventOutput ev) {
-      Logger.track();
-      
-      if (id.equals(ev.getServerId())) {
-         Logger.verbose("Received unhandled Event from Server " + getName() + " (" + getId() + ")" + " : " + ev.toString());
-      }
-   }
-   
-   @Handler
-   protected void putMachineDataEvent(MachineDataChangeEventOutput ev) {
-      Logger.track();
-      
-      if (id.equals(ev.getServerId())) {
-         CoreEventManager.post(new MachineDataChangedEvent(getId(), getMachine(ev.getMachine().getUuid())));
-      }
-   }
-   
-   /*
-   @Handler
-   protected void putMachineStateEvent(MachineStateEventOutput ev) {
-      Logger.track();
-      
-      if (id.equals(ev.getServerId())) {
-         CoreEventManager.post(new MachineStateChangedEvent(getId(), getMachine(ev.getMachine().getUuid())));
-      }
-      
-   }
-    */
-   
-   @Handler
    protected final void putServerShutdownEvent(ServerShutdownEventOutput ev) {
       Logger.track();
       
@@ -928,11 +895,6 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       
       HostOutput hostOut = trans.extractItem(HostOutput.class);
       return hostOut;
-   }
-   
-   @Override
-   public SnapshotOutput getRootSnapshot(String vmUuid) {
-      return getRootSnapshot(new MachineInput(vmUuid));
    }
    
    @Override

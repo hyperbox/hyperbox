@@ -27,10 +27,10 @@ import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.output.ServerOutput;
 import org.altherian.hbox.comm.output.TaskOutput;
-import org.altherian.hbox.comm.output.event.task.TaskQueueEventOutput;
-import org.altherian.hbox.comm.output.event.task.TaskStateEventOutput;
-import org.altherian.hbox.states.TaskQueueEvents;
 import org.altherian.hboxc.event.FrontEventManager;
+import org.altherian.hboxc.event.task.TaskAddedEvent;
+import org.altherian.hboxc.event.task.TaskRemovedEvent;
+import org.altherian.hboxc.event.task.TaskStateChangedEvent;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.task.TaskCancelAction;
 import org.altherian.hboxc.front.gui.workers.TaskListWorker;
@@ -182,12 +182,12 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
                   loadingStarted();
                }
             });
+         } else {
+            loadingLabel.setVisible(true);
+            panel.setEnabled(false);
+            panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            itemListModel.clear();
          }
-
-         loadingLabel.setVisible(true);
-         panel.setEnabled(false);
-         panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-         itemListModel.clear();
       }
       
       private void finish() {
@@ -198,11 +198,11 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
                   finish();
                }
             });
+         } else {
+            isLoading = false;
+            panel.setEnabled(false);
+            panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
          }
-
-         isLoading = false;
-         panel.setEnabled(false);
-         panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
       }
       
       @Override
@@ -226,22 +226,24 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
    }
    
    @Handler
-   private void putTaskQueueEvent(TaskQueueEventOutput ev) {
-      if (ev.getServerId().equals(srvOut.getId())) {
-         if (ev.getQueueEvent().equals(TaskQueueEvents.TaskAdded)) {
-            add(ev.getTask());
-         }
-         if (ev.getQueueEvent().equals(TaskQueueEvents.TaskRemoved)) {
-            remove(ev.getTask());
-         }
+   private void putTaskAddedEvent(TaskAddedEvent ev) {
+      if (ev.getServer().getId().equals(srvOut.getId())) {
+         add(ev.getTask());
       }
    }
    
    @Handler
-   private void putTaskStateEvent(TaskStateEventOutput ev) {
+   private void putTaskRemovedEvent(TaskRemovedEvent ev) {
+      if (ev.getServer().getId().equals(srvOut.getId())) {
+         remove(ev.getTask());
+      }
+   }
+   
+   @Handler
+   private void putTaskStateEvent(TaskStateChangedEvent ev) {
       Logger.track();
       
-      if (ev.getServerId().equals(srvOut.getId())) {
+      if (ev.getServer().getId().equals(srvOut.getId())) {
          update(ev.getTask());
       }
    }
@@ -254,9 +256,9 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
                add(tOut);
             }
          });
+      } else {
+         itemListModel.add(tOut);
       }
-      
-      itemListModel.add(tOut);
    }
    
    private void update(final TaskOutput tOut) {
@@ -267,9 +269,9 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
                update(tOut);
             }
          });
+      } else {
+         itemListModel.update(tOut);
       }
-      
-      itemListModel.update(tOut);
    }
    
    private void remove(final TaskOutput tOut) {
@@ -280,9 +282,9 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
                remove(tOut);
             }
          });
+      } else {
+         itemListModel.remove(tOut);
       }
-      
-      itemListModel.remove(tOut);
    }
    
 }

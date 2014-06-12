@@ -46,4 +46,9 @@ public abstract class MachineEvent extends Event {
       return srvId;
    }
    
+   @Override
+   public String toString() {
+      return "Event ID " + getEventId() + " for Machine " + getUuid() + " on Server " + getServerId() + " occured @ " + getTime();
+   }
+   
 }

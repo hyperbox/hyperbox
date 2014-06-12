@@ -38,10 +38,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class SessionManager implements _RootSessionManager {
+public final class SessionManager implements _SessionManager {
    
    private Map<_Client, _Session> sessions = new ConcurrentHashMap<_Client, _Session>();
-   
    private _Hyperbox hbox;
    
    @Override
@@ -101,15 +100,6 @@ public final class SessionManager implements _RootSessionManager {
       }
       
       getSession(client).putRequest(req);
-   }
-   
-   @Override
-   public _RootSession getRootSession(_Client client) {
-      Logger.track();
-      
-      _RootSession rootSess = new RootSession(client, hbox.getTaskManager());
-      sessions.put(client, rootSess);
-      return rootSess;
    }
    
    @Override

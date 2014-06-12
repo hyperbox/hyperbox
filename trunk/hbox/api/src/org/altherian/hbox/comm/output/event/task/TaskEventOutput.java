@@ -43,7 +43,7 @@ public abstract class TaskEventOutput extends EventOutput {
    }
    
    public String getTaskId() {
-      return getTask().getTaskId();
+      return getTask().getId();
    }
    
 }

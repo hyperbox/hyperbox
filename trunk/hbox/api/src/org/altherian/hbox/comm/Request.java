@@ -39,6 +39,7 @@ public final class Request extends Message {
    
    private Command command;
    private String exchangeId = String.valueOf(System.currentTimeMillis() + hashCode());
+   private boolean isQueueable = true;
    
    /**
     * Empty constructor<br/>
@@ -77,7 +78,7 @@ public final class Request extends Message {
          set(obj);
       }
    }
-
+   
    public Request(Enum<?> task, Enum<?> label, Object o) {
       this(Command.VBOX, task);
       set(label, o);
@@ -146,6 +147,15 @@ public final class Request extends Message {
       }
    }
    
+   public Request setQueueable(boolean isQueueable) {
+      this.isQueueable = isQueueable;
+      return this;
+   }
+   
+   public boolean isQueueable() {
+      return isQueueable;
+   }
+
    /**
     * Get the unique identifier for this Request and the following Answer(s).
     * 

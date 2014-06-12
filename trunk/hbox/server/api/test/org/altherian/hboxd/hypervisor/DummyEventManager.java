@@ -24,13 +24,12 @@ package org.altherian.hboxd.hypervisor;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxd.event._EventManager;
-import org.altherian.hboxd.security._User;
 
 
 public class DummyEventManager implements _EventManager {
    
    @Override
-   public void start(_User usr) throws HyperboxException {
+   public void start() throws HyperboxException {
       // stub
    }
    

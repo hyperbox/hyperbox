@@ -52,7 +52,7 @@ public class SnapshotChangedEventIoFactory implements _EventIoFactory {
    public EventOutput get(_Hyperbox hbox, _Event ev) {
       SnapshotEvent sEv = (SnapshotEvent) ev;
       
-      _Machine vm = HBoxServer.get().getMachine(sEv.getMachineUuid());
+      _Machine vm = HBoxServer.get().getMachine(sEv.getMachineId());
       MachineOutput mOut = MachineIoFactory.get(vm);
       SnapshotOutput snapOut = SnapshotIoFactory.get(vm.getSnapshot(sEv.getSnapshotUuid()));
       

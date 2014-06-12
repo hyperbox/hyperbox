@@ -34,6 +34,7 @@ public class OsTypeOutput extends ObjectOutput {
    }
    
    public OsTypeOutput(String id, String name, Long bitness) {
+      super(id);
       this.id = id;
       this.name = name;
       this.bitness = bitness;

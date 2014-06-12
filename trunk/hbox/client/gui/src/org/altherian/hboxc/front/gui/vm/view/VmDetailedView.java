@@ -168,10 +168,11 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
       
       loadingLabel.setVisible(false);
       tabs.setEnabled(isSuccessful);
-      tabs.setVisible(isSuccessful && mOut.isAvailable());
       if (!isSuccessful) {
          errorLabel.setText("Unable to retrieve VM information: " + message);
          errorLabel.setVisible(true);
+      } else {
+         tabs.setVisible(mOut.isAvailable());
       }
    }
    

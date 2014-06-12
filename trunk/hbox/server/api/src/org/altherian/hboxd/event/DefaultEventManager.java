@@ -27,7 +27,6 @@ import net.engio.mbassy.bus.config.BusConfiguration;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxd.security.SecurityContext;
-import org.altherian.hboxd.security._User;
 import org.altherian.tool.logging.Logger;
 
 import java.util.concurrent.BlockingQueue;
@@ -39,18 +38,18 @@ public final class DefaultEventManager implements _EventManager, Runnable {
    private MBassador<_Event> eventBus;
    private boolean running = false;
    private Thread worker;
-   private _User usr;
    
    @Override
-   public void start(_User usr) throws HyperboxException {
+   public void start() throws HyperboxException {
       Logger.track();
       
       Logger.debug("Event Manager Starting");
-      this.usr = usr;
       eventBus = new MBassador<_Event>(BusConfiguration.Default());
       eventsQueue = new LinkedBlockingQueue<_Event>();
       worker = new Thread(this, "EvMgrWT");
       worker.setDaemon(true);
+      SecurityContext.addAdminThread(worker);
+
       worker.start();
       Logger.verbose("Event Manager Started");
    }
@@ -103,7 +102,6 @@ public final class DefaultEventManager implements _EventManager, Runnable {
    public void run() {
       Logger.track();
       
-      SecurityContext.setUser(usr);
       Logger.verbose("Event Manager Worker Started");
       running = true;
       while (running) {

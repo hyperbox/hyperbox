@@ -37,8 +37,9 @@ public enum SecurityAction {
    Save,
    Reset,
    Restart,
+   Resume,
    
    Connect,
    Disconnect,
-
+   
 }

@@ -31,7 +31,7 @@ public class TaskInput extends ObjectInput {
    }
    
    public TaskInput(TaskOutput tskOut) {
-      this(tskOut.getTaskId());
+      this(tskOut.getId());
    }
    
    public TaskInput(String taskId) {

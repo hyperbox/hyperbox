@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -19,12 +19,17 @@
  * 
  */
 
-package org.altherian.hboxd.security;
+package org.altherian.hboxc.event.snapshot;
 
-public class RootUser extends User {
+import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
+import org.altherian.hboxc.event.ClientEvents;
+
+public class SnapshotModifiedEvent extends SnapshotEvent {
    
-   public RootUser() {
-      super("0", "admin");
+   public SnapshotModifiedEvent(ServerOutput srvOut, MachineOutput mOut, SnapshotOutput snapOut) {
+      super(ClientEvents.SnapshotModified, srvOut, mOut, snapOut);
    }
    
 }

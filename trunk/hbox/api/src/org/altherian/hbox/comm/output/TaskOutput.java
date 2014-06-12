@@ -29,7 +29,6 @@ import java.util.Date;
 public class TaskOutput extends ObjectOutput {
    
    private String serverId;
-   private String taskId;
    private String actionId;
    private String requestId;
    private UserOutput uOut;
@@ -48,9 +47,8 @@ public class TaskOutput extends ObjectOutput {
    }
    
    public TaskOutput(String serverId, String taskId) {
-      super(serverId + "." + taskId);
+      super(taskId);
       this.serverId = serverId;
-      this.taskId = taskId;
    }
    
    public TaskOutput(String serverId, String taskId, String actionId, String requestId, TaskState state, UserOutput uOut, Date createTime,
@@ -68,17 +66,8 @@ public class TaskOutput extends ObjectOutput {
       this.error = error;
    }
    
-   @Override
-   public String getId() {
-      return getServerId() + "." + getTaskId();
-   }
-   
    public String getServerId() {
       return serverId;
-   }
-   
-   public String getTaskId() {
-      return taskId;
    }
    
    public UserOutput getUser() {
