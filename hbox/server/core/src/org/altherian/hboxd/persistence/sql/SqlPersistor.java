@@ -26,6 +26,7 @@ import org.altherian.hbox.comm.SecurityAction;
 import org.altherian.hbox.comm.SecurityItem;
 import org.altherian.hbox.exception.FeatureNotImplementedException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
+import org.altherian.hbox.states.StoreState;
 import org.altherian.hboxd.exception.PersistorException;
 import org.altherian.hboxd.factory.StoreFactory;
 import org.altherian.hboxd.persistence._Persistor;
@@ -111,13 +112,19 @@ public abstract class SqlPersistor implements _Persistor {
             String moduleId = rSet.getString(StoreSQL.MODULE_ID);
             String storeName = rSet.getString(StoreSQL.NAME);
             String storePath = rSet.getString(StoreSQL.PATH);
-            String storeStatus = rSet.getString(StoreSQL.STATUS);
-            return StoreFactory.get(moduleId, storeId, storeName, storePath, storeStatus);
+            StoreState storeState = StoreState.Closed;
+            try {
+               storeState = StoreState.valueOf(rSet.getString(StoreSQL.STATUS));
+            } catch (IllegalArgumentException e) {
+               Logger.error("Store ID " + id + " status is invalid - data structure is not correct. Failling back to default value: "
+                     + StoreState.Closed);
+            }
+            return StoreFactory.get(moduleId, storeId, storeName, storePath, storeState);
          } finally {
             prepStmt.close();
          }
       } catch (SQLException e) {
-         throw new HyperboxRuntimeException("Unable to retrieve list of stores", e);
+         throw new HyperboxRuntimeException("Unable to retrieve Store ID " + id, e);
       }
    }
    
@@ -134,8 +141,14 @@ public abstract class SqlPersistor implements _Persistor {
                String moduleId = rSet.getString(StoreSQL.MODULE_ID);
                String storeName = rSet.getString(StoreSQL.NAME);
                String storePath = rSet.getString(StoreSQL.PATH);
-               String storeStatus = rSet.getString(StoreSQL.STATUS);
-               storeList.add(StoreFactory.get(moduleId, storeId, storeName, storePath, storeStatus));
+               StoreState storeState = StoreState.Closed;
+               try {
+                  storeState = StoreState.valueOf(rSet.getString(StoreSQL.STATUS));
+               } catch (IllegalArgumentException e) {
+                  Logger.error("Store ID " + storeId + " status is invalid - data structure is not correct. Failling back to default value: "
+                        + StoreState.Closed);
+               }
+               storeList.add(StoreFactory.get(moduleId, storeId, storeName, storePath, storeState));
             }
          } finally {
             rSet.close();

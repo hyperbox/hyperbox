@@ -47,6 +47,26 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
    protected String hostname;
    
    @Override
+   public String getId() {
+      return this.getClass().getAnnotation(Hypervisor.class).id();
+   }
+   
+   @Override
+   public String getTypeId() {
+      return this.getClass().getAnnotation(Hypervisor.class).typeId();
+   }
+   
+   @Override
+   public String getVendor() {
+      return this.getClass().getAnnotation(Hypervisor.class).vendor();
+   }
+   
+   @Override
+   public String getProduct() {
+      return this.getClass().getAnnotation(Hypervisor.class).product();
+   }
+   
+   @Override
    protected VirtualBoxManager connect(String options) {
       String host = defaultHost;
       int port = defaultPort;
@@ -87,7 +107,7 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
          Logger.debug("User: " + username);
          Logger.debug("Password given: " + ((password != null) && !password.isEmpty()));
          mgr.connect("http://" + host + ":" + port, username, password);
-
+         
          return mgr;
       } catch (VBoxException e) {
          throw new HypervisorException("Unable to connect to the Virtualbox WebServices : " + e.getMessage(), e);

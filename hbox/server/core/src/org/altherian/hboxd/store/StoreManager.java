@@ -153,7 +153,7 @@ public final class StoreManager implements _StoreManager {
       }
       
       // TODO implement registration event
-      _Store s = StoreFactory.get("localFolder", IdGen.get(), label, path.getAbsolutePath(), StoreState.Closed.toString());
+      _Store s = StoreFactory.get("localFolder", IdGen.get(), label, path.getAbsolutePath(), StoreState.Closed);
       persistor.insertStore(s);
       stores.put(s.getId(), s);
       s.open();
@@ -166,7 +166,7 @@ public final class StoreManager implements _StoreManager {
       Logger.track();
       
       SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.Delete, id);
-
+      
       _Store s = getStore(id);
       s.close();
       persistor.deleteStore(s);
@@ -179,7 +179,7 @@ public final class StoreManager implements _StoreManager {
       Logger.track();
       
       SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.Delete, id);
-
+      
       if (!new File(getStore(id).getLocation()).delete()) {
          throw new HyperboxRuntimeException("Unable to delete the store");
       }

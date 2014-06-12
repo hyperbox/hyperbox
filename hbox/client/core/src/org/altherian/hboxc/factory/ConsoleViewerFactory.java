@@ -45,7 +45,7 @@ public class ConsoleViewerFactory {
    public static List<_ConsoleViewer> getDefaults() {
       List<_ConsoleViewer> viewers = new ArrayList<_ConsoleViewer>();
       
-      viewers.add(get("virtualbox", "Oracle VM VirtualBox Extension Pack", "C:/Windows/system32/mstsc.exe", "/v:%SA%:%SP%"));
+      viewers.add(get(".*", "Oracle VM VirtualBox Extension Pack", "C:/Windows/system32/mstsc.exe", "/v:%SA%:%SP%"));
       
       return viewers;
    }

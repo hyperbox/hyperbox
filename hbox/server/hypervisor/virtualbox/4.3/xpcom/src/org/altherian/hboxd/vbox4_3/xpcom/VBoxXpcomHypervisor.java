@@ -40,6 +40,26 @@ public final class VBoxXpcomHypervisor extends VBoxHypervisor {
    protected String home;
    
    @Override
+   public String getId() {
+      return this.getClass().getAnnotation(Hypervisor.class).id();
+   }
+   
+   @Override
+   public String getTypeId() {
+      return this.getClass().getAnnotation(Hypervisor.class).typeId();
+   }
+   
+   @Override
+   public String getVendor() {
+      return this.getClass().getAnnotation(Hypervisor.class).vendor();
+   }
+   
+   @Override
+   public String getProduct() {
+      return this.getClass().getAnnotation(Hypervisor.class).product();
+   }
+   
+   @Override
    protected VirtualBoxManager connect(String options) {
       if (!StringTools.isEmpty(options)) {
          home = options;

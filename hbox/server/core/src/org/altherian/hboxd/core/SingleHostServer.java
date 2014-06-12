@@ -88,7 +88,7 @@ import java.util.UUID;
 
 import com.google.common.io.Files;
 
-public class SingleHostCore implements _Hyperbox, _Server {
+public class SingleHostServer implements _Hyperbox, _Server {
    
    private ServerState state;
    

@@ -36,7 +36,6 @@ import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.front._Front;
 import org.altherian.hboxc.server._ServerReader;
 import org.altherian.hboxc.state.CoreState;
-import org.altherian.tool.logging.LogLevel;
 import org.altherian.tool.logging.Logger;
 
 import java.awt.AWTEvent;
@@ -49,7 +48,6 @@ import java.io.StringWriter;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 public final class Gui implements _Front {
@@ -178,18 +176,10 @@ public final class Gui implements _Front {
    }
    
    public static _CoreReader getReader() {
-      if (SwingUtilities.isEventDispatchThread() && Logger.isLevel(LogLevel.Debug)) {
-         Logger.debug("GUI-EWT - /!\\ We are working on the EWT /!\\");
-         Thread.dumpStack();
-      }
       return reader;
    }
    
    public static _ServerReader getServer(String id) {
-      if (SwingUtilities.isEventDispatchThread() && Logger.isLevel(LogLevel.Debug)) {
-         Logger.debug("GUI-EWT - /!\\ We are working on the EWT /!\\");
-         Thread.dumpStack();
-      }
       return getReader().getServerReader(id);
    }
    

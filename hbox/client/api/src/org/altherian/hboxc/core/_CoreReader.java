@@ -41,10 +41,12 @@ public interface _CoreReader {
    
    public ConnectorOutput getConnector(String id);
    
+   public ConnectorOutput getConnectorForServer(String srvId);
+
    public ServerOutput getServer(ConnectorInput conIn);
    
    public ServerOutput getServerInfo(String id);
-
+   
    public _ServerReader getServerReader(String id);
    
    public List<ConsoleViewerOutput> listConsoleViewers();

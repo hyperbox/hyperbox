@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -19,19 +19,27 @@
  * 
  */
 
-package org.altherian.hboxd.core;
+package org.altherian.hboxd.core.action;
 
-import org.altherian.hbox.exception.HyperboxException;
+import org.altherian.hbox.comm.Request;
+import org.altherian.hbox.comm.input.ServerInput;
+import org.altherian.hboxd.core._Hyperbox;
+import org.altherian.hboxd.server._Server;
 
-import org.junit.BeforeClass;
-
-public class HyperboxCoreTest extends HyperboxTest {
+public abstract class ServerAction extends ASingleTaskAction {
    
-   @BeforeClass
-   public static void beforeClass() throws HyperboxException {
-      core = new SingleHostServer();
+   @Override
+   public void run(Request request, _Hyperbox hbox) {
+      _Server srv = null;
+      if (request.has(ServerInput.class)) {
+         srv = hbox.getServer(request.get(ServerInput.class).getId());
+      } else {
+         srv = hbox.getServer();
+      }
       
-      HyperboxTest.init();
+      run(request, hbox, srv);
    }
+   
+   protected abstract void run(Request request, _Hyperbox hbox, _Server srv);
    
 }
