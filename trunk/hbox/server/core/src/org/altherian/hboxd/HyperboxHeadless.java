@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -21,13 +21,11 @@
 
 package org.altherian.hboxd;
 
-import org.altherian.hbox.Configuration;
 import org.altherian.hboxd.controller.Controller;
 
-public final class HyperboxInteractive {
+public class HyperboxHeadless {
    
    public static void main(String[] args) {
-      Configuration.setSetting("log.file", "none");
       new Controller().start();
    }
    
