@@ -478,7 +478,7 @@
 		<chmod file="${server.out.dir}/hyperbox" perm="ugo+rx" />
 		<copy file="scripts/server/initd/hboxd" tofile="${server.out.dir}/hboxd" />
 		<chmod file="${server.out.dir}/hboxd" perm="ugo+rx"/>
-		<copy file="external/common-daemons/jsvc" tofile="${server.out.dir}/bin/hboxd" />
+		<copy file="scripts/server/hboxd" tofile="${server.out.dir}/bin/hboxd" />
 		<chmod file="${server.out.dir}/bin/hboxd" perm="ugo+rx" />
 	</target>
 	

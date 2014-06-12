@@ -2,7 +2,7 @@
 ###########################################################################
 #
 # Hyperbox - Enterprise Virtualization Manager
-# Copyright (C) 2013 Maxime Dor
+# Copyright (C) 2014 Maxime Dor
 # 
 # http://hyperbox.altherian.org
 # 
@@ -21,4 +21,17 @@
 #
 ###########################################################################
 
-java -server -Xmx75m -Xss2048k -cp bin/*:lib/*:modules/* "$@" org.altherian.hboxd.HyperboxInteractive
+INSTALL_DIR="/opt/hboxd"
+EXEC="java"
+DAEMON_CLASS="org.altherian.hboxd.HyperboxHeadless"
+CLASSPATH="$INSTALL_DIR/bin/*:$INSTALL_DIR/lib/*:$INSTALL_DIR/modules/*"
+ARGS_START="-cp $CLASSPATH -Xmx75m -Xss2048k"
+
+if [ $# -ge 1 ]; then
+	INSTALL_DIR=$1
+	shift 1
+fi
+
+cd $INSTALL_DIR
+nohup java $ARGS_START "$@" $DAEMON_CLASS &> /dev/null &
+echo $!
