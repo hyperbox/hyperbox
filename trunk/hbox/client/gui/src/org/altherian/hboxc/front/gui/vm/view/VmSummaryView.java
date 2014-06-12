@@ -45,6 +45,7 @@ import org.altherian.hboxc.front.gui.action.storage.StorageDeviceAttachmentMediu
 import org.altherian.hboxc.front.gui.network.NetworkInterfaceSummary;
 import org.altherian.helper.swing.BorderUtils;
 import org.altherian.helper.swing.JTextFieldUtils;
+import org.altherian.tool.StringTools;
 import org.altherian.tool.logging.Logger;
 
 import java.awt.Color;
@@ -266,51 +267,114 @@ public final class VmSummaryView {
    private void clearGeneral() {
       Logger.track();
       
-      nameField.setText(null);
-      uuidField.setText(null);
-      stateField.setText(null);
-      osTypeField.setText(null);
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               clearGeneral();
+            }
+         });
+      } else {
+         nameField.setText(null);
+         uuidField.setText(null);
+         stateField.setText(null);
+         osTypeField.setText(null);
+      }
    }
    
    private void clearSystem() {
       Logger.track();
       
-      cpuCountValue.setText(null);
-      memoryValue.setText(null);
-      accelValue.setText(null);
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               clearSystem();
+            }
+         });
+      } else {
+         cpuCountValue.setText(null);
+         memoryValue.setText(null);
+         accelValue.setText(null);
+      }
    }
    
    private void clearDisplay() {
       Logger.track();
       
-      vramValue.setText(null);
-      consoleModuleValue.setText(null);
-      consoleAddressValue.setText(null);
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               clearDisplay();
+            }
+         });
+      } else {
+         vramValue.setText(null);
+         consoleModuleValue.setText(null);
+         consoleAddressValue.setText(null);
+      }
    }
    
    private void clearStorage() {
       Logger.track();
       
-      storagePanel.removeAll();
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               clearStorage();
+            }
+         });
+      } else {
+         storagePanel.removeAll();
+      }
    }
    
    private void clearAudio() {
       Logger.track();
       
-      hostDriverValue.setText(null);
-      audioControllerValue.setText(null);
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               clearAudio();
+            }
+         });
+      } else {
+         hostDriverValue.setText(null);
+         audioControllerValue.setText(null);
+      }
    }
    
    private void clearNetwork() {
       Logger.track();
       
-      networkPanel.removeAll();
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               clearNetwork();
+            }
+         });
+      } else {
+         networkPanel.removeAll();
+      }
    }
    
    private void clearDesc() {
       Logger.track();
       
-      descArea.setText(null);
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               clearDesc();
+            }
+         });
+      } else {
+         descArea.setText(null);
+      }
    }
    
    public void clear() {
@@ -347,58 +411,88 @@ public final class VmSummaryView {
    public void refreshGeneral() {
       Logger.track();
       
-      nameField.setText(mOut.getName());
-      uuidField.setText(mOut.getUuid());
-      stateField.setText(mOut.getState());
-      osTypeField.setText(mOut.getSetting(MachineAttributes.OsType).getString());
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               refreshGeneral();
+            }
+         });
+      } else {
+         nameField.setText(mOut.getName());
+         uuidField.setText(mOut.getUuid());
+         stateField.setText(mOut.getState());
+         osTypeField.setText(mOut.getSetting(MachineAttributes.OsType).getString());
+      }
    }
    
    public void refreshSystem() {
       Logger.track();
       
-      cpuCountValue.setText(mOut.getSetting(MachineAttributes.CpuCount).getString());
-      memoryValue.setText(mOut.getSetting(MachineAttributes.Memory).getString() + " MB");
-      List<String> extList = new ArrayList<String>();
-      if (mOut.getSetting(MachineAttributes.HwVirtEx).getBoolean()) {
-         extList.add("VT-x/AMD-V");
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               refreshSystem();
+            }
+         });
+      } else {
+         cpuCountValue.setText(mOut.getSetting(MachineAttributes.CpuCount).getString());
+         memoryValue.setText(mOut.getSetting(MachineAttributes.Memory).getString() + " MB");
+         List<String> extList = new ArrayList<String>();
+         if (mOut.getSetting(MachineAttributes.HwVirtEx).getBoolean()) {
+            extList.add("VT-x/AMD-V");
+         }
+         if (mOut.getSetting(MachineAttributes.HwVirtExExcl).getBoolean()) {
+            extList.add("Virt Unrestricted");
+         }
+         if (mOut.getSetting(MachineAttributes.NestedPaging).getBoolean()) {
+            extList.add("Nested Paging");
+         }
+         if (mOut.getSetting(MachineAttributes.PAE).getBoolean()) {
+            extList.add("PAE/NX");
+         }
+         if (mOut.getSetting(MachineAttributes.LargePages).getBoolean()) {
+            extList.add("Large Pages");
+         }
+         if (mOut.getSetting(MachineAttributes.Vtxvpid).getBoolean()) {
+            extList.add("VT-x VPID");
+         }
+         StringBuilder extBuilder = new StringBuilder();
+         for (String ext : extList) {
+            extBuilder.append(ext + ", ");
+         }
+         extBuilder.delete(extBuilder.lastIndexOf(", "), extBuilder.length());
+         accelValue.setText(extBuilder.toString());
       }
-      if (mOut.getSetting(MachineAttributes.HwVirtExExcl).getBoolean()) {
-         extList.add("Virt Unrestricted");
-      }
-      if (mOut.getSetting(MachineAttributes.NestedPaging).getBoolean()) {
-         extList.add("Nested Paging");
-      }
-      if (mOut.getSetting(MachineAttributes.PAE).getBoolean()) {
-         extList.add("PAE/NX");
-      }
-      if (mOut.getSetting(MachineAttributes.LargePages).getBoolean()) {
-         extList.add("Large Pages");
-      }
-      if (mOut.getSetting(MachineAttributes.Vtxvpid).getBoolean()) {
-         extList.add("VT-x VPID");
-      }
-      StringBuilder extBuilder = new StringBuilder();
-      for (String ext : extList) {
-         extBuilder.append(ext + ", ");
-      }
-      extBuilder.delete(extBuilder.lastIndexOf(", "), extBuilder.length());
-      accelValue.setText(extBuilder.toString());
    }
    
    public void refreshDisplay() {
       Logger.track();
       
-      vramValue.setText(mOut.getSetting(MachineAttributes.VRAM).getString());
-      
-      consoleModuleValue.setText(mOut.getSetting(MachineAttributes.VrdeModule).getString());
-      
-      if (mOut.getSetting(MachineAttributes.VrdeEnabled).getBoolean()) {
-         String addr = mOut.getSetting(MachineAttributes.VrdeAddress).getString();
-         addr = addr + ":" + mOut.getSetting(MachineAttributes.VrdePort).getString();
-         consoleAddressValue.setText(addr);
-         consoleConnectButton.setEnabled(mOut.getState().equalsIgnoreCase("running"));
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               refreshDisplay();
+            }
+         });
       } else {
-         consoleAddressValue.setText("Not available (Disabled or Extention Pack not installed)");
+         vramValue.setText(mOut.getSetting(MachineAttributes.VRAM).getString());
+         
+         consoleModuleValue.setText(mOut.getSetting(MachineAttributes.VrdeModule).getString());
+         
+         if (mOut.getSetting(MachineAttributes.VrdeEnabled).getBoolean()) {
+            String addr = Gui.getReader().getConnectorForServer(mOut.getServerId()).getAddress();
+            if (!StringTools.isEmpty(mOut.getSetting(MachineAttributes.VrdeAddress).getString())) {
+               addr = mOut.getSetting(MachineAttributes.VrdeAddress).getString();
+            }
+            addr = addr + ":" + mOut.getSetting(MachineAttributes.VrdePort).getString();
+            consoleAddressValue.setText(addr);
+            consoleConnectButton.setEnabled(mOut.getState().equalsIgnoreCase("running"));
+         } else {
+            consoleAddressValue.setText("Not available (Disabled or Console Module not installed)");
+         }
       }
    }
    
@@ -460,19 +554,28 @@ public final class VmSummaryView {
    public void refreshAudio() {
       Logger.track();
       
-      audioPanel.removeAll();
-      if (mOut.getSetting(MachineAttributes.AudioEnable).getBoolean()) {
-         hostDriverValue.setText(mOut.getSetting(MachineAttributes.AudioDriver).getString());
-         audioControllerValue.setText(mOut.getSetting(MachineAttributes.AudioController).getString());
-         
-         audioPanel.add(hostDriverLabel);
-         audioPanel.add(hostDriverValue, "growx, pushx, wrap");
-         audioPanel.add(audioControllerLabel);
-         audioPanel.add(audioControllerValue, "growx, pushx, wrap");
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               refreshAudio();
+            }
+         });
       } else {
-         audioPanel.add(new JLabel("Disabled"));
+         audioPanel.removeAll();
+         if (mOut.getSetting(MachineAttributes.AudioEnable).getBoolean()) {
+            hostDriverValue.setText(mOut.getSetting(MachineAttributes.AudioDriver).getString());
+            audioControllerValue.setText(mOut.getSetting(MachineAttributes.AudioController).getString());
+            
+            audioPanel.add(hostDriverLabel);
+            audioPanel.add(hostDriverValue, "growx, pushx, wrap");
+            audioPanel.add(audioControllerLabel);
+            audioPanel.add(audioControllerValue, "growx, pushx, wrap");
+         } else {
+            audioPanel.add(new JLabel("Disabled"));
+         }
+         audioPanel.revalidate();
       }
-      audioPanel.revalidate();
    }
    
    public void refreshNetwork() {
@@ -512,7 +615,16 @@ public final class VmSummaryView {
    public void refreshDesc() {
       Logger.track();
       
-      descArea.setText(mOut.getSetting(MachineAttributes.Description).getString());
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               refreshDesc();
+            }
+         });
+      } else {
+         descArea.setText(mOut.getSetting(MachineAttributes.Description).getString());
+      }
    }
    
    public void refresh() {

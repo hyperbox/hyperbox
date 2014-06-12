@@ -45,9 +45,9 @@ public final class FolderStore implements _Store {
       location = path;
    }
    
-   public FolderStore(String id, String name, File path, String state) {
+   public FolderStore(String id, String name, File path, StoreState state) {
       this(id, name, path);
-      this.state = StoreState.valueOf(state);
+      this.state = state;
    }
    
    private void setState(StoreState s) {
@@ -98,7 +98,7 @@ public final class FolderStore implements _Store {
       if (!isOpen()) {
          throw new StoreNotOpenException();
       }
-
+      
       setState(StoreState.Closed);
    }
    

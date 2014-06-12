@@ -26,17 +26,16 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
 import org.altherian.hboxd.comm.io.factory.ServerIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
-import org.altherian.hboxd.core.action.AbstractHyperboxMultiTaskAction;
+import org.altherian.hboxd.core.action.ServerAction;
 import org.altherian.hboxd.server._Server;
 import org.altherian.hboxd.session.SessionContext;
 
 import java.util.Arrays;
 import java.util.List;
 
-public final class ServerGetAction extends AbstractHyperboxMultiTaskAction {
+public final class ServerGetAction extends ServerAction {
    
    @Override
    public List<String> getRegistrations() {
@@ -49,16 +48,7 @@ public final class ServerGetAction extends AbstractHyperboxMultiTaskAction {
    }
    
    @Override
-   public void run(Request request, _Hyperbox hbox) {
-      _Server srv = null;
-      
-      if (request.has(ServerInput.class)) {
-         ServerInput srvIn = request.get(ServerInput.class);
-         srv = hbox.getServerManager().getServer(srvIn.getId());
-      } else {
-         srv = hbox.getServerManager().getServer();
-      }
-      
+   public void run(Request request, _Hyperbox hbox, _Server srv) {
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, ServerIoFactory.get(srv)));
    }
    

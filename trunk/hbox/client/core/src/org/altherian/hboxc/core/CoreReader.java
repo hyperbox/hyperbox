@@ -114,4 +114,9 @@ public class CoreReader implements _CoreReader {
       cachedServerReaders.remove(core.getServer(ev.getServer().getId()));
    }
    
+   @Override
+   public ConnectorOutput getConnectorForServer(String srvId) {
+      return ConnectorIoFactory.get(core.getConnectorForServer(srvId));
+   }
+   
 }

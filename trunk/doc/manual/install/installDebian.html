@@ -36,14 +36,6 @@
 		Install Virtualbox 4.3.4/4.2.20 or later from <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank">Virtualbox website</a> - any older version are not tested and might break.<br>
 		Choose a dedicated user to run Virtualbox & Hyperbox under, in this case : hyperbox. This is required to isolate and manage the environment under a single user.<br>
 		<code>sudo useradd -m hyperbox</code>
-		Remove WebSrv Authentication as it is not supported yet:
-		<code>sudo su - hyperbox -c "vboxmanage setproperty websrvauthlibrary null"</code>
-		Configure WebSvc<br>
-		<code>sudo nano /etc/default/virtualbox</code>
-		Recommanded config to add (hyperbox user must exist before)<br>
-		<code>VBOXWEB_USER=hyperbox</code>
-		Start WebSrv
-		<code>sudo /etc/init.d/vboxweb-service start</code>
 	</div>
 	<div>
 		<h3>Java</h3>

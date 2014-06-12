@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.factory;
 
-import org.altherian.hboxd.core.SingleHostCore;
+import org.altherian.hboxd.core.SingleHostServer;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.tool.logging.Logger;
 
@@ -39,7 +39,7 @@ public class ModelFactory {
       Logger.track();
       
       if (hyperbox == null) {
-         hyperbox = new SingleHostCore();
+         hyperbox = new SingleHostServer();
       }
       
       return hyperbox;

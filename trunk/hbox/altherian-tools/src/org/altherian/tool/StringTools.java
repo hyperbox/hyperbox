@@ -54,4 +54,14 @@ public class StringTools {
       return ((s == null) || s.isEmpty());
    }
    
+   /**
+    * Return true if an Object is null or its .toString() method returns null or an empty string
+    * 
+    * @param o The Object to check
+    * @return true if o == null || isEmpty(o.toString()), false otherwise
+    */
+   public static boolean isEmpty(Object o) {
+      return ((o == null) || isEmpty(o.toString()));
+   }
+   
 }
