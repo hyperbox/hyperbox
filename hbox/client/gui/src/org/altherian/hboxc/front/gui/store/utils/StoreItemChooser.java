@@ -26,7 +26,6 @@ import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.input.StoreInput;
 import org.altherian.hbox.comm.input.StoreItemInput;
-import org.altherian.hbox.comm.output.ServerOutput;
 import org.altherian.hbox.comm.output.StoreItemOutput;
 import org.altherian.hbox.comm.output.StoreOutput;
 import org.altherian.hbox.constant.StoreItemAttributes;
@@ -76,7 +75,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
    private static final int FOLDER_NAME = 8;
    private static final int BROWSE = 16;
    
-   private ServerOutput srvOut;
+   private String srvId;
    
    private int workingMode;
    private JDialog dialog;
@@ -106,8 +105,8 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
    private static StoreItemInput choosenStiIn;
    private StoreItemOutput choosenStiOut;
    
-   protected StoreItemChooser(ServerOutput srvOut, int workingMode) {
-      this.srvOut = srvOut;
+   protected StoreItemChooser(String srvId, int workingMode) {
+      this.srvId = srvId;
       this.workingMode = workingMode;
       initDialog();
       initAddressPanel();
@@ -128,22 +127,22 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
          dialog.add(addressPanel, "growx, pushx, wrap");
          dialog.add(vSplit, "grow, push, wrap");
       }
-      if (this.workingMode != BROWSE) {
+      if ((this.workingMode != BROWSE) && (this.workingMode != FOLDER_NAME)) {
          JPanel selectorPanel = new JPanel(new MigLayout("ins 0"));
          selectorPanel.add(storeItemFilterName);
          selectorPanel.add(storeItemFilterValue, "growx, pushx, wrap");
          selectorPanel.add(storeItemName);
          selectorPanel.add(storeItemValue, "growx, pushx, wrap");
          dialog.add(selectorPanel, "growx, pushx, wrap");
-         
-         initButtons();
-         JPanel buttonPanel = new JPanel(new MigLayout("ins 0"));
-         buttonPanel.add(acceptButton);
-         buttonPanel.add(cancelButton);
-         dialog.add(buttonPanel, "growx, pushx, wrap");
       } else {
          dialog.setTitle("Store Browser");
       }
+      
+      initButtons();
+      JPanel buttonPanel = new JPanel(new MigLayout("ins 0"));
+      buttonPanel.add(acceptButton);
+      buttonPanel.add(cancelButton);
+      dialog.add(buttonPanel, "growx, pushx, wrap");
    }
    
    private void initDialog() {
@@ -217,7 +216,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
    
    private void showInTable(StoreOutput stoOut) {
       if (workingMode != FOLDER_NAME) {
-         List<StoreItemOutput> stiOutList = Gui.getServer(srvOut).listStoreItems(new StoreInput(stoOut.getId()));
+         List<StoreItemOutput> stiOutList = Gui.getServer(srvId).listStoreItems(new StoreInput(stoOut.getId()));
          showInTable(stiOutList);
          addressBarValue.setText(stoOut.getLabel());
       } else {
@@ -228,7 +227,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
    private void showInTable(StoreItemOutput stiOut) {
       choosenStiOut = stiOut;
       if (workingMode != FOLDER_NAME) {
-         List<StoreItemOutput> stiOutList = Gui.getServer(srvOut).listStoreItems(new StoreInput(stiOut.getStoreId()),
+         List<StoreItemOutput> stiOutList = Gui.getServer(srvId).listStoreItems(new StoreInput(stiOut.getStoreId()),
                new StoreItemInput(stiOut.getPath()));
          showInTable(stiOutList);
          addressBarValue.setText(stiOut.getPath());
@@ -264,7 +263,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       topNode.removeAllChildren();
       treeModel.reload();
       
-      for (StoreOutput stoOut : Gui.getServer(srvOut).listStores()) {
+      for (StoreOutput stoOut : Gui.getServer(srvId).listStores()) {
          insertInTree(stoOut);
       }
    }
@@ -305,45 +304,45 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
    }
    
    // TODO implement selective store browsing, selected when dialog is showing
-   public static void browse(ServerOutput srvOut) {
-      new StoreItemChooser(srvOut, BROWSE).getUserInput();
+   public static void browse(String srvId) {
+      new StoreItemChooser(srvId, BROWSE).getUserInput();
    }
    
    /**
     * Get a Store Item path from the user. Only guarantees that the Store Item object would be a file, but does not guarantee its (non)existence.
     * 
-    * @param srvOut the server
+    * @param srvId the server
     * @return StoreItemInput object with only {@link StoreItemAttributes#Path} attribute or <code>null</code> if no item was chosen by the user.
     */
-   public static StoreItemInput getFilename(ServerOutput srvOut) {
-      new StoreItemChooser(srvOut, FILE_NAME).getUserInput();
+   public static StoreItemInput getFilename(String srvId) {
+      new StoreItemChooser(srvId, FILE_NAME).getUserInput();
       return choosenStiIn;
    }
    
    /**
     * Not Fully Implement - Does not give any guarantee.
     * 
-    * @param srvOut the server
+    * @param srvId the server
     * @return StoreItemInput object with only {@link StoreItemAttributes#Path} attribute or <code>null</code> if no item was chosen by the user.
     */
    // TODO implement verification
-   public static StoreItemInput getNewFilename(ServerOutput srvOut) {
-      new StoreItemChooser(srvOut, FILE_NEW).getUserInput();
+   public static StoreItemInput getNewFilename(String srvId) {
+      new StoreItemChooser(srvId, FILE_NEW).getUserInput();
       return choosenStiIn;
    }
    
    /**
     * Get a Store Item path from the user and guarantees that the given file exist, or null if the user cancel or no existing file was chosen.
     * 
-    * @param srvOut the server
+    * @param srvId the server
     * @return a StoreItemOutput object or <code>null</code> if no item was chosen by the user.
     */
-   public static StoreItemOutput getExisitingFile(ServerOutput srvOut) {
-      return new StoreItemChooser(srvOut, FILE_EXIST).getUserInput();
+   public static StoreItemOutput getExisitingFile(String srvId) {
+      return new StoreItemChooser(srvId, FILE_EXIST).getUserInput();
    }
    
-   public static StoreItemOutput getExisitingFolder(ServerOutput srvOut) {
-      return new StoreItemChooser(srvOut, FOLDER_NAME).getUserInput();
+   public static StoreItemOutput getExisitingFolder(String srvId) {
+      return new StoreItemChooser(srvId, FOLDER_NAME).getUserInput();
    }
    
    private class StoreOutputTreeNode extends DefaultMutableTreeNode {
@@ -419,12 +418,12 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
          DefaultMutableTreeNode dmtn = (DefaultMutableTreeNode) ev.getPath().getLastPathComponent();
          if (dmtn.getUserObject() instanceof StoreOutput) {
             StoreOutput stoOut = (StoreOutput) dmtn.getUserObject();
-            List<StoreItemOutput> stiOutList = Gui.getServer(srvOut).listStoreItems(new StoreInput(stoOut.getId()));
+            List<StoreItemOutput> stiOutList = Gui.getServer(srvId).listStoreItems(new StoreInput(stoOut.getId()));
             insertInTree(stiOutList, dmtn);
          }
          if (dmtn.getUserObject() instanceof StoreItemOutput) {
             StoreItemOutput stiOutParent = (StoreItemOutput) dmtn.getUserObject();
-            List<StoreItemOutput> stiOutList = Gui.getServer(srvOut).listStoreItems(new StoreInput(stiOutParent.getStoreId()),
+            List<StoreItemOutput> stiOutList = Gui.getServer(srvId).listStoreItems(new StoreInput(stiOutParent.getStoreId()),
                   new StoreItemInput(stiOutParent.getPath()));
             insertInTree(stiOutList, dmtn);
          }

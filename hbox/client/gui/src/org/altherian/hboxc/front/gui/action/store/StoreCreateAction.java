@@ -53,7 +53,7 @@ public class StoreCreateAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent e) {
-      StoreInput stoIn = StoreEditor.getInputCreate();
+      StoreInput stoIn = StoreEditor.getInputCreate(select.getServer().getId());
       if (stoIn != null) {
          Gui.post(new Request(Command.HBOX, HyperboxTasks.StoreCreate, new ServerInput(select.getServer()), stoIn));
       }

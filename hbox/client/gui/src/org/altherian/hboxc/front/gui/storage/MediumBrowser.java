@@ -40,8 +40,8 @@ public class MediumBrowser {
    }
    
    public static MediumOutput browse(ServerOutput srvOut, String deviceType) {
-      StoreItemOutput siOut = StoreItemChooser.getExisitingFile(srvOut);
-      if ((siOut != null) && siOut.isContainer()) {
+      StoreItemOutput siOut = StoreItemChooser.getExisitingFile(srvOut.getId());
+      if ((siOut == null) || siOut.isContainer()) {
          return null;
       }
       return getMedium(srvOut, siOut, deviceType);

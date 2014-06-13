@@ -53,7 +53,7 @@ public final class MachineRegisterAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent ae) {
-      StoreItemOutput vboxFilePathOut = StoreItemChooser.getExisitingFile(select.getServer());
+      StoreItemOutput vboxFilePathOut = StoreItemChooser.getExisitingFile(select.getServer().getId());
       if (vboxFilePathOut != null) {
          StoreItemInput vboxFilePathIn = StoreItemIoFactory.get(vboxFilePathOut);
          Gui.post(new Request(Command.VBOX, HypervisorTasks.MachineRegister, new ServerInput(select.getServer().getId()), vboxFilePathIn));
