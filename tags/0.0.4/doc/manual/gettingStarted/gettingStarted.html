@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<!--
+* 
+* Hyperbox - Enterprise Virtualization Manager
+* Copyright (C) 2013 Maxime Dor
+* 
+* http://hyperbox.altherian.org
+* 
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+* 
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Affero General Public License for more details.
+* 
+* You should have received a copy of the GNU Affero General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*  
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="icon" type="image/png" href="../hyperbox.png">
+	<link rel="stylesheet" type="text/css" href="../hyperbox.css">
+	<title>Hyperbox - Getting Started</title>
+</head>
+
+<body>
+<div>
+	<h1><a id="gettingStarted">Getting started</a></h1>
+	<div>
+		<h2>IMPORTANT NOTICE</h2>
+		<p>The software is still in testing phase and should not be used for production environments.<br>
+		It is assumed that you have a strong knowledge of Virtualbox and system administration.<br>
+		Such topics will not be supported, to allow focus on the Hyperbox software itself.</p>
+	</div>
+	
+	<h2>Introduction</h2>
+	<div>
+		<p>Hyperbox is designed to be the manager of your virtualized infrastructure, and is best used on a dedicated host where no other tools accessing and/or controlling the hypervisor are running.<br>
+		It is composed of 2 parts:
+			<ul>
+				<li>The Server where all the work take places and which interacts with the hypervisor and abstract out all the details to present a common layer that can be used to manage hybrid environments, e.g. Virtualbox and VMware ESXi.</li>
+				<li>The Client which send the user input to the server for processing and allow to interact with the Server and the Hypervisor</li>
+			</ul>
+		</p>
+	</div>
+	
+	<h2>Server</h2>
+	<div>
+		<h3>Introduction</h3>
+		<p>The server aims to provide centralized user management with authentication, authorization and auditing. This means that a dedicated system user should be used to run the hypervisor - opposite of what Virtualbox does by default per example.<br>
+		Keeping this in mind, the following instructions are given for Debian-based systems, prefered OS for Hyperbox.<br>
+		If you are using another Linux distro, manual installation can be performed using the zip package, coping the server files to a location of your choice, and installing the init.d script. Note that the init.d script will need minor adjustements.<br>
+		If you are using Windows, the installer will copy the server files and install the service. Starting from there, the instructions are the same for configuration and logs review.</p>
+	</div>
+	
+	<div>
+		<a href="../install/installDebian.html">Debian-based Install HOWTO</a> - Debian, Ubuntu, Mint, etc.<br>
+		<a href="../install/installRedhat.html">Redhat-based Install HOWTO</a> - RHEL, OEL, Fedora, etc.
+	</div>
+	
+	<h2>Client</h2>
+	<div>
+		<h3>Installation</h3>
+		To install the client, simply download its installer and run it. For Debian & Fedora based distributions, run the following :
+		<code>sudo sh ./hbox_client-*.run</code>
+		For other distros, use the zip package and perform a manual install.<br>
+		<p>For Windows, run the installer.</p>
+		<p>The Client can then be launched via the Start Menu/Main menu or by creating a shortcut poiting to &#60;INSTALL_DIR&#62;/hyperbox(.exe) and setting the working dir to &#60;INSTALL_DIR&#62;
+	</div>
+	<h2>First launch</h2>
+	<figure>
+		<img src="gettingStarted_client_first_launch.png" />
+		<figcaption>Fire up the client. You will start in an empty window</figcaption>
+	</figure>
+	<br>
+	<figure>	
+		<img src="gettingStarted_client_server_add.png" />
+		<figcaption>In the menu bar, click on Server > Add...</figcaption>
+	</figure>
+	<br>
+	<figure>
+		<img src="gettingStarted_client_server_add_info.png" />
+		<figcaption>
+			You will be prompted to enter the hostname/IP address of the server you want to connect to. The Hyperbox Server default listener is available on all interfaces by default.<br>
+			The default username / password are : admin / hyperbox<br>
+			Click on Save once finished.
+		</figcaption>
+	</figure>
+	<br>
+	<figure>
+		<img src="gettingStarted_client_server_connected_hyp_offline.png" />
+		<figcaption>
+			You can now right click > Connect or double-click on the server address to initiate the connection.<br>
+			If successful, the icon will change to a stopped server icon, and the tabs on the right panel should activate. You should also see the Hyperbox Server detailed and that is it disconnected of the hypervisor.<br>
+		</figcaption>
+	</figure>
+	<br>
+	<figure>
+		<img src="gettingStarted_client_server_connected_hyp_connect.png" />
+		<figcaption>Right click on the server: Select Hypervisor > Connect</figcaption>
+	</figure>
+	<br>
+	<figure>
+		<img src="gettingStarted_client_server_connected_hyp_connect_dialog.png" />
+		<figcaption>
+			Hyperbox comes by default with two connectors per system :
+			<ul>
+				<li>Linux-based : Virtualbox WebService 4.2 and Virtualbox XPCOM 4.3</li>
+				<li>Windows-based : Virtualbox WebService 4.2 and Virtualbox WebService 4.3</li>
+			</ul>
+			Select the one matching your installation. You can leave the connection options field blank for now, it is used for advanced configuration.<br>
+			Click on Connect.
+		</figcaption>
+	</figure>
+	<br>
+	<figure>
+		<img src="gettingStarted_client_server_connected_hyp_connecting.png" />
+		<figcaption>You should now see a new task in the bottom list showing you that Hyperbox is currently connecting and initializing the connection with the hypervisor.</figcaption>
+	</figure>
+	<br>
+	<figure>
+		<img src="gettingStarted_client_server_connected_hyp_connected.png" />
+		<figcaption>If successful, the server icon will change as well as the hypervisor status in the detail panel.</figcaption>
+	</figure>
+	<br>
+	You can now then manage your machines or create new ones by right clicking on the server list item in the left panel!
+</div>
+<hr>
+<div>
+	<a href="../index.html">Main</a>
+</div>
+</body>
+</html>

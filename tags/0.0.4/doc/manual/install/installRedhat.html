@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<!--
+* 
+* Hyperbox - Enterprise Virtualization Manager
+* Copyright (C) 2013 Maxime Dor
+* 
+* http://hyperbox.altherian.org
+* 
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+* 
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Affero General Public License for more details.
+* 
+* You should have received a copy of the GNU Affero General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*  
+-->
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="icon" type="image/png" href="../hyperbox.png">
+	<link rel="stylesheet" type="text/css" href="../hyperbox.css">
+	<title>Hyperbox - Install on Fedora-based systems</title>
+</head>
+
+<body>
+<h2>Server</h2>
+	<div>
+		<h3>Virtualbox</h3>
+		Install Virtualbox 4.3.4/4.2.20 or later from <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank">Virtualbox website</a> - any older version are not tested and might break.<br>
+		Choose a dedicated user to run Virtualbox & Hyperbox under, in this case : hyperbox. This is required to isolate and manage the environment under a single user.<br>
+		<code>sudo useradd -m hyperbox</code>
+	</div>
+	<div>
+		<h3>Java</h3>
+		Install : <code>sudo yum install java-1.6.0-openjdk.x86_64</code>
+		Check as root that you get a successful version info: <code>$ sudo java -version</code>
+		You should get something along these lines :
+		<code>java version "1.6.0_27"<br>OpenJDK Runtime Environment (IcedTea6 1.12.6) (6b27-1.12.6-1~deb7u1)<br>OpenJDK 64-Bit Server VM (build 20.0-b12, mixed mode)</code>
+	</div>
+	<div>
+		<h3>Hyperbox</h3>
+		Download the latest Hyperbox
+		<code>curl -O http://hyperbox.altherian.org/download/hbox_server-latest-linux_amd64.run</code>
+		Run the installer<br>
+		<code>sudo sh hbox_server-latest-linux_amd64.run</code>
+		Start Hyperbox Daemon<br>
+		<code>service hboxd start</code>
+		Output and errors are logged to &#60;INSTALL_DIR&#62;/log/hboxd.log by default
+	</div>
+</body>
+</html>
