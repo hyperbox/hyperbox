@@ -49,7 +49,7 @@ public final class StoreBrowseAction extends AbstractAction {
    public void actionPerformed(ActionEvent ev) {
       List<String> selection = selector.getSelection();
       if (!selection.isEmpty()) {
-         StoreItemChooser.browse(selector.getServer());
+         StoreItemChooser.browse(selector.getServer().getId());
       }
    }
    

@@ -53,7 +53,7 @@ public class StoreRegisterAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent e) {
-      StoreInput stoIn = StoreEditor.getInputRegister();
+      StoreInput stoIn = StoreEditor.getInputRegister(select.getServer().getId());
       if (stoIn != null) {
          Gui.post(new Request(Command.HBOX, HyperboxTasks.StoreRegister, new ServerInput(select.getId()), stoIn));
       }

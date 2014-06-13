@@ -76,7 +76,7 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
       
       @Override
       public void actionPerformed(ActionEvent ae) {
-         StoreItemInput stiIn = StoreItemChooser.getFilename(srvOut);
+         StoreItemInput stiIn = StoreItemChooser.getFilename(srvOut.getId());
          if (stiIn != null) {
             locationField.setText(stiIn.getPath());
             sizeField.requestFocus();

@@ -152,7 +152,7 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
             itemList.clearSelection();
          } else if ((ev.getButton() == MouseEvent.BUTTON1) && (ev.getClickCount() == 2) && (itemList.rowAtPoint(ev.getPoint()) != -1)) {
             // StoreOutput stoOut = itemListModel.getObjectAtRowId(itemList.convertRowIndexToModel(itemList.rowAtPoint(ev.getPoint())));
-            StoreItemChooser.browse(srvOut);
+            StoreItemChooser.browse(srvOut.getId());
          } else {
             showPopup(ev);
          }
