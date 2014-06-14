@@ -34,17 +34,17 @@ public class NullSettingIO extends SettingIO {
    
    @Override
    public Boolean getBoolean() {
-      return null;
+      return false;
    }
    
    @Override
    public String getString() {
-      return null;
+      return "";
    }
    
    @Override
    public Long getNumber() {
-      return null;
+      return 0l;
    }
    
 }
