@@ -25,6 +25,7 @@ import org.virtualbox_4_3.IMachine;
 import org.virtualbox_4_3.ISession;
 import org.virtualbox_4_3.LockType;
 
+// TODO create a getConsole() that use the lockAuto() with exception
 public interface _RawSessionManager {
    
    /**
@@ -46,7 +47,8 @@ public interface _RawSessionManager {
    public ISession lock(String uuid, LockType lockType);
    
    public ISession lockAuto(String uuid, LockType lockType);
-
+   
+   // TODO document that lockAuto should try every kind of lock, or faill with a "LockingFailed" exception
    public ISession lockAuto(String uuid);
    
    /**

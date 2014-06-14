@@ -440,29 +440,32 @@ public final class VmSummaryView {
          cpuCountValue.setText(mOut.getSetting(MachineAttributes.CpuCount).getString());
          memoryValue.setText(mOut.getSetting(MachineAttributes.Memory).getString() + " MB");
          List<String> extList = new ArrayList<String>();
-         if (mOut.getSetting(MachineAttributes.HwVirtEx).getBoolean()) {
+         if (mOut.hasSetting(MachineAttributes.HwVirtEx) && mOut.getSetting(MachineAttributes.HwVirtEx).getBoolean()) {
             extList.add("VT-x/AMD-V");
          }
-         if (mOut.getSetting(MachineAttributes.HwVirtExExcl).getBoolean()) {
+         if (mOut.hasSetting(MachineAttributes.HwVirtExExcl) && mOut.getSetting(MachineAttributes.HwVirtExExcl).getBoolean()) {
             extList.add("Virt Unrestricted");
          }
-         if (mOut.getSetting(MachineAttributes.NestedPaging).getBoolean()) {
+         if (mOut.hasSetting(MachineAttributes.NestedPaging) && mOut.getSetting(MachineAttributes.NestedPaging).getBoolean()) {
             extList.add("Nested Paging");
          }
-         if (mOut.getSetting(MachineAttributes.PAE).getBoolean()) {
+         if (mOut.hasSetting(MachineAttributes.PAE) && mOut.getSetting(MachineAttributes.PAE).getBoolean()) {
             extList.add("PAE/NX");
          }
-         if (mOut.getSetting(MachineAttributes.LargePages).getBoolean()) {
+         if (mOut.hasSetting(MachineAttributes.LargePages) && mOut.getSetting(MachineAttributes.LargePages).getBoolean()) {
             extList.add("Large Pages");
          }
-         if (mOut.getSetting(MachineAttributes.Vtxvpid).getBoolean()) {
+         if (mOut.hasSetting(MachineAttributes.Vtxvpid) && mOut.getSetting(MachineAttributes.Vtxvpid).getBoolean()) {
             extList.add("VT-x VPID");
          }
          StringBuilder extBuilder = new StringBuilder();
          for (String ext : extList) {
             extBuilder.append(ext + ", ");
          }
-         extBuilder.delete(extBuilder.lastIndexOf(", "), extBuilder.length());
+         
+         if (extBuilder.lastIndexOf(", ") >= 0) {
+            extBuilder.delete(extBuilder.lastIndexOf(", "), extBuilder.length());
+         }
          accelValue.setText(extBuilder.toString());
       }
    }
