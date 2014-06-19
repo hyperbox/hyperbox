@@ -65,7 +65,7 @@ public class Logger {
    public static boolean isLevel(LogLevel level) {
       return level.getLevel() >= maxLevel.getLevel();
    }
-
+   
    public static void track() {
       put("", LogLevel.Tracking);
    }
@@ -175,25 +175,25 @@ public class Logger {
                output = time + " |FatalExcept| " + Thread.currentThread().getName() + " | " + getCalling(1) + " | " + o;
                break;
             case Exception:
-               output = time + " | Exception | " + Thread.currentThread().getName() + " | " + getCalling(1);
+               output = time + " |E X C E P T I O N| " + Thread.currentThread().getName() + " | " + getCalling(1);
                break;
             case Error:
-               output = time + " |   Error   | " + o;
+               output = time + " |ERROR ERROR| " + o;
                break;
             case Warning:
-               output = time + " |  Warning  | " + o;
+               output = time + " |  WARNING  | " + o;
                break;
             case Info:
                output = time + " |   Info    | " + o;
                break;
             case Verbose:
-               output = time + " |  Verbose  | " + o;
+               output = time + " |  verbose  | " + o;
                break;
             case Debug:
-               output = time + " |   Debug   | " + Thread.currentThread().getName() + " | " + getCalling(1) + " | " + o;
+               output = time + " |   debug   | " + Thread.currentThread().getName() + " | " + getCalling(1) + " | " + o;
                break;
             case Tracking:
-               output = time + " | Tracking  | " + Thread.currentThread().getName() + " | " + getCalling(1, true);
+               output = time + " | tracking  | " + Thread.currentThread().getName() + " | " + getCalling(1, true);
                break;
             default:
                output = time + " | UNKNWON | " + o;

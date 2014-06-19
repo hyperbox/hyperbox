@@ -32,7 +32,7 @@ import org.altherian.hbox.exception.MachineException;
 import org.altherian.hbox.exception.ServiceException;
 import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event._EventManager;
-import org.altherian.hboxd.event.hypervisor.HypervisorConfigurationUpdateEvent;
+import org.altherian.hboxd.event.hypervisor.HypervisorConfiguredEvent;
 import org.altherian.hboxd.event.hypervisor.HypervisorConnectedEvent;
 import org.altherian.hboxd.event.hypervisor.HypervisorDisconnectedEvent;
 import org.altherian.hboxd.event.service.ServiceStatusEvent;
@@ -48,7 +48,7 @@ import org.altherian.hboxd.service._Service;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings.StringSetting;
 import org.altherian.hboxd.settings._Setting;
-import org.altherian.tool.StringTools;
+import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
 import org.altherian.vbox4_3.data.Mappings;
 import org.altherian.vbox4_3.factory.OsTypeFactory;
@@ -108,6 +108,8 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    
    private List<_RawOsType> osTypeCache;
    
+   protected abstract VirtualBoxManager connect(String options);
+   
    @Override
    public String getId() {
       return "vbox-4.3";
@@ -133,16 +135,6 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       Logger.track();
       
       this.evMgr = evMgr;
-   }
-   
-   /**
-    * Gets the VirtualBoxManager instance. Override to perform any custom creation of the instance (e.g. XPCOM)
-    * 
-    * @param options options given to the hypervisor to connect
-    * @return a VirtualBox Manager instance object
-    */
-   protected VirtualBoxManager getManager(String options) {
-      return VirtualBoxManager.createInstance(null);
    }
    
    @Override
@@ -194,14 +186,13 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       Logger.info("Host OS: " + vbMgr.getVBox().getHost().getOperatingSystem() + " " + vbMgr.getVBox().getHost().getOSVersion());
    }
    
-   protected abstract VirtualBoxManager connect(String options);
-   
    protected abstract void disconnect();
    
    @Override
    public void stop() {
       Logger.track();
       
+      host = null;
       mediumRegister = null;
       osTypeCache = null;
       
@@ -213,7 +204,9 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       }
       
       disconnect();
+      VBox.unset();
       vbMgr.cleanup();
+      vbMgr = null;
       
       EventManager.post(new HypervisorDisconnectedEvent(this));
       EventManager.unregister(this);
@@ -667,7 +660,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    @Override
    public _RawMedium getToolsMedium() {
       String path = vbMgr.getVBox().getSystemProperties().getDefaultAdditionsISO();
-      if (StringTools.isEmpty(path)) {
+      if (AxStrings.isEmpty(path)) {
          return null;
       } else {
          return getMedium(path, EntityTypes.DVD);
@@ -676,7 +669,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    
    @Override
    public boolean hasToolsMedium() {
-      return !StringTools.isEmpty(vbMgr.getVBox().getSystemProperties().getDefaultAdditionsISO());
+      return !AxStrings.isEmpty(vbMgr.getVBox().getSystemProperties().getDefaultAdditionsISO());
    }
    
    @Override
@@ -694,7 +687,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
             vbMgr.getVBox().getSystemProperties().setExclusiveHwVirt(setting.getBoolean());
          }
       }
-      EventManager.post(new HypervisorConfigurationUpdateEvent(this));
+      EventManager.post(new HypervisorConfiguredEvent(this));
    }
    
    @Override

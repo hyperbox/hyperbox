@@ -45,7 +45,7 @@ import org.altherian.hboxc.front.gui.action.storage.StorageDeviceAttachmentMediu
 import org.altherian.hboxc.front.gui.network.NetworkInterfaceSummary;
 import org.altherian.helper.swing.BorderUtils;
 import org.altherian.helper.swing.JTextFieldUtils;
-import org.altherian.tool.StringTools;
+import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
 
 import java.awt.Color;
@@ -487,7 +487,7 @@ public final class VmSummaryView {
          
          if (mOut.getSetting(MachineAttributes.VrdeEnabled).getBoolean()) {
             String addr = Gui.getReader().getConnectorForServer(mOut.getServerId()).getAddress();
-            if (!StringTools.isEmpty(mOut.getSetting(MachineAttributes.VrdeAddress).getString())) {
+            if (!AxStrings.isEmpty(mOut.getSetting(MachineAttributes.VrdeAddress).getString())) {
                addr = mOut.getSetting(MachineAttributes.VrdeAddress).getString();
             }
             addr = addr + ":" + mOut.getSetting(MachineAttributes.VrdePort).getString();

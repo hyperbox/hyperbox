@@ -31,6 +31,10 @@ import java.io.File;
 
 public class StoreFactory {
    
+   private StoreFactory() {
+      throw new RuntimeException("Not allowed");
+   }
+
    public static _Store get(String moduleId, String storeId, String storeName, String storePath, StoreState storeState) {
       if (moduleId.equalsIgnoreCase("localFolder")) {
          return new FolderStore(storeId, storeName, new File(storePath), storeState);

@@ -22,7 +22,7 @@
 package org.altherian.hboxd.security;
 
 import org.altherian.hbox.exception.HyperboxRuntimeException;
-import org.altherian.tool.StringTools;
+import org.altherian.tool.AxStrings;
 
 public class User implements _User {
    
@@ -94,10 +94,10 @@ public class User implements _User {
    
    @Override
    public void save() {
-      if (StringTools.isEmpty(getId())) {
+      if (AxStrings.isEmpty(getId())) {
          throw new HyperboxRuntimeException("ID cannot be empty");
       }
-      if (StringTools.isEmpty(getName())) {
+      if (AxStrings.isEmpty(getName())) {
          throw new HyperboxRuntimeException("Name cannot be empty");
       }
    }

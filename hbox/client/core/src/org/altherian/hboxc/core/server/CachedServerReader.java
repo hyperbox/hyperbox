@@ -35,6 +35,7 @@ import org.altherian.hbox.comm.input.StoreInput;
 import org.altherian.hbox.comm.input.StoreItemInput;
 import org.altherian.hbox.comm.input.TaskInput;
 import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.output.ModuleOutput;
 import org.altherian.hbox.comm.output.SessionOutput;
 import org.altherian.hbox.comm.output.StoreItemOutput;
 import org.altherian.hbox.comm.output.StoreOutput;
@@ -43,6 +44,7 @@ import org.altherian.hbox.comm.output.event.machine.MachineDataChangeEventOutput
 import org.altherian.hbox.comm.output.event.machine.MachineRegistrationEventOutput;
 import org.altherian.hbox.comm.output.event.machine.MachineSnapshotDataChangedEventOutput;
 import org.altherian.hbox.comm.output.event.machine.MachineStateEventOutput;
+import org.altherian.hbox.comm.output.event.module.ModuleEventOutput;
 import org.altherian.hbox.comm.output.event.snapshot.SnapshotDeletedEventOutput;
 import org.altherian.hbox.comm.output.event.snapshot.SnapshotModifiedEventOutput;
 import org.altherian.hbox.comm.output.event.snapshot.SnapshotRestoredEventOutput;
@@ -65,6 +67,7 @@ import org.altherian.hbox.comm.output.storage.MediumOutput;
 import org.altherian.hbox.comm.output.storage.StorageControllerSubTypeOutput;
 import org.altherian.hbox.comm.output.storage.StorageControllerTypeOutput;
 import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
+import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.states.TaskQueueEvents;
 import org.altherian.hboxc.event.CoreEventManager;
@@ -72,6 +75,7 @@ import org.altherian.hboxc.event.machine.MachineAddedEvent;
 import org.altherian.hboxc.event.machine.MachineDataChangedEvent;
 import org.altherian.hboxc.event.machine.MachineRemovedEvent;
 import org.altherian.hboxc.event.machine.MachineStateChangedEvent;
+import org.altherian.hboxc.event.module.ModuleEvent;
 import org.altherian.hboxc.event.snapshot.SnapshotDeletedEvent;
 import org.altherian.hboxc.event.snapshot.SnapshotModifiedEvent;
 import org.altherian.hboxc.event.snapshot.SnapshotRestoredEvent;
@@ -438,6 +442,13 @@ public class CachedServerReader implements _ServerReader {
       }
    }
    
+   @Handler
+   public void putModuleEventOutput(ModuleEventOutput ev) {
+      Logger.track();
+      
+      CoreEventManager.post(new ModuleEvent(HyperboxEvents.ModuleLoaded, ev.getServer(), ev.getModule()));
+   }
+   
    private void refreshTask(TaskInput tIn) {
       try {
          TaskOutput tOut = reader.getTask(tIn);
@@ -697,6 +708,16 @@ public class CachedServerReader implements _ServerReader {
    @Override
    public SnapshotOutput getCurrentSnapshot(String vmId) {
       return getCurrentSnapshot(new MachineInput(vmId));
+   }
+   
+   @Override
+   public List<ModuleOutput> listModules() {
+      return reader.listModules();
+   }
+   
+   @Override
+   public ModuleOutput getModule(String modId) {
+      return reader.getModule(modId);
    }
    
 }

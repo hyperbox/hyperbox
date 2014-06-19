@@ -25,59 +25,63 @@
 	<property file="build.properties"/>
 	
 	<property name="build.dir"							value="${out.dir}/build" />
-	<property name="classes.dir"						value="${build.dir}/classes" />
+	<property name="build.class.dir"					value="${build.dir}/classes" />
+	<property name="build.jar.dir"						value="${build.dir}/jars" />
+	<property name="build.module.jar.dir"				value="${build.jar.dir}/modules" />
 	
 	<property name="tools.src.dir"						value="${tools.dir}/${src.dir}" />
 	
 	<property name="api.src.dir"						value="${api.dir}/${src.dir}" />
 	<property name="api.lib.dir"						value="${api.dir}/${lib.dir}" />
-	<property name="api.classes.dir"					value="${classes.dir}/api" />
+	<property name="api.classes.dir"					value="${build.class.dir}/api" />
 	
 	<property name="server.api.src.dir"					value="${server.api.dir}/${src.dir}" />
 	<property name="server.api.lib.dir"					value="${server.api.dir}/${lib.dir}" />
-	<property name="server.api.classes.dir"				value="${classes.dir}/srv-api" />
+	<property name="server.api.classes.dir"				value="${build.class.dir}/srv-api" />
 
 	<property name="client.api.src.dir"					value="${client.api.dir}/${src.dir}" />
 	<property name="client.api.lib.dir"					value="${client.api.dir}/${lib.dir}" />
-	<property name="client.api.classes.dir"				value="${classes.dir}/client-api" />
+	<property name="client.api.classes.dir"				value="${build.class.dir}/client-api" />
+	
+	<property name="server.vbox.helper.src.dir"			value="${server.vb.helper.dir}/${src.dir}" />
 
+	<property name="server.vbws-4.2.id"					value="vbox-4.2-ws" />
 	<property name="server.vbws-4.2.src.dir"			value="${server.vbws-4.2.dir}/${src.dir}" />
 	<property name="server.vbws-4.2.lib.dir"			value="${server.vbws-4.2.dir}/${lib.dir}" />
-	<property name="server.vbws-4.2.classes.dir"		value="${classes.dir}/srv-vbws-4.2" />
+	<property name="server.vbws-4.2.classes.dir"		value="${build.class.dir}/srv-vbws-4.2" />
+	<property name="server.vbws-4.2.jar.dir"			value="${build.module.jar.dir}/${server.vbws-4.2.id}" />
 	
-	<property name="server.vb-4.3.src.dir"				value="${server.vb-4.3.dir}/${src.dir}" />
-	<property name="server.vb-4.3.lib.dir"				value="${server.vb-4.3.dir}/${lib.dir}" />
-	<property name="server.vb-4.3.classes.dir"			value="${classes.dir}/srv-vb-4.3" />
+	<property name="srv.mod.vbox-4.3.src.dir"			value="${server.vb-4.3.dir}/${src.dir}" />
+	<property name="srv.mod.vbox-4.3.lib.dir"			value="${server.vb-4.3.dir}/${lib.dir}" />
+	<property name="srv.mod.vbox-4.3.classes.dir"		value="${build.class.dir}/srv-vb-4.3" />
 	
-	<property name="server.vbws-4.3.src.dir"			value="${server.vbws-4.3.dir}/${src.dir}" />
-	<property name="server.vbws-4.3.lib.dir"			value="${server.vbws-4.3.dir}/${lib.dir}" />
-	<property name="server.vbws-4.3.classes.dir"		value="${classes.dir}/srv-vbws-4.3" />
+	<property name="srv.mod.vbox-4.3.ws.id"				value="vbox-4.3-ws" />
+	<property name="srv.mod.vbox-4.3.ws.src.dir"		value="${server.vbws-4.3.dir}/${src.dir}" />
+	<property name="srv.mod.vbox-4.3.ws.lib.dir"		value="${server.vbws-4.3.dir}/${lib.dir}" />
+	<property name="srv.mod.vbox-4.3.ws.class.dir"		value="${build.class.dir}/srv-vbws-4.3" />
+	<property name="srv.mod.vbox-4.3.ws.jar.dir"		value="${build.module.jar.dir}/${srv.mod.vbox-4.3.ws.id}" />
 	
+	<property name="server.vbxpcom-4.3.id"				value="vbox-4.3-xpcom" />
 	<property name="server.vbxpcom-4.3.src.dir"			value="${server.vbxpcom-4.3.dir}/${src.dir}" />
 	<property name="server.vbxpcom-4.3.lib.dir"			value="${server.vbxpcom-4.3.dir}/${lib.dir}" />
-	<property name="server.vbxpcom-4.3.classes.dir"		value="${classes.dir}/srv-vbxpcom-4.3" />
-	
-	<property name="server.vbxpcom-4.4.src.dir"			value="${server.vbxpcom-4.4.dir}/${src.dir}" />
-	<property name="server.vbxpcom-4.4.lib.dir"			value="${server.vbxpcom-4.4.dir}/${lib.dir}" />
-	<property name="server.vbxpcom-4.4.classes.dir"		value="${classes.dir}/srv-vbxpcom-4.4" />
-	
-	<property name="server.vb.helper.src.dir"			value="${server.vb.helper.dir}/${src.dir}" />
+	<property name="server.vbxpcom-4.3.classes.dir"		value="${build.class.dir}/srv-vbxpcom-4.3" />
+	<property name="server.vbxpcom-4.3.jar.dir"			value="${build.module.jar.dir}/${server.vbxpcom-4.3.id}" />
 
 	<property name="kryo.api.src.dir"					value="${kryo.api.dir}/${src.dir}" />
 	<property name="kryo.api.lib.dir"					value="${kryo.api.dir}/${lib.dir}" />
-	<property name="kryo.api.classes.dir"				value="${classes.dir}/kryo-api" />
+	<property name="kryo.api.classes.dir"				value="${build.class.dir}/kryo-api" />
 
-	<property name="server.lib.dir"						value="${server.dir}/${lib.dir}" />
-	<property name="server.classes.dir"					value="${classes.dir}/srv" />
 	<property name="server.src.dir"						value="${server.dir}/${src.dir}" />
+	<property name="server.lib.dir"						value="${server.dir}/${lib.dir}" />
+	<property name="server.classes.dir"					value="${build.class.dir}/srv" />
 	
-	<property name="client.lib.dir"						value="${client.dir}/${lib.dir}" />
-	<property name="client.classes.dir"					value="${classes.dir}/client" />
 	<property name="client.src.dir"						value="${client.dir}/${src.dir}" />
+	<property name="client.lib.dir"						value="${client.dir}/${lib.dir}" />
+	<property name="client.classes.dir"					value="${build.class.dir}/client" />
 	
-	<property name="client.gui.lib.dir"					value="${client.gui.dir}/${lib.dir}" />
-	<property name="client.gui.classes.dir"				value="${classes.dir}/client-gui" />
 	<property name="client.gui.src.dir"					value="${client.gui.dir}/${src.dir}" />
+	<property name="client.gui.lib.dir"					value="${client.gui.dir}/${lib.dir}" />
+	<property name="client.gui.classes.dir"				value="${build.class.dir}/client-gui" />
 	
 	<property name="docs.out.dir"						value="${out.dir}/${docs.dir}" />
 	<property name="javadoc.out.dir"					value="${out.dir}/${docs.dir}/javadoc" />
@@ -108,8 +112,8 @@
 	
 	<path id="server.vbws.4-3.classpath">
 		<path refid="server.api.classpath"/>
-		<pathelement location="${server.vbws-4.3.classes.dir}"/>
-		<fileset dir="${server.vbws-4.3.lib.dir}" includes="**/*.jar"/>
+		<pathelement location="${srv.mod.vbox-4.3.ws.class.dir}"/>
+		<fileset dir="${srv.mod.vbox-4.3.ws.lib.dir}" includes="**/*.jar"/>
 	</path>
 	
 	<path id="server.vbxpcom.4-3.classpath">
@@ -232,7 +236,9 @@
 		<loadfile srcfile="VERSION"							property="hbox.version" />
 		
 		<property name="server.out.dir"						value="${out.dir}/bin/${platform}/server" />
+		<property name="server.out.module.dir"				value="${server.out.dir}/modules" />
 		<property name="client.out.dir"						value="${out.dir}/bin/${platform}/client" />
+		<property name="client.out.module.dir"				value="${client.out.dir}/modules" />
 		<property name="dist.out.dir"						value="${out.dir}/dist/${platform}" />
 		
 		<property name="server.out.dir.abs"					location="${server.out.dir}" />
@@ -252,6 +258,9 @@
 		<echo message="Hyperbox Revision:            ${hbox.revision}" />
 		<echo message="API Revision:                 ${hbox.api.revision}" />
 		<echo message="Network Protocol Revision:    ${hbox.protocol.version}" />
+		
+		<echo message="Server Out Dir:               ${server.out.dir}" />
+		<echo message="Server Modules Out Dir:       ${server.out.module.dir}" />
 	</target>
 	
 	<target name="api.compile" depends="configure">
@@ -268,13 +277,13 @@
 		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${server.api.src.dir}" destdir="${server.api.classes.dir}" classpathref="server.api.classpath" />
 	</target>
 	
-	<target name="server.api.deploy">
+	<target name="server.api.deploy" depends="configure">
 		<mkdir dir="${server.out.dir}/bin" />
 		<mkdir dir="${server.out.dir}/doc" />
 		<mkdir dir="${server.out.dir}/doc/manual" />
 		<mkdir dir="${server.out.dir}/doc/legal" />
 		<mkdir dir="${server.out.dir}/lib" />
-		<mkdir dir="${server.out.dir}/modules" />
+		<mkdir dir="${server.out.module.dir}" />
 		<copy todir="${server.out.dir}/lib" flatten="true">
 			<fileset dir="${api.lib.dir}" includes="**/*.jar" />
 		</copy>
@@ -300,7 +309,7 @@
 		<mkdir dir="${client.out.dir}/doc/manual" />
 		<mkdir dir="${client.out.dir}/doc/legal" />
 		<mkdir dir="${client.out.dir}/lib" />
-		<mkdir dir="${client.out.dir}/modules" />
+		<mkdir dir="${client.out.module.dir}" />
 		<copy todir="${client.out.dir}/lib" flatten="true">
 			<fileset dir="${api.lib.dir}" includes="**/*.jar" />
 		</copy>
@@ -316,59 +325,75 @@
 	</target>
 
 	<!-- Virtualbox 4.2 WebServices Connector -->
-	<target name="server.vbws.4-2.jar" depends="server.api.compile, server.api.deploy">
+	<target name="server.vbws.4-2.jar" depends="server.api.compile">
 		<mkdir dir="${server.vbws-4.2.classes.dir}" />
-		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${server.vb.helper.src.dir}" destdir="${server.vbws-4.2.classes.dir}" classpathref="server.vbws.4-2.classpath" />
+		<mkdir dir="${server.vbws-4.2.jar.dir}" />
+		<!-- create single output directory for each lines just under -->
+		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${server.vbox.helper.src.dir}" destdir="${server.vbws-4.2.classes.dir}" classpathref="server.vbws.4-2.classpath" />
 		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${server.vbws-4.2.src.dir}" destdir="${server.vbws-4.2.classes.dir}" classpathref="server.vbws.4-2.classpath" />
-		<jar destfile="${server.out.dir}/modules/vbws-4.2.jar" basedir="${server.vbws-4.2.classes.dir}" />
+		
+		<jar destfile="${server.vbws-4.2.jar.dir}/vbws-4.2.jar" basedir="${server.vbws-4.2.classes.dir}" />
 	</target>
 	
-	<target name="server.vbws.4-2.deploy" depends="server.api.deploy">
-		<copy file="${server.vbws-4.2.lib.dir}/vboxjws.jar" tofile="${server.out.dir}/modules/vboxjws-4.2.jar" />
+	<target name="server.vbws.4-2.deploy" depends="server.api.deploy, server.vbws.4-2.jar">
+		<property name="server.vbws-4.2.out.dir"	value="${server.out.module.dir}/${server.vbws-4.2.id}" />
+		<mkdir dir="${server.vbws-4.2.out.dir}" />
+		<copy file="${server.vbws-4.2.lib.dir}/vboxjws.jar" tofile="${server.vbws-4.2.out.dir}/vboxjws-4.2.jar" />
+		<copy file="${server.vbws-4.2.jar.dir}/vbws-4.2.jar" tofile="${server.vbws-4.2.out.dir}/vbws-4.2.jar" />
 	</target>
 	
-	<extension-point name="server.vbws.4-2.build" if="server.vbws-4.2.enable" depends="server.vbws.4-2.deploy, server.vbws.4-2.jar" />
+	<extension-point name="server.vbws.4-2.build" if="server.vbws-4.2.enable" depends="server.vbws.4-2.jar, server.vbws.4-2.deploy" />
 	<!--######################################-->
 	
 	<!-- Virtualbox 4.3 WebServices Connector -->
-	<target name="server.vbws.4-3.jar" if="server.vbws-4.3.enable" depends="server.api.compile, server.api.deploy">
-		<mkdir dir="${server.vbws-4.3.classes.dir}" />
-		<!-- create single output directory for each two lines just under -->
-		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${server.vb.helper.src.dir}" destdir="${server.vbws-4.3.classes.dir}" classpathref="server.vbws.4-3.classpath" />
-		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${server.vb-4.3.src.dir}" destdir="${server.vbws-4.3.classes.dir}" classpathref="server.vbws.4-3.classpath" />
-		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${server.vbws-4.3.src.dir}" destdir="${server.vbws-4.3.classes.dir}" classpathref="server.vbws.4-3.classpath" />
+	<target name="server.vbws.4-3.jar" if="server.vbws-4.3.enable" depends="server.api.compile">
+		<mkdir dir="${srv.mod.vbox-4.3.ws.class.dir}" />
+		<mkdir dir="${srv.mod.vbox-4.3.ws.jar.dir}" />
+		<!-- create single output directory for each lines just under -->
+		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${server.vbox.helper.src.dir}" destdir="${srv.mod.vbox-4.3.ws.class.dir}" classpathref="server.vbws.4-3.classpath" />
+		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${srv.mod.vbox-4.3.src.dir}" destdir="${srv.mod.vbox-4.3.ws.class.dir}" classpathref="server.vbws.4-3.classpath" />
+		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${srv.mod.vbox-4.3.ws.src.dir}" destdir="${srv.mod.vbox-4.3.ws.class.dir}" classpathref="server.vbws.4-3.classpath" />
 		
-		<jar destfile="${server.out.dir}/modules/vbws-4.3.jar">
-			<fileset dir="${server.vbws-4.3.classes.dir}" />
+		<jar destfile="${srv.mod.vbox-4.3.ws.jar.dir}/vbws-4.3.jar">
+			<fileset dir="${srv.mod.vbox-4.3.ws.class.dir}" />
 		</jar>
 	</target>
 	
-	<target name="server.vbws.4-3.deploy" if="server.vbws-4.3.enable" depends="server.api.deploy">
-		<copy file="${server.vbws-4.3.lib.dir}/vboxjws.jar" tofile="${server.out.dir}/modules/vboxjws-4.3.jar" />
+	<target name="server.vbws.4-3.deploy" if="server.vbws-4.3.enable" depends="server.api.deploy, server.vbws.4-3.jar">
+		<property name="srv.mod.vbox-4.3.ws.out.dir"	value="${server.out.module.dir}/${srv.mod.vbox-4.3.ws.id}" />
+		<mkdir dir="${srv.mod.vbox-4.3.ws.out.dir}" />
+		<copy file="${srv.mod.vbox-4.3.ws.lib.dir}/vboxjws.jar" tofile="${srv.mod.vbox-4.3.ws.out.dir}/vboxjws-4.3.jar" />
+		<copy file="${srv.mod.vbox-4.3.ws.jar.dir}/vbws-4.3.jar" tofile="${srv.mod.vbox-4.3.ws.out.dir}/vbws-4.3.jar" />
+		<copy file="${server.vbws-4.3.dir}/${srv.mod.vbox-4.3.ws.id}.xml" tofile="${server.out.module.dir}/${srv.mod.vbox-4.3.ws.id}.xml" />
 	</target>
 	
-	<extension-point name="server.vbws.4-3.build" if="server.vbws-4.3.enable" depends="server.vbws.4-3.deploy, server.vbws.4-3.jar" />
+	<extension-point name="server.vbws.4-3.build" if="server.vbws-4.3.enable" depends="server.vbws.4-3.jar, server.vbws.4-3.deploy" />
 	<!--######################################-->
 	
 	<!--    Virtualbox 4.3 XPCOM Connector    -->
-	<target name="server.vbxpcom.4-3.jar" if="server.vbxpcom-4.3.enable" depends="server.api.compile, server.api.deploy">
+	<target name="server.vbxpcom.4-3.jar" if="server.vbxpcom-4.3.enable" depends="server.api.compile">
 		<mkdir dir="${server.vbxpcom-4.3.classes.dir}" />
-		
+		<mkdir dir="${server.vbxpcom-4.3.jar.dir}" />
 		<!-- create single output directory for each two lines just under -->
-		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${server.vb.helper.src.dir}" destdir="${server.vbxpcom-4.3.classes.dir}" classpathref="server.vbxpcom.4-3.classpath" />
-		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${server.vb-4.3.src.dir}" destdir="${server.vbxpcom-4.3.classes.dir}" classpathref="server.vbxpcom.4-3.classpath" />
+		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${server.vbox.helper.src.dir}" destdir="${server.vbxpcom-4.3.classes.dir}" classpathref="server.vbxpcom.4-3.classpath" />
+		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${srv.mod.vbox-4.3.src.dir}" destdir="${server.vbxpcom-4.3.classes.dir}" classpathref="server.vbxpcom.4-3.classpath" />
 		<javac target="1.6" debug="on" includeantruntime="false" srcdir="${server.vbxpcom-4.3.src.dir}" destdir="${server.vbxpcom-4.3.classes.dir}" classpathref="server.vbxpcom.4-3.classpath" />
 		
-		<jar destfile="${server.out.dir}/modules/vbxpcom-4.3.jar">
+		<jar destfile="${server.vbxpcom-4.3.jar.dir}/vbxpcom-4.3.jar">
 			<fileset dir="${server.vbxpcom-4.3.classes.dir}" />
 		</jar>
 	</target>
 	
-	<target name="server.vbxpcom.4-3.deploy" if="server.vbxpcom-4.3.enable" depends="server.api.deploy">
-		<copy file="${server.vbxpcom-4.3.lib.dir}/vboxjxpcom.jar" tofile="${server.out.dir}/modules/vboxjxpcom-4.3.jar" />
+	<target name="server.vbxpcom.4-3.deploy" if="server.vbxpcom-4.3.enable" depends="server.api.deploy, server.vbxpcom.4-3.jar">
+		<property name="server.vbxpcom-4.3.out.dir"	value="${server.out.module.dir}/${server.vbxpcom-4.3.id}" />
+		<mkdir dir="${server.vbxpcom-4.3.out.dir}" />
+		<copy file="${server.vbxpcom-4.3.lib.dir}/vboxjxpcom.jar" tofile="${server.vbxpcom-4.3.out.dir}/vboxjxpcom-4.3.jar" />
+		<copy file="${server.vbxpcom-4.3.jar.dir}/vbxpcom-4.3.jar" tofile="${server.vbxpcom-4.3.out.dir}/vbxpcom-4.3.jar" />
+		<copy file="${server.vbxpcom-4.3.dir}/${server.vbxpcom-4.3.id}.xml" tofile="${server.out.module.dir}/${server.vbxpcom-4.3.id}.xml" />
+		
 	</target>
 	
-	<extension-point name="server.vbxpcom.4-3.build" if="server.vbxpcom-4.3.enable" depends="server.api.compile,server.vbxpcom.4-3.deploy, server.vbxpcom.4-3.jar"/>
+	<extension-point name="server.vbxpcom.4-3.build" if="server.vbxpcom-4.3.enable" depends="server.vbxpcom.4-3.jar, server.vbxpcom.4-3.deploy"/>
 	<!--######################################-->
 	
 	<target name="kryo.api.compile" depends="api.compile">

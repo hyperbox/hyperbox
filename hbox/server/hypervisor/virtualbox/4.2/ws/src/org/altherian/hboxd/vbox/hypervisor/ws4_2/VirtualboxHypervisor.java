@@ -50,7 +50,7 @@ import org.altherian.hboxd.vbox4_2.ws.factory.OsTypeFactory;
 import org.altherian.hboxd.vbox4_2.ws.manager.VbSessionManager;
 import org.altherian.hboxd.vbox4_2.ws.service.EventsManagementService;
 import org.altherian.hboxd.vbox4_2.ws.utils.Mappings;
-import org.altherian.tool.StringTools;
+import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
 
 import java.util.ArrayList;
@@ -599,7 +599,7 @@ public class VirtualboxHypervisor implements _Hypervisor {
    @Override
    public _RawMedium getToolsMedium() {
       String path = ConnectionManager.getBox().getSystemProperties().getDefaultAdditionsISO();
-      if (StringTools.isEmpty(path)) {
+      if (AxStrings.isEmpty(path)) {
          return null;
       } else {
          return getMedium(path, EntityTypes.DVD);
@@ -608,7 +608,7 @@ public class VirtualboxHypervisor implements _Hypervisor {
    
    @Override
    public boolean hasToolsMedium() {
-      return !StringTools.isEmpty(ConnectionManager.getBox().getSystemProperties().getDefaultAdditionsISO());
+      return !AxStrings.isEmpty(ConnectionManager.getBox().getSystemProperties().getDefaultAdditionsISO());
    }
    
    @Override

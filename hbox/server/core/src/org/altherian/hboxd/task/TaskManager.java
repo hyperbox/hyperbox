@@ -258,7 +258,7 @@ public final class TaskManager implements _TaskManager {
    public void putSystemEvent(SystemStateEvent ev) {
       Logger.track();
       
-      if (ev.getState().equals(ServerState.Running)) {
+      if (ServerState.Running.equals(ev.getState())) {
          worker.start();
       }
    }

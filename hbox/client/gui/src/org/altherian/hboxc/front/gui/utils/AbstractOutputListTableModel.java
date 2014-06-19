@@ -137,7 +137,7 @@ public abstract class AbstractOutputListTableModel<T extends ObjectOutput> exten
          fireTableRowsDeleted(index, index);
       }
    }
-
+   
    public void merge(T oOut) {
       if (has(oOut)) {
          update(oOut);

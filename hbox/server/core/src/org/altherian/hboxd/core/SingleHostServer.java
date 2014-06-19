@@ -46,11 +46,13 @@ import org.altherian.hboxd.core.model._Machine;
 import org.altherian.hboxd.core.model._Medium;
 import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event.hypervisor.HypervisorDisconnectedEvent;
+import org.altherian.hboxd.event.module.ModuleEvent;
 import org.altherian.hboxd.event.server.ServerConnectionStateEvent;
 import org.altherian.hboxd.event.system.SystemStateEvent;
 import org.altherian.hboxd.exception.ServerNotFoundException;
 import org.altherian.hboxd.exception.hypervisor.HypervisorNotConnectedException;
 import org.altherian.hboxd.factory.MachineFactory;
+import org.altherian.hboxd.factory.ModuleManagerFactory;
 import org.altherian.hboxd.factory.SecurityManagerFactory;
 import org.altherian.hboxd.front._RequestReceiver;
 import org.altherian.hboxd.host.Host;
@@ -59,6 +61,7 @@ import org.altherian.hboxd.hypervisor.Hypervisor;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 import org.altherian.hboxd.hypervisor.storage._RawMedium;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
+import org.altherian.hboxd.module._ModuleManager;
 import org.altherian.hboxd.persistence._Persistor;
 import org.altherian.hboxd.persistence.sql.h2.H2SqlPersistor;
 import org.altherian.hboxd.security.SecurityContext;
@@ -72,12 +75,11 @@ import org.altherian.hboxd.store.StoreManager;
 import org.altherian.hboxd.store._StoreManager;
 import org.altherian.hboxd.task.TaskManager;
 import org.altherian.hboxd.task._TaskManager;
-import org.altherian.tool.BooleanUtils;
-import org.altherian.tool.SystemUtils;
+import org.altherian.tool.AxBooleans;
+import org.altherian.tool.AxSystems;
 import org.altherian.tool.logging.Logger;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -98,6 +100,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
    private _TaskManager taskMgr;
    private _StoreManager storeMgr;
    private _Persistor persistor;
+   private _ModuleManager modMgr;
    
    private Map<String, Class<? extends _Hypervisor>> hypervisors;
    private _Hypervisor hypervisor;
@@ -156,7 +159,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
       
       sessMgr = new SessionManager();
       
-      loadHypervisors();
+      modMgr = ModuleManagerFactory.get();
    }
    
    @Override
@@ -172,7 +175,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
          Logger.verbose("Generating new Server ID");
          HBoxServer.setSetting(CFGKEY_SRV_ID, UUID.randomUUID());
          Logger.verbose("Generating default Server name");
-         HBoxServer.setSetting(CFGKEY_SRV_NAME, SystemUtils.getHostname());
+         HBoxServer.setSetting(CFGKEY_SRV_NAME, AxSystems.getHostname());
       }
       id = HBoxServer.getSettingOrFail(CFGKEY_SRV_ID);
       name = HBoxServer.getSettingOrFail(CFGKEY_SRV_NAME);
@@ -186,12 +189,15 @@ public class SingleHostServer implements _Hyperbox, _Server {
       taskMgr.start(this);
       sessMgr.start(this);
       storeMgr.start();
+      modMgr.start();
+      
+      loadHypervisors();
       
       if (HBoxServer.hasSetting(CFGKEY_CORE_HYP_ID)) {
          Logger.info("Loading Hypervisor configuration");
          HypervisorInput in = new HypervisorInput(HBoxServer.getSetting(CFGKEY_CORE_HYP_ID));
          in.setConnectionOptions(HBoxServer.getSetting(CFGKEY_CORE_HYP_OPTS));
-         in.setAutoConnect(BooleanUtils.get(HBoxServer.getSetting(CFGKEY_CORE_HYP_AUTO)));
+         in.setAutoConnect(AxBooleans.get(HBoxServer.getSetting(CFGKEY_CORE_HYP_AUTO)));
          Logger.info("Hypervisor ID: " + in.getId());
          Logger.info("Hypervisor options: " + in.getConnectOptions());
          Logger.info("Hypervisor AutoConnect: " + in.getAutoConnect());
@@ -216,6 +222,9 @@ public class SingleHostServer implements _Hyperbox, _Server {
       
       setState(ServerState.Stopping);
       
+      if (modMgr != null) {
+         modMgr.stop();
+      }
       if (sessMgr != null) {
          sessMgr.stop();
       }
@@ -240,6 +249,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
          persistor.stop();
       }
       
+      hypervisors = null;
       setState(ServerState.Stopped);
       EventManager.stop();
    }
@@ -272,6 +282,11 @@ public class SingleHostServer implements _Hyperbox, _Server {
    @Override
    public _StoreManager getStoreManager() {
       return storeMgr;
+   }
+   
+   @Override
+   public _ModuleManager getModuleManager() {
+      return modMgr;
    }
    
    @Override
@@ -315,25 +330,21 @@ public class SingleHostServer implements _Hyperbox, _Server {
    private void loadHypervisors() throws HyperboxException {
       Logger.track();
       
-      hypervisors = new HashMap<String, Class<? extends _Hypervisor>>();
-      
+      Map<String, Class<? extends _Hypervisor>> hyps = new HashMap<String, Class<? extends _Hypervisor>>();
       Set<Class<? extends _Hypervisor>> subTypes = HBoxServer.getAnnotatedSubTypes(_Hypervisor.class, Hypervisor.class);
-      if (subTypes.isEmpty()) {
-         Logger.error("Found no hypervisor module - make sure your classpath is correct and the Hypervisor module is properly located");
-         Logger.warning("Hyperbox will not be able to connect to any hypervisor and will require a restart if this is needed");
-      }
       
       for (Class<? extends _Hypervisor> hypLoader : subTypes) {
          for (String scheme : hypLoader.getAnnotation(Hypervisor.class).schemes()) {
             try {
-               hypervisors.put(scheme, hypLoader);
-               Logger.debug("Loaded " + hypLoader.getSimpleName() + " for " + scheme + " scheme");
+               hyps.put(scheme, hypLoader);
+               Logger.verbose("Loaded " + hypLoader.getSimpleName() + " for " + scheme + " scheme");
             } catch (Exception e) {
                throw new HyperboxException("Failed to load Hypervior Class : " + e.getLocalizedMessage(), e);
             }
          }
       }
       
+      hypervisors = hyps;
    }
    
    @Override
@@ -345,7 +356,9 @@ public class SingleHostServer implements _Hyperbox, _Server {
       }
       
       try {
-         _Hypervisor hypervisor = (_Hypervisor) hypervisors.get(hypervisorId).getConstructors()[0].newInstance();
+         Class<? extends _Hypervisor> hypClass = hypervisors.get(hypervisorId);
+         Logger.warning("Loading " + hypClass.getName() + " using " + hypClass.getClassLoader().getClass().getName());
+         _Hypervisor hypervisor = hypervisors.get(hypervisorId).newInstance();
          hypervisor.setEventManager(EventManager.get());
          hypervisor.start(options);
          this.hypervisor = hypervisor;
@@ -360,8 +373,6 @@ public class SingleHostServer implements _Hyperbox, _Server {
       } catch (InstantiationException e) {
          throw new HyperboxRuntimeException("Hypervisor cannot be loaded due to bad format: " + e.getMessage(), e);
       } catch (IllegalAccessException e) {
-         throw new HyperboxRuntimeException("Hypervisor cannot be loaded due to bad format: " + e.getMessage(), e);
-      } catch (InvocationTargetException e) {
          throw new HyperboxRuntimeException("Hypervisor cannot be loaded due to bad format: " + e.getMessage(), e);
       }
    }
@@ -514,12 +525,24 @@ public class SingleHostServer implements _Hyperbox, _Server {
    }
    
    @Handler
-   public void putHypervisorDisconnectEvent(HypervisorDisconnectedEvent ev) {
+   protected void putHypervisorDisconnectEvent(HypervisorDisconnectedEvent ev) {
       Logger.track();
       
       if (ev.getHypervisor().equals(hypervisor) && isConnected()) {
          Logger.debug("Hypervisor disconnected, cleaning up");
          disconnect();
+      }
+   }
+   
+   @Handler
+   protected void putModuleEvent(ModuleEvent ev) {
+      Logger.track();
+      
+      try {
+         loadHypervisors();
+      } catch (HyperboxException e) {
+         Logger.error("Error when trying to refresh hypervisors: " + e.getMessage());
+         Logger.exception(e);
       }
    }
    

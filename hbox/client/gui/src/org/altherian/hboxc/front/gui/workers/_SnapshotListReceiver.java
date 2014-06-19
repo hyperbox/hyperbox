@@ -27,6 +27,6 @@ import java.util.List;
 
 public interface _SnapshotListReceiver extends _WorkerDataReceiver {
    
-   public void add(List<SnapshotOutput> mOutList);
-
+   public void add(List<SnapshotOutput> objOutList);
+   
 }

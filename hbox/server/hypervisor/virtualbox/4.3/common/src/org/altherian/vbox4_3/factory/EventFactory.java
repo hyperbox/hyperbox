@@ -42,9 +42,10 @@ public class EventFactory {
       factories = new HashMap<VBoxEventType, _PreciseEventFactory>();
       
       try {
+         Logger.debug("Current class loader: " + EventFactory.class.getClassLoader());
+         Logger.debug("Interface class loader: " + _PreciseEventFactory.class.getClassLoader());
          Set<_PreciseEventFactory> factoriesSet = HBoxServer.getAllOrFail(_PreciseEventFactory.class);
          for (_PreciseEventFactory factory : factoriesSet) {
-            Logger.debug("Loaded " + factory.getClass().getSimpleName() + " for " + factory.getType());
             factories.put(factory.getType(), factory);
          }
       } catch (HyperboxException e) {

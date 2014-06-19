@@ -29,6 +29,7 @@ import org.altherian.hboxd.security._ItemPermission;
 public class ItemPermissionFactory {
    
    private ItemPermissionFactory() {
+      throw new RuntimeException("Not allowed");
    }
    
    public static _ItemPermission get(String userId, String itemTypeId, String actionId, String itemId, boolean isAllowed) {

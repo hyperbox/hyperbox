@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Server-API"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Kryonet-API"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="/API/lib/slf4j-api-1.7.2.jar"/>
 	<classpathentry kind="lib" path="/API/lib/slf4j-nop-1.7.2.jar"/>
 	<classpathentry kind="lib" path="/Kryonet-API/lib/asm-4.0.jar"/>
@@ -18,9 +18,9 @@
 	<classpathentry kind="lib" path="/Kryonet-API/lib/objenesis-1.2.jar"/>
 	<classpathentry kind="lib" path="/Kryonet-API/lib/reflectasm-1.07.jar"/>
 	<classpathentry kind="lib" path="/Kryonet-API/lib/minlog-trace-1.2.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/API/lib/javassist-3.16.1-GA.jar"/>
 	<classpathentry kind="lib" path="lib/commons-daemon-1.0.15.jar"/>
 	<classpathentry kind="lib" path="lib/h2-1.3.174.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="eclipse-bin"/>
 </classpath>

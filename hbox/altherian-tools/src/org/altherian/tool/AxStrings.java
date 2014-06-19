@@ -22,9 +22,9 @@
 
 package org.altherian.tool;
 
-public class StringTools {
+public class AxStrings {
    
-   protected StringTools() {
+   protected AxStrings() {
       // we don't plan on instance this
    }
    

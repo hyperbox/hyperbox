@@ -35,7 +35,7 @@ import org.altherian.hboxc.event.server.ServerDisconnectedEvent;
 import org.altherian.hboxc.factory.ServerFactory;
 import org.altherian.hboxc.server._Server;
 import org.altherian.hboxc.state.ConnectionState;
-import org.altherian.tool.StringTools;
+import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
 
 public class Connector implements _Connector {
@@ -83,7 +83,7 @@ public class Connector implements _Connector {
    
    @Override
    public String getLabel() {
-      return StringTools.isEmpty(label) ? getAddress() : label;
+      return AxStrings.isEmpty(label) ? getAddress() : label;
    }
    
    @Override

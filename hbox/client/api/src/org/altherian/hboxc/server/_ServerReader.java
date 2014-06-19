@@ -33,6 +33,7 @@ import org.altherian.hbox.comm.input.StoreInput;
 import org.altherian.hbox.comm.input.StoreItemInput;
 import org.altherian.hbox.comm.input.TaskInput;
 import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.output.ModuleOutput;
 import org.altherian.hbox.comm.output.SessionOutput;
 import org.altherian.hbox.comm.output.StoreItemOutput;
 import org.altherian.hbox.comm.output.StoreOutput;
@@ -151,5 +152,9 @@ public interface _ServerReader {
    public List<HypervisorLoaderOutput> listHypervisors();
    
    public HostOutput getHost();
+   
+   public List<ModuleOutput> listModules();
+   
+   public ModuleOutput getModule(String modId);
    
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
  * 
@@ -30,9 +30,7 @@ public class ModelFactory {
    private static _Hyperbox hyperbox;
    
    private ModelFactory() {
-      Logger.track();
-      
-      // static class, cannot be instantiated
+      throw new RuntimeException("Not allowed");
    }
    
    public static _Hyperbox get() {

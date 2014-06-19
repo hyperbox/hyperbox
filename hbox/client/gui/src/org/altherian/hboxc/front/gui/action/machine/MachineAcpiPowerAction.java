@@ -41,7 +41,6 @@ public class MachineAcpiPowerAction extends AbstractAction {
    
    public MachineAcpiPowerAction(_MachineSelector selector) {
       super("Power Button", IconBuilder.getTask(HypervisorTasks.MachineAcpiPowerButton));
-      setEnabled(true);
       this.selector = selector;
    }
    

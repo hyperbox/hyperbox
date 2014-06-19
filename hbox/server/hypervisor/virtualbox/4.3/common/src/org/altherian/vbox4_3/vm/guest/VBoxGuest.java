@@ -25,7 +25,7 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxd.hypervisor.vm.guest._RawGuest;
 import org.altherian.hboxd.hypervisor.vm.guest._RawGuestNetworkInterface;
 import org.altherian.hboxd.hypervisor.vm.guest._RawHypervisorTools;
-import org.altherian.tool.StringTools;
+import org.altherian.tool.AxStrings;
 import org.altherian.vbox4_3.VBox;
 import org.altherian.vbox4_3.manager.VbSessionManager;
 import org.altherian.vbox4_3.vm.VBoxMachine;
@@ -91,7 +91,7 @@ public class VBoxGuest implements _RawGuest {
    }
    
    private int getNicCount() {
-      return Integer.parseInt(StringTools.getNonEmpty(getVm().getGuestPropertyValue("/VirtualBox/GuestInfo/Net/Count"), "0"));
+      return Integer.parseInt(AxStrings.getNonEmpty(getVm().getGuestPropertyValue("/VirtualBox/GuestInfo/Net/Count"), "0"));
    }
    
    @Override

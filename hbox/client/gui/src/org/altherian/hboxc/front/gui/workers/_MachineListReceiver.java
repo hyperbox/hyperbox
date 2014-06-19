@@ -28,6 +28,6 @@ import java.util.List;
 
 public interface _MachineListReceiver extends _WorkerDataReceiver {
    
-   public void add(List<MachineOutput> mOutList);
+   public void add(List<MachineOutput> objOutList);
    
 }

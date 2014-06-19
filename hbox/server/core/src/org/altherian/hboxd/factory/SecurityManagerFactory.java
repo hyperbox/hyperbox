@@ -30,9 +30,7 @@ public class SecurityManagerFactory {
    private static _SecurityManager secMgr;
    
    private SecurityManagerFactory() {
-      Logger.track();
-      
-      // static class, cannot be instantiated
+      throw new RuntimeException("Not allowed");
    }
    
    public static _SecurityManager get() {

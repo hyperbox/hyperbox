@@ -22,8 +22,8 @@
 package org.altherian.hboxd.core.action.snapshot;
 
 import org.altherian.hbox.comm.Command;
-import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.HypervisorTasks;
+import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.input.MachineInput;
 import org.altherian.hbox.comm.input.SnapshotInput;
 import org.altherian.hboxd.core._Hyperbox;

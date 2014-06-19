@@ -22,7 +22,7 @@
 package org.altherian.hboxd.core.model;
 
 import org.altherian.hboxd.hypervisor.storage._RawMediumAttachment;
-import org.altherian.tool.StringTools;
+import org.altherian.tool.AxStrings;
 
 public class MediumAttachment implements _MediumAttachment {
    
@@ -88,7 +88,7 @@ public class MediumAttachment implements _MediumAttachment {
    
    @Override
    public boolean hasMedium() {
-      return !StringTools.isEmpty(mediumId);
+      return !AxStrings.isEmpty(mediumId);
    }
    
 }

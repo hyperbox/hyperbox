@@ -1,7 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
- * hyperbox at altherian dot org
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -20,19 +19,22 @@
  * 
  */
 
-package org.altherian.tool;
+package org.altherian.hbox.comm.output.event.module;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import org.altherian.hbox.comm.output.ModuleOutput;
+import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.event.HyperboxEvents;
 
-public class SystemUtils {
+import java.util.Date;
+
+public class ModuleUnregisteredEventOutput extends ModuleEventOutput {
    
-   public static String getHostname() {
-      try {
-         return InetAddress.getLocalHost().getHostName();
-      } catch (UnknownHostException e) {
-         return "Unknown Host";
-      }
+   protected ModuleUnregisteredEventOutput() {
+      // Used for serialization
+   }
+   
+   public ModuleUnregisteredEventOutput(Date time, ServerOutput srvOut, ModuleOutput modOut) {
+      super(time, HyperboxEvents.ModuleUnregistered, srvOut, modOut);
    }
    
 }

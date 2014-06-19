@@ -30,11 +30,11 @@ import java.beans.PropertyChangeListener;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
-public abstract class HSwingWorker<T, V, K extends _WorkerDataReceiver> extends SwingWorker<T, V> {
+public abstract class AnSwingWorker<T, V, K extends _WorkerDataReceiver> extends SwingWorker<T, V> {
    
    private K recv;
    
-   public HSwingWorker(final K recv) {
+   public AnSwingWorker(final K recv) {
       this.recv = recv;
       
       addPropertyChangeListener(new PropertyChangeListener() {
@@ -47,7 +47,6 @@ public abstract class HSwingWorker<T, V, K extends _WorkerDataReceiver> extends 
                   recv.loadingStarted();
                } else {
                   SwingUtilities.invokeLater(new Runnable() {
-                     
                      @Override
                      public void run() {
                         recv.loadingStarted();
