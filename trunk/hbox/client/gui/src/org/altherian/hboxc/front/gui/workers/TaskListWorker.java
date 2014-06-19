@@ -25,12 +25,12 @@ package org.altherian.hboxc.front.gui.workers;
 import org.altherian.hbox.comm.output.ServerOutput;
 import org.altherian.hbox.comm.output.TaskOutput;
 import org.altherian.hboxc.front.gui.Gui;
-import org.altherian.hboxc.front.gui.utils.HSwingWorker;
+import org.altherian.hboxc.front.gui.utils.AnSwingWorker;
 import org.altherian.tool.logging.Logger;
 
 import java.util.List;
 
-public class TaskListWorker extends HSwingWorker<Void, TaskOutput, _TaskListReceiver> {
+public class TaskListWorker extends AnSwingWorker<Void, TaskOutput, _TaskListReceiver> {
    
    private ServerOutput srvOut;
    

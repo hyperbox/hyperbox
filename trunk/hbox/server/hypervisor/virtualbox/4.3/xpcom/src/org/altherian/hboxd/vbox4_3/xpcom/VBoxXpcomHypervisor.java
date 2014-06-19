@@ -22,8 +22,7 @@
 package org.altherian.hboxd.vbox4_3.xpcom;
 
 import org.altherian.hboxd.hypervisor.Hypervisor;
-import org.altherian.tool.StringTools;
-import org.altherian.tool.logging.Logger;
+import org.altherian.tool.AxStrings;
 import org.altherian.vbox4_3.VBoxHypervisor;
 
 import org.virtualbox_4_3.VirtualBoxManager;
@@ -36,8 +35,7 @@ import org.virtualbox_4_3.VirtualBoxManager;
       schemes = { "vbox-4.3-xpcom" })
 public final class VBoxXpcomHypervisor extends VBoxHypervisor {
    
-   protected final String defaultHome = "/usr/lib/virtualbox";
-   protected String home;
+   private final String defaultHome = "/usr/lib/virtualbox";
    
    @Override
    public String getId() {
@@ -61,21 +59,17 @@ public final class VBoxXpcomHypervisor extends VBoxHypervisor {
    
    @Override
    protected VirtualBoxManager connect(String options) {
-      if (!StringTools.isEmpty(options)) {
-         home = options;
-         Logger.verbose("Given Virtualbox home: " + options);
-      } else {
-         home = defaultHome;
-         Logger.verbose("No Virtualbox home was given, using default value: " + options);
+      if (AxStrings.isEmpty(options)) {
+         options = defaultHome;
       }
       
-      System.setProperty("vbox.home", home);
-      return VirtualBoxManager.createInstance(null);
+      return VirtualBoxManager.createInstance(options);
    }
    
    @Override
    protected void disconnect() {
       // nothing to do here
+      System.gc();
    }
    
 }

@@ -49,7 +49,7 @@ public abstract class EventOutput {
     * </ul>
     */
    protected EventOutput() {
-      // Used for serialization
+      // Used for (de)serialization
    }
    
    /**

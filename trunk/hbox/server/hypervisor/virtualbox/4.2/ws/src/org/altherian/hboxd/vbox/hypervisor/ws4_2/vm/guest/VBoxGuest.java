@@ -28,7 +28,7 @@ import org.altherian.hboxd.hypervisor.vm.guest._RawHypervisorTools;
 import org.altherian.hboxd.vbox.hypervisor.ws4_2.vm.VBoxMachine;
 import org.altherian.hboxd.vbox4_2.ws.factory.ConnectionManager;
 import org.altherian.hboxd.vbox4_2.ws.manager.VbSessionManager;
-import org.altherian.tool.StringTools;
+import org.altherian.tool.AxStrings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +91,7 @@ public class VBoxGuest implements _RawGuest {
    }
    
    private int getNicCount() {
-      return Integer.parseInt(StringTools.getNonEmpty(getVm().getGuestPropertyValue("/VirtualBox/GuestInfo/Net/Count"), "0"));
+      return Integer.parseInt(AxStrings.getNonEmpty(getVm().getGuestPropertyValue("/VirtualBox/GuestInfo/Net/Count"), "0"));
    }
    
    @Override

@@ -123,4 +123,9 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
       }
    }
    
+   @Override
+   public void finalize() {
+      Logger.warning(this + " has been called for garbage collection");
+   }
+   
 }

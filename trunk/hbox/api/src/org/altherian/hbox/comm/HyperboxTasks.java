@@ -28,8 +28,6 @@ import org.altherian.hbox.comm.output.hypervisor.HypervisorOutput;
 
 public enum HyperboxTasks {
    
-   Hello,
-   
    /**
     * Retrieve the list of servers managed by the one we are connected to.
     * <p>
@@ -81,7 +79,7 @@ public enum HyperboxTasks {
    HypervisorDisconnect,
    
    HostGet,
-
+   
    Login,
    Logout,
    
@@ -154,7 +152,19 @@ public enum HyperboxTasks {
    PermissionSet,
    PermissionDelete,
    PermissionList,
-   PermissionGet;
+   PermissionGet,
+   
+   ModuleRefresh,
+   ModuleList,
+   ModuleGet,
+   ModuleRegister,
+   ModuleUnregister,
+   ModuleEnable,
+   ModuleDisable,
+   ModuleLoad,
+   ModuleUnload,
+   
+   Hello;
    
    public String getId() {
       return toString();

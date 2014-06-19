@@ -23,6 +23,7 @@ package org.altherian.hboxd.core;
 
 import org.altherian.hboxd.core.action._ActionManager;
 import org.altherian.hboxd.hypervisor._Hypervisor;
+import org.altherian.hboxd.module._ModuleManager;
 import org.altherian.hboxd.persistence._Persistor;
 import org.altherian.hboxd.security._SecurityManager;
 import org.altherian.hboxd.server._ServerManager;
@@ -44,8 +45,10 @@ public interface _HyperboxManipulator {
    
    public _StoreManager getStoreManager();
    
+   public _ModuleManager getModuleManager();
+
    public _Persistor getPersistor();
    
    public _Hypervisor getHypervisor();
-
+   
 }

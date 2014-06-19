@@ -21,6 +21,8 @@
 
 package org.altherian.hboxd.exception.store;
 
+import org.altherian.hboxd.exception.StoreException;
+
 @SuppressWarnings("serial")
 public class StoreNotOpenException extends StoreException {
    

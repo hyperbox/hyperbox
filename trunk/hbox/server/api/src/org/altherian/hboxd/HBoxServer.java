@@ -31,7 +31,9 @@ import org.altherian.tool.logging.Logger;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executors;
 
@@ -43,33 +45,73 @@ import org.reflections.util.ConfigurationBuilder;
 
 public class HBoxServer {
    
-   private static Reflections classes;
+   private static Map<URL, Reflections> classes;
    private static _Persistor persistor;
    private static _Server srv;
    
    static {
-      Long start = System.currentTimeMillis();
-      Set<URL> rawURls = ClasspathHelper.forJavaClassPath();
+      classes = new HashMap<URL, Reflections>();
+      
       Set<URL> urls = new HashSet<URL>();
-      for (URL url : rawURls) {
+      for (URL url : ClasspathHelper.forJavaClassPath()) {
          if (url.getFile().endsWith(".jar") || url.getFile().endsWith(".class") || url.getFile().endsWith("/")) {
             urls.add(url);
          }
       }
+      scan(urls);
+   }
+   
+   private static void scan(Set<URL> urls, ClassLoader... loaders) {
+      Logger.track();
       
-      classes = new Reflections(new ConfigurationBuilder().setUrls(urls).setScanners(new SubTypesScanner(), new TypeAnnotationsScanner())
+      Long start = System.currentTimeMillis();
+      Reflections scan = new Reflections(new ConfigurationBuilder().addClassLoaders(loaders).setUrls(urls)
+            .setScanners(new SubTypesScanner(), new TypeAnnotationsScanner())
             .setExecutorService(Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())));
-      Long end = System.currentTimeMillis();
-      Long eslaped = end - start;
-      Logger.verbose("Scanning for providers took " + eslaped + " ms");
+      for (URL url : urls) {
+         classes.put(url, scan);
+      }
+      
+      Logger.debug("Scanning urls took " + (System.currentTimeMillis() - start) + " ms");
+   }
+   
+   public static void add(Set<URL> rawUrls, ClassLoader... loaders) {
+      Logger.track();
+      
+      Set<URL> urls = new HashSet<URL>();
+      for (URL rawUrl : rawUrls) {
+         if (!classes.containsKey(rawUrl)) {
+            Logger.debug("Adding " + rawUrl.toString() + " to URL to scan");
+            urls.add(rawUrl);
+         }
+      }
+      scan(urls, loaders);
+   }
+   
+   public static void reload(Set<URL> rawUrls, ClassLoader... loaders) {
+      Logger.track();
+      
+      scan(rawUrls, loaders);
+   }
+   
+   public static void remove(Set<URL> urls) {
+      Logger.track();
+      
+      for (URL url : urls) {
+         classes.remove(url);
+         Logger.debug("URL removed: " + url);
+      }
+      Logger.debug(classes.keySet().size() + " remaining URLs:");
+      for (URL url : classes.keySet()) {
+         Logger.debug("\t" + url);
+      }
    }
    
    @SuppressWarnings("unchecked")
    public static <T> T loadClass(Class<T> itWannabeClass, String it) {
       try {
          Class<T> itClass = (Class<T>) Class.forName(it);
-         T itInstance = (T) itClass.getConstructors()[0].newInstance();
-         Logger.verbose("Loaded " + itInstance.getClass().getSimpleName());
+         T itInstance = itClass.newInstance();
          return itInstance;
       } catch (Exception e) {
          Logger.error("Failed to load " + it + " : " + e.getLocalizedMessage());
@@ -78,27 +120,38 @@ public class HBoxServer {
       }
    }
    
-   public static <T> Set<Class<? extends T>> getSubTypes(final Class<T> type) {
+   public static <T> Set<Class<? extends T>> getSubTypes(Class<T> type) {
       Long start = System.currentTimeMillis();
-      Set<Class<? extends T>> classList = classes.getSubTypesOf(type);
-      Long end = System.currentTimeMillis();
-      Long eslaped = end - start;
-      Logger.verbose(type.getSimpleName() + " providers took " + eslaped + " ms to find");
+      Set<Class<? extends T>> classList = new HashSet<Class<? extends T>>();
+      for (Reflections data : classes.values()) {
+         for (Class<? extends T> rawClass : data.getSubTypesOf(type)) {
+            /* Since we have modules, it is possible that several classes have the same name.
+             * To avoid any conflict, we want to make sure only the good classes are returned.
+             * 
+             * For the queried class type, if it comes from the system class loader (same as us), we have no problem
+             * since that class type will be unique in the system.
+             * 
+             * On the other hand, if the queried class type is not from the system class loader, it means it comes
+             * from a module. In that case, we must only return results that are from the same class loader.
+             */
+            if (HBoxServer.class.getClassLoader().equals(type.getClassLoader()) || rawClass.getClassLoader().equals(type.getClassLoader())) {
+               classList.addAll(data.getSubTypesOf(type));
+            }
+         }
+      }
+      Logger.debug(type.getSimpleName() + " providers took " + (System.currentTimeMillis() - start) + " ms to find");
       return classList;
    }
    
    public static <T> Set<Class<? extends T>> getAnnotatedSubTypes(Class<T> type, Class<? extends Annotation> note) {
       Long start = System.currentTimeMillis();
       Set<Class<? extends T>> classList = new HashSet<Class<? extends T>>();
-      for (Class<? extends T> subType : classes.getSubTypesOf(type)) {
+      for (Class<? extends T> subType : getSubTypes(type)) {
          Logger.track();
          if (Modifier.isAbstract(subType.getModifiers())) {
             Logger.debug(subType.getName() + " is abstract and was ignored");
          } else {
             Logger.debug("Found match for " + type.getName() + ": " + subType.getName());
-            if (subType.getAnnotations().length == 0) {
-               Logger.debug(subType.getName() + " has no annotation");
-            }
             for (Annotation subTypeNote : subType.getAnnotations()) {
                if (!subTypeNote.annotationType().equals(note)) {
                   Logger.debug(subTypeNote.annotationType().getName() + " ignored, does not have annotation " + note.getName());
@@ -109,13 +162,10 @@ public class HBoxServer {
             
          }
       }
-      Long end = System.currentTimeMillis();
-      Long eslaped = end - start;
-      Logger.verbose(type.getSimpleName() + " providers took " + eslaped + " ms to find");
+      Logger.debug(type.getSimpleName() + " providers took " + (System.currentTimeMillis() - start) + " ms to find");
       return classList;
    }
    
-   @SuppressWarnings("unchecked")
    public static <T> Set<T> getQuiet(Class<T> type) {
       Set<T> loadedClasses = new HashSet<T>();
       
@@ -123,13 +173,11 @@ public class HBoxServer {
       for (Class<? extends T> rawObject : classes) {
          try {
             if (!Modifier.isAbstract(rawObject.getModifiers())) {
-               T view = (T) rawObject.getConstructors()[0].newInstance();
-               Logger.verbose("Loaded " + view.getClass().getSimpleName());
+               T view = rawObject.newInstance();
                loadedClasses.add(view);
             }
          } catch (Exception e) {
-            Logger.error("Failed to load " + rawObject.getSimpleName() + " : " + e.getLocalizedMessage());
-            Logger.exception(e);
+            Logger.debug("Failed to load " + rawObject.getSimpleName() + " : " + e.getLocalizedMessage());
          }
       }
       
@@ -146,15 +194,13 @@ public class HBoxServer {
       return objects;
    }
    
-   @SuppressWarnings("unchecked")
    public static <T> Set<T> getAllOrFail(Class<T> type) throws HyperboxException {
       try {
          Set<Class<? extends T>> classes = getSubTypes(type);
          Set<T> loadedClasses = new HashSet<T>();
          for (Class<? extends T> rawObject : classes) {
             if (!Modifier.isAbstract(rawObject.getModifiers())) {
-               T view = (T) rawObject.getConstructors()[0].newInstance();
-               Logger.verbose("Loaded " + view.getClass().getSimpleName());
+               T view = rawObject.newInstance();
                loadedClasses.add(view);
             }
          }
@@ -166,12 +212,16 @@ public class HBoxServer {
    }
    
    public static void initPersistor(_Persistor persistor) {
+      Logger.track();
+      
       if (HBoxServer.persistor == null) {
          HBoxServer.persistor = persistor;
       }
    }
    
    public static void initServer(_Server srv) {
+      Logger.track();
+      
       HBoxServer.srv = srv;
    }
    
@@ -215,6 +265,8 @@ public class HBoxServer {
    }
    
    public static void setSetting(String key, Object value) {
+      Logger.track();
+      
       persistor.storeSetting(key, value.toString());
       Configuration.setSetting(key, value);
    }

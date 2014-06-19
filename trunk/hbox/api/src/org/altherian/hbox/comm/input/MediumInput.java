@@ -26,7 +26,7 @@ import org.altherian.hbox.comm.io.PositiveNumberSettingIO;
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
 import org.altherian.hbox.constant.MediumAttribute;
-import org.altherian.tool.StringTools;
+import org.altherian.tool.AxStrings;
 
 import java.io.File;
 import java.util.HashSet;
@@ -86,9 +86,9 @@ public class MediumInput extends ObjectInput implements _Actionnable {
     */
    @Override
    public String getId() {
-      if (!StringTools.isEmpty(getUuid())) {
+      if (!AxStrings.isEmpty(getUuid())) {
          return getUuid();
-      } else if (!StringTools.isEmpty(getLocation())) {
+      } else if (!AxStrings.isEmpty(getLocation())) {
          return getLocation();
       } else {
          return "";

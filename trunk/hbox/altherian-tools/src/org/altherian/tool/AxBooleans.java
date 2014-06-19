@@ -1,6 +1,7 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2014 Maxime Dor
+ * Copyright (C) 2013 Maxime Dor
+ * hyperbox at altherian dot org
  * 
  * http://hyperbox.altherian.org
  * 
@@ -19,23 +20,16 @@
  * 
  */
 
-package org.altherian.hboxd.exception.store;
+package org.altherian.tool;
 
-import org.altherian.hbox.exception.HyperboxRuntimeException;
-
-@SuppressWarnings("serial")
-public class StoreException extends HyperboxRuntimeException {
+public class AxBooleans {
    
-   public StoreException(String s) {
-      super(s);
+   public static boolean get(Object o) {
+      return get(o.toString());
    }
    
-   public StoreException(Throwable t) {
-      super(t);
-   }
-   
-   public StoreException(String s, Throwable t) {
-      super(s, t);
+   public static boolean get(String o) {
+      return ((o != null) && (o.equalsIgnoreCase("true") || o.equalsIgnoreCase("yes") || o.equalsIgnoreCase("1")));
    }
    
 }

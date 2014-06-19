@@ -38,7 +38,7 @@ import org.altherian.hboxd.exception.security.InvalidCredentialsException;
 import org.altherian.hboxd.factory.SecurityUserFactory;
 import org.altherian.hboxd.persistence._SecurityPersistor;
 import org.altherian.security.PasswordEncryptionService;
-import org.altherian.tool.StringTools;
+import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
 
 import java.security.NoSuchAlgorithmException;
@@ -405,7 +405,7 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public void set(_User usr, SecurityItem itemType, SecurityAction action, String itemId, boolean isAllowed) {
-      if (StringTools.isEmpty(itemId)) {
+      if (AxStrings.isEmpty(itemId)) {
          set(usr, itemType, action, isAllowed);
       } else {
          Logger.debug("Setting permission: " + itemType + " - " + action + " - " + itemId + " : " + isAllowed);
@@ -416,7 +416,7 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public void remove(_User usr, SecurityItem itemType, SecurityAction action, String itemId) {
-      if (StringTools.isEmpty(itemId)) {
+      if (AxStrings.isEmpty(itemId)) {
          remove(usr, itemType, action);
       } else {
          persistor.deletePermission(usr, itemType, action, itemId);

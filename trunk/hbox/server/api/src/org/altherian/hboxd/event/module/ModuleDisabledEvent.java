@@ -1,7 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
- * hyperbox at altherian dot org
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -20,16 +19,15 @@
  * 
  */
 
-package org.altherian.tool;
+package org.altherian.hboxd.event.module;
 
-public class BooleanUtils {
+import org.altherian.hbox.event.HyperboxEvents;
+import org.altherian.hboxd.module._Module;
+
+public class ModuleDisabledEvent extends ModuleEvent {
    
-   public static boolean get(Object o) {
-      return get(o.toString());
-   }
-   
-   public static boolean get(String o) {
-      return ((o != null) && (o.equalsIgnoreCase("true") || o.equalsIgnoreCase("yes") || o.equalsIgnoreCase("1")));
+   public ModuleDisabledEvent(_Module mod) {
+      super(HyperboxEvents.ModuleDisabled, mod);
    }
    
 }

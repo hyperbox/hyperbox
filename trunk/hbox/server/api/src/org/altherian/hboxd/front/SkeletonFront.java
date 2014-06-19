@@ -99,11 +99,11 @@ public abstract class SkeletonFront implements _Front, Runnable {
    }
    
    protected void starting() {
-      // if needed
+      // stub - to be implemented if needed
    }
    
    protected void stopping() {
-      // if needed
+      // stub - to be implemented if needed
    }
    
    protected _RequestReceiver getReceiver() {

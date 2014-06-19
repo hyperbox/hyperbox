@@ -34,7 +34,7 @@ import org.altherian.hboxc.front.gui.action.SaveAction;
 import org.altherian.hboxc.front.gui.builder.JDialogBuilder;
 import org.altherian.hboxc.front.gui.store.utils.StoreItemChooser;
 import org.altherian.hboxc.front.gui.utils.CancelableUtils;
-import org.altherian.tool.StringTools;
+import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
 
 import java.awt.event.ActionEvent;
@@ -89,7 +89,7 @@ public class StoreEditor implements _Saveable, _Cancelable {
    private class EmptyValueListener implements DocumentListener {
       
       private void validate() {
-         saveButton.setEnabled(!StringTools.isEmpty(storeLabelValue.getText()) && !StringTools.isEmpty(storeLocValue.getText()));
+         saveButton.setEnabled(!AxStrings.isEmpty(storeLabelValue.getText()) && !AxStrings.isEmpty(storeLocValue.getText()));
       }
       
       @Override

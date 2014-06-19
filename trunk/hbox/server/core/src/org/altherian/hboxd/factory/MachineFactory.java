@@ -30,6 +30,7 @@ import org.altherian.hboxd.server._Server;
 public class MachineFactory {
    
    private MachineFactory() {
+      throw new RuntimeException("Not allowed");
       
    }
    

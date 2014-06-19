@@ -33,6 +33,7 @@ import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.host.HostViewer;
+import org.altherian.hboxc.front.gui.module.ModuleListView;
 import org.altherian.hboxc.front.gui.security.user.UserListView;
 import org.altherian.hboxc.front.gui.store.StoreListView;
 import org.altherian.hboxc.front.gui.tasks.ServerTaskListView;
@@ -57,6 +58,7 @@ public class ConnectorDetailedView implements _Refreshable {
    private ServerTaskListView taskView;
    private StoreListView storeView;
    private UserListView userView;
+   private ModuleListView modView;
    
    public ConnectorDetailedView() {
       summaryView = new ConnectorSummaryViewer();
@@ -64,6 +66,7 @@ public class ConnectorDetailedView implements _Refreshable {
       taskView = new ServerTaskListView();
       storeView = new StoreListView();
       userView = new UserListView();
+      modView = new ModuleListView();
       
       tabs = new JTabbedPane();
       tabs.addTab("Summary", IconBuilder.getEntityType(EntityTypes.Server), summaryView.getComponent());
@@ -71,6 +74,7 @@ public class ConnectorDetailedView implements _Refreshable {
       tabs.addTab("Tasks", IconBuilder.getEntityType(EntityTypes.Task), taskView.getComponent());
       tabs.addTab("Stores", IconBuilder.getEntityType(EntityTypes.Store), storeView.getComponent());
       tabs.addTab("Users", IconBuilder.getEntityType(EntityTypes.User), userView.getComponent());
+      tabs.addTab("Modules", IconBuilder.getEntityType(EntityTypes.Module), modView.getComponent());
       
       loadingLabel = new JLabel("Loading...");
       loadingLabel.setVisible(false);
@@ -105,11 +109,13 @@ public class ConnectorDetailedView implements _Refreshable {
          tabs.setEnabledAt(tabs.indexOfComponent(taskView.getComponent()), conOut.isConnected());
          tabs.setEnabledAt(tabs.indexOfComponent(storeView.getComponent()), conOut.isConnected());
          tabs.setEnabledAt(tabs.indexOfComponent(userView.getComponent()), conOut.isConnected());
+         tabs.setEnabledAt(tabs.indexOfComponent(modView.getComponent()), conOut.isConnected());
          if (conOut.isConnected()) {
             hostView.show(conOut.getServerId());
             taskView.show(conOut.getServer());
             storeView.show(conOut.getServer());
             userView.show(conOut.getServer());
+            modView.show(conOut.getServer());
          } else {
             tabs.setSelectedComponent(summaryView.getComponent());
          }

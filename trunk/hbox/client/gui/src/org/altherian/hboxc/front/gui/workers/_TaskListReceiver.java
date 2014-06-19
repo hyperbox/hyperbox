@@ -28,6 +28,6 @@ import java.util.List;
 
 public interface _TaskListReceiver extends _WorkerDataReceiver {
    
-   public void add(List<TaskOutput> tOutList);
+   public void add(List<TaskOutput> objOutList);
    
 }

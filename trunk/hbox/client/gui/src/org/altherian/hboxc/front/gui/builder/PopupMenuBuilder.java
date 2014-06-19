@@ -22,6 +22,7 @@
 
 package org.altherian.hboxc.front.gui.builder;
 
+import org.altherian.hbox.comm.output.ModuleOutput;
 import org.altherian.hbox.comm.output.ServerOutput;
 import org.altherian.hbox.comm.output.StoreOutput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
@@ -40,6 +41,7 @@ import org.altherian.hboxc.front.gui.action.machine.MachineAcpiPowerAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineCreateAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineDeleteAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineEditAction;
+import org.altherian.hboxc.front.gui.action.machine.MachineLockAction;
 import org.altherian.hboxc.front.gui.action.machine.MachinePauseAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineRegisterAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineResetAction;
@@ -47,7 +49,13 @@ import org.altherian.hboxc.front.gui.action.machine.MachineResumeAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineSaveStateAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineStartAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineStopAction;
+import org.altherian.hboxc.front.gui.action.machine.MachineUnlockAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineUnregisterAction;
+import org.altherian.hboxc.front.gui.action.module.ModuleDisableAction;
+import org.altherian.hboxc.front.gui.action.module.ModuleEnableAction;
+import org.altherian.hboxc.front.gui.action.module.ModuleLoadAction;
+import org.altherian.hboxc.front.gui.action.module.ModuleUnloadAction;
+import org.altherian.hboxc.front.gui.action.module.ModuleUnregisterAction;
 import org.altherian.hboxc.front.gui.action.storage.HypervisorToolsMediumAttachAction;
 import org.altherian.hboxc.front.gui.action.storage.MediumAttachAction;
 import org.altherian.hboxc.front.gui.action.storage.MediumDettachAction;
@@ -57,6 +65,7 @@ import org.altherian.hboxc.front.gui.action.store.StoreDeleteAction;
 import org.altherian.hboxc.front.gui.action.store.StoreOpenAction;
 import org.altherian.hboxc.front.gui.action.store.StoreUnregisterAction;
 import org.altherian.hboxc.front.gui.connector._ConnectorSelector;
+import org.altherian.hboxc.front.gui.module._ModuleSelector;
 import org.altherian.hboxc.front.gui.server._ServerSelector;
 import org.altherian.hboxc.front.gui.store._StoreSelector;
 import org.altherian.hboxc.front.gui.vm._MachineSelector;
@@ -94,6 +103,9 @@ public class PopupMenuBuilder {
       machineMenu.add(new JSeparator());
       machineMenu.add(new JMenuItem(new MachineUnregisterAction(select)));
       machineMenu.add(new JMenuItem(new MachineDeleteAction(select)));
+      machineMenu.add(new JSeparator());
+      machineMenu.add(new JMenuItem(new MachineLockAction(select)));
+      machineMenu.add(new JMenuItem(new MachineUnlockAction(select)));
       
       /*
       JMenu guestMenu = new JMenu("Guest");
@@ -151,7 +163,6 @@ public class PopupMenuBuilder {
    }
    
    public static JPopupMenu get(_StoreSelector stoSelect, StoreOutput stoOut) {
-      JPopupMenu actions = new JPopupMenu();
       Action browse = new StoreBrowseAction(stoSelect);
       browse.setEnabled(stoOut.getState().equals(StoreState.Open));
       Action close = new StoreCloseAction(stoSelect);
@@ -161,6 +172,7 @@ public class PopupMenuBuilder {
       Action unregister = new StoreUnregisterAction(stoSelect);
       Action delete = new StoreDeleteAction(stoSelect);
       
+      JPopupMenu actions = new JPopupMenu();
       actions.add(new JMenuItem(browse));
       actions.add(new JSeparator(JSeparator.HORIZONTAL));
       actions.add(new JMenuItem(close));
@@ -171,4 +183,27 @@ public class PopupMenuBuilder {
       return actions;
    }
    
+   public static JPopupMenu get(_ModuleSelector modSelect, ModuleOutput modOut) {
+      Action disable = new ModuleDisableAction(modSelect);
+      disable.setEnabled(modOut.isEnabled());
+      Action enable = new ModuleEnableAction(modSelect);
+      enable.setEnabled(!modOut.isEnabled());
+      Action load = new ModuleLoadAction(modSelect);
+      load.setEnabled(!modOut.isLoaded());
+      Action unload = new ModuleUnloadAction(modSelect);
+      unload.setEnabled(modOut.isLoaded());
+      Action unregister = new ModuleUnregisterAction(modSelect);
+      
+      JPopupMenu actions = new JPopupMenu();
+      actions.add(new JMenuItem(enable));
+      actions.add(new JMenuItem(disable));
+      actions.add(new JSeparator(JSeparator.HORIZONTAL));
+      actions.add(new JMenuItem(load));
+      actions.add(new JMenuItem(unload));
+      actions.add(new JSeparator(JSeparator.HORIZONTAL));
+      actions.add(new JMenuItem(unregister));
+      return actions;
+   }
+   
 }
+

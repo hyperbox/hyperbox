@@ -33,7 +33,7 @@ import org.altherian.hboxd.comm.io.factory.MediumIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 import org.altherian.hboxd.session.SessionContext;
-import org.altherian.tool.StringTools;
+import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
 
 import java.util.Arrays;
@@ -58,7 +58,7 @@ public final class MediumGetAction extends ASingleTaskAction {
       MediumInput medIn = request.get(MediumInput.class);
       
       MediumOutput medOut = null;
-      if (!StringTools.isEmpty(medIn.getUuid())) {
+      if (!AxStrings.isEmpty(medIn.getUuid())) {
          medOut = MediumIoFactory.get(hbox.getHypervisor().getMedium(medIn.getUuid()));
       } else {
          medOut = MediumIoFactory.get(hbox.getHypervisor().getMedium(medIn.getLocation(), medIn.getSetting(MediumAttribute.Type).getString()));

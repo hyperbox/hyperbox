@@ -26,7 +26,7 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.output.hypervisor.GuestNetworkInterfaceOutput;
 import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
 import org.altherian.helper.swing.JTextFieldUtils;
-import org.altherian.tool.StringTools;
+import org.altherian.tool.AxStrings;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,7 +42,7 @@ public class NetworkInterfaceSummary {
       JPanel panel = new JPanel(new MigLayout("ins 0"));
       
       JTextField nicValue = JTextFieldUtils.createAsLabel(nicOut.getAdapterType() + " using " + nicOut.getAttachMode()
-            + (StringTools.isEmpty(nicOut.getAttachName()) ? "" : " on " + nicOut.getAttachName()));
+            + (AxStrings.isEmpty(nicOut.getAttachName()) ? "" : " on " + nicOut.getAttachName()));
       JTextField ipv4Value = JTextFieldUtils.createAsLabel(nicOut.getMacAddress());
       if (gNicOut != null) {
          ipv4Value.setText(ipv4Value.getText() + " / " + gNicOut.getIp4Address() + " / " + gNicOut.getIp4Subnet());

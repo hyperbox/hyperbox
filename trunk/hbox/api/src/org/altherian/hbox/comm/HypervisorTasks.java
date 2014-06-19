@@ -50,6 +50,9 @@ public enum HypervisorTasks {
     */
    MachineList,
    
+   MachineLock,
+   MachineUnlock,
+
    /**
     * Get the details of a VM
     * <p>

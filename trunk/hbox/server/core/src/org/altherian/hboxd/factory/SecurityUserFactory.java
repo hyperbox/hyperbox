@@ -27,10 +27,14 @@ import org.altherian.hboxd.security._User;
 
 public class SecurityUserFactory {
    
+   private SecurityUserFactory() {
+      throw new RuntimeException("Not allowed");
+   }
+
    public static _User get(String userId, String username) {
       return new User(userId, username);
    }
-
+   
    public static _User get(String userId, String userName, String userDomain) {
       return new User(userId, userName, userDomain);
    }

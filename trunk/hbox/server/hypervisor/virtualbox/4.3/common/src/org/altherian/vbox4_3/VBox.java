@@ -48,5 +48,9 @@ public class VBox {
    public static VirtualBoxManager getManager() {
       return mgr;
    }
-
+   
+   public static void unset() {
+      mgr = null;
+   }
+   
 }
