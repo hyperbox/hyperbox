@@ -91,8 +91,8 @@ public class ModuleListView implements _ModuleSelector, _Refreshable, _ModuleLis
       
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(refreshProgress, "hidemode 3, growx, pushx, wrap");
-      panel.add(buttonPanel, "growx, pushx, wrap");
-      panel.add(scrollPane, "grow, push, wrap");
+      panel.add(buttonPanel, "hidemode 3, growx, pushx, wrap");
+      panel.add(scrollPane, "hidemode 3, grow, push, wrap");
       
       FrontEventManager.register(this);
    }

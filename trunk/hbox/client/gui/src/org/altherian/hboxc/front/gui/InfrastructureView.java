@@ -60,6 +60,7 @@ import org.altherian.hboxc.front.gui.utils.MachineOutputComparator;
 import org.altherian.hboxc.front.gui.utils.RefreshUtil;
 import org.altherian.hboxc.front.gui.vm._MachineSelector;
 import org.altherian.hboxc.front.gui.vm.view.VmDetailedView;
+import org.altherian.helper.swing.MouseWheelController;
 import org.altherian.tool.logging.Logger;
 
 import java.awt.CardLayout;
@@ -144,6 +145,7 @@ public final class InfrastructureView implements _MachineSelector, _ServerSelect
       //detailViews.add(srvView.getComponent(), EntityTypes.Server.getId());
       JScrollPane detailPane = new JScrollPane(detailViews);
       detailPane.setBorder(BorderFactory.createEmptyBorder());
+      MouseWheelController.install(detailPane);
       
       vSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, detailPane);
       vSplit.setResizeWeight(0);
@@ -655,11 +657,7 @@ public final class InfrastructureView implements _MachineSelector, _ServerSelect
             else if (node.getUserObject() instanceof ConnectorOutput) {
                ConnectorOutput conOut = (ConnectorOutput) node.getUserObject();
                setIcon(IconBuilder.getConnector(conOut));
-               if (conOut.isConnected()) {
-                  setText(conOut.getServer().getName());
-               } else {
-                  setText(conOut.getLabel());
-               }
+               setText(conOut.getLabel());
             }
             else {
                Logger.warning("Unknown object: " + node.getUserObject().getClass().getName());

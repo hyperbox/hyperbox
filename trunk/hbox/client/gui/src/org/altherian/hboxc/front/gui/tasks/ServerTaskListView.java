@@ -87,8 +87,8 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       scrollPane = new JScrollPane(itemList);
       
       panel = new JPanel(new MigLayout("ins 0"));
-      panel.add(loadingLabel, "growx,pushx,wrap,hidemode 3");
-      panel.add(scrollPane, "grow,push,wrap");
+      panel.add(loadingLabel, "hidemode 3, growx, pushx, wrap");
+      panel.add(scrollPane, "hidemode 3, grow, push, wrap");
       
       pane = new JScrollPane(panel);
       pane.setBorder(BorderFactory.createEmptyBorder());

@@ -29,6 +29,7 @@ import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.output.ServerOutput;
 import org.altherian.hbox.comm.output.event.security.UserEventOutput;
 import org.altherian.hbox.comm.output.security.UserOutput;
+import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
@@ -48,6 +49,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -55,14 +57,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
+import javax.swing.SwingUtilities;
 
 public class UserListView implements _UserSelector, _Refreshable, _SingleServerSelector {
    
    private ServerOutput srvOut;
    
+   private JLabel errorLabel;
+   
    private JPanel panel;
    private UserTableModel itemListModel;
    private JTable itemList;
+   private JScrollPane scrollPane;
    
    private JButton addButton;
    private JPanel buttonPanel;
@@ -72,6 +78,9 @@ public class UserListView implements _UserSelector, _Refreshable, _SingleServerS
    public UserListView() {
       Logger.track();
       
+      errorLabel = new JLabel();
+      errorLabel.setVisible(false);
+      
       itemListModel = new UserTableModel();
       itemList = new JTable(itemListModel);
       itemList.setAutoCreateRowSorter(true);
@@ -79,7 +88,7 @@ public class UserListView implements _UserSelector, _Refreshable, _SingleServerS
       itemList.getRowSorter().setSortKeys(Arrays.asList(new RowSorter.SortKey(0, SortOrder.ASCENDING)));
       itemList.addMouseListener(new ItemListMouseListener());
       
-      JScrollPane scrollPane = new JScrollPane(itemList);
+      scrollPane = new JScrollPane(itemList);
       
       addButton = new JButton(new UserCreateAction(this));
       addButton.setIcon(IconBuilder.getTask(HyperboxTasks.UserCreate));
@@ -87,8 +96,10 @@ public class UserListView implements _UserSelector, _Refreshable, _SingleServerS
       buttonPanel.add(addButton);
       
       panel = new JPanel(new MigLayout("ins 0"));
-      panel.add(scrollPane, "grow, push, wrap");
-      panel.add(buttonPanel, "bottom");
+      panel.add(errorLabel, "hidemode 3, growx, pushx, wrap");
+      panel.add(buttonPanel, "hidemode 3, growx, pushx, wrap");
+      panel.add(scrollPane, "hidemode 3, grow, push, wrap");
+      
       
       actions = new JPopupMenu();
       actions.add(new JMenuItem(new UserModifyAction(this)));
@@ -157,7 +168,22 @@ public class UserListView implements _UserSelector, _Refreshable, _SingleServerS
    
    @Override
    public void refresh() {
-      update(Gui.getReader().getServerReader(srvOut.getId()).listUsers());
+      SwingUtilities.invokeLater(new Runnable() {
+         @Override
+         public void run() {
+            try {
+               errorLabel.setVisible(false);
+               update(Gui.getReader().getServerReader(srvOut.getId()).listUsers());
+               buttonPanel.setVisible(true);
+               scrollPane.setVisible(true);
+            } catch (HyperboxRuntimeException e) {
+               errorLabel.setText(e.getMessage());
+               errorLabel.setVisible(true);
+               buttonPanel.setVisible(false);
+               scrollPane.setVisible(false);
+            }
+         }
+      });
    }
    
    @Override

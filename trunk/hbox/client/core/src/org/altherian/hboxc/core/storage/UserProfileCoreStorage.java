@@ -90,7 +90,7 @@ public class UserProfileCoreStorage implements _CoreStorage {
       consoleViewersFile = new File(userDataFolder.getAbsolutePath() + File.separator + CONSOLE_VIEWERS_FILE);
       connectorFile = new File(userDataFolder.getAbsolutePath() + File.separator + CONNECTORS_FILE);
       
-      Logger.verbose("Initiated data directory: " + userDataFolder.getAbsolutePath());
+      Logger.info("Initiated data directory: " + userDataFolder.getAbsolutePath());
    }
    
    @Override

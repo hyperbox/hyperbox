@@ -30,16 +30,16 @@ import org.altherian.hboxc.front.gui.vbox.VBox4_3ConfigureView;
 public class HypervisorConfigureView {
    
    public static HypervisorInput getInput(String srvId) {
-      String hypTypeId = Gui.getServer(srvId).getHypervisor().getType();
+      String hypId = Gui.getServer(srvId).getHypervisor().getInfo().getId();
       // TODO make it generic
-      if (hypTypeId.startsWith("vbox-4.3")) {
+      if (hypId.toLowerCase().contains("vbox") && hypId.toLowerCase().contains("4.3")) {
          return VBox4_3ConfigureView.getInput(srvId);
       }
-      else if (hypTypeId.startsWith("vbox-4.2")) {
+      else if (hypId.toLowerCase().contains("vbox") && hypId.toLowerCase().contains("4.2")) {
          return VBox4_2ConfigureView.getInput(srvId);
       }
       else {
-         HyperboxClient.getView().postError("No Configuration GUI module for this hypervisor: " + hypTypeId);
+         HyperboxClient.getView().postError("No Configuration GUI module for this hypervisor: " + hypId);
          return null;
       }
       

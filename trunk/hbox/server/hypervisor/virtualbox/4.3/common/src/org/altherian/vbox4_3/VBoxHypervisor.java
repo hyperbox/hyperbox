@@ -36,6 +36,7 @@ import org.altherian.hboxd.event.hypervisor.HypervisorConfiguredEvent;
 import org.altherian.hboxd.event.hypervisor.HypervisorConnectedEvent;
 import org.altherian.hboxd.event.hypervisor.HypervisorDisconnectedEvent;
 import org.altherian.hboxd.event.service.ServiceStatusEvent;
+import org.altherian.hboxd.hypervisor.Hypervisor;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 import org.altherian.hboxd.hypervisor._RawOsType;
 import org.altherian.hboxd.hypervisor.host._RawHost;
@@ -89,6 +90,12 @@ import org.virtualbox_4_3.StorageControllerType;
 import org.virtualbox_4_3.VBoxException;
 import org.virtualbox_4_3.VirtualBoxManager;
 
+@Hypervisor(
+      id = "vbox-4.3-generic",
+      typeId = "generic",
+      vendor = "Oracle",
+      product = "Virtualbox",
+      schemes = {})
 public abstract class VBoxHypervisor implements _Hypervisor {
    
    /**
@@ -112,22 +119,22 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    
    @Override
    public String getId() {
-      return "vbox-4.3";
+      return this.getClass().getAnnotation(Hypervisor.class).id();
    }
    
    @Override
    public String getTypeId() {
-      return "Generic";
+      return this.getClass().getAnnotation(Hypervisor.class).typeId();
    }
    
    @Override
    public String getVendor() {
-      return "Oracle";
+      return this.getClass().getAnnotation(Hypervisor.class).vendor();
    }
    
    @Override
    public String getProduct() {
-      return "Virtualbox";
+      return this.getClass().getAnnotation(Hypervisor.class).product();
    }
    
    @Override

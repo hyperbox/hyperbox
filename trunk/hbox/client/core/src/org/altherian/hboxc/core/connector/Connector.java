@@ -83,7 +83,7 @@ public class Connector implements _Connector {
    
    @Override
    public String getLabel() {
-      return AxStrings.isEmpty(label) ? getAddress() : label;
+      return !AxStrings.isEmpty(label) ? label : getServer() != null ? getServer().getName() : getAddress();
    }
    
    @Override
@@ -140,7 +140,6 @@ public class Connector implements _Connector {
          server = ServerFactory.get();
          server.connect(address, backendId, usrIn);
          serverId = server.getId();
-         label = server.getName();
          setState(ConnectionState.Connected);
          
          return server;

@@ -68,11 +68,14 @@ import javax.swing.tree.TreePath;
 public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    
    private JPanel mainPanel;
+   
    private JProgressBar refreshProgress;
+   
    private JButton takeSnapButton;
    private JButton restoreSnapButton;
    private JButton delSnapButton;
    private JButton infoSnapButton;
+   private JPanel buttonPanel;
    
    private DefaultMutableTreeNode topNode;
    private DefaultTreeModel treeModel;
@@ -105,6 +108,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       infoSnapButton = new JButton(new SnapshotModifyAction(this));
       infoSnapButton.setIcon(IconBuilder.getTask(HypervisorTasks.SnapshotGet));
       
+      
       snapNodes = new HashMap<String, DefaultMutableTreeNode>();
       topNode = new DefaultMutableTreeNode("Snapshots");
       treeModel = new DefaultTreeModel(topNode);
@@ -116,13 +120,16 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       tree.addMouseListener(new TreeMouseListener());
       treeView = new JScrollPane(tree);
       
+      buttonPanel = new JPanel(new MigLayout("ins 0"));
+      buttonPanel.add(takeSnapButton);
+      buttonPanel.add(restoreSnapButton);
+      buttonPanel.add(delSnapButton);
+      buttonPanel.add(infoSnapButton);
+      
       mainPanel = new JPanel(new MigLayout());
-      mainPanel.add(refreshProgress, "hidemode 3, growx, pushx, wrap, span");
-      mainPanel.add(takeSnapButton);
-      mainPanel.add(restoreSnapButton);
-      mainPanel.add(delSnapButton);
-      mainPanel.add(infoSnapButton, "wrap");
-      mainPanel.add(treeView, "grow, push, span");
+      mainPanel.add(refreshProgress, "hidemode 3, growx, pushx, wrap");
+      mainPanel.add(buttonPanel, "hidemode 3, growx, pushx, wrap");
+      mainPanel.add(treeView, "hidemode 3, grow, push, wrap");
       
       FrontEventManager.register(this);
    }
