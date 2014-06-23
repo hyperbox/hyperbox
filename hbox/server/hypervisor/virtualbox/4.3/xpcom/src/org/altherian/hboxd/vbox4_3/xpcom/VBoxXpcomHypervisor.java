@@ -48,16 +48,6 @@ public final class VBoxXpcomHypervisor extends VBoxHypervisor {
    }
    
    @Override
-   public String getVendor() {
-      return this.getClass().getAnnotation(Hypervisor.class).vendor();
-   }
-   
-   @Override
-   public String getProduct() {
-      return this.getClass().getAnnotation(Hypervisor.class).product();
-   }
-   
-   @Override
    protected VirtualBoxManager connect(String options) {
       if (AxStrings.isEmpty(options)) {
          options = defaultHome;
@@ -68,7 +58,6 @@ public final class VBoxXpcomHypervisor extends VBoxHypervisor {
    
    @Override
    protected void disconnect() {
-      // nothing to do here
       System.gc();
    }
    

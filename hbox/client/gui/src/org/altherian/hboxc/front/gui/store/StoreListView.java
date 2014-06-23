@@ -27,6 +27,7 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.output.ServerOutput;
 import org.altherian.hbox.comm.output.StoreOutput;
 import org.altherian.hbox.comm.output.event.store.StoreStateEventOutput;
+import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
@@ -46,6 +47,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -57,6 +59,8 @@ import javax.swing.SwingUtilities;
 public final class StoreListView implements _StoreSelector, _Refreshable, _SingleServerSelector {
    
    private ServerOutput srvOut;
+   
+   private JLabel errorLabel;
    
    private StoreListTableModel itemListModel;
    private JTable itemList;
@@ -70,6 +74,9 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
    
    public StoreListView() {
       Logger.track();
+      
+      errorLabel = new JLabel();
+      errorLabel.setVisible(false);
       
       itemListModel = new StoreListTableModel();
       itemList = new JTable(itemListModel);
@@ -87,8 +94,9 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
       buttonPanel.add(registerButton);
       
       panel = new JPanel(new MigLayout("ins 0"));
-      panel.add(scrollPane, "grow, push, wrap");
-      panel.add(buttonPanel, "growx, pushx, wrap");
+      panel.add(errorLabel, "hidemode 3, growx, pushx, wrap");
+      panel.add(buttonPanel, "hidemode 3, growx, pushx, wrap");
+      panel.add(scrollPane, "hidemode 3, grow, push, wrap");
       
       FrontEventManager.register(this);
    }
@@ -106,12 +114,21 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
       return listSelectedItems;
    }
    
+   private void clear() {
+      SwingUtilities.invokeLater(new Runnable() {
+         @Override
+         public void run() {
+            itemListModel.clear();
+         }
+      });
+   }
+   
    private void update(final List<StoreOutput> stores) {
       SwingUtilities.invokeLater(new Runnable() {
          @Override
          public void run() {
             if (stores.isEmpty()) {
-               itemListModel.clear();
+               clear();
             } else {
                itemListModel.put(stores);
             }
@@ -178,7 +195,23 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
    public void refresh() {
       Logger.track();
       
-      update(Gui.getServer(srvOut).listStores());
+      SwingUtilities.invokeLater(new Runnable() {
+         @Override
+         public void run() {
+            try {
+               errorLabel.setVisible(false);
+               update(Gui.getServer(srvOut).listStores());
+               buttonPanel.setVisible(true);
+               scrollPane.setVisible(true);
+            } catch (HyperboxRuntimeException e) {
+               clear();
+               errorLabel.setText(e.getMessage());
+               errorLabel.setVisible(true);
+               buttonPanel.setVisible(false);
+               scrollPane.setVisible(false);
+            }
+         }
+      });
    }
    
    @Override

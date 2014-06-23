@@ -294,7 +294,7 @@ public class ClientCore implements _Core {
    public _Connector addConnector(ConnectorInput conIn, UserInput usrIn) {
       Logger.track();
       
-      _Connector conn = ConnectorFactory.get(connectIdGen.getId(), conIn.getAddress(), usrIn.getUsername(), conIn.getBackendId());
+      _Connector conn = ConnectorFactory.get(connectIdGen.getId(), conIn.getLabel(), conIn.getAddress(), usrIn.getUsername(), conIn.getBackendId());
       storage.storeConnectorCredentials(conn.getId(), usrIn);
       conns.put(conn.getId(), conn);
       storage.storeConnectors(new ArrayList<_Connector>(conns.values()));

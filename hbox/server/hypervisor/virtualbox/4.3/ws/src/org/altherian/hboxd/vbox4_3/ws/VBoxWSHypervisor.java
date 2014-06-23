@@ -57,16 +57,6 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
    }
    
    @Override
-   public String getVendor() {
-      return this.getClass().getAnnotation(Hypervisor.class).vendor();
-   }
-   
-   @Override
-   public String getProduct() {
-      return this.getClass().getAnnotation(Hypervisor.class).product();
-   }
-   
-   @Override
    protected VirtualBoxManager connect(String options) {
       String host = defaultHost;
       int port = defaultPort;

@@ -46,6 +46,14 @@ public class ConnectorInput extends ObjectInput {
       setSetting(new StringSettingIO(ConnectorAttributes.Address, address));
    }
    
+   public String getLabel() {
+      return getSetting(ConnectorAttributes.Label).getString();
+   }
+   
+   public void setLabel(String label) {
+      setSetting(new StringSettingIO(ConnectorAttributes.Label, label));
+   }
+   
    public String getBackendId() {
       return getSetting(ConnectorAttributes.BackendId).getString();
    }

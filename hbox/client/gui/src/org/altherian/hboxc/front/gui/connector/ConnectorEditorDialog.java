@@ -54,6 +54,8 @@ public final class ConnectorEditorDialog implements _Saveable, _Cancelable {
    private JPanel inputPanel;
    private JLabel hostnameLabel;
    private JTextField hostnameField;
+   private JLabel labelLabel;
+   private JTextField labelField;
    private JLabel userLabel;
    private JTextField userField;
    private JLabel passLabel;
@@ -95,6 +97,9 @@ public final class ConnectorEditorDialog implements _Saveable, _Cancelable {
       hostnameField = new JTextField(15);
       hostnameField.setText("127.0.0.1");
       
+      labelLabel = new JLabel("Label");
+      labelField = new JTextField(15);
+      
       userLabel = new JLabel("User");
       userField = new JTextField(15);
       
@@ -111,8 +116,8 @@ public final class ConnectorEditorDialog implements _Saveable, _Cancelable {
       cancelButton = new JButton(new CancelAction(this));
       
       inputPanel = new JPanel(new MigLayout());
-      //inputPanel.add(labelLabel);
-      //inputPanel.add(labelField, "growx,pushx,wrap");
+      inputPanel.add(labelLabel);
+      inputPanel.add(labelField, "growx,pushx,wrap");
       inputPanel.add(hostnameLabel);
       inputPanel.add(hostnameField, "growx, pushx, wrap");
       inputPanel.add(userLabel);
@@ -171,7 +176,8 @@ public final class ConnectorEditorDialog implements _Saveable, _Cancelable {
    public void save() throws HyperboxException {
       ConnectorInput conIn = new ConnectorInput(conId);
       conIn.setAddress(hostnameField.getText());
-      conIn.setBackendId(connectorValue.getSelectedItem().toString());
+      conIn.setLabel(labelField.getText());
+      conIn.setBackendId(((BackendOutput) connectorValue.getSelectedItem()).getId());
       
       
       if (task.equals(ClientTasks.ConnectorAdd)) {
