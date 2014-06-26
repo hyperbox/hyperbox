@@ -22,7 +22,6 @@
 package org.altherian.vbox4_3.vm.guest;
 
 import org.altherian.hboxd.hypervisor.vm.guest._RawGuestNetworkInterface;
-import org.altherian.tool.logging.Logger;
 import org.altherian.vbox4_3.VBox;
 
 import org.virtualbox_4_3.IMachine;
@@ -67,9 +66,7 @@ public class VBoxGuestNetworkInterface implements _RawGuestNetworkInterface {
    
    @Override
    public String getIp4Subnet() {
-      String subnet = getProperty("V4/Netmask");
-      Logger.debug("Machine subnet :" + subnet);
-      return subnet;
+      return getProperty("V4/Netmask");
    }
    
    @Override

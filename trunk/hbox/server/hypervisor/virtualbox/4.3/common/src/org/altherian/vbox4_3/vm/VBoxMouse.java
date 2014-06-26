@@ -27,7 +27,7 @@ import org.altherian.hboxd.hypervisor.vm.device._RawMouse;
 import org.altherian.hboxd.settings.StringSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.general.MouseModeSetting;
-import org.altherian.vbox4_3.manager.VbSettingManager;
+import org.altherian.vbox4_3.manager.VBoxSettingManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,7 +64,7 @@ public class VBoxMouse implements _RawMouse {
    
    @Override
    public _Setting getSetting(Object getName) {
-      return VbSettingManager.get(machine, getName);
+      return VBoxSettingManager.get(machine, getName);
    }
    
    @Override

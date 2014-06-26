@@ -166,6 +166,7 @@ public final class ConnectorEditorDialog implements _Saveable, _Cancelable {
       task = ClientTasks.ConnectorModify;
       dialog.setTitle("Edit Server Connection");
       
+      labelField.setText(conOut.getLabel());
       hostnameField.setText(conOut.getAddress());
       userField.setText(conOut.getUsername());
       

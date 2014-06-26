@@ -25,7 +25,7 @@ import org.altherian.hbox.constant.MachineAttributes;
 import org.altherian.hbox.exception.HypervisorException;
 import org.altherian.hboxd.settings.StringSetting;
 import org.altherian.hboxd.settings._Setting;
-import org.altherian.vbox4_3.manager.VbSessionManager;
+import org.altherian.vbox4_3.manager.VBoxSessionManager;
 import org.altherian.vbox4_3.setting._MachineSettingAction;
 
 import org.virtualbox_4_3.IMachine;
@@ -53,7 +53,7 @@ public class VrdePortSettingAction implements _MachineSettingAction {
    public _Setting get(IMachine machine) {
       // TODO improve by having a getConsole() in SessionManager and throw the appropriate exception
       try {
-         ISession sess = VbSessionManager.get().lockAuto(machine.getId());
+         ISession sess = VBoxSessionManager.get().lockAuto(machine.getId());
          try {
             if ((sess.getConsole().getVRDEServerInfo() != null) && (sess.getConsole().getVRDEServerInfo().getPort() > 0)) {
                return new StringSetting(MachineAttributes.VrdePort, Integer.toString(sess.getConsole().getVRDEServerInfo().getPort()));
@@ -61,7 +61,7 @@ public class VrdePortSettingAction implements _MachineSettingAction {
                return new StringSetting(MachineAttributes.VrdePort, machine.getVRDEServer().getVRDEProperty("TCP/Ports"));
             }
          } finally {
-            VbSessionManager.get().unlockAuto(machine.getId());
+            VBoxSessionManager.get().unlockAuto(machine.getId());
          }
          // FIXME need more precise exception
       } catch (HypervisorException e) {

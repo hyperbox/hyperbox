@@ -33,7 +33,7 @@ import org.altherian.vbox.settings.network.NicAttachNameSetting;
 import org.altherian.vbox.settings.network.NicCableConnectedSetting;
 import org.altherian.vbox.settings.network.NicEnabledSetting;
 import org.altherian.vbox.settings.network.NicMacAddressSetting;
-import org.altherian.vbox4_3.manager.VbSettingManager;
+import org.altherian.vbox4_3.manager.VBoxSettingManager;
 
 import java.util.Arrays;
 import java.util.List;
@@ -136,12 +136,12 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    
    @Override
    public List<_Setting> listSettings() {
-      return VbSettingManager.list(this);
+      return VBoxSettingManager.list(this);
    }
    
    @Override
    public _Setting getSetting(Object getName) {
-      return VbSettingManager.get(this, getName);
+      return VBoxSettingManager.get(this, getName);
    }
    
    @Override
@@ -151,7 +151,7 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    
    @Override
    public void setSetting(List<_Setting> s) {
-      VbSettingManager.set(this, s);
+      VBoxSettingManager.set(this, s);
    }
    
 }

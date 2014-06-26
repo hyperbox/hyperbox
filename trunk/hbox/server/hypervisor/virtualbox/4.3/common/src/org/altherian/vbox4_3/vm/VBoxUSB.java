@@ -28,7 +28,7 @@ import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.usb.UsbEhciSetting;
 import org.altherian.vbox.settings.usb.UsbOhciSetting;
-import org.altherian.vbox4_3.manager.VbSettingManager;
+import org.altherian.vbox4_3.manager.VBoxSettingManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,7 +75,7 @@ public class VBoxUSB implements _RawUSB {
    
    @Override
    public _Setting getSetting(Object getName) {
-      return VbSettingManager.get(machine, getName);
+      return VBoxSettingManager.get(machine, getName);
    }
    
    @Override

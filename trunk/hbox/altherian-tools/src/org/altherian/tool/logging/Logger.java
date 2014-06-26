@@ -44,7 +44,7 @@ public class Logger {
    static {
       maxLevel = LogLevel.Info;
       printSql = false;
-      formater = new SimpleDateFormat("HH:mm:ss.SSS");
+      formater = new SimpleDateFormat("yyyy.mm.dd-HH:mm:ss.SSS");
    }
    
    private Logger() {

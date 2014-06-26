@@ -30,7 +30,7 @@ import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.motherboard.ACPISetting;
 import org.altherian.vbox.settings.motherboard.HardwareUuidSetting;
 import org.altherian.vbox.settings.motherboard.IoAPICSetting;
-import org.altherian.vbox4_3.manager.VbSettingManager;
+import org.altherian.vbox4_3.manager.VBoxSettingManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -87,7 +87,7 @@ public class VBoxMotherboard implements _RawMotherboard {
    
    @Override
    public _Setting getSetting(Object getName) {
-      return VbSettingManager.get(machine, getName);
+      return VBoxSettingManager.get(machine, getName);
    }
    
    @Override

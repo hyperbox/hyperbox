@@ -135,6 +135,13 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
       String[] options = address.split(":", 2);
       String host = options[0];
       Integer port = options.length == 2 ? Integer.parseInt(options[1]) : KryonetDefaultSettings.PORT;
+      if (options.length == 2) {
+         try {
+            port = Integer.parseInt(options[1]);
+         } catch (NumberFormatException e) {
+            throw new HyperboxException("Invalid port number: " + options[1]);
+         }
+      }
       
       try {
          client.connect(5000, host, port);
@@ -142,9 +149,13 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
          Logger.info("Backend connected");
          setState(BackendConnectionState.Connected);
       } catch (IOException e) {
-         Logger.debug("Backend connect error : " + e.getMessage() + " - " + e.getCause().getMessage());
+         String message = "Backend connect error - " + e.getClass().getSimpleName() + ": " + e.getMessage();
+         if (e.getCause() != null) {
+            message = message + e.getCause().getMessage();
+         }
+         Logger.debug(message);
          disconnect();
-         throw new HyperboxException(e.getMessage() + " - " + e.getCause().getMessage(), e);
+         throw new HyperboxException(message, e);
       }
    }
    

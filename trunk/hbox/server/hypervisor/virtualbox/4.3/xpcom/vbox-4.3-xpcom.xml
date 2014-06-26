@@ -9,7 +9,7 @@
 	<providers>
 		<provider>
 			<type>org.altherian.hboxd.hypervisor._Hypervisor</type>
-			<impl>org.altherian.hboxd.vbox4_3.xpcom.VBoxXpcomHypervisor</impl>
+			<impl>org.altherian.vbox4_3.xpcom.VBoxXpcomHypervisor</impl>
 		</provider>
 	</providers>
 </module>

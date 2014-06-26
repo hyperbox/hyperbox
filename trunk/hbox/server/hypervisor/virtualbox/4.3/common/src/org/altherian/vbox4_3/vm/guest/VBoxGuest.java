@@ -27,7 +27,7 @@ import org.altherian.hboxd.hypervisor.vm.guest._RawGuestNetworkInterface;
 import org.altherian.hboxd.hypervisor.vm.guest._RawHypervisorTools;
 import org.altherian.tool.AxStrings;
 import org.altherian.vbox4_3.VBox;
-import org.altherian.vbox4_3.manager.VbSessionManager;
+import org.altherian.vbox4_3.manager.VBoxSessionManager;
 import org.altherian.vbox4_3.vm.VBoxMachine;
 
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class VBoxGuest implements _RawGuest {
    }
    
    private void lockAuto() {
-      session = VbSessionManager.get().lockAuto(machineUuid, LockType.Shared);
+      session = VBoxSessionManager.get().lockAuto(machineUuid, LockType.Shared);
    }
    
    private void unlockAuto() {
@@ -61,7 +61,7 @@ public class VBoxGuest implements _RawGuest {
    }
    
    private void unlockAuto(boolean saveSettings) {
-      VbSessionManager.get().unlockAuto(machineUuid, saveSettings);
+      VBoxSessionManager.get().unlockAuto(machineUuid, saveSettings);
       session = null;
    }
    
