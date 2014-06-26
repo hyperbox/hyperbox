@@ -19,6 +19,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *  
  */
+ 
+body {
+	font-family: Verdana;
+	font-size: small;
+}
+
+ol {
+    counter-reset: item;
+}
+ol li {
+    display: block;
+    position: relative;
+}
+ol li:before {
+    content: counters(item, ".")".";
+    counter-increment: item;
+    position: absolute;
+    margin-right: 100%;
+    right: 8px; /* space between number and text */
+}
 
 pre, code  {
 	font-family: monospace;
@@ -37,5 +57,32 @@ pre, code  {
 }
 
 .tab {
-	margin-left: 40px;
+	margin-left: 1.5em;
+}
+
+.chapterTitle, .note, .caution, .warning {
+	border: 1px solid;
+	margin: 1.5em 0em 0.3em 0em;
+	padding: 0.10em;
+}
+
+.chapterTitle {
+	color: #00529B;
+	background-color: #BDE5F8;
+	text-align: center;
+}
+
+.note {
+	color: #4F8A10;
+	background-color: #DFF2BF;
+}
+
+.caution {
+	color: #9F6000;
+	background-color: #FEEFB3;
+}
+
+.warning {
+	color: #D8000C;
+	background-color: #FFBABA;
 }

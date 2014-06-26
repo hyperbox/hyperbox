@@ -28,7 +28,7 @@ import org.altherian.hboxd.hypervisor.vm.device._RawKeyboard;
 import org.altherian.hboxd.settings.StringSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.general.KeyboardModeSetting;
-import org.altherian.vbox4_3.manager.VbSettingManager;
+import org.altherian.vbox4_3.manager.VBoxSettingManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,7 +70,7 @@ public final class VBoxKeyboard implements _RawKeyboard {
    
    @Override
    public _Setting getSetting(Object getName) {
-      return VbSettingManager.get(machine, getName);
+      return VBoxSettingManager.get(machine, getName);
    }
    
    @Override

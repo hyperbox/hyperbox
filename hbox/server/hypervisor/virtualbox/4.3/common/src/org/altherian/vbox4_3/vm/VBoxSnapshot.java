@@ -29,7 +29,7 @@ import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.snapshot.SnapshotDescriptionSetting;
 import org.altherian.vbox.settings.snapshot.SnapshotNameSetting;
 import org.altherian.vbox4_3.VBox;
-import org.altherian.vbox4_3.manager.VbSettingManager;
+import org.altherian.vbox4_3.manager.VBoxSettingManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,12 +59,12 @@ public class VBoxSnapshot implements _RawSnapshot {
    
    @Override
    public List<_Setting> listSettings() {
-      return VbSettingManager.list(this);
+      return VBoxSettingManager.list(this);
    }
    
    @Override
    public _Setting getSetting(Object getName) {
-      return VbSettingManager.get(this, getName);
+      return VBoxSettingManager.get(this, getName);
    }
    
    @Override
@@ -74,7 +74,7 @@ public class VBoxSnapshot implements _RawSnapshot {
    
    @Override
    public void setSetting(List<_Setting> s) {
-      VbSettingManager.set(this, s);
+      VBoxSettingManager.set(this, s);
       EventManager.post(new SnapshotChangedEvent(uuid, machineUuid));
    }
    

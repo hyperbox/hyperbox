@@ -26,7 +26,7 @@ import org.altherian.hbox.constant.MachineAttributes;
 import org.altherian.hboxd.hypervisor.vm.device._RawCPU;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.cpu.CpuCountSetting;
-import org.altherian.vbox4_3.manager.VbSettingManager;
+import org.altherian.vbox4_3.manager.VBoxSettingManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,17 +63,17 @@ public final class VBoxCPU implements _RawCPU {
    
    @Override
    public _Setting getSetting(Object getName) {
-      return VbSettingManager.get(machine, getName);
+      return VBoxSettingManager.get(machine, getName);
    }
    
    @Override
    public void setSetting(_Setting s) {
-      VbSettingManager.set(machine, Arrays.asList(s));
+      VBoxSettingManager.set(machine, Arrays.asList(s));
    }
    
    @Override
    public void setSetting(List<_Setting> s) {
-      VbSettingManager.set(machine, s);
+      VBoxSettingManager.set(machine, s);
    }
    
 }

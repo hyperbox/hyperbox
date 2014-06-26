@@ -54,11 +54,11 @@ import org.altherian.tool.logging.Logger;
 import org.altherian.vbox4_3.data.Mappings;
 import org.altherian.vbox4_3.factory.OsTypeFactory;
 import org.altherian.vbox4_3.host.VBoxHost;
-import org.altherian.vbox4_3.manager.VbSessionManager;
+import org.altherian.vbox4_3.manager.VBoxSessionManager;
 import org.altherian.vbox4_3.service.EventsManagementService;
-import org.altherian.vbox4_3.storage.VbStorageControllerSubType;
-import org.altherian.vbox4_3.storage.VbStorageControllerType;
-import org.altherian.vbox4_3.storage.VirtualboxMedium;
+import org.altherian.vbox4_3.storage.VBoxStorageControllerSubType;
+import org.altherian.vbox4_3.storage.VBoxStorageControllerType;
+import org.altherian.vbox4_3.storage.VBoxMedium;
 import org.altherian.vbox4_3.vm.VBoxMachine;
 
 import java.util.ArrayList;
@@ -110,7 +110,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    private VBoxHost host;
    private _EventManager evMgr;
    // TODO keep this register up-to-date
-   private Map<String, VirtualboxMedium> mediumRegister;
+   private Map<String, VBoxMedium> mediumRegister;
    private _Service evMgrSvc;
    
    private List<_RawOsType> osTypeCache;
@@ -163,7 +163,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       
       Mappings.load();
       
-      mediumRegister = new ConcurrentHashMap<String, VirtualboxMedium>();
+      mediumRegister = new ConcurrentHashMap<String, VBoxMedium>();
       if (Configuration.getSetting("virtualbox.ws.cache.medium.autoload", "0").contentEquals("1")) {
          Logger.verbose("Loading media registry");
          updateMediumRegistry();
@@ -241,7 +241,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       Logger.track();
       
       for (IMedium medium : mediums) {
-         mediumRegister.put(medium.getId(), new VirtualboxMedium(medium));
+         mediumRegister.put(medium.getId(), new VBoxMedium(medium));
          registerMediums(medium.getChildren());
       }
    }
@@ -372,7 +372,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
             medium.close();
             throw new HypervisorException("Unable to get " + filePath + " : " + medium.getLastAccessError());
          }
-         return new VirtualboxMedium(medium);
+         return new VBoxMedium(medium);
       } catch (VBoxException e) {
          throw ErrorInterpreter.transform(e);
       }
@@ -448,7 +448,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
          // We validate that the type exist in Virtualbox
          StorageBus.valueOf(id);
          
-         return VbStorageControllerType.valueOf(id);
+         return VBoxStorageControllerType.valueOf(id);
       } catch (IllegalArgumentException e) {
          throw new HypervisorException(id + " is not a supported Controller Type");
       } catch (VBoxException e) {
@@ -464,7 +464,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       // Reminder : must skip StorageBus.Null
       //
       
-      return Arrays.asList((_RawStorageControllerType[]) VbStorageControllerType.values());
+      return Arrays.asList((_RawStorageControllerType[]) VBoxStorageControllerType.values());
    }
    
    @Override
@@ -473,7 +473,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
          // We validate that the type exist in Virtualbox
          StorageControllerType.valueOf(id);
          
-         return VbStorageControllerSubType.valueOf(id);
+         return VBoxStorageControllerSubType.valueOf(id);
       } catch (IllegalArgumentException e) {
          throw new HypervisorException(id + " is not a supported Controller SubType");
       } catch (VBoxException e) {
@@ -487,7 +487,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       try {
          List<_RawStorageControllerSubType> subTypes = new ArrayList<_RawStorageControllerSubType>();
          // TODO Must validate using the same logic than listStorageControllerType - use IVirtualbox::StorageControllerType.toString() as lookup ID, skipping Null
-         for (VbStorageControllerSubType subType : VbStorageControllerSubType.values()) {
+         for (VBoxStorageControllerSubType subType : VBoxStorageControllerSubType.values()) {
             if (subType.getParentType().contentEquals(type)) {
                subTypes.add(subType);
             }
@@ -512,7 +512,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    @Override
    public void deleteMachine(String uuid) {
       // TODO improve with multi-step exeception handling, as well as a separate method for hdd deletion
-      VbSessionManager.get().unlock(uuid);
+      VBoxSessionManager.get().unlock(uuid);
       IMachine machine = vbMgr.getVBox().findMachine(uuid);
       
       try {
@@ -568,7 +568,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    public void unregisterMachine(String uuid) {
       Logger.track();
       
-      VbSessionManager.get().unlock(uuid);
+      VBoxSessionManager.get().unlock(uuid);
       IMachine machine = vbMgr.getVBox().findMachine(uuid);
       machine.unregister(CleanupMode.DetachAllReturnNone);
    }

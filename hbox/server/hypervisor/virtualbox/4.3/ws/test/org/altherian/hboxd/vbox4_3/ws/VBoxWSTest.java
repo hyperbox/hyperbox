@@ -24,6 +24,7 @@ package org.altherian.hboxd.vbox4_3.ws;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxd.hypervisor.DummyEventManager;
 import org.altherian.hboxd.hypervisor.HypervisorTest;
+import org.altherian.vbox4_3.ws.VBoxWSHypervisor;
 
 import org.junit.BeforeClass;
 

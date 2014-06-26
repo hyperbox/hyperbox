@@ -32,7 +32,7 @@ import org.altherian.vbox.settings.memory.MemorySetting;
 import org.altherian.vbox.settings.memory.NestedPagingSetting;
 import org.altherian.vbox.settings.memory.PagefusionSetting;
 import org.altherian.vbox.settings.memory.VtxvpidSetting;
-import org.altherian.vbox4_3.manager.VbSettingManager;
+import org.altherian.vbox4_3.manager.VBoxSettingManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,7 +109,7 @@ public final class VBoxMemory implements _RawMemory {
    
    @Override
    public _Setting getSetting(Object getName) {
-      return VbSettingManager.get(machine, getName);
+      return VBoxSettingManager.get(machine, getName);
    }
    
    @Override

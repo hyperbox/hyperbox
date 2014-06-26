@@ -48,9 +48,9 @@ import org.altherian.hboxd.settings._Setting;
 import org.altherian.tool.logging.Logger;
 import org.altherian.vbox4_3.VBox;
 import org.altherian.vbox4_3.data.Mappings;
-import org.altherian.vbox4_3.manager.VbSessionManager;
-import org.altherian.vbox4_3.manager.VbSettingManager;
-import org.altherian.vbox4_3.storage.VirtualboxStorageController;
+import org.altherian.vbox4_3.manager.VBoxSessionManager;
+import org.altherian.vbox4_3.manager.VBoxSettingManager;
+import org.altherian.vbox4_3.storage.VBoxStorageController;
 import org.altherian.vbox4_3.vm.guest.VBoxGuest;
 
 import java.io.File;
@@ -140,7 +140,7 @@ public final class VBoxMachine implements _RawVM {
    }
    
    protected void lock(LockType lockType) {
-      session = VbSessionManager.get().lock(getUuid(), lockType);
+      session = VBoxSessionManager.get().lock(getUuid(), lockType);
    }
    
    @Override
@@ -153,15 +153,15 @@ public final class VBoxMachine implements _RawVM {
    }
    
    protected void lockAutoWrite() {
-      session = VbSessionManager.get().lockAuto(getUuid(), LockType.Write);
+      session = VBoxSessionManager.get().lockAuto(getUuid(), LockType.Write);
    }
    
    protected void lockAutoShared() {
-      session = VbSessionManager.get().lockAuto(getUuid(), LockType.Shared);
+      session = VBoxSessionManager.get().lockAuto(getUuid(), LockType.Shared);
    }
    
    protected void lockAuto() {
-      session = VbSessionManager.get().lockAuto(getUuid());
+      session = VBoxSessionManager.get().lockAuto(getUuid());
    }
    
    @Override
@@ -171,7 +171,7 @@ public final class VBoxMachine implements _RawVM {
    
    @Override
    public void unlock(boolean saveChanges) {
-      VbSessionManager.get().unlock(getUuid(), saveChanges);
+      VBoxSessionManager.get().unlock(getUuid(), saveChanges);
       session = null;
    }
    
@@ -180,7 +180,7 @@ public final class VBoxMachine implements _RawVM {
    }
    
    private void unlockAuto(boolean saveSettings) {
-      VbSessionManager.get().unlockAuto(getUuid(), saveSettings);
+      VBoxSessionManager.get().unlockAuto(getUuid(), saveSettings);
       session = null;
    }
    
@@ -205,7 +205,7 @@ public final class VBoxMachine implements _RawVM {
    }
    
    private IMachine getRaw() {
-      session = VbSessionManager.get().getLock(uuid);
+      session = VBoxSessionManager.get().getLock(uuid);
       if ((session != null) && session.getState().equals(SessionState.Locked)) {
          return session.getMachine();
       } else {
@@ -362,22 +362,22 @@ public final class VBoxMachine implements _RawVM {
    
    @Override
    public _Setting getSetting(Object getName) {
-      return VbSettingManager.get(this, getName);
+      return VBoxSettingManager.get(this, getName);
    }
    
    @Override
    public List<_Setting> listSettings() {
-      return VbSettingManager.list(this);
+      return VBoxSettingManager.list(this);
    }
    
    @Override
    public void setSetting(_Setting s) {
-      VbSettingManager.set(this, Arrays.asList(s));
+      VBoxSettingManager.set(this, Arrays.asList(s));
    }
    
    @Override
    public void setSetting(List<_Setting> s) {
-      VbSettingManager.set(this, s);
+      VBoxSettingManager.set(this, s);
    }
    
    @Override
@@ -453,7 +453,7 @@ public final class VBoxMachine implements _RawVM {
       Set<_RawStorageController> storageCtrls = new HashSet<_RawStorageController>();
       try {
          for (IStorageController vboxStrCtrl : getRaw().getStorageControllers()) {
-            storageCtrls.add(new VirtualboxStorageController(this, vboxStrCtrl));
+            storageCtrls.add(new VBoxStorageController(this, vboxStrCtrl));
          }
          return storageCtrls;
       } catch (VBoxException e) {
@@ -463,7 +463,7 @@ public final class VBoxMachine implements _RawVM {
    
    @Override
    public _RawStorageController getStorageController(String name) {
-      return new VirtualboxStorageController(this, getRaw().getStorageControllerByName(name));
+      return new VBoxStorageController(this, getRaw().getStorageControllerByName(name));
    }
    
    @Override
@@ -475,7 +475,7 @@ public final class VBoxMachine implements _RawVM {
       lockAuto();
       try {
          IStorageController strCtrl = getRaw().addStorageController(name, bus);
-         VirtualboxStorageController vbStrCtrl = new VirtualboxStorageController(this, strCtrl);
+         VBoxStorageController vbStrCtrl = new VBoxStorageController(this, strCtrl);
          return vbStrCtrl;
       } finally {
          unlockAuto(true);
@@ -620,7 +620,7 @@ public final class VBoxMachine implements _RawVM {
    public void applyConfiguration(Machine rawData) {
       lockAuto();
       try {
-         VbSettingManager.apply(session.getMachine(), rawData);
+         VBoxSettingManager.apply(session.getMachine(), rawData);
          saveChanges();
       } catch (VBoxException e) {
          throw new MachineException(e.getMessage(), e);
