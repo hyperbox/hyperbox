@@ -125,7 +125,9 @@ public class HBoxServer {
       Set<Class<? extends T>> classList = new HashSet<Class<? extends T>>();
       for (Reflections data : classes.values()) {
          for (Class<? extends T> rawClass : data.getSubTypesOf(type)) {
-            /* Since we have modules, it is possible that several classes have the same name.
+            
+            /*
+             * Since we have modules, it is possible that several classes have the same name.
              * To avoid any conflict, we want to make sure only the good classes are returned.
              * 
              * For the queried class type, if it comes from the system class loader (same as us), we have no problem
@@ -151,11 +153,11 @@ public class HBoxServer {
          if (Modifier.isAbstract(subType.getModifiers())) {
             Logger.debug(subType.getName() + " is abstract and was ignored");
          } else {
-            Logger.debug("Found match for " + type.getName() + ": " + subType.getName());
             for (Annotation subTypeNote : subType.getAnnotations()) {
                if (!subTypeNote.annotationType().equals(note)) {
                   Logger.debug(subTypeNote.annotationType().getName() + " ignored, does not have annotation " + note.getName());
                } else {
+                  Logger.debug("Found match for " + type.getName() + ": " + subType.getName());
                   classList.add(subType);
                }
             }

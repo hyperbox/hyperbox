@@ -31,13 +31,11 @@ import org.altherian.hbox.comm.input.SnapshotInput;
 import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
 import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
 import org.altherian.hboxc.front.gui.Gui;
-import org.altherian.hboxc.front.gui.MainView;
 import org.altherian.hboxc.front.gui._Cancelable;
 import org.altherian.hboxc.front.gui._Saveable;
 import org.altherian.hboxc.front.gui.action.CancelAction;
 import org.altherian.hboxc.front.gui.action.SaveAction;
-
-import java.awt.Dialog.ModalityType;
+import org.altherian.hboxc.front.gui.builder.JDialogBuilder;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -69,10 +67,6 @@ public class SnapshotModifyDialog implements _Saveable, _Cancelable {
       this.mOut = mOut;
       this.snapOut = snapOut;
       
-      mainDialog = new JDialog(MainView.getMainFrame());
-      mainDialog.setModalityType(ModalityType.APPLICATION_MODAL);
-      mainDialog.setTitle("Edit Snapshot");
-      
       nameLabel = new JLabel("Name");
       nameField = new JTextField(40);
       nameField.setText(snapOut.getName());
@@ -95,6 +89,7 @@ public class SnapshotModifyDialog implements _Saveable, _Cancelable {
       buttonsPanel.add(saveButton);
       buttonsPanel.add(cancelButton);
       
+      mainDialog = JDialogBuilder.get("Edit Snapshot", saveButton);
       mainDialog.getContentPane().setLayout(new MigLayout());
       mainDialog.getContentPane().add(mainPanel, "grow,push,wrap");
       mainDialog.getContentPane().add(buttonsPanel, "center, growx");
@@ -103,7 +98,8 @@ public class SnapshotModifyDialog implements _Saveable, _Cancelable {
    
    public static void show(MachineOutput mOut, SnapshotOutput snapOut) {
       instance = new SnapshotModifyDialog();
-      instance.init(mOut, snapOut);
+      // FIXME use SwingWorker
+      instance.init(mOut, Gui.getServer(mOut.getServerId()).getSnapshot(mOut.getUuid(), snapOut.getUuid()));
       
       instance.mainDialog.pack();
       instance.mainDialog.setLocationRelativeTo(instance.mainDialog.getParent());
@@ -127,12 +123,7 @@ public class SnapshotModifyDialog implements _Saveable, _Cancelable {
       }
       
       if (snapIn.hasNewData()) {
-         MachineInput mIn = new MachineInput(mOut);
-         
-         Request req = new Request(Command.VBOX, HypervisorTasks.SnapshotModify);
-         req.set(snapIn);
-         req.set(mIn);
-         Gui.post(req);
+         Gui.post(new Request(Command.VBOX, HypervisorTasks.SnapshotModify, new MachineInput(mOut), snapIn));
       }
       
       hide();

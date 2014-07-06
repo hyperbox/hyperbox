@@ -214,33 +214,45 @@ public class SecurityManager implements _SecurityManager {
    }
    
    private boolean isAuthorized(SecurityItem item) {
+      if (isAuthorized()) {
+         return true;
+      }
+      
       String permId = getPermissionId(SecurityContext.getUser(), item, SecurityAction.Any);
       Logger.debug("Checking for permission ID " + permId);
-      return isAuthorized() || (perms.containsKey(permId) && perms.get(permId));
+      return perms.containsKey(permId) && perms.get(permId);
    }
    
    private boolean isAuthorized(SecurityItem item, String itemId) {
+      if (isAuthorized(item)) {
+         return true;
+      }
+      
       String permId = getPermissionId(SecurityContext.getUser(), item, itemId);
       Logger.debug("Checking for permission ID " + permId);
-      return isAuthorized(item) || (perms.containsKey(permId) && perms.get(permId));
+      return perms.containsKey(permId) && perms.get(permId);
    }
    
    @Override
    public boolean isAuthorized(SecurityItem item, SecurityAction action) {
-      Logger.track();
+      if (isAuthorized(item)) {
+         return true;
+      }
       
       String permId = getPermissionId(SecurityContext.getUser(), item, action);
       Logger.debug("Checking for permission ID " + permId);
-      return isAuthorized(item) || (perms.containsKey(permId) && perms.get(permId));
+      return perms.containsKey(permId) && perms.get(permId);
    }
    
    @Override
    public boolean isAuthorized(SecurityItem item, SecurityAction action, String itemId) {
-      Logger.track();
+      if (isAuthorized(item, itemId) || isAuthorized(item, action)) {
+         return true;
+      }
       
       String permId = getPermissionId(SecurityContext.getUser(), item, action, itemId);
       Logger.debug("Checking for permission ID " + permId);
-      return isAuthorized(item, itemId) || isAuthorized(item, action) || (perms.containsKey(permId) && perms.get(permId));
+      return perms.containsKey(permId) && perms.get(permId);
    }
    
    @Override

@@ -50,9 +50,10 @@ public class VrdePortSettingAction implements _MachineSettingAction {
    
    @Override
    public _Setting get(IMachine machine) {
+      // TODO improve by having a getConsole() in SessionManager and throw the appropriate exception
       ISession sess = VBoxSessionManager.get().lockAuto(machine.getId());
       try {
-         if (sess.getConsole().getVRDEServerInfo().getPort() > 0) {
+         if ((sess.getConsole().getVRDEServerInfo() != null) && (sess.getConsole().getVRDEServerInfo().getPort() > 0)) {
             return new StringSetting(MachineAttributes.VrdePort, Integer.toString(sess.getConsole().getVRDEServerInfo().getPort()));
          } else {
             return new StringSetting(MachineAttributes.VrdePort, machine.getVRDEServer().getVRDEProperty("TCP/Ports"));
