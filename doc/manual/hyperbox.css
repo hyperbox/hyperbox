@@ -40,7 +40,7 @@ ol li:before {
     right: 8px; /* space between number and text */
 }
 
-pre, code  {
+pre {
 	font-family: monospace;
 	white-space: pre;
 	background-color: #DDD;

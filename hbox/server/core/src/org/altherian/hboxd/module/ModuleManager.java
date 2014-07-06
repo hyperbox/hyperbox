@@ -44,7 +44,6 @@ public class ModuleManager implements _ModuleManager {
    
    private boolean isStarted = false;
    private String[] baseDirs = new String[0];
-   private String moduleExtention = "xml";
    private Map<String, _Module> modules;
    
    @Override
@@ -89,7 +88,7 @@ public class ModuleManager implements _ModuleManager {
                   Logger.debug(file.getAbsolutePath() + " is not readable, skipping.");
                   continue;
                }
-               if (!file.getPath().endsWith("." + moduleExtention)) {
+               if (!file.getPath().endsWith("." + Configuration.getSetting(CFGKEY_MODULE_EXTENSION, CFGVAL_MODULE_EXTENSION))) {
                   Logger.debug(file.getAbsolutePath() + " does not have the module extention, skipping.");
                   continue;
                }

@@ -343,7 +343,7 @@ public class CachedServerReader implements _ServerReader {
          // TODO catch the proper exception
       } catch (HyperboxRuntimeException e) {
          // Virtualbox error meaning "Machine not found", so we remove from cache
-         if (e.getMessage().contains("0x80070005") || e.getMessage().contains("0x80BB0001")) {
+         if ((e.getMessage() != null) && (e.getMessage().contains("0x80070005") || e.getMessage().contains("0x80BB0001"))) {
             deleteMachine(vmId);
          }
          throw e;

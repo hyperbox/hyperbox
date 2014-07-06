@@ -31,6 +31,7 @@ import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.machine.MachineSnapshotDataChangedEvent;
 import org.altherian.hboxc.event.machine.MachineStateChangedEvent;
 import org.altherian.hboxc.event.snapshot.SnapshotDeletedEvent;
+import org.altherian.hboxc.event.snapshot.SnapshotModifiedEvent;
 import org.altherian.hboxc.event.snapshot.SnapshotTakenEvent;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
@@ -444,6 +445,14 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       }
    }
    
+   public void putSnapshotModifiedEvent(SnapshotModifiedEvent ev) {
+      Logger.track();
+      
+      if (isSame(ev.getMachine())) {
+         refresh();
+      }
+   }
+
    @Override
    public MachineOutput getMachine() {
       return Gui.getServer(srvId).getMachine(vmUuid);
