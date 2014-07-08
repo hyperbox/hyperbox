@@ -75,7 +75,7 @@ public final class SessionManager implements _SessionManager {
          sess.close();
          sessions.remove(c);
       } else {
-         Logger.debug("Asked to close session for Client " + c.toString() + " but no session was found. Skipping...");
+         Logger.warning("Asked to close session for Client " + c.toString() + " but no session was found. Skipping...");
       }
       
    }

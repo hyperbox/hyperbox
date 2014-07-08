@@ -38,9 +38,9 @@ public class SecurityContext {
    
    public static void init() {
       Logger.track();
-
+      
       if (adminThreads != null) {
-         throw new SecurityException("Admin thread is already defined, cannot be redefined");
+         throw new SecurityException("SecurityContext is already initialized");
       }
       
       adminThreads = new WeakHashMap<Thread, Thread>();
@@ -51,11 +51,12 @@ public class SecurityContext {
    
    public static void addAdminThread(Thread thread) {
       Logger.track();
-
+      
       if (isAdminThread()) {
          adminThreads.put(thread, thread);
       } else {
-         throw new SecurityException();
+         throw new SecurityException("Cannot promoted thread: Current thread is not admin: #" + Thread.currentThread().getId() + " - "
+               + Thread.currentThread().getName());
       }
    }
    
@@ -65,7 +66,7 @@ public class SecurityContext {
    
    public static void initSecurityManager(_SecurityManager secMgr) {
       Logger.track();
-
+      
       if (SecurityContext.secMgr != null) {
          throw new HyperboxRuntimeException("Security Manager is already defined, cannot be redefined");
       }
@@ -74,9 +75,10 @@ public class SecurityContext {
    
    public static void setAdminUser(_User u) {
       Logger.track();
-
+      
       if (!isAdminThread()) {
-         throw new SecurityException();
+         throw new SecurityException("Cannot set admin user: Current thread is not admin: #" + Thread.currentThread().getId() + " - "
+               + Thread.currentThread().getName());
       }
       
       adminUsr = u;

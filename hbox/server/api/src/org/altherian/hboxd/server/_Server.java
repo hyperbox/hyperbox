@@ -36,6 +36,13 @@ import java.util.List;
  */
 public interface _Server {
    
+   public static final String CFGKEY_SRV_ID = "server.id";
+   public static final String CFGKEY_SRV_NAME = "server.name";
+   public static final String CFGKEY_CORE_HYP_ID = "core.hypervisor.id";
+   public static final String CFGKEY_CORE_HYP_OPTS = "core.hypervisor.options";
+   public static final String CFGKEY_CORE_HYP_AUTO = "core.hypervisor.autoconnect";
+   public static final String CFGKEY_CORE_PERSISTOR_CLASS = "core.persistor.class";
+
    /**
     * Get this server unique ID, by default a randomly generated UUID.<br>
     * This must be unique in an organisation structure.

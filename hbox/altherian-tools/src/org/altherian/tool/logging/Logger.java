@@ -115,9 +115,21 @@ public class Logger {
          File file = new File(logFileName);
          if (!file.exists()) {
             if (!file.getParentFile().exists() && !file.getParentFile().mkdirs()) {
-               throw new IOException("Unable to create dirs to the log file");
+               throw new IOException("Unable to create dirs to the log file: " + file.getParentFile().getAbsolutePath());
             }
             file.createNewFile();
+         }
+         
+         try {
+            file.setReadable(true, false);
+         } catch (SecurityException e) {
+            throw new IOException("Unable to set read permission to everyone on the log file");
+         }
+         
+         try {
+            file.getParentFile().setReadable(true, false);
+         } catch (SecurityException e) {
+            throw new IOException("Unable to set read permission to everyone on the log folder");
          }
          
          Calendar now = new GregorianCalendar();
@@ -127,19 +139,13 @@ public class Logger {
          output.println(String.format("+           Log start on %1$td/%1$tm/%1$tY @ %1$tH:%1$tM:%1$tS           +", now));
          output.println("+============================================================================+");
          output.flush();
-         try {
-            file.setReadable(true, false);
-            file.getParentFile().setReadable(true, false);
-         } catch (SecurityException e) {
-            throw new IOException("Unable to set read permission to everyone on the log folder & file");
-         }
       }
       
    }
    
    public static void log(String fileName, int history) throws IOException {
       if (history < 1) {
-         throw new IllegalArgumentException("History must be greater than 0");
+         throw new IllegalArgumentException("History count must be greater than 0");
       }
       
       for (int i = history; i > 0; i--) {

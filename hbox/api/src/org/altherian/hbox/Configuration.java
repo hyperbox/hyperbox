@@ -36,6 +36,7 @@ import java.util.Map;
  */
 public class Configuration {
    
+   public static final String CFGKEY_CONF_USER_DATA_PATH = "conf.user.data.path";
    private static Map<String, String> settings = new HashMap<String, String>();
    
    private Configuration() {
@@ -44,7 +45,9 @@ public class Configuration {
    
    
    public static String getUserDataPath() throws HyperboxException {
-      if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+      if (hasSetting(CFGKEY_CONF_USER_DATA_PATH)) {
+         return getSetting(CFGKEY_CONF_USER_DATA_PATH);
+      } else if (System.getProperty("os.name").toLowerCase().contains("windows")) {
          return getUserDataPathWin();
       } else {
          return getUserDataPathLinux();

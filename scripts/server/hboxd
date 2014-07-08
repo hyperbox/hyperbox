@@ -24,7 +24,7 @@
 INSTALL_DIR="/opt/hboxd"
 EXEC="java"
 DAEMON_CLASS="org.altherian.hboxd.HyperboxHeadless"
-CLASSPATH="$INSTALL_DIR/bin/*:$INSTALL_DIR/lib/*:$INSTALL_DIR/modules/*"
+CLASSPATH="$INSTALL_DIR/bin/*:$INSTALL_DIR/lib/*"
 ARGS_START="-cp $CLASSPATH -Xmx75m -Xss2048k"
 
 if [ $# -ge 1 ]; then

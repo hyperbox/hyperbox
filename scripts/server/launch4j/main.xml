@@ -30,7 +30,6 @@
     <mainClass>org.altherian.hboxd.HyperboxInteractive</mainClass>
     <cp>bin/*</cp>
     <cp>lib/*</cp>
-    <cp>modules/*</cp>
   </classPath>
   <jre>
     <bundledJre64Bit>false</bundledJre64Bit>

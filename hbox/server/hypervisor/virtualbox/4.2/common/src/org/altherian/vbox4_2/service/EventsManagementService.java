@@ -94,6 +94,7 @@ public final class EventsManagementService extends SimpleLoopService {
       } catch (RuntimeException r) {
          if ((r.getMessage() != null) && r.getMessage().contains("Connection refused")) {
             Logger.error("Virtualbox broke the connection with us");
+            Logger.exception(r);
             stop();
          } else {
             throw r;

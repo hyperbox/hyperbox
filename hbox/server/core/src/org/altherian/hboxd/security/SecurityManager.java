@@ -203,13 +203,13 @@ public class SecurityManager implements _SecurityManager {
    }
    
    private boolean isAuthorized() {
+      String permId = getPermissionId(SecurityContext.getUser(), SecurityItem.Any, SecurityAction.Any);
+      Logger.debug("Checking for permission ID " + permId);
       Logger.debug("Possible values:");
       for (String key : perms.keySet()) {
          Logger.debug(key);
       }
       Logger.debug("-----------------------");
-      String permId = getPermissionId(SecurityContext.getUser(), SecurityItem.Any, SecurityAction.Any);
-      Logger.debug("Checking for permission ID " + permId);
       return perms.containsKey(permId) && perms.get(permId);
    }
    

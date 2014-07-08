@@ -68,32 +68,32 @@ public class ModuleManager implements _ModuleManager {
    
    @Override
    public void refreshModules() {
-      Logger.verbose("Refreshing modules...");
+      Logger.info("Refreshing modules...");
       
       Logger.debug("Number of base module directories: " + baseDirs.length);
       for (String baseDir : baseDirs) {
-         File baseDirFile = new File(baseDir);
-         Logger.verbose("Searching in " + baseDirFile.getAbsolutePath() + " for modules...");
+         File baseDirFile = new File(baseDir).getAbsoluteFile();
+         Logger.info("Searching in " + baseDirFile.getAbsolutePath() + " for modules...");
          if (baseDirFile.isDirectory() && baseDirFile.canRead()) {
             Logger.debug(baseDirFile.getAbsolutePath() + " is a readable directory, processing...");
             for (File file : baseDirFile.listFiles()) {
                if (isRegistered(file.getAbsolutePath())) {
-                  Logger.debug(file.getAbsolutePath() + " is already registered for " + modules.get(file.getAbsolutePath()).getName());
+                  Logger.verbose(file.getAbsolutePath() + " is already registered for " + modules.get(file.getAbsolutePath()).getName());
                   continue;
                }
                if (!file.isFile()) {
                   continue;
                }
                if (!file.canRead()) {
-                  Logger.debug(file.getAbsolutePath() + " is not readable, skipping.");
+                  Logger.verbose(file.getAbsolutePath() + " is not readable, skipping.");
                   continue;
                }
                if (!file.getPath().endsWith("." + Configuration.getSetting(CFGKEY_MODULE_EXTENSION, CFGVAL_MODULE_EXTENSION))) {
-                  Logger.debug(file.getAbsolutePath() + " does not have the module extention, skipping.");
+                  Logger.verbose(file.getAbsolutePath() + " does not have the module extention, skipping.");
                   continue;
                }
                if (modules.containsKey(file.getAbsolutePath())) {
-                  Logger.debug(file.getAbsolutePath() + " is already registered as " + modules.get(file.getAbsolutePath()));
+                  Logger.verbose(file.getAbsolutePath() + " is already registered as " + modules.get(file.getAbsolutePath()));
                   continue;
                }
                
@@ -108,7 +108,7 @@ public class ModuleManager implements _ModuleManager {
             Logger.error("Unable to refresh modules for Base Directory " + baseDirFile + ": either not a directory or cannot be read");
          }
       }
-      Logger.verbose("Finished refreshing modules.");
+      Logger.info("Finished refreshing modules.");
    }
    
    @Override
@@ -176,7 +176,7 @@ public class ModuleManager implements _ModuleManager {
    public _Module registerModule(String moduleDescFile) {
       Logger.track();
       
-      Logger.verbose("Attempting to add module with descriptor file: " + moduleDescFile);
+      Logger.info("Attempting to add module with descriptor file: " + moduleDescFile);
       File xmlFile = new File(moduleDescFile);
       _Module mod = ModuleFactory.get(xmlFile);
       
@@ -187,13 +187,13 @@ public class ModuleManager implements _ModuleManager {
       modules.put(mod.getId(), mod);
       modules.put(mod.getDescriptor(), mod);
       
-      Logger.verbose("Module ID " + mod.getId() + " (" + mod.getName() + ") was successfully registered");
+      Logger.info("Module ID " + mod.getId() + " (" + mod.getName() + ") was successfully registered");
       EventManager.post(new ModuleRegisteredEvent(mod));
       
       if (AxBooleans.get(Configuration.getSetting(CFGKEY_MODULE_AUTOLOAD, CFGVAL_MODULE_AUTOLOAD))) {
          try {
             mod.load();
-            Logger.verbose("Module ID " + mod.getId() + " (" + mod.getName() + ") was autoloaded");
+            Logger.info("Module ID " + mod.getId() + " (" + mod.getName() + ") was autoloaded");
          } catch (ModuleException e) {
             Logger.warning("Module ID " + mod.getId() + " (" + mod.getName() + ") failed to autoload: " + e.getMessage());
          }
@@ -213,7 +213,7 @@ public class ModuleManager implements _ModuleManager {
       modules.remove(mod.getDescriptor());
       
       EventManager.post(new ModuleUnregisteredEvent(mod.getId()));
-      Logger.verbose("Module ID " + mod.getId() + " (" + mod.getName() + ") was successfully unregistered");
+      Logger.info("Module ID " + mod.getId() + " (" + mod.getName() + ") was successfully unregistered");
    }
    
    @Override

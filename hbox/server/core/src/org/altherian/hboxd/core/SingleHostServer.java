@@ -49,8 +49,8 @@ import org.altherian.hboxd.event.hypervisor.HypervisorDisconnectedEvent;
 import org.altherian.hboxd.event.module.ModuleEvent;
 import org.altherian.hboxd.event.server.ServerConnectionStateEvent;
 import org.altherian.hboxd.event.system.SystemStateEvent;
-import org.altherian.hboxd.exception.ServerNotFoundException;
 import org.altherian.hboxd.exception.hypervisor.HypervisorNotConnectedException;
+import org.altherian.hboxd.exception.server.ServerNotFoundException;
 import org.altherian.hboxd.factory.MachineFactory;
 import org.altherian.hboxd.factory.ModuleManagerFactory;
 import org.altherian.hboxd.factory.SecurityManagerFactory;
@@ -106,13 +106,6 @@ public class SingleHostServer implements _Hyperbox, _Server {
    private _Hypervisor hypervisor;
    
    private _Client system = new System();
-   
-   public static final String CFGKEY_SRV_ID = "server.id";
-   public static final String CFGKEY_SRV_NAME = "server.name";
-   public static final String CFGKEY_CORE_HYP_ID = "core.hypervisor.id";
-   public static final String CFGKEY_CORE_HYP_OPTS = "core.hypervisor.options";
-   public static final String CFGKEY_CORE_HYP_AUTO = "core.hypervisor.autoconnect";
-   public static final String CFGKEY_CORE_PERSISTOR_CLASS = "core.persistor.class";
    
    private String id;
    private String name;
@@ -357,7 +350,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
       
       try {
          Class<? extends _Hypervisor> hypClass = hypervisors.get(hypervisorId);
-         Logger.warning("Loading " + hypClass.getName() + " using " + hypClass.getClassLoader().getClass().getName());
+         Logger.debug("Loading " + hypClass.getName() + " using " + hypClass.getClassLoader().getClass().getName());
          _Hypervisor hypervisor = hypervisors.get(hypervisorId).newInstance();
          hypervisor.setEventManager(EventManager.get());
          hypervisor.start(options);

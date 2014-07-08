@@ -19,27 +19,20 @@
  * 
  */
 
-package org.altherian.hboxd.controller;
+package org.altherian.hboxd.exception.server;
 
-import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm._Client;
+import org.altherian.hbox.exception.HyperboxRuntimeException;
+import org.altherian.hboxd.server._Server;
 
-public class ClientRequest {
+@SuppressWarnings("serial")
+public final class ServerNotFoundException extends HyperboxRuntimeException {
    
-   private _Client c;
-   private Request r;
-   
-   public ClientRequest(_Client c, Request r) {
-      this.c = c;
-      this.r = r;
+   public ServerNotFoundException(String id) {
+      super("Server [" + id + "] was not found");
    }
    
-   public _Client getClient() {
-      return c;
-   }
-   
-   public Request getRequest() {
-      return r;
+   public ServerNotFoundException(_Server s) {
+      this(s.getId());
    }
    
 }

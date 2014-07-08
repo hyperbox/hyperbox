@@ -22,6 +22,7 @@
 package org.altherian.vbox4_2.setting.console;
 
 import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hboxd.exception.machine.MachineLockingException;
 import org.altherian.hboxd.settings.StringSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox4_2.manager.VBoxSessionManager;
@@ -51,15 +52,19 @@ public class VrdePortSettingAction implements _MachineSettingAction {
    @Override
    public _Setting get(IMachine machine) {
       // TODO improve by having a getConsole() in SessionManager and throw the appropriate exception
-      ISession sess = VBoxSessionManager.get().lockAuto(machine.getId());
       try {
-         if ((sess.getConsole().getVRDEServerInfo() != null) && (sess.getConsole().getVRDEServerInfo().getPort() > 0)) {
-            return new StringSetting(MachineAttributes.VrdePort, Integer.toString(sess.getConsole().getVRDEServerInfo().getPort()));
-         } else {
-            return new StringSetting(MachineAttributes.VrdePort, machine.getVRDEServer().getVRDEProperty("TCP/Ports"));
+         ISession sess = VBoxSessionManager.get().lockAuto(machine.getId());
+         try {
+            if ((sess.getConsole().getVRDEServerInfo() != null) && (sess.getConsole().getVRDEServerInfo().getPort() > 0)) {
+               return new StringSetting(MachineAttributes.VrdePort, Integer.toString(sess.getConsole().getVRDEServerInfo().getPort()));
+            } else {
+               return new StringSetting(MachineAttributes.VrdePort, machine.getVRDEServer().getVRDEProperty("TCP/Ports"));
+            }
+         } finally {
+            VBoxSessionManager.get().unlockAuto(machine.getId());
          }
-      } finally {
-         VBoxSessionManager.get().unlockAuto(machine.getId());
+      } catch (MachineLockingException e) {
+         return new StringSetting(MachineAttributes.VrdePort, machine.getVRDEServer().getVRDEProperty("TCP/Ports"));
       }
    }
    

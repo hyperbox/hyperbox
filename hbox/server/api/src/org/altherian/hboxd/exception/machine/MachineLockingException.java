@@ -19,13 +19,25 @@
  * 
  */
 
-package org.altherian.hboxd.hypervisor.event;
+package org.altherian.hboxd.exception.machine;
 
-import org.altherian.hbox.event._Event;
-
-
-public interface _HypervisorDisconnected extends _Event {
+@SuppressWarnings("serial")
+public class MachineLockingException extends MachineException {
    
-   public String getMessage();
+   public MachineLockingException() {
+      this("Unable to lock machine");
+   }
+   
+   public MachineLockingException(String s) {
+      super(s);
+   }
+   
+   public MachineLockingException(Throwable t) {
+      super(t);
+   }
+   
+   public MachineLockingException(String s, Throwable t) {
+      super(s, t);
+   }
    
 }

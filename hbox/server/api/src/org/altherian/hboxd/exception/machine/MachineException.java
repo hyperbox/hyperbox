@@ -1,6 +1,6 @@
-/* 
+/*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -19,20 +19,26 @@
  * 
  */
 
-package org.altherian.hboxd.exception;
+package org.altherian.hboxd.exception.machine;
 
 import org.altherian.hbox.exception.HyperboxRuntimeException;
-import org.altherian.hboxd.server._Server;
 
 @SuppressWarnings("serial")
-public final class ServerNotFoundException extends HyperboxRuntimeException {
+public abstract class MachineException extends HyperboxRuntimeException {
    
-   public ServerNotFoundException(String id) {
-      super("Server [" + id + "] was not found");
+   public MachineException(String s) {
+      super(s);
+      // TODO Auto-generated constructor stub
    }
    
-   public ServerNotFoundException(_Server s) {
-      this(s.getId());
+   public MachineException(Throwable t) {
+      super(t);
+      // TODO Auto-generated constructor stub
+   }
+   
+   public MachineException(String s, Throwable t) {
+      super(s, t);
+      // TODO Auto-generated constructor stub
    }
    
 }
