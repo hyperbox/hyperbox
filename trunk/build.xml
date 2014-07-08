@@ -307,9 +307,6 @@
 		<echo message="Hyperbox Revision:            ${hbox.revision}" />
 		<echo message="API Revision:                 ${hbox.api.revision}" />
 		<echo message="Network Protocol Revision:    ${hbox.protocol.version}" />
-		
-		<echo message="Server Out Dir:               ${server.out.dir}" />
-		<echo message="Server Modules Out Dir:       ${server.out.module.dir}" />
 	</target>
 	
 	<target name="api.compile" depends="configure">
@@ -574,7 +571,7 @@
 	
 	<target name="server.build.win" depends="server.jar, server.deploy" if="isWin">
 		<launch4j configFile="scripts/server/launch4j/main.xml" outfile="${server.out.dir}/${server.out.exe}" />
-		<copy file="external/common-daemons/prunsrv.exe" tofile="${server.out.dir}/bin/hboxd.exe" />
+		<copy file="external/common-daemons/prunsrv-${os.arch}.exe" tofile="${server.out.dir}/hboxd.exe" />
 	</target>
 	
 	<target name="server.build.linux" depends="server.jar, server.deploy" if="isLinux">

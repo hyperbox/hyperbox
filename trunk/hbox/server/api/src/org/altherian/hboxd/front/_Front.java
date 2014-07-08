@@ -25,11 +25,9 @@ import org.altherian.hbox.comm.output.event.EventOutput;
 import org.altherian.hbox.exception.HyperboxException;
 
 /**
- * <p>
  * This represent a communication protocol system for the server to be able to connect with clients.<br/>
  * Any protocol implementation (e.g. SOAP, XML-RPC, REST, Java RMI) should implement this interface.<br/>
  * Any class implementing this interface will be automatically loaded.
- * </p>
  * 
  * @author noteirak
  */

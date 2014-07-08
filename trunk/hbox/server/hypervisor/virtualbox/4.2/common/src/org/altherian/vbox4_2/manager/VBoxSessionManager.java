@@ -23,7 +23,7 @@ package org.altherian.vbox4_2.manager;
 
 import net.engio.mbassy.listener.Handler;
 
-import org.altherian.hbox.exception.HypervisorException;
+import org.altherian.hboxd.exception.machine.MachineLockingException;
 import org.altherian.tool.logging.Logger;
 import org.altherian.vbox4_2.VBox;
 import org.altherian.vbox4_2.factory.EventBusFactory;
@@ -108,7 +108,7 @@ public class VBoxSessionManager implements _RawSessionManager {
          
          return sessions.get().get(uuid);
       } catch (VBoxException e) {
-         throw new HypervisorException(e.getMessage(), e);
+         throw new MachineLockingException(e.getMessage(), e);
       }
    }
    
@@ -199,7 +199,7 @@ public class VBoxSessionManager implements _RawSessionManager {
    public ISession lockAuto(String uuid) {
       try {
          return lockAuto(uuid, LockType.Write);
-      } catch (HypervisorException e) {
+      } catch (MachineLockingException e) {
          Logger.debug("Failed to create Write lock: " + e.getLocalizedMessage());
          Logger.debug("Trying Shared lock instead");
          return lockAuto(uuid, LockType.Shared);

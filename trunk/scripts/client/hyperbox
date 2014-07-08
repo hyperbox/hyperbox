@@ -18,4 +18,4 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-java -splash:icons/login-header.png -cp bin/*:lib/*:modules/* org.altherian.hboxc.HyperboxClientApplicationStart "$@"
+java -splash:icons/login-header.png -cp bin/*:lib/* org.altherian.hboxc.HyperboxClientApplicationStart "$@"

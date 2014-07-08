@@ -23,7 +23,7 @@ package org.altherian.vbox4_3.manager;
 
 import net.engio.mbassy.listener.Handler;
 
-import org.altherian.hbox.exception.HypervisorException;
+import org.altherian.hboxd.exception.machine.MachineLockingException;
 import org.altherian.tool.logging.Logger;
 import org.altherian.vbox.utils.EventBusFactory;
 import org.altherian.vbox4_3.VBox;
@@ -83,11 +83,11 @@ public class VBoxSessionManager implements _RawSessionManager {
    }
    
    @Override
-   public ISession lock(String uuid, LockType lockType) {
+   public ISession lock(String uuid, LockType lockType) throws MachineLockingException {
       return lock(uuid, lockType, true);
    }
    
-   private ISession lock(String uuid, LockType lockType, boolean userRequest) {
+   private ISession lock(String uuid, LockType lockType, boolean userRequest) throws MachineLockingException {
       Logger.track();
       
       try {
@@ -108,7 +108,7 @@ public class VBoxSessionManager implements _RawSessionManager {
          
          return sessions.get().get(uuid);
       } catch (VBoxException e) {
-         throw new HypervisorException(e.getMessage(), e);
+         throw new MachineLockingException(e.getMessage(), e);
       }
    }
    
@@ -196,10 +196,10 @@ public class VBoxSessionManager implements _RawSessionManager {
    }
    
    @Override
-   public ISession lockAuto(String uuid) {
+   public ISession lockAuto(String uuid) throws MachineLockingException {
       try {
          return lockAuto(uuid, LockType.Write);
-      } catch (HypervisorException e) {
+      } catch (MachineLockingException e) {
          Logger.debug("Failed to create Write lock: " + e.getLocalizedMessage());
          Logger.debug("Trying Shared lock instead");
          return lockAuto(uuid, LockType.Shared);
@@ -207,7 +207,7 @@ public class VBoxSessionManager implements _RawSessionManager {
    }
    
    @Override
-   public ISession lockAuto(String uuid, LockType lockType) {
+   public ISession lockAuto(String uuid, LockType lockType) throws MachineLockingException {
       return lock(uuid, lockType, false);
    }
    

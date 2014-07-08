@@ -21,11 +21,12 @@
 
 package org.altherian.vbox4_3.manager;
 
+import org.altherian.hboxd.exception.machine.MachineLockingException;
+
 import org.virtualbox_4_3.IMachine;
 import org.virtualbox_4_3.ISession;
 import org.virtualbox_4_3.LockType;
 
-// TODO create a getConsole() that use the lockAuto() with exception
 public interface _RawSessionManager {
    
    /**
@@ -38,18 +39,36 @@ public interface _RawSessionManager {
    
    /**
     * Get a lock of a given type for a VM, assuming that this lock is coming from a user command.<br/>
-    * If a lock already exist, it will be returned.
+    * If a lock of at least equivalent level already exist, it will be returned.
     * 
     * @param uuid UUID of the VM to lock
     * @param lockType The type of lock needed
     * @return a ISession object with the requested lock
+    * @throws MachineLockingException If an error occurred when trying to lock the machine
     */
-   public ISession lock(String uuid, LockType lockType);
+   public ISession lock(String uuid, LockType lockType) throws MachineLockingException;
    
-   public ISession lockAuto(String uuid, LockType lockType);
+   /**
+    * Get a lock of a given type for a VM, assuming that this lock is NOT coming from a user command.<br/>
+    * If a lock of at least equivalent level already exist, it will be returned.
+    * 
+    * @param uuid UUID of the VM to lock
+    * @param lockType The type of lock needed
+    * @return a ISession object with the requested lock
+    * @throws MachineLockingException If an error occurred when trying to lock the machine
+    */
+   public ISession lockAuto(String uuid, LockType lockType) throws MachineLockingException;
    
-   // TODO document that lockAuto should try every kind of lock, or faill with a "LockingFailed" exception
-   public ISession lockAuto(String uuid);
+   /**
+    * Get the most powerful lock possible for a VM, assuming that this lock is NOT coming from a user command.<br/>
+    * This call will try every possible lock, from most powerful to least powerful until one succeed, and that one will be returned.<br/>
+    * If a lock of already exist, it will be returned.
+    * 
+    * @param uuid UUID of the VM to lock
+    * @return a ISession object with the requested lock
+    * @throws MachineLockingException If an error occurred when trying to lock the machine
+    */
+   public ISession lockAuto(String uuid) throws MachineLockingException;
    
    /**
     * Save the settings and release a lock on the given VM, assuming that this lock release is coming from a user command.<br/>

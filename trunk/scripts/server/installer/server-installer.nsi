@@ -31,6 +31,14 @@ Page instfiles
 
 Section "Core files"
 SetOutPath $INSTDIR
+
+# We try to stop & delete the existing service if it exists, else the install will fail
+IfFileExists $INSTDIR\hboxd.exe 0 +2
+ExecWait '$INSTDIR\hboxd.exe delete hboxd'
+# Legacy location of hboxd.exe
+IfFileExists $INSTDIR\bin\hboxd.exe 0 +2
+ExecWait '$INSTDIR\bin\hboxd.exe delete hboxd'
+
 File /r "@SERVER_OUT_BIN_DIR@\*.*"
 WriteUninstaller $INSTDIR\uninstaller.exe
 SectionEnd
@@ -41,16 +49,16 @@ CreateShortCut "$SMPROGRAMS\Hyperbox\Server\Uninstall.lnk" "$INSTDIR\uninstaller
 SectionEnd
 
 Section "Install Service"
-ExecWait '$INSTDIR\bin\hboxd.exe install hboxd --DisplayName="Hyperbox" --Install="$INSTDIR\bin\hboxd.exe" --Jvm=auto --StartMode=jvm --StopMode=jvm --StartClass="org.altherian.hboxd.HyperboxService" --StartMethod=start --StopClass="org.altherian.hboxd.HyperboxService" --StopMethod=stop --Startup=auto --Classpath="$INSTDIR\bin\*;$INSTDIR\lib\*;$INSTDIR\modules\*"'
+ExecWait '$INSTDIR\hboxd.exe install hboxd --DisplayName="Hyperbox" --StartMode=jvm --StopMode=jvm --StartClass="org.altherian.hboxd.HyperboxService" --StartMethod=start --StopClass="org.altherian.hboxd.HyperboxService" --StopMethod=stop --Startup=auto --Classpath="$INSTDIR\bin\*;$INSTDIR\lib\*"'
 SectionEnd
 
 Section "Start Service"
-ExecWait '$INSTDIR\bin\hboxd.exe start hboxd'
+ExecWait '$INSTDIR\hboxd.exe start hboxd'
 SectionEnd
 
 Section "Uninstall"
-ExecWait '$INSTDIR\bin\hboxd.exe stop hboxd'
-ExecWait '$INSTDIR\bin\hboxd.exe delete hboxd'
+ExecWait '$INSTDIR\hboxd.exe stop hboxd'
+ExecWait '$INSTDIR\hboxd.exe delete hboxd'
 RMDir /r "$INSTDIR"
 RMDir /r "$SMPROGRAMS\Hyperbox\Server"
 RMDir "$SMPROGRAMS\Hyperbox"

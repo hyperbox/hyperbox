@@ -1,9 +1,3 @@
-package org.altherian.hboxd;
-
-import org.altherian.hbox.Configuration;
-import org.altherian.hboxd.controller.Controller;
-import org.altherian.tool.logging.Logger;
-
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
@@ -25,13 +19,19 @@ import org.altherian.tool.logging.Logger;
  * 
  */
 
+package org.altherian.hboxd;
+
+import org.altherian.hboxd.controller.Controller;
+
 public class HyperboxService {
    
    private static Controller c;
    
+   public static void main(String[] args) throws Exception {
+      start(args);
+   }
+
    public static void start(String[] args) throws Exception {
-      Configuration.setSetting("log.file", "../log/hboxd.log");
-      Logger.log("../log/hboxd.log");
       c = new Controller();
       c.start();
    }

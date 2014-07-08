@@ -150,7 +150,6 @@ public final class Controller implements _Controller {
       } catch (Throwable e) {
          Logger.error("Hyperbox Init Sequence failed!");
          exitCode = 1;
-         Logger.error(e);
          Logger.exception(e);
          stop();
       }
