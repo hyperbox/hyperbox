@@ -25,6 +25,7 @@ import org.altherian.tool.logging.Logger;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Set;
 
 public class HyperboxAPI {
    
@@ -62,8 +63,27 @@ public class HyperboxAPI {
       return revision;
    }
    
+   public static String getFullVersion() {
+      return getVersion() + "r" + getRevision();
+   }
+   
    public static long getProtocolVersion() {
       return protocolVersion;
+   }
+   
+   public static void processArgs(Set<String> args) {
+      if (args.contains("--apiversion")) {
+         System.out.println(getVersion());
+         System.exit(0);
+      }
+      if (args.contains("--apirevision")) {
+         System.out.println(getRevision());
+         System.exit(0);
+      }
+      if (args.contains("--netversion")) {
+         System.out.println(HyperboxAPI.getProtocolVersion());
+         System.exit(0);
+      }
    }
    
 }

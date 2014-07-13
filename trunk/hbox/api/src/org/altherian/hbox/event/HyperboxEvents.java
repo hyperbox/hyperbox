@@ -24,6 +24,7 @@ package org.altherian.hbox.event;
 public enum HyperboxEvents {
    
    ServerState,
+   ServerPropertyChanged,
    ServerConnectionState,
    ServerShutdown,
    SystemState,

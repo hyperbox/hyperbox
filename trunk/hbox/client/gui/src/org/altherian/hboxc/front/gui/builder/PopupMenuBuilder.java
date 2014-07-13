@@ -56,6 +56,8 @@ import org.altherian.hboxc.front.gui.action.module.ModuleEnableAction;
 import org.altherian.hboxc.front.gui.action.module.ModuleLoadAction;
 import org.altherian.hboxc.front.gui.action.module.ModuleUnloadAction;
 import org.altherian.hboxc.front.gui.action.module.ModuleUnregisterAction;
+import org.altherian.hboxc.front.gui.action.server.ServerConfigureAction;
+import org.altherian.hboxc.front.gui.action.server.ServerShutdownAction;
 import org.altherian.hboxc.front.gui.action.storage.HypervisorToolsMediumAttachAction;
 import org.altherian.hboxc.front.gui.action.storage.MediumAttachAction;
 import org.altherian.hboxc.front.gui.action.storage.MediumDettachAction;
@@ -146,14 +148,13 @@ public class PopupMenuBuilder {
          }
          conPopupMenu.add(hypActions);
          
-         conPopupMenu.add(new JSeparator());
-         conPopupMenu.add(new JMenuItem(new ConnectorDisconnectAction(conSelect)));
-         
-         /*
          JMenu srvMenu = new JMenu("Server");
+         srvMenu.add(new JMenuItem(new ServerConfigureAction(srvSelect)));
          srvMenu.add(new JMenuItem(new ServerShutdownAction(srvSelect)));
          conPopupMenu.add(srvMenu);
-          */
+         
+         conPopupMenu.add(new JSeparator());
+         conPopupMenu.add(new JMenuItem(new ConnectorDisconnectAction(conSelect)));
       } else {
          conPopupMenu.add(new JMenuItem(new ConnectorConnectAction(conSelect)));
          conPopupMenu.add(new JMenuItem(new ConnectorModifyAction(conSelect, !conOut.isConnected())));

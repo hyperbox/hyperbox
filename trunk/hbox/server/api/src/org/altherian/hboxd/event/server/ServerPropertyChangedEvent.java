@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -19,18 +19,28 @@
  * 
  */
 
-package org.altherian.hbox.constant;
+package org.altherian.hboxd.event.server;
 
-public enum ServerAttributes {
+import org.altherian.hbox.event.HyperboxEvents;
+import org.altherian.hboxd.server._Server;
+
+public class ServerPropertyChangedEvent extends ServerEvent {
    
-   Id,
-   Name,
-   Type,
-   Version,
-   NetProtocolVersion,
-   Revision,
-   FullVersion,
-   IsHypervisorConnected,
-   LogLevel,
+   private Object property;
+   private Object newValue;
+   
+   public ServerPropertyChangedEvent(_Server srv, Object property, Object newValue) {
+      super(HyperboxEvents.ServerPropertyChanged, srv);
+      this.property = property;
+      this.newValue = newValue;
+   }
+   
+   public Object getProperty() {
+      return property;
+   }
+   
+   public Object getValue() {
+      return newValue;
+   }
    
 }

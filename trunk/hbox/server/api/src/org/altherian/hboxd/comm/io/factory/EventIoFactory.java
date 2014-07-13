@@ -58,7 +58,7 @@ public final class EventIoFactory {
    }
    
    private static EventOutput getUnknown(_Event ev) {
-      Logger.debug("Creating Unknown Event for ID " + ev.getEventId() + " @ " + ev.getTime());
+      Logger.debug("Creating Unknown Event for ID " + ev.getEventId() + " @ " + ev.getTime() + ": " + ev);
       return new UnknownEventOutput(ev.getTime(), ev.getEventId(), ServerIoFactory.get(HBoxServer.get()));
    }
    
@@ -76,7 +76,7 @@ public final class EventIoFactory {
          Logger.exception(t);
       }
       
-      Logger.debug("No factory for " + ev.getEventId() + ", sending " + UnknownEventOutput.class.getName());
+      Logger.warning("No factory for Event ID " + ev.getEventId() + ", sending " + UnknownEventOutput.class.getName() + " instead");
       return getUnknown(ev);
    }
 }

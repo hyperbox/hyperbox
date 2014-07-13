@@ -54,18 +54,6 @@ public final class Controller implements _Controller {
    
    private Thread shutdownHook;
    
-   {
-      shutdownHook = new Thread() {
-         @Override
-         public void run() {
-            SecurityContext.setUser(new SystemUser());
-            SessionContext.setClient(new Client());
-            Controller.this.stop();
-         }
-      };
-      Runtime.getRuntime().addShutdownHook(shutdownHook);
-   }
-   
    public static String getHeader() {
       StringBuilder header = new StringBuilder();
       header.append("Hyperbox " + Hyperbox.getVersion() + " r" + Hyperbox.getRevision());
@@ -117,16 +105,20 @@ public final class Controller implements _Controller {
    public void start() {
       Logger.track();
       
+      shutdownHook = new Thread() {
+         @Override
+         public void run() {
+            SecurityContext.setUser(new SystemUser());
+            SessionContext.setClient(new Client());
+            Controller.this.stop();
+         }
+      };
+      Runtime.getRuntime().addShutdownHook(shutdownHook);
+
       try {
          Long startTime = System.currentTimeMillis();
          
-         SecurityContext.init();
-         SecurityContext.addAdminThread(shutdownHook);
-         
-         Configuration.init();
-         
-         String logLevel = Configuration.getSetting("log.level", LogLevel.Info.toString());
-         Logger.setLevel(LogLevel.valueOf(logLevel));
+         Logger.setLevel(LogLevel.valueOf(Configuration.getSetting("log.level", LogLevel.Info.toString())));
          
          String logFilename = Configuration.getSetting("log.file", "log/hboxd.log");
          if (!logFilename.contentEquals("none")) {
@@ -136,10 +128,17 @@ public final class Controller implements _Controller {
          Logger.put(getHeader());
          Logger.info("Hyperbox Init Sequence started");
          
+         SecurityContext.init();
+         SecurityContext.addAdminThread(shutdownHook);
+         
+         Configuration.init();
+         
          ShutdownAction.setController(this);
          
          for (String name : System.getenv().keySet()) {
-            Logger.debug(name + ": " + System.getenv(name));
+            if (name.startsWith(Configuration.CFG_ENV_PREFIX + Configuration.CFG_ENV_SEPERATOR)) {
+               Logger.info("Environment Variable: " + name + " | " + System.getenv(name));
+            }
          }
          
          startBack();

@@ -56,9 +56,9 @@ import org.altherian.vbox4_3.factory.OsTypeFactory;
 import org.altherian.vbox4_3.host.VBoxHost;
 import org.altherian.vbox4_3.manager.VBoxSessionManager;
 import org.altherian.vbox4_3.service.EventsManagementService;
+import org.altherian.vbox4_3.storage.VBoxMedium;
 import org.altherian.vbox4_3.storage.VBoxStorageControllerSubType;
 import org.altherian.vbox4_3.storage.VBoxStorageControllerType;
-import org.altherian.vbox4_3.storage.VBoxMedium;
 import org.altherian.vbox4_3.vm.VBoxMachine;
 
 import java.util.ArrayList;
@@ -212,8 +212,10 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       
       disconnect();
       VBox.unset();
-      vbMgr.cleanup();
-      vbMgr = null;
+      if (vbMgr != null) {
+         vbMgr.cleanup();
+         vbMgr = null;
+      }
       
       EventManager.post(new HypervisorDisconnectedEvent(this));
       EventManager.unregister(this);

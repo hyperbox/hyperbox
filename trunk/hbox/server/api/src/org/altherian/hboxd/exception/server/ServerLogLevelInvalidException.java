@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -19,18 +19,19 @@
  * 
  */
 
-package org.altherian.hbox.constant;
+package org.altherian.hboxd.exception.server;
 
-public enum ServerAttributes {
+import org.altherian.hbox.exception.HyperboxRuntimeException;
+
+@SuppressWarnings("serial")
+public class ServerLogLevelInvalidException extends HyperboxRuntimeException {
    
-   Id,
-   Name,
-   Type,
-   Version,
-   NetProtocolVersion,
-   Revision,
-   FullVersion,
-   IsHypervisorConnected,
-   LogLevel,
+   public ServerLogLevelInvalidException(String message, String logLevel) {
+      super(message + ": " + logLevel);
+   }
+   
+   public ServerLogLevelInvalidException(String logLevel) {
+      this("Invalid Log Level", logLevel);
+   }
    
 }

@@ -204,8 +204,10 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       
       disconnect();
       VBox.unset();
-      vbMgr.cleanup();
-      vbMgr = null;
+      if (vbMgr != null) {
+         vbMgr.cleanup();
+         vbMgr = null;
+      }
       
       EventManager.post(new HypervisorDisconnectedEvent(this));
       EventManager.unregister(this);

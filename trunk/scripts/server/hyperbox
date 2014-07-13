@@ -21,4 +21,4 @@
 #
 ###########################################################################
 
-java -server -Xmx75m -Xss2048k -cp bin/*:lib/* "$@" org.altherian.hboxd.HyperboxInteractive
+java -server -Xmx75m -Xss2048k -cp bin/*:lib/* org.altherian.hboxd.HyperboxInteractive  "$@"

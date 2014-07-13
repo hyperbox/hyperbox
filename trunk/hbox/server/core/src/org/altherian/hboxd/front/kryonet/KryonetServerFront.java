@@ -43,8 +43,6 @@ import com.esotericsoftware.kryonet.Server;
 
 public class KryonetServerFront implements _Front {
    
-   private final static String CFGKEY_KRYO_SRV_PORT = "kryonet.port";
-   
    private _RequestReceiver r;
    private Server server;
    private Integer port;
@@ -60,11 +58,15 @@ public class KryonetServerFront implements _Front {
       
       loadConfig();
       
-      server = new Server(KryonetDefaultSettings.IO_BUFFER_SIZE, KryonetDefaultSettings.OBJECT_BUFFER_SIZE);
-      server.start();
-      KryoRegister.register(server.getKryo());
-      
       try {
+         int netBufferWriteSize = Integer.parseInt(Configuration.getSetting(KryonetDefaultSettings.CFGKEY_KRYO_NET_WRITE_BUFFER_SIZE,
+               KryonetDefaultSettings.CFGVAL_KRYO_NET_WRITE_BUFFER_SIZE));
+         int netBufferObjectSize = Integer.parseInt(Configuration.getSetting(KryonetDefaultSettings.CFGVAL_KRYO_NET_OBJECT_BUFFER_SIZE,
+               KryonetDefaultSettings.CFGVAL_KRYO_NET_OBJECT_BUFFER_SIZE));
+         server = new Server(netBufferWriteSize, netBufferObjectSize);
+         server.start();
+         KryoRegister.register(server.getKryo());
+         
          server.bind(port);
          server.addListener(new MainListener());
          server.getUpdateThread().setUncaughtExceptionHandler(new ServerUncaughtExceptionHandler());
@@ -83,10 +85,12 @@ public class KryonetServerFront implements _Front {
       Logger.track();
       
       try {
-         port = Integer.parseInt(Configuration.getSetting(CFGKEY_KRYO_SRV_PORT, KryonetDefaultSettings.PORT.toString()));
-         Logger.debug("Found valid value for config key [" + CFGKEY_KRYO_SRV_PORT + "]: " + port);
+         port = Integer.parseInt(Configuration.getSetting(KryonetDefaultSettings.CFGKEY_KRYO_NET_TCP_PORT,
+               KryonetDefaultSettings.CFGVAL_KRYO_NET_TCP_PORT.toString()));
+         Logger.debug("Found valid value for config key [" + KryonetDefaultSettings.CFGKEY_KRYO_NET_TCP_PORT + "]: " + port);
       } catch (NumberFormatException e) {
-         throw new HyperboxException("Invalid value for config key [" + CFGKEY_KRYO_SRV_PORT + "]: " + Configuration.getSetting(CFGKEY_KRYO_SRV_PORT));
+         throw new HyperboxException("Invalid value for config key [" + KryonetDefaultSettings.CFGKEY_KRYO_NET_TCP_PORT + "]: "
+               + Configuration.getSetting(KryonetDefaultSettings.CFGKEY_KRYO_NET_TCP_PORT));
       }
    }
    

@@ -103,8 +103,6 @@ public class TaskView implements _Cancelable {
       
       
       dialog = JDialogBuilder.get(IconBuilder.getEntityType(EntityTypes.Task).getImage());
-      dialog.setIconImage(IconBuilder.getHyperbox().getImage());
-      
       dialog.getContentPane().setLayout(new MigLayout());
       
       dialog.add(idLabel);

@@ -24,10 +24,12 @@ package org.altherian.hboxd.server;
 import org.altherian.hbox.constant.ServerType;
 import org.altherian.hboxd.core.model._Machine;
 import org.altherian.hboxd.core.model._Medium;
+import org.altherian.hboxd.exception.server.ServerLogLevelInvalidException;
 import org.altherian.hboxd.host._Host;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Represent a server
@@ -42,7 +44,7 @@ public interface _Server {
    public static final String CFGKEY_CORE_HYP_OPTS = "core.hypervisor.options";
    public static final String CFGKEY_CORE_HYP_AUTO = "core.hypervisor.autoconnect";
    public static final String CFGKEY_CORE_PERSISTOR_CLASS = "core.persistor.class";
-
+   
    /**
     * Get this server unique ID, by default a randomly generated UUID.<br>
     * This must be unique in an organisation structure.
@@ -77,6 +79,12 @@ public interface _Server {
    
    public String getVersion();
    
+   public String getLogLevel();
+   
+   public Set<String> listLogLevel();
+   
+   public void setLogLevel(String logLevel) throws ServerLogLevelInvalidException;
+   
    public void connect(String hypervisorId, String options);
    
    public void disconnect();
@@ -104,5 +112,10 @@ public interface _Server {
    public _Medium createMedium(String vmId, String filename, String format, Long logicalSize);
    
    public _Medium getMedium(String medId);
+   
+   /**
+    * Force save all current settings to the persistence layer.
+    */
+   public void save();
    
 }

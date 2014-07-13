@@ -279,8 +279,6 @@
 		<property name="hbox.revision"						value="${svn.global.entry(revision)}" />
 		<property name="hbox.api.revision"					value="${svn.api.entry.commit(revision)}" />
 		<property name="hbox.protocol.version"				value="${svn.api.protocol.entry.commit(revision)}" />
-		<property name="server.revision"					value="${svn.server.entry.commit(revision)}" />
-		<property name="client.revision"					value="${svn.client.entry.commit(revision)}" />
 		
 		<loadfile srcfile="VERSION"							property="hbox.version" />
 		

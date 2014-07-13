@@ -24,9 +24,14 @@ package org.altherian.hboxc;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.controller.Controller;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 public final class HyperboxClientApplicationStart {
    
    public static void main(String[] args) throws HyperboxException {
+      Hyperbox.processArgs(new HashSet<String>(Arrays.asList(args)));
+
       new Controller().start();
    }
    

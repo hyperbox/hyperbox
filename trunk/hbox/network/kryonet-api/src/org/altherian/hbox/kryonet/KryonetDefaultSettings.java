@@ -23,11 +23,13 @@ package org.altherian.hbox.kryonet;
 
 public class KryonetDefaultSettings {
    
-   public static final Integer PORT = 45612;
-   public static final Integer IO_BUFFER_SIZE = 1838400;
-   public static final Integer OBJECT_BUFFER_SIZE = 1638400;
+   public static final String CFGKEY_KRYO_NET_TCP_PORT = "kryonet.net.tcp.port";
+   public static final String CFGVAL_KRYO_NET_TCP_PORT = "45612";
    
-   public static final String CFG_WRITE_BUFFER_SIZE = "kryonet.buffer.write";
-   public static final String CFG_OBJECT_BUFFER_SIZE = "kryonet.buffer.object";
+   public static final String CFGKEY_KRYO_NET_WRITE_BUFFER_SIZE = "kryonet.net.buffer.write";
+   public static final String CFGVAL_KRYO_NET_WRITE_BUFFER_SIZE = "1838400";
+   
+   public static final String CFGKEY_KRYO_NET_OBJECT_BUFFER_SIZE = "kryonet.net.buffer.object";
+   public static final String CFGVAL_KRYO_NET_OBJECT_BUFFER_SIZE = "1638400";
    
 }
