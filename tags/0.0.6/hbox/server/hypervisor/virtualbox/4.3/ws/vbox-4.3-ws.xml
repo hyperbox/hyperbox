@@ -1,0 +1,15 @@
+<module>
+	<id>vbox-4.3-ws</id>
+	<path>vbox-4.3-ws</path>
+	<name>Virtualbox 4.3 WebService Connector</name>
+	<desc>This module provides the universal WebServices connector for VirtualBox 4.3.</desc>
+	<version>1</version>
+	<vendor>Altherian</vendor>
+	<url>http://hyperbox.altherian.org</url>
+	<providers>
+		<provider>
+			<type>org.altherian.hboxd.hypervisor._Hypervisor</type>
+			<impl>org.altherian.vbox4_3.ws.VBoxWSHypervisor</impl>
+		</provider>
+	</providers>
+</module>
