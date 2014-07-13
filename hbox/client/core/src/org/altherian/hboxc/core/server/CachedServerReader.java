@@ -448,7 +448,7 @@ public class CachedServerReader implements _ServerReader {
       
       CoreEventManager.post(new ModuleEvent(HyperboxEvents.ModuleLoaded, ev.getServer(), ev.getModule()));
    }
-   
+
    private void refreshTask(TaskInput tIn) {
       try {
          TaskOutput tOut = reader.getTask(tIn);
@@ -718,6 +718,16 @@ public class CachedServerReader implements _ServerReader {
    @Override
    public ModuleOutput getModule(String modId) {
       return reader.getModule(modId);
+   }
+   
+   @Override
+   public Set<String> listLogLevel() {
+      return reader.listLogLevel();
+   }
+   
+   @Override
+   public String getLogLevel() {
+      return reader.getLogLevel();
    }
    
 }

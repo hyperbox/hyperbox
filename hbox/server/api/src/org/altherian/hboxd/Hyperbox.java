@@ -21,10 +21,12 @@
 
 package org.altherian.hboxd;
 
+import org.altherian.hbox.HyperboxAPI;
 import org.altherian.tool.logging.Logger;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Set;
 
 public class Hyperbox {
    
@@ -48,7 +50,7 @@ public class Hyperbox {
    public static String getVersionFull() {
       return getVersion() + "." + getRevision();
    }
-
+   
    static {
       buildProperties = new Properties();
       try {
@@ -59,6 +61,29 @@ public class Hyperbox {
          failedToLoad(e);
       } catch (NullPointerException e) {
          failedToLoad(e);
+      }
+   }
+   
+   public static void processArgs(Set<String> args) {
+      HyperboxAPI.processArgs(args);
+      
+      if (args.contains("-?") || args.contains("--help")) {
+         System.out.println("Hyperbox available executable switches:\n");
+         System.out.println("--help or -? : Print this help");
+         System.out.println("--apiversion : Print API version");
+         System.out.println("--apirevision : Print API revision");
+         System.out.println("--netversion : Print Net protocol version");
+         System.out.println("--version : Print Client version");
+         System.out.println("--revision : Print Client revision");
+         System.exit(0);
+      }
+      if (args.contains("--version")) {
+         System.out.println(getVersion());
+         System.exit(0);
+      }
+      if (args.contains("--revision")) {
+         System.out.println(getRevision());
+         System.exit(0);
       }
    }
    

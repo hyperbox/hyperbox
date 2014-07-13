@@ -42,7 +42,6 @@ public class Logger {
    private static PrintStream output = System.out;
    
    static {
-      maxLevel = LogLevel.Info;
       printSql = false;
       formater = new SimpleDateFormat("yyyy.mm.dd-HH:mm:ss.SSS");
    }
@@ -63,7 +62,7 @@ public class Logger {
    }
    
    public static boolean isLevel(LogLevel level) {
-      return level.getLevel() >= maxLevel.getLevel();
+      return (maxLevel == null) || (level.getLevel() <= maxLevel.getLevel());
    }
    
    public static void track() {
@@ -169,7 +168,7 @@ public class Logger {
    }
    
    public static void put(Object o, LogLevel type) {
-      if (type.getLevel() <= maxLevel.getLevel()) {
+      if (isLevel(type)) {
          if (o == null) {
             o = new String("[ ! [NULL] ! ]");
          }

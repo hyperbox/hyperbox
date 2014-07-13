@@ -56,6 +56,7 @@ import org.altherian.hbox.comm.output.StoreItemOutput;
 import org.altherian.hbox.comm.output.StoreOutput;
 import org.altherian.hbox.comm.output.TaskOutput;
 import org.altherian.hbox.comm.output.event.hypervisor.HypervisorEventOutput;
+import org.altherian.hbox.comm.output.event.server.ServerPropertyChangedEventOutput;
 import org.altherian.hbox.comm.output.event.server.ServerShutdownEventOutput;
 import org.altherian.hbox.comm.output.host.HostOutput;
 import org.altherian.hbox.comm.output.hypervisor.HypervisorLoaderOutput;
@@ -93,8 +94,10 @@ import org.altherian.tool.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class HyperboxServer implements _Server, _AnswerReceiver {
    
@@ -106,6 +109,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
    private String type;
    private String version;
    private String protocolVersion;
+   private String logLevel;
    private boolean isHypConnected = false;
    
    private ConnectionState state = ConnectionState.Disconnected;
@@ -117,6 +121,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       }
       
       this.state = state;
+      Logger.info("Changed Server #" + id + " object state to " + state);
    }
    
    @Override
@@ -142,6 +147,11 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
    @Override
    public String getProtocolVersion() {
       return protocolVersion;
+   }
+   
+   @Override
+   public String getLogLevel() {
+      return logLevel;
    }
    
    @Override
@@ -353,7 +363,9 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
          throw new HyperboxRuntimeException("Not connected to the server");
       }
       
-      req.set(new ServerInput(id));
+      if (!req.has(ServerInput.class)) {
+         req.set(new ServerInput(id));
+      }
       Transaction t = new Transaction(backend, req);
       ansRecv.put(req.getExchangeId(), t);
       return t;
@@ -736,18 +748,21 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
          throw new HyperboxRuntimeException("Unable to retrieve server information: " + srvTrans.getError());
       }
       ServerOutput srvOut = srvTrans.extractItem(ServerOutput.class);
+      
       id = srvOut.getId();
       name = srvOut.getName();
       type = srvOut.getType();
       version = srvOut.getVersion();
       protocolVersion = srvOut.getNetworkProtocolVersion();
       isHypConnected = srvOut.isHypervisorConnected();
+      logLevel = srvOut.getLogLevel();
       if (isHypConnected && (hypReader == null)) {
          hypReader = new HypervisorReader(this);
       }
       if (!isHypConnected && (hypReader != null)) {
          hypReader = null;
       }
+      
       CoreEventManager.post(new ServerModifiedEvent(ServerIoFactory.get(this)));
    }
    
@@ -873,6 +888,15 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       }
    }
    
+   @Handler
+   private void putServerPropertyChanged(ServerPropertyChangedEventOutput ev) {
+      Logger.track();
+      
+      if (id.equals(ev.getServerId())) {
+         refreshInfo();
+      }
+   }
+
    @Override
    public _GuestReader getGuest(String machineUuid) {
       Logger.track();
@@ -941,6 +965,17 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       
       ModuleOutput objOut = trans.extractItem(ModuleOutput.class);
       return objOut;
+   }
+   
+   @Override
+   public Set<String> listLogLevel() {
+      Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.ServerLogLevelList));
+      if (!trans.sendAndWait()) {
+         throw new HyperboxRuntimeException("Unable to retrieve Log levels : " + trans.getError());
+      }
+      
+      List<String> objOutList = trans.extractItems(String.class);
+      return new HashSet<String>(objOutList);
    }
    
 }

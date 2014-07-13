@@ -21,7 +21,9 @@
 
 package org.altherian.hbox.comm.input;
 
+import org.altherian.hbox.comm.io.StringSettingIO;
 import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.constant.ServerAttributes;
 
 
 public class ServerInput extends ObjectInput {
@@ -35,6 +37,14 @@ public class ServerInput extends ObjectInput {
    
    public ServerInput(ServerOutput srvOut) {
       super(srvOut.getId());
+   }
+   
+   public void setName(String name) {
+      setSetting(new StringSettingIO(ServerAttributes.Name, name));
+   }
+
+   public void setLogLevel(String logLevel) {
+      setSetting(new StringSettingIO(ServerAttributes.LogLevel, logLevel));
    }
    
 }

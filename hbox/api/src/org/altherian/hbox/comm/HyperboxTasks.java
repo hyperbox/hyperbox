@@ -48,7 +48,9 @@ public enum HyperboxTasks {
     * </p>
     */
    ServerGet,
+   ServerConfigure,
    ServerShutdown,
+   ServerLogLevelList,
    
    /**
     * Connect a server to an hypervisor.

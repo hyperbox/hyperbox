@@ -33,6 +33,7 @@ import org.altherian.hbox.comm.SecurityItem;
 import org.altherian.hbox.comm._Client;
 import org.altherian.hbox.comm.input.HypervisorInput;
 import org.altherian.hbox.comm.output.event.EventOutput;
+import org.altherian.hbox.constant.ServerAttributes;
 import org.altherian.hbox.constant.ServerType;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
@@ -48,8 +49,10 @@ import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event.hypervisor.HypervisorDisconnectedEvent;
 import org.altherian.hboxd.event.module.ModuleEvent;
 import org.altherian.hboxd.event.server.ServerConnectionStateEvent;
+import org.altherian.hboxd.event.server.ServerPropertyChangedEvent;
 import org.altherian.hboxd.event.system.SystemStateEvent;
 import org.altherian.hboxd.exception.hypervisor.HypervisorNotConnectedException;
+import org.altherian.hboxd.exception.server.ServerLogLevelInvalidException;
 import org.altherian.hboxd.exception.server.ServerNotFoundException;
 import org.altherian.hboxd.factory.MachineFactory;
 import org.altherian.hboxd.factory.ModuleManagerFactory;
@@ -77,12 +80,14 @@ import org.altherian.hboxd.task.TaskManager;
 import org.altherian.hboxd.task._TaskManager;
 import org.altherian.tool.AxBooleans;
 import org.altherian.tool.AxSystems;
+import org.altherian.tool.logging.LogLevel;
 import org.altherian.tool.logging.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -308,6 +313,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
       
       HBoxServer.setSetting(CFGKEY_SRV_NAME, name);
       this.name = name;
+      EventManager.post(new ServerPropertyChangedEvent(this, ServerAttributes.Name, name));
    }
    
    @Override
@@ -537,6 +543,36 @@ public class SingleHostServer implements _Hyperbox, _Server {
          Logger.error("Error when trying to refresh hypervisors: " + e.getMessage());
          Logger.exception(e);
       }
+   }
+   
+   @Override
+   public String getLogLevel() {
+      return Logger.getLevel().toString();
+   }
+   
+   @Override
+   public Set<String> listLogLevel() {
+      Set<String> levels = new HashSet<String>();
+      for (LogLevel level : LogLevel.values()) {
+         levels.add(level.toString());
+      }
+      return levels;
+   }
+   
+   @Override
+   public void setLogLevel(String logLevel) throws ServerLogLevelInvalidException {
+      
+      try {
+         Logger.setLevel(LogLevel.valueOf(logLevel));
+         EventManager.post(new ServerPropertyChangedEvent(this, ServerAttributes.LogLevel, logLevel));
+      } catch (IllegalArgumentException e) {
+         throw new ServerLogLevelInvalidException(logLevel);
+      }
+   }
+   
+   @Override
+   public void save() {
+      // stub, nothing to save for now
    }
    
 }

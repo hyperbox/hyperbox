@@ -2,7 +2,7 @@
 <!--
 * 
 * Hyperbox - Enterprise Virtualization Manager
-* Copyright (C) 2013 Maxime Dor
+* Copyright (C) 2013-2014 Maxime Dor
 * 
 * http://hyperbox.altherian.org
 * 
@@ -188,8 +188,8 @@
 						<li>Users Authentication</li>
 						<li>Simple Permissions
 							<ul>
-								<li>Server (Full/none)</li>
-								<li>Virtual Machines (full/none)</li>
+								<li>Server (Full/None)</li>
+								<li>Virtual Machines (Full/None)</li>
 							</ul>
 						</li>
 					</ul>
@@ -382,10 +382,10 @@
 					The connector is slower than XPCOM/COM and come with several limitations. It should only be used if no other is available/working.<br/>
 				</li>
 				<li>
-					<strong>XPCOM</strong>: Only compatible with systems supporting XPCOM, which is basically any UNIX-based system. This is a native connector that supports every feature of Virtualbox and should be prefered over WebServices.
+					<strong>XPCOM</strong>: Only compatible with systems supporting XPCOM, which is basically any UNIX-based system. This is a native connector that supports every feature of Virtualbox and should be preferred over WebServices.
 				</li>
 				<li>
-					<strong>MSCOM</strong>: Only compatible with Windows systems. Due to build limitation in the Virtualbox SDK, this kind of connector is not implemented in Hyperbox. Only WebServices can be used on Windows.
+					<strong>MSCOM</strong>: Only compatible with Windows systems. Due to build limitation in the Virtualbox SDK, this kind of connector is not currently implemented in Hyperbox. Only WebServices can be used on Windows.
 				</li>
 			</ul>
 			
@@ -405,7 +405,7 @@
 				</li>
 			</ul>
 			<div class="tab warning">
-				A known bug prevents XPCOM to work on all versions. XPCOM only works from 4.2.24 and 4.3.8. Fix was not backported to any previous versions and therefore will never work.<br/>
+				A known bug prevents XPCOM to work on all versions. XPCOM only works from 4.2.24 and 4.3.8. Fix was not back-ported to any previous versions and therefore will never work.<br/>
 				You can find detailed info on <a href="https://www.virtualbox.org/ticket/11232" target="_blank">Ticket #11232</a> of the <a href="https://www.virtualbox.org/wiki/Bugtracker" target="_blank">Virtualbox BugTracker</a>.
 			</div>
 		</div> <!-- Virtualbox -->
@@ -416,11 +416,11 @@
 			<p>Once the modules are ready, you can connect to an hypervisor by right-clicking on the server &gt; Hypervisor &gt; Connect.<br/>
 			You will be prompted by dialog to choose which hypervisor connector you want to use, and optional options for the connector.<br/>
 			<p>The options are implementation specific, so syntax/values will normally be provided by the author of the Hypervisor connector module.<br/>
-			For the Virtualbox modules shipped with Hyperbox, the following option syntax are used :
+			For the Virtualbox modules shipped with Hyperbox, the following options are available (anything in square braquets [ ] are optional) :
 			<ul>
-				<li>WebServices: <code>http[s]://[user:password@]host[:port]</code><br/>
-				Default value is <code>http://localhost:18083</code> and expects Virtualbox to be configured with <code>null</code> authentication for the WebServices.<br/>&nbsp;</li>
-				<li>XPCOM: full path to the Virtualbox XPCOM native code.<br/>
+				<li>WebServices: <code>[http[s]://][user:password@]host[:port]</code><br/>
+				Default value is <code>http://localhost:18083</code> and expects Virtualbox to be configured with <code>null</code> authentication for the WebServices - See the <a href="https://www.virtualbox.org/manual/ch08.html#vboxmanage-setproperty">webservauthlibrary property</a><br/>&nbsp;</li>
+				<li>XPCOM: full base path to the Virtualbox XPCOM native code.<br/>
 				Default value is <code>/usr/lib/virtualbox</code></li>
 			</ul>
 			</p>
@@ -431,12 +431,49 @@
 	<div>
 		<h2><a id="cv-o">Overview</a></h2>
 		<div class="tab">
-			C
+			<p>Since Hyperbox will start VMs in headless mode (or equivalent), it is indispensable to be able to connect to the console of the VM, being like the physical screen of a real computer.<br/>
+			That is an essential step to perform OS installs, start rescue modes, or simply access the console for debugging purposes.<br/>
+			Hyperbox already provides the Console module and address in the VM summary panel if available, but also implements the concept of "Console Viewers".</p>
+			<p>Console Viewers are programs that can be launched to connect to and display the VM console by the simple press of a button. Console viewers are meant to map to a specific protocol.<br/>
+			Virtualbox provides a RDP implementation in the Extension pack and a non-supported VNC implementation built from SVN, both which can be used with standard programs like :
+			<ul>
+				<li>Windows: Remote Desktop native Client (mstsc.exe) and UltraVNC</li>
+				<li>UNIX-Like: rdesktop and UltraVNC</li>
+			</ul>
+			Hyperbox can (and should) pass parameters using variables like the console IP and port, server hostname, VM name, etc.
+			</p>
+			<p>
+			Hyperbox will use two values to map a given console viewer to a VM: the Hypervisor Type ID and the Console Module.<br/>
+			The Hypervisor type can be found on the Server Summary panel and the Console module in each VM Summary panel.
+			</p>
+			<p>
 		</div> <!-- Overview -->
 		
 		<h2><a id="cv-mcv">Managing Console Viewers</a></h2>
 		<div class="tab">
-			I
+			<h3>Default Console Viewers</h3>
+			<div class="tab">
+			</div>
+			
+			<h3>Connect to a VM console</h3>
+			<div class="tab">
+			</div>
+			
+			<h3>Variables</h3>
+			<div class="tab">
+			</div>
+			
+			<h3>Add Console Viewer(s)</h3>
+			<div class="tab">
+			</div>
+			
+			<h3>Edit a Console Viewer</h3>
+			<div class="tab">
+			</div>
+			
+			<h3>Remove Console Viewer(s)</h3>
+			<div class="tab">
+			</div>
 		</div>
 	</div> <!-- Console Viewers -->
 	

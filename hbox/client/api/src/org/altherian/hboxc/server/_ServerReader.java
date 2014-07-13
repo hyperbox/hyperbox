@@ -56,6 +56,7 @@ import org.altherian.hbox.comm.output.storage.StorageControllerTypeOutput;
 import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
 
 import java.util.List;
+import java.util.Set;
 
 public interface _ServerReader {
    
@@ -68,6 +69,8 @@ public interface _ServerReader {
    public String getVersion();
    
    public String getProtocolVersion();
+   
+   public String getLogLevel();
    
    public _GuestReader getGuest(String vmId);
    
@@ -156,5 +159,7 @@ public interface _ServerReader {
    public List<ModuleOutput> listModules();
    
    public ModuleOutput getModule(String modId);
+   
+   public Set<String> listLogLevel();
    
 }

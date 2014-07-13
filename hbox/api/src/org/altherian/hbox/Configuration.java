@@ -36,6 +36,9 @@ import java.util.Map;
  */
 public class Configuration {
    
+   public static final String CFG_SEPARATOR = ".";
+   public static final String CFG_ENV_PREFIX = "HBOX";
+   public static final String CFG_ENV_SEPERATOR = "_";
    public static final String CFGKEY_CONF_USER_DATA_PATH = "conf.user.data.path";
    private static Map<String, String> settings = new HashMap<String, String>();
    
@@ -69,7 +72,7 @@ public class Configuration {
    }
    
    private static String getEnvVarName(String key) {
-      return "HBOX_" + key.toUpperCase().replace(".", "_");
+      return CFG_ENV_PREFIX + CFG_ENV_SEPERATOR + key.toUpperCase().replace(CFG_SEPARATOR, CFG_ENV_SEPERATOR);
    }
    
    public static void init() throws HyperboxException {
@@ -78,21 +81,26 @@ public class Configuration {
    
    public static String getSetting(String key, String defaultValue) {
       Logger.debug("Trying to get setting " + key + " with default value " + defaultValue);
-      Logger.debug("System.getProperties().containsKey(): " + System.getProperties().containsKey(key));
-      Logger.debug("System.getenv().containsKey(getEnvVarName()): " + System.getenv().containsKey(getEnvVarName(key)));
-      Logger.debug("hasSetting(): " + hasSetting(key));
+      Logger.debug("System.getProperties().containsKey(" + key + "): " + System.getProperties().containsKey(key));
+      Logger.debug("System.getenv().containsKey(" + getEnvVarName(key) + "): " + System.getenv().containsKey(getEnvVarName(key)));
+      Logger.debug("hasSetting(" + key + "): " + hasSetting(key));
+      
       if (System.getProperties().containsKey(key)) {
+         Logger.debug("Returning properties value");
          return System.getProperty(key);
       }
-      else if (System.getenv().containsKey(getEnvVarName(key))) {
+      
+      if (System.getenv().containsKey(getEnvVarName(key))) {
+         Logger.debug("Returning environment value");
          return System.getenv(getEnvVarName(key));
       }
-      else if (settings.containsKey(key)) {
+      
+      if (settings.containsKey(key)) {
+         Logger.debug("Returning config value");
          return settings.get(key);
       }
-      else {
-         return defaultValue;
-      }
+      
+      return defaultValue;
    }
    
    public static String getSetting(String key) {

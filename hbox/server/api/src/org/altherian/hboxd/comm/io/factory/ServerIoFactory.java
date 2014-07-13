@@ -46,6 +46,7 @@ public class ServerIoFactory {
       settings.add(new StringSettingIO(ServerAttributes.Version, srv.getVersion()));
       settings.add(new BooleanSettingIO(ServerAttributes.IsHypervisorConnected, srv.isConnected()));
       settings.add(new StringSettingIO(ServerAttributes.NetProtocolVersion, Long.toString(HyperboxAPI.getProtocolVersion())));
+      settings.add(new StringSettingIO(ServerAttributes.LogLevel, srv.getLogLevel()));
       ServerOutput srvOut = new ServerOutput(srv.getId(), settings);
       return srvOut;
    }

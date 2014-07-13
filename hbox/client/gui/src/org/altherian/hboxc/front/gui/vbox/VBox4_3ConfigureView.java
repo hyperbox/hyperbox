@@ -81,11 +81,11 @@ public class VBox4_3ConfigureView implements _Saveable, _Cancelable {
       
       dialog = JDialogBuilder.get("Hypervisor Configuration Edit", IconBuilder.getEntityType(EntityTypes.Server).getImage(), saveButton);
       dialog.add(machineFolderLabel);
-      dialog.add(machineFolderValue, "growx,pushx,wrap");
+      dialog.add(machineFolderValue, "growx, pushx, wrap");
       dialog.add(consoleModuleLabel);
-      dialog.add(consoleModuleValue, "growx,pushx,wrap");
+      dialog.add(consoleModuleValue, "growx, pushx, wrap");
       dialog.add(virtExLabel);
-      dialog.add(virtExValue, "growx,pushx,wrap");
+      dialog.add(virtExValue, "growx, pushx, wrap");
       dialog.add(buttonPanel, "center, span 2");
    }
    

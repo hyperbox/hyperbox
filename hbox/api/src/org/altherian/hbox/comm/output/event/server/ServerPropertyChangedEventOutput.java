@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -19,30 +19,34 @@
  * 
  */
 
-package org.altherian.hboxd;
+package org.altherian.hbox.comm.output.event.server;
 
-import org.altherian.hboxd.controller.Controller;
+import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.event.HyperboxEvents;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Date;
 
-public class HyperboxService {
+public class ServerPropertyChangedEventOutput extends ServerEventOutput {
    
-   private static Controller c;
+   private Object property;
+   private String newValue;
    
-   public static void main(String[] args) throws Exception {
-      start(args);
+   protected ServerPropertyChangedEventOutput() {
+      // Used for (de)serialization
    }
    
-   public static void start(String[] args) throws Exception {
-      Hyperbox.processArgs(new HashSet<String>(Arrays.asList(args)));
-
-      c = new Controller();
-      c.start();
+   public ServerPropertyChangedEventOutput(Date time, ServerOutput srvOut, Object property, String newValue) {
+      super(time, HyperboxEvents.ServerPropertyChanged, srvOut);
+      this.property = property;
+      this.newValue = newValue;
    }
    
-   public static void stop(String[] args) throws Exception {
-      c.stop();
+   public Object getProperty() {
+      return property;
+   }
+   
+   public String getValue() {
+      return newValue;
    }
    
 }
