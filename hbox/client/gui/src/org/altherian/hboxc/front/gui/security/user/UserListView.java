@@ -26,9 +26,9 @@ import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.HyperboxTasks;
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.event.security.UserEventOutput;
-import org.altherian.hbox.comm.output.security.UserOutput;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.event.security.UserEventOut;
+import org.altherian.hbox.comm.out.security.UserOut;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
@@ -61,7 +61,7 @@ import javax.swing.SwingUtilities;
 
 public class UserListView implements _UserSelector, _Refreshable, _SingleServerSelector {
    
-   private ServerOutput srvOut;
+   private ServerOut srvOut;
    
    private JLabel errorLabel;
    
@@ -109,22 +109,17 @@ public class UserListView implements _UserSelector, _Refreshable, _SingleServerS
       RefreshUtil.set(panel, this);
    }
    
-   @Override
-   public String getId() {
-      return "Users";
-   }
-   
    public JComponent getComponent() {
       return panel;
    }
    
-   private void update(List<UserOutput> users) {
+   private void update(List<UserOut> users) {
       itemListModel.put(users);
    }
    
    // TODO add specific handlers
    @Handler
-   public void putUserEvent(UserEventOutput evOut) {
+   public void putUserEvent(UserEventOut evOut) {
       refresh();
    }
    
@@ -191,7 +186,7 @@ public class UserListView implements _UserSelector, _Refreshable, _SingleServerS
       return srvOut.getId();
    }
    
-   public void show(ServerOutput srvOut) {
+   public void show(ServerOut srvOut) {
       if (srvOut == null) {
          itemListModel.clear();
       } else {
@@ -201,7 +196,7 @@ public class UserListView implements _UserSelector, _Refreshable, _SingleServerS
    }
    
    @Override
-   public ServerOutput getServer() {
+   public ServerOut getServer() {
       return srvOut;
    }
    

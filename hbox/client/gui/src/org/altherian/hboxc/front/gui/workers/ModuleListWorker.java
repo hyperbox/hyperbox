@@ -21,14 +21,14 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.output.ModuleOutput;
+import org.altherian.hbox.comm.out.ModuleOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.utils.AnSwingWorker;
 import org.altherian.tool.logging.Logger;
 
 import java.util.List;
 
-public class ModuleListWorker extends AnSwingWorker<Void, ModuleOutput, _ModuleListReceiver> {
+public class ModuleListWorker extends AnSwingWorker<Void, ModuleOut, _ModuleListReceiver> {
    
    private String srvId;
    
@@ -39,7 +39,7 @@ public class ModuleListWorker extends AnSwingWorker<Void, ModuleOutput, _ModuleL
    
    @Override
    protected Void doInBackground() throws Exception {
-      for (ModuleOutput modOut : Gui.getServer(srvId).listModules()) {
+      for (ModuleOut modOut : Gui.getServer(srvId).listModules()) {
          publish(modOut);
       }
 
@@ -47,7 +47,7 @@ public class ModuleListWorker extends AnSwingWorker<Void, ModuleOutput, _ModuleL
    }
    
    @Override
-   protected void process(List<ModuleOutput> objOutList) {
+   protected void process(List<ModuleOut> objOutList) {
       getReceiver().add(objOutList);
    }
    

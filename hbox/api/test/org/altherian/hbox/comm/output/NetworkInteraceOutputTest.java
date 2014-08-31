@@ -21,23 +21,23 @@
 
 package org.altherian.hbox.comm.output;
 
-import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
 
 public class NetworkInteraceOutputTest {
-   public static void validateSimple(NetworkInterfaceOutput nOut) {
+   public static void validateSimple(NetworkInterfaceOut nOut) {
       // TODO
    }
    
-   public static void validateFull(NetworkInterfaceOutput nOut) {
+   public static void validateFull(NetworkInterfaceOut nOut) {
       validateSimple(nOut);
       // TODO
    }
    
-   public static void compareSimple(NetworkInterfaceOutput nic01, NetworkInterfaceOutput nic02) {
+   public static void compareSimple(NetworkInterfaceOut nic01, NetworkInterfaceOut nic02) {
       // TODO
    }
    
-   public static void compareFull(NetworkInterfaceOutput nic01, NetworkInterfaceOutput nic02) {
+   public static void compareFull(NetworkInterfaceOut nic01, NetworkInterfaceOut nic02) {
       compareSimple(nic01, nic02);
       // TODO
    }

@@ -27,8 +27,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
-import org.altherian.hbox.constant.StorageControllerSettings;
+import org.altherian.hbox.comm.out.storage.StorageControllerOut;
+import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.hbox.constant.StorageControllerSubType;
 import org.altherian.hbox.constant.StorageControllerType;
 
@@ -42,22 +42,22 @@ public final class StorageControllerOutputTest {
    @Test
    public void basicTest() {
       String id = "Test";
-      SettingIO name = new StringSettingIO(StorageControllerSettings.Name, "Test");
-      SettingIO type = new StringSettingIO(StorageControllerSettings.Type, StorageControllerType.SATA.toString());
-      SettingIO subType = new StringSettingIO(StorageControllerSettings.SubType, StorageControllerSubType.IntelAhci.toString());
+      SettingIO name = new StringSettingIO(StorageControllerAttribute.Name, "Test");
+      SettingIO type = new StringSettingIO(StorageControllerAttribute.Type, StorageControllerType.SATA.toString());
+      SettingIO subType = new StringSettingIO(StorageControllerAttribute.SubType, StorageControllerSubType.IntelAhci.toString());
       
-      StorageControllerOutput scOut = new StorageControllerOutput(UUID.randomUUID().toString(), id, Arrays.asList(name, type, subType));
+      StorageControllerOut scOut = new StorageControllerOut(UUID.randomUUID().toString(), id, Arrays.asList(name, type, subType));
       validateSimple(scOut);
       assertTrue(scOut.getId().contentEquals(id));
       assertTrue(scOut.getName().contentEquals(name.getString()));
-      assertTrue(scOut.getSetting(StorageControllerSettings.Type).getString().contentEquals(type.getString()));
-      assertTrue(scOut.getSetting(StorageControllerSettings.SubType).getString().contentEquals(subType.getString()));
+      assertTrue(scOut.getSetting(StorageControllerAttribute.Type).getString().contentEquals(type.getString()));
+      assertTrue(scOut.getSetting(StorageControllerAttribute.SubType).getString().contentEquals(subType.getString()));
       assertTrue(scOut.getType().contentEquals(type.getString()));
-      assertTrue(scOut.getSetting(StorageControllerSettings.SubType).getString().contentEquals(subType.getString()));
+      assertTrue(scOut.getSetting(StorageControllerAttribute.SubType).getString().contentEquals(subType.getString()));
       assertTrue(scOut.getSubType().contentEquals(subType.getString()));
    }
    
-   public static void validateSimple(StorageControllerOutput scOut) {
+   public static void validateSimple(StorageControllerOut scOut) {
       assertNotNull(scOut);
       assertNotNull(scOut.getId());
       assertFalse(scOut.getId().isEmpty());
@@ -65,7 +65,7 @@ public final class StorageControllerOutputTest {
       assertFalse(scOut.getName().isEmpty());
    }
    
-   public static void validateFull(StorageControllerOutput scOut) {
+   public static void validateFull(StorageControllerOut scOut) {
       validateSimple(scOut);
       assertNotNull(scOut.getType());
       assertNotNull(scOut.getSubType());

@@ -25,9 +25,9 @@ package org.altherian.hboxc.front.gui.action.hypervisor;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.HypervisorInput;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.in.HypervisorIn;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.controller.MessageInput;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.hypervisor.HypervisorConnectView;
@@ -56,13 +56,13 @@ public class HypervisorConnectAction extends AbstractAction {
    public void actionPerformed(ActionEvent ae) {
       Logger.track();
       
-      ServerOutput srvOut = selector.getServer();
+      ServerOut srvOut = selector.getServer();
       if (srvOut != null) {
-         HypervisorInput hypIn = HypervisorConnectView.getInput(srvOut);
+         HypervisorIn hypIn = HypervisorConnectView.getInput(srvOut);
          if (hypIn != null) {
             Logger.debug("Got user input to connect hypervisor");
             Request req = new Request(Command.HBOX,HyperboxTasks.HypervisorConnect);
-            req.set(new ServerInput(srvOut.getId()));
+            req.set(new ServerIn(srvOut.getId()));
             req.set(hypIn);
             Gui.post(new MessageInput(req));
          }

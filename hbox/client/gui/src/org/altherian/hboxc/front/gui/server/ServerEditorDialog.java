@@ -23,9 +23,9 @@ package org.altherian.hboxc.front.gui.server;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.constant.EntityTypes;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Cancelable;
@@ -55,10 +55,10 @@ public class ServerEditorDialog implements _Saveable, _Cancelable {
    
    private JDialog dialog;
    
-   private ServerInput srvIn;
-   private ServerOutput srvOut;
+   private ServerIn srvIn;
+   private ServerOut srvOut;
    
-   public static ServerInput getInput(String srvId) {
+   public static ServerIn getInput(String srvId) {
       Logger.track();
       
       return new ServerEditorDialog().getUserInput(srvId);
@@ -79,7 +79,7 @@ public class ServerEditorDialog implements _Saveable, _Cancelable {
       buttonPanel.add(saveButton);
       buttonPanel.add(cancelButton);
       
-      dialog = JDialogBuilder.get("Server Configuration", IconBuilder.getEntityType(EntityTypes.Server).getImage(), saveButton);
+      dialog = JDialogBuilder.get("Server Configuration", IconBuilder.getEntityType(Entity.Server).getImage(), saveButton);
       dialog.add(nameLabel);
       dialog.add(nameValue, "growx, pushx, wrap");
       dialog.add(logLevelLabel);
@@ -87,7 +87,7 @@ public class ServerEditorDialog implements _Saveable, _Cancelable {
       dialog.add(buttonPanel, "center, span 2");
    }
    
-   private ServerInput getUserInput(String srvId) {
+   private ServerIn getUserInput(String srvId) {
       Logger.track();
       
       srvOut = Gui.getServerInfo(srvId);
@@ -126,7 +126,7 @@ public class ServerEditorDialog implements _Saveable, _Cancelable {
    public void save() throws HyperboxException {
       Logger.track();
       
-      srvIn = new ServerInput(srvOut.getId());
+      srvIn = new ServerIn(srvOut.getId());
       srvIn.setName(nameValue.getText());
       srvIn.setLogLevel(logLevelValue.getSelectedItem().toString());
       hide();

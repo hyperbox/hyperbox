@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.network;
 
-import org.altherian.hbox.constant.NetworkInterfaceSettings;
+import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class NicMacAddressSetting extends StringSetting {
    
    public NicMacAddressSetting(String macAddress) {
-      super(NetworkInterfaceSettings.MacAddress, macAddress);
+      super(NetworkInterfaceAttribute.MacAddress, macAddress);
    }
    
 }

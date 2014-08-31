@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.machine;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hbox.exception.ConfigurationException;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.general.CurrentSnapshotSetting;
@@ -39,7 +39,7 @@ public class CurrentSnapshotSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.CurrentSnapshotUuid.getId();
+      return MachineAttribute.CurrentSnapshotUuid.getId();
    }
    
    @Override

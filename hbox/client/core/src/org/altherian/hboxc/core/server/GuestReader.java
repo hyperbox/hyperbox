@@ -24,9 +24,9 @@ package org.altherian.hboxc.core.server;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.GuestNetworkInterfaceInput;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.output.hypervisor.GuestNetworkInterfaceOutput;
+import org.altherian.hbox.comm.in.GuestNetworkInterfaceIn;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.out.hypervisor.GuestNetworkInterfaceOut;
 import org.altherian.hboxc.comm.utils.Transaction;
 import org.altherian.hboxc.server._GuestReader;
 import org.altherian.hboxc.server._Server;
@@ -42,12 +42,12 @@ public class GuestReader implements _GuestReader {
    }
 
    @Override
-   public GuestNetworkInterfaceOutput findNetworkInterface(String macAddress) {
+   public GuestNetworkInterfaceOut findNetworkInterface(String macAddress) {
       Request req = new Request(Command.VBOX,HypervisorTasks.GuestNetworkInterfaceFind);
-      req.set(new MachineInput(machineUuid));
-      req.set(new GuestNetworkInterfaceInput().setMacAddress(macAddress));
+      req.set(new MachineIn(machineUuid));
+      req.set(new GuestNetworkInterfaceIn().setMacAddress(macAddress));
       Transaction t = srv.sendRequest(req);
-      return t.extractItem(GuestNetworkInterfaceOutput.class);
+      return t.extractItem(GuestNetworkInterfaceOut.class);
    }
    
 }

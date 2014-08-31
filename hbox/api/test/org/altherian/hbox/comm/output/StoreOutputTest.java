@@ -25,30 +25,31 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.altherian.hbox.constant.StoreAttributes;
+import org.altherian.hbox.comm.out.StoreOut;
+import org.altherian.hbox.constant.StoreAttribute;
 
 public final class StoreOutputTest {
    
-   public static void validateFull(StoreOutput sOut) {
+   public static void validateFull(StoreOut sOut) {
       validateSimple(sOut);
       
-      assertTrue(sOut.hasSetting(StoreAttributes.Location));
-      assertNotNull(sOut.getSetting(StoreAttributes.Location).getString());
-      assertFalse(sOut.getSetting(StoreAttributes.Location).getString().isEmpty());
+      assertTrue(sOut.hasSetting(StoreAttribute.Location));
+      assertNotNull(sOut.getSetting(StoreAttribute.Location).getString());
+      assertFalse(sOut.getSetting(StoreAttribute.Location).getString().isEmpty());
    }
    
-   public static void validateSimple(StoreOutput sOut) {
+   public static void validateSimple(StoreOut sOut) {
       assertNotNull(sOut);
       assertNotNull(sOut.getId());
       assertFalse(sOut.getId().isEmpty());
       
-      assertTrue(sOut.hasSetting(StoreAttributes.Label));
-      assertNotNull(sOut.getSetting(StoreAttributes.Label).getString());
-      assertFalse(sOut.getSetting(StoreAttributes.Label).getString().isEmpty());
+      assertTrue(sOut.hasSetting(StoreAttribute.Label));
+      assertNotNull(sOut.getSetting(StoreAttribute.Label).getString());
+      assertFalse(sOut.getSetting(StoreAttribute.Label).getString().isEmpty());
       
-      assertTrue(sOut.hasSetting(StoreAttributes.State));
-      assertNotNull(sOut.getSetting(StoreAttributes.State).getString());
-      assertFalse(sOut.getSetting(StoreAttributes.State).getString().isEmpty());
+      assertTrue(sOut.hasSetting(StoreAttribute.State));
+      assertNotNull(sOut.getSetting(StoreAttribute.State).getString());
+      assertFalse(sOut.getSetting(StoreAttribute.State).getString().isEmpty());
    }
    
 }

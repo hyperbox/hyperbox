@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.snapshot;
 
-import org.altherian.hbox.constant.SnapshotAttributes;
+import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.hbox.exception.ConfigurationException;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
 import org.altherian.hboxd.settings._Setting;
@@ -39,7 +39,7 @@ public class SnapshotCreationTimeSettingAction implements _SnapshotSettingAction
    
    @Override
    public String getSettingName() {
-      return SnapshotAttributes.CreationTime.getId();
+      return SnapshotAttribute.CreationTime.getId();
    }
    
    @Override
@@ -49,7 +49,7 @@ public class SnapshotCreationTimeSettingAction implements _SnapshotSettingAction
    
    @Override
    public _Setting get(ISnapshot snap) {
-      return new PositiveNumberSetting(SnapshotAttributes.CreationTime, snap.getTimeStamp());
+      return new PositiveNumberSetting(SnapshotAttribute.CreationTime, snap.getTimeStamp());
    }
    
 }

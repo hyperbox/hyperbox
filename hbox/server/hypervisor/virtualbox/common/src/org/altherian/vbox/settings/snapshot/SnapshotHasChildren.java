@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.snapshot;
 
-import org.altherian.hbox.constant.SnapshotAttributes;
+import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public class SnapshotHasChildren extends BooleanSetting {
    
    public SnapshotHasChildren(Boolean hasChildren) {
-      super(SnapshotAttributes.HasChildren, hasChildren);
+      super(SnapshotAttribute.HasChildren, hasChildren);
    }
    
 }

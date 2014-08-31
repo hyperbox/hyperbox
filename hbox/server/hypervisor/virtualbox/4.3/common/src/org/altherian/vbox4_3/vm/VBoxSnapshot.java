@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.vm;
 
-import org.altherian.hbox.constant.SnapshotAttributes;
+import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event.snapshot.SnapshotChangedEvent;
 import org.altherian.hboxd.hypervisor.vm.snapshot._RawSnapshot;
@@ -85,7 +85,7 @@ public class VBoxSnapshot implements _RawSnapshot {
    
    @Override
    public String getName() {
-      return getSetting(SnapshotAttributes.Name).getString();
+      return getSetting(SnapshotAttribute.Name).getString();
    }
    
    @Override
@@ -95,7 +95,7 @@ public class VBoxSnapshot implements _RawSnapshot {
    
    @Override
    public String getDescription() {
-      return getSetting(SnapshotAttributes.Description).getString();
+      return getSetting(SnapshotAttribute.Description).getString();
    }
    
    @Override
@@ -105,12 +105,12 @@ public class VBoxSnapshot implements _RawSnapshot {
    
    @Override
    public Date getCreationTime() {
-      return new Date(getSetting(SnapshotAttributes.CreationTime).getNumber());
+      return new Date(getSetting(SnapshotAttribute.CreationTime).getNumber());
    }
    
    @Override
    public boolean isOnline() {
-      return getSetting(SnapshotAttributes.IsOnline).getBoolean();
+      return getSetting(SnapshotAttribute.IsOnline).getBoolean();
    }
    
    @Override
@@ -120,7 +120,7 @@ public class VBoxSnapshot implements _RawSnapshot {
    
    @Override
    public boolean hasParent() {
-      return getSetting(SnapshotAttributes.HasParent).getBoolean();
+      return getSetting(SnapshotAttribute.HasParent).getBoolean();
    }
    
    @Override
@@ -134,7 +134,7 @@ public class VBoxSnapshot implements _RawSnapshot {
    
    @Override
    public boolean hasChildren() {
-      return getSetting(SnapshotAttributes.HasChildren).getBoolean();
+      return getSetting(SnapshotAttribute.HasChildren).getBoolean();
    }
    
    @Override

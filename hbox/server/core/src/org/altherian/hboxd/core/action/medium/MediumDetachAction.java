@@ -24,9 +24,9 @@ package org.altherian.hboxd.core.action.medium;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.input.StorageDeviceAttachmentInput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.in.StorageDeviceAttachmentIn;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 import org.altherian.hboxd.server._Server;
@@ -48,13 +48,13 @@ public class MediumDetachAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      ServerInput srvIn = request.get(ServerInput.class);
+      ServerIn srvIn = request.get(ServerIn.class);
       _Server srv = hbox.getServer(srvIn.getId());
       
-      String mId = request.get(MachineInput.class).getId();
-      String ctrlId = request.get(StorageDeviceAttachmentInput.class).getControllerId();
-      Long portId = request.get(StorageDeviceAttachmentInput.class).getPortId();
-      Long deviceId = request.get(StorageDeviceAttachmentInput.class).getDeviceId();
+      String mId = request.get(MachineIn.class).getId();
+      String ctrlId = request.get(StorageDeviceAttachmentIn.class).getControllerId();
+      Long portId = request.get(StorageDeviceAttachmentIn.class).getPortId();
+      Long deviceId = request.get(StorageDeviceAttachmentIn.class).getDeviceId();
       
       srv.getMachine(mId).getStorageController(ctrlId).detachMedium(portId, deviceId);
    }

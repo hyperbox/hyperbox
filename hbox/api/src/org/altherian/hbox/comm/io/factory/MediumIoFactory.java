@@ -21,13 +21,13 @@
 
 package org.altherian.hbox.comm.io.factory;
 
-import org.altherian.hbox.comm.input.MediumInput;
-import org.altherian.hbox.comm.output.storage.MediumOutput;
+import org.altherian.hbox.comm.in.MediumIn;
+import org.altherian.hbox.comm.out.storage.MediumOut;
 
 public final class MediumIoFactory {
    
-   public static MediumInput get(MediumOutput medOut) {
-      return new MediumInput(medOut.getId(), medOut.listSettings());
+   public static MediumIn get(MediumOut medOut) {
+      return new MediumIn(medOut.getId(), medOut.listSettings());
    }
    
 }

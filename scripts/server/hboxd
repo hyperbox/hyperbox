@@ -33,5 +33,5 @@ if [ $# -ge 1 ]; then
 fi
 
 cd $INSTALL_DIR
-nohup java $ARGS_START "$@" $DAEMON_CLASS &> /dev/null &
+nohup java $ARGS_START $DAEMON_CLASS "$@" &> /dev/null &
 echo $!

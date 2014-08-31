@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.cpu;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
 
 public class CpuExecCapSetting extends PositiveNumberSetting {
    
    public CpuExecCapSetting(long execCap) {
-      super(MachineAttributes.CpuExecCap, execCap);
+      super(MachineAttribute.CpuExecCap, execCap);
    }
    
 }

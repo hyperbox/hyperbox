@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.setting.network;
 
-import org.altherian.hbox.constant.NetworkInterfaceSettings;
+import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.hbox.exception.ConfigurationException;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.network.NicPromiscuousModeSetting;
@@ -41,7 +41,7 @@ public class NicPromiscuousModeSettingAction implements _NetworkInterfaceSetting
    
    @Override
    public String getSettingName() {
-      return NetworkInterfaceSettings.PromiscuousMode.getId();
+      return NetworkInterfaceAttribute.PromiscuousMode.getId();
    }
    
    @Override

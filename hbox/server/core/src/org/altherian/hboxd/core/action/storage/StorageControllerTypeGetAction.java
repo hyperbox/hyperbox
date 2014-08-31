@@ -26,8 +26,8 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.StorageControllerTypeInput;
-import org.altherian.hbox.comm.output.storage.StorageControllerTypeOutput;
+import org.altherian.hbox.comm.in.StorageControllerTypeIn;
+import org.altherian.hbox.comm.out.storage.StorageControllerTypeOut;
 import org.altherian.hbox.exception.HyperboxCommunicationException;
 import org.altherian.hboxd.comm.io.factory.StorageControllerTypeIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
@@ -52,13 +52,13 @@ public final class StorageControllerTypeGetAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      if (!request.has(StorageControllerTypeInput.class)) {
-         throw new HyperboxCommunicationException(StorageControllerTypeInput.class.getSimpleName() + " is missing");
+      if (!request.has(StorageControllerTypeIn.class)) {
+         throw new HyperboxCommunicationException(StorageControllerTypeIn.class.getSimpleName() + " is missing");
       }
       
-      StorageControllerTypeInput sctIn = request.get(StorageControllerTypeInput.class);
+      StorageControllerTypeIn sctIn = request.get(StorageControllerTypeIn.class);
       _RawStorageControllerType sctType = hbox.getHypervisor().getStorageControllerType(sctIn.getId());
-      StorageControllerTypeOutput sctOut = StorageControllerTypeIoFactory.get(sctType);
+      StorageControllerTypeOut sctOut = StorageControllerTypeIoFactory.get(sctType);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, sctOut));
    }
    

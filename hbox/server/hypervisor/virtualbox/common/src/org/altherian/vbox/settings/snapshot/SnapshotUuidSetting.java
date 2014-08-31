@@ -21,7 +21,7 @@
 
 package org.altherian.vbox.settings.snapshot;
 
-import org.altherian.hbox.constant.SnapshotAttributes;
+import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 import java.util.UUID;
@@ -29,7 +29,7 @@ import java.util.UUID;
 public class SnapshotUuidSetting extends StringSetting {
    
    public SnapshotUuidSetting(String uuid) {
-      super(SnapshotAttributes.Uuid, uuid);
+      super(SnapshotAttribute.Uuid, uuid);
    }
    
    public SnapshotUuidSetting(UUID uuid) {

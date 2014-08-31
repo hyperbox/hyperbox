@@ -23,8 +23,8 @@ package org.altherian.hboxc.front.gui.builder;
 
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.HypervisorTasks;
-import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
-import org.altherian.hbox.constant.EntityTypes;
+import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hbox.constant.StorageControllerType;
 import org.altherian.hbox.states.MachineStates;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
@@ -52,14 +52,14 @@ public class IconBuilder {
    
    private static Map<MachineStates, ImageIcon> machineStates;
    
-   private static Map<EntityTypes, ImageIcon> entTypes;
+   private static Map<String, ImageIcon> entTypes;
    private static ImageIcon unknownEntType;
    
    private static Map<String, ImageIcon> scTypes;
    private static ImageIcon unknownScType;
    
    private IconBuilder() {
-      // static class
+      // static only
    }
    
    static {
@@ -151,23 +151,24 @@ public class IconBuilder {
    }
    
    private static void initEntityTypes() {
-      entTypes = new EnumMap<EntityTypes, ImageIcon>(EntityTypes.class);
-      entTypes.put(EntityTypes.Guest, new ImageIcon(ICONS_PATH + "monitor.png"));
-      entTypes.put(EntityTypes.Machine, new ImageIcon(ICONS_PATH + "computer.png"));
-      entTypes.put(EntityTypes.DVD, new ImageIcon(ICONS_PATH + "cd.png"));
-      entTypes.put(EntityTypes.HardDisk, new ImageIcon(ICONS_PATH + "harddisk.png"));
-      entTypes.put(EntityTypes.Floppy, new ImageIcon(ICONS_PATH + "disk.png"));
-      entTypes.put(EntityTypes.Server, new ImageIcon(ICONS_PATH + "server.png"));
-      entTypes.put(EntityTypes.Display, new ImageIcon(ICONS_PATH + "monitor.png"));
-      entTypes.put(EntityTypes.CPU, new ImageIcon(ICONS_PATH + "shape_shadow.png"));
-      entTypes.put(EntityTypes.Audio, new ImageIcon(ICONS_PATH + "sound.png"));
-      entTypes.put(EntityTypes.Network, new ImageIcon(ICONS_PATH + "world.png"));
-      entTypes.put(EntityTypes.DiskDrive, new ImageIcon(ICONS_PATH + "drive.png"));
-      entTypes.put(EntityTypes.DvdDrive, new ImageIcon(ICONS_PATH + "drive_cd.png"));
-      entTypes.put(EntityTypes.FloppyDrive, new ImageIcon(ICONS_PATH + "drive_disk.png"));
-      entTypes.put(EntityTypes.User, new ImageIcon(ICONS_PATH + "user.png"));
-      entTypes.put(EntityTypes.Store, new ImageIcon(ICONS_PATH + "store.png"));
-      entTypes.put(EntityTypes.Task, new ImageIcon(ICONS_PATH + "task.png"));
+      entTypes = new HashMap<String, ImageIcon>();
+      entTypes.put(Entity.Hyperbox.getId(), getHyperbox());
+      entTypes.put(Entity.Guest.getId(), new ImageIcon(ICONS_PATH + "monitor.png"));
+      entTypes.put(Entity.Machine.getId(), new ImageIcon(ICONS_PATH + "computer.png"));
+      entTypes.put(Entity.DVD.getId(), new ImageIcon(ICONS_PATH + "cd.png"));
+      entTypes.put(Entity.HardDisk.getId(), new ImageIcon(ICONS_PATH + "harddisk.png"));
+      entTypes.put(Entity.Floppy.getId(), new ImageIcon(ICONS_PATH + "disk.png"));
+      entTypes.put(Entity.Server.getId(), new ImageIcon(ICONS_PATH + "server.png"));
+      entTypes.put(Entity.Display.getId(), new ImageIcon(ICONS_PATH + "monitor.png"));
+      entTypes.put(Entity.CPU.getId(), new ImageIcon(ICONS_PATH + "shape_shadow.png"));
+      entTypes.put(Entity.Audio.getId(), new ImageIcon(ICONS_PATH + "sound.png"));
+      entTypes.put(Entity.Network.getId(), new ImageIcon(ICONS_PATH + "world.png"));
+      entTypes.put(Entity.DiskDrive.getId(), new ImageIcon(ICONS_PATH + "drive.png"));
+      entTypes.put(Entity.DvdDrive.getId(), new ImageIcon(ICONS_PATH + "drive_cd.png"));
+      entTypes.put(Entity.FloppyDrive.getId(), new ImageIcon(ICONS_PATH + "drive_disk.png"));
+      entTypes.put(Entity.User.getId(), new ImageIcon(ICONS_PATH + "user.png"));
+      entTypes.put(Entity.Store.getId(), new ImageIcon(ICONS_PATH + "store.png"));
+      entTypes.put(Entity.Task.getId(), new ImageIcon(ICONS_PATH + "task.png"));
    }
    
    public static ImageIcon getHyperbox() {
@@ -216,11 +217,13 @@ public class IconBuilder {
       
       try {
          return getMachineState(MachineStates.valueOf(state));
-      } catch (Throwable t) {
+      }
+      // TODO catch the proper exception
+      catch (Throwable t) {
          return unknownElement;
       }
    }
-
+   
    public static ImageIcon getMachineState(MachineStates state) {
       if ((state != null) && machineStates.containsKey(state)) {
          return machineStates.get(state);
@@ -239,7 +242,11 @@ public class IconBuilder {
       }
    }
    
-   public static ImageIcon getEntityType(EntityTypes type) {
+   public static ImageIcon getEntityType(Entity type) {
+      return getEntityType(type.getId());
+   }
+   
+   public static ImageIcon getEntityType(String type) {
       if ((type != null) && entTypes.containsKey(type)) {
          return entTypes.get(type);
       } else {
@@ -249,10 +256,10 @@ public class IconBuilder {
    }
    
    public static ImageIcon getDeviceType(String type) {
-      return getEntityType(EntityTypes.valueOf(type));
+      return getEntityType(Entity.valueOf(type));
    }
    
-   public static ImageIcon getSnapshot(SnapshotOutput snapOut) {
+   public static ImageIcon getSnapshot(SnapshotOut snapOut) {
       if (snapOut.isOnline()) {
          return new ImageIcon(ICONS_PATH + "camera_start.png");
       } else {

@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.video;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.video.VRamSetting;
@@ -39,7 +39,7 @@ public class VramSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.VRAM.toString();
+      return MachineAttribute.VRAM.toString();
    }
    
    @Override

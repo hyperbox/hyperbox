@@ -22,27 +22,27 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.hypervisor.ScreenshotOutput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.hypervisor.ScreenshotOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.tool.logging.Logger;
 
 import javax.swing.SwingWorker;
 
-public class MachineGetScreenshotWorker extends SwingWorker<ScreenshotOutput, Void> {
+public class MachineGetScreenshotWorker extends SwingWorker<ScreenshotOut, Void> {
    
    private _MachineScreenshotReceiver recv;
-   private MachineOutput mOut;
+   private MachineOut mOut;
    
-   public MachineGetScreenshotWorker(_MachineScreenshotReceiver recv, MachineOutput mOut) {
+   public MachineGetScreenshotWorker(_MachineScreenshotReceiver recv, MachineOut mOut) {
       this.recv = recv;
       this.mOut = mOut;
    }
    
    @Override
-   protected ScreenshotOutput doInBackground() throws Exception {
-      return Gui.getServer(mOut.getServerId()).getScreenshot(new MachineInput(mOut));
+   protected ScreenshotOut doInBackground() throws Exception {
+      return Gui.getServer(mOut.getServerId()).getScreenshot(new MachineIn(mOut));
    }
    
    @Override
@@ -50,7 +50,7 @@ public class MachineGetScreenshotWorker extends SwingWorker<ScreenshotOutput, Vo
       Logger.track();
       
       try {
-         ScreenshotOutput scrOut = get();
+         ScreenshotOut scrOut = get();
          recv.put(scrOut);
          recv.loadingFinished(true, null);
       } catch (Throwable e) {
@@ -58,7 +58,7 @@ public class MachineGetScreenshotWorker extends SwingWorker<ScreenshotOutput, Vo
       }
    }
    
-   public static void get(_MachineScreenshotReceiver recv, MachineOutput mOut) {
+   public static void get(_MachineScreenshotReceiver recv, MachineOut mOut) {
       new MachineGetScreenshotWorker(recv, mOut).execute();
    }
    

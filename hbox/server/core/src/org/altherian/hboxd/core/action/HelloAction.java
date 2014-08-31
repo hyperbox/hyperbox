@@ -27,7 +27,7 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.output.HelloOutput;
+import org.altherian.hbox.comm.out.HelloOut;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.session.SessionContext;
 
@@ -49,7 +49,7 @@ public final class HelloAction extends ASingleTaskAction {
    @Override
    public void run(Request request, _Hyperbox hbox) {
       // TODO give more info
-      SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, new HelloOutput(HyperboxAPI.getProtocolVersion())));
+      SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, new HelloOut(HyperboxAPI.getProtocolVersion())));
    }
    
 }

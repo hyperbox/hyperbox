@@ -21,8 +21,8 @@
 
 package org.altherian.vbox4_2.vm;
 
-import org.altherian.hbox.constant.EntityTypes;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawUSB;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
@@ -44,7 +44,7 @@ public class VBoxUSB implements _RawUSB {
    
    @Override
    public boolean isEnabled() {
-      return ((BooleanSetting) machine.getSetting(MachineAttributes.UsbOhci)).getValue();
+      return ((BooleanSetting) machine.getSetting(MachineAttribute.UsbOhci)).getValue();
    }
    
    @Override
@@ -54,7 +54,7 @@ public class VBoxUSB implements _RawUSB {
    
    @Override
    public boolean isEhciEnabled() {
-      return ((BooleanSetting) machine.getSetting(MachineAttributes.UsbEhci)).getValue();
+      return ((BooleanSetting) machine.getSetting(MachineAttribute.UsbEhci)).getValue();
    }
    
    @Override
@@ -65,8 +65,8 @@ public class VBoxUSB implements _RawUSB {
    @Override
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
-      for (MachineAttributes setting : MachineAttributes.values()) {
-         if (setting.getDeviceType().equals(EntityTypes.USB)) {
+      for (MachineAttribute setting : MachineAttribute.values()) {
+         if (setting.getDeviceType().equals(Entity.USB)) {
             getSetting(setting);
          }
       }

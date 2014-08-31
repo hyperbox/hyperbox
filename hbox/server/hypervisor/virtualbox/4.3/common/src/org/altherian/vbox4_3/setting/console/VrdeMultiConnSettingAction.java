@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.setting.console;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox4_3.setting._MachineSettingAction;
@@ -38,7 +38,7 @@ public class VrdeMultiConnSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.VrdeMultiConnection.getId();
+      return MachineAttribute.VrdeMultiConnection.getId();
    }
    
    @Override
@@ -48,7 +48,7 @@ public class VrdeMultiConnSettingAction implements _MachineSettingAction {
    
    @Override
    public _Setting get(IMachine machine) {
-      return new BooleanSetting(MachineAttributes.VrdeMultiConnection, machine.getVRDEServer().getAllowMultiConnection());
+      return new BooleanSetting(MachineAttribute.VrdeMultiConnection, machine.getVRDEServer().getAllowMultiConnection());
    }
    
 }

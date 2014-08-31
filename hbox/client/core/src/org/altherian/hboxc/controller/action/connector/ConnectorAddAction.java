@@ -26,7 +26,7 @@ import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._AnswerReceiver;
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.comm.input.ConnectorInput;
 import org.altherian.hboxc.comm.io.factory.ConnectorIoFactory;
@@ -46,7 +46,7 @@ public class ConnectorAddAction extends AbstractClientControllerSingleAction {
    @Override
    public void run(_Core core, _Front view, Request req, _AnswerReceiver recv) throws HyperboxException {
       ConnectorInput conIn = req.get(ConnectorInput.class);
-      UserInput usrIn = req.get(UserInput.class);
+      UserIn usrIn = req.get(UserIn.class);
       _Connector conn = core.addConnector(conIn, usrIn);
       recv.putAnswer(new Answer(req, AnswerType.DATA, ConnectorIoFactory.get(conn)));
    }

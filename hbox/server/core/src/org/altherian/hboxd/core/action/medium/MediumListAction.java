@@ -26,7 +26,7 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.output.storage.MediumOutput;
+import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hboxd.comm.io.factory.MediumIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.AbstractHyperboxMultiTaskAction;
@@ -52,7 +52,7 @@ public final class MediumListAction extends AbstractHyperboxMultiTaskAction {
    public void run(Request request, _Hyperbox hbox) {
       List<_RawMedium> medList = hbox.getHypervisor().listMediums();
       for (_RawMedium med : medList) {
-         MediumOutput medOut = MediumIoFactory.get(med);
+         MediumOut medOut = MediumIoFactory.get(med);
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, medOut));
       }
    }

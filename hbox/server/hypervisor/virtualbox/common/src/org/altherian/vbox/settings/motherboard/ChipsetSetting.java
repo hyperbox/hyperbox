@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.motherboard;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class ChipsetSetting extends StringSetting {
    
    public ChipsetSetting(String s) {
-      super(MachineAttributes.Chipset, s);
+      super(MachineAttribute.Chipset, s);
    }
    
 }

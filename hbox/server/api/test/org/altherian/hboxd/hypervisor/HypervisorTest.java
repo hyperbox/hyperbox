@@ -26,11 +26,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.constant.EntityTypes;
-import org.altherian.hbox.constant.HardDiskFormats;
-import org.altherian.hbox.constant.KeyboardModes;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.HardDiskFormat;
+import org.altherian.hbox.constant.KeyboardMode;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hbox.constant.StorageControllerSubType;
 import org.altherian.hbox.constant.StorageControllerType;
 import org.altherian.hbox.exception.HyperboxException;
@@ -74,7 +74,7 @@ public abstract class HypervisorTest {
    private static boolean initialized = false;
    protected static _Hypervisor hypervisor;
    
-   protected List<MachineInput> machines = new ArrayList<MachineInput>();
+   protected List<MachineIn> machines = new ArrayList<MachineIn>();
    
    public static void init(String options) throws HyperboxException {
       Logger.setLevel(LogLevel.Tracking);
@@ -87,10 +87,10 @@ public abstract class HypervisorTest {
       init("");
    }
    
-   public _RawVM createVm(MachineInput mIn) {
+   public _RawVM createVm(MachineIn mIn) {
       _RawVM rawVm = hypervisor.createMachine(mIn.getUuid(), mIn.getName(), null);
       assertNotNull(rawVm);
-      machines.add(new MachineInput(rawVm.getUuid()));
+      machines.add(new MachineIn(rawVm.getUuid()));
       
       if (mIn.getUuid() != null) {
          assertTrue(mIn.getUuid().equals(rawVm.getUuid()));
@@ -100,7 +100,7 @@ public abstract class HypervisorTest {
    }
    
    public _RawVM createVm() {
-      MachineInput mIn01 = new MachineInput(UUID.randomUUID().toString());
+      MachineIn mIn01 = new MachineIn(UUID.randomUUID().toString());
       mIn01.setName(Long.toString(System.currentTimeMillis()));
       return createVm(mIn01);
    }
@@ -113,15 +113,15 @@ public abstract class HypervisorTest {
    
    @After
    public void after() {
-      List<MachineInput> deletedVms = new ArrayList<MachineInput>();
-      for (MachineInput mIn : machines) {
+      List<MachineIn> deletedVms = new ArrayList<MachineIn>();
+      for (MachineIn mIn : machines) {
          if (hypervisor.getMachine(mIn.getUuid()).getState().equals(MachineStates.Running)) {
             hypervisor.getMachine(mIn.getUuid()).powerOff();
          }
          hypervisor.deleteMachine(mIn.getUuid());
          deletedVms.add(mIn);
       }
-      for (MachineInput mIn : deletedVms) {
+      for (MachineIn mIn : deletedVms) {
          machines.remove(mIn);
          assertFalse(machines.contains(mIn));
       }
@@ -208,7 +208,7 @@ public abstract class HypervisorTest {
    
    @Test
    public void createNoUuid() {
-      MachineInput mIn = new MachineInput();
+      MachineIn mIn = new MachineIn();
       mIn.setName(Long.toString(System.currentTimeMillis()));
       createVm(mIn);
    }
@@ -234,7 +234,7 @@ public abstract class HypervisorTest {
    
    @Test
    public void modifyVm() {
-      MachineInput mIn = new MachineInput(UUID.randomUUID().toString());
+      MachineIn mIn = new MachineIn(UUID.randomUUID().toString());
       mIn.setName(Long.toString(System.currentTimeMillis()));
       
       _RawVM rawVm = createVm(mIn);
@@ -242,7 +242,7 @@ public abstract class HypervisorTest {
       rawVm.lock();
       
       rawVm.getMemory().setAmount(256);
-      rawVm.getKeyboard().setMode(KeyboardModes.Usb);
+      rawVm.getKeyboard().setMode(KeyboardMode.Usb);
       _RawStorageController rawScIde = rawVm.addStorageController(StorageControllerType.IDE, "testIde");
       rawScIde.setSubType(StorageControllerSubType.PIIX3.getId());
       _RawStorageController rawScSata = rawVm.addStorageController(StorageControllerType.SATA, "testSata");
@@ -254,9 +254,9 @@ public abstract class HypervisorTest {
       _RawVM resultVm = hypervisor.getMachine(mIn.getUuid());
       
       assertTrue(resultVm.getMemory().getAmount() == 256);
-      assertTrue(resultVm.getKeyboard().getMode().contentEquals(KeyboardModes.Usb.getId()));
-      assertTrue(((PositiveNumberSetting) resultVm.getSetting(MachineAttributes.Memory)).getValue() == 256);
-      assertTrue(((StringSetting) resultVm.getSetting(MachineAttributes.KeyboardMode)).getValue().contentEquals(KeyboardModes.Usb.getId()));
+      assertTrue(resultVm.getKeyboard().getMode().contentEquals(KeyboardMode.Usb.getId()));
+      assertTrue(((PositiveNumberSetting) resultVm.getSetting(MachineAttribute.Memory)).getValue() == 256);
+      assertTrue(((StringSetting) resultVm.getSetting(MachineAttribute.KeyboardMode)).getValue().contentEquals(KeyboardMode.Usb.getId()));
       assertTrue(resultVm.listStoroageControllers().size() == 2);
       
       _RawStorageController resultSc01 = resultVm.getStorageController("testIde");
@@ -296,7 +296,7 @@ public abstract class HypervisorTest {
    @Test
    public void listMediums() {
       // TODO update for non-harcoded value
-      _RawMedium guestAddMed = hypervisor.getMedium("/usr/share/virtualbox/VBoxGuestAdditions.iso", EntityTypes.DVD);
+      _RawMedium guestAddMed = hypervisor.getMedium("/usr/share/virtualbox/VBoxGuestAdditions.iso", Entity.DVD);
       RawMediumTest.validate(guestAddMed);
       
       List<_RawMedium> rawMedList = hypervisor.listMediums();
@@ -309,14 +309,14 @@ public abstract class HypervisorTest {
    public void createAndDeleteMediumTest() {
       // Update for non hard-coded path & extension
       String path = "/tmp/test" + System.currentTimeMillis() + ".vdi";
-      _RawMedium rawMed = hypervisor.createHardDisk(path, HardDiskFormats.VDI.getId(), 1535000l);
+      _RawMedium rawMed = hypervisor.createHardDisk(path, HardDiskFormat.VDI.getId(), 1535000l);
       RawMediumTest.validate(rawMed);
       _RawMedium otherMed = hypervisor.getMedium(rawMed.getUuid());
       RawMediumTest.validate(otherMed);
       assertTrue(otherMed.getLocation().contentEquals(path));
       hypervisor.deleteMedium(rawMed.getUuid());
       try {
-         hypervisor.getMedium(path, EntityTypes.HardDisk);
+         hypervisor.getMedium(path, Entity.HardDisk);
          assertTrue(false);
       } catch (HypervisorException e) {
          assertTrue(true);

@@ -26,7 +26,7 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.output.storage.MediumOutput;
+import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hboxd.comm.io.factory.MediumIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
@@ -51,7 +51,7 @@ public class HypervisorToolsMediumGet extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      MediumOutput medOut = null;
+      MediumOut medOut = null;
       
       if (hbox.getHypervisor().hasToolsMedium()) {
          _RawMedium med = hbox.getHypervisor().getToolsMedium();
@@ -61,7 +61,7 @@ public class HypervisorToolsMediumGet extends ASingleTaskAction {
          Logger.debug("Hypervisor does not have tools medium");
       }
       
-      SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, MediumOutput.class, medOut));
+      SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, MediumOut.class, medOut));
    }
    
 }

@@ -23,8 +23,8 @@ package org.altherian.hboxc.front.gui.network;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.output.hypervisor.GuestNetworkInterfaceOutput;
-import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
+import org.altherian.hbox.comm.out.hypervisor.GuestNetworkInterfaceOut;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
 import org.altherian.helper.swing.JTextFieldUtils;
 import org.altherian.tool.AxStrings;
 
@@ -38,7 +38,7 @@ public class NetworkInterfaceSummary {
       
    }
    
-   public static JPanel get(NetworkInterfaceOutput nicOut, GuestNetworkInterfaceOutput gNicOut) {
+   public static JPanel get(NetworkInterfaceOut nicOut, GuestNetworkInterfaceOut gNicOut) {
       JPanel panel = new JPanel(new MigLayout("ins 0"));
       
       JTextField nicValue = JTextFieldUtils.createAsLabel(nicOut.getAdapterType() + " using " + nicOut.getAttachMode()

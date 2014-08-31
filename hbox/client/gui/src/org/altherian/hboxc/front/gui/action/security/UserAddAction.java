@@ -25,8 +25,8 @@ package org.altherian.hboxc.front.gui.action.security;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.security.user.UserEditor;
@@ -52,9 +52,9 @@ public class UserAddAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent ae) {
-      UserInput usrIn = UserEditor.getInput();
+      UserIn usrIn = UserEditor.getInput();
       if (usrIn != null) {
-         Gui.post(new Request(Command.HBOX, HyperboxTasks.UserCreate, new ServerInput(select.getId()), usrIn));
+         Gui.post(new Request(Command.HBOX, HyperboxTasks.UserCreate, new ServerIn(select.getServer().getId()), usrIn));
       }
    }
    

@@ -21,12 +21,12 @@
 
 package org.altherian.hboxd.comm.io.factory.event;
 
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.snapshot.SnapshotModifiedEventOutput;
-import org.altherian.hbox.comm.output.event.snapshot.SnapshotRestoredEventOutput;
-import org.altherian.hbox.comm.output.event.snapshot.SnapshotTakenEventOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.snapshot.SnapshotModifiedEventOut;
+import org.altherian.hbox.comm.out.event.snapshot.SnapshotRestoredEventOut;
+import org.altherian.hbox.comm.out.event.snapshot.SnapshotTakenEventOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.event._Event;
 import org.altherian.hboxd.HBoxServer;
@@ -49,21 +49,21 @@ public class SnapshotChangedEventIoFactory implements _EventIoFactory {
    }
    
    @Override
-   public EventOutput get(_Hyperbox hbox, _Event ev) {
+   public EventOut get(_Hyperbox hbox, _Event ev) {
       SnapshotEvent sEv = (SnapshotEvent) ev;
       
       _Machine vm = HBoxServer.get().getMachine(sEv.getMachineId());
-      MachineOutput mOut = MachineIoFactory.get(vm);
-      SnapshotOutput snapOut = SnapshotIoFactory.get(vm.getSnapshot(sEv.getSnapshotUuid()));
+      MachineOut mOut = MachineIoFactory.get(vm);
+      SnapshotOut snapOut = SnapshotIoFactory.get(vm.getSnapshot(sEv.getSnapshotUuid()));
       
       switch ((HyperboxEvents) sEv.getEventId()) {
          
          case SnapshotModified:
-            return new SnapshotModifiedEventOutput(sEv.getTime(), ServerIoFactory.get(), mOut, snapOut);
+            return new SnapshotModifiedEventOut(sEv.getTime(), ServerIoFactory.get(), mOut, snapOut);
          case SnapshotRestored:
-            return new SnapshotRestoredEventOutput(sEv.getTime(), ServerIoFactory.get(), mOut, snapOut);
+            return new SnapshotRestoredEventOut(sEv.getTime(), ServerIoFactory.get(), mOut, snapOut);
          case SnapshotTaken:
-            return new SnapshotTakenEventOutput(sEv.getTime(), ServerIoFactory.get(), mOut, snapOut);
+            return new SnapshotTakenEventOut(sEv.getTime(), ServerIoFactory.get(), mOut, snapOut);
          default:
             return null;
       }

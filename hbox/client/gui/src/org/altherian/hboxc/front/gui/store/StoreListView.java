@@ -24,9 +24,9 @@ package org.altherian.hboxc.front.gui.store;
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.StoreOutput;
-import org.altherian.hbox.comm.output.event.store.StoreStateEventOutput;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.StoreOut;
+import org.altherian.hbox.comm.out.event.store.StoreStateEventOut;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
@@ -58,7 +58,7 @@ import javax.swing.SwingUtilities;
 
 public final class StoreListView implements _StoreSelector, _Refreshable, _SingleServerSelector {
    
-   private ServerOutput srvOut;
+   private ServerOut srvOut;
    
    private JLabel errorLabel;
    
@@ -123,7 +123,7 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
       });
    }
    
-   private void update(final List<StoreOutput> stores) {
+   private void update(final List<StoreOut> stores) {
       SwingUtilities.invokeLater(new Runnable() {
          @Override
          public void run() {
@@ -137,7 +137,7 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
    }
    
    @Handler
-   public void postStoreState(StoreStateEventOutput event) {
+   public void postStoreState(StoreStateEventOut event) {
       Logger.track();
       
       refresh();
@@ -177,7 +177,7 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
       
    }
    
-   public void show(ServerOutput srvOut) {
+   public void show(ServerOut srvOut) {
       if (srvOut == null) {
          itemListModel.clear();
       } else {
@@ -187,7 +187,7 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
    }
    
    @Override
-   public ServerOutput getServer() {
+   public ServerOut getServer() {
       return srvOut;
    }
    
@@ -212,11 +212,6 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
             }
          }
       });
-   }
-   
-   @Override
-   public String getId() {
-      return srvOut.getId();
    }
    
 }

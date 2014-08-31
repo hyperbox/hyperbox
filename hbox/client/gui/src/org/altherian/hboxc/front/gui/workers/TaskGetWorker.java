@@ -21,8 +21,8 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.input.TaskInput;
-import org.altherian.hbox.comm.output.TaskOutput;
+import org.altherian.hbox.comm.in.TaskIn;
+import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.tool.logging.Logger;
 
@@ -31,9 +31,9 @@ import javax.swing.SwingWorker;
 public class TaskGetWorker extends SwingWorker<Void, Void> {
    
    private _TaskReceiver recv;
-   private TaskOutput objOut;
+   private TaskOut objOut;
    
-   public TaskGetWorker(_TaskReceiver recv, TaskOutput objOut) {
+   public TaskGetWorker(_TaskReceiver recv, TaskOut objOut) {
       this.recv = recv;
       this.objOut = objOut;
    }
@@ -41,7 +41,7 @@ public class TaskGetWorker extends SwingWorker<Void, Void> {
    @Override
    protected Void doInBackground() throws Exception {
       recv.loadingStarted();
-      TaskOutput newObjOut = Gui.getServer(objOut.getServerId()).getTask(new TaskInput(objOut));
+      TaskOut newObjOut = Gui.getServer(objOut.getServerId()).getTask(new TaskIn(objOut));
       recv.put(newObjOut);
       
       return null;
@@ -59,7 +59,7 @@ public class TaskGetWorker extends SwingWorker<Void, Void> {
       }
    }
    
-   public static void get(_TaskReceiver recv, TaskOutput objOut) {
+   public static void get(_TaskReceiver recv, TaskOut objOut) {
       new TaskGetWorker(recv, objOut).execute();
    }
    

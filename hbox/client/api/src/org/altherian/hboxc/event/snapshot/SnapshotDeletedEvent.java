@@ -21,14 +21,14 @@
 
 package org.altherian.hboxc.event.snapshot;
 
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class SnapshotDeletedEvent extends SnapshotEvent {
    
-   public SnapshotDeletedEvent(ServerOutput srvOut, MachineOutput mOut, SnapshotOutput snapOut) {
+   public SnapshotDeletedEvent(ServerOut srvOut, MachineOut mOut, SnapshotOut snapOut) {
       super(ClientEvents.SnapshotDeleted, srvOut, mOut, snapOut);
    }
    

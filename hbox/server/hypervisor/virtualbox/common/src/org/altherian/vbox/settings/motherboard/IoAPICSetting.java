@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.motherboard;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public class IoAPICSetting extends BooleanSetting {
    
    public IoAPICSetting(boolean isEnabled) {
-      super(MachineAttributes.IoAPIC, isEnabled);
+      super(MachineAttribute.IoAPIC, isEnabled);
    }
    
 }

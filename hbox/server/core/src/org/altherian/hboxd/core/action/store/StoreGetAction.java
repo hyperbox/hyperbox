@@ -26,7 +26,7 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.StoreInput;
+import org.altherian.hbox.comm.in.StoreIn;
 import org.altherian.hboxd.comm.io.factory.StoreIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
@@ -50,7 +50,7 @@ public final class StoreGetAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      StoreInput sIn = request.get(StoreInput.class);
+      StoreIn sIn = request.get(StoreIn.class);
       _Store s = hbox.getStoreManager().getStore(sIn.getId());
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, StoreIoFactory.get(s)));
    }

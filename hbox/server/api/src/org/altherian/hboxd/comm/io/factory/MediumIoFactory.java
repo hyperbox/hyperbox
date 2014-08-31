@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.output.storage.MediumOutput;
+import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hboxd.core.model._Medium;
 import org.altherian.hboxd.hypervisor.storage._RawMedium;
 
@@ -31,13 +31,13 @@ public class MediumIoFactory {
       // static class
    }
    
-   public static MediumOutput get(_RawMedium m) {
-      MediumOutput mIo = new MediumOutput(m.getUuid(), SettingIoFactory.getList(m.listSettings()));
+   public static MediumOut get(_RawMedium m) {
+      MediumOut mIo = new MediumOut(m.getUuid(), SettingIoFactory.getList(m.listSettings()));
       return mIo;
    }
    
-   public static MediumOutput get(_Medium m) {
-      MediumOutput mIo = new MediumOutput(m.getUuid(), SettingIoFactory.getList(m.getSettings()));
+   public static MediumOut get(_Medium m) {
+      MediumOut mIo = new MediumOut(m.getUuid(), SettingIoFactory.getList(m.getSettings()));
       return mIo;
    }
    

@@ -23,14 +23,15 @@
 package org.altherian.hboxc.comm.output;
 
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.comm.output.ObjectOutput;
+import org.altherian.hbox.comm.out.ObjectOut;
+import org.altherian.hboxc.constant.ClientEntity;
 import org.altherian.hboxc.constant.ConsoleViewerAttributes;
 import org.altherian.hboxc.core._ConsoleViewerReader;
 
-public class ConsoleViewerOutput extends ObjectOutput implements _ConsoleViewerReader {
+public class ConsoleViewerOutput extends ObjectOut implements _ConsoleViewerReader {
    
    public ConsoleViewerOutput(String id, String hypervisorId, String moduleId, String viewerPath, String args) {
-      super(id);
+      super(ClientEntity.ConsoleViewer, id);
       setSetting(new StringSettingIO(ConsoleViewerAttributes.HypervisorTypeId, hypervisorId));
       setSetting(new StringSettingIO(ConsoleViewerAttributes.ModuleId, moduleId));
       setSetting(new StringSettingIO(ConsoleViewerAttributes.ViewerPath, viewerPath));

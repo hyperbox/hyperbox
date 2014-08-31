@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.general;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class CurrentSnapshotSetting extends StringSetting {
    
    public CurrentSnapshotSetting(String uuid) {
-      super(MachineAttributes.CurrentSnapshotUuid, uuid);
+      super(MachineAttribute.CurrentSnapshotUuid, uuid);
    }
    
 }

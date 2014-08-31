@@ -22,12 +22,12 @@
 
 package org.altherian.hboxc.front.gui.builder;
 
-import org.altherian.hbox.comm.output.ModuleOutput;
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.StoreOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
-import org.altherian.hbox.constant.EntityTypes;
+import org.altherian.hbox.comm.out.ModuleOut;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.StoreOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hbox.states.StoreState;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.hboxc.front.gui.action.connector.ConnectorConnectAction;
@@ -81,7 +81,7 @@ import javax.swing.JSeparator;
 
 public class PopupMenuBuilder {
    
-   public static JPopupMenu get(String serverId, StorageDeviceAttachmentOutput sdaOut) {
+   public static JPopupMenu get(String serverId, StorageDeviceAttachmentOut sdaOut) {
       JPopupMenu stoMenuActions = new JPopupMenu();
       stoMenuActions.add(new JMenuItem(new HypervisorToolsMediumAttachAction(serverId, sdaOut)));
       stoMenuActions.add(new JMenuItem(new MediumAttachAction(serverId, sdaOut)));
@@ -89,11 +89,11 @@ public class PopupMenuBuilder {
       return stoMenuActions;
    }
    
-   public static JPopupMenu get(_MachineSelector select, MachineOutput mOut) {
+   public static JPopupMenu get(_MachineSelector select, MachineOut mOut) {
       Logger.track();
       
       JMenu machineMenu = new JMenu("Machine");
-      machineMenu.setIcon(IconBuilder.getEntityType(EntityTypes.Machine));
+      machineMenu.setIcon(IconBuilder.getEntityType(Entity.Machine));
       machineMenu.add(new JMenuItem(new MachineStartAction(select)));
       machineMenu.add(new JMenuItem(new MachineStopAction(select)));
       machineMenu.add(new JMenuItem(new MachineResetAction(select)));
@@ -124,7 +124,7 @@ public class PopupMenuBuilder {
       return vmPopupMenu;
    }
    
-   public static JPopupMenu get(ServerOutput srvOut) {
+   public static JPopupMenu get(ServerOut srvOut) {
       JPopupMenu menu = new JPopupMenu();
       menu.add(new JMenuItem("Not implemented"));
       return menu;
@@ -163,7 +163,7 @@ public class PopupMenuBuilder {
       return conPopupMenu;
    }
    
-   public static JPopupMenu get(_StoreSelector stoSelect, StoreOutput stoOut) {
+   public static JPopupMenu get(_StoreSelector stoSelect, StoreOut stoOut) {
       Action browse = new StoreBrowseAction(stoSelect);
       browse.setEnabled(stoOut.getState().equals(StoreState.Open));
       Action close = new StoreCloseAction(stoSelect);
@@ -184,7 +184,7 @@ public class PopupMenuBuilder {
       return actions;
    }
    
-   public static JPopupMenu get(_ModuleSelector modSelect, ModuleOutput modOut) {
+   public static JPopupMenu get(_ModuleSelector modSelect, ModuleOut modOut) {
       Action disable = new ModuleDisableAction(modSelect);
       disable.setEnabled(modOut.isEnabled());
       Action enable = new ModuleEnableAction(modSelect);

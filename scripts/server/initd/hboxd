@@ -124,11 +124,6 @@ hboxd_start() {
 			log_failure "already running"
 			RETVAL=1
 		else
-			if [ -f /etc/default/hboxd ]; then
-				for arg in $(cat /etc/default/hboxd); do
-					ARGS_START="$ARGS_START -D$arg"
-				done
-			fi
 			PID=$(su - $RUNAS -c "$EXEC $ARGS_START")
 			if [ $PID -ge 1 ]; then
 				echo $PID > $PID_FILE

@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.cpu;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.cpu.PaeSetting;
@@ -40,7 +40,7 @@ public final class PaeSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.PAE.toString();
+      return MachineAttribute.PAE.toString();
    }
    
    @Override

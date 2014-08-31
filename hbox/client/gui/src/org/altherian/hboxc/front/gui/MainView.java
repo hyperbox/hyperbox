@@ -45,7 +45,7 @@ public final class MainView {
    private JFrame mainFrame;
    private MainMenu mainMenu;
    
-   private InfrastructureView vmListView;
+   private ServerMachineView vmListView;
    private JSplitPane vSplit;
    
    public static JFrame getMainFrame() {
@@ -59,7 +59,7 @@ public final class MainView {
    public MainView() {
       Logger.track();
       
-      vmListView = new InfrastructureView();
+      vmListView = new ServerMachineView();
       mainMenu = new MainMenu();
       
       mainFrame = new JFrame(FRAME_NAME);

@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.setting.snapshot;
 
-import org.altherian.hbox.constant.SnapshotAttributes;
+import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox4_3.setting._SnapshotSettingAction;
@@ -38,7 +38,7 @@ public class SnapshotDescriptionSettingAction implements _SnapshotSettingAction 
    
    @Override
    public String getSettingName() {
-      return SnapshotAttributes.Description.getId();
+      return SnapshotAttribute.Description.getId();
    }
    
    @Override
@@ -49,7 +49,7 @@ public class SnapshotDescriptionSettingAction implements _SnapshotSettingAction 
    
    @Override
    public _Setting get(ISnapshot snap) {
-      return new StringSetting(SnapshotAttributes.Description, snap.getDescription());
+      return new StringSetting(SnapshotAttribute.Description, snap.getDescription());
    }
    
 }

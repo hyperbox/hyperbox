@@ -23,8 +23,8 @@ package org.altherian.hboxc.front.gui.tasks;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.output.TaskOutput;
-import org.altherian.hbox.constant.EntityTypes;
+import org.altherian.hbox.comm.out.TaskOut;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Cancelable;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
@@ -40,7 +40,7 @@ import javax.swing.JTextField;
 
 public class TaskView implements _Cancelable {
    
-   private TaskOutput tskOut;
+   private TaskOut tskOut;
    private String srvName;
    
    private JDialog dialog;
@@ -102,7 +102,7 @@ public class TaskView implements _Cancelable {
       errorField = JTextFieldUtils.createNonEditable();
       
       
-      dialog = JDialogBuilder.get(IconBuilder.getEntityType(EntityTypes.Task).getImage());
+      dialog = JDialogBuilder.get(IconBuilder.getEntityType(Entity.Task).getImage());
       dialog.getContentPane().setLayout(new MigLayout());
       
       dialog.add(idLabel);
@@ -135,14 +135,14 @@ public class TaskView implements _Cancelable {
       dialog.setLocationRelativeTo(dialog.getParent());
    }
    
-   private void display(TaskOutput tskOut) {
+   private void display(TaskOut tskOut) {
       this.tskOut = tskOut;
       dialog.setTitle("Task Details");
       TaskGetWorker.get(new TaskReceiver(), tskOut);
       dialog.setVisible(true);
    }
    
-   public static void show(TaskOutput tOut) {
+   public static void show(TaskOut tOut) {
       new TaskView().display(tOut);
    }
    
@@ -184,7 +184,7 @@ public class TaskView implements _Cancelable {
       }
       
       @Override
-      public void put(TaskOutput tskOut) {
+      public void put(TaskOut tskOut) {
          TaskView.this.tskOut = tskOut;
          TaskView.this.srvName = Gui.getServer(tskOut.getServerId()).getName();
       }

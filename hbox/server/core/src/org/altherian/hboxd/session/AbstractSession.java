@@ -23,7 +23,7 @@ package org.altherian.hboxd.session;
 
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._Client;
-import org.altherian.hbox.comm.output.event.EventOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.states.SessionStates;
 import org.altherian.hboxd.event.EventManager;
@@ -137,7 +137,7 @@ public abstract class AbstractSession implements _Session {
    }
    
    @Override
-   public void post(EventOutput ev) {
+   public void post(EventOut ev) {
       Logger.track();
       
       client.post(ev);

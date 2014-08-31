@@ -33,6 +33,7 @@ public class Hyperbox {
    private static Properties buildProperties;
    private static String version = "0.0.0";
    private static String revision = "0";
+   private static String cfgFile = "conf/main.cfg";
    
    private static void failedToLoad(Exception e) {
       Logger.error("Unable to access the build.properties file: " + e.getMessage());
@@ -49,6 +50,10 @@ public class Hyperbox {
    
    public static String getVersionFull() {
       return getVersion() + "." + getRevision();
+   }
+   
+   public static String getConfigFilePath() {
+      return cfgFile;
    }
    
    static {

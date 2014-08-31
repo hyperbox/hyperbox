@@ -25,8 +25,8 @@ package org.altherian.hboxc.front.gui.action.hypervisor;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.controller.MessageInput;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.server._SingleServerSelector;
@@ -52,9 +52,9 @@ public class HypervisorDisconnectAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent ae) {
-      ServerOutput srvOut = selector.getServer();
+      ServerOut srvOut = selector.getServer();
       if (srvOut != null) {
-         Request req = new Request(Command.HBOX, HyperboxTasks.HypervisorDisconnect, new ServerInput(srvOut.getId()));
+         Request req = new Request(Command.HBOX, HyperboxTasks.HypervisorDisconnect, new ServerIn(srvOut.getId()));
          Gui.post(new MessageInput(req));
       } else {
          Logger.debug("No server was selected");

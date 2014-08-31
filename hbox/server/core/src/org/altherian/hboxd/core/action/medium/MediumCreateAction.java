@@ -26,9 +26,9 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MediumInput;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.output.storage.MediumOutput;
+import org.altherian.hbox.comm.in.MediumIn;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hboxd.comm.io.factory.MediumIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
@@ -55,8 +55,8 @@ public final class MediumCreateAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      ServerInput srvIn = request.get(ServerInput.class);
-      MediumInput medIn = request.get(MediumInput.class);
+      ServerIn srvIn = request.get(ServerIn.class);
+      MediumIn medIn = request.get(MediumIn.class);
       
       Logger.debug("Creating a new hard disk at location [" + medIn.getLocation() + "] with format [" + medIn.getFormat() + "] and size ["
             + medIn.getLogicalSize() + "]");
@@ -69,7 +69,7 @@ public final class MediumCreateAction extends ASingleTaskAction {
       }
       
       _Medium med = hbox.getServer(srvIn.getId()).createMedium(medIn.getLocation(), medIn.getFormat(), medIn.getLogicalSize());
-      MediumOutput medOut = MediumIoFactory.get(med);
+      MediumOut medOut = MediumIoFactory.get(med);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, medOut));
    }
    

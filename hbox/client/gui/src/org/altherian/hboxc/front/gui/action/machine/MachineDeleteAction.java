@@ -24,8 +24,8 @@ package org.altherian.hboxc.front.gui.action.machine;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.MainView;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
@@ -56,8 +56,8 @@ public final class MachineDeleteAction extends AbstractAction {
             JOptionPane.WARNING_MESSAGE,
             JOptionPane.OK_CANCEL_OPTION);
       if (info == JOptionPane.YES_OPTION) {
-         for (MachineOutput mOut : selector.getMachines()) {
-            Gui.post(new Request(Command.VBOX, HypervisorTasks.MachineDelete, new MachineInput(mOut)));
+         for (MachineOut mOut : selector.getMachines()) {
+            Gui.post(new Request(Command.VBOX, HypervisorTasks.MachineDelete, new MachineIn(mOut)));
          }
       }
    }

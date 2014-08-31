@@ -24,8 +24,8 @@ package org.altherian.hboxd.comm.io.factory;
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.comm.output.ModuleOutput;
-import org.altherian.hbox.constant.ModuleAttributes;
+import org.altherian.hbox.comm.out.ModuleOut;
+import org.altherian.hbox.constant.ModuleAttribute;
 import org.altherian.hboxd.module._Module;
 
 import java.util.ArrayList;
@@ -38,18 +38,18 @@ public class ModuleIoFactory {
       // static class, cannot be instantiated
    }
    
-   public static ModuleOutput get(_Module mod) {
+   public static ModuleOut get(_Module mod) {
       List<SettingIO> settings = new ArrayList<SettingIO>();
-      settings.add(new StringSettingIO(ModuleAttributes.DescriptorFile, mod.getDescriptor()));
-      settings.add(new StringSettingIO(ModuleAttributes.Name, mod.getName()));
-      settings.add(new StringSettingIO(ModuleAttributes.Version, mod.getVersion()));
-      settings.add(new BooleanSettingIO(ModuleAttributes.isEnabled, mod.isEnabled()));
-      settings.add(new BooleanSettingIO(ModuleAttributes.isLoaded, mod.isLoaded()));
-      return new ModuleOutput(mod.getId(), settings);
+      settings.add(new StringSettingIO(ModuleAttribute.DescriptorFile, mod.getDescriptor()));
+      settings.add(new StringSettingIO(ModuleAttribute.Name, mod.getName()));
+      settings.add(new StringSettingIO(ModuleAttribute.Version, mod.getVersion()));
+      settings.add(new BooleanSettingIO(ModuleAttribute.isEnabled, mod.isEnabled()));
+      settings.add(new BooleanSettingIO(ModuleAttribute.isLoaded, mod.isLoaded()));
+      return new ModuleOut(mod.getId(), settings);
    }
    
-   public static List<ModuleOutput> get(Collection<_Module> mods) {
-      List<ModuleOutput> modsOut = new ArrayList<ModuleOutput>();
+   public static List<ModuleOut> get(Collection<_Module> mods) {
+      List<ModuleOut> modsOut = new ArrayList<ModuleOut>();
       for (_Module mod : mods) {
          modsOut.add(get(mod));
       }

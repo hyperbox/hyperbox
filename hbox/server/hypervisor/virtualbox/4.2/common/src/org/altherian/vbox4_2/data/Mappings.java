@@ -23,9 +23,9 @@ package org.altherian.vbox4_2.data;
 
 import org.altherian.hbox.constant.AudioController;
 import org.altherian.hbox.constant.AudioDriver;
-import org.altherian.hbox.constant.Firmwares;
-import org.altherian.hbox.constant.KeyboardModes;
-import org.altherian.hbox.constant.MouseModes;
+import org.altherian.hbox.constant.Firmware;
+import org.altherian.hbox.constant.KeyboardMode;
+import org.altherian.hbox.constant.MouseMode;
 import org.altherian.hbox.states.MachineSessionStates;
 import org.altherian.hbox.states.MachineStates;
 import org.altherian.tool.BiEnumMap;
@@ -41,11 +41,11 @@ import org.virtualbox_4_2.SessionState;
 
 public class Mappings {
    
-   private static BiEnumMap<MouseModes, PointingHIDType> mappingMouse;
+   private static BiEnumMap<MouseMode, PointingHIDType> mappingMouse;
    private static BiEnumMap<MachineStates, MachineState> mappingMachine;
    private static BiEnumMap<MachineSessionStates, SessionState> mappingMachineSession;
-   private static BiEnumMap<KeyboardModes, KeyboardHIDType> mappingKeyboard;
-   private static BiEnumMap<Firmwares, FirmwareType> mappingFirmware;
+   private static BiEnumMap<KeyboardMode, KeyboardHIDType> mappingKeyboard;
+   private static BiEnumMap<Firmware, FirmwareType> mappingFirmware;
    private static BiEnumMap<AudioDriver, AudioDriverType> mappingAudioDriver;
    private static BiEnumMap<AudioController, AudioControllerType> mappingAudioController;
    
@@ -54,20 +54,20 @@ public class Mappings {
       
       Logger.debug("Loading Virtualbox Mappings");
       
-      mappingMouse = new BiEnumMap<MouseModes, PointingHIDType>(MouseModes.class, PointingHIDType.class);
+      mappingMouse = new BiEnumMap<MouseMode, PointingHIDType>(MouseMode.class, PointingHIDType.class);
       mappingMachine = new BiEnumMap<MachineStates, MachineState>(MachineStates.class, MachineState.class);
       
       mappingMachineSession = new BiEnumMap<MachineSessionStates, SessionState>(MachineSessionStates.class, SessionState.class);
-      mappingKeyboard = new BiEnumMap<KeyboardModes, KeyboardHIDType>(KeyboardModes.class, KeyboardHIDType.class);
-      mappingFirmware = new BiEnumMap<Firmwares, FirmwareType>(Firmwares.class, FirmwareType.class);
+      mappingKeyboard = new BiEnumMap<KeyboardMode, KeyboardHIDType>(KeyboardMode.class, KeyboardHIDType.class);
+      mappingFirmware = new BiEnumMap<Firmware, FirmwareType>(Firmware.class, FirmwareType.class);
       mappingAudioDriver = new BiEnumMap<AudioDriver, AudioDriverType>(AudioDriver.class, AudioDriverType.class);
       mappingAudioController = new BiEnumMap<AudioController, AudioControllerType>(AudioController.class, AudioControllerType.class);
       
-      mappingMouse.put(MouseModes.None, PointingHIDType.None);
-      mappingMouse.put(MouseModes.Ps2, PointingHIDType.PS2Mouse);
-      mappingMouse.put(MouseModes.Usb, PointingHIDType.USBMouse);
-      mappingMouse.put(MouseModes.UsbTablet, PointingHIDType.USBTablet);
-      mappingMouse.put(MouseModes.ComboMouse, PointingHIDType.ComboMouse);
+      mappingMouse.put(MouseMode.None, PointingHIDType.None);
+      mappingMouse.put(MouseMode.Ps2, PointingHIDType.PS2Mouse);
+      mappingMouse.put(MouseMode.Usb, PointingHIDType.USBMouse);
+      mappingMouse.put(MouseMode.UsbTablet, PointingHIDType.USBTablet);
+      mappingMouse.put(MouseMode.ComboMouse, PointingHIDType.ComboMouse);
       
       mappingMachine.put(MachineStates.PoweredOff, MachineState.PoweredOff);
       mappingMachine.put(MachineStates.Saved, MachineState.Saved);
@@ -97,16 +97,16 @@ public class Mappings {
       mappingMachineSession.put(MachineSessionStates.Unlocking, SessionState.Unlocking);
       mappingMachineSession.put(MachineSessionStates.Unlocked, SessionState.Unlocked);
       
-      mappingKeyboard.put(KeyboardModes.None, KeyboardHIDType.None);
-      mappingKeyboard.put(KeyboardModes.Ps2, KeyboardHIDType.PS2Keyboard);
-      mappingKeyboard.put(KeyboardModes.Usb, KeyboardHIDType.USBKeyboard);
-      mappingKeyboard.put(KeyboardModes.Combo, KeyboardHIDType.ComboKeyboard);
+      mappingKeyboard.put(KeyboardMode.None, KeyboardHIDType.None);
+      mappingKeyboard.put(KeyboardMode.Ps2, KeyboardHIDType.PS2Keyboard);
+      mappingKeyboard.put(KeyboardMode.Usb, KeyboardHIDType.USBKeyboard);
+      mappingKeyboard.put(KeyboardMode.Combo, KeyboardHIDType.ComboKeyboard);
       
-      mappingFirmware.put(Firmwares.Bios, FirmwareType.BIOS);
-      mappingFirmware.put(Firmwares.Efi, FirmwareType.EFI);
-      mappingFirmware.put(Firmwares.Efi32, FirmwareType.EFI32);
-      mappingFirmware.put(Firmwares.Efi64, FirmwareType.EFI64);
-      mappingFirmware.put(Firmwares.EfiDual, FirmwareType.EFIDUAL);
+      mappingFirmware.put(Firmware.Bios, FirmwareType.BIOS);
+      mappingFirmware.put(Firmware.Efi, FirmwareType.EFI);
+      mappingFirmware.put(Firmware.Efi32, FirmwareType.EFI32);
+      mappingFirmware.put(Firmware.Efi64, FirmwareType.EFI64);
+      mappingFirmware.put(Firmware.EfiDual, FirmwareType.EFIDUAL);
       
       mappingAudioDriver.put(AudioDriver.ALSA, AudioDriverType.ALSA);
       mappingAudioDriver.put(AudioDriver.CoreAudio, AudioDriverType.CoreAudio);
@@ -122,11 +122,11 @@ public class Mappings {
       mappingAudioController.put(AudioController.SB16, AudioControllerType.SB16);
    }
    
-   public static MouseModes get(PointingHIDType type) {
+   public static MouseMode get(PointingHIDType type) {
       return mappingMouse.getReverse(type);
    }
    
-   public static PointingHIDType get(MouseModes type) {
+   public static PointingHIDType get(MouseMode type) {
       return mappingMouse.get(type);
    }
    
@@ -135,7 +135,7 @@ public class Mappings {
          return mappingMachine.getReverse(type);
       } else {
          Logger.error("Unable to find a Machine State mapping for " + type);
-         return MachineStates.UNKNOWN;
+         return MachineStates.Unknown;
       }
    }
    
@@ -151,19 +151,19 @@ public class Mappings {
       return mappingMachineSession.get(type);
    }
    
-   public static KeyboardModes get(KeyboardHIDType type) {
+   public static KeyboardMode get(KeyboardHIDType type) {
       return mappingKeyboard.getReverse(type);
    }
    
-   public static KeyboardHIDType get(KeyboardModes type) {
+   public static KeyboardHIDType get(KeyboardMode type) {
       return mappingKeyboard.get(type);
    }
    
-   public static FirmwareType get(Firmwares firmware) {
+   public static FirmwareType get(Firmware firmware) {
       return mappingFirmware.get(firmware);
    }
    
-   public static Firmwares get(FirmwareType firmware) {
+   public static Firmware get(FirmwareType firmware) {
       return mappingFirmware.getReverse(firmware);
    }
    

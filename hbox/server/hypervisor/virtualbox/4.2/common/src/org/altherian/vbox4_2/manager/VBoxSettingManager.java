@@ -21,10 +21,10 @@
 
 package org.altherian.vbox4_2.manager;
 
-import org.altherian.hbox.constant.EntityTypes;
-import org.altherian.hbox.constant.MachineAttributes;
-import org.altherian.hbox.constant.NetworkInterfaceSettings;
-import org.altherian.hbox.constant.StorageControllerSettings;
+import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.MachineAttribute;
+import org.altherian.hbox.constant.NetworkInterfaceAttribute;
+import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.hbox.data.Device;
 import org.altherian.hbox.data.Machine;
 import org.altherian.hbox.exception.ConfigurationException;
@@ -189,9 +189,9 @@ public class VBoxSettingManager {
          vmActions.get(setting.getName()).set(vm, setting);
       }
       
-      for (Device dev : vmData.listDevices(EntityTypes.DvdDrive.getId())) {
-         String controllerType = dev.getSetting(StorageControllerSettings.Type).getString();
-         String controllerSubType = dev.getSetting(StorageControllerSettings.SubType).getString();
+      for (Device dev : vmData.listDevices(Entity.DvdDrive.getId())) {
+         String controllerType = dev.getSetting(StorageControllerAttribute.Type).getString();
+         String controllerSubType = dev.getSetting(StorageControllerAttribute.SubType).getString();
          try {
             vm.getStorageControllerByName(controllerType);
          } catch (VBoxException e) {
@@ -205,9 +205,9 @@ public class VBoxSettingManager {
          vm.attachDeviceWithoutMedium(controllerType, 0, 0, DeviceType.DVD);
       }
       
-      for (Device dev : vmData.listDevices(EntityTypes.DiskDrive.getId())) {
-         String controllerType = dev.getSetting(StorageControllerSettings.Type).getString();
-         String controllerSubType = dev.getSetting(StorageControllerSettings.SubType).getString();
+      for (Device dev : vmData.listDevices(Entity.DiskDrive.getId())) {
+         String controllerType = dev.getSetting(StorageControllerAttribute.Type).getString();
+         String controllerSubType = dev.getSetting(StorageControllerAttribute.SubType).getString();
          try {
             vm.getStorageControllerByName(controllerType);
          } catch (VBoxException e) {
@@ -220,9 +220,9 @@ public class VBoxSettingManager {
          vm.getStorageControllerByName(controllerType).setControllerType(StorageControllerType.valueOf(controllerSubType));
       }
       
-      for (Device dev : vmData.listDevices(EntityTypes.Network.getId())) {
+      for (Device dev : vmData.listDevices(Entity.Network.getId())) {
          Long maxNic = VBox.get().getSystemProperties().getMaxNetworkAdapters(vm.getChipsetType());
-         NetworkAdapterType adapterType = NetworkAdapterType.valueOf(dev.getSetting(NetworkInterfaceSettings.AdapterType).getString());
+         NetworkAdapterType adapterType = NetworkAdapterType.valueOf(dev.getSetting(NetworkInterfaceAttribute.AdapterType).getString());
          for (long i = 0; maxNic > i; i++) {
             vm.getNetworkAdapter(i).setAdapterType((adapterType));
          }
@@ -289,7 +289,7 @@ public class VBoxSettingManager {
       return s;
    }
    
-   public static _Setting get(VBoxMachine vm, MachineAttributes setting) {
+   public static _Setting get(VBoxMachine vm, MachineAttribute setting) {
       return get(vm, setting.toString());
    }
    
@@ -369,7 +369,7 @@ public class VBoxSettingManager {
       return nicActions.get(uniqueId).get(getVm(nic.getMachineUuid()).getNetworkAdapter(nic.getNicId()));
    }
    
-   public static _Setting get(VBoxNetworkInterface nic, NetworkInterfaceSettings setting) {
+   public static _Setting get(VBoxNetworkInterface nic, NetworkInterfaceAttribute setting) {
       return get(nic, setting.toString());
    }
    
@@ -449,7 +449,7 @@ public class VBoxSettingManager {
       return sctActions.get(uniqueId).get(getVm(sct.getMachineUuid()).getStorageControllerByName(sct.getName()));
    }
    
-   public static _Setting get(VirtualboxStorageController sct, StorageControllerSettings setting) {
+   public static _Setting get(VirtualboxStorageController sct, StorageControllerAttribute setting) {
       return get(sct, setting.toString());
    }
    

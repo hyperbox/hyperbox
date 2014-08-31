@@ -26,8 +26,8 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.output.host.HostOutput;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.out.host.HostOut;
 import org.altherian.hboxd.comm.io.factory.HostIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
@@ -51,9 +51,9 @@ public class HostGetAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      ServerInput srvIn = request.get(ServerInput.class);
+      ServerIn srvIn = request.get(ServerIn.class);
       _Host host = hbox.getServer(srvIn.getId()).getHost();
-      HostOutput hostOut = HostIoFactory.get(host);
+      HostOut hostOut = HostIoFactory.get(host);
       
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, hostOut));
    }

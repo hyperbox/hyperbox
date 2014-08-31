@@ -21,13 +21,13 @@
 
 package org.altherian.hboxc.front.gui.store;
 
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.out.ServerOut;
 
 import java.util.List;
 
 public interface _StoreSelector {
    
-   public ServerOutput getServer();
+   public ServerOut getServer();
    
    public List<String> getSelection();
    

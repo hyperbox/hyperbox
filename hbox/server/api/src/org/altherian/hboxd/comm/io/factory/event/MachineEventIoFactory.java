@@ -21,12 +21,12 @@
 
 package org.altherian.hboxd.comm.io.factory.event;
 
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.machine.MachineDataChangeEventOutput;
-import org.altherian.hbox.comm.output.event.machine.MachineRegistrationEventOutput;
-import org.altherian.hbox.comm.output.event.machine.MachineSnapshotDataChangedEventOutput;
-import org.altherian.hbox.comm.output.event.machine.MachineStateEventOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.machine.MachineDataChangeEventOut;
+import org.altherian.hbox.comm.out.event.machine.MachineRegistrationEventOut;
+import org.altherian.hbox.comm.out.event.machine.MachineSnapshotDataChangedEventOut;
+import org.altherian.hbox.comm.out.event.machine.MachineStateEventOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
@@ -42,6 +42,15 @@ import org.altherian.tool.logging.Logger;
 
 public final class MachineEventIoFactory implements _EventIoFactory {
    
+   private MachineOut getObjOut(String id) {
+      try {
+         return MachineIoFactory.get(HBoxServer.get().getMachine(id));
+      } catch (HyperboxRuntimeException e) {
+         Logger.exception(e);
+         return MachineIoFactory.get(id, MachineStates.Unknown.getId());
+      }
+   }
+   
    @Override
    public Enum<?>[] getHandles() {
       return new Enum<?>[] {
@@ -53,25 +62,27 @@ public final class MachineEventIoFactory implements _EventIoFactory {
    }
    
    @Override
-   public EventOutput get(_Hyperbox hbox, _Event ev) {
+   public EventOut get(_Hyperbox hbox, _Event ev) {
       MachineEvent mEv = (MachineEvent) ev;
-      MachineOutput mOut = null;
+      MachineOut mOut = null;
       try {
-         mOut = MachineIoFactory.get(HBoxServer.get().getMachine(mEv.getMachineId()));
+         if (HyperboxEvents.MachineRegistration.equals(mEv.getEventId())) {
+            mOut = MachineIoFactory.get(HBoxServer.get().getMachine(mEv.getMachineId()));
+         }
       } catch (HyperboxRuntimeException e) {
          Logger.exception(e);
-         mOut = MachineIoFactory.get(mEv.getMachineId(), MachineStates.UNKNOWN.getId());
+         mOut = MachineIoFactory.get(mEv.getMachineId(), MachineStates.Unknown.getId());
       }
       switch ((HyperboxEvents) ev.getEventId()) {
          case MachineState:
-            return new MachineStateEventOutput(mEv.getTime(), ServerIoFactory.get(), mOut, ((MachineStateEvent) ev).getState());
+            return new MachineStateEventOut(mEv.getTime(), ServerIoFactory.get(), getObjOut(mEv.getMachineId()), ((MachineStateEvent) ev).getState());
          case MachineRegistration:
-            return new MachineRegistrationEventOutput(mEv.getTime(), ServerIoFactory.get(), mOut,
+            return new MachineRegistrationEventOut(mEv.getTime(), ServerIoFactory.get(), mOut,
                   ((MachineRegistrationEvent) mEv).isRegistrated());
          case MachineDataChange:
-            return new MachineDataChangeEventOutput(mEv.getTime(), ServerIoFactory.get(), mOut);
+            return new MachineDataChangeEventOut(mEv.getTime(), ServerIoFactory.get(), mOut);
          case MachineSnapshotDataChange:
-            return new MachineSnapshotDataChangedEventOutput(mEv.getTime(), ServerIoFactory.get(), mOut);
+            return new MachineSnapshotDataChangedEventOut(mEv.getTime(), ServerIoFactory.get(), mOut);
          default:
             return null;
       }

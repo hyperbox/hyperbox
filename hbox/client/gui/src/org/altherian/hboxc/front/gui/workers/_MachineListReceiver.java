@@ -22,12 +22,12 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 
 import java.util.List;
 
 public interface _MachineListReceiver extends _WorkerDataReceiver {
    
-   public void add(List<MachineOutput> objOutList);
+   public void add(List<MachineOut> objOutList);
    
 }

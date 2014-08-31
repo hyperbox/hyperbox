@@ -1,4 +1,4 @@
-/* 
+/*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
  * 
@@ -21,8 +21,12 @@
 
 package org.altherian.hboxd.core.action;
 
+import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.AnswerType;
+import org.altherian.hbox.comm.Request;
 import org.altherian.hboxd.controller.action._Action;
+import org.altherian.hboxd.core._Hyperbox;
+import org.altherian.hboxd.session.SessionContext;
 
 /**
  * Skeleton structure for a single-task action.<br/>
@@ -40,6 +44,8 @@ import org.altherian.hboxd.controller.action._Action;
  */
 public abstract class ASingleTaskAction extends AbstractHyperboxAction {
    
+   private Request request;
+   
    @Override
    public AnswerType getStartReturn() {
       return AnswerType.STARTED;
@@ -53,6 +59,56 @@ public abstract class ASingleTaskAction extends AbstractHyperboxAction {
    @Override
    public AnswerType getFailReturn() {
       return AnswerType.FAILED;
+   }
+   
+   @Override
+   public void run(Request request, _Hyperbox hbox) {
+      this.request = request;
+      process(request, hbox);
+   }
+   
+   protected void process(Request request, _Hyperbox hbox) {
+      // TODO turn into abstract
+      // stub
+   }
+   
+   /**
+    * {@link #send(Class, Object)}
+    * 
+    * @param k the data
+    */
+   protected void send(Object k) {
+      send(k.getClass(), k);
+   }
+   
+   /**
+    * SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, key, value))
+    * 
+    * @param key Enum
+    * @param value Object
+    */
+   protected void send(Enum<?> key, Object value) {
+      SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, key, value));
+   }
+   
+   /**
+    * SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, key, value))
+    * 
+    * @param key Class key
+    * @param value Object
+    */
+   protected void send(Class<?> key, Object value) {
+      SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, key, value));
+   }
+   
+   /**
+    * SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, key, value))
+    * 
+    * @param key String key
+    * @param value Object
+    */
+   protected void send(String key, Object value) {
+      SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, key, value));
    }
    
 }

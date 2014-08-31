@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.network;
 
-import org.altherian.hbox.constant.NetworkInterfaceSettings;
+import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public class NicEnabledSetting extends BooleanSetting {
    
    public NicEnabledSetting(boolean isEnabled) {
-      super(NetworkInterfaceSettings.Enabled, isEnabled);
+      super(NetworkInterfaceAttribute.Enabled, isEnabled);
    }
    
 }

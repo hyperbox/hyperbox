@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.memory;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public final class PagefusionSetting extends BooleanSetting {
    
    public PagefusionSetting(boolean isEnabled) {
-      super(MachineAttributes.PageFusion, isEnabled);
+      super(MachineAttribute.PageFusion, isEnabled);
    }
    
 }

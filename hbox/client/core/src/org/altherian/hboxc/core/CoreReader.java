@@ -24,7 +24,7 @@ package org.altherian.hboxc.core;
 
 import net.engio.mbassy.listener.Handler;
 
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.comm.input.ConnectorInput;
 import org.altherian.hboxc.comm.io.factory.BackendIoFactory;
 import org.altherian.hboxc.comm.io.factory.ConnectorIoFactory;
@@ -93,7 +93,7 @@ public class CoreReader implements _CoreReader {
    }
    
    @Override
-   public ServerOutput getServer(ConnectorInput conIn) {
+   public ServerOut getServer(ConnectorInput conIn) {
       return ServerIoFactory.get(core.getConnector(conIn.getId()).getServer());
    }
    
@@ -103,7 +103,7 @@ public class CoreReader implements _CoreReader {
    }
    
    @Override
-   public ServerOutput getServerInfo(String id) {
+   public ServerOut getServerInfo(String id) {
       return ServerIoFactory.get(core.getServer(id));
    }
    

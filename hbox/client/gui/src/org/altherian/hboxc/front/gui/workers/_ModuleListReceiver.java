@@ -21,12 +21,12 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.output.ModuleOutput;
+import org.altherian.hbox.comm.out.ModuleOut;
 
 import java.util.List;
 
 public interface _ModuleListReceiver extends _WorkerDataReceiver {
    
-   public void add(List<ModuleOutput> objOutList);
+   public void add(List<ModuleOut> objOutList);
 
 }

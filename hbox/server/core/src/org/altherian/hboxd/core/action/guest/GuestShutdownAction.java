@@ -24,7 +24,7 @@ package org.altherian.hboxd.core.action.guest;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
+import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.states.ACPI;
 import org.altherian.hbox.states.MachineStates;
 import org.altherian.hboxd.core._Hyperbox;
@@ -76,7 +76,7 @@ public class GuestShutdownAction extends AbstractHyperboxMultiTaskAction {
    public void run(Request request, _Hyperbox hbox) {
       init();
       try {
-         MachineInput mIn = request.get(MachineInput.class);
+         MachineIn mIn = request.get(MachineIn.class);
          _RawVM m = hbox.getHypervisor().getMachine(mIn.getUuid());
          while (!m.getState().equals(MachineStates.PoweredOff)) {
             if (canceled) {

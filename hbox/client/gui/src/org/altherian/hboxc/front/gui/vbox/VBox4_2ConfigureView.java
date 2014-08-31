@@ -21,11 +21,11 @@
 
 package org.altherian.hboxc.front.gui.vbox;
 
-import org.altherian.hbox.comm.input.HypervisorInput;
+import org.altherian.hbox.comm.in.HypervisorIn;
 
 public class VBox4_2ConfigureView {
    
-   public static HypervisorInput getInput(String srvId) {
+   public static HypervisorIn getInput(String srvId) {
       return null;
    }
    

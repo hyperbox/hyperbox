@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.audio;
 
 import org.altherian.hbox.constant.AudioDriver;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class AudioDriverSetting extends StringSetting {
@@ -32,7 +32,7 @@ public class AudioDriverSetting extends StringSetting {
    }
    
    public AudioDriverSetting(String value) {
-      super(MachineAttributes.AudioDriver, value);
+      super(MachineAttribute.AudioDriver, value);
    }
    
 }

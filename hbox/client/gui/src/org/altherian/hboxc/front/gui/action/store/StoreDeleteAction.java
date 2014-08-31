@@ -25,8 +25,8 @@ package org.altherian.hboxc.front.gui.action.store;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.input.StoreInput;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.in.StoreIn;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.store._StoreSelector;
@@ -60,7 +60,7 @@ public class StoreDeleteAction extends AbstractAction {
             JOptionPane.OK_CANCEL_OPTION);
       if (info == JOptionPane.YES_OPTION) {
          for (String storeId : selector.getSelection()) {
-            Gui.post(new Request(Command.HBOX, HyperboxTasks.StoreDelete, new ServerInput(selector.getServer()), new StoreInput(storeId)));
+            Gui.post(new Request(Command.HBOX, HyperboxTasks.StoreDelete, new ServerIn(selector.getServer()), new StoreIn(storeId)));
          }
       }
    }

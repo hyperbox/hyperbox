@@ -21,8 +21,8 @@
 
 package org.altherian.vbox4_3.setting.machine;
 
-import org.altherian.hbox.constant.MachineAttributes;
-import org.altherian.hbox.constant.MouseModes;
+import org.altherian.hbox.constant.MachineAttribute;
+import org.altherian.hbox.constant.MouseMode;
 import org.altherian.hboxd.settings.StringSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.general.MouseModeSetting;
@@ -42,12 +42,12 @@ public class MouseModeSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.MouseMode.toString();
+      return MachineAttribute.MouseMode.toString();
    }
    
    @Override
    public void set(IMachine machine, _Setting setting) {
-      PointingHIDType mouseMode = Mappings.get(MouseModes.valueOf(((StringSetting) setting).getValue()));
+      PointingHIDType mouseMode = Mappings.get(MouseMode.valueOf(((StringSetting) setting).getValue()));
       machine.setPointingHIDType(mouseMode);
    }
    

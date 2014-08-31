@@ -26,8 +26,8 @@ import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.SecurityAction;
 import org.altherian.hbox.comm.SecurityItem;
-import org.altherian.hbox.comm.input.PermissionInput;
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.PermissionIn;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 import org.altherian.hboxd.security._User;
@@ -49,8 +49,8 @@ public class PermissionSetAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      UserInput usrIn = request.get(UserInput.class);
-      PermissionInput permIn = request.get(PermissionInput.class);
+      UserIn usrIn = request.get(UserIn.class);
+      PermissionIn permIn = request.get(PermissionIn.class);
       
       _User usr = hbox.getSecurityManager().getUser(usrIn.getId());
       SecurityItem itemType = SecurityItem.valueOf(permIn.getItemTypeId());

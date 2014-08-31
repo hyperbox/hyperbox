@@ -25,8 +25,8 @@ import org.altherian.hbox.HyperboxAPI;
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.constant.ServerAttributes;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.constant.ServerAttribute;
 import org.altherian.hboxd.HBoxServer;
 import org.altherian.hboxd.server._Server;
 
@@ -39,19 +39,19 @@ public class ServerIoFactory {
       // static-only class
    }
    
-   public static ServerOutput get(_Server srv) {
+   public static ServerOut get(_Server srv) {
       List<SettingIO> settings = new ArrayList<SettingIO>();
-      settings.add(new StringSettingIO(ServerAttributes.Name, srv.getName()));
-      settings.add(new StringSettingIO(ServerAttributes.Type, srv.getType().getId()));
-      settings.add(new StringSettingIO(ServerAttributes.Version, srv.getVersion()));
-      settings.add(new BooleanSettingIO(ServerAttributes.IsHypervisorConnected, srv.isConnected()));
-      settings.add(new StringSettingIO(ServerAttributes.NetProtocolVersion, Long.toString(HyperboxAPI.getProtocolVersion())));
-      settings.add(new StringSettingIO(ServerAttributes.LogLevel, srv.getLogLevel()));
-      ServerOutput srvOut = new ServerOutput(srv.getId(), settings);
+      settings.add(new StringSettingIO(ServerAttribute.Name, srv.getName()));
+      settings.add(new StringSettingIO(ServerAttribute.Type, srv.getType().getId()));
+      settings.add(new StringSettingIO(ServerAttribute.Version, srv.getVersion()));
+      settings.add(new BooleanSettingIO(ServerAttribute.IsHypervisorConnected, srv.isConnected()));
+      settings.add(new StringSettingIO(ServerAttribute.NetProtocolVersion, Long.toString(HyperboxAPI.getProtocolVersion())));
+      settings.add(new StringSettingIO(ServerAttribute.LogLevel, srv.getLogLevel()));
+      ServerOut srvOut = new ServerOut(srv.getId(), settings);
       return srvOut;
    }
    
-   public static ServerOutput get() {
+   public static ServerOut get() {
       return get(HBoxServer.get());
    }
    

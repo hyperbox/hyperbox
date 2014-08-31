@@ -21,12 +21,12 @@
 
 package org.altherian.hboxc.front.gui.server;
 
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.out.ServerOut;
 
 import java.util.List;
 
 public interface _ServerSelector extends _SingleServerSelector {
    
-   public List<ServerOutput> getServers();
+   public List<ServerOut> getServers();
    
 }

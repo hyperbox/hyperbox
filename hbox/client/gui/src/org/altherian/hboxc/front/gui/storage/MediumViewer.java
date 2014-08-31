@@ -23,9 +23,9 @@ package org.altherian.hboxc.front.gui.storage;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.MediumInput;
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.storage.MediumOutput;
+import org.altherian.hbox.comm.in.MediumIn;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hbox.constant.MediumAttribute;
 import org.altherian.hboxc.front.gui.Gui;
 
@@ -47,7 +47,7 @@ public final class MediumViewer {
    private JLabel locationLabel;
    private JLabel locationValue;
    
-   public MediumViewer(ServerOutput srvOut) {
+   public MediumViewer(ServerOut srvOut) {
       typeLabel = new JLabel("Type");
       typeValue = new JLabel();
       formatLabel = new JLabel("Format");
@@ -76,12 +76,12 @@ public final class MediumViewer {
       return panel;
    }
    
-   public JPanel show(ServerOutput srvOut, String mediumId) {
-      MediumOutput medOut = Gui.getServer(srvOut).getMedium(new MediumInput(mediumId));
+   public JPanel show(ServerOut srvOut, String mediumId) {
+      MediumOut medOut = Gui.getServer(srvOut).getMedium(new MediumIn(mediumId));
       return show(srvOut, medOut);
    }
    
-   public JPanel show(ServerOutput srvOut, MediumOutput medOut) {
+   public JPanel show(ServerOut srvOut, MediumOut medOut) {
       if (medOut.hasSetting(MediumAttribute.Type)) {
          typeValue.setText(medOut.getSetting(MediumAttribute.Type).getString());
       }
@@ -100,7 +100,7 @@ public final class MediumViewer {
       return getPanel();
    }
    
-   public JPanel show(ServerOutput srvOut, MediumInput medIn) {
+   public JPanel show(ServerOut srvOut, MediumIn medIn) {
       if (medIn.hasSetting(MediumAttribute.Type)) {
          typeValue.setText(medIn.getSetting(MediumAttribute.Type).getString());
       }

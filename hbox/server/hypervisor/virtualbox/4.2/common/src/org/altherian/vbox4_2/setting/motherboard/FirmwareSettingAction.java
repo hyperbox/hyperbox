@@ -21,8 +21,8 @@
 
 package org.altherian.vbox4_2.setting.motherboard;
 
-import org.altherian.hbox.constant.Firmwares;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.Firmware;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.motherboard.FirmwareSetting;
@@ -41,12 +41,12 @@ public final class FirmwareSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.Firmware.toString();
+      return MachineAttribute.Firmware.toString();
    }
    
    @Override
    public void set(IMachine machine, _Setting setting) {
-      machine.setFirmwareType(Mappings.get(Firmwares.valueOf(((StringSetting) setting).getValue())));
+      machine.setFirmwareType(Mappings.get(Firmware.valueOf(((StringSetting) setting).getValue())));
    }
    
    @Override

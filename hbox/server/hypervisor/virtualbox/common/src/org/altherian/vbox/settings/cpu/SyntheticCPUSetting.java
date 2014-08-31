@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.cpu;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public class SyntheticCPUSetting extends BooleanSetting {
    
    public SyntheticCPUSetting(boolean isEnabled) {
-      super(MachineAttributes.SyntheticCPU, isEnabled);
+      super(MachineAttribute.SyntheticCPU, isEnabled);
    }
    
 }

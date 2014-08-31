@@ -22,18 +22,18 @@
 
 package org.altherian.hboxc.event.server;
 
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.event.Event;
 
 public class ServerEvent extends Event {
    
-   public ServerEvent(Enum<?> eventId, ServerOutput srv) {
+   public ServerEvent(Enum<?> eventId, ServerOut srv) {
       super(eventId);
-      set(ServerOutput.class, srv);
+      set(ServerOut.class, srv);
    }
    
-   public ServerOutput getServer() {
-      return get(ServerOutput.class);
+   public ServerOut getServer() {
+      return get(ServerOut.class);
    }
    
    @Override

@@ -25,7 +25,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import net.engio.mbassy.listener.Handler;
 
-import org.altherian.hbox.comm.output.event.EventOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxd.core.model.MachineTest;
 import org.altherian.hboxd.core.model._Machine;
@@ -99,7 +99,7 @@ public abstract class HyperboxTest {
    }
    
    @Handler
-   public void post(EventOutput eOut) {
+   public void post(EventOut eOut) {
       Logger.verbose(eOut.toString());
    }
    

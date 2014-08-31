@@ -25,9 +25,9 @@ import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._Client;
 import org.altherian.hbox.comm._RequestReceiver;
-import org.altherian.hbox.comm.output.TaskOutput;
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.task.TaskStateEventOutput;
+import org.altherian.hbox.comm.out.TaskOut;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.task.TaskStateEventOut;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.tool.logging.Logger;
 
@@ -46,7 +46,7 @@ public class Transaction implements _Client {
    
    private volatile String requestId;
    private volatile String taskId;
-   private volatile TaskStateEventOutput eventOut;
+   private volatile TaskStateEventOut eventOut;
    
    private volatile long lastMessage;
    
@@ -124,8 +124,8 @@ public class Transaction implements _Client {
       if (!sendAndWait(r)) {
          return false;
       }
-      if (extractItem(TaskOutput.class) != null) {
-         taskId = extractItem(TaskOutput.class).getId();
+      if (extractItem(TaskOut.class) != null) {
+         taskId = extractItem(TaskOut.class).getId();
          synchronized (this) {
             while ((eventOut == null) || !eventOut.getTask().getState().isFinishing()) {
                try {
@@ -183,11 +183,11 @@ public class Transaction implements _Client {
    }
    
    @Override
-   public void post(EventOutput evOut) {
+   public void post(EventOut evOut) {
       Logger.track();
       Logger.verbose(evOut.toString());
-      if (evOut instanceof TaskStateEventOutput) {
-         TaskStateEventOutput tsEvOut = (TaskStateEventOutput) evOut;
+      if (evOut instanceof TaskStateEventOut) {
+         TaskStateEventOut tsEvOut = (TaskStateEventOut) evOut;
          if (tsEvOut.getTask().getId().contentEquals(taskId)) {
             eventOut = tsEvOut;
          }

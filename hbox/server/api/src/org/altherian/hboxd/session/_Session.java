@@ -23,7 +23,7 @@ package org.altherian.hboxd.session;
 
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._RequestReceiver;
-import org.altherian.hbox.comm.output.event.EventOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
 import org.altherian.hbox.states.SessionStates;
 import org.altherian.hboxd.security._User;
 
@@ -44,7 +44,7 @@ public interface _Session extends Runnable, _RequestReceiver {
    @Override
    public void putRequest(Request r);
    
-   public void post(EventOutput evOut);
+   public void post(EventOut evOut);
    
    public void login();
 

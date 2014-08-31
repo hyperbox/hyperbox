@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.setting.cpu;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.cpu.SyntheticCPUSetting;
@@ -40,7 +40,7 @@ public class SyntheticCPUSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.SyntheticCPU.toString();
+      return MachineAttribute.SyntheticCPU.toString();
    }
    
    @Override

@@ -21,10 +21,10 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.output.host.HostOutput;
+import org.altherian.hbox.comm.out.host.HostOut;
 
 public interface _HostReceiver extends _WorkerDataReceiver {
    
-   public void put(HostOutput hostOut);
+   public void put(HostOut hostOut);
 
 }

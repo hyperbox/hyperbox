@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.video;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
 
 public final class VRamSetting extends PositiveNumberSetting {
    
    public VRamSetting(long memoryMb) {
-      super(MachineAttributes.VRAM, memoryMb);
+      super(MachineAttribute.VRAM, memoryMb);
    }
    
 }

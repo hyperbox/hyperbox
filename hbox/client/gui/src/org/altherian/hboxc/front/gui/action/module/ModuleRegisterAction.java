@@ -24,9 +24,9 @@ package org.altherian.hboxc.front.gui.action.module;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ModuleInput;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.output.StoreItemOutput;
+import org.altherian.hbox.comm.in.ModuleIn;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.out.StoreItemOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.module._ModuleSelector;
@@ -48,11 +48,11 @@ public class ModuleRegisterAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent e) {
-      StoreItemOutput stoOut = StoreItemChooser.getExisitingFile(selector.getServerId());
+      StoreItemOut stoOut = StoreItemChooser.getExisitingFile(selector.getServerId());
       if (stoOut != null) {
-         ModuleInput modIn = new ModuleInput();
+         ModuleIn modIn = new ModuleIn();
          modIn.setDescriptorFile(stoOut.getPath());
-         Gui.post(new Request(Command.HBOX, HyperboxTasks.ModuleRegister, new ServerInput(selector.getServerId()), modIn));
+         Gui.post(new Request(Command.HBOX, HyperboxTasks.ModuleRegister, new ServerIn(selector.getServerId()), modIn));
       }
    }
    

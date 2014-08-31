@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.virtual;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public class HpetSetting extends BooleanSetting {
    
    public HpetSetting(boolean isEnabled) {
-      super(MachineAttributes.HPET, isEnabled);
+      super(MachineAttribute.HPET, isEnabled);
    }
    
 }

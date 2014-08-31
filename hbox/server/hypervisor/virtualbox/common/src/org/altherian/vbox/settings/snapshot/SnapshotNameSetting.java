@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.snapshot;
 
-import org.altherian.hbox.constant.SnapshotAttributes;
+import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class SnapshotNameSetting extends StringSetting {
    
    public SnapshotNameSetting(String name) {
-      super(SnapshotAttributes.Name, name);
+      super(SnapshotAttribute.Name, name);
    }
    
 }

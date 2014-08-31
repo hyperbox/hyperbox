@@ -24,8 +24,8 @@ package org.altherian.hboxd.core.action.snapshot;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.SnapshotInput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.SnapshotIn;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 
@@ -46,8 +46,8 @@ public class SnapshotDeleteAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      MachineInput mIn = request.get(MachineInput.class);
-      SnapshotInput snapIn = request.get(SnapshotInput.class);
+      MachineIn mIn = request.get(MachineIn.class);
+      SnapshotIn snapIn = request.get(SnapshotIn.class);
       hbox.getHypervisor().getMachine(mIn.getUuid()).deleteSnapshot(snapIn.getUuid());
    }
    

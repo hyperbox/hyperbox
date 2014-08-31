@@ -26,7 +26,7 @@ import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._AnswerReceiver;
-import org.altherian.hbox.comm.output.event.EventOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.kryonet.KryoRegister;
@@ -225,7 +225,7 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
                Logger.warning("Oprhan answer: " + ans.getExchangeId() + " - " + ans.getType() + " - " + ans.getCommand() + " - " + ans.getName());
             }
          }
-         if (object instanceof EventOutput) {
+         if (object instanceof EventOut) {
             CoreEventManager.get().post(object);
          }
       }

@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.memory;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public class VtxvpidSetting extends BooleanSetting {
    
    public VtxvpidSetting(boolean isEnabled) {
-      super(MachineAttributes.Vtxvpid, isEnabled);
+      super(MachineAttribute.Vtxvpid, isEnabled);
    }
    
 }

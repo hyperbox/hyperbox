@@ -26,8 +26,12 @@ import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.tool.logging.Logger;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * To be used by any class that require a configuration file based on a namespace.
@@ -41,6 +45,7 @@ public class Configuration {
    public static final String CFG_ENV_SEPERATOR = "_";
    public static final String CFGKEY_CONF_USER_DATA_PATH = "conf.user.data.path";
    private static Map<String, String> settings = new HashMap<String, String>();
+   private static Properties properties = new Properties();;
    
    private Configuration() {
       // static only
@@ -75,19 +80,35 @@ public class Configuration {
       return CFG_ENV_PREFIX + CFG_ENV_SEPERATOR + key.toUpperCase().replace(CFG_SEPARATOR, CFG_ENV_SEPERATOR);
    }
    
-   public static void init() throws HyperboxException {
-      // TODO
+   public static void init(String settingsFilePath) throws HyperboxException {
+      File settingsFile = new File(settingsFilePath).getAbsoluteFile();
+      Logger.debug("Configured config file: " + settingsFile.getAbsolutePath());
+      
+      if (!settingsFile.isFile()) {
+         throw new HyperboxException("Configuration file: not a file");
+      }
+      if (!settingsFile.canRead()) {
+         throw new HyperboxException("Configuration file: cannot read");
+      }
+      
+      try {
+         properties.load(new FileReader(settingsFile));
+      } catch (FileNotFoundException e) {
+         throw new HyperboxException("Configuration file: not a file");
+      } catch (IOException e) {
+         throw new HyperboxException("Configuration file: cannot read - " + e.getMessage());
+      }
    }
    
    public static String getSetting(String key, String defaultValue) {
       Logger.debug("Trying to get setting " + key + " with default value " + defaultValue);
-      Logger.debug("System.getProperties().containsKey(" + key + "): " + System.getProperties().containsKey(key));
+      Logger.debug("settings.containsKey(" + key + "): " + settings.containsKey(key));
       Logger.debug("System.getenv().containsKey(" + getEnvVarName(key) + "): " + System.getenv().containsKey(getEnvVarName(key)));
-      Logger.debug("hasSetting(" + key + "): " + hasSetting(key));
+      Logger.debug("properties.containsKey(" + key + "): " + properties.containsKey(key));
       
-      if (System.getProperties().containsKey(key)) {
-         Logger.debug("Returning properties value");
-         return System.getProperty(key);
+      if (settings.containsKey(key)) {
+         Logger.debug("Returning config value");
+         return settings.get(key);
       }
       
       if (System.getenv().containsKey(getEnvVarName(key))) {
@@ -95,9 +116,9 @@ public class Configuration {
          return System.getenv(getEnvVarName(key));
       }
       
-      if (settings.containsKey(key)) {
-         Logger.debug("Returning config value");
-         return settings.get(key);
+      if (properties.containsKey(key)) {
+         Logger.debug("Returning properties value");
+         return properties.getProperty(key);
       }
       
       return defaultValue;
@@ -108,7 +129,7 @@ public class Configuration {
    }
    
    public static boolean hasSetting(String key) {
-      return System.getProperties().containsKey(key) || System.getenv().containsKey(getEnvVarName(key)) || settings.containsKey(key);
+      return settings.containsKey(key) || System.getenv().containsKey(getEnvVarName(key)) || properties.containsKey(key);
    }
    
    

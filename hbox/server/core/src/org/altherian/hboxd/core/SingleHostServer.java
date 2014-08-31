@@ -31,9 +31,9 @@ import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.SecurityAction;
 import org.altherian.hbox.comm.SecurityItem;
 import org.altherian.hbox.comm._Client;
-import org.altherian.hbox.comm.input.HypervisorInput;
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.constant.ServerAttributes;
+import org.altherian.hbox.comm.in.HypervisorIn;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.constant.ServerAttribute;
 import org.altherian.hbox.constant.ServerType;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
@@ -193,7 +193,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
       
       if (HBoxServer.hasSetting(CFGKEY_CORE_HYP_ID)) {
          Logger.info("Loading Hypervisor configuration");
-         HypervisorInput in = new HypervisorInput(HBoxServer.getSetting(CFGKEY_CORE_HYP_ID));
+         HypervisorIn in = new HypervisorIn(HBoxServer.getSetting(CFGKEY_CORE_HYP_ID));
          in.setConnectionOptions(HBoxServer.getSetting(CFGKEY_CORE_HYP_OPTS));
          in.setAutoConnect(AxBooleans.get(HBoxServer.getSetting(CFGKEY_CORE_HYP_AUTO)));
          Logger.info("Hypervisor ID: " + in.getId());
@@ -313,7 +313,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
       
       HBoxServer.setSetting(CFGKEY_SRV_NAME, name);
       this.name = name;
-      EventManager.post(new ServerPropertyChangedEvent(this, ServerAttributes.Name, name));
+      EventManager.post(new ServerPropertyChangedEvent(this, ServerAttribute.Name, name));
    }
    
    @Override
@@ -442,7 +442,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
       }
       
       @Override
-      public void post(EventOutput evOut) {
+      public void post(EventOut evOut) {
          Logger.verbose("[ Event ] " + evOut);
       }
       
@@ -564,7 +564,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
       
       try {
          Logger.setLevel(LogLevel.valueOf(logLevel));
-         EventManager.post(new ServerPropertyChangedEvent(this, ServerAttributes.LogLevel, logLevel));
+         EventManager.post(new ServerPropertyChangedEvent(this, ServerAttribute.LogLevel, logLevel));
       } catch (IllegalArgumentException e) {
          throw new ServerLogLevelInvalidException(logLevel);
       }

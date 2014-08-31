@@ -26,8 +26,8 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.SecurityAccess;
 import org.altherian.hbox.comm.SecurityAction;
 import org.altherian.hbox.comm.SecurityItem;
-import org.altherian.hbox.comm.input.PermissionInput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.in.PermissionIn;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.front.gui._Cancelable;
 import org.altherian.hboxc.front.gui._Saveable;
@@ -51,7 +51,7 @@ public class PermissionAddDialog implements _Saveable, _Cancelable, _MachineList
    
    private String serverId;
    
-   private PermissionInput permIn;
+   private PermissionIn permIn;
    
    private JDialog dialog;
    private JLabel itemTypeLabel;
@@ -115,7 +115,7 @@ public class PermissionAddDialog implements _Saveable, _Cancelable, _MachineList
       dialog.getContentPane().add(buttonPanel, "growx,pushx,span 2,wrap");
    }
    
-   public PermissionInput show() {
+   public PermissionIn show() {
       dialog.pack();
       dialog.setLocationRelativeTo(dialog.getParent());
       dialog.setVisible(true);
@@ -126,7 +126,7 @@ public class PermissionAddDialog implements _Saveable, _Cancelable, _MachineList
       dialog.setVisible(false);
    }
    
-   public static PermissionInput get(String serverId) {
+   public static PermissionIn get(String serverId) {
       PermissionAddDialog permDiag = new PermissionAddDialog(serverId);
       return permDiag.show();
    }
@@ -138,14 +138,14 @@ public class PermissionAddDialog implements _Saveable, _Cancelable, _MachineList
    
    @Override
    public void save() throws HyperboxException {
-      permIn = new PermissionInput();
+      permIn = new PermissionIn();
       permIn.setItemTypeId(itemTypeValue.getSelectedItem().toString());
       permIn.setActionId(actionValue.getSelectedItem().toString());
       permIn.setAllowed(rightValue.getSelectedItem().equals(SecurityAccess.Grant));
       
       Object item = itemValue.getSelectedItem();
-      if (item instanceof MachineOutput) {
-         permIn.setItemId(((MachineOutput) item).getUuid());
+      if (item instanceof MachineOut) {
+         permIn.setItemId(((MachineOut) item).getUuid());
       }
       
       hide();
@@ -182,8 +182,8 @@ public class PermissionAddDialog implements _Saveable, _Cancelable, _MachineList
    }
    
    @Override
-   public void add(List<MachineOutput> mOutList) {
-      for (MachineOutput mOut : mOutList) {
+   public void add(List<MachineOut> mOutList) {
+      for (MachineOut mOut : mOutList) {
          itemValue.addItem(mOut);
       }
    }

@@ -22,7 +22,7 @@
 
 package org.altherian.vbox4_2.setting.console;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox4_2.setting._MachineSettingAction;
@@ -39,7 +39,7 @@ public class VrdeEnableSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.VrdeEnabled.getId();
+      return MachineAttribute.VrdeEnabled.getId();
    }
    
    @Override
@@ -49,7 +49,7 @@ public class VrdeEnableSettingAction implements _MachineSettingAction {
    
    @Override
    public _Setting get(IMachine machine) {
-      return new BooleanSetting(MachineAttributes.VrdeEnabled, machine.getVRDEServer().getEnabled());
+      return new BooleanSetting(MachineAttribute.VrdeEnabled, machine.getVRDEServer().getEnabled());
    }
    
 }

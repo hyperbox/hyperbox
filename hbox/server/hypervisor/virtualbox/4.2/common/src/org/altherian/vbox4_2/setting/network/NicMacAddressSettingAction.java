@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.network;
 
-import org.altherian.hbox.constant.NetworkInterfaceSettings;
+import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox4_2.setting._NetworkInterfaceSettingAction;
@@ -38,7 +38,7 @@ public class NicMacAddressSettingAction implements _NetworkInterfaceSettingActio
    
    @Override
    public String getSettingName() {
-      return NetworkInterfaceSettings.MacAddress.toString();
+      return NetworkInterfaceAttribute.MacAddress.toString();
    }
    
    @Override
@@ -48,7 +48,7 @@ public class NicMacAddressSettingAction implements _NetworkInterfaceSettingActio
    
    @Override
    public _Setting get(INetworkAdapter nic) {
-      return new StringSetting(NetworkInterfaceSettings.MacAddress, nic.getMACAddress());
+      return new StringSetting(NetworkInterfaceAttribute.MacAddress, nic.getMACAddress());
    }
    
 }

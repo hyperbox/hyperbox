@@ -23,7 +23,7 @@ package org.altherian.hboxc.front.gui.session;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
@@ -36,7 +36,7 @@ import javax.swing.JTable;
 
 public final class SessionListView {
    
-   private ServerOutput srvOut;
+   private ServerOut srvOut;
    private JPanel panel;
    private SessionListTableModel sessionListModel;
    private JTable sessionList;
@@ -64,7 +64,7 @@ public final class SessionListView {
       sessionListModel.put(Gui.getServer(srvOut).listSessions());
    }
    
-   public void update(ServerOutput srvOut) {
+   public void update(ServerOut srvOut) {
       this.srvOut = srvOut;
       update();
    }

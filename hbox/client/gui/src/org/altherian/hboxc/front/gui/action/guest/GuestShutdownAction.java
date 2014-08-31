@@ -24,8 +24,8 @@ package org.altherian.hboxc.front.gui.action.guest;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.vm._MachineSelector;
 
@@ -46,8 +46,8 @@ public class GuestShutdownAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent ev) {
-      for (MachineOutput mOut : selector.getMachines()) {
-         Gui.post(new Request(Command.HBOX, HyperboxTasks.GuestShutdown, new MachineInput(mOut)));
+      for (MachineOut mOut : selector.getMachines()) {
+         Gui.post(new Request(Command.HBOX, HyperboxTasks.GuestShutdown, new MachineIn(mOut)));
       }
    }
    

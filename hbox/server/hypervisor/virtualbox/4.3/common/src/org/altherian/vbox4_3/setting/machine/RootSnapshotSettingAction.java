@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.setting.machine;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.general.RootSnapshotSetting;
 import org.altherian.vbox4_3.setting._MachineSettingAction;
@@ -38,7 +38,7 @@ public class RootSnapshotSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.RootSnapshotUuid.getId();
+      return MachineAttribute.RootSnapshotUuid.getId();
    }
    
    @Override

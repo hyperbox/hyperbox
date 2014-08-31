@@ -25,7 +25,7 @@ package org.altherian.hboxd.core.action.security;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 
@@ -46,7 +46,7 @@ public class UserRemoveAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      UserInput usrIn = request.get(UserInput.class);
+      UserIn usrIn = request.get(UserIn.class);
       hbox.getSecurityManager().removeUser(usrIn.getId());
    }
    

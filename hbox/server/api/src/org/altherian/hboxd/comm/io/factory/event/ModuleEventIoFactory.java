@@ -21,15 +21,15 @@
 
 package org.altherian.hboxd.comm.io.factory.event;
 
-import org.altherian.hbox.comm.output.ModuleOutput;
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.module.ModuleDisabledEventOutput;
-import org.altherian.hbox.comm.output.event.module.ModuleEnabledEventOutput;
-import org.altherian.hbox.comm.output.event.module.ModuleLoadedEventOutput;
-import org.altherian.hbox.comm.output.event.module.ModuleRegisteredEventOutput;
-import org.altherian.hbox.comm.output.event.module.ModuleUnloadedEventOutput;
-import org.altherian.hbox.comm.output.event.module.ModuleUnregisteredEventOutput;
+import org.altherian.hbox.comm.out.ModuleOut;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.module.ModuleDisabledEventOut;
+import org.altherian.hbox.comm.out.event.module.ModuleEnabledEventOut;
+import org.altherian.hbox.comm.out.event.module.ModuleLoadedEventOut;
+import org.altherian.hbox.comm.out.event.module.ModuleRegisteredEventOut;
+import org.altherian.hbox.comm.out.event.module.ModuleUnloadedEventOut;
+import org.altherian.hbox.comm.out.event.module.ModuleUnregisteredEventOut;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.event._Event;
 import org.altherian.hboxd.comm.io.factory.ModuleIoFactory;
@@ -55,28 +55,28 @@ public class ModuleEventIoFactory implements _EventIoFactory {
    }
    
    @Override
-   public EventOutput get(_Hyperbox hbox, _Event ev) {
+   public EventOut get(_Hyperbox hbox, _Event ev) {
       if (!(ev instanceof ModuleEvent)) {
          return null;
       }
       
       ModuleEvent modEv = (ModuleEvent) ev;
       Date time = modEv.getTime();
-      ServerOutput srvOut = ServerIoFactory.get();
+      ServerOut srvOut = ServerIoFactory.get();
       
       switch ((HyperboxEvents) ev.getEventId()) {
          case ModuleDisabled:
-            return new ModuleDisabledEventOutput(time, srvOut, ModuleIoFactory.get(modEv.getModule()));
+            return new ModuleDisabledEventOut(time, srvOut, ModuleIoFactory.get(modEv.getModule()));
          case ModuleEnabled:
-            return new ModuleEnabledEventOutput(time, srvOut, ModuleIoFactory.get(modEv.getModule()));
+            return new ModuleEnabledEventOut(time, srvOut, ModuleIoFactory.get(modEv.getModule()));
          case ModuleLoaded:
-            return new ModuleLoadedEventOutput(time, srvOut, ModuleIoFactory.get(modEv.getModule()));
+            return new ModuleLoadedEventOut(time, srvOut, ModuleIoFactory.get(modEv.getModule()));
          case ModuleRegistered:
-            return new ModuleRegisteredEventOutput(time, srvOut, ModuleIoFactory.get(modEv.getModule()));
+            return new ModuleRegisteredEventOut(time, srvOut, ModuleIoFactory.get(modEv.getModule()));
          case ModuleUnloaded:
-            return new ModuleUnloadedEventOutput(time, srvOut, ModuleIoFactory.get(modEv.getModule()));
+            return new ModuleUnloadedEventOut(time, srvOut, ModuleIoFactory.get(modEv.getModule()));
          case ModuleUnregistered:
-            return new ModuleUnregisteredEventOutput(time, srvOut, new ModuleOutput(((ModuleUnregisteredEvent) modEv).getModuleId()));
+            return new ModuleUnregisteredEventOut(time, srvOut, new ModuleOut(((ModuleUnregisteredEvent) modEv).getModuleId()));
          default:
             return null;
       }

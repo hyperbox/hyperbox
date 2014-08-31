@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.event.session;
 
-import org.altherian.hbox.comm.output.SessionOutput;
+import org.altherian.hbox.comm.out.SessionOut;
 import org.altherian.hbox.event.Event;
 import org.altherian.hboxd.comm.io.factory.SessionIoFactory;
 import org.altherian.hboxd.session._Session;
@@ -34,7 +34,7 @@ public abstract class SessionEvent extends Event {
    }
    
    public String getSessionId() {
-      return get(SessionOutput.class).getId();
+      return get(SessionOut.class).getId();
    }
    
 }

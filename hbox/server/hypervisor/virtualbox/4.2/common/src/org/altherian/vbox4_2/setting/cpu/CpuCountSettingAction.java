@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.cpu;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.cpu.CpuCountSetting;
@@ -39,7 +39,7 @@ public final class CpuCountSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.CpuCount.toString();
+      return MachineAttribute.CpuCount.toString();
    }
    
    @Override

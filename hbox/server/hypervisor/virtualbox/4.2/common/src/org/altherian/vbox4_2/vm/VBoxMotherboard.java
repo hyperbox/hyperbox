@@ -21,8 +21,8 @@
 
 package org.altherian.vbox4_2.vm;
 
-import org.altherian.hbox.constant.EntityTypes;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawMotherboard;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings.StringSetting;
@@ -46,7 +46,7 @@ public class VBoxMotherboard implements _RawMotherboard {
    
    @Override
    public boolean isAcpiEnabled() {
-      return ((BooleanSetting) machine.getSetting(MachineAttributes.ACPI)).getValue();
+      return ((BooleanSetting) machine.getSetting(MachineAttribute.ACPI)).getValue();
    }
    
    @Override
@@ -56,7 +56,7 @@ public class VBoxMotherboard implements _RawMotherboard {
    
    @Override
    public boolean isIoApicEnabled() {
-      return ((BooleanSetting) machine.getSetting(MachineAttributes.IoAPIC)).getValue();
+      return ((BooleanSetting) machine.getSetting(MachineAttribute.IoAPIC)).getValue();
    }
    
    @Override
@@ -66,7 +66,7 @@ public class VBoxMotherboard implements _RawMotherboard {
    
    @Override
    public String getHardwareUuid() {
-      return ((StringSetting) machine.getSetting(MachineAttributes.HardwareUuid)).getValue();
+      return ((StringSetting) machine.getSetting(MachineAttribute.HardwareUuid)).getValue();
    }
    
    @Override
@@ -77,8 +77,8 @@ public class VBoxMotherboard implements _RawMotherboard {
    @Override
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
-      for (MachineAttributes setting : MachineAttributes.values()) {
-         if (setting.getDeviceType().equals(EntityTypes.Motherboard)) {
+      for (MachineAttribute setting : MachineAttribute.values()) {
+         if (setting.getDeviceType().equals(Entity.Motherboard)) {
             getSetting(setting);
          }
       }

@@ -26,8 +26,8 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.NetworkAttachModeInput;
-import org.altherian.hbox.comm.output.network.NetworkAttachNameOutput;
+import org.altherian.hbox.comm.in.NetworkAttachModeIn;
+import org.altherian.hbox.comm.out.network.NetworkAttachNameOut;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.AbstractHyperboxMultiTaskAction;
 import org.altherian.hboxd.session.SessionContext;
@@ -49,10 +49,10 @@ public class NetworkAttachNameListAction extends AbstractHyperboxMultiTaskAction
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      NetworkAttachModeInput namIn = request.get(NetworkAttachModeInput.class);
+      NetworkAttachModeIn namIn = request.get(NetworkAttachModeIn.class);
       List<String> attachNames = hbox.getHypervisor().listNicAttachNames(namIn.getId());
       for (String attachName : attachNames) {
-         NetworkAttachNameOutput nanOut = new NetworkAttachNameOutput(attachName);
+         NetworkAttachNameOut nanOut = new NetworkAttachNameOut(attachName);
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, nanOut));
       }
    }

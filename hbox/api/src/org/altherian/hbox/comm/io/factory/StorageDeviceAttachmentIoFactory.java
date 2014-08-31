@@ -21,9 +21,9 @@
 
 package org.altherian.hbox.comm.io.factory;
 
-import org.altherian.hbox.comm.input.MediumInput;
-import org.altherian.hbox.comm.input.StorageDeviceAttachmentInput;
-import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
+import org.altherian.hbox.comm.in.MediumIn;
+import org.altherian.hbox.comm.in.StorageDeviceAttachmentIn;
+import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
 
 public final class StorageDeviceAttachmentIoFactory {
    
@@ -35,11 +35,11 @@ public final class StorageDeviceAttachmentIoFactory {
       return machineId + "|" + controllerId + "|" + portId.toString() + "|" + deviceId.toString();
    }
    
-   public static StorageDeviceAttachmentInput get(StorageDeviceAttachmentOutput maOut) {
+   public static StorageDeviceAttachmentIn get(StorageDeviceAttachmentOut maOut) {
       if (maOut.hasMediumInserted()) {
-         return new StorageDeviceAttachmentInput(maOut.getControllerName(), maOut.getPortId(), maOut.getDeviceId(), maOut.getDeviceType(), new MediumInput(maOut.getMediumUuid()));
+         return new StorageDeviceAttachmentIn(maOut.getControllerName(), maOut.getPortId(), maOut.getDeviceId(), maOut.getDeviceType(), new MediumIn(maOut.getMediumUuid()));
       } else {
-         return new StorageDeviceAttachmentInput(maOut.getControllerName(), maOut.getPortId(), maOut.getDeviceId(), maOut.getDeviceType());
+         return new StorageDeviceAttachmentIn(maOut.getControllerName(), maOut.getPortId(), maOut.getDeviceId(), maOut.getDeviceType());
       }
       
    }

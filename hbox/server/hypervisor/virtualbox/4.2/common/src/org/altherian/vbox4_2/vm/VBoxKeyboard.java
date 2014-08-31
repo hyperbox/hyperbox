@@ -21,9 +21,9 @@
 
 package org.altherian.vbox4_2.vm;
 
-import org.altherian.hbox.constant.EntityTypes;
-import org.altherian.hbox.constant.KeyboardModes;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.KeyboardMode;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawKeyboard;
 import org.altherian.hboxd.settings.StringSetting;
 import org.altherian.hboxd.settings._Setting;
@@ -44,7 +44,7 @@ public final class VBoxKeyboard implements _RawKeyboard {
    
    @Override
    public String getMode() {
-      return ((StringSetting) machine.getSetting(MachineAttributes.KeyboardMode)).getValue();
+      return ((StringSetting) machine.getSetting(MachineAttribute.KeyboardMode)).getValue();
    }
    
    @Override
@@ -53,15 +53,15 @@ public final class VBoxKeyboard implements _RawKeyboard {
    }
    
    @Override
-   public void setMode(KeyboardModes mode) {
+   public void setMode(KeyboardMode mode) {
       setMode(mode.toString());
    }
    
    @Override
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
-      for (MachineAttributes setting : MachineAttributes.values()) {
-         if (setting.getDeviceType().equals(EntityTypes.Keyboard)) {
+      for (MachineAttribute setting : MachineAttribute.values()) {
+         if (setting.getDeviceType().equals(Entity.Keyboard)) {
             getSetting(setting);
          }
       }

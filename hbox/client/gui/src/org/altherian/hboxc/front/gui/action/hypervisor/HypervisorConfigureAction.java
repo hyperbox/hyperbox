@@ -24,9 +24,9 @@ package org.altherian.hboxc.front.gui.action.hypervisor;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.HypervisorInput;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.in.HypervisorIn;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.controller.MessageInput;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.hypervisor.HypervisorConfigureView;
@@ -55,13 +55,13 @@ public class HypervisorConfigureAction extends AbstractAction {
    public void actionPerformed(ActionEvent ae) {
       Logger.track();
       
-      ServerOutput srvOut = selector.getServer();
+      ServerOut srvOut = selector.getServer();
       if (srvOut != null) {
-         HypervisorInput hypIn = HypervisorConfigureView.getInput(srvOut.getId());
+         HypervisorIn hypIn = HypervisorConfigureView.getInput(srvOut.getId());
          if (hypIn != null) {
             Logger.debug("Got user input to configure hypervisor");
             Request req = new Request(Command.HBOX, HyperboxTasks.HypervisorConfigure);
-            req.set(new ServerInput(srvOut.getId()));
+            req.set(new ServerIn(srvOut.getId()));
             req.set(hypIn);
             Gui.post(new MessageInput(req));
          }

@@ -26,9 +26,9 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.input.StoreItemInput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.in.StoreItemIn;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxd.comm.io.factory.MachineIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
@@ -52,10 +52,10 @@ public final class MachineRegisterAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      ServerInput srvIn = request.get(ServerInput.class);
-      StoreItemInput siIn = request.get(StoreItemInput.class);
+      ServerIn srvIn = request.get(ServerIn.class);
+      StoreItemIn siIn = request.get(StoreItemIn.class);
       _RawVM vm = hbox.getHypervisor().registerMachine(siIn.getPath());
-      MachineOutput mOut = MachineIoFactory.get(hbox.getServer(srvIn.getId()).getMachine(vm.getUuid()));
+      MachineOut mOut = MachineIoFactory.get(hbox.getServer(srvIn.getId()).getMachine(vm.getUuid()));
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, mOut));
    }
    

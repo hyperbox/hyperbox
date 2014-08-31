@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.memory;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
 
 public final class MemorySetting extends PositiveNumberSetting {
    
    public MemorySetting(long value) {
-      super(MachineAttributes.Memory, value);
+      super(MachineAttribute.Memory, value);
    }
    
 }

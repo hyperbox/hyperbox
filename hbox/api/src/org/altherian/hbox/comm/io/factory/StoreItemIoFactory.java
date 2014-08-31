@@ -21,8 +21,8 @@
 
 package org.altherian.hbox.comm.io.factory;
 
-import org.altherian.hbox.comm.input.StoreItemInput;
-import org.altherian.hbox.comm.output.StoreItemOutput;
+import org.altherian.hbox.comm.in.StoreItemIn;
+import org.altherian.hbox.comm.out.StoreItemOut;
 
 public class StoreItemIoFactory {
    
@@ -30,8 +30,8 @@ public class StoreItemIoFactory {
       // static class
    }
    
-   public static StoreItemInput get(StoreItemOutput siOut) {
-      return new StoreItemInput(siOut.getPath());
+   public static StoreItemIn get(StoreItemOut siOut) {
+      return new StoreItemIn(siOut.getPath());
    }
    
 }

@@ -22,16 +22,16 @@
 package org.altherian.hbox.states;
 
 /**
- * Machine states of Virtualbox
+ * Machine states of Hyperbox
  * 
  * @author noteirak
  */
 public enum MachineStates {
    
    /**
-    * Unknown state, most likely added and unsupported
+    * Default for any unknown state. This most likely means a module is broken in the server or missing in the client.
     */
-   UNKNOWN,
+   Unknown,
    
    /**
     * Unable to retrieve the Machine information. This represent a broken state.
@@ -132,12 +132,12 @@ public enum MachineStates {
    SnapshotDeletingOff,
    
    /**
-    * Like SNAPSHOT_DELETING_OFF, but the merging of media is ongoing in the background while the machine is running.
+    * Like {@link #SnapshotDeletingOff}, but the merging of media is ongoing in the background while the machine is running.
     */
    SnapshotDeletingOnline,
    
    /**
-    * Like SNAPSHOT_DELETING_OFF, but the machine was paused when the merging of differencing media was started.
+    * Like {@link #SnapshotDeletingOff}, but the machine was paused when the merging of differencing media was started.
     */
    SnapshotDeletingPaused,
    

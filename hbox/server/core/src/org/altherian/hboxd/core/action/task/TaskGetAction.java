@@ -26,7 +26,7 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.TaskInput;
+import org.altherian.hbox.comm.in.TaskIn;
 import org.altherian.hboxd.comm.io.factory.TaskIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
@@ -50,7 +50,7 @@ public final class TaskGetAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      TaskInput tIn = request.get(TaskInput.class);
+      TaskIn tIn = request.get(TaskIn.class);
       _Task t = hbox.getTaskManager().get(tIn.getId());
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, TaskIoFactory.get(t)));
    }

@@ -22,12 +22,12 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.output.hypervisor.OsTypeOutput;
+import org.altherian.hbox.comm.out.hypervisor.OsTypeOut;
 
 import java.util.List;
 
 public interface _OsTypeListReceiver extends _WorkerDataReceiver {
    
-   public void add(List<OsTypeOutput> objOutList);
+   public void add(List<OsTypeOut> objOutList);
    
 }

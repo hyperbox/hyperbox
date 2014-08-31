@@ -26,12 +26,12 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.PermissionInput;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.input.UserInput;
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.security.PermissionOutput;
-import org.altherian.hbox.comm.output.security.UserOutput;
+import org.altherian.hbox.comm.in.PermissionIn;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.in.UserIn;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.security.PermissionOut;
+import org.altherian.hbox.comm.out.security.UserOut;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
@@ -57,11 +57,11 @@ import javax.swing.SwingWorker;
 public class UserPermissionEditor implements _Refreshable {
    
    private String serverId;
-   private ServerOutput srvOut;
-   private UserOutput usrOut;
-   private Set<PermissionInput> permInList = new HashSet<PermissionInput>();
-   private Set<PermissionInput> addPermInList = new HashSet<PermissionInput>();
-   private Set<PermissionInput> delPermInList = new HashSet<PermissionInput>();
+   private ServerOut srvOut;
+   private UserOut usrOut;
+   private Set<PermissionIn> permInList = new HashSet<PermissionIn>();
+   private Set<PermissionIn> addPermInList = new HashSet<PermissionIn>();
+   private Set<PermissionIn> delPermInList = new HashSet<PermissionIn>();
    
    private JPanel panel;
    private JProgressBar refreshProgress;
@@ -83,7 +83,7 @@ public class UserPermissionEditor implements _Refreshable {
          
          @Override
          public void actionPerformed(ActionEvent e) {
-            PermissionInput permIn = PermissionAddDialog.get(serverId);
+            PermissionIn permIn = PermissionAddDialog.get(serverId);
             if (permIn != null) {
                if (!permInList.contains(permIn)) {
                   if (!delPermInList.contains(permIn)) {
@@ -102,7 +102,7 @@ public class UserPermissionEditor implements _Refreshable {
          
          @Override
          public void actionPerformed(ActionEvent e) {
-            PermissionInput permIn = tableModel.getObjectAtRow(table.convertRowIndexToModel(table.getSelectedRow()));
+            PermissionIn permIn = tableModel.getObjectAtRow(table.convertRowIndexToModel(table.getSelectedRow()));
             if (addPermInList.contains(permIn)) {
                addPermInList.remove(permIn);
             }
@@ -132,7 +132,7 @@ public class UserPermissionEditor implements _Refreshable {
       FrontEventManager.register(this);
    }
    
-   public void show(String serverId, UserOutput usrOut) {
+   public void show(String serverId, UserOut usrOut) {
       this.serverId = serverId;
       this.usrOut = usrOut;
       
@@ -177,8 +177,8 @@ public class UserPermissionEditor implements _Refreshable {
             protected Void doInBackground() throws Exception {
                srvOut = Gui.getServerInfo(serverId);
                permInList.clear();
-               for (PermissionOutput permOut : Gui.getServer(serverId).listPermissions(new UserInput(usrOut))) {
-                  permInList.add(new PermissionInput(permOut));
+               for (PermissionOut permOut : Gui.getServer(serverId).listPermissions(new UserIn(usrOut))) {
+                  permInList.add(new PermissionIn(permOut));
                }
                
                return null;
@@ -201,13 +201,13 @@ public class UserPermissionEditor implements _Refreshable {
    
    public void save() {
       Logger.debug("Permissions to add: " + addPermInList.size());
-      ServerInput srvIn = new ServerInput(srvOut);
-      UserInput usrIn = new UserInput(usrOut);
-      for (PermissionInput permIn : addPermInList) {
+      ServerIn srvIn = new ServerIn(srvOut);
+      UserIn usrIn = new UserIn(usrOut);
+      for (PermissionIn permIn : addPermInList) {
          Gui.post(new Request(Command.HBOX, HyperboxTasks.PermissionSet, srvIn, usrIn, permIn));
       }
       Logger.debug("Permissions to remove: " + delPermInList.size());
-      for (PermissionInput permIn : delPermInList) {
+      for (PermissionIn permIn : delPermInList) {
          Gui.post(new Request(Command.HBOX, HyperboxTasks.PermissionDelete, srvIn, usrIn, permIn));
       }
    }

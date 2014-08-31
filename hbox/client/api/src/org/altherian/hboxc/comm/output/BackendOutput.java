@@ -22,14 +22,15 @@
 
 package org.altherian.hboxc.comm.output;
 
-import org.altherian.hbox.comm.output.ObjectOutput;
+import org.altherian.hbox.comm.out.ObjectOut;
+import org.altherian.hboxc.constant.ClientEntity;
 
-public class BackendOutput extends ObjectOutput {
+public class BackendOutput extends ObjectOut {
    
    public BackendOutput(String id) {
-      super(id);
+      super(ClientEntity.Backend, id);
    }
-
+   
    @Override
    public String toString() {
       return getId();

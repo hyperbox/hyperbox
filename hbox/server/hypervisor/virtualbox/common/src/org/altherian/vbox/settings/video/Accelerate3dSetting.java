@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.video;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public class Accelerate3dSetting extends BooleanSetting {
    
    public Accelerate3dSetting(boolean isEnabled) {
-      super(MachineAttributes.Accelerate3d, isEnabled);
+      super(MachineAttribute.Accelerate3d, isEnabled);
    }
    
 }

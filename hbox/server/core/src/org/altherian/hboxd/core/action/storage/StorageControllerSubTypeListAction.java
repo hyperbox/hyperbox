@@ -26,8 +26,8 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.StorageControllerTypeInput;
-import org.altherian.hbox.comm.output.storage.StorageControllerSubTypeOutput;
+import org.altherian.hbox.comm.in.StorageControllerTypeIn;
+import org.altherian.hbox.comm.out.storage.StorageControllerSubTypeOut;
 import org.altherian.hboxd.comm.io.factory.StorageControllerSubTypeIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.AbstractHyperboxMultiTaskAction;
@@ -51,10 +51,10 @@ public class StorageControllerSubTypeListAction extends AbstractHyperboxMultiTas
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      StorageControllerTypeInput sctIn = request.get(StorageControllerTypeInput.class);
+      StorageControllerTypeIn sctIn = request.get(StorageControllerTypeIn.class);
       List<_RawStorageControllerSubType> subtypeList = hbox.getHypervisor().listStorageControllerSubType(sctIn.getId());
       for (_RawStorageControllerSubType subtype : subtypeList) {
-         StorageControllerSubTypeOutput scstOut = StorageControllerSubTypeIoFactory.get(subtype);
+         StorageControllerSubTypeOut scstOut = StorageControllerSubTypeIoFactory.get(subtype);
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, scstOut));
       }
    }

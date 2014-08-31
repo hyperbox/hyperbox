@@ -23,7 +23,7 @@ package org.altherian.hboxc.core;
 
 import net.engio.mbassy.listener.Handler;
 
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.back._Backend;
@@ -291,7 +291,7 @@ public class ClientCore implements _Core {
    }
    
    @Override
-   public _Connector addConnector(ConnectorInput conIn, UserInput usrIn) {
+   public _Connector addConnector(ConnectorInput conIn, UserIn usrIn) {
       Logger.track();
       
       _Connector conn = ConnectorFactory.get(connectIdGen.getId(), conIn.getLabel(), conIn.getAddress(), usrIn.getUsername(), conIn.getBackendId());
@@ -303,7 +303,7 @@ public class ClientCore implements _Core {
    }
    
    @Override
-   public _Connector modifyConnector(ConnectorInput conIn, UserInput usrIn) {
+   public _Connector modifyConnector(ConnectorInput conIn, UserIn usrIn) {
       Logger.track();
       
       _Connector conn = getConnector(conIn.getId());
@@ -322,7 +322,7 @@ public class ClientCore implements _Core {
       Logger.track();
       
       _Connector conn = getConnector(id);
-      UserInput usrIn = storage.loadConnectorCredentials(conn.getId());
+      UserIn usrIn = storage.loadConnectorCredentials(conn.getId());
       _Server srv = conn.connect(usrIn);
       servers.put(srv.getId(), srv);
       return conn;

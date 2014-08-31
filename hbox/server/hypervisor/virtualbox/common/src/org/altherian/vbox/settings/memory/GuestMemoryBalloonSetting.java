@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.memory;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
 
 public class GuestMemoryBalloonSetting extends PositiveNumberSetting {
    
    public GuestMemoryBalloonSetting(long memoryMb) {
-      super(MachineAttributes.GuestMemoryBalloon, memoryMb);
+      super(MachineAttribute.GuestMemoryBalloon, memoryMb);
    }
    
 }

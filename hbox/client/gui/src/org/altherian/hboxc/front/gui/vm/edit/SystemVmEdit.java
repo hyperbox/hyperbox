@@ -23,14 +23,14 @@ package org.altherian.hboxc.front.gui.vm.edit;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.MachineInput;
+import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.PositiveNumberSettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.constant.Chipsets;
-import org.altherian.hbox.constant.Firmwares;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.Firmware;
+import org.altherian.hbox.constant.MachineAttribute;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -72,8 +72,8 @@ public class SystemVmEdit {
    private JLabel vpidLabel;
    private JCheckBox vpidBox;
    
-   private MachineInput mIn;
-   private MachineOutput mOut;
+   private MachineIn mIn;
+   private MachineOut mOut;
    
    public SystemVmEdit() {
       cpuNbField = new JTextField(5);
@@ -84,7 +84,7 @@ public class SystemVmEdit {
          mbChipsetBox.addItem(chip.getId());
       }
       firmwareBox = new JComboBox();
-      for (Firmwares firm : Firmwares.values()) {
+      for (Firmware firm : Firmware.values()) {
          firmwareBox.addItem(firm.getId());
       }
       utcClockBox = new JCheckBox();
@@ -155,62 +155,62 @@ public class SystemVmEdit {
       return panel;
    }
    
-   public void update(MachineOutput mOut, MachineInput mIn) {
+   public void update(MachineOut mOut, MachineIn mIn) {
       this.mIn = mIn;
       this.mOut = mOut;
       
-      cpuNbField.setText(mOut.getSetting(MachineAttributes.CpuCount).getString());
-      cpuExecCapField.setText(mOut.getSetting(MachineAttributes.CpuExecCap).getString());
-      ramField.setText(mOut.getSetting(MachineAttributes.Memory).getString());
-      mbChipsetBox.setSelectedItem(mOut.getSetting(MachineAttributes.Chipset).getString());
-      firmwareBox.setSelectedItem(mOut.getSetting(MachineAttributes.Firmware).getString());
+      cpuNbField.setText(mOut.getSetting(MachineAttribute.CpuCount).getString());
+      cpuExecCapField.setText(mOut.getSetting(MachineAttribute.CpuExecCap).getString());
+      ramField.setText(mOut.getSetting(MachineAttribute.Memory).getString());
+      mbChipsetBox.setSelectedItem(mOut.getSetting(MachineAttribute.Chipset).getString());
+      firmwareBox.setSelectedItem(mOut.getSetting(MachineAttribute.Firmware).getString());
       // TODO not supported
       utcClockBox.setEnabled(false);
       // TODO not supported
       hosttimeSynckBox.setEnabled(false);
-      hpetBox.setSelected(mOut.getSetting(MachineAttributes.HPET).getBoolean());
-      virtBox.setSelected(mOut.getSetting(MachineAttributes.HwVirtEx).getBoolean());
-      excVirtBox.setSelected(mOut.getSetting(MachineAttributes.HwVirtExExcl).getBoolean());
-      largePageBox.setSelected(mOut.getSetting(MachineAttributes.LargePages).getBoolean());
-      nestedPageBox.setSelected(mOut.getSetting(MachineAttributes.NestedPaging).getBoolean());
-      vpidBox.setSelected(mOut.getSetting(MachineAttributes.Vtxvpid).getBoolean());
+      hpetBox.setSelected(mOut.getSetting(MachineAttribute.HPET).getBoolean());
+      virtBox.setSelected(mOut.getSetting(MachineAttribute.HwVirtEx).getBoolean());
+      excVirtBox.setSelected(mOut.getSetting(MachineAttribute.HwVirtExExcl).getBoolean());
+      largePageBox.setSelected(mOut.getSetting(MachineAttribute.LargePages).getBoolean());
+      nestedPageBox.setSelected(mOut.getSetting(MachineAttribute.NestedPaging).getBoolean());
+      vpidBox.setSelected(mOut.getSetting(MachineAttribute.Vtxvpid).getBoolean());
    }
    
    public void save() {
-      if (!mOut.getSetting(MachineAttributes.CpuCount).getString().contentEquals(cpuNbField.getText())) {
-         mIn.setSetting(new PositiveNumberSettingIO(MachineAttributes.CpuCount, Long.parseLong(cpuNbField.getText())));
+      if (!mOut.getSetting(MachineAttribute.CpuCount).getString().contentEquals(cpuNbField.getText())) {
+         mIn.setSetting(new PositiveNumberSettingIO(MachineAttribute.CpuCount, Long.parseLong(cpuNbField.getText())));
       }
-      if (!mOut.getSetting(MachineAttributes.CpuExecCap).getString().contentEquals(cpuExecCapField.getText())) {
-         mIn.setSetting(new PositiveNumberSettingIO(MachineAttributes.CpuExecCap, Long.parseLong(cpuExecCapField.getText())));
+      if (!mOut.getSetting(MachineAttribute.CpuExecCap).getString().contentEquals(cpuExecCapField.getText())) {
+         mIn.setSetting(new PositiveNumberSettingIO(MachineAttribute.CpuExecCap, Long.parseLong(cpuExecCapField.getText())));
       }
-      if (!mOut.getSetting(MachineAttributes.Memory).getString().contentEquals(ramField.getText())) {
-         mIn.setSetting(new PositiveNumberSettingIO(MachineAttributes.Memory, Long.parseLong(ramField.getText())));
+      if (!mOut.getSetting(MachineAttribute.Memory).getString().contentEquals(ramField.getText())) {
+         mIn.setSetting(new PositiveNumberSettingIO(MachineAttribute.Memory, Long.parseLong(ramField.getText())));
       }
-      if (!mOut.getSetting(MachineAttributes.Chipset).getString().contentEquals(mbChipsetBox.getSelectedItem().toString())) {
-         mIn.setSetting(new StringSettingIO(MachineAttributes.Chipset, mbChipsetBox.getSelectedItem().toString()));
+      if (!mOut.getSetting(MachineAttribute.Chipset).getString().contentEquals(mbChipsetBox.getSelectedItem().toString())) {
+         mIn.setSetting(new StringSettingIO(MachineAttribute.Chipset, mbChipsetBox.getSelectedItem().toString()));
       }
-      if (!mOut.getSetting(MachineAttributes.Firmware).getString().contentEquals(firmwareBox.getSelectedItem().toString())) {
-         mIn.setSetting(new StringSettingIO(MachineAttributes.Firmware, firmwareBox.getSelectedItem().toString()));
+      if (!mOut.getSetting(MachineAttribute.Firmware).getString().contentEquals(firmwareBox.getSelectedItem().toString())) {
+         mIn.setSetting(new StringSettingIO(MachineAttribute.Firmware, firmwareBox.getSelectedItem().toString()));
       }
       // TODO utcoClock
       // TODO hostTimeSync
-      if (!mOut.getSetting(MachineAttributes.HPET).getBoolean().equals(hpetBox.isSelected())) {
-         mIn.setSetting(new BooleanSettingIO(MachineAttributes.HPET, hpetBox.isSelected()));
+      if (!mOut.getSetting(MachineAttribute.HPET).getBoolean().equals(hpetBox.isSelected())) {
+         mIn.setSetting(new BooleanSettingIO(MachineAttribute.HPET, hpetBox.isSelected()));
       }
-      if (!mOut.getSetting(MachineAttributes.HwVirtEx).getBoolean().equals(virtBox.isSelected())) {
-         mIn.setSetting(new BooleanSettingIO(MachineAttributes.HwVirtEx, virtBox.isSelected()));
+      if (!mOut.getSetting(MachineAttribute.HwVirtEx).getBoolean().equals(virtBox.isSelected())) {
+         mIn.setSetting(new BooleanSettingIO(MachineAttribute.HwVirtEx, virtBox.isSelected()));
       }
-      if (!mOut.getSetting(MachineAttributes.HwVirtExExcl).getBoolean().equals(excVirtBox.isSelected())) {
-         mIn.setSetting(new BooleanSettingIO(MachineAttributes.HwVirtExExcl, excVirtBox.isSelected()));
+      if (!mOut.getSetting(MachineAttribute.HwVirtExExcl).getBoolean().equals(excVirtBox.isSelected())) {
+         mIn.setSetting(new BooleanSettingIO(MachineAttribute.HwVirtExExcl, excVirtBox.isSelected()));
       }
-      if (!mOut.getSetting(MachineAttributes.LargePages).getBoolean().equals(largePageBox.isSelected())) {
-         mIn.setSetting(new BooleanSettingIO(MachineAttributes.LargePages, largePageBox.isSelected()));
+      if (!mOut.getSetting(MachineAttribute.LargePages).getBoolean().equals(largePageBox.isSelected())) {
+         mIn.setSetting(new BooleanSettingIO(MachineAttribute.LargePages, largePageBox.isSelected()));
       }
-      if (!mOut.getSetting(MachineAttributes.NestedPaging).getBoolean().equals(nestedPageBox.isSelected())) {
-         mIn.setSetting(new BooleanSettingIO(MachineAttributes.NestedPaging, nestedPageBox.isSelected()));
+      if (!mOut.getSetting(MachineAttribute.NestedPaging).getBoolean().equals(nestedPageBox.isSelected())) {
+         mIn.setSetting(new BooleanSettingIO(MachineAttribute.NestedPaging, nestedPageBox.isSelected()));
       }
-      if (!mOut.getSetting(MachineAttributes.Vtxvpid).getBoolean().equals(vpidBox.isSelected())) {
-         mIn.setSetting(new BooleanSettingIO(MachineAttributes.Vtxvpid, vpidBox.isSelected()));
+      if (!mOut.getSetting(MachineAttribute.Vtxvpid).getBoolean().equals(vpidBox.isSelected())) {
+         mIn.setSetting(new BooleanSettingIO(MachineAttribute.Vtxvpid, vpidBox.isSelected()));
       }
    }
    

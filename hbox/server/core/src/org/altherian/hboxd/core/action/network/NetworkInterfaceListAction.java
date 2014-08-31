@@ -26,8 +26,8 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
 import org.altherian.hboxd.comm.io.factory.NetworkInterfaceIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.AbstractHyperboxMultiTaskAction;
@@ -53,13 +53,13 @@ public class NetworkInterfaceListAction extends AbstractHyperboxMultiTaskAction 
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      MachineInput mIn = request.get(MachineInput.class);
+      MachineIn mIn = request.get(MachineIn.class);
       
       _RawVM rawVm = hbox.getHypervisor().getMachine(mIn.getUuid());
       Set<_RawNetworkInterface> rawNics = rawVm.listNetworkInterfaces();
       
       for (_RawNetworkInterface rawNic : rawNics) {
-         NetworkInterfaceOutput nicOut = NetworkInterfaceIoFactory.get(rawNic);
+         NetworkInterfaceOut nicOut = NetworkInterfaceIoFactory.get(rawNic);
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, nicOut));
       }
    }

@@ -23,11 +23,11 @@ package org.altherian.hboxc.front.gui.vm.edit;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.MachineInput;
+import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.hypervisor.OsTypeOutput;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.hypervisor.OsTypeOut;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxc.HyperboxClient;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.workers.KeyboardTypeListWorker;
@@ -60,8 +60,8 @@ public class GeneralVmEdit {
    private JLabel descLabel;
    private JTextArea descArea;
    
-   private MachineOutput mOut;
-   private MachineInput mIn;
+   private MachineOut mOut;
+   private MachineIn mIn;
    
    public GeneralVmEdit() {
       nameLabel = new JLabel("Name");
@@ -101,21 +101,21 @@ public class GeneralVmEdit {
       return panel;
    }
    
-   public void update(MachineOutput mOut, MachineInput mIn) {
+   public void update(MachineOut mOut, MachineIn mIn) {
       this.mIn = mIn;
       this.mOut = mOut;
       
       nameField.setText(mOut.getName());
-      descArea.setText(mOut.getSetting(MachineAttributes.Description).getString());
+      descArea.setText(mOut.getSetting(MachineAttribute.Description).getString());
       
       KeyboardTypeListWorker.get(new KeyboardListReceiver(), mOut.getServerId(), mOut.getUuid());
       
       try {
          mouseTypeBox.removeAllItems();
-         for (String mouse : Gui.getServer(mOut.getServerId()).listMouseMode(new MachineInput(mOut))) {
+         for (String mouse : Gui.getServer(mOut.getServerId()).listMouseMode(new MachineIn(mOut))) {
             mouseTypeBox.addItem(mouse);
          }
-         mouseTypeBox.setSelectedItem(mOut.getSetting(MachineAttributes.MouseMode).getRawValue());
+         mouseTypeBox.setSelectedItem(mOut.getSetting(MachineAttribute.MouseMode).getRawValue());
       } catch (Throwable t) {
          HyperboxClient.getView().postError("Unable to retrieve list of Mouse modes", t);
       }
@@ -126,17 +126,17 @@ public class GeneralVmEdit {
       if (!nameField.getText().contentEquals(mOut.getName())) {
          mIn.setName(nameField.getText());
       }
-      if (!osTypeField.getSelectedItem().toString().contentEquals(mOut.getSetting(MachineAttributes.OsType).getString())) {
-         mIn.setSetting(new StringSettingIO(MachineAttributes.OsType, osTypeField.getSelectedItem().toString()));
+      if (!osTypeField.getSelectedItem().toString().contentEquals(mOut.getSetting(MachineAttribute.OsType).getString())) {
+         mIn.setSetting(new StringSettingIO(MachineAttribute.OsType, osTypeField.getSelectedItem().toString()));
       }
-      if (!keyboardTypeBox.getSelectedItem().toString().contentEquals(mOut.getSetting(MachineAttributes.KeyboardMode).getString())) {
-         mIn.setSetting(new StringSettingIO(MachineAttributes.KeyboardMode, keyboardTypeBox.getSelectedItem().toString()));
+      if (!keyboardTypeBox.getSelectedItem().toString().contentEquals(mOut.getSetting(MachineAttribute.KeyboardMode).getString())) {
+         mIn.setSetting(new StringSettingIO(MachineAttribute.KeyboardMode, keyboardTypeBox.getSelectedItem().toString()));
       }
-      if (!mouseTypeBox.getSelectedItem().toString().contentEquals(mOut.getSetting(MachineAttributes.MouseMode).getString())) {
-         mIn.setSetting(new StringSettingIO(MachineAttributes.MouseMode, mouseTypeBox.getSelectedItem().toString()));
+      if (!mouseTypeBox.getSelectedItem().toString().contentEquals(mOut.getSetting(MachineAttribute.MouseMode).getString())) {
+         mIn.setSetting(new StringSettingIO(MachineAttribute.MouseMode, mouseTypeBox.getSelectedItem().toString()));
       }
-      if (!descArea.getText().contentEquals(mOut.getSetting(MachineAttributes.Description).getString())) {
-         mIn.setSetting(new StringSettingIO(MachineAttributes.Description, descArea.getText()));
+      if (!descArea.getText().contentEquals(mOut.getSetting(MachineAttribute.Description).getString())) {
+         mIn.setSetting(new StringSettingIO(MachineAttribute.Description, descArea.getText()));
       }
    }
    
@@ -155,7 +155,7 @@ public class GeneralVmEdit {
          osTypeField.setEnabled(true);
          
          if (isSuccess) {
-            osTypeField.setSelectedItem(mOut.getSetting(MachineAttributes.OsType).getRawValue());
+            osTypeField.setSelectedItem(mOut.getSetting(MachineAttribute.OsType).getRawValue());
             osTypeField.removeItem("Loading...");
          } else {
             osTypeField.removeAllItems();
@@ -164,8 +164,8 @@ public class GeneralVmEdit {
       }
       
       @Override
-      public void add(List<OsTypeOutput> ostOuttList) {
-         for (OsTypeOutput osOut : ostOuttList) {
+      public void add(List<OsTypeOut> ostOuttList) {
+         for (OsTypeOut osOut : ostOuttList) {
             osTypeField.addItem(osOut.getId());
          }
       }
@@ -187,7 +187,7 @@ public class GeneralVmEdit {
          keyboardTypeBox.removeItem("Loading...");
          keyboardTypeBox.setEnabled(isSuccessful);
          if (isSuccessful) {
-            keyboardTypeBox.setSelectedItem(mOut.getSetting(MachineAttributes.KeyboardMode).getRawValue());
+            keyboardTypeBox.setSelectedItem(mOut.getSetting(MachineAttribute.KeyboardMode).getRawValue());
          } else {
             keyboardTypeBox.removeAllItems();
             keyboardTypeBox.addItem("Failed to load Keyboard Types list: " + message);

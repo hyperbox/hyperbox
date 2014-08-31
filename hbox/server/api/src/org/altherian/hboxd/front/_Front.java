@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.front;
 
-import org.altherian.hbox.comm.output.event.EventOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
 import org.altherian.hbox.exception.HyperboxException;
 
 /**
@@ -51,6 +51,6 @@ public interface _Front {
     * 
     * @param ev The event to send to all clients
     */
-   public void broadcast(EventOutput ev);
+   public void broadcast(EventOut ev);
    
 }

@@ -21,8 +21,8 @@
 
 package org.altherian.vbox4_3.vm;
 
-import org.altherian.hbox.constant.EntityTypes;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawMemory;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
@@ -48,7 +48,7 @@ public final class VBoxMemory implements _RawMemory {
    
    @Override
    public long getAmount() {
-      return ((PositiveNumberSetting) machine.getSetting(MachineAttributes.Memory)).getValue();
+      return ((PositiveNumberSetting) machine.getSetting(MachineAttribute.Memory)).getValue();
    }
    
    @Override
@@ -58,7 +58,7 @@ public final class VBoxMemory implements _RawMemory {
    
    @Override
    public boolean isLargePageEnabled() {
-      return ((BooleanSetting) machine.getSetting(MachineAttributes.LargePages)).getValue();
+      return ((BooleanSetting) machine.getSetting(MachineAttribute.LargePages)).getValue();
    }
    
    @Override
@@ -68,7 +68,7 @@ public final class VBoxMemory implements _RawMemory {
    
    @Override
    public boolean isPageFusionEnabled() {
-      return ((BooleanSetting) machine.getSetting(MachineAttributes.PageFusion)).getValue();
+      return ((BooleanSetting) machine.getSetting(MachineAttribute.PageFusion)).getValue();
    }
    
    @Override
@@ -78,7 +78,7 @@ public final class VBoxMemory implements _RawMemory {
    
    @Override
    public boolean isNestedPagingEnabled() {
-      return ((BooleanSetting) machine.getSetting(MachineAttributes.NestedPaging)).getValue();
+      return ((BooleanSetting) machine.getSetting(MachineAttribute.NestedPaging)).getValue();
    }
    
    @Override
@@ -88,7 +88,7 @@ public final class VBoxMemory implements _RawMemory {
    
    @Override
    public boolean isVTxvpidEnabled() {
-      return ((BooleanSetting) machine.getSetting(MachineAttributes.Vtxvpid)).getValue();
+      return ((BooleanSetting) machine.getSetting(MachineAttribute.Vtxvpid)).getValue();
    }
    
    @Override
@@ -99,8 +99,8 @@ public final class VBoxMemory implements _RawMemory {
    @Override
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
-      for (MachineAttributes setting : MachineAttributes.values()) {
-         if (setting.getDeviceType().equals(EntityTypes.Memory)) {
+      for (MachineAttribute setting : MachineAttribute.values()) {
+         if (setting.getDeviceType().equals(Entity.Memory)) {
             getSetting(setting);
          }
       }

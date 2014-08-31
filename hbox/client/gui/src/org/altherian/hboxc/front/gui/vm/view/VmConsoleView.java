@@ -24,8 +24,8 @@ package org.altherian.hboxc.front.gui.vm.view;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.hypervisor.ScreenshotOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.hypervisor.ScreenshotOut;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.RefreshAction;
 import org.altherian.hboxc.front.gui.workers.MachineGetScreenshotWorker;
@@ -49,7 +49,7 @@ public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
    private JPanel panel;
    private JLabelIconAutoResize screenlabel;
    private JLabel statusLabel;
-   private MachineOutput mOut;
+   private MachineOut mOut;
    
    private boolean isDisplayAvailable() {
       return ((mOut != null) && mOut.getState().equalsIgnoreCase("running"));
@@ -98,7 +98,7 @@ public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
       screenlabel.setIcon(null);
    }
    
-   public void show(MachineOutput mOut) {
+   public void show(MachineOut mOut) {
       this.mOut = mOut;
       if (isDisplayAvailable()) {
          start();
@@ -145,7 +145,7 @@ public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
    }
    
    @Override
-   public void put(ScreenshotOutput scrOut) {
+   public void put(ScreenshotOut scrOut) {
       screenlabel.setIcon(new ImageIcon(scrOut.getData()));
    }
    

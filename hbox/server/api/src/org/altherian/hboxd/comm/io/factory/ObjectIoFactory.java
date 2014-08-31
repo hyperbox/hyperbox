@@ -21,12 +21,12 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.input.ObjectInput;
+import org.altherian.hbox.comm.in.ObjectIn;
 import org.altherian.hboxd.settings._Settable;
 
 public class ObjectIoFactory {
    
-   public static void update(_Settable o, ObjectInput oIo) {
+   public static void update(_Settable o, ObjectIn<?> oIo) {
       oIo.setSetting(SettingIoFactory.getList(o.getSettings()));
    }
    

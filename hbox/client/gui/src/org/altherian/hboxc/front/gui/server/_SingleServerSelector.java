@@ -22,12 +22,10 @@
 
 package org.altherian.hboxc.front.gui.server;
 
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.out.ServerOut;
 
 public interface _SingleServerSelector {
    
-   public ServerOutput getServer();
-   
-   public String getId();
+   public ServerOut getServer();
    
 }

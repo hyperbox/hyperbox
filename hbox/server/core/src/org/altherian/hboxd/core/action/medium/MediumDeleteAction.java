@@ -24,7 +24,7 @@ package org.altherian.hboxd.core.action.medium;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MediumInput;
+import org.altherian.hbox.comm.in.MediumIn;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 
@@ -45,7 +45,7 @@ public final class MediumDeleteAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      MediumInput medIn = request.get(MediumInput.class);
+      MediumIn medIn = request.get(MediumIn.class);
       
       hbox.getHypervisor().deleteMedium(medIn.getUuid());
    }

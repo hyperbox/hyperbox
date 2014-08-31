@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.virtual;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public class HwVirtExSetting extends BooleanSetting {
    
    public HwVirtExSetting(boolean isEnabled) {
-      super(MachineAttributes.HwVirtEx, isEnabled);
+      super(MachineAttribute.HwVirtEx, isEnabled);
    }
    
 }

@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.storage;
 
-import org.altherian.hbox.constant.StorageControllerSettings;
+import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
 
 public final class ControllerMaxPortCountSetting extends PositiveNumberSetting {
    
    public ControllerMaxPortCountSetting(Long maxCount) {
-      super(StorageControllerSettings.MaxPortCount, maxCount);
+      super(StorageControllerAttribute.MaxPortCount, maxCount);
    }
    
 }

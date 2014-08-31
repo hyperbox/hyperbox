@@ -26,9 +26,9 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.StoreInput;
-import org.altherian.hbox.comm.input.StoreItemInput;
-import org.altherian.hbox.comm.output.StoreItemOutput;
+import org.altherian.hbox.comm.in.StoreIn;
+import org.altherian.hbox.comm.in.StoreItemIn;
+import org.altherian.hbox.comm.out.StoreItemOut;
 import org.altherian.hboxd.comm.io.factory.StoreItemIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.AbstractHyperboxMultiTaskAction;
@@ -52,16 +52,16 @@ public final class StoreItemListAction extends AbstractHyperboxMultiTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      StoreInput sIn = request.get(StoreInput.class);
-      StoreItemInput siIn;
-      if (request.has(StoreItemInput.class)) {
-         siIn = request.get(StoreItemInput.class);
+      StoreIn sIn = request.get(StoreIn.class);
+      StoreItemIn siIn;
+      if (request.has(StoreItemIn.class)) {
+         siIn = request.get(StoreItemIn.class);
       } else {
-         siIn = new StoreItemInput();
+         siIn = new StoreItemIn();
       }
       List<_StoreItem> siList = hbox.getStoreManager().getStore(sIn.getId()).getItem(siIn.getPath()).listItems();
-      List<StoreItemOutput> siOutList = StoreItemIoFactory.get(siList);
-      for (StoreItemOutput siOut : siOutList) {
+      List<StoreItemOut> siOutList = StoreItemIoFactory.get(siList);
+      for (StoreItemOut siOut : siOutList) {
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, siOut));
       }
    }

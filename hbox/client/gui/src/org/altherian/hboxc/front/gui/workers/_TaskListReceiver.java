@@ -22,12 +22,12 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.output.TaskOutput;
+import org.altherian.hbox.comm.out.TaskOut;
 
 import java.util.List;
 
 public interface _TaskListReceiver extends _WorkerDataReceiver {
    
-   public void add(List<TaskOutput> objOutList);
+   public void add(List<TaskOut> objOutList);
    
 }

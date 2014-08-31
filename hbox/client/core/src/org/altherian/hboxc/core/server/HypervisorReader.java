@@ -27,10 +27,10 @@ import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.output.event.hypervisor.HypervisorDisconnectedEventOutput;
-import org.altherian.hbox.comm.output.event.hypervisor.HypervisorEventOutput;
-import org.altherian.hbox.comm.output.hypervisor.HypervisorOutput;
-import org.altherian.hbox.comm.output.storage.MediumOutput;
+import org.altherian.hbox.comm.out.event.hypervisor.HypervisorDisconnectedEventOut;
+import org.altherian.hbox.comm.out.event.hypervisor.HypervisorEventOut;
+import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
+import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hboxc.comm.utils.Transaction;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.server._HypervisorReader;
@@ -40,14 +40,14 @@ import org.altherian.tool.logging.Logger;
 public class HypervisorReader implements _HypervisorReader {
    
    private _Server srv;
-   private HypervisorOutput hypData;
+   private HypervisorOut hypData;
    
    private void refresh() {
       Logger.track();
       
       if (srv.isHypervisorConnected()) {
          Transaction t = srv.sendRequest(new Request(Command.HBOX, HyperboxTasks.HypervisorGet));
-         hypData = t.extractItem(HypervisorOutput.class);
+         hypData = t.extractItem(HypervisorOut.class);
       } else {
          hypData = null;
       }
@@ -61,7 +61,7 @@ public class HypervisorReader implements _HypervisorReader {
    }
    
    @Override
-   public HypervisorOutput getInfo() {
+   public HypervisorOut getInfo() {
       return hypData;
    }
    
@@ -96,20 +96,20 @@ public class HypervisorReader implements _HypervisorReader {
    }
    
    @Override
-   public MediumOutput getToolsMedium() {
+   public MediumOut getToolsMedium() {
       Transaction t = srv.sendRequest(new Request(Command.VBOX, HypervisorTasks.ToolsMediumGet));
-      return t.extractItem(MediumOutput.class);
+      return t.extractItem(MediumOut.class);
    }
    
    @Handler
-   protected void putHypervisorDisconnectedEvent(HypervisorDisconnectedEventOutput ev) {
+   protected void putHypervisorDisconnectedEvent(HypervisorDisconnectedEventOut ev) {
       Logger.track();
       
       hypData = null;
    }
    
    @Handler
-   protected void putHypervisorEvent(HypervisorEventOutput ev) {
+   protected void putHypervisorEvent(HypervisorEventOut ev) {
       Logger.track();
       
       refresh();

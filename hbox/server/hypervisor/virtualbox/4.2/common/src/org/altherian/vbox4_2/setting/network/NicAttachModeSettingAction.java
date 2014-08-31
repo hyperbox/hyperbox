@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.network;
 
-import org.altherian.hbox.constant.NetworkInterfaceSettings;
+import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.hbox.exception.ConfigurationException;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.network.NicAttachModeSetting;
@@ -41,7 +41,7 @@ public class NicAttachModeSettingAction implements _NetworkInterfaceSettingActio
    
    @Override
    public String getSettingName() {
-      return NetworkInterfaceSettings.AttachMode.getId();
+      return NetworkInterfaceAttribute.AttachMode.getId();
    }
    
    @Override

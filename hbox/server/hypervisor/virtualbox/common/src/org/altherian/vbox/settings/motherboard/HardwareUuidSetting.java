@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.motherboard;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class HardwareUuidSetting extends StringSetting {
    
    public HardwareUuidSetting(String uuid) {
-      super(MachineAttributes.HardwareUuid, uuid);
+      super(MachineAttribute.HardwareUuid, uuid);
    }
    
 }

@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.output.hypervisor.GuestNetworkInterfaceOutput;
+import org.altherian.hbox.comm.out.hypervisor.GuestNetworkInterfaceOut;
 import org.altherian.hboxd.hypervisor.vm.guest._RawGuestNetworkInterface;
 
 public class GuestNetworkInterfaceIoFactory {
@@ -30,8 +30,8 @@ public class GuestNetworkInterfaceIoFactory {
       
    }
    
-   public static GuestNetworkInterfaceOutput get(_RawGuestNetworkInterface rawGnic) {
-      return new GuestNetworkInterfaceOutput(
+   public static GuestNetworkInterfaceOut get(_RawGuestNetworkInterface rawGnic) {
+      return new GuestNetworkInterfaceOut(
             Integer.toString(rawGnic.getId()),
             rawGnic.isUp(),
             rawGnic.getMacAddress(),

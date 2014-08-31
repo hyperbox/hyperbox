@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.setting.network;
 
-import org.altherian.hbox.constant.NetworkInterfaceSettings;
+import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.hbox.exception.ConfigurationException;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
@@ -41,7 +41,7 @@ public class NicCableConnectedSettingAction implements _NetworkInterfaceSettingA
    
    @Override
    public String getSettingName() {
-      return NetworkInterfaceSettings.CableConnected.getId();
+      return NetworkInterfaceAttribute.CableConnected.getId();
    }
    
    @Override

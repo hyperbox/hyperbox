@@ -23,11 +23,11 @@ package org.altherian.hboxc.front.gui.storage;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.MediumInput;
-import org.altherian.hbox.comm.input.StoreItemInput;
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.constant.EntityTypes;
-import org.altherian.hbox.constant.HardDiskFormats;
+import org.altherian.hbox.comm.in.MediumIn;
+import org.altherian.hbox.comm.in.StoreItemIn;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.HardDiskFormat;
 import org.altherian.hboxc.front.gui.MainView;
 import org.altherian.hboxc.front.gui._Cancelable;
 import org.altherian.hboxc.front.gui._Saveable;
@@ -52,7 +52,7 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
    private static final String MB = "MB";
    private static final String GB = "GB";
    
-   private ServerOutput srvOut;
+   private ServerOut srvOut;
    
    private JDialog dialog;
    
@@ -70,13 +70,13 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
    private JButton saveButton;
    private JButton cancelButton;
    
-   private MediumInput medIn;
+   private MediumIn medIn;
    
    private class BrowseAction implements ActionListener {
       
       @Override
       public void actionPerformed(ActionEvent ae) {
-         StoreItemInput stiIn = StoreItemChooser.getFilename(srvOut.getId());
+         StoreItemIn stiIn = StoreItemChooser.getFilename(srvOut.getId());
          if (stiIn != null) {
             locationField.setText(stiIn.getPath());
             sizeField.requestFocus();
@@ -85,7 +85,7 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
       
    }
    
-   private HarddiskCreateDialog(ServerOutput srvOut) {
+   private HarddiskCreateDialog(ServerOut srvOut) {
       this.srvOut = srvOut;
       locationLabel = new JLabel("Location");
       locationField = new JTextField(50);
@@ -100,7 +100,7 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
       
       formatLabel = new JLabel("Format");
       formatBox = new JComboBox();
-      for (HardDiskFormats format : HardDiskFormats.values()) {
+      for (HardDiskFormat format : HardDiskFormat.values()) {
          formatBox.addItem(format);
       }
       
@@ -137,15 +137,15 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
     * @param srvOut the server
     * @return MediumInput object if user has entered valid data, or <code>null</code> if the user cancelled.
     */
-   public static MediumInput show(ServerOutput srvOut) {
+   public static MediumIn show(ServerOut srvOut) {
       Logger.track();
       
       HarddiskCreateDialog diskCreateDialog = new HarddiskCreateDialog(srvOut);
-      MediumInput medIn = diskCreateDialog.getUserInput();
+      MediumIn medIn = diskCreateDialog.getUserInput();
       return medIn;
    }
    
-   private MediumInput getUserInput() {
+   private MediumIn getUserInput() {
       Logger.track();
       
       dialog.pack();
@@ -178,8 +178,8 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
       }
       String format = formatBox.getSelectedItem().toString();
       
-      medIn = new MediumInput();
-      medIn.setDeviceType(EntityTypes.HardDisk.getId());
+      medIn = new MediumIn();
+      medIn.setDeviceType(Entity.HardDisk.getId());
       medIn.setLocation(path);
       medIn.setFormat(format);
       medIn.setLogicalSize(size);

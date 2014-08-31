@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.output.ExceptionOutput;
+import org.altherian.hbox.comm.out.ExceptionOut;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -32,10 +32,10 @@ public class ExceptionIoFactory {
       // static class
    }
    
-   public static ExceptionOutput get(Throwable t) {
+   public static ExceptionOut get(Throwable t) {
       StringWriter writer = new StringWriter();
       t.printStackTrace(new PrintWriter(writer));
-      ExceptionOutput error = new ExceptionOutput("0", t.getMessage(), writer.toString());
+      ExceptionOut error = new ExceptionOut("0", t.getMessage(), writer.toString());
       return error;
    }
    

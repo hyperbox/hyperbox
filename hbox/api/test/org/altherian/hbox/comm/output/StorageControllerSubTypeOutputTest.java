@@ -24,16 +24,16 @@ package org.altherian.hbox.comm.output;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.altherian.hbox.comm.output.storage.StorageControllerSubTypeOutput;
+import org.altherian.hbox.comm.out.storage.StorageControllerSubTypeOut;
 
 public final class StorageControllerSubTypeOutputTest {
    
-   public static void validate(StorageControllerSubTypeOutput scstOut) {
+   public static void validate(StorageControllerSubTypeOut scstOut) {
       assertFalse(scstOut.getId().isEmpty());
       assertFalse(scstOut.getParentType().isEmpty());
    }
    
-   public static void compare(StorageControllerSubTypeOutput scstOut1, StorageControllerSubTypeOutput scstOut2) {
+   public static void compare(StorageControllerSubTypeOut scstOut1, StorageControllerSubTypeOut scstOut2) {
       assertTrue(scstOut1.getId().contentEquals(scstOut2.getId()));
       assertTrue(scstOut1.getParentType().contentEquals(scstOut2.getParentType()));
    }

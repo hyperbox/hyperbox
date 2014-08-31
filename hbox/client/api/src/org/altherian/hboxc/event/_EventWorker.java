@@ -21,7 +21,7 @@
 
 package org.altherian.hboxc.event;
 
-import org.altherian.hbox.comm.output.event.EventOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
 
 public interface _EventWorker {
    
@@ -29,6 +29,6 @@ public interface _EventWorker {
    
    public String getEventId();
    
-   public void work(EventOutput evOut);
+   public void work(EventOut evOut);
    
 }

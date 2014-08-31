@@ -21,7 +21,7 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.output.network.NetworkAttachModeOutput;
+import org.altherian.hbox.comm.out.network.NetworkAttachModeOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.tool.logging.Logger;
 
@@ -29,7 +29,7 @@ import java.util.List;
 
 import javax.swing.SwingWorker;
 
-public class NetworkAttachModeListWorker extends SwingWorker<Void, NetworkAttachModeOutput> {
+public class NetworkAttachModeListWorker extends SwingWorker<Void, NetworkAttachModeOut> {
    
    private _NetworkAttachModeReceiver recv;
    private String serverId;
@@ -42,7 +42,7 @@ public class NetworkAttachModeListWorker extends SwingWorker<Void, NetworkAttach
    
    @Override
    protected Void doInBackground() throws Exception {
-      for (NetworkAttachModeOutput ostOut : Gui.getServer(serverId).listNetworkAttachModes()) {
+      for (NetworkAttachModeOut ostOut : Gui.getServer(serverId).listNetworkAttachModes()) {
          publish(ostOut);
       }
       
@@ -50,7 +50,7 @@ public class NetworkAttachModeListWorker extends SwingWorker<Void, NetworkAttach
    }
    
    @Override
-   protected void process(List<NetworkAttachModeOutput> ostOutList) {
+   protected void process(List<NetworkAttachModeOut> ostOutList) {
       recv.add(ostOutList);
    }
    

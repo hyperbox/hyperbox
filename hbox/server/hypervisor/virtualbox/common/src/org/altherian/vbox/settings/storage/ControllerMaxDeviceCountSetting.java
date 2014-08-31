@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.storage;
 
-import org.altherian.hbox.constant.StorageControllerSettings;
+import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
 
 public final class ControllerMaxDeviceCountSetting extends PositiveNumberSetting {
    
    public ControllerMaxDeviceCountSetting(Long maxCount) {
-      super(StorageControllerSettings.MaxDeviceCount, maxCount);
+      super(StorageControllerAttribute.MaxDeviceCount, maxCount);
    }
    
 }

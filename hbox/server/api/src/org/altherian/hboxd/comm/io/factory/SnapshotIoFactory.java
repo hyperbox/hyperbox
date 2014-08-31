@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
+import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
 import org.altherian.hboxd.hypervisor.vm.snapshot._RawSnapshot;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class SnapshotIoFactory {
       // Static class, not allowed
    }
    
-   public static SnapshotOutput get(_RawSnapshot rawSnap) {
+   public static SnapshotOut get(_RawSnapshot rawSnap) {
       if (rawSnap == null) {
          return null;
       }
@@ -47,7 +47,7 @@ public class SnapshotIoFactory {
          childrenUuid.add(child.getUuid());
       }
       
-      SnapshotOutput snapOut = new SnapshotOutput(rawSnap.getUuid(), SettingIoFactory.getList(rawSnap.listSettings()), parentUuid, childrenUuid);
+      SnapshotOut snapOut = new SnapshotOut(rawSnap.getUuid(), SettingIoFactory.getList(rawSnap.listSettings()), parentUuid, childrenUuid);
       return snapOut;
    }
    

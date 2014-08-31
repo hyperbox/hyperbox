@@ -27,8 +27,8 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.UserInput;
-import org.altherian.hbox.comm.output.security.UserOutput;
+import org.altherian.hbox.comm.in.UserIn;
+import org.altherian.hbox.comm.out.security.UserOut;
 import org.altherian.hboxd.comm.io.factory.UserIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
@@ -52,10 +52,10 @@ public class UserCreateAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      UserInput usrIn = request.get(UserInput.class);
+      UserIn usrIn = request.get(UserIn.class);
       _User user = hbox.getSecurityManager().addUser(usrIn);
       
-      UserOutput usrOut = UserIoFactory.get(user);
+      UserOut usrOut = UserIoFactory.get(user);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, usrOut));
    }
    

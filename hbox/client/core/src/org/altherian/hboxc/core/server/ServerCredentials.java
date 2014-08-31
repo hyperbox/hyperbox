@@ -22,14 +22,14 @@
 
 package org.altherian.hboxc.core.server;
 
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.UserIn;
 
 public class ServerCredentials {
    
    private String srvId;
-   private UserInput usrIn;
+   private UserIn usrIn;
 
-   public ServerCredentials(String srvId, UserInput usrIn) {
+   public ServerCredentials(String srvId, UserIn usrIn) {
       this.srvId = srvId;
       this.usrIn = usrIn;
    }
@@ -38,7 +38,7 @@ public class ServerCredentials {
       return srvId;
    }
    
-   public UserInput getCredentials() {
+   public UserIn getCredentials() {
       return usrIn;
    }
    

@@ -25,8 +25,8 @@ package org.altherian.hboxc.front.gui.action.store;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.input.StoreInput;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.in.StoreIn;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.server._SingleServerSelector;
@@ -53,9 +53,9 @@ public class StoreCreateAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent e) {
-      StoreInput stoIn = StoreEditor.getInputCreate(select.getServer().getId());
+      StoreIn stoIn = StoreEditor.getInputCreate(select.getServer().getId());
       if (stoIn != null) {
-         Gui.post(new Request(Command.HBOX, HyperboxTasks.StoreCreate, new ServerInput(select.getServer()), stoIn));
+         Gui.post(new Request(Command.HBOX, HyperboxTasks.StoreCreate, new ServerIn(select.getServer()), stoIn));
       }
    }
    

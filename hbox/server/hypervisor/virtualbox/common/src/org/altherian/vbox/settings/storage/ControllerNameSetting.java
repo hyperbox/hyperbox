@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.storage;
 
-import org.altherian.hbox.constant.StorageControllerSettings;
+import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class ControllerNameSetting extends StringSetting {
    
    public ControllerNameSetting(String name) {
-      super(StorageControllerSettings.Name, name);
+      super(StorageControllerAttribute.Name, name);
    }
    
 }

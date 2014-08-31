@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.setting.virtual;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.virtual.HpetSetting;
@@ -39,7 +39,7 @@ public final class HpetSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.HPET.getId();
+      return MachineAttribute.HPET.getId();
    }
    
    @Override

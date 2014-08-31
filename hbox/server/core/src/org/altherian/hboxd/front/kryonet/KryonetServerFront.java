@@ -24,7 +24,7 @@ package org.altherian.hboxd.front.kryonet;
 import org.altherian.hbox.Configuration;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._Client;
-import org.altherian.hbox.comm.output.event.EventOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.kryonet.KryoRegister;
 import org.altherian.hbox.kryonet.KryonetDefaultSettings;
@@ -101,13 +101,13 @@ public class KryonetServerFront implements _Front {
       server.stop();
    }
    
-   public void stop(EventOutput ev) {
+   public void stop(EventOut ev) {
       broadcast(ev);
       stop();
    }
    
    @Override
-   public void broadcast(EventOutput ev) {
+   public void broadcast(EventOut ev) {
       Logger.track();
       
       if (server != null) {

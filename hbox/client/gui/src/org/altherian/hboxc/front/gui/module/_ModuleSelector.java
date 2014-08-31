@@ -21,7 +21,7 @@
 
 package org.altherian.hboxc.front.gui.module;
 
-import org.altherian.hbox.comm.output.ModuleOutput;
+import org.altherian.hbox.comm.out.ModuleOut;
 
 import java.util.List;
 
@@ -29,6 +29,6 @@ public interface _ModuleSelector {
    
    public String getServerId();
 
-   public List<ModuleOutput> getModuleSelection();
+   public List<ModuleOut> getModuleSelection();
    
 }

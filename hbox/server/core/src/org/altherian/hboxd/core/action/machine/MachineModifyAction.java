@@ -26,13 +26,13 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.Action;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.NetworkInterfaceInput;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.input.StorageControllerInput;
-import org.altherian.hbox.comm.input.StorageDeviceAttachmentInput;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.comm.in.Action;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.NetworkInterfaceIn;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.in.StorageControllerIn;
+import org.altherian.hbox.comm.in.StorageDeviceAttachmentIn;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.comm.io.factory.SettingIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
@@ -50,7 +50,7 @@ import java.util.List;
 
 public final class MachineModifyAction extends ASingleTaskAction {
    
-   private void createMedium(_Server srv, _Machine vm, _StorageController sc, StorageDeviceAttachmentInput sdaIn) {
+   private void createMedium(_Server srv, _Machine vm, _StorageController sc, StorageDeviceAttachmentIn sdaIn) {
       Logger.track();
       
       _Medium med = srv
@@ -58,14 +58,14 @@ public final class MachineModifyAction extends ASingleTaskAction {
       sc.attachMedium(med, sdaIn.getPortId(), sdaIn.getDeviceId());
    }
    
-   private void replaceMedium(_Server srv, _StorageController sc, StorageDeviceAttachmentInput sdaIn) {
+   private void replaceMedium(_Server srv, _StorageController sc, StorageDeviceAttachmentIn sdaIn) {
       Logger.track();
       
       _Medium med = srv.getMedium(sdaIn.getMedium().getUuid());
       sc.attachMedium(med, sdaIn.getPortId(), sdaIn.getDeviceId());
    }
    
-   private void removeMedium(_StorageController sc, StorageDeviceAttachmentInput sdaIn) {
+   private void removeMedium(_StorageController sc, StorageDeviceAttachmentIn sdaIn) {
       Logger.track();
       
       sc.detachMedium(sdaIn.getPortId(), sdaIn.getDeviceId());
@@ -83,9 +83,9 @@ public final class MachineModifyAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      ServerInput srvIn = request.get(ServerInput.class);
-      MachineInput mIn = request.get(MachineInput.class);
-      mIn.removeSetting(MachineAttributes.ServerId);
+      ServerIn srvIn = request.get(ServerIn.class);
+      MachineIn mIn = request.get(MachineIn.class);
+      mIn.removeSetting(MachineAttribute.ServerId);
       
       _Server srv = hbox.getServer(srvIn.getId());
       _Machine vm = srv.getMachine(mIn.getId());
@@ -97,12 +97,12 @@ public final class MachineModifyAction extends ASingleTaskAction {
       try {
          vm.setSetting(SettingIoFactory.getListIo(mIn.listSettings()));
          
-         for (NetworkInterfaceInput nIn : mIn.listNetworkInterface()) {
+         for (NetworkInterfaceIn nIn : mIn.listNetworkInterface()) {
             _NetworkInterface nic = vm.getNetworkInterface(nIn.getNicId());
             nic.setSetting(SettingIoFactory.getListIo(nIn.listSettings()));
          }
          
-         for (StorageControllerInput scIn : mIn.listStorageController()) {
+         for (StorageControllerIn scIn : mIn.listStorageController()) {
             _StorageController sc = null;
             
             if (scIn.getAction().equals(Action.Delete) || scIn.getAction().equals(Action.Replace)) {
@@ -115,7 +115,7 @@ public final class MachineModifyAction extends ASingleTaskAction {
                sc = vm.getStorageController(scIn.getId());
                sc.setSetting(SettingIoFactory.getListIo(scIn.listSettings()));
                
-               for (StorageDeviceAttachmentInput sdaIn : scIn.listAttachments()) {
+               for (StorageDeviceAttachmentIn sdaIn : scIn.listAttachments()) {
                   if (sdaIn.getAction().equals(Action.Delete)) {
                      sc.detachDevice(sdaIn.getPortId(), sdaIn.getDeviceId());
                   }

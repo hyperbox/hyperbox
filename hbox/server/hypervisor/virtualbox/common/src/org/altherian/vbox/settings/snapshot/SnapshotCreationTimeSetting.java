@@ -21,7 +21,7 @@
 
 package org.altherian.vbox.settings.snapshot;
 
-import org.altherian.hbox.constant.SnapshotAttributes;
+import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
 
 import java.util.Date;
@@ -29,7 +29,7 @@ import java.util.Date;
 public class SnapshotCreationTimeSetting extends PositiveNumberSetting {
    
    public SnapshotCreationTimeSetting(Date time) {
-      super(SnapshotAttributes.CreationTime, time.getTime());
+      super(SnapshotAttribute.CreationTime, time.getTime());
    }
    
 }

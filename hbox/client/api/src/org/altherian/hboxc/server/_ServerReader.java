@@ -21,39 +21,39 @@
 
 package org.altherian.hboxc.server;
 
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.MediumInput;
-import org.altherian.hbox.comm.input.NetworkAttachModeInput;
-import org.altherian.hbox.comm.input.SessionInput;
-import org.altherian.hbox.comm.input.SnapshotInput;
-import org.altherian.hbox.comm.input.StorageControllerInput;
-import org.altherian.hbox.comm.input.StorageControllerSubTypeInput;
-import org.altherian.hbox.comm.input.StorageControllerTypeInput;
-import org.altherian.hbox.comm.input.StoreInput;
-import org.altherian.hbox.comm.input.StoreItemInput;
-import org.altherian.hbox.comm.input.TaskInput;
-import org.altherian.hbox.comm.input.UserInput;
-import org.altherian.hbox.comm.output.ModuleOutput;
-import org.altherian.hbox.comm.output.SessionOutput;
-import org.altherian.hbox.comm.output.StoreItemOutput;
-import org.altherian.hbox.comm.output.StoreOutput;
-import org.altherian.hbox.comm.output.TaskOutput;
-import org.altherian.hbox.comm.output.host.HostOutput;
-import org.altherian.hbox.comm.output.hypervisor.HypervisorLoaderOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.hypervisor.OsTypeOutput;
-import org.altherian.hbox.comm.output.hypervisor.ScreenshotOutput;
-import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
-import org.altherian.hbox.comm.output.network.NetworkAttachModeOutput;
-import org.altherian.hbox.comm.output.network.NetworkAttachNameOutput;
-import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
-import org.altherian.hbox.comm.output.network.NetworkInterfaceTypeOutput;
-import org.altherian.hbox.comm.output.security.PermissionOutput;
-import org.altherian.hbox.comm.output.security.UserOutput;
-import org.altherian.hbox.comm.output.storage.MediumOutput;
-import org.altherian.hbox.comm.output.storage.StorageControllerSubTypeOutput;
-import org.altherian.hbox.comm.output.storage.StorageControllerTypeOutput;
-import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.MediumIn;
+import org.altherian.hbox.comm.in.NetworkAttachModeIn;
+import org.altherian.hbox.comm.in.SessionIn;
+import org.altherian.hbox.comm.in.SnapshotIn;
+import org.altherian.hbox.comm.in.StorageControllerIn;
+import org.altherian.hbox.comm.in.StorageControllerSubTypeIn;
+import org.altherian.hbox.comm.in.StorageControllerTypeIn;
+import org.altherian.hbox.comm.in.StoreIn;
+import org.altherian.hbox.comm.in.StoreItemIn;
+import org.altherian.hbox.comm.in.TaskIn;
+import org.altherian.hbox.comm.in.UserIn;
+import org.altherian.hbox.comm.out.ModuleOut;
+import org.altherian.hbox.comm.out.SessionOut;
+import org.altherian.hbox.comm.out.StoreItemOut;
+import org.altherian.hbox.comm.out.StoreOut;
+import org.altherian.hbox.comm.out.TaskOut;
+import org.altherian.hbox.comm.out.host.HostOut;
+import org.altherian.hbox.comm.out.hypervisor.HypervisorLoaderOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.hypervisor.OsTypeOut;
+import org.altherian.hbox.comm.out.hypervisor.ScreenshotOut;
+import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
+import org.altherian.hbox.comm.out.network.NetworkAttachModeOut;
+import org.altherian.hbox.comm.out.network.NetworkAttachNameOut;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceTypeOut;
+import org.altherian.hbox.comm.out.security.PermissionOut;
+import org.altherian.hbox.comm.out.security.UserOut;
+import org.altherian.hbox.comm.out.storage.MediumOut;
+import org.altherian.hbox.comm.out.storage.StorageControllerSubTypeOut;
+import org.altherian.hbox.comm.out.storage.StorageControllerTypeOut;
+import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
 
 import java.util.List;
 import java.util.Set;
@@ -74,91 +74,91 @@ public interface _ServerReader {
    
    public _GuestReader getGuest(String vmId);
    
-   public MachineOutput getMachine(MachineInput mIn);
+   public MachineOut getMachine(MachineIn mIn);
    
-   public MachineOutput getMachine(String vmId);
+   public MachineOut getMachine(String vmId);
    
-   public MediumOutput getMedium(MediumInput mIn);
+   public MediumOut getMedium(MediumIn mIn);
    
-   public SessionOutput getSession(SessionInput sIn);
+   public SessionOut getSession(SessionIn sIn);
    
-   public StorageControllerSubTypeOutput getStorageControllerSubType(StorageControllerSubTypeInput scstIn);
+   public StorageControllerSubTypeOut getStorageControllerSubType(StorageControllerSubTypeIn scstIn);
    
-   public StorageControllerTypeOutput getStorageControllerType(StorageControllerTypeInput sctIn);
+   public StorageControllerTypeOut getStorageControllerType(StorageControllerTypeIn sctIn);
    
-   public StoreOutput getStore(StoreInput sIn);
+   public StoreOut getStore(StoreIn sIn);
    
-   public StoreItemOutput getStoreItem(StoreItemInput siIn);
+   public StoreItemOut getStoreItem(StoreItemIn siIn);
    
-   public TaskOutput getTask(TaskInput tIn);
+   public TaskOut getTask(TaskIn tIn);
    
-   public UserOutput getUser(UserInput uIn);
+   public UserOut getUser(UserIn uIn);
    
-   public List<StorageDeviceAttachmentOutput> listAttachments(StorageControllerInput scIn);
+   public List<StorageDeviceAttachmentOut> listAttachments(StorageControllerIn scIn);
    
-   public List<StorageDeviceAttachmentOutput> listAttachments(String machineUuid);
+   public List<StorageDeviceAttachmentOut> listAttachments(String machineUuid);
    
-   public List<String> listKeyboardMode(MachineInput mIn);
+   public List<String> listKeyboardMode(MachineIn mIn);
    
-   public List<MachineOutput> listMachines();
+   public List<MachineOut> listMachines();
    
-   public List<MediumOutput> listMediums();
+   public List<MediumOut> listMediums();
    
-   public List<NetworkInterfaceOutput> listNetworkInterfaces(MachineInput mIn);
+   public List<NetworkInterfaceOut> listNetworkInterfaces(MachineIn mIn);
    
-   public List<NetworkAttachModeOutput> listNetworkAttachModes();
+   public List<NetworkAttachModeOut> listNetworkAttachModes();
    
-   public List<NetworkAttachNameOutput> listNetworkAttachNames(NetworkAttachModeInput namIn);
+   public List<NetworkAttachNameOut> listNetworkAttachNames(NetworkAttachModeIn namIn);
    
-   public List<NetworkInterfaceTypeOutput> listNetworkInterfaceTypes();
+   public List<NetworkInterfaceTypeOut> listNetworkInterfaceTypes();
    
-   public List<String> listMouseMode(MachineInput mIn);
+   public List<String> listMouseMode(MachineIn mIn);
    
-   public List<OsTypeOutput> listOsType();
+   public List<OsTypeOut> listOsType();
    
-   public List<OsTypeOutput> listOsType(MachineInput mIn);
+   public List<OsTypeOut> listOsType(MachineIn mIn);
    
-   public List<SessionOutput> listSessions();
+   public List<SessionOut> listSessions();
    
-   public List<StorageControllerSubTypeOutput> listStorageControllerSubType(StorageControllerTypeInput sctIn);
+   public List<StorageControllerSubTypeOut> listStorageControllerSubType(StorageControllerTypeIn sctIn);
    
-   public List<StorageControllerTypeOutput> listStorageControllerType();
+   public List<StorageControllerTypeOut> listStorageControllerType();
    
-   public List<StoreItemOutput> listStoreItems(StoreInput sIn);
+   public List<StoreItemOut> listStoreItems(StoreIn sIn);
    
-   public List<StoreItemOutput> listStoreItems(StoreInput sIn, StoreItemInput siIn);
+   public List<StoreItemOut> listStoreItems(StoreIn sIn, StoreItemIn siIn);
    
-   public List<StoreOutput> listStores();
+   public List<StoreOut> listStores();
    
-   public List<TaskOutput> listTasks();
+   public List<TaskOut> listTasks();
    
-   public List<UserOutput> listUsers();
+   public List<UserOut> listUsers();
    
-   public List<PermissionOutput> listPermissions(UserInput usrIn);
+   public List<PermissionOut> listPermissions(UserIn usrIn);
    
-   public SnapshotOutput getRootSnapshot(String vmId);
+   public SnapshotOut getRootSnapshot(String vmId);
    
-   public SnapshotOutput getSnapshot(String vmId, String snapUuid);
+   public SnapshotOut getSnapshot(String vmId, String snapUuid);
    
-   public SnapshotOutput getSnapshot(MachineInput mIn, SnapshotInput snapIn);
+   public SnapshotOut getSnapshot(MachineIn mIn, SnapshotIn snapIn);
    
-   public SnapshotOutput getCurrentSnapshot(String vmId);
+   public SnapshotOut getCurrentSnapshot(String vmId);
    
-   public SnapshotOutput getCurrentSnapshot(MachineInput mIn);
+   public SnapshotOut getCurrentSnapshot(MachineIn mIn);
    
    public boolean isHypervisorConnected();
    
    public _HypervisorReader getHypervisor();
    
-   public ScreenshotOutput getScreenshot(MachineInput mIn);
+   public ScreenshotOut getScreenshot(MachineIn mIn);
    
-   public List<HypervisorLoaderOutput> listHypervisors();
+   public List<HypervisorLoaderOut> listHypervisors();
    
-   public HostOutput getHost();
+   public HostOut getHost();
    
-   public List<ModuleOutput> listModules();
+   public List<ModuleOut> listModules();
    
-   public ModuleOutput getModule(String modId);
+   public ModuleOut getModule(String modId);
    
    public Set<String> listLogLevel();
    

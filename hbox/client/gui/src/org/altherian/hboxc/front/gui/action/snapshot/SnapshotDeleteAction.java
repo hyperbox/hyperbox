@@ -24,9 +24,9 @@ package org.altherian.hboxc.front.gui.action.snapshot;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.SnapshotInput;
-import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.SnapshotIn;
+import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.MainView;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
@@ -63,10 +63,10 @@ public class SnapshotDeleteAction extends AbstractAction {
                JOptionPane.WARNING_MESSAGE,
                JOptionPane.OK_CANCEL_OPTION);
          if (info == JOptionPane.YES_OPTION) {
-            for (SnapshotOutput snapOut : selector.getSelection()) {
+            for (SnapshotOut snapOut : selector.getSelection()) {
                Request req = new Request(Command.VBOX, HypervisorTasks.SnapshotDelete);
-               req.set(new MachineInput(selector.getMachine()));
-               req.set(new SnapshotInput(snapOut.getUuid()));
+               req.set(new MachineIn(selector.getMachine()));
+               req.set(new SnapshotIn(snapOut.getUuid()));
                Gui.post(req);
             }
          }

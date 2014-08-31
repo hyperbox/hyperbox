@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.network;
 
-import org.altherian.hbox.constant.NetworkInterfaceSettings;
+import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.network.NicEnabledSetting;
@@ -39,7 +39,7 @@ public class NicEnabledSettingAction implements _NetworkInterfaceSettingAction {
    
    @Override
    public String getSettingName() {
-      return NetworkInterfaceSettings.Enabled.toString();
+      return NetworkInterfaceAttribute.Enabled.toString();
    }
    
    @Override

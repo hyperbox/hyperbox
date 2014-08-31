@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.setting.memory;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.tool.logging.Logger;
 import org.altherian.vbox.settings.memory.MemorySetting;
@@ -39,7 +39,7 @@ public class MemorySettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.Memory.toString();
+      return MachineAttribute.Memory.toString();
    }
    
    @Override

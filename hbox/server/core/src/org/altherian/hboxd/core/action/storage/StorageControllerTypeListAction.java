@@ -26,7 +26,7 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.output.storage.StorageControllerTypeOutput;
+import org.altherian.hbox.comm.out.storage.StorageControllerTypeOut;
 import org.altherian.hboxd.comm.io.factory.StorageControllerTypeIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.AbstractHyperboxMultiTaskAction;
@@ -52,7 +52,7 @@ public final class StorageControllerTypeListAction extends AbstractHyperboxMulti
    public void run(Request request, _Hyperbox hbox) {
       List<_RawStorageControllerType> typeList = hbox.getHypervisor().listStorageControllerType();
       for (_RawStorageControllerType type : typeList) {
-         StorageControllerTypeOutput sctOut = StorageControllerTypeIoFactory.get(type);
+         StorageControllerTypeOut sctOut = StorageControllerTypeIoFactory.get(type);
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, sctOut));
       }
    }

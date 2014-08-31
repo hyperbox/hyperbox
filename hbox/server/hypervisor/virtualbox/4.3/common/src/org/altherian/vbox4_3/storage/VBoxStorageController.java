@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.storage;
 
-import org.altherian.hbox.constant.StorageControllerSettings;
+import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxd.hypervisor.storage._RawMedium;
 import org.altherian.hboxd.hypervisor.storage._RawMediumAttachment;
@@ -117,7 +117,7 @@ public class VBoxStorageController implements _RawStorageController {
    
    @Override
    public String getSubType() {
-      return ((StringSetting) VBoxSettingManager.get(this, StorageControllerSettings.SubType)).getValue();
+      return ((StringSetting) VBoxSettingManager.get(this, StorageControllerAttribute.SubType)).getValue();
    }
    
    @Override
@@ -127,7 +127,7 @@ public class VBoxStorageController implements _RawStorageController {
    
    @Override
    public long getPortCount() {
-      return ((PositiveNumberSetting) VBoxSettingManager.get(this, StorageControllerSettings.PortCount)).getValue();
+      return ((PositiveNumberSetting) VBoxSettingManager.get(this, StorageControllerAttribute.PortCount)).getValue();
    }
    
    @Override
@@ -232,12 +232,12 @@ public class VBoxStorageController implements _RawStorageController {
       // TODO use DeviceTypeMapping
       DeviceType dt = DeviceType.valueOf(medium.getDeviceType());
       IMedium vbMedium = VBox.get().openMedium(medium.getLocation(), dt, AccessMode.ReadOnly, false);
+      Integer portNbInt = InconsistencyUtils.getAndTruncate(portNb);
+      Integer deviceNbInt = InconsistencyUtils.getAndTruncate(deviceNb);
       
       try {
          lockAuto();
          if (isSlotTaken(portNb, deviceNb)) {
-            Integer portNbInt = InconsistencyUtils.getAndTruncate(portNb);
-            Integer deviceNbInt = InconsistencyUtils.getAndTruncate(deviceNb);
             if (dt.equals(DeviceType.DVD) || dt.equals(DeviceType.Floppy)) {
                getVm().mountMedium(strCtrName, portNbInt, deviceNbInt, vbMedium, true);
             } else {
@@ -245,8 +245,6 @@ public class VBoxStorageController implements _RawStorageController {
                getVm().attachDevice(getName(), portNbInt, deviceNbInt, dt, vbMedium);
             }
          } else {
-            Integer portNbInt = InconsistencyUtils.getAndTruncate(portNb);
-            Integer deviceNbInt = InconsistencyUtils.getAndTruncate(deviceNb);
             getVm().attachDevice(getName(), portNbInt, deviceNbInt, dt, vbMedium);
          }
          getVm().saveSettings();

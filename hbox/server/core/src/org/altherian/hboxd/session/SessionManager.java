@@ -25,7 +25,7 @@ import net.engio.mbassy.listener.Handler;
 
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._Client;
-import org.altherian.hbox.comm.output.event.EventOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxd.comm.io.factory.EventIoFactory;
@@ -129,7 +129,7 @@ public final class SessionManager implements _SessionManager {
    public void postEvent(_Event event) {
       Logger.track();
       
-      EventOutput evOut = EventIoFactory.get(hbox, event);
+      EventOut evOut = EventIoFactory.get(hbox, event);
       for (_Session sess : sessions.values()) {
          if (hbox.getSecurityManager().isAuthorized(sess.getUser(), event)) {
             sess.post(evOut);

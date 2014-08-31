@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.storage;
 
-import org.altherian.hbox.constant.StorageControllerSettings;
+import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxd.hypervisor.storage._RawMedium;
 import org.altherian.hboxd.hypervisor.storage._RawMediumAttachment;
@@ -117,7 +117,7 @@ public class VirtualboxStorageController implements _RawStorageController {
    
    @Override
    public String getSubType() {
-      return ((StringSetting) VBoxSettingManager.get(this, StorageControllerSettings.SubType)).getValue();
+      return ((StringSetting) VBoxSettingManager.get(this, StorageControllerAttribute.SubType)).getValue();
    }
    
    @Override
@@ -127,7 +127,7 @@ public class VirtualboxStorageController implements _RawStorageController {
    
    @Override
    public long getPortCount() {
-      return ((PositiveNumberSetting) VBoxSettingManager.get(this, StorageControllerSettings.PortCount)).getValue();
+      return ((PositiveNumberSetting) VBoxSettingManager.get(this, StorageControllerAttribute.PortCount)).getValue();
    }
    
    @Override

@@ -21,9 +21,9 @@
 
 package org.altherian.hboxd.comm.io.factory.event;
 
-import org.altherian.hbox.comm.output.SessionOutput;
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.session.SessionStateEventOutput;
+import org.altherian.hbox.comm.out.SessionOut;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.session.SessionStateEventOut;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.states.SessionStates;
@@ -40,10 +40,10 @@ public final class SessionEventIoFactory implements _EventIoFactory {
    }
    
    @Override
-   public EventOutput get(_Hyperbox hbox, _Event ev) {
+   public EventOut get(_Hyperbox hbox, _Event ev) {
       switch ((HyperboxEvents) ev.getEventId()) {
          case SessionState:
-            return new SessionStateEventOutput(ev.getTime(), ServerIoFactory.get(), ev.get(SessionOutput.class), ev.get(SessionStates.class));
+            return new SessionStateEventOut(ev.getTime(), ServerIoFactory.get(), ev.get(SessionOut.class), ev.get(SessionStates.class));
          default:
             return null;
       }

@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.event.store;
 
-import org.altherian.hbox.comm.output.StoreOutput;
+import org.altherian.hbox.comm.out.StoreOut;
 import org.altherian.hbox.event.Event;
 import org.altherian.hboxd.comm.io.factory.StoreIoFactory;
 import org.altherian.hboxd.store._Store;
@@ -34,7 +34,7 @@ public abstract class StoreEvent extends Event {
    }
    
    public String getStoreId() {
-      return get(StoreOutput.class).getId();
+      return get(StoreOut.class).getId();
    }
    
 }

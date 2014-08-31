@@ -22,9 +22,9 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.hypervisor.OsTypeOutput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.hypervisor.OsTypeOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.tool.logging.Logger;
 
@@ -32,12 +32,12 @@ import java.util.List;
 
 import javax.swing.SwingWorker;
 
-public class OsTypeListWorker extends SwingWorker<Void, OsTypeOutput> {
+public class OsTypeListWorker extends SwingWorker<Void, OsTypeOut> {
    
    private _OsTypeListReceiver recv;
-   private MachineOutput mOut;
+   private MachineOut mOut;
    
-   public OsTypeListWorker(_OsTypeListReceiver recv, MachineOutput mOut) {
+   public OsTypeListWorker(_OsTypeListReceiver recv, MachineOut mOut) {
       this.recv = recv;
       this.mOut = mOut;
    }
@@ -45,7 +45,7 @@ public class OsTypeListWorker extends SwingWorker<Void, OsTypeOutput> {
    @Override
    protected Void doInBackground() throws Exception {
       recv.loadingStarted();
-      for (OsTypeOutput ostOut : Gui.getServer(mOut.getServerId()).listOsType(new MachineInput(mOut))) {
+      for (OsTypeOut ostOut : Gui.getServer(mOut.getServerId()).listOsType(new MachineIn(mOut))) {
          publish(ostOut);
       }
       
@@ -53,7 +53,7 @@ public class OsTypeListWorker extends SwingWorker<Void, OsTypeOutput> {
    }
    
    @Override
-   protected void process(List<OsTypeOutput> ostOutList) {
+   protected void process(List<OsTypeOut> ostOutList) {
       recv.add(ostOutList);
    }
    
@@ -69,7 +69,7 @@ public class OsTypeListWorker extends SwingWorker<Void, OsTypeOutput> {
       }
    }
    
-   public static void run(_OsTypeListReceiver recv, MachineOutput mOut) {
+   public static void run(_OsTypeListReceiver recv, MachineOut mOut) {
       new OsTypeListWorker(recv, mOut).execute();
    }
    

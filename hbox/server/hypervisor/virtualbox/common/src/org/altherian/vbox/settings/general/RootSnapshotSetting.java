@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.general;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class RootSnapshotSetting extends StringSetting {
    
    public RootSnapshotSetting(String uuid) {
-      super(MachineAttributes.RootSnapshotUuid, uuid);
+      super(MachineAttribute.RootSnapshotUuid, uuid);
    }
    
 }

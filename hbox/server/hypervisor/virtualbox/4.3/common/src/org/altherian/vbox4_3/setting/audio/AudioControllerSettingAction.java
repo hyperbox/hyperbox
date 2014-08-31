@@ -22,7 +22,7 @@
 package org.altherian.vbox4_3.setting.audio;
 
 import org.altherian.hbox.constant.AudioController;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.audio.AudioControllerSetting;
@@ -42,7 +42,7 @@ public final class AudioControllerSettingAction implements _MachineSettingAction
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.AudioController.toString();
+      return MachineAttribute.AudioController.toString();
    }
    
    @Override

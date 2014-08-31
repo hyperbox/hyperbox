@@ -26,10 +26,10 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.StorageControllerInput;
-import org.altherian.hbox.comm.input.StorageDeviceAttachmentInput;
-import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.StorageControllerIn;
+import org.altherian.hbox.comm.in.StorageDeviceAttachmentIn;
+import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
 import org.altherian.hboxd.comm.io.factory.MediumAttachmentIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
@@ -53,13 +53,13 @@ public final class MediumAttachmentGetAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      MachineInput mIn = request.get(MachineInput.class);
-      StorageControllerInput scIn = request.get(StorageControllerInput.class);
-      StorageDeviceAttachmentInput sdaIn = request.get(StorageDeviceAttachmentInput.class);
+      MachineIn mIn = request.get(MachineIn.class);
+      StorageControllerIn scIn = request.get(StorageControllerIn.class);
+      StorageDeviceAttachmentIn sdaIn = request.get(StorageDeviceAttachmentIn.class);
       
       _RawMediumAttachment rawMat = hbox.getHypervisor().getMachine(mIn.getUuid()).getStorageController(scIn.getId())
             .getMediumAttachment(sdaIn.getPortId(), sdaIn.getDeviceId());
-      StorageDeviceAttachmentOutput sdaOut = MediumAttachmentIoFactory.get(rawMat);
+      StorageDeviceAttachmentOut sdaOut = MediumAttachmentIoFactory.get(rawMat);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, sdaOut));
    }
    

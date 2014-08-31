@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.virtual;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.virtual.HwVirtExSetting;
@@ -40,7 +40,7 @@ public class HwVirtExSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.HwVirtEx.toString();
+      return MachineAttribute.HwVirtEx.toString();
    }
    
    @Override

@@ -22,7 +22,7 @@
 
 package org.altherian.hboxc.server;
 
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hboxc.state.ConnectionState;
 
 public interface _Server extends _ServerReader, _ServerWriter {
@@ -34,7 +34,7 @@ public interface _Server extends _ServerReader, _ServerWriter {
    
    public ConnectionState getState();
    
-   public void connect(String address, String backendId, UserInput usrIn);
+   public void connect(String address, String backendId, UserIn usrIn);
    
    public void disconnect();
    

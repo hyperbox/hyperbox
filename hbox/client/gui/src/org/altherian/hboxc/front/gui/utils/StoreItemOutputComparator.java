@@ -22,14 +22,14 @@
 
 package org.altherian.hboxc.front.gui.utils;
 
-import org.altherian.hbox.comm.output.StoreItemOutput;
+import org.altherian.hbox.comm.out.StoreItemOut;
 
 import java.util.Comparator;
 
-public class StoreItemOutputComparator implements Comparator<StoreItemOutput> {
+public class StoreItemOutputComparator implements Comparator<StoreItemOut> {
    
    @Override
-   public int compare(StoreItemOutput obj1, StoreItemOutput obj2) {
+   public int compare(StoreItemOut obj1, StoreItemOut obj2) {
       return obj1.getName().compareToIgnoreCase(obj2.getName());
    }
    

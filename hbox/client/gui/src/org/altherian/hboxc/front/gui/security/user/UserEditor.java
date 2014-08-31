@@ -24,8 +24,8 @@ package org.altherian.hboxc.front.gui.security.user;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.UserInput;
-import org.altherian.hbox.comm.output.security.UserOutput;
+import org.altherian.hbox.comm.in.UserIn;
+import org.altherian.hbox.comm.out.security.UserOut;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.front.gui._Cancelable;
 import org.altherian.hboxc.front.gui._Saveable;
@@ -63,8 +63,8 @@ public class UserEditor implements _Saveable, _Cancelable {
    
    private JDialog dialog;
    
-   private UserInput usrIn;
-   private UserOutput usrOut;
+   private UserIn usrIn;
+   private UserOut usrOut;
    
    public UserEditor() {
       permEditor = new UserPermissionEditor();
@@ -103,7 +103,7 @@ public class UserEditor implements _Saveable, _Cancelable {
       dialog.add(buttonPanel, "span 2, center, bottom");
    }
    
-   public UserInput create() {
+   public UserIn create() {
       Logger.track();
       
       dialog.setTitle("Create new User");
@@ -112,7 +112,7 @@ public class UserEditor implements _Saveable, _Cancelable {
       return usrIn;
    }
    
-   public UserInput edit(String serverId, UserOutput usrOut) {
+   public UserIn edit(String serverId, UserOut usrOut) {
       Logger.track();
       
       dialog.setTitle("Editing user " + usrOut.getDomainLogonName());
@@ -127,13 +127,13 @@ public class UserEditor implements _Saveable, _Cancelable {
       return usrIn;
    }
    
-   public static UserInput getInput() {
+   public static UserIn getInput() {
       Logger.track();
       
       return new UserEditor().create();
    }
    
-   public static UserInput getInput(String serverId, UserOutput usrOut) {
+   public static UserIn getInput(String serverId, UserOut usrOut) {
       Logger.track();
       
       return new UserEditor().edit(serverId, usrOut);
@@ -166,10 +166,10 @@ public class UserEditor implements _Saveable, _Cancelable {
       Logger.track();
       
       if (usrOut != null) {
-         usrIn = new UserInput(usrOut.getId());
+         usrIn = new UserIn(usrOut.getId());
          permEditor.save();
       } else {
-         usrIn = new UserInput();
+         usrIn = new UserIn();
          
          if (!domainValue.getText().isEmpty()) {
             usrIn.setDomain(domainValue.getText());

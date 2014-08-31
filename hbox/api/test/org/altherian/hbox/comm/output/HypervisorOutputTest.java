@@ -25,11 +25,11 @@ package org.altherian.hbox.comm.output;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
-import org.altherian.hbox.comm.output.hypervisor.HypervisorOutput;
+import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
 
 public class HypervisorOutputTest {
    
-   public static void validateFull(HypervisorOutput hypOut) {
+   public static void validateFull(HypervisorOut hypOut) {
       assertFalse(hypOut.getId().isEmpty());
       assertNotNull(hypOut.getVendor());
       assertNotNull(hypOut.getProduct());

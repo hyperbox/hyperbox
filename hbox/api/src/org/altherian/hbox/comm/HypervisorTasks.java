@@ -21,15 +21,15 @@
 
 package org.altherian.hbox.comm;
 
-import org.altherian.hbox.comm.input.GuestNetworkInterfaceInput;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.NetworkInterfaceInput;
-import org.altherian.hbox.comm.input.StorageControllerInput;
-import org.altherian.hbox.comm.input.StoreItemInput;
-import org.altherian.hbox.comm.output.hypervisor.GuestNetworkInterfaceOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
-import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
+import org.altherian.hbox.comm.in.GuestNetworkInterfaceIn;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.NetworkInterfaceIn;
+import org.altherian.hbox.comm.in.StorageControllerIn;
+import org.altherian.hbox.comm.in.StoreItemIn;
+import org.altherian.hbox.comm.out.hypervisor.GuestNetworkInterfaceOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
+import org.altherian.hbox.comm.out.storage.StorageControllerOut;
 
 // TODO document required data (javadoc-like) and returned data
 /**
@@ -44,7 +44,7 @@ public enum HypervisorTasks {
     * Get the list of registered VMs
     * <p>
     * Request Object : None<br/>
-    * Answer Object : {@link MachineOutput}<br/>
+    * Answer Object : {@link MachineOut}<br/>
     * Answer Type : Multi
     * </p>
     */
@@ -52,12 +52,12 @@ public enum HypervisorTasks {
    
    MachineLock,
    MachineUnlock,
-
+   
    /**
     * Get the details of a VM
     * <p>
-    * Request Object : {@link MachineInput}<br/>
-    * Answer Object : {@link MachineOutput}<br/>
+    * Request Object : {@link MachineIn}<br/>
+    * Answer Object : {@link MachineOut}<br/>
     * Answer Type : Single
     * </p>
     */
@@ -66,7 +66,7 @@ public enum HypervisorTasks {
    /**
     * Request PowerOn of a PoweredOff VM
     * <p>
-    * Request Object : {@link MachineInput}<br/>
+    * Request Object : {@link MachineIn}<br/>
     * Answer Object : None<br/>
     * Answer Type : Single
     * </p>
@@ -76,7 +76,7 @@ public enum HypervisorTasks {
    /**
     * Request PowerOff on a PoweredOn or Paused VM
     * <p>
-    * Request Object : {@link MachineInput}<br/>
+    * Request Object : {@link MachineIn}<br/>
     * Answer Object : None<br/>
     * Answer Type : Single
     * </p>
@@ -86,7 +86,7 @@ public enum HypervisorTasks {
    /**
     * Request Pause of a Running VM
     * <p>
-    * Request Object : {@link MachineInput}<br/>
+    * Request Object : {@link MachineIn}<br/>
     * Answer Object : None<br/>
     * Answer Type : Single
     * </p>
@@ -96,7 +96,7 @@ public enum HypervisorTasks {
    /**
     * Request Resume of a paused VM
     * <p>
-    * Request Object : {@link MachineInput}<br/>
+    * Request Object : {@link MachineIn}<br/>
     * Answer Object : None<br/>
     * Answer Type : Single
     * </p>
@@ -106,7 +106,7 @@ public enum HypervisorTasks {
    /**
     * Request to save the state of a Running VM
     * <p>
-    * Request Object : {@link MachineInput}<br/>
+    * Request Object : {@link MachineIn}<br/>
     * Answer Object : None<br/>
     * Answer Type : Single
     * </p>
@@ -116,7 +116,7 @@ public enum HypervisorTasks {
    /**
     * Request to reset a PoweredOn VM
     * <p>
-    * Request Object : {@link MachineInput}<br/>
+    * Request Object : {@link MachineIn}<br/>
     * Answer Object : None<br/>
     * Answer Type : Single
     * </p>
@@ -126,7 +126,7 @@ public enum HypervisorTasks {
    /**
     * Request to send a Sleep Button ACPI event (Press Sleep Button) on a Running VM
     * <p>
-    * Request Object : {@link MachineInput}<br/>
+    * Request Object : {@link MachineIn}<br/>
     * Answer Object : None<br/>
     * Answer Type : Single
     * </p>
@@ -136,7 +136,7 @@ public enum HypervisorTasks {
    /**
     * Request to send a Power Button ACPI event (Press Sleep Button) on a Running VM
     * <p>
-    * Request Object : {@link MachineInput}<br/>
+    * Request Object : {@link MachineIn}<br/>
     * Answer Object : None<br/>
     * Answer Type : Single
     * </p>
@@ -146,7 +146,7 @@ public enum HypervisorTasks {
    /**
     * Request to modify settings of a VM
     * <p>
-    * Request Object : {@link MachineInput}<br/>
+    * Request Object : {@link MachineIn}<br/>
     * Answer Object : None<br/>
     * Answer Type : Single
     * </p>
@@ -158,8 +158,8 @@ public enum HypervisorTasks {
     * This will Answer with a MachineIO.<br/>
     * If a VM with specific settings needs to be created, {@link #MachineCreate} then {@link #MachineModify} needs to be called.
     * <p>
-    * Request Object : {@link MachineInput}<br/>
-    * Answer Object : {@link MachineOutput}<br/>
+    * Request Object : {@link MachineIn}<br/>
+    * Answer Object : {@link MachineOut}<br/>
     * Answer Type : Single
     * </p>
     */
@@ -168,8 +168,8 @@ public enum HypervisorTasks {
    /**
     * Register a VM given its machine description file
     * <p>
-    * Request Object : {@link StoreItemInput}<br/>
-    * Answer Object : {@link MachineOutput}<br/>
+    * Request Object : {@link StoreItemIn}<br/>
+    * Answer Object : {@link MachineOut}<br/>
     * Answer Type : Single
     * </p>
     */
@@ -178,7 +178,7 @@ public enum HypervisorTasks {
    /**
     * Unregister the VM, without deleting any file
     * <p>
-    * Request Object : {@link MachineInput}<br/>
+    * Request Object : {@link MachineIn}<br/>
     * Answer Object : None<br/>
     * Answer Type : Single
     * </p>
@@ -188,8 +188,8 @@ public enum HypervisorTasks {
    /**
     * Unregister and delete all the VM files
     * <p>
-    * Request Object : {@link MachineInput}<br/>
-    * Answer Object : {@link MachineOutput}<br/>
+    * Request Object : {@link MachineIn}<br/>
+    * Answer Object : {@link MachineOut}<br/>
     * Answer Type : Single
     * </p>
     */
@@ -202,8 +202,8 @@ public enum HypervisorTasks {
    /**
     * Get the details of a Network Interface
     * <p>
-    * Request Object : {@link NetworkInterfaceInput}<br/>
-    * Answer Object : {@link NetworkInterfaceOutput}<br/>
+    * Request Object : {@link NetworkInterfaceIn}<br/>
+    * Answer Object : {@link NetworkInterfaceOut}<br/>
     * Answer Type : Single
     * </p>
     */
@@ -219,8 +219,8 @@ public enum HypervisorTasks {
    /**
     * Get the details of a Storage Controller
     * <p>
-    * Request Object : {@link StorageControllerInput}<br/>
-    * Answer Object : {@link StorageControllerOutput}<br/>
+    * Request Object : {@link StorageControllerIn}<br/>
+    * Answer Object : {@link StorageControllerOut}<br/>
     * Answer Type : Single
     * </p>
     */
@@ -244,8 +244,8 @@ public enum HypervisorTasks {
    GuestNetworkInterfaceGet,
    /**
     * <p>
-    * Request Objects : {@link MachineInput}, {@link GuestNetworkInterfaceInput}<br/>
-    * Answer Object : {@link GuestNetworkInterfaceOutput}<br/>
+    * Request Objects : {@link MachineIn}, {@link GuestNetworkInterfaceIn}<br/>
+    * Answer Object : {@link GuestNetworkInterfaceOut}<br/>
     * Answer Type : Single
     * </p>
     */
@@ -262,7 +262,7 @@ public enum HypervisorTasks {
    /**
     * Mount a medium to a storage attachment
     * <p>
-    * Request Objects: MachineInput, StorageDeviceAttachmentInput, MediumInput<br/>
+    * Request Objects: MachineIn, StorageDeviceAttachmentInput, MediumInput<br/>
     * Answer Object : none<br/>
     * Answer Type : Single
     * </p>

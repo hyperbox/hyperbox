@@ -25,7 +25,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 
 public class MachineTest {
    
@@ -40,7 +40,7 @@ public class MachineTest {
    
    public static void validateFull(_Machine vm) {
       validateSimple(vm);
-      assertFalse(vm.getSetting(MachineAttributes.OsType.toString()).getString().isEmpty());
+      assertFalse(vm.getSetting(MachineAttribute.OsType.toString()).getString().isEmpty());
       for (_StorageController sto : vm.listStorageControllers()) {
          StorageControllerTest.validateFull(sto);
       }

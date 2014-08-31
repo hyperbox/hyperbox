@@ -25,8 +25,8 @@ import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.HypervisorTasks;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.machine.MachineSnapshotDataChangedEvent;
 import org.altherian.hboxc.event.machine.MachineStateChangedEvent;
@@ -91,7 +91,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    private boolean hasSnap;
    private String currentSnapUuid;
    private String rootSnapUuid;
-   private Map<String, SnapshotOutput> snaps;
+   private Map<String, SnapshotOut> snaps;
    
    public SnapshotManagementView() {
       Logger.track();
@@ -135,11 +135,11 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       FrontEventManager.register(this);
    }
    
-   private boolean isSame(MachineOutput mOut) {
+   private boolean isSame(MachineOut mOut) {
       return (srvId != null) && (vmUuid != null) && srvId.equals(mOut.getServerId()) && vmUuid.equals(mOut.getUuid());
    }
    
-   private void add(SnapshotOutput snapOut) {
+   private void add(SnapshotOut snapOut) {
       Logger.track();
       
       if (!snaps.containsKey(snapOut.getUuid())) {
@@ -150,7 +150,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    private void process(String snapUuid) {
       Logger.track();
       
-      SnapshotOutput snapOut = Gui.getServer(srvId).getSnapshot(vmUuid, snapUuid);
+      SnapshotOut snapOut = Gui.getServer(srvId).getSnapshot(vmUuid, snapUuid);
       if (snapOut != null) {
          add(snapOut);
          for (String childUuid : snapOut.getChildrenUuid()) {
@@ -184,7 +184,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       }
    }
    
-   public void show(MachineOutput newVmOut) {
+   public void show(MachineOut newVmOut) {
       Logger.track();
       
       if ((newVmOut != null) && ((vmUuid == null) || !vmUuid.equals(newVmOut.getUuid()))) {
@@ -216,7 +216,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       hasSnap = false;
       currentSnapUuid = null;
       rootSnapUuid = null;
-      snaps = new HashMap<String, SnapshotOutput>();
+      snaps = new HashMap<String, SnapshotOut>();
    }
    
    private void refreshData() {
@@ -224,7 +224,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       
       clearData();
       
-      MachineOutput mOut = Gui.getServer(srvId).getMachine(vmUuid);
+      MachineOut mOut = Gui.getServer(srvId).getMachine(vmUuid);
       currentState = mOut.getState();
       hasSnap = mOut.hasSnapshots();
       if (hasSnap) {
@@ -350,7 +350,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
                delSnapButton.setEnabled(false);
                infoSnapButton.setEnabled(false);
             }
-            if (node.getUserObject() instanceof SnapshotOutput) {
+            if (node.getUserObject() instanceof SnapshotOut) {
                takeSnapButton.setEnabled(false);
                restoreSnapButton.setEnabled(true);
                delSnapButton.setEnabled(true);
@@ -369,8 +369,8 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
          DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
          super.getTreeCellRendererComponent(rawTree, value, isSelected, isExpanded, isLeaf, row, hasFocus);
          
-         if (node.getUserObject() instanceof SnapshotOutput) {
-            SnapshotOutput snapOut = (SnapshotOutput) node.getUserObject();
+         if (node.getUserObject() instanceof SnapshotOut) {
+            SnapshotOut snapOut = (SnapshotOut) node.getUserObject();
             setText(snapOut.getName());
             setIcon(IconBuilder.getSnapshot(snapOut));
          }
@@ -388,7 +388,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       public void mouseClicked(MouseEvent e) {
          DefaultMutableTreeNode node = ((DefaultMutableTreeNode) tree.getLastSelectedPathComponent());
          if (node != null) {
-            if ((e.getClickCount() == 2) && (node.getUserObject() instanceof SnapshotOutput)) {
+            if ((e.getClickCount() == 2) && (node.getUserObject() instanceof SnapshotOut)) {
                // TODO SnapshotModifyDialog.show(mOut, ((SnapshotOutput) node.getUserObject()));
             }
          } else {
@@ -399,10 +399,10 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    }
    
    @Override
-   public List<SnapshotOutput> getSelection() {
-      List<SnapshotOutput> snapOutList = new ArrayList<SnapshotOutput>();
+   public List<SnapshotOut> getSelection() {
+      List<SnapshotOut> snapOutList = new ArrayList<SnapshotOut>();
       for (TreePath path : tree.getSelectionPaths()) {
-         snapOutList.add(((SnapshotOutput) ((DefaultMutableTreeNode) path.getLastPathComponent()).getUserObject()));
+         snapOutList.add(((SnapshotOut) ((DefaultMutableTreeNode) path.getLastPathComponent()).getUserObject()));
       }
       return snapOutList;
    }
@@ -454,7 +454,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    }
 
    @Override
-   public MachineOutput getMachine() {
+   public MachineOut getMachine() {
       return Gui.getServer(srvId).getMachine(vmUuid);
    }
    

@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.machine;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.general.NameSetting;
@@ -39,7 +39,7 @@ public class NameSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.Name.toString();
+      return MachineAttribute.Name.toString();
    }
    
    @Override
