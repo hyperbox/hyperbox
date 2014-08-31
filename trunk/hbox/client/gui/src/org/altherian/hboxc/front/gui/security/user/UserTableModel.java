@@ -22,17 +22,17 @@
 
 package org.altherian.hboxc.front.gui.security.user;
 
-import org.altherian.hbox.comm.output.security.UserOutput;
-import org.altherian.hbox.constant.UserAttributes;
+import org.altherian.hbox.comm.out.security.UserOut;
+import org.altherian.hbox.constant.UserAttribute;
 import org.altherian.hboxc.front.gui.utils.ObjectOutputTableModel;
 
 @SuppressWarnings("serial")
-public class UserTableModel extends ObjectOutputTableModel<UserOutput> {
+public class UserTableModel extends ObjectOutputTableModel<UserOut> {
    
    @Override
    protected void addColumns() {
-      addColumn("ID", UserAttributes.Id);
-      addColumn("Username", UserAttributes.Username);
+      addColumn("ID", UserAttribute.Id);
+      addColumn("Username", UserAttribute.Username);
    }
    
 }

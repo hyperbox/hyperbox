@@ -24,16 +24,16 @@ package org.altherian.hbox.comm.output;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
-import org.altherian.hbox.comm.output.storage.MediumOutput;
+import org.altherian.hbox.comm.out.storage.MediumOut;
 
 public final class MediumOutputTest {
    
-   public static void validateSimple(MediumOutput medOut) {
+   public static void validateSimple(MediumOut medOut) {
       assertFalse(medOut.getId().isEmpty());
       assertFalse(medOut.getUuid().isEmpty());
    }
    
-   public static void validateFull(MediumOutput medOut) {
+   public static void validateFull(MediumOut medOut) {
       validateSimple(medOut);
       assertFalse(medOut.getLocation().isEmpty());
       // TODO add isBase()

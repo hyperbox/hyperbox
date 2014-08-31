@@ -24,8 +24,8 @@ package org.altherian.hboxd.controller;
 import org.altherian.hbox.Configuration;
 import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm._Client;
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.server.ServerShutdownEventOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.server.ServerShutdownEventOut;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxd.HBoxServer;
@@ -41,6 +41,7 @@ import org.altherian.hboxd.session.SessionContext;
 import org.altherian.tool.logging.LogLevel;
 import org.altherian.tool.logging.Logger;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,6 +54,19 @@ public final class Controller implements _Controller {
    private List<_Front> fronts = new ArrayList<_Front>();
    
    private Thread shutdownHook;
+   
+   static {
+      try {
+         if (new File(Hyperbox.getConfigFilePath()).exists()) {
+            Configuration.init(Hyperbox.getConfigFilePath());
+         } else {
+            Logger.info("Default config file does not exist, skipping: " + Hyperbox.getConfigFilePath());
+         }
+      } catch (HyperboxException e) {
+         Logger.error(e);
+         System.exit(1);
+      }
+   }
    
    public static String getHeader() {
       StringBuilder header = new StringBuilder();
@@ -114,7 +128,7 @@ public final class Controller implements _Controller {
          }
       };
       Runtime.getRuntime().addShutdownHook(shutdownHook);
-
+      
       try {
          Long startTime = System.currentTimeMillis();
          
@@ -130,8 +144,6 @@ public final class Controller implements _Controller {
          
          SecurityContext.init();
          SecurityContext.addAdminThread(shutdownHook);
-         
-         Configuration.init();
          
          ShutdownAction.setController(this);
          
@@ -184,7 +196,7 @@ public final class Controller implements _Controller {
       Logger.track();
       
       Logger.info("Stopping front-ends");
-      EventOutput evOut = new ServerShutdownEventOutput(new Date(), ServerIoFactory.get(model.getServerManager().getServer()));
+      EventOut evOut = new ServerShutdownEventOut(new Date(), ServerIoFactory.get(model.getServerManager().getServer()));
       for (_Front f : fronts) {
          f.broadcast(evOut);
          f.stop();
@@ -221,7 +233,7 @@ public final class Controller implements _Controller {
       }
       
       @Override
-      public void post(EventOutput evOut) {
+      public void post(EventOut evOut) {
          // stub
       }
       

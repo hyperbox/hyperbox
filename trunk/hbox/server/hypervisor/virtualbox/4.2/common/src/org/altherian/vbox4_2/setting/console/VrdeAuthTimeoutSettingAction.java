@@ -22,7 +22,7 @@
 
 package org.altherian.vbox4_2.setting.console;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox4_2.setting._MachineSettingAction;
@@ -39,7 +39,7 @@ public class VrdeAuthTimeoutSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.VrdeAuthTimeout.getId();
+      return MachineAttribute.VrdeAuthTimeout.getId();
    }
    
    @Override
@@ -49,7 +49,7 @@ public class VrdeAuthTimeoutSettingAction implements _MachineSettingAction {
    
    @Override
    public _Setting get(IMachine machine) {
-      return new PositiveNumberSetting(MachineAttributes.VrdeAuthTimeout, machine.getVRDEServer().getAuthTimeout());
+      return new PositiveNumberSetting(MachineAttribute.VrdeAuthTimeout, machine.getVRDEServer().getAuthTimeout());
    }
    
 }

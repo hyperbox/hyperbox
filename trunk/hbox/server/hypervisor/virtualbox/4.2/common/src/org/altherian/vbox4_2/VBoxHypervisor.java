@@ -22,7 +22,7 @@
 package org.altherian.vbox4_2;
 
 import org.altherian.hbox.Configuration;
-import org.altherian.hbox.constant.EntityTypes;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hbox.data.Machine;
 import org.altherian.hbox.exception.FeatureNotImplementedException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
@@ -363,7 +363,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    }
    
    @Override
-   public _RawMedium getMedium(String filePath, EntityTypes mediumType) {
+   public _RawMedium getMedium(String filePath, Entity mediumType) {
       return getMedium(filePath, mediumType.toString());
    }
    
@@ -631,7 +631,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       if (AxStrings.isEmpty(path)) {
          return null;
       } else {
-         return getMedium(path, EntityTypes.DVD);
+         return getMedium(path, Entity.DVD);
       }
    }
    

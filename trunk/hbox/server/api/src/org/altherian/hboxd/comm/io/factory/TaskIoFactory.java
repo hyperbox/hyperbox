@@ -21,9 +21,9 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.output.ExceptionOutput;
-import org.altherian.hbox.comm.output.TaskOutput;
-import org.altherian.hbox.comm.output.security.UserOutput;
+import org.altherian.hbox.comm.out.ExceptionOut;
+import org.altherian.hbox.comm.out.TaskOut;
+import org.altherian.hbox.comm.out.security.UserOut;
 import org.altherian.hboxd.HBoxServer;
 import org.altherian.hboxd.task._Task;
 
@@ -33,15 +33,15 @@ public class TaskIoFactory {
       // will not be used
    }
    
-   public static TaskOutput get(_Task t) {
-      UserOutput uOut = UserIoFactory.get(t.getUser());
+   public static TaskOut get(_Task t) {
+      UserOut uOut = UserIoFactory.get(t.getUser());
       
-      ExceptionOutput eOut = null;
+      ExceptionOut eOut = null;
       if (t.getError() != null) {
          eOut = ExceptionIoFactory.get(t.getError());
       }
       
-      TaskOutput tOut = new TaskOutput(
+      TaskOut tOut = new TaskOut(
             HBoxServer.get().getId(),
             t.getId(),
             t.getRequest().getName(),

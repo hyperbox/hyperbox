@@ -21,13 +21,13 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.tool.logging.Logger;
 
 import javax.swing.SwingWorker;
 
-public class ServerGetWorker extends SwingWorker<ServerOutput, Void> {
+public class ServerGetWorker extends SwingWorker<ServerOut, Void> {
    
    private _ServerReceiver recv;
    private String srvId;
@@ -38,9 +38,9 @@ public class ServerGetWorker extends SwingWorker<ServerOutput, Void> {
    }
    
    @Override
-   protected ServerOutput doInBackground() throws Exception {
+   protected ServerOut doInBackground() throws Exception {
       recv.loadingStarted();
-      ServerOutput newSrvOut = Gui.getServerInfo(srvId);
+      ServerOut newSrvOut = Gui.getServerInfo(srvId);
       return newSrvOut;
    }
    
@@ -49,7 +49,7 @@ public class ServerGetWorker extends SwingWorker<ServerOutput, Void> {
       Logger.track();
       
       try {
-         ServerOutput srvOut = get();
+         ServerOut srvOut = get();
          recv.put(srvOut);
          recv.loadingFinished(true, null);
       } catch (Throwable e) {

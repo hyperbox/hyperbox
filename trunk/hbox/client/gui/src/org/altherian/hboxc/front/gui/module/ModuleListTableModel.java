@@ -21,11 +21,11 @@
 
 package org.altherian.hboxc.front.gui.module;
 
-import org.altherian.hbox.comm.output.ModuleOutput;
+import org.altherian.hbox.comm.out.ModuleOut;
 import org.altherian.hboxc.front.gui.utils.AbstractOutputListTableModel;
 
 @SuppressWarnings("serial")
-public class ModuleListTableModel extends AbstractOutputListTableModel<ModuleOutput> {
+public class ModuleListTableModel extends AbstractOutputListTableModel<ModuleOut> {
    
    private final String ID = "ID";
    private final String NAME = "Name";
@@ -43,7 +43,7 @@ public class ModuleListTableModel extends AbstractOutputListTableModel<ModuleOut
    }
    
    @Override
-   protected Object getValueAt(ModuleOutput obj, String columnName) {
+   protected Object getValueAt(ModuleOut obj, String columnName) {
       if (ID.equalsIgnoreCase(columnName)) {
          return obj.getId();
       }

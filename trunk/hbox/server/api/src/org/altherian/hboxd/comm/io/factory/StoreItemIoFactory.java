@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.output.StoreItemOutput;
+import org.altherian.hbox.comm.out.StoreItemOut;
 import org.altherian.hboxd.store._StoreItem;
 
 import java.util.ArrayList;
@@ -29,12 +29,12 @@ import java.util.List;
 
 public final class StoreItemIoFactory {
    
-   public static StoreItemOutput get(_StoreItem si) {
-      return new StoreItemOutput(si.getStore().getId(), si.getName(), si.getPath(), si.getSize(), si.isContainer());
+   public static StoreItemOut get(_StoreItem si) {
+      return new StoreItemOut(si.getStore().getId(), si.getName(), si.getPath(), si.getSize(), si.isContainer());
    }
    
-   public static List<StoreItemOutput> get(List<_StoreItem> siList) {
-      List<StoreItemOutput> siOutList = new ArrayList<StoreItemOutput>();
+   public static List<StoreItemOut> get(List<_StoreItem> siList) {
+      List<StoreItemOut> siOutList = new ArrayList<StoreItemOut>();
       for (_StoreItem si : siList) {
          siOutList.add(get(si));
       }

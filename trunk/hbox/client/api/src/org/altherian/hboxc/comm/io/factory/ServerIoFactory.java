@@ -25,8 +25,8 @@ package org.altherian.hboxc.comm.io.factory;
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.constant.ServerAttributes;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.constant.ServerAttribute;
 import org.altherian.hboxc.server._Server;
 
 import java.util.ArrayList;
@@ -35,20 +35,20 @@ import java.util.List;
 
 public class ServerIoFactory {
    
-   public static ServerOutput get(_Server srv) {
+   public static ServerOut get(_Server srv) {
       List<SettingIO> settings = new ArrayList<SettingIO>();
-      settings.add(new StringSettingIO(ServerAttributes.Name, srv.getName()));
-      settings.add(new StringSettingIO(ServerAttributes.Type, srv.getType()));
-      settings.add(new StringSettingIO(ServerAttributes.Version, srv.getVersion()));
-      settings.add(new BooleanSettingIO(ServerAttributes.IsHypervisorConnected, srv.isHypervisorConnected()));
-      settings.add(new StringSettingIO(ServerAttributes.NetProtocolVersion, srv.getProtocolVersion()));
-      settings.add(new StringSettingIO(ServerAttributes.LogLevel, srv.getLogLevel()));
-      ServerOutput srvOut = new ServerOutput(srv.getId(), settings);
+      settings.add(new StringSettingIO(ServerAttribute.Name, srv.getName()));
+      settings.add(new StringSettingIO(ServerAttribute.Type, srv.getType()));
+      settings.add(new StringSettingIO(ServerAttribute.Version, srv.getVersion()));
+      settings.add(new BooleanSettingIO(ServerAttribute.IsHypervisorConnected, srv.isHypervisorConnected()));
+      settings.add(new StringSettingIO(ServerAttribute.NetProtocolVersion, srv.getProtocolVersion()));
+      settings.add(new StringSettingIO(ServerAttribute.LogLevel, srv.getLogLevel()));
+      ServerOut srvOut = new ServerOut(srv.getId(), settings);
       return srvOut;
    }
    
-   public static List<ServerOutput> getList(Collection<_Server> objList) {
-      List<ServerOutput> listOut = new ArrayList<ServerOutput>();
+   public static List<ServerOut> getList(Collection<_Server> objList) {
+      List<ServerOut> listOut = new ArrayList<ServerOut>();
       for (_Server obj : objList) {
          listOut.add(get(obj));
       }

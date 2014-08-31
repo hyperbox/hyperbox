@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.storage;
 
-import org.altherian.hbox.constant.StorageControllerSettings;
+import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.storage.ControllerPortCountSetting;
@@ -39,7 +39,7 @@ public class ControllerPortCountSettingAction implements _StorageControllerSetti
    
    @Override
    public String getSettingName() {
-      return StorageControllerSettings.PortCount.toString();
+      return StorageControllerAttribute.PortCount.toString();
    }
    
    @Override

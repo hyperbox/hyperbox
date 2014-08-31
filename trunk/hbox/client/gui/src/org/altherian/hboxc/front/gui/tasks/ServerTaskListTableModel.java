@@ -22,12 +22,12 @@
 
 package org.altherian.hboxc.front.gui.tasks;
 
-import org.altherian.hbox.comm.output.TaskOutput;
+import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hboxc.front.gui.utils.AbstractOutputListTableModel;
 import org.altherian.tool.TimeFormater;
 
 @SuppressWarnings("serial")
-public class ServerTaskListTableModel extends AbstractOutputListTableModel<TaskOutput> {
+public class ServerTaskListTableModel extends AbstractOutputListTableModel<TaskOut> {
    
    private final String ID = "ID";
    private final String TASK = "Task";
@@ -50,7 +50,7 @@ public class ServerTaskListTableModel extends AbstractOutputListTableModel<TaskO
    }
    
    @Override
-   protected Object getValueAt(TaskOutput tOut, String columnLabel) {
+   protected Object getValueAt(TaskOut tOut, String columnLabel) {
       if (columnLabel == ID) {
          return tOut.getId();
       }

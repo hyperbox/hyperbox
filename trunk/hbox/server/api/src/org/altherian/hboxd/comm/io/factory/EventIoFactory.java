@@ -21,8 +21,8 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.UnknownEventOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.UnknownEventOut;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
@@ -57,16 +57,16 @@ public final class EventIoFactory {
       }
    }
    
-   private static EventOutput getUnknown(_Event ev) {
+   private static EventOut getUnknown(_Event ev) {
       Logger.debug("Creating Unknown Event for ID " + ev.getEventId() + " @ " + ev.getTime() + ": " + ev);
-      return new UnknownEventOutput(ev.getTime(), ev.getEventId(), ServerIoFactory.get(HBoxServer.get()));
+      return new UnknownEventOut(ev.getTime(), ev.getEventId(), ServerIoFactory.get(HBoxServer.get()));
    }
    
-   public static EventOutput get(_Hyperbox hbox, _Event ev) {
+   public static EventOut get(_Hyperbox hbox, _Event ev) {
       try {
          if (factories.containsKey(ev.getEventId())) {
             Logger.debug("Using " + factories.get(ev.getEventId()).getClass().getName() + " for " + ev.getEventId());
-            EventOutput evOut = factories.get(ev.getEventId()).get(hbox, ev);
+            EventOut evOut = factories.get(ev.getEventId()).get(hbox, ev);
             if (evOut != null) {
                return evOut;
             }
@@ -76,7 +76,7 @@ public final class EventIoFactory {
          Logger.exception(t);
       }
       
-      Logger.warning("No factory for Event ID " + ev.getEventId() + ", sending " + UnknownEventOutput.class.getName() + " instead");
+      Logger.warning("No factory for Event ID " + ev.getEventId() + ", sending " + UnknownEventOut.class.getName() + " instead");
       return getUnknown(ev);
    }
 }

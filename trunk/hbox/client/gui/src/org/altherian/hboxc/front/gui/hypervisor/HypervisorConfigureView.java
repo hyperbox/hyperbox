@@ -21,7 +21,7 @@
 
 package org.altherian.hboxc.front.gui.hypervisor;
 
-import org.altherian.hbox.comm.input.HypervisorInput;
+import org.altherian.hbox.comm.in.HypervisorIn;
 import org.altherian.hboxc.HyperboxClient;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.vbox.VBox4_2ConfigureView;
@@ -29,7 +29,7 @@ import org.altherian.hboxc.front.gui.vbox.VBox4_3ConfigureView;
 
 public class HypervisorConfigureView {
    
-   public static HypervisorInput getInput(String srvId) {
+   public static HypervisorIn getInput(String srvId) {
       String hypId = Gui.getServer(srvId).getHypervisor().getInfo().getId();
       // TODO make it generic
       if (hypId.toLowerCase().contains("vbox") && hypId.toLowerCase().contains("4.3")) {

@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.memory;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public class NestedPagingSetting extends BooleanSetting {
    
    public NestedPagingSetting(boolean isEnabled) {
-      super(MachineAttributes.NestedPaging, isEnabled);
+      super(MachineAttribute.NestedPaging, isEnabled);
    }
    
 }

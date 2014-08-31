@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.network;
 
-import org.altherian.hbox.constant.NetworkInterfaceSettings;
+import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public class NicCableConnectedSetting extends BooleanSetting {
    
    public NicCableConnectedSetting(boolean isConnected) {
-      super(NetworkInterfaceSettings.CableConnected, isConnected);
+      super(NetworkInterfaceAttribute.CableConnected, isConnected);
    }
    
 }

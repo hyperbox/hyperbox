@@ -23,11 +23,11 @@ package org.altherian.hboxc.front.gui.storage;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.StorageControllerInput;
-import org.altherian.hbox.comm.input.StorageControllerTypeInput;
+import org.altherian.hbox.comm.in.StorageControllerIn;
+import org.altherian.hbox.comm.in.StorageControllerTypeIn;
 import org.altherian.hbox.comm.io.BooleanSettingIO;
-import org.altherian.hbox.comm.output.storage.StorageControllerSubTypeOutput;
-import org.altherian.hbox.constant.StorageControllerSettings;
+import org.altherian.hbox.comm.out.storage.StorageControllerSubTypeOut;
+import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.tool.logging.Logger;
 
@@ -39,7 +39,7 @@ import javax.swing.JTextField;
 
 public final class StorageControllerViewer {
    
-   private StorageControllerInput scIn;
+   private StorageControllerIn scIn;
    
    private JLabel nameLabel;
    private JTextField nameField;
@@ -84,7 +84,7 @@ public final class StorageControllerViewer {
       return panel;
    }
    
-   public void display(String srvId, StorageControllerInput scIn) {
+   public void display(String srvId, StorageControllerIn scIn) {
       this.scIn = scIn;
       
       nameField.setEditable(true);
@@ -95,24 +95,24 @@ public final class StorageControllerViewer {
       boolean ioCache = false;
       
       name = scIn.getName();
-      scTypeId = scIn.getSetting(StorageControllerSettings.Type).getString();
+      scTypeId = scIn.getSetting(StorageControllerAttribute.Type).getString();
       
-      if (scIn.hasSetting(StorageControllerSettings.SubType)) {
-         scSubTypeId = scIn.getSetting(StorageControllerSettings.SubType).getString();
+      if (scIn.hasSetting(StorageControllerAttribute.SubType)) {
+         scSubTypeId = scIn.getSetting(StorageControllerAttribute.SubType).getString();
          Logger.debug("Selecting " + scSubTypeId + " subType");
       } else {
          Logger.debug("No SubType in the object");
       }
       
-      if (scIn.hasSetting(StorageControllerSettings.IoCache)) {
-         ioCache = scIn.getSetting(StorageControllerSettings.IoCache).getBoolean();
+      if (scIn.hasSetting(StorageControllerAttribute.IoCache)) {
+         ioCache = scIn.getSetting(StorageControllerAttribute.IoCache).getBoolean();
       } else {
          Logger.debug("No IoCache in the object");
       }
       
       subTypeBox.removeAllItems();
-      for (StorageControllerSubTypeOutput scstOut : Gui.getServer(srvId).listStorageControllerSubType(
-            new StorageControllerTypeInput(scTypeId))) {
+      for (StorageControllerSubTypeOut scstOut : Gui.getServer(srvId).listStorageControllerSubType(
+            new StorageControllerTypeIn(scTypeId))) {
          subTypeBox.addItem(scstOut.getId());
       }
       
@@ -124,7 +124,7 @@ public final class StorageControllerViewer {
    
    public void save() {
       scIn.setSubType(subTypeBox.getSelectedItem().toString());
-      scIn.setSetting(new BooleanSettingIO(StorageControllerSettings.IoCache, ioCacheBox.isSelected()));
+      scIn.setSetting(new BooleanSettingIO(StorageControllerAttribute.IoCache, ioCacheBox.isSelected()));
    }
    
 }

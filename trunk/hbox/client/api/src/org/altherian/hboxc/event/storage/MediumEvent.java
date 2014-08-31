@@ -21,18 +21,18 @@
 
 package org.altherian.hboxc.event.storage;
 
-import org.altherian.hbox.comm.output.storage.MediumOutput;
+import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hbox.event.Event;
 
 public abstract class MediumEvent extends Event {
    
-   public MediumEvent(Enum<?> s, MediumOutput medOut) {
+   public MediumEvent(Enum<?> s, MediumOut medOut) {
       super(s);
-      set(MediumOutput.class, medOut);
+      set(MediumOut.class, medOut);
    }
    
-   public MediumOutput getMedium() {
-      return get(MediumOutput.class);
+   public MediumOut getMedium() {
+      return get(MediumOut.class);
    }
    
    @Override

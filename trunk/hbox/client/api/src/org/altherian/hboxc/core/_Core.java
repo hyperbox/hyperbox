@@ -21,7 +21,7 @@
 
 package org.altherian.hboxc.core;
 
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.back._Backend;
 import org.altherian.hboxc.comm.input.ConnectorInput;
@@ -51,9 +51,9 @@ public interface _Core {
    
    public _Connector getConnector(String id);
    
-   public _Connector addConnector(ConnectorInput conIn, UserInput usrIn);
+   public _Connector addConnector(ConnectorInput conIn, UserIn usrIn);
    
-   public _Connector modifyConnector(ConnectorInput conIn, UserInput usrIn);
+   public _Connector modifyConnector(ConnectorInput conIn, UserIn usrIn);
    
    public _Connector connect(String id);
    

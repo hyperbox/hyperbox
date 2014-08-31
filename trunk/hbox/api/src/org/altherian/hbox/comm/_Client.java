@@ -21,7 +21,7 @@
 
 package org.altherian.hbox.comm;
 
-import org.altherian.hbox.comm.output.event.EventOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
 
 /**
  * Represent a client into the communication process.<br/>
@@ -49,6 +49,6 @@ public interface _Client extends _AnswerReceiver {
     * 
     * @param evOut The Event object to be send
     */
-   public void post(EventOutput evOut);
+   public void post(EventOut evOut);
    
 }

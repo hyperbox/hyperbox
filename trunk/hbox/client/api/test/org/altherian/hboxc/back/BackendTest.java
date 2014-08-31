@@ -30,16 +30,16 @@ import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.HypervisorTasks;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.MediumInput;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.input.TaskInput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.MediumIn;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.in.TaskIn;
+import org.altherian.hbox.comm.out.TaskOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.security.UserOut;
+import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hbox.comm.output.MachineOutputTest;
 import org.altherian.hbox.comm.output.MediumOutputTest;
-import org.altherian.hbox.comm.output.TaskOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.security.UserOutput;
-import org.altherian.hbox.comm.output.storage.MediumOutput;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.comm.utils.Transaction;
@@ -60,7 +60,7 @@ public abstract class BackendTest {
    
    private static _Backend backend;
    
-   public static void init(_Backend b, ServerInput srvIn) throws HyperboxException {
+   public static void init(_Backend b, ServerIn srvIn) throws HyperboxException {
       Logger.setLevel(LogLevel.Tracking);
       
       BackendTest.backend = b;
@@ -105,7 +105,7 @@ public abstract class BackendTest {
    @Test
    public void listVmTest() {
       String newUuid = UUID.randomUUID().toString();
-      MachineInput mIn = new MachineInput(newUuid);
+      MachineIn mIn = new MachineIn(newUuid);
       mIn.setName(Long.toString(System.currentTimeMillis()));
       
       Transaction t = new Transaction(backend, new Request(Command.VBOX, HypervisorTasks.MachineCreate, mIn));
@@ -119,8 +119,8 @@ public abstract class BackendTest {
       Queue<Answer> answers = t.getBody();
       
       for (Answer ans : answers) {
-         assertTrue(ans.has(MachineOutput.class));
-         MachineOutput mOut = ans.get(MachineOutput.class);
+         assertTrue(ans.has(MachineOut.class));
+         MachineOut mOut = ans.get(MachineOut.class);
          MachineOutputTest.validateSimple(mOut);
       }
    }
@@ -131,8 +131,8 @@ public abstract class BackendTest {
       assertTrue(t.sendAndWait());
       Queue<Answer> answers = t.getBody();
       for (Answer ans : answers) {
-         assertTrue(ans.has(UserOutput.class));
-         UserOutput objOut = ans.get(UserOutput.class);
+         assertTrue(ans.has(UserOut.class));
+         UserOut objOut = ans.get(UserOut.class);
          assertNotNull(objOut);
          assertFalse(objOut.getId().isEmpty());
          assertFalse(objOut.getUsername().isEmpty());
@@ -144,7 +144,7 @@ public abstract class BackendTest {
       Transaction t = null;
       
       String newUuid = UUID.randomUUID().toString();
-      MachineInput mIn = new MachineInput(newUuid);
+      MachineIn mIn = new MachineIn(newUuid);
       mIn.setName(Long.toString(System.currentTimeMillis()));
       
       t = new Transaction(backend, new Request(Command.VBOX, HypervisorTasks.MachineCreate, mIn));
@@ -158,7 +158,7 @@ public abstract class BackendTest {
       t = new Transaction(backend, new Request(Command.HBOX, HyperboxTasks.GuestShutdown, mIn));
       t.sendAndWait();
       assertFalse(t.getError(), t.hasFailed());
-      TaskOutput tOutFinal = t.extractItem(TaskOutput.class);
+      TaskOut tOutFinal = t.extractItem(TaskOut.class);
       assertNotNull(tOutFinal);
       
       try {
@@ -170,14 +170,14 @@ public abstract class BackendTest {
          Queue<Answer> answers = t.getBody();
          assertTrue(answers.size() >= 1);
          for (Answer ans : answers) {
-            assertTrue(ans.has(TaskOutput.class));
-            TaskOutput tOut = ans.get(TaskOutput.class);
+            assertTrue(ans.has(TaskOut.class));
+            TaskOut tOut = ans.get(TaskOut.class);
             assertNotNull("TaskOutput shouldn't be null", tOut);
             assertFalse(tOut.getId().isEmpty());
             assertNotNull(tOut.getUser());
          }
       } finally {
-         t = new Transaction(backend, new Request(Command.HBOX, HyperboxTasks.TaskCancel, new TaskInput(tOutFinal.getId())));
+         t = new Transaction(backend, new Request(Command.HBOX, HyperboxTasks.TaskCancel, new TaskIn(tOutFinal.getId())));
          t.sendAndWait();
          assertFalse(t.getError(), t.hasFailed());
       }
@@ -189,20 +189,20 @@ public abstract class BackendTest {
       t.sendAndWait();
       assertFalse(t.getError(), t.hasFailed());
       
-      List<MediumOutput> medOutList = t.extractItems(MediumOutput.class);
+      List<MediumOut> medOutList = t.extractItems(MediumOut.class);
       if (medOutList.isEmpty()) {
-         t = new Transaction(backend, new Request(Command.VBOX, HypervisorTasks.MediumGet, new MediumInput("/usr/share/VBoxGuestAdditions")));
+         t = new Transaction(backend, new Request(Command.VBOX, HypervisorTasks.MediumGet, new MediumIn("/usr/share/VBoxGuestAdditions")));
          t.sendAndWait();
          assertFalse(t.getError(), t.hasFailed());
-         MediumOutput newMedOut = t.extractItem(MediumOutput.class);
+         MediumOut newMedOut = t.extractItem(MediumOut.class);
          MediumOutputTest.validateFull(newMedOut);
       } else {
-         for (MediumOutput medOut : medOutList) {
+         for (MediumOut medOut : medOutList) {
             MediumOutputTest.validateSimple(medOut);
-            t = new Transaction(backend, new Request(Command.VBOX, HypervisorTasks.MediumGet, new MediumInput(medOut.getUuid())));
+            t = new Transaction(backend, new Request(Command.VBOX, HypervisorTasks.MediumGet, new MediumIn(medOut.getUuid())));
             t.sendAndWait();
             assertFalse(t.getError(), t.hasFailed());
-            MediumOutput newMedOut = t.extractItem(MediumOutput.class);
+            MediumOut newMedOut = t.extractItem(MediumOut.class);
             MediumOutputTest.validateFull(newMedOut);
          }
       }

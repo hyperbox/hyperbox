@@ -21,7 +21,7 @@
 
 package org.altherian.hboxc.core;
 
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.comm.input.ConnectorInput;
 import org.altherian.hboxc.comm.output.BackendOutput;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
@@ -43,9 +43,9 @@ public interface _CoreReader {
    
    public ConnectorOutput getConnectorForServer(String srvId);
 
-   public ServerOutput getServer(ConnectorInput conIn);
+   public ServerOut getServer(ConnectorInput conIn);
    
-   public ServerOutput getServerInfo(String id);
+   public ServerOut getServerInfo(String id);
    
    public _ServerReader getServerReader(String id);
    

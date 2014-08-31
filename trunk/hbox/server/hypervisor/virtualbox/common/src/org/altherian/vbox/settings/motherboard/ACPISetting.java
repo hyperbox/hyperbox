@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.motherboard;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public class ACPISetting extends BooleanSetting {
    
    public ACPISetting(boolean isEnabled) {
-      super(MachineAttributes.ACPI, isEnabled);
+      super(MachineAttribute.ACPI, isEnabled);
    }
    
 }

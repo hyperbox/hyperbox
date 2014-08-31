@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.setting.snapshot;
 
-import org.altherian.hbox.constant.SnapshotAttributes;
+import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.hbox.exception.ConfigurationException;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.snapshot.SnapshotIsOnlineSetting;
@@ -39,7 +39,7 @@ public class SnapshotIsOnlineSettingAction implements _SnapshotSettingAction {
    
    @Override
    public String getSettingName() {
-      return SnapshotAttributes.IsOnline.getId();
+      return SnapshotAttribute.IsOnline.getId();
    }
    
    @Override

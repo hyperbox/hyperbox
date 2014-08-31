@@ -24,15 +24,17 @@ package org.altherian.hbox.comm.output;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
+import org.altherian.hbox.comm.out.ServerOut;
+
 public class ServerOutputTest {
    
-   public static void validateSimple(ServerOutput srvOut) {
+   public static void validateSimple(ServerOut srvOut) {
       assertNotNull(srvOut);
       assertNotNull(srvOut.getId());
       assertFalse(srvOut.getId().isEmpty());
    }
    
-   public static void validateFull(ServerOutput srvOut) {
+   public static void validateFull(ServerOut srvOut) {
       assertNotNull(srvOut.getType());
       assertFalse(srvOut.getType().isEmpty());
       assertNotNull(srvOut.getVersion());

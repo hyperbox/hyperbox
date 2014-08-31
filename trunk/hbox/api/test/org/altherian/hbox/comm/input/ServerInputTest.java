@@ -24,16 +24,18 @@ package org.altherian.hbox.comm.input;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
+import org.altherian.hbox.comm.in.ServerIn;
+
 import org.junit.Test;
 
 public class ServerInputTest {
    
    @Test
    public void basicTest() {
-      ServerInput srvIn = new ServerInput();
+      ServerIn srvIn = new ServerIn();
       assertNotNull(srvIn.getId());
       
-      srvIn = new ServerInput("test");
+      srvIn = new ServerIn("test");
       assertFalse(srvIn.getId().isEmpty());
       
    }

@@ -24,9 +24,9 @@ package org.altherian.hboxc.front.gui.hypervisor;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.HypervisorInput;
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.hypervisor.HypervisorLoaderOutput;
+import org.altherian.hbox.comm.in.HypervisorIn;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.hypervisor.HypervisorLoaderOut;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Cancelable;
@@ -44,7 +44,7 @@ import javax.swing.JTextField;
 
 public class HypervisorConnectView implements _Saveable, _Cancelable {
    
-   private ServerOutput srvOut;
+   private ServerOut srvOut;
    
    private JDialog dialog;
    
@@ -57,9 +57,9 @@ public class HypervisorConnectView implements _Saveable, _Cancelable {
    private JButton connectButton;
    private JButton cancelButton;
    
-   private HypervisorInput hypIn;
+   private HypervisorIn hypIn;
    
-   public HypervisorConnectView(ServerOutput srvOut) {
+   public HypervisorConnectView(ServerOut srvOut) {
       this.srvOut = srvOut;
       
       loaderLabel = new JLabel("Connector ID");
@@ -88,7 +88,7 @@ public class HypervisorConnectView implements _Saveable, _Cancelable {
    }
    
    public void show() {
-      for (HypervisorLoaderOutput hypOut : Gui.getServer(srvOut).listHypervisors()) {
+      for (HypervisorLoaderOut hypOut : Gui.getServer(srvOut).listHypervisors()) {
          loaderData.addItem(hypOut);
       }
       dialog.pack();
@@ -107,18 +107,18 @@ public class HypervisorConnectView implements _Saveable, _Cancelable {
    
    @Override
    public void save() throws HyperboxException {
-      hypIn = new HypervisorInput(((HypervisorLoaderOutput) loaderData.getSelectedItem()).getHypervisorId());
+      hypIn = new HypervisorIn(((HypervisorLoaderOut) loaderData.getSelectedItem()).getHypervisorId());
       hypIn.setConnectionOptions(optionsData.getText());
       hypIn.setAutoConnect(true);
       hide();
    }
    
-   public HypervisorInput getUserInput() {
+   public HypervisorIn getUserInput() {
       show();
       return hypIn;
    }
    
-   public static HypervisorInput getInput(ServerOutput srvOut) {
+   public static HypervisorIn getInput(ServerOut srvOut) {
       return new HypervisorConnectView(srvOut).getUserInput();
    }
    

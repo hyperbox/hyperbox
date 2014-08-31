@@ -27,7 +27,7 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.output.hypervisor.HypervisorOutput;
+import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
 import org.altherian.hboxd.comm.io.factory.HypervisorIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.AbstractHyperboxMultiTaskAction;
@@ -50,7 +50,7 @@ public class HypervisorGetCurrentAction extends AbstractHyperboxMultiTaskAction 
    
    @Override
    public void run(Request request, _Hyperbox modules) {
-      HypervisorOutput hypOut = HypervisorIoFactory.getOut(modules.getServer().getHypervisor());
+      HypervisorOut hypOut = HypervisorIoFactory.getOut(modules.getServer().getHypervisor());
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, hypOut));
    }
    

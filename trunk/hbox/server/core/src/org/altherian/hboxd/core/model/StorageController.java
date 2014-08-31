@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.core.model;
 
-import org.altherian.hbox.constant.EntityTypes;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event.storage.StorageAttachmentAddedEvent;
 import org.altherian.hboxd.event.storage.StorageAttachmentModifiedEvent;
@@ -55,8 +55,8 @@ public class StorageController implements _StorageController {
    }
    
    @Override
-   public EntityTypes getType() {
-      return EntityTypes.StorageController;
+   public Entity getType() {
+      return Entity.StorageController;
    }
    
    @Override

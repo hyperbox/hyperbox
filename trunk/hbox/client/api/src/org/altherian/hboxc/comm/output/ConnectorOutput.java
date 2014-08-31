@@ -23,26 +23,26 @@
 package org.altherian.hboxc.comm.output;
 
 import org.altherian.hbox.comm.io.SettingIO;
-import org.altherian.hbox.comm.output.ObjectOutput;
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.out.ObjectOut;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hboxc.constant.ClientEntity;
 import org.altherian.hboxc.constant.ConnectorAttributes;
 import org.altherian.hboxc.state.ConnectionState;
 
 import java.util.Collection;
 
-public class ConnectorOutput extends ObjectOutput {
+public class ConnectorOutput extends ObjectOut {
    
    protected ConnectorOutput() {
-      super();
       // do not use
    }
    
    public ConnectorOutput(String id) {
-      super(id);
+      super(ClientEntity.Connector, id);
    }
    
    public ConnectorOutput(String id, Collection<SettingIO> settings) {
-      super(id, settings);
+      super(ClientEntity.Connector, id, settings);
    }
    
    public String getLabel() {
@@ -69,12 +69,12 @@ public class ConnectorOutput extends ObjectOutput {
       return getSetting(ConnectorAttributes.Username).getString();
    }
    
-   public ServerOutput getServer() {
-      return (ServerOutput) getSetting(ConnectorAttributes.Server).getRawValue();
+   public ServerOut getServer() {
+      return (ServerOut) getSetting(ConnectorAttributes.Server).getRawValue();
    }
    
    public String getServerId() {
       return getSetting(ConnectorAttributes.ServerId).getString();
    }
-
+   
 }

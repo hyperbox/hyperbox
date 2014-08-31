@@ -21,13 +21,13 @@
 
 package org.altherian.hboxc.event.task;
 
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.TaskOutput;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class TaskAddedEvent extends TaskEvent {
    
-   public TaskAddedEvent(ServerOutput srvOut, TaskOutput taskOut) {
+   public TaskAddedEvent(ServerOut srvOut, TaskOut taskOut) {
       super(ClientEvents.TaskAdded, srvOut, taskOut);
    }
    

@@ -24,7 +24,7 @@ package org.altherian.hboxc.front.gui.hypervisor;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.output.hypervisor.HypervisorOutput;
+import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -115,7 +115,7 @@ public class HypervisorViewer {
       }
    }
    
-   public void show(final HypervisorOutput srvOut) {
+   public void show(final HypervisorOut srvOut) {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
             @Override

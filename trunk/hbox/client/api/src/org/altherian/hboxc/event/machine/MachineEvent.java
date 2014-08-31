@@ -21,21 +21,21 @@
 
 package org.altherian.hboxc.event.machine;
 
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.event.Event;
 
 public abstract class MachineEvent extends Event {
    
    private String srvId;
    
-   public MachineEvent(Enum<?> id, String srvId, MachineOutput mOut) {
+   public MachineEvent(Enum<?> id, String srvId, MachineOut mOut) {
       super(id);
       this.srvId = srvId;
-      set(MachineOutput.class, mOut);
+      set(MachineOut.class, mOut);
    }
    
-   public MachineOutput getMachine() {
-      return get(MachineOutput.class);
+   public MachineOut getMachine() {
+      return get(MachineOut.class);
    }
    
    public String getUuid() {

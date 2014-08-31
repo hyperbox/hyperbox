@@ -21,17 +21,17 @@
 
 package org.altherian.vbox.settings.motherboard;
 
-import org.altherian.hbox.constant.Firmwares;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.Firmware;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class FirmwareSetting extends StringSetting {
    
    public FirmwareSetting(String firmware) {
-      super(MachineAttributes.Firmware, firmware);
+      super(MachineAttribute.Firmware, firmware);
    }
    
-   public FirmwareSetting(Firmwares firmware) {
+   public FirmwareSetting(Firmware firmware) {
       this(firmware.toString());
    }
    

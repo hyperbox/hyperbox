@@ -22,8 +22,8 @@
 package org.altherian.hboxd.comm.io.factory;
 
 import org.altherian.hbox.comm.io.SettingIO;
-import org.altherian.hbox.comm.output.host.HostOutput;
-import org.altherian.hbox.constant.HostAttributes;
+import org.altherian.hbox.comm.out.host.HostOut;
+import org.altherian.hbox.constant.HostAttribute;
 import org.altherian.hboxd.host._Host;
 
 import java.util.ArrayList;
@@ -35,14 +35,14 @@ public class HostIoFactory {
       // static class, cannot be instantiated
    }
    
-   public static HostOutput get(_Host host) {
+   public static HostOut get(_Host host) {
       List<SettingIO> sIoList = new ArrayList<SettingIO>();
-      sIoList.add(new SettingIO(HostAttributes.Hostname, host.getHostname()));
-      sIoList.add(new SettingIO(HostAttributes.OperatingSystemName, host.getOSName()));
-      sIoList.add(new SettingIO(HostAttributes.OperatingSystemVersion, host.getOSVersion()));
-      sIoList.add(new SettingIO(HostAttributes.MemoryTotal, host.getMemorySize()));
-      sIoList.add(new SettingIO(HostAttributes.MemoryAvailable, host.getMemoryAvailable()));
-      return new HostOutput(sIoList);
+      sIoList.add(new SettingIO(HostAttribute.Hostname, host.getHostname()));
+      sIoList.add(new SettingIO(HostAttribute.OperatingSystemName, host.getOSName()));
+      sIoList.add(new SettingIO(HostAttribute.OperatingSystemVersion, host.getOSVersion()));
+      sIoList.add(new SettingIO(HostAttribute.MemoryTotal, host.getMemorySize()));
+      sIoList.add(new SettingIO(HostAttribute.MemoryAvailable, host.getMemoryAvailable()));
+      return new HostOut(sIoList);
    }
    
 }

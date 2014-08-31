@@ -23,7 +23,7 @@
 package org.altherian.hboxc.core.storage;
 
 import org.altherian.hbox.Configuration;
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.core._ConsoleViewer;
@@ -73,6 +73,9 @@ public class UserProfileCoreStorage implements _CoreStorage {
          storage = new XStream();
          storage.alias(CONSOLE_VIEWER_ID, _ConsoleViewer.class, ConsoleViewer.class);
          storage.alias(CONNECTOR_ID, _Connector.class, Connector.class);
+         // legacy name
+         storage.alias("org.altherian.hbox.comm.input.UserInput", UserIn.class);
+         storage.alias("user", UserIn.class);
          storage.omitField(Connector.class, "server");
          storage.omitField(Connector.class, "state");
          
@@ -183,7 +186,7 @@ public class UserProfileCoreStorage implements _CoreStorage {
    }
    
    @Override
-   public void storeConnectorCredentials(String id, UserInput usrIn) {
+   public void storeConnectorCredentials(String id, UserIn usrIn) {
       Logger.track();
       
       try {
@@ -200,11 +203,11 @@ public class UserProfileCoreStorage implements _CoreStorage {
    }
    
    @Override
-   public UserInput loadConnectorCredentials(String id) {
+   public UserIn loadConnectorCredentials(String id) {
       Logger.track();
       
       Logger.debug("Loading Connector ID " + id + " credentials from " + connectorCredFolder.getAbsolutePath() + File.separator + id + ".xml");
-      return (UserInput) storage.fromXML(new File(connectorCredFolder.getAbsolutePath() + File.separator + id + ".xml"));
+      return (UserIn) storage.fromXML(new File(connectorCredFolder.getAbsolutePath() + File.separator + id + ".xml"));
    }
    
    @Override

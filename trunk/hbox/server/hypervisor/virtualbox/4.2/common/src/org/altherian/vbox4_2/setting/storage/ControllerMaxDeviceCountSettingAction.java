@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.storage;
 
-import org.altherian.hbox.constant.StorageControllerSettings;
+import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.storage.ControllerMaxDeviceCountSetting;
@@ -39,7 +39,7 @@ public final class ControllerMaxDeviceCountSettingAction implements _StorageCont
    
    @Override
    public String getSettingName() {
-      return StorageControllerSettings.MaxDeviceCount.toString();
+      return StorageControllerAttribute.MaxDeviceCount.toString();
    }
    
    @Override

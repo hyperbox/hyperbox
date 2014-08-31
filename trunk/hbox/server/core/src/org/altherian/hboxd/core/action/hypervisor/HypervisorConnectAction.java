@@ -25,7 +25,7 @@ package org.altherian.hboxd.core.action.hypervisor;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.HypervisorInput;
+import org.altherian.hbox.comm.in.HypervisorIn;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 
@@ -46,7 +46,7 @@ public class HypervisorConnectAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      HypervisorInput hypIn = request.get(HypervisorInput.class);
+      HypervisorIn hypIn = request.get(HypervisorIn.class);
       hbox.getServerManager().getServer().connect(hypIn.getId(), hypIn.getConnectOptions());
    }
    

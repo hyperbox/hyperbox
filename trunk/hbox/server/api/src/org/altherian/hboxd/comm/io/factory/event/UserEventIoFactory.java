@@ -22,10 +22,10 @@
 
 package org.altherian.hboxd.comm.io.factory.event;
 
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.security.UserAddedEventOutput;
-import org.altherian.hbox.comm.output.event.security.UserModifiedEventOutput;
-import org.altherian.hbox.comm.output.event.security.UserRemovedEventOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.security.UserAddedEventOut;
+import org.altherian.hbox.comm.out.event.security.UserModifiedEventOut;
+import org.altherian.hbox.comm.out.event.security.UserRemovedEventOut;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.event._Event;
 import org.altherian.hboxd.comm.io.factory.ServerIoFactory;
@@ -44,15 +44,15 @@ public class UserEventIoFactory implements _EventIoFactory {
    }
    
    @Override
-   public EventOutput get(_Hyperbox hbox, _Event ev) {
+   public EventOut get(_Hyperbox hbox, _Event ev) {
       UserEvent usrEv = (UserEvent) ev;
       switch ((HyperboxEvents) ev.getEventId()) {
          case UserAdded:
-            return new UserAddedEventOutput(usrEv.getTime(), ServerIoFactory.get(), usrEv.getUser());
+            return new UserAddedEventOut(usrEv.getTime(), ServerIoFactory.get(), usrEv.getUser());
          case UserModified:
-            return new UserModifiedEventOutput(usrEv.getTime(), ServerIoFactory.get(), usrEv.getUser());
+            return new UserModifiedEventOut(usrEv.getTime(), ServerIoFactory.get(), usrEv.getUser());
          case UserRemoved:
-            return new UserRemovedEventOutput(usrEv.getTime(), ServerIoFactory.get(), usrEv.getUser());
+            return new UserRemovedEventOut(usrEv.getTime(), ServerIoFactory.get(), usrEv.getUser());
          default:
             return null;
       }

@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.video;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.video.Accelerate3dSetting;
@@ -39,7 +39,7 @@ public class Accelerate3dSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.Accelerate3d.toString();
+      return MachineAttribute.Accelerate3d.toString();
    }
    
    @Override

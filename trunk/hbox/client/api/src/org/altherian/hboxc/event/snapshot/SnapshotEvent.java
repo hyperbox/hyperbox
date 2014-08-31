@@ -21,20 +21,20 @@
 
 package org.altherian.hboxc.event.snapshot;
 
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
 import org.altherian.hboxc.event.machine.MachineEvent;
 
 public class SnapshotEvent extends MachineEvent {
    
-   public SnapshotEvent(Enum<?> eventId, ServerOutput srvOut, MachineOutput mOut, SnapshotOutput snapOut) {
+   public SnapshotEvent(Enum<?> eventId, ServerOut srvOut, MachineOut mOut, SnapshotOut snapOut) {
       super(eventId, srvOut.getId(), mOut);
-      set(SnapshotOutput.class, snapOut);
+      set(SnapshotOut.class, snapOut);
    }
    
-   public SnapshotOutput getSnapshot() {
-      return get(SnapshotOutput.class);
+   public SnapshotOut getSnapshot() {
+      return get(SnapshotOut.class);
    }
 
 }

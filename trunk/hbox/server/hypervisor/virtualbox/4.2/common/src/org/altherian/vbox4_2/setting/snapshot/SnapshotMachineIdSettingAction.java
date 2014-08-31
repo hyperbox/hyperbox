@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.snapshot;
 
-import org.altherian.hbox.constant.SnapshotAttributes;
+import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.hbox.exception.ConfigurationException;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.snapshot.SnapshotMachineIdSetting;
@@ -39,7 +39,7 @@ public class SnapshotMachineIdSettingAction implements _SnapshotSettingAction {
    
    @Override
    public String getSettingName() {
-      return SnapshotAttributes.MachineID.getId();
+      return SnapshotAttribute.MachineID.getId();
    }
    
    @Override

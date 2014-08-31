@@ -24,8 +24,8 @@ package org.altherian.hboxc.core;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.state.CoreState;
 import org.altherian.tool.logging.LogLevel;
@@ -44,7 +44,7 @@ public abstract class CoreTest {
    
    private static _Core core;
    
-   public static void init(_Core coreToTest, ServerInput sInToTest, UserInput uInToTest) throws HyperboxException {
+   public static void init(_Core coreToTest, ServerIn sInToTest, UserIn uInToTest) throws HyperboxException {
       Logger.setLevel(LogLevel.Tracking);
       
       core = coreToTest;

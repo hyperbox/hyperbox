@@ -21,7 +21,7 @@
 
 package org.altherian.hboxc.front.gui.utils;
 
-import org.altherian.hbox.comm.output.ObjectOutput;
+import org.altherian.hbox.comm.out.ObjectOut;
 import org.altherian.tool.logging.Logger;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 @SuppressWarnings("serial")
-public abstract class AbstractOutputListTableModel<T extends ObjectOutput> extends AbstractTableModel {
+public abstract class AbstractOutputListTableModel<T extends ObjectOut> extends AbstractTableModel {
    
    private List<T> data;
    private List<String> columns;

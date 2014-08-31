@@ -23,7 +23,7 @@ package org.altherian.hboxd.front.kryonet;
 
 import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm._Client;
-import org.altherian.hbox.comm.output.event.EventOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
 import org.altherian.tool.logging.Logger;
 
 import com.esotericsoftware.kryonet.Connection;
@@ -58,7 +58,7 @@ public class KryonetClient implements _Client {
    }
    
    @Override
-   public void post(EventOutput evOut) {
+   public void post(EventOut evOut) {
       Logger.track();
       
       client.sendTCP(evOut);

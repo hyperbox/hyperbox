@@ -24,9 +24,9 @@ package org.altherian.hboxd.comm.io.factory;
 
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.comm.output.hypervisor.HypervisorLoaderOutput;
-import org.altherian.hbox.comm.output.hypervisor.HypervisorOutput;
-import org.altherian.hbox.constant.HypervisorAttributes;
+import org.altherian.hbox.comm.out.hypervisor.HypervisorLoaderOut;
+import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
+import org.altherian.hbox.constant.HypervisorAttribute;
 import org.altherian.hboxd.hypervisor.Hypervisor;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 
@@ -39,25 +39,25 @@ public class HypervisorIoFactory {
       // static only
    }
    
-   public static HypervisorOutput getOut(_Hypervisor hyp) {
+   public static HypervisorOut getOut(_Hypervisor hyp) {
       List<SettingIO> settings = new ArrayList<SettingIO>();
-      settings.add(new StringSettingIO(HypervisorAttributes.Type, hyp.getTypeId()));
-      settings.add(new StringSettingIO(HypervisorAttributes.Vendor, hyp.getVendor()));
-      settings.add(new StringSettingIO(HypervisorAttributes.Product, hyp.getProduct()));
+      settings.add(new StringSettingIO(HypervisorAttribute.Type, hyp.getTypeId()));
+      settings.add(new StringSettingIO(HypervisorAttribute.Vendor, hyp.getVendor()));
+      settings.add(new StringSettingIO(HypervisorAttribute.Product, hyp.getProduct()));
       if (hyp.isRunning()) {
-         settings.add(new StringSettingIO(HypervisorAttributes.Version, hyp.getVersion()));
-         settings.add(new StringSettingIO(HypervisorAttributes.Revision, hyp.getRevision()));
+         settings.add(new StringSettingIO(HypervisorAttribute.Version, hyp.getVersion()));
+         settings.add(new StringSettingIO(HypervisorAttribute.Revision, hyp.getRevision()));
       }
       settings.addAll(SettingIoFactory.getList(hyp.getSettings()));
-      return new HypervisorOutput(hyp.getId(), settings);
+      return new HypervisorOut(hyp.getId(), settings);
    }
    
-   public static List<HypervisorLoaderOutput> getOut(Class<? extends _Hypervisor> loader) {
-      List<HypervisorLoaderOutput> listOut = new ArrayList<HypervisorLoaderOutput>();
+   public static List<HypervisorLoaderOut> getOut(Class<? extends _Hypervisor> loader) {
+      List<HypervisorLoaderOut> listOut = new ArrayList<HypervisorLoaderOut>();
       Hypervisor metadata = loader.getAnnotation(Hypervisor.class);
       if (metadata != null) {
          for (String id : metadata.schemes()) {
-            listOut.add(new HypervisorLoaderOutput(metadata.vendor(), metadata.product(), metadata.typeId(), id));
+            listOut.add(new HypervisorLoaderOut(metadata.vendor(), metadata.product(), metadata.typeId(), id));
          }
       }
       return listOut;

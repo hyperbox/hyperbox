@@ -27,8 +27,8 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.output.hypervisor.ScreenshotOutput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.out.hypervisor.ScreenshotOut;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 import org.altherian.hboxd.session.SessionContext;
@@ -50,10 +50,10 @@ public class MachineDisplayTakeScreenshotAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      MachineInput mIn = request.get(MachineInput.class);
+      MachineIn mIn = request.get(MachineIn.class);
       
       byte[] screenData = hbox.getHypervisor().getMachine(mIn.getUuid()).takeScreenshot();
-      ScreenshotOutput scrOut = new ScreenshotOutput(screenData);
+      ScreenshotOut scrOut = new ScreenshotOut(screenData);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, scrOut));
    }
    

@@ -24,8 +24,8 @@ package org.altherian.hboxc.front.gui.module;
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.output.ModuleOutput;
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.out.ModuleOut;
+import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.module.ModuleEvent;
 import org.altherian.hboxc.front.gui._Refreshable;
@@ -97,7 +97,7 @@ public class ModuleListView implements _ModuleSelector, _Refreshable, _ModuleLis
       FrontEventManager.register(this);
    }
    
-   public void show(ServerOutput srvOut) {
+   public void show(ServerOut srvOut) {
       if (srvOut == null) {
          itemListModel.clear();
       } else {
@@ -117,8 +117,8 @@ public class ModuleListView implements _ModuleSelector, _Refreshable, _ModuleLis
    }
    
    @Override
-   public List<ModuleOutput> getModuleSelection() {
-      List<ModuleOutput> listSelectedItems = new ArrayList<ModuleOutput>();
+   public List<ModuleOut> getModuleSelection() {
+      List<ModuleOut> listSelectedItems = new ArrayList<ModuleOut>();
       for (int row : itemList.getSelectedRows()) {
          listSelectedItems.add(itemListModel.getObjectAtRow(itemList.convertRowIndexToModel(row)));
       }
@@ -145,7 +145,7 @@ public class ModuleListView implements _ModuleSelector, _Refreshable, _ModuleLis
    }
    
    @Override
-   public void add(List<ModuleOutput> objOutList) {
+   public void add(List<ModuleOut> objOutList) {
       itemListModel.add(objOutList);
    }
    

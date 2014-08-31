@@ -24,11 +24,11 @@ package org.altherian.hboxc.front.gui.store.utils;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.StoreInput;
-import org.altherian.hbox.comm.input.StoreItemInput;
-import org.altherian.hbox.comm.output.StoreItemOutput;
-import org.altherian.hbox.comm.output.StoreOutput;
-import org.altherian.hbox.constant.StoreItemAttributes;
+import org.altherian.hbox.comm.in.StoreIn;
+import org.altherian.hbox.comm.in.StoreItemIn;
+import org.altherian.hbox.comm.out.StoreItemOut;
+import org.altherian.hbox.comm.out.StoreOut;
+import org.altherian.hbox.constant.StoreItemAttribute;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.MainView;
 import org.altherian.hboxc.front.gui._Cancelable;
@@ -102,8 +102,8 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
    private JButton acceptButton;
    private JButton cancelButton;
    
-   private static StoreItemInput choosenStiIn;
-   private StoreItemOutput choosenStiOut;
+   private static StoreItemIn choosenStiIn;
+   private StoreItemOut choosenStiOut;
    
    protected StoreItemChooser(String srvId, int workingMode) {
       this.srvId = srvId;
@@ -193,30 +193,30 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       cancelButton = new JButton(new CancelAction(this));
    }
    
-   private void insertInTree(StoreOutput stoOut) {
+   private void insertInTree(StoreOut stoOut) {
       DefaultMutableTreeNode storeNode = new StoreOutputTreeNode(stoOut);
       topNode.insert(storeNode, topNode.getChildCount());
       tree.scrollPathToVisible(new TreePath(storeNode.getPath()));
       treeModel.reload(topNode);
    }
    
-   private void insertInTree(List<StoreItemOutput> stiOutList, DefaultMutableTreeNode parentNode) {
+   private void insertInTree(List<StoreItemOut> stiOutList, DefaultMutableTreeNode parentNode) {
       Collections.sort(stiOutList, new StoreItemOutputComparator());
-      for (StoreItemOutput stiOut : stiOutList) {
+      for (StoreItemOut stiOut : stiOutList) {
          if (stiOut.isContainer()) {
             insertInTree(stiOut, parentNode);
          }
       }
    }
    
-   private void insertInTree(StoreItemOutput stiOut, DefaultMutableTreeNode parentNode) {
+   private void insertInTree(StoreItemOut stiOut, DefaultMutableTreeNode parentNode) {
       DefaultMutableTreeNode storeItemNode = new StoreItemOutputTreeNode(stiOut);
       parentNode.insert(storeItemNode, parentNode.getChildCount());
    }
    
-   private void showInTable(StoreOutput stoOut) {
+   private void showInTable(StoreOut stoOut) {
       if (workingMode != FOLDER_NAME) {
-         List<StoreItemOutput> stiOutList = Gui.getServer(srvId).listStoreItems(new StoreInput(stoOut.getId()));
+         List<StoreItemOut> stiOutList = Gui.getServer(srvId).listStoreItems(new StoreIn(stoOut.getId()));
          showInTable(stiOutList);
          addressBarValue.setText(stoOut.getLabel());
       } else {
@@ -224,11 +224,11 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       }
    }
    
-   private void showInTable(StoreItemOutput stiOut) {
+   private void showInTable(StoreItemOut stiOut) {
       choosenStiOut = stiOut;
       if (workingMode != FOLDER_NAME) {
-         List<StoreItemOutput> stiOutList = Gui.getServer(srvId).listStoreItems(new StoreInput(stiOut.getStoreId()),
-               new StoreItemInput(stiOut.getPath()));
+         List<StoreItemOut> stiOutList = Gui.getServer(srvId).listStoreItems(new StoreIn(stiOut.getStoreId()),
+               new StoreItemIn(stiOut.getPath()));
          showInTable(stiOutList);
          addressBarValue.setText(stiOut.getPath());
       } else {
@@ -236,7 +236,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       }
    }
    
-   private void showInTable(List<StoreItemOutput> stiOutList) {
+   private void showInTable(List<StoreItemOut> stiOutList) {
       // We are not in a folder-only mode
       if (workingMode != FOLDER_NAME) {
          Collections.sort(stiOutList, new StoreItemOutputComparator());
@@ -244,18 +244,18 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       }
    }
    
-   private void select(StoreItemOutput stiOut) {
+   private void select(StoreItemOut stiOut) {
       Logger.track();
       
       storeItemValue.setText(stiOut.getName());
+      choosenStiOut = stiOut;
    }
    
-   private void choose(StoreItemOutput stiOut) {
+   private void choose(StoreItemOut stiOut) {
       Logger.track();
       
       
       select(stiOut);
-      choosenStiOut = stiOut;
       save();
    }
    
@@ -263,12 +263,12 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       topNode.removeAllChildren();
       treeModel.reload();
       
-      for (StoreOutput stoOut : Gui.getServer(srvId).listStores()) {
+      for (StoreOut stoOut : Gui.getServer(srvId).listStores()) {
          insertInTree(stoOut);
       }
    }
    
-   private StoreItemOutput getUserInput() {
+   private StoreItemOut getUserInput() {
       choosenStiIn = null;
       loadStores();
       if (workingMode == FOLDER_NAME) {
@@ -295,7 +295,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       Logger.track();
       
       if (workingMode != FOLDER_NAME) {
-         choosenStiIn = new StoreItemInput(addressBarValue.getText() + "/" + storeItemValue.getText());
+         choosenStiIn = new StoreItemIn(addressBarValue.getText() + "/" + storeItemValue.getText());
       }
       if (workingMode == FILE_EXIST) {
          // TODO implement check for valid file
@@ -312,9 +312,9 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
     * Get a Store Item path from the user. Only guarantees that the Store Item object would be a file, but does not guarantee its (non)existence.
     * 
     * @param srvId the server
-    * @return StoreItemInput object with only {@link StoreItemAttributes#Path} attribute or <code>null</code> if no item was chosen by the user.
+    * @return StoreItemInput object with only {@link StoreItemAttribute#Path} attribute or <code>null</code> if no item was chosen by the user.
     */
-   public static StoreItemInput getFilename(String srvId) {
+   public static StoreItemIn getFilename(String srvId) {
       new StoreItemChooser(srvId, FILE_NAME).getUserInput();
       return choosenStiIn;
    }
@@ -323,10 +323,10 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
     * Not Fully Implement - Does not give any guarantee.
     * 
     * @param srvId the server
-    * @return StoreItemInput object with only {@link StoreItemAttributes#Path} attribute or <code>null</code> if no item was chosen by the user.
+    * @return StoreItemInput object with only {@link StoreItemAttribute#Path} attribute or <code>null</code> if no item was chosen by the user.
     */
    // TODO implement verification
-   public static StoreItemInput getNewFilename(String srvId) {
+   public static StoreItemIn getNewFilename(String srvId) {
       new StoreItemChooser(srvId, FILE_NEW).getUserInput();
       return choosenStiIn;
    }
@@ -337,11 +337,11 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
     * @param srvId the server
     * @return a StoreItemOutput object or <code>null</code> if no item was chosen by the user.
     */
-   public static StoreItemOutput getExisitingFile(String srvId) {
+   public static StoreItemOut getExisitingFile(String srvId) {
       return new StoreItemChooser(srvId, FILE_EXIST).getUserInput();
    }
    
-   public static StoreItemOutput getExisitingFolder(String srvId) {
+   public static StoreItemOut getExisitingFolder(String srvId) {
       return new StoreItemChooser(srvId, FOLDER_NAME).getUserInput();
    }
    
@@ -349,7 +349,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       
       private static final long serialVersionUID = 1L;
       
-      public StoreOutputTreeNode(StoreOutput node) {
+      public StoreOutputTreeNode(StoreOut node) {
          super(node);
       }
       
@@ -362,9 +362,9 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
    private class StoreItemOutputTreeNode extends DefaultMutableTreeNode {
       
       private static final long serialVersionUID = 1L;
-      private StoreItemOutput siOut;
+      private StoreItemOut siOut;
       
-      public StoreItemOutputTreeNode(StoreItemOutput node) {
+      public StoreItemOutputTreeNode(StoreItemOut node) {
          super(node);
          siOut = node;
       }
@@ -395,11 +395,11 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
          if ((ev.getNewLeadSelectionPath() != null) && (ev.getNewLeadSelectionPath().getLastPathComponent() != null)) {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) ev.getNewLeadSelectionPath().getLastPathComponent();
             
-            if (node.getUserObject() instanceof StoreOutput) {
-               showInTable((StoreOutput) node.getUserObject());
+            if (node.getUserObject() instanceof StoreOut) {
+               showInTable((StoreOut) node.getUserObject());
             }
-            if (node.getUserObject() instanceof StoreItemOutput) {
-               showInTable((StoreItemOutput) node.getUserObject());
+            if (node.getUserObject() instanceof StoreItemOut) {
+               showInTable((StoreItemOut) node.getUserObject());
             }
          }
       }
@@ -416,15 +416,15 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       @Override
       public void treeWillExpand(TreeExpansionEvent ev) throws ExpandVetoException {
          DefaultMutableTreeNode dmtn = (DefaultMutableTreeNode) ev.getPath().getLastPathComponent();
-         if (dmtn.getUserObject() instanceof StoreOutput) {
-            StoreOutput stoOut = (StoreOutput) dmtn.getUserObject();
-            List<StoreItemOutput> stiOutList = Gui.getServer(srvId).listStoreItems(new StoreInput(stoOut.getId()));
+         if (dmtn.getUserObject() instanceof StoreOut) {
+            StoreOut stoOut = (StoreOut) dmtn.getUserObject();
+            List<StoreItemOut> stiOutList = Gui.getServer(srvId).listStoreItems(new StoreIn(stoOut.getId()));
             insertInTree(stiOutList, dmtn);
          }
-         if (dmtn.getUserObject() instanceof StoreItemOutput) {
-            StoreItemOutput stiOutParent = (StoreItemOutput) dmtn.getUserObject();
-            List<StoreItemOutput> stiOutList = Gui.getServer(srvId).listStoreItems(new StoreInput(stiOutParent.getStoreId()),
-                  new StoreItemInput(stiOutParent.getPath()));
+         if (dmtn.getUserObject() instanceof StoreItemOut) {
+            StoreItemOut stiOutParent = (StoreItemOut) dmtn.getUserObject();
+            List<StoreItemOut> stiOutList = Gui.getServer(srvId).listStoreItems(new StoreIn(stiOutParent.getStoreId()),
+                  new StoreItemIn(stiOutParent.getPath()));
             insertInTree(stiOutList, dmtn);
          }
       }
@@ -433,7 +433,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
    
    private class BrowseMouseListener extends MouseAdapter {
       
-      private StoreItemOutput getSelection() {
+      private StoreItemOut getSelection() {
          int selectedRow = storeItemTable.getSelectedRow();
          Logger.debug("Selected row: " + selectedRow);
          
@@ -448,27 +448,18 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       public void mouseClicked(MouseEvent ev) {
          Logger.track();
          
-         StoreItemOutput stiOut = getSelection();
+         StoreItemOut stiOut = getSelection();
          if (stiOut != null) {
             if ((ev.getClickCount() == 1) && !stiOut.isContainer()) {
-               System.out.println("Selecting");
                select(stiOut);
-            } else {
-               Logger.track();
             }
             if (ev.getClickCount() == 2) {
                if (stiOut.isContainer()) {
-                  System.out.println("Showing");
                   showInTable(stiOut);
                } else {
-                  System.out.println("Choosing");
                   choose(stiOut);
                }
-            } else {
-               Logger.track();
             }
-         } else {
-            Logger.track();
          }
       }
    }

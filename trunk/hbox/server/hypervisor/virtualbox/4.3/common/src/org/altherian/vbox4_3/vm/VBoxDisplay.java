@@ -21,8 +21,8 @@
 
 package org.altherian.vbox4_3.vm;
 
-import org.altherian.hbox.constant.EntityTypes;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawDisplay;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
 import org.altherian.hboxd.settings._Setting;
@@ -44,7 +44,7 @@ public final class VBoxDisplay implements _RawDisplay {
    
    @Override
    public long getVideoMemoryAmount() {
-      return ((PositiveNumberSetting) getSetting(MachineAttributes.VRAM)).getValue();
+      return ((PositiveNumberSetting) getSetting(MachineAttribute.VRAM)).getValue();
    }
    
    @Override
@@ -54,7 +54,7 @@ public final class VBoxDisplay implements _RawDisplay {
    
    @Override
    public long getMonitorCount() {
-      return ((PositiveNumberSetting) getSetting(MachineAttributes.MonitorCount)).getValue();
+      return ((PositiveNumberSetting) getSetting(MachineAttribute.MonitorCount)).getValue();
    }
    
    @Override
@@ -65,8 +65,8 @@ public final class VBoxDisplay implements _RawDisplay {
    @Override
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
-      for (MachineAttributes setting : MachineAttributes.values()) {
-         if (setting.getDeviceType().equals(EntityTypes.Display)) {
+      for (MachineAttribute setting : MachineAttribute.values()) {
+         if (setting.getDeviceType().equals(Entity.Display)) {
             getSetting(setting);
          }
       }

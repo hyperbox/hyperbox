@@ -24,7 +24,7 @@ package org.altherian.hboxc.core.connector;
 
 import net.engio.mbassy.listener.Handler;
 
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.comm.io.factory.ConnectorIoFactory;
 import org.altherian.hboxc.event.CoreEventManager;
@@ -130,7 +130,7 @@ public class Connector implements _Connector {
    }
    
    @Override
-   public _Server connect(UserInput usrIn) {
+   public _Server connect(UserIn usrIn) {
       Logger.track();
       
       setState(ConnectionState.Connecting);

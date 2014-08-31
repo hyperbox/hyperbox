@@ -23,50 +23,50 @@ package org.altherian.hboxc.core.server;
 
 import net.engio.mbassy.listener.Handler;
 
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.MediumInput;
-import org.altherian.hbox.comm.input.NetworkAttachModeInput;
-import org.altherian.hbox.comm.input.SessionInput;
-import org.altherian.hbox.comm.input.SnapshotInput;
-import org.altherian.hbox.comm.input.StorageControllerInput;
-import org.altherian.hbox.comm.input.StorageControllerSubTypeInput;
-import org.altherian.hbox.comm.input.StorageControllerTypeInput;
-import org.altherian.hbox.comm.input.StoreInput;
-import org.altherian.hbox.comm.input.StoreItemInput;
-import org.altherian.hbox.comm.input.TaskInput;
-import org.altherian.hbox.comm.input.UserInput;
-import org.altherian.hbox.comm.output.ModuleOutput;
-import org.altherian.hbox.comm.output.SessionOutput;
-import org.altherian.hbox.comm.output.StoreItemOutput;
-import org.altherian.hbox.comm.output.StoreOutput;
-import org.altherian.hbox.comm.output.TaskOutput;
-import org.altherian.hbox.comm.output.event.machine.MachineDataChangeEventOutput;
-import org.altherian.hbox.comm.output.event.machine.MachineRegistrationEventOutput;
-import org.altherian.hbox.comm.output.event.machine.MachineSnapshotDataChangedEventOutput;
-import org.altherian.hbox.comm.output.event.machine.MachineStateEventOutput;
-import org.altherian.hbox.comm.output.event.module.ModuleEventOutput;
-import org.altherian.hbox.comm.output.event.snapshot.SnapshotDeletedEventOutput;
-import org.altherian.hbox.comm.output.event.snapshot.SnapshotModifiedEventOutput;
-import org.altherian.hbox.comm.output.event.snapshot.SnapshotRestoredEventOutput;
-import org.altherian.hbox.comm.output.event.snapshot.SnapshotTakenEventOutput;
-import org.altherian.hbox.comm.output.event.task.TaskQueueEventOutput;
-import org.altherian.hbox.comm.output.event.task.TaskStateEventOutput;
-import org.altherian.hbox.comm.output.host.HostOutput;
-import org.altherian.hbox.comm.output.hypervisor.HypervisorLoaderOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.hypervisor.OsTypeOutput;
-import org.altherian.hbox.comm.output.hypervisor.ScreenshotOutput;
-import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
-import org.altherian.hbox.comm.output.network.NetworkAttachModeOutput;
-import org.altherian.hbox.comm.output.network.NetworkAttachNameOutput;
-import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
-import org.altherian.hbox.comm.output.network.NetworkInterfaceTypeOutput;
-import org.altherian.hbox.comm.output.security.PermissionOutput;
-import org.altherian.hbox.comm.output.security.UserOutput;
-import org.altherian.hbox.comm.output.storage.MediumOutput;
-import org.altherian.hbox.comm.output.storage.StorageControllerSubTypeOutput;
-import org.altherian.hbox.comm.output.storage.StorageControllerTypeOutput;
-import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.MediumIn;
+import org.altherian.hbox.comm.in.NetworkAttachModeIn;
+import org.altherian.hbox.comm.in.SessionIn;
+import org.altherian.hbox.comm.in.SnapshotIn;
+import org.altherian.hbox.comm.in.StorageControllerIn;
+import org.altherian.hbox.comm.in.StorageControllerSubTypeIn;
+import org.altherian.hbox.comm.in.StorageControllerTypeIn;
+import org.altherian.hbox.comm.in.StoreIn;
+import org.altherian.hbox.comm.in.StoreItemIn;
+import org.altherian.hbox.comm.in.TaskIn;
+import org.altherian.hbox.comm.in.UserIn;
+import org.altherian.hbox.comm.out.ModuleOut;
+import org.altherian.hbox.comm.out.SessionOut;
+import org.altherian.hbox.comm.out.StoreItemOut;
+import org.altherian.hbox.comm.out.StoreOut;
+import org.altherian.hbox.comm.out.TaskOut;
+import org.altherian.hbox.comm.out.event.machine.MachineDataChangeEventOut;
+import org.altherian.hbox.comm.out.event.machine.MachineRegistrationEventOut;
+import org.altherian.hbox.comm.out.event.machine.MachineSnapshotDataChangedEventOut;
+import org.altherian.hbox.comm.out.event.machine.MachineStateEventOut;
+import org.altherian.hbox.comm.out.event.module.ModuleEventOut;
+import org.altherian.hbox.comm.out.event.snapshot.SnapshotDeletedEventOut;
+import org.altherian.hbox.comm.out.event.snapshot.SnapshotModifiedEventOut;
+import org.altherian.hbox.comm.out.event.snapshot.SnapshotRestoredEventOut;
+import org.altherian.hbox.comm.out.event.snapshot.SnapshotTakenEventOut;
+import org.altherian.hbox.comm.out.event.task.TaskQueueEventOut;
+import org.altherian.hbox.comm.out.event.task.TaskStateEventOut;
+import org.altherian.hbox.comm.out.host.HostOut;
+import org.altherian.hbox.comm.out.hypervisor.HypervisorLoaderOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.hypervisor.OsTypeOut;
+import org.altherian.hbox.comm.out.hypervisor.ScreenshotOut;
+import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
+import org.altherian.hbox.comm.out.network.NetworkAttachModeOut;
+import org.altherian.hbox.comm.out.network.NetworkAttachNameOut;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceTypeOut;
+import org.altherian.hbox.comm.out.security.PermissionOut;
+import org.altherian.hbox.comm.out.security.UserOut;
+import org.altherian.hbox.comm.out.storage.MediumOut;
+import org.altherian.hbox.comm.out.storage.StorageControllerSubTypeOut;
+import org.altherian.hbox.comm.out.storage.StorageControllerTypeOut;
+import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.states.TaskQueueEvents;
@@ -101,51 +101,51 @@ public class CachedServerReader implements _ServerReader {
    
    private _ServerReader reader;
    
-   private Map<String, MachineOutput> mOutListCache;
+   private Map<String, MachineOut> mOutListCache;
    private Long mOutListCacheUpdate;
-   private Map<String, MachineOutput> mOutCache;
+   private Map<String, MachineOut> mOutCache;
    private Set<String> invalidMachineUuidSet;
    
-   private Map<String, TaskOutput> tOutListCache;
+   private Map<String, TaskOut> tOutListCache;
    private Long tOutListCacheUpdate;
-   private Map<String, TaskOutput> tOutCache;
+   private Map<String, TaskOut> tOutCache;
    private Set<String> invalidTaskIdSet;
    
-   private Map<String, MediumOutput> medOutCache;
+   private Map<String, MediumOut> medOutCache;
    private Set<String> invalidMedOutSet;
    
-   private Map<String, Map<String, SnapshotOutput>> snapOutCache;
+   private Map<String, Map<String, SnapshotOut>> snapOutCache;
    
    
    public CachedServerReader(_ServerReader reader) {
       this.reader = reader;
       
-      mOutListCache = new ConcurrentHashMap<String, MachineOutput>();
-      mOutCache = new ConcurrentHashMap<String, MachineOutput>();
+      mOutListCache = new ConcurrentHashMap<String, MachineOut>();
+      mOutCache = new ConcurrentHashMap<String, MachineOut>();
       invalidMachineUuidSet = new LinkedHashSet<String>();
       
-      tOutListCache = new ConcurrentHashMap<String, TaskOutput>();
-      tOutCache = new ConcurrentHashMap<String, TaskOutput>();
+      tOutListCache = new ConcurrentHashMap<String, TaskOut>();
+      tOutCache = new ConcurrentHashMap<String, TaskOut>();
       invalidTaskIdSet = new LinkedHashSet<String>();
       
-      medOutCache = new HashMap<String, MediumOutput>();
+      medOutCache = new HashMap<String, MediumOut>();
       invalidMedOutSet = new LinkedHashSet<String>();
       
-      snapOutCache = new HashMap<String, Map<String, SnapshotOutput>>();
+      snapOutCache = new HashMap<String, Map<String, SnapshotOut>>();
       
       CoreEventManager.get().register(this);
    }
    
-   private void insertSnapshot(String vmId, SnapshotOutput snapOut) {
+   private void insertSnapshot(String vmId, SnapshotOut snapOut) {
       Logger.track();
       
       if (!snapOutCache.containsKey(vmId)) {
-         snapOutCache.put(vmId, new HashMap<String, SnapshotOutput>());
+         snapOutCache.put(vmId, new HashMap<String, SnapshotOut>());
       }
       snapOutCache.get(vmId).put(snapOut.getUuid(), snapOut);
    }
    
-   private void updateSnapshot(String vmId, SnapshotOutput snapOut) {
+   private void updateSnapshot(String vmId, SnapshotOut snapOut) {
       if (snapOutCache.containsKey(vmId)) {
          snapOutCache.get(vmId).put(snapOut.getUuid(), snapOut);
       }
@@ -161,7 +161,7 @@ public class CachedServerReader implements _ServerReader {
       Logger.track();
       
       try {
-         SnapshotOutput snapOut = reader.getSnapshot(vmUuid, snapUuid);
+         SnapshotOut snapOut = reader.getSnapshot(vmUuid, snapUuid);
          insertSnapshot(vmUuid, snapOut);
       } catch (Throwable t) {
          Logger.error("Unable to refresh Snapshot #" + snapUuid + " of VM #" + vmUuid + ": " + t.getMessage());
@@ -189,13 +189,13 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Override
-   public SnapshotOutput getRootSnapshot(String vmId) {
+   public SnapshotOut getRootSnapshot(String vmId) {
       return reader.getRootSnapshot(vmId);
       
    }
    
    @Override
-   public SnapshotOutput getSnapshot(MachineInput mIn, SnapshotInput snapIn) {
+   public SnapshotOut getSnapshot(MachineIn mIn, SnapshotIn snapIn) {
       Logger.track();
       
       if (!snapOutCache.containsKey(mIn.getUuid()) || !snapOutCache.get(mIn.getUuid()).containsKey(snapIn.getUuid())) {
@@ -206,7 +206,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Override
-   public SnapshotOutput getCurrentSnapshot(MachineInput mIn) {
+   public SnapshotOut getCurrentSnapshot(MachineIn mIn) {
       Logger.track();
       
       if (mOutCache.containsKey(mIn.getId())) {
@@ -217,14 +217,14 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putMachineSnapDataChangedEvent(MachineSnapshotDataChangedEventOutput ev) {
+   public void putMachineSnapDataChangedEvent(MachineSnapshotDataChangedEventOut ev) {
       Logger.track();
       
       snapOutCache.remove(ev.getUuid());
    }
    
    @Handler
-   public void putSnapshotTakenEvent(SnapshotTakenEventOutput ev) {
+   public void putSnapshotTakenEvent(SnapshotTakenEventOut ev) {
       Logger.track();
       
       updateMachine(ev.getMachine());
@@ -234,10 +234,10 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putSnashotDeletedEvent(SnapshotDeletedEventOutput ev) {
+   public void putSnashotDeletedEvent(SnapshotDeletedEventOut ev) {
       Logger.track();
       
-      SnapshotOutput deletedSnap = snapOutCache.get(ev.getUuid()).get(ev.getSnapshotUuid());
+      SnapshotOut deletedSnap = snapOutCache.get(ev.getUuid()).get(ev.getSnapshotUuid());
       refreshSnapshot(ev.getMachine().getUuid(), deletedSnap.getParentUuid());
       for (String child : deletedSnap.getChildrenUuid()) {
          refreshSnapshot(ev.getUuid(), child);
@@ -248,7 +248,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putSnapshotRestoredEvent(SnapshotRestoredEventOutput ev) {
+   public void putSnapshotRestoredEvent(SnapshotRestoredEventOut ev) {
       Logger.track();
       
       updateMachine(ev.getMachine());
@@ -257,7 +257,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putSnashopModifiedEvent(SnapshotModifiedEventOutput ev) {
+   public void putSnashopModifiedEvent(SnapshotModifiedEventOut ev) {
       Logger.track();
       
       updateSnapshot(ev.getMachine().getUuid(), ev.getSnapshot());
@@ -265,7 +265,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putMachineDataChangedEvent(MachineDataChangeEventOutput ev) {
+   public void putMachineDataChangedEvent(MachineDataChangeEventOut ev) {
       Logger.track();
       
       updateMachine(ev.getMachine());
@@ -273,7 +273,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putMachineRegistrationEvent(MachineRegistrationEventOutput ev) {
+   public void putMachineRegistrationEvent(MachineRegistrationEventOut ev) {
       Logger.track();
       
       if (ev.isRegistered()) {
@@ -287,7 +287,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putMachineStateEvent(MachineStateEventOutput ev) {
+   public void putMachineStateEvent(MachineStateEventOut ev) {
       Logger.track();
       
       updateMachine(ev.getMachine());
@@ -300,7 +300,7 @@ public class CachedServerReader implements _ServerReader {
       insertMachine(reader.getMachine(vmId));
    }
    
-   private void insertMachine(MachineOutput mOut) {
+   private void insertMachine(MachineOut mOut) {
       Logger.track();
       
       snapOutCache.remove(mOut.getId());
@@ -315,7 +315,7 @@ public class CachedServerReader implements _ServerReader {
       updateMachine(reader.getMachine(vmId));
    }
    
-   private void updateMachine(MachineOutput mOut) {
+   private void updateMachine(MachineOut mOut) {
       Logger.track();
       
       mOutCache.put(mOut.getId(), mOut);
@@ -350,34 +350,34 @@ public class CachedServerReader implements _ServerReader {
       }
    }
    
-   private void insertMedium(MediumInput medIn) {
+   private void insertMedium(MediumIn medIn) {
       Logger.track();
       
-      MediumOutput medOut = reader.getMedium(medIn);
+      MediumOut medOut = reader.getMedium(medIn);
       medOutCache.put(medOut.getUuid(), medOut);
       medOutCache.put(medOut.getLocation(), medOut);
       invalidMedOutSet.remove(medOut.getUuid());
    }
    
-   private void updateMedium(MediumInput medIn) {
+   private void updateMedium(MediumIn medIn) {
       Logger.track();
       
-      MediumOutput medOut = reader.getMedium(medIn);
+      MediumOut medOut = reader.getMedium(medIn);
       medOutCache.put(medOut.getUuid(), medOut);
       medOutCache.put(medOut.getLocation(), medOut);
    }
    
-   private void deleteMedium(MediumInput medIn) {
+   private void deleteMedium(MediumIn medIn) {
       Logger.track();
       
       Logger.debug("Removing Medium ID " + medIn.getId() + " from cache");
-      MediumOutput medOut = getMedium(medIn);
+      MediumOut medOut = getMedium(medIn);
       invalidMedOutSet.add(medOut.getUuid());
       medOutCache.remove(medOut.getUuid());
       medOutCache.remove(medOut.getLocation());
    }
    
-   private void refreshMedium(MediumInput medIn) {
+   private void refreshMedium(MediumIn medIn) {
       Logger.debug("Refreshing medium ID " + medIn.getId());
       try {
          if (!medOutCache.containsKey(medIn.getId())) {
@@ -397,7 +397,7 @@ public class CachedServerReader implements _ServerReader {
       Logger.track();
       
       mOutListCache.clear();
-      for (MachineOutput mOut : reader.listMachines()) {
+      for (MachineOut mOut : reader.listMachines()) {
          mOutListCache.put(mOut.getUuid(), mOut);
       }
       
@@ -405,23 +405,23 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Override
-   public List<MachineOutput> listMachines() {
+   public List<MachineOut> listMachines() {
       if (mOutListCacheUpdate == null) {
          updateMachineList();
       }
       
-      return new ArrayList<MachineOutput>(mOutListCache.values());
+      return new ArrayList<MachineOut>(mOutListCache.values());
    }
    
    @Override
-   public MachineOutput getMachine(MachineInput mIn) {
+   public MachineOut getMachine(MachineIn mIn) {
       Logger.track();
       
       return getMachine(mIn.getUuid());
    }
    
    @Handler
-   public void putTaskStateChangedEvent(TaskStateEventOutput ev) {
+   public void putTaskStateChangedEvent(TaskStateEventOut ev) {
       Logger.track();
       
       updateTask(ev.getTask());
@@ -429,7 +429,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putTaskQueueEvent(TaskQueueEventOutput ev) {
+   public void putTaskQueueEvent(TaskQueueEventOut ev) {
       Logger.track();
       
       if (ev.getQueueEvent().equals(TaskQueueEvents.TaskAdded)) {
@@ -443,15 +443,15 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putModuleEventOutput(ModuleEventOutput ev) {
+   public void putModuleEventOutput(ModuleEventOut ev) {
       Logger.track();
       
       CoreEventManager.post(new ModuleEvent(HyperboxEvents.ModuleLoaded, ev.getServer(), ev.getModule()));
    }
 
-   private void refreshTask(TaskInput tIn) {
+   private void refreshTask(TaskIn tIn) {
       try {
-         TaskOutput tOut = reader.getTask(tIn);
+         TaskOut tOut = reader.getTask(tIn);
          insertTask(tOut);
          // TODO catch the proper exception
       } catch (HyperboxRuntimeException e) {
@@ -461,12 +461,12 @@ public class CachedServerReader implements _ServerReader {
       }
    }
    
-   private void insertTask(TaskOutput tOut) {
+   private void insertTask(TaskOut tOut) {
       tOutListCache.put(tOut.getId(), tOut);
       tOutCache.put(tOut.getId(), tOut);
    }
    
-   private void updateTask(TaskOutput tOut) {
+   private void updateTask(TaskOut tOut) {
       tOutListCache.put(tOut.getId(), tOut);
       tOutCache.put(tOut.getId(), tOut);
    }
@@ -476,7 +476,7 @@ public class CachedServerReader implements _ServerReader {
       tOutCache.remove(taskId);
    }
    
-   private void removeTask(TaskOutput tOut) {
+   private void removeTask(TaskOut tOut) {
       removeTask(tOut.getId());
    }
    
@@ -484,7 +484,7 @@ public class CachedServerReader implements _ServerReader {
       Logger.track();
       
       tOutListCache.clear();
-      for (TaskOutput tOut : reader.listTasks()) {
+      for (TaskOut tOut : reader.listTasks()) {
          tOutListCache.put(tOut.getId(), tOut);
       }
       
@@ -492,16 +492,16 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Override
-   public List<TaskOutput> listTasks() {
+   public List<TaskOut> listTasks() {
       if (tOutListCacheUpdate == null) {
          updateTaskList();
       }
       
-      return new ArrayList<TaskOutput>(tOutListCache.values());
+      return new ArrayList<TaskOut>(tOutListCache.values());
    }
    
    @Override
-   public TaskOutput getTask(TaskInput tIn) {
+   public TaskOut getTask(TaskIn tIn) {
       if (invalidTaskIdSet.contains(tIn.getId())) {
          throw new HyperboxRuntimeException("Task was not found");
       }
@@ -512,7 +512,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Override
-   public MediumOutput getMedium(MediumInput medIn) {
+   public MediumOut getMedium(MediumIn medIn) {
       if (invalidMedOutSet.contains(medIn.getUuid())) {
          throw new HyperboxRuntimeException(medIn.getUuid() + " does not relate to a medium");
       }
@@ -530,117 +530,117 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Override
-   public SessionOutput getSession(SessionInput sIn) {
+   public SessionOut getSession(SessionIn sIn) {
       return reader.getSession(sIn);
    }
    
    @Override
-   public StorageControllerSubTypeOutput getStorageControllerSubType(StorageControllerSubTypeInput scstIn) {
+   public StorageControllerSubTypeOut getStorageControllerSubType(StorageControllerSubTypeIn scstIn) {
       return reader.getStorageControllerSubType(scstIn);
    }
    
    @Override
-   public StorageControllerTypeOutput getStorageControllerType(StorageControllerTypeInput sctIn) {
+   public StorageControllerTypeOut getStorageControllerType(StorageControllerTypeIn sctIn) {
       return reader.getStorageControllerType(sctIn);
    }
    
    @Override
-   public StoreOutput getStore(StoreInput sIn) {
+   public StoreOut getStore(StoreIn sIn) {
       return reader.getStore(sIn);
    }
    
    @Override
-   public StoreItemOutput getStoreItem(StoreItemInput siIn) {
+   public StoreItemOut getStoreItem(StoreItemIn siIn) {
       return reader.getStoreItem(siIn);
    }
    
    @Override
-   public UserOutput getUser(UserInput uIn) {
+   public UserOut getUser(UserIn uIn) {
       return reader.getUser(uIn);
    }
    
    @Override
-   public List<StorageDeviceAttachmentOutput> listAttachments(StorageControllerInput scIn) {
+   public List<StorageDeviceAttachmentOut> listAttachments(StorageControllerIn scIn) {
       return reader.listAttachments(scIn);
    }
    
    @Override
-   public List<String> listKeyboardMode(MachineInput mIn) {
+   public List<String> listKeyboardMode(MachineIn mIn) {
       return reader.listKeyboardMode(mIn);
    }
    
    @Override
-   public List<MediumOutput> listMediums() {
+   public List<MediumOut> listMediums() {
       return reader.listMediums();
    }
    
    @Override
-   public List<String> listMouseMode(MachineInput mIn) {
+   public List<String> listMouseMode(MachineIn mIn) {
       return reader.listMouseMode(mIn);
    }
    
    @Override
-   public List<OsTypeOutput> listOsType() {
+   public List<OsTypeOut> listOsType() {
       return reader.listOsType();
    }
    
    @Override
-   public List<OsTypeOutput> listOsType(MachineInput mIn) {
+   public List<OsTypeOut> listOsType(MachineIn mIn) {
       return reader.listOsType(mIn);
    }
    
    @Override
-   public List<SessionOutput> listSessions() {
+   public List<SessionOut> listSessions() {
       return reader.listSessions();
    }
    
    @Override
-   public List<StorageControllerSubTypeOutput> listStorageControllerSubType(StorageControllerTypeInput sctIn) {
+   public List<StorageControllerSubTypeOut> listStorageControllerSubType(StorageControllerTypeIn sctIn) {
       return reader.listStorageControllerSubType(sctIn);
    }
    
    @Override
-   public List<StorageControllerTypeOutput> listStorageControllerType() {
+   public List<StorageControllerTypeOut> listStorageControllerType() {
       return reader.listStorageControllerType();
    }
    
    @Override
-   public List<StoreItemOutput> listStoreItems(StoreInput sIn) {
+   public List<StoreItemOut> listStoreItems(StoreIn sIn) {
       return reader.listStoreItems(sIn);
    }
    
    @Override
-   public List<StoreItemOutput> listStoreItems(StoreInput sIn, StoreItemInput siIn) {
+   public List<StoreItemOut> listStoreItems(StoreIn sIn, StoreItemIn siIn) {
       return reader.listStoreItems(sIn, siIn);
    }
    
    @Override
-   public List<StoreOutput> listStores() {
+   public List<StoreOut> listStores() {
       return reader.listStores();
    }
    
    @Override
-   public List<UserOutput> listUsers() {
+   public List<UserOut> listUsers() {
       return reader.listUsers();
    }
    
    @Override
-   public List<NetworkInterfaceOutput> listNetworkInterfaces(MachineInput mIn) {
+   public List<NetworkInterfaceOut> listNetworkInterfaces(MachineIn mIn) {
       return reader.listNetworkInterfaces(mIn);
    }
    
    @Override
-   public List<NetworkAttachModeOutput> listNetworkAttachModes() {
+   public List<NetworkAttachModeOut> listNetworkAttachModes() {
       return reader.listNetworkAttachModes();
    }
    
    @Override
-   public List<NetworkAttachNameOutput> listNetworkAttachNames(NetworkAttachModeInput namIn) {
+   public List<NetworkAttachNameOut> listNetworkAttachNames(NetworkAttachModeIn namIn) {
       return reader.listNetworkAttachNames(namIn);
    }
    
    @Override
-   public List<NetworkInterfaceTypeOutput> listNetworkInterfaceTypes() {
+   public List<NetworkInterfaceTypeOut> listNetworkInterfaceTypes() {
       return reader.listNetworkInterfaceTypes();
    }
    
@@ -650,7 +650,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Override
-   public ScreenshotOutput getScreenshot(MachineInput mIn) {
+   public ScreenshotOut getScreenshot(MachineIn mIn) {
       return reader.getScreenshot(mIn);
    }
    
@@ -660,12 +660,12 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Override
-   public List<HypervisorLoaderOutput> listHypervisors() {
+   public List<HypervisorLoaderOut> listHypervisors() {
       return reader.listHypervisors();
    }
    
    @Override
-   public List<StorageDeviceAttachmentOutput> listAttachments(String machineUuid) {
+   public List<StorageDeviceAttachmentOut> listAttachments(String machineUuid) {
       return reader.listAttachments(machineUuid);
    }
    
@@ -680,7 +680,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Override
-   public MachineOutput getMachine(String vmId) {
+   public MachineOut getMachine(String vmId) {
       if (invalidMachineUuidSet.contains(vmId)) {
          throw new HyperboxRuntimeException(vmId + " does not relate to a machine");
       }
@@ -691,32 +691,32 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Override
-   public List<PermissionOutput> listPermissions(UserInput usrIn) {
+   public List<PermissionOut> listPermissions(UserIn usrIn) {
       return reader.listPermissions(usrIn);
    }
    
    @Override
-   public HostOutput getHost() {
+   public HostOut getHost() {
       return reader.getHost();
    }
    
    @Override
-   public SnapshotOutput getSnapshot(String vmId, String snapId) {
-      return getSnapshot(new MachineInput(vmId), new SnapshotInput(snapId));
+   public SnapshotOut getSnapshot(String vmId, String snapId) {
+      return getSnapshot(new MachineIn(vmId), new SnapshotIn(snapId));
    }
    
    @Override
-   public SnapshotOutput getCurrentSnapshot(String vmId) {
-      return getCurrentSnapshot(new MachineInput(vmId));
+   public SnapshotOut getCurrentSnapshot(String vmId) {
+      return getCurrentSnapshot(new MachineIn(vmId));
    }
    
    @Override
-   public List<ModuleOutput> listModules() {
+   public List<ModuleOut> listModules() {
       return reader.listModules();
    }
    
    @Override
-   public ModuleOutput getModule(String modId) {
+   public ModuleOut getModule(String modId) {
       return reader.getModule(modId);
    }
    

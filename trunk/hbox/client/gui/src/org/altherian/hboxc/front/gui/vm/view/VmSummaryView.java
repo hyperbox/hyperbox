@@ -25,18 +25,18 @@ import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.MediumInput;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.output.event.storage.StorageControllerAttachmentDataModifiedEventOutput;
-import org.altherian.hbox.comm.output.hypervisor.GuestNetworkInterfaceOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
-import org.altherian.hbox.comm.output.storage.MediumOutput;
-import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
-import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
-import org.altherian.hbox.constant.EntityTypes;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.MediumIn;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.out.event.storage.StorageControllerAttachmentDataModifiedEventOut;
+import org.altherian.hbox.comm.out.hypervisor.GuestNetworkInterfaceOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
+import org.altherian.hbox.comm.out.storage.MediumOut;
+import org.altherian.hbox.comm.out.storage.StorageControllerOut;
+import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
+import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxc.controller.ClientTasks;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.machine.MachineStateChangedEvent;
@@ -67,8 +67,8 @@ import javax.swing.SwingWorker;
 
 public final class VmSummaryView {
    
-   private MachineOutput mOut;
-   private Map<String, StorageControllerOutput> controllers;
+   private MachineOut mOut;
+   private Map<String, StorageControllerOut> controllers;
    
    private JPanel panel;
    
@@ -225,7 +225,7 @@ public final class VmSummaryView {
    private void initStorage() {
       Logger.track();
       
-      controllers = new HashMap<String, StorageControllerOutput>();
+      controllers = new HashMap<String, StorageControllerOut>();
       storagePanel = new JPanel(new MigLayout());
       storagePanel.setBorder(BorderUtils.createTitledBorder(Color.gray, "Storage"));
    }
@@ -399,7 +399,7 @@ public final class VmSummaryView {
       }
    }
    
-   public void show(final MachineOutput mOut) {
+   public void show(final MachineOut mOut) {
       Logger.track();
       
       if ((this.mOut == null) || !this.mOut.equals(mOut)) {
@@ -422,7 +422,7 @@ public final class VmSummaryView {
          nameField.setText(mOut.getName());
          uuidField.setText(mOut.getUuid());
          stateField.setText(mOut.getState());
-         osTypeField.setText(mOut.getSetting(MachineAttributes.OsType).getString());
+         osTypeField.setText(mOut.getSetting(MachineAttribute.OsType).getString());
       }
    }
    
@@ -437,25 +437,25 @@ public final class VmSummaryView {
             }
          });
       } else {
-         cpuCountValue.setText(mOut.getSetting(MachineAttributes.CpuCount).getString());
-         memoryValue.setText(mOut.getSetting(MachineAttributes.Memory).getString() + " MB");
+         cpuCountValue.setText(mOut.getSetting(MachineAttribute.CpuCount).getString());
+         memoryValue.setText(mOut.getSetting(MachineAttribute.Memory).getString() + " MB");
          List<String> extList = new ArrayList<String>();
-         if (mOut.hasSetting(MachineAttributes.HwVirtEx) && mOut.getSetting(MachineAttributes.HwVirtEx).getBoolean()) {
+         if (mOut.hasSetting(MachineAttribute.HwVirtEx) && mOut.getSetting(MachineAttribute.HwVirtEx).getBoolean()) {
             extList.add("VT-x/AMD-V");
          }
-         if (mOut.hasSetting(MachineAttributes.HwVirtExExcl) && mOut.getSetting(MachineAttributes.HwVirtExExcl).getBoolean()) {
+         if (mOut.hasSetting(MachineAttribute.HwVirtExExcl) && mOut.getSetting(MachineAttribute.HwVirtExExcl).getBoolean()) {
             extList.add("Virt Unrestricted");
          }
-         if (mOut.hasSetting(MachineAttributes.NestedPaging) && mOut.getSetting(MachineAttributes.NestedPaging).getBoolean()) {
+         if (mOut.hasSetting(MachineAttribute.NestedPaging) && mOut.getSetting(MachineAttribute.NestedPaging).getBoolean()) {
             extList.add("Nested Paging");
          }
-         if (mOut.hasSetting(MachineAttributes.PAE) && mOut.getSetting(MachineAttributes.PAE).getBoolean()) {
+         if (mOut.hasSetting(MachineAttribute.PAE) && mOut.getSetting(MachineAttribute.PAE).getBoolean()) {
             extList.add("PAE/NX");
          }
-         if (mOut.hasSetting(MachineAttributes.LargePages) && mOut.getSetting(MachineAttributes.LargePages).getBoolean()) {
+         if (mOut.hasSetting(MachineAttribute.LargePages) && mOut.getSetting(MachineAttribute.LargePages).getBoolean()) {
             extList.add("Large Pages");
          }
-         if (mOut.hasSetting(MachineAttributes.Vtxvpid) && mOut.getSetting(MachineAttributes.Vtxvpid).getBoolean()) {
+         if (mOut.hasSetting(MachineAttribute.Vtxvpid) && mOut.getSetting(MachineAttribute.Vtxvpid).getBoolean()) {
             extList.add("VT-x VPID");
          }
          StringBuilder extBuilder = new StringBuilder();
@@ -481,16 +481,16 @@ public final class VmSummaryView {
             }
          });
       } else {
-         vramValue.setText(mOut.getSetting(MachineAttributes.VRAM).getString());
+         vramValue.setText(mOut.getSetting(MachineAttribute.VRAM).getString());
          
-         consoleModuleValue.setText(mOut.getSetting(MachineAttributes.VrdeModule).getString());
+         consoleModuleValue.setText(mOut.getSetting(MachineAttribute.VrdeModule).getString());
          
-         if (mOut.getSetting(MachineAttributes.VrdeEnabled).getBoolean()) {
+         if (mOut.getSetting(MachineAttribute.VrdeEnabled).getBoolean()) {
             String addr = Gui.getReader().getConnectorForServer(mOut.getServerId()).getAddress();
-            if (!AxStrings.isEmpty(mOut.getSetting(MachineAttributes.VrdeAddress).getString())) {
-               addr = mOut.getSetting(MachineAttributes.VrdeAddress).getString();
+            if (!AxStrings.isEmpty(mOut.getSetting(MachineAttribute.VrdeAddress).getString())) {
+               addr = mOut.getSetting(MachineAttribute.VrdeAddress).getString();
             }
-            addr = addr + ":" + mOut.getSetting(MachineAttributes.VrdePort).getString();
+            addr = addr + ":" + mOut.getSetting(MachineAttribute.VrdePort).getString();
             consoleAddressValue.setText(addr);
             consoleConnectButton.setEnabled(mOut.getState().equalsIgnoreCase("running"));
          } else {
@@ -512,31 +512,31 @@ public final class VmSummaryView {
       } else {
          clearStorage();
          if (controllers.isEmpty()) {
-            for (StorageControllerOutput scOut : mOut.listStorageController()) {
+            for (StorageControllerOut scOut : mOut.listStorageController()) {
                controllers.put(scOut.getId(), scOut);
             }
          }
          
-         for (StorageControllerOutput scOut : controllers.values()) {
+         for (StorageControllerOut scOut : controllers.values()) {
             try {
                storagePanel.add(new JLabel(scOut.getType()), "wrap");
-               for (StorageDeviceAttachmentOutput sdaOut : scOut.getAttachments()) {
+               for (StorageDeviceAttachmentOut sdaOut : scOut.getAttachments()) {
                   storagePanel.add(new JLabel(""));
                   storagePanel.add(new JLabel(sdaOut.getPortId() + ":" + sdaOut.getDeviceId()));
                   
                   storagePanel.add(new JLabel(""));
                   storagePanel.add(new JLabel(""));
                   if (sdaOut.hasMediumInserted()) {
-                     MediumOutput medOut = Gui.getServer(mOut.getServerId()).getMedium(new MediumInput(sdaOut.getMediumUuid()));
+                     MediumOut medOut = Gui.getServer(mOut.getServerId()).getMedium(new MediumIn(sdaOut.getMediumUuid()));
                      while (medOut.hasParent()) {
                         Logger.debug(medOut.getName() + " has parent : " + medOut.getParentUuid());
-                        medOut = Gui.getServer(mOut.getServerId()).getMedium(new MediumInput(medOut.getParentUuid()));
+                        medOut = Gui.getServer(mOut.getServerId()).getMedium(new MediumIn(medOut.getParentUuid()));
                      }
                      storagePanel.add(new JLabel("[" + sdaOut.getDeviceType() + "] " + medOut.getName()));
                   } else {
                      storagePanel.add(new JLabel("[" + sdaOut.getDeviceType() + "] Empty"));
                   }
-                  if (sdaOut.getDeviceType().contentEquals(EntityTypes.DVD.getId())) {
+                  if (sdaOut.getDeviceType().contentEquals(Entity.DVD.getId())) {
                      storagePanel.add(new JButton(new StorageDeviceAttachmentMediumEditAction(mOut.getServerId(), sdaOut)), "wrap");
                   } else {
                      storagePanel.add(new JLabel(""), "wrap");
@@ -566,9 +566,9 @@ public final class VmSummaryView {
          });
       } else {
          audioPanel.removeAll();
-         if (mOut.getSetting(MachineAttributes.AudioEnable).getBoolean()) {
-            hostDriverValue.setText(mOut.getSetting(MachineAttributes.AudioDriver).getString());
-            audioControllerValue.setText(mOut.getSetting(MachineAttributes.AudioController).getString());
+         if (mOut.getSetting(MachineAttribute.AudioEnable).getBoolean()) {
+            hostDriverValue.setText(mOut.getSetting(MachineAttribute.AudioDriver).getString());
+            audioControllerValue.setText(mOut.getSetting(MachineAttribute.AudioController).getString());
             
             audioPanel.add(hostDriverLabel);
             audioPanel.add(hostDriverValue, "growx, pushx, wrap");
@@ -585,13 +585,13 @@ public final class VmSummaryView {
       Logger.track();
       
       clearNetwork();
-      new SwingWorker<List<StorageDeviceAttachmentOutput>,Void>() {
+      new SwingWorker<List<StorageDeviceAttachmentOut>,Void>() {
          
          @Override
-         protected List<StorageDeviceAttachmentOutput> doInBackground() throws Exception {
-            for (NetworkInterfaceOutput nicOut : mOut.listNetworkInterface()) {
+         protected List<StorageDeviceAttachmentOut> doInBackground() throws Exception {
+            for (NetworkInterfaceOut nicOut : mOut.listNetworkInterface()) {
                if (nicOut.isEnabled()) {
-                  GuestNetworkInterfaceOutput gNicOut = null;
+                  GuestNetworkInterfaceOut gNicOut = null;
                   try  {
                      gNicOut = Gui.getReader().getServerReader(mOut.getServerId()).getGuest(mOut.getUuid())
                            .findNetworkInterface(nicOut.getMacAddress());
@@ -626,7 +626,7 @@ public final class VmSummaryView {
             }
          });
       } else {
-         descArea.setText(mOut.getSetting(MachineAttributes.Description).getString());
+         descArea.setText(mOut.getSetting(MachineAttribute.Description).getString());
       }
    }
    
@@ -681,7 +681,7 @@ public final class VmSummaryView {
    }
    
    @Handler
-   public void putStorageControllerAttachmentDataChanged(StorageControllerAttachmentDataModifiedEventOutput ev) {
+   public void putStorageControllerAttachmentDataChanged(StorageControllerAttachmentDataModifiedEventOut ev) {
       if (ev.getUuid().contentEquals(mOut.getUuid())) {
          controllers.put(ev.getStorageController().getId(), ev.getStorageController());
          refreshStorage();
@@ -694,7 +694,7 @@ public final class VmSummaryView {
       public void actionPerformed(ActionEvent ae) {
          Logger.track();
          
-         Gui.post(new Request(ClientTasks.ConsoleViewerUse, new ServerInput(mOut.getServerId()), new MachineInput(mOut)));
+         Gui.post(new Request(ClientTasks.ConsoleViewerUse, new ServerIn(mOut.getServerId()), new MachineIn(mOut)));
       }
       
    }

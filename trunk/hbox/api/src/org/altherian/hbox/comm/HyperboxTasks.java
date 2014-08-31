@@ -21,10 +21,11 @@
 
 package org.altherian.hbox.comm;
 
-import org.altherian.hbox.comm.input.HypervisorInput;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.hypervisor.HypervisorOutput;
+import org.altherian.hbox.comm.in.HypervisorIn;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
+
 
 public enum HyperboxTasks {
    
@@ -32,7 +33,7 @@ public enum HyperboxTasks {
     * Retrieve the list of servers managed by the one we are connected to.
     * <p>
     * Request Object: None<br/>
-    * Answer Object: {@link ServerOutput}<br/>
+    * Answer Object: {@link ServerOut}<br/>
     * Answer Type : Multi<br/>
     * Queueable: No
     * </p>
@@ -41,8 +42,8 @@ public enum HyperboxTasks {
    /**
     * Retrieve the information about a server
     * <p>
-    * Request Object: {@link ServerInput} for a specific server, none for the current server<br/>
-    * Answer Object: {@link ServerOutput}<br/>
+    * Request Object: {@link ServerIn} for a specific server, none for the current server<br/>
+    * Answer Object: {@link ServerOut}<br/>
     * Answer Type: Single<br/>
     * Queueable: No
     * </p>
@@ -55,9 +56,9 @@ public enum HyperboxTasks {
    /**
     * Connect a server to an hypervisor.
     * <p>
-    * Request Objects: {@link ServerInput} for a specific server, none for the current server<br/>
-    * {@link HypervisorInput} for the hypervisor to connect to<br/>
-    * Answer Object: {@link HypervisorOutput}<br/>
+    * Request Objects: {@link ServerIn} for a specific server, none for the current server<br/>
+    * {@link HypervisorIn} for the hypervisor to connect to<br/>
+    * Answer Object: {@link HypervisorOut}<br/>
     * Answer Type: Single<br/>
     * Queueable: Yes
     * </p>
@@ -67,7 +68,7 @@ public enum HyperboxTasks {
    /**
     * Disconnect the server from its hypervisor.
     * <p>
-    * Request Objects: {@link ServerInput} for a specific server, none for the current server<br/>
+    * Request Objects: {@link ServerIn} for a specific server, none for the current server<br/>
     * Answer Type: Single<br/>
     * Queueable: Yes
     * </p>

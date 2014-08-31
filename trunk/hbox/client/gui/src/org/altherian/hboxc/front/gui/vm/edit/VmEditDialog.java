@@ -26,9 +26,9 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.constant.EntityTypes;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.MainView;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
@@ -91,7 +91,7 @@ public class VmEditDialog {
    private AudioVmEdit audioEdit;
    private NetworkVmEdit networkEdit;
    
-   private MachineInput mIn;
+   private MachineIn mIn;
    
    public VmEditDialog() {
       generalEdit = new GeneralVmEdit();
@@ -156,8 +156,8 @@ public class VmEditDialog {
       
    }
    
-   private void show(MachineOutput mOut) {
-      mIn = new MachineInput(mOut);
+   private void show(MachineOut mOut) {
+      mIn = new MachineIn(mOut);
       MachineGetWorker.get(new MachineReceiver(), mOut);
       mainDialog.setTitle(mOut.getName() + " - Settings");
       mainDialog.setLocationRelativeTo(mainDialog.getParent());
@@ -165,7 +165,7 @@ public class VmEditDialog {
    }
    
    
-   public static void edit(MachineOutput mOut) {
+   public static void edit(MachineOut mOut) {
       new VmEditDialog().show(mOut);
    }
    
@@ -242,17 +242,17 @@ public class VmEditDialog {
          JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
          
          if (label.getText() == GENERAL) {
-            label.setIcon(IconBuilder.getEntityType(EntityTypes.Machine));
+            label.setIcon(IconBuilder.getEntityType(Entity.Machine));
          } else if (label.getText() == SYSTEM) {
-            label.setIcon(IconBuilder.getEntityType(EntityTypes.CPU));
+            label.setIcon(IconBuilder.getEntityType(Entity.CPU));
          } else if (label.getText() == DISPLAY) {
-            label.setIcon(IconBuilder.getEntityType(EntityTypes.Display));
+            label.setIcon(IconBuilder.getEntityType(Entity.Display));
          } else if (label.getText() == STORAGE) {
-            label.setIcon(IconBuilder.getEntityType(EntityTypes.HardDisk));
+            label.setIcon(IconBuilder.getEntityType(Entity.HardDisk));
          } else if (label.getText() == AUDIO) {
-            label.setIcon(IconBuilder.getEntityType(EntityTypes.Audio));
+            label.setIcon(IconBuilder.getEntityType(Entity.Audio));
          } else if (label.getText() == NETWORK) {
-            label.setIcon(IconBuilder.getEntityType(EntityTypes.Network));
+            label.setIcon(IconBuilder.getEntityType(Entity.Network));
          } else {
             label.setIcon(null);
          }
@@ -277,7 +277,7 @@ public class VmEditDialog {
       }
       
       @Override
-      public void put(final MachineOutput mOut) {
+      public void put(final MachineOut mOut) {
          if (!SwingUtilities.isEventDispatchThread()) {
             SwingUtilities.invokeLater(new Runnable() {
                @Override

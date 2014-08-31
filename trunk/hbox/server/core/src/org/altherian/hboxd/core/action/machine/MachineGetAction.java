@@ -26,9 +26,9 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxd.comm.io.factory.MachineIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
@@ -52,12 +52,12 @@ public class MachineGetAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      ServerInput srvIn = request.get(ServerInput.class);
-      MachineInput mIn = request.get(MachineInput.class);
+      ServerIn srvIn = request.get(ServerIn.class);
+      MachineIn mIn = request.get(MachineIn.class);
       
       _Machine vm = hbox.getServer(srvIn.getId()).getMachine(mIn.getUuid());
       
-      MachineOutput mOut = MachineIoFactory.get(vm);
+      MachineOut mOut = MachineIoFactory.get(vm);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, mOut));
    }
    

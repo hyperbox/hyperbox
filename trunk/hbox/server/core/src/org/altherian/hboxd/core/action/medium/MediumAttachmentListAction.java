@@ -26,8 +26,8 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.StorageControllerInput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.StorageControllerIn;
 import org.altherian.hboxd.comm.io.factory.MediumAttachmentIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.AbstractHyperboxMultiTaskAction;
@@ -52,8 +52,8 @@ public final class MediumAttachmentListAction extends AbstractHyperboxMultiTaskA
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      if (request.has(StorageControllerInput.class)) {
-         StorageControllerInput scIn = request.get(StorageControllerInput.class);
+      if (request.has(StorageControllerIn.class)) {
+         StorageControllerIn scIn = request.get(StorageControllerIn.class);
          _RawStorageController sc = hbox.getHypervisor().getMachine(scIn.getMachineUuid()).getStorageController(scIn.getId());
          
          for (_RawMediumAttachment ma : sc.listMediumAttachment()) {
@@ -61,7 +61,7 @@ public final class MediumAttachmentListAction extends AbstractHyperboxMultiTaskA
          }
          
       } else {
-         MachineInput mIn = request.get(MachineInput.class);
+         MachineIn mIn = request.get(MachineIn.class);
          for (_RawStorageController sc : hbox.getHypervisor().getMachine(mIn.getUuid()).listStoroageControllers()) {
             for (_RawMediumAttachment ma : sc.listMediumAttachment()) {
                SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, MediumAttachmentIoFactory.get(ma)));

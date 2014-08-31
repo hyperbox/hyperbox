@@ -25,7 +25,7 @@ package org.altherian.hboxd.core.action.store;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.StoreInput;
+import org.altherian.hbox.comm.in.StoreIn;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 
@@ -47,7 +47,7 @@ public class StoreUnregisterAction extends ASingleTaskAction {
    @Override
    public void run(Request request, _Hyperbox hbox) {
       // TODO check if still in use
-      StoreInput stoIn = request.get(StoreInput.class);
+      StoreIn stoIn = request.get(StoreIn.class);
       hbox.getStoreManager().unregisterStore(stoIn.getId());
    }
    

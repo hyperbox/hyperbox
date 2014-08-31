@@ -23,11 +23,11 @@ package org.altherian.hboxc.front.gui.network;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.NetworkInterfaceInput;
-import org.altherian.hbox.comm.output.network.NetworkAttachModeOutput;
-import org.altherian.hbox.comm.output.network.NetworkAttachNameOutput;
-import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
-import org.altherian.hbox.comm.output.network.NetworkInterfaceTypeOutput;
+import org.altherian.hbox.comm.in.NetworkInterfaceIn;
+import org.altherian.hbox.comm.out.network.NetworkAttachModeOut;
+import org.altherian.hbox.comm.out.network.NetworkAttachNameOut;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceTypeOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.workers.NetworkAttachModeListWorker;
 import org.altherian.hboxc.front.gui.workers.NetworkAttachNameListWorker;
@@ -47,8 +47,8 @@ import javax.swing.JTextField;
 public class NetworkInterfaceViewer {
    
    private String srvId;
-   private NetworkInterfaceOutput nicOut;
-   private NetworkInterfaceInput nicIn;
+   private NetworkInterfaceOut nicOut;
+   private NetworkInterfaceIn nicIn;
    
    private JLabel enableNicLabel = new JLabel();
    private JCheckBox enableNicValue = new JCheckBox();
@@ -65,17 +65,17 @@ public class NetworkInterfaceViewer {
    
    private JPanel mainPanel = new JPanel(new MigLayout());
    
-   public static NetworkInterfaceViewer show(String srvId, NetworkInterfaceOutput nicOut) {
+   public static NetworkInterfaceViewer show(String srvId, NetworkInterfaceOut nicOut) {
       NetworkInterfaceViewer viewer = new NetworkInterfaceViewer(srvId, nicOut);
       return viewer;
    }
    
-   public static NetworkInterfaceViewer show(String srvId, NetworkInterfaceOutput nicOut, NetworkInterfaceInput nicIn) {
+   public static NetworkInterfaceViewer show(String srvId, NetworkInterfaceOut nicOut, NetworkInterfaceIn nicIn) {
       NetworkInterfaceViewer viewer = new NetworkInterfaceViewer(srvId, nicOut, nicIn);
       return viewer;
    }
    
-   public NetworkInterfaceViewer(String srvId, NetworkInterfaceOutput nicOut) {
+   public NetworkInterfaceViewer(String srvId, NetworkInterfaceOut nicOut) {
       this.srvId = srvId;
       this.nicOut = nicOut;
       
@@ -97,7 +97,7 @@ public class NetworkInterfaceViewer {
       mainPanel.add(macAddrValue, "growx, wrap");
    }
    
-   public NetworkInterfaceViewer(String srvId, NetworkInterfaceOutput nicOut, NetworkInterfaceInput nicIn) {
+   public NetworkInterfaceViewer(String srvId, NetworkInterfaceOut nicOut, NetworkInterfaceIn nicIn) {
       this(srvId, nicOut);
       this.nicIn = nicIn;
    }
@@ -122,12 +122,12 @@ public class NetworkInterfaceViewer {
       macAddrLabel.setText("MAC Address");
    }
    
-   private void apply(NetworkInterfaceOutput nicOut) {
+   private void apply(NetworkInterfaceOut nicOut) {
       NetworkAttachModeListWorker.run(new NetworkModeReceiver(), srvId);
       
       adapaterTypeValue.removeAllItems();
-      List<NetworkInterfaceTypeOutput> adapterTypes = Gui.getServer(srvId).listNetworkInterfaceTypes();
-      for (NetworkInterfaceTypeOutput adapterType : adapterTypes) {
+      List<NetworkInterfaceTypeOut> adapterTypes = Gui.getServer(srvId).listNetworkInterfaceTypes();
+      for (NetworkInterfaceTypeOut adapterType : adapterTypes) {
          adapaterTypeValue.addItem(adapterType.getId());
       }
       
@@ -143,7 +143,7 @@ public class NetworkInterfaceViewer {
       return mainPanel;
    }
    
-   public NetworkInterfaceInput save() {
+   public NetworkInterfaceIn save() {
       if (nicIn != null) {
          if (enableNicValue.isEnabled() && (enableNicValue.isSelected() != nicOut.isEnabled())) {
             nicIn.setEnabled(enableNicValue.isSelected());
@@ -213,8 +213,8 @@ public class NetworkInterfaceViewer {
       }
       
       @Override
-      public void add(List<NetworkAttachModeOutput> attachModes) {
-         for (NetworkAttachModeOutput attachMode : attachModes) {
+      public void add(List<NetworkAttachModeOut> attachModes) {
+         for (NetworkAttachModeOut attachMode : attachModes) {
             attachModeValue.addItem(attachMode.getId());
          }
       }
@@ -249,8 +249,8 @@ public class NetworkInterfaceViewer {
       }
       
       @Override
-      public void add(List<NetworkAttachNameOutput> nanOut) {
-         for (NetworkAttachNameOutput attachName : nanOut) {
+      public void add(List<NetworkAttachNameOut> nanOut) {
+         for (NetworkAttachNameOut attachName : nanOut) {
             attachNameValue.addItem(attachName.getId());
          }
       }

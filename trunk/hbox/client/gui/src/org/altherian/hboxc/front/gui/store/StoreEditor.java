@@ -24,9 +24,9 @@ package org.altherian.hboxc.front.gui.store;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.StoreInput;
-import org.altherian.hbox.comm.output.StoreItemOutput;
-import org.altherian.hbox.comm.output.StoreOutput;
+import org.altherian.hbox.comm.in.StoreIn;
+import org.altherian.hbox.comm.out.StoreItemOut;
+import org.altherian.hbox.comm.out.StoreOut;
 import org.altherian.hboxc.front.gui._Cancelable;
 import org.altherian.hboxc.front.gui._Saveable;
 import org.altherian.hboxc.front.gui.action.CancelAction;
@@ -65,8 +65,8 @@ public class StoreEditor implements _Saveable, _Cancelable {
    private JDialog dialog;
    
    private String srvId;
-   private StoreInput stoIn;
-   private StoreOutput stoOut;
+   private StoreIn stoIn;
+   private StoreOut stoOut;
    
    @SuppressWarnings("serial")
    private class BrowseAction extends AbstractAction {
@@ -77,7 +77,7 @@ public class StoreEditor implements _Saveable, _Cancelable {
       
       @Override
       public void actionPerformed(ActionEvent e) {
-         StoreItemOutput stiOut = StoreItemChooser.getExisitingFolder(srvId);
+         StoreItemOut stiOut = StoreItemChooser.getExisitingFolder(srvId);
          if (stiOut != null) {
             storeLocValue.setText(stiOut.getPath());
             storeLocValue.requestFocus();
@@ -146,7 +146,7 @@ public class StoreEditor implements _Saveable, _Cancelable {
       CancelableUtils.set(this, dialog.getRootPane());
    }
    
-   public StoreInput create() {
+   public StoreIn create() {
       Logger.track();
       
       dialog.setTitle("Create new Store");
@@ -154,7 +154,7 @@ public class StoreEditor implements _Saveable, _Cancelable {
       return stoIn;
    }
    
-   public StoreInput register() {
+   public StoreIn register() {
       Logger.track();
       
       dialog.setTitle("Registering new Store");
@@ -162,7 +162,7 @@ public class StoreEditor implements _Saveable, _Cancelable {
       return stoIn;
    }
    
-   public StoreInput edit(StoreOutput stoOut) {
+   public StoreIn edit(StoreOut stoOut) {
       Logger.track();
       
       this.stoOut = stoOut;
@@ -175,15 +175,15 @@ public class StoreEditor implements _Saveable, _Cancelable {
       return stoIn;
    }
    
-   public static StoreInput getInputCreate(String srvId) {
+   public static StoreIn getInputCreate(String srvId) {
       return new StoreEditor(srvId).create();
    }
    
-   public static StoreInput getInputRegister(String srvId) {
+   public static StoreIn getInputRegister(String srvId) {
       return new StoreEditor(srvId).register();
    }
    
-   public static StoreInput getInputEdit(String srvId, StoreOutput stoOut) {
+   public static StoreIn getInputEdit(String srvId, StoreOut stoOut) {
       return new StoreEditor(srvId).edit(stoOut);
       
    }
@@ -215,9 +215,9 @@ public class StoreEditor implements _Saveable, _Cancelable {
       Logger.track();
       
       if (stoOut != null) {
-         stoIn = new StoreInput(stoOut.getId());
+         stoIn = new StoreIn(stoOut.getId());
       } else {
-         stoIn = new StoreInput();
+         stoIn = new StoreIn();
       }
       stoIn.setLabel(storeLabelValue.getText());
       stoIn.setLocation(storeLocValue.getText());

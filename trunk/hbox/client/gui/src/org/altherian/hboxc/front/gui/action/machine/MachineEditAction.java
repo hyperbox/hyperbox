@@ -22,7 +22,7 @@
 package org.altherian.hboxc.front.gui.action.machine;
 
 import org.altherian.hbox.comm.HypervisorTasks;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.vm._MachineSelector;
 import org.altherian.hboxc.front.gui.vm.edit.VmEditDialog;
@@ -44,7 +44,7 @@ public class MachineEditAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent ae) {
-      MachineOutput mOut = selector.getMachines().get(0);
+      MachineOut mOut = selector.getMachines().get(0);
       VmEditDialog.edit(mOut);
    }
    

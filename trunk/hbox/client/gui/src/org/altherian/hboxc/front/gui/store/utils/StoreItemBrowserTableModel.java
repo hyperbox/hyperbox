@@ -22,17 +22,17 @@
 
 package org.altherian.hboxc.front.gui.store.utils;
 
-import org.altherian.hbox.comm.output.StoreItemOutput;
-import org.altherian.hbox.constant.StoreItemAttributes;
+import org.altherian.hbox.comm.out.StoreItemOut;
+import org.altherian.hbox.constant.StoreItemAttribute;
 import org.altherian.hboxc.front.gui.utils.ObjectOutputTableModel;
 
 @SuppressWarnings("serial")
-public class StoreItemBrowserTableModel extends ObjectOutputTableModel<StoreItemOutput> {
+public class StoreItemBrowserTableModel extends ObjectOutputTableModel<StoreItemOut> {
    
    @Override
    protected void addColumns() {
-      addColumn("Name", StoreItemAttributes.Name);
-      addColumn("Size", StoreItemAttributes.Size);
+      addColumn("Name", StoreItemAttribute.Name);
+      addColumn("Size", StoreItemAttribute.Size);
    }
    
 }

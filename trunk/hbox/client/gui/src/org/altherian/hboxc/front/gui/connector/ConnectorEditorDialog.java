@@ -24,7 +24,7 @@ package org.altherian.hboxc.front.gui.connector;
 import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.PreferencesManager;
 import org.altherian.hboxc.comm.input.ConnectorInput;
@@ -182,13 +182,13 @@ public final class ConnectorEditorDialog implements _Saveable, _Cancelable {
       
       
       if (task.equals(ClientTasks.ConnectorAdd)) {
-         UserInput uIn = new UserInput(userField.getText(), passField.getPassword());
+         UserIn uIn = new UserIn(userField.getText(), passField.getPassword());
          Gui.post(new Request(task, uIn, conIn));
       } else {
          if (!userField.getText().isEmpty()) {
             char[] pass = passField.getPassword();
             if (pass.length > 0) {
-               UserInput uIn = new UserInput(userField.getText(), passField.getPassword());
+               UserIn uIn = new UserIn(userField.getText(), passField.getPassword());
                Gui.post(new Request(task, uIn, conIn));
             } else {
                Gui.post(new Request(task, conIn));

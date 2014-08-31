@@ -21,12 +21,12 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.output.network.NetworkAttachModeOutput;
+import org.altherian.hbox.comm.out.network.NetworkAttachModeOut;
 
 import java.util.List;
 
 public interface _NetworkAttachModeReceiver extends _WorkerDataReceiver {
    
-   public void add(List<NetworkAttachModeOutput> objOutList);
+   public void add(List<NetworkAttachModeOut> objOutList);
    
 }

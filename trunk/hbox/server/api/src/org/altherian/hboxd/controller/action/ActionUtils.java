@@ -22,7 +22,7 @@
 package org.altherian.hboxd.controller.action;
 
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
+import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.model._Machine;
 
@@ -46,8 +46,8 @@ public class ActionUtils {
       return null;
    }
    
-   public static MachineInput extractMachineInput(_Hyperbox core, Request req) {
-      return (MachineInput) req.get(MachineInput.class);
+   public static MachineIn extractMachineInput(_Hyperbox core, Request req) {
+      return (MachineIn) req.get(MachineIn.class);
    }
    
 }

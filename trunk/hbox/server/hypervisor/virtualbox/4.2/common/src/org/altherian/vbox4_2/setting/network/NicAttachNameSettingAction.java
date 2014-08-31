@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.network;
 
-import org.altherian.hbox.constant.NetworkInterfaceSettings;
+import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.network.NicAttachNameSetting;
 import org.altherian.vbox4_2.setting._NetworkInterfaceSettingAction;
@@ -38,7 +38,7 @@ public class NicAttachNameSettingAction implements _NetworkInterfaceSettingActio
    
    @Override
    public String getSettingName() {
-      return NetworkInterfaceSettings.AttachName.toString();
+      return NetworkInterfaceAttribute.AttachName.toString();
    }
    
    @Override

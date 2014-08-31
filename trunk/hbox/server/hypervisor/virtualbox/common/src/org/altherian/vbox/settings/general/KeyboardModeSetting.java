@@ -21,17 +21,17 @@
 
 package org.altherian.vbox.settings.general;
 
-import org.altherian.hbox.constant.KeyboardModes;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.KeyboardMode;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class KeyboardModeSetting extends StringSetting {
    
    public KeyboardModeSetting(String mode) {
-      super(MachineAttributes.KeyboardMode, mode);
+      super(MachineAttribute.KeyboardMode, mode);
    }
    
-   public KeyboardModeSetting(KeyboardModes mode) {
+   public KeyboardModeSetting(KeyboardMode mode) {
       this(mode.toString());
    }
    

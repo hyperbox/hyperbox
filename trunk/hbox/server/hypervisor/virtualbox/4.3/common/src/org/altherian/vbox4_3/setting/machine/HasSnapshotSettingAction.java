@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.setting.machine;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
@@ -39,7 +39,7 @@ public class HasSnapshotSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.HasSnapshot.getId();
+      return MachineAttribute.HasSnapshot.getId();
    }
    
    @Override
@@ -49,7 +49,7 @@ public class HasSnapshotSettingAction implements _MachineSettingAction {
    
    @Override
    public _Setting get(IMachine machine) {
-      return new BooleanSetting(MachineAttributes.HasSnapshot, machine.getSnapshotCount() != 0);
+      return new BooleanSetting(MachineAttribute.HasSnapshot, machine.getSnapshotCount() != 0);
    }
    
 }

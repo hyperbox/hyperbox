@@ -22,9 +22,12 @@
 
 package org.altherian.hboxc;
 
+import org.altherian.hbox.Configuration;
 import org.altherian.hbox.HyperboxAPI;
+import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.tool.logging.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.Set;
@@ -34,6 +37,10 @@ public class Hyperbox {
    private static Properties buildProperties;
    private static String version = "0.0.0";
    private static String revision = "0";
+   
+   public static String getConfigFilePath() throws HyperboxException {
+      return Configuration.getUserDataPath() + File.separator + "main.cfg";
+   }
    
    private static void failedToLoad(Exception e) {
       Logger.error("Unable to access the build.properties file: " + e.getMessage());

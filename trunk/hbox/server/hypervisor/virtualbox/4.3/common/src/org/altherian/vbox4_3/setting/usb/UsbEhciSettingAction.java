@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.setting.usb;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.usb.UsbEhciSetting;
 import org.altherian.vbox4_3.setting._MachineSettingAction;
@@ -39,7 +39,7 @@ public class UsbEhciSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.UsbEhci.toString();
+      return MachineAttribute.UsbEhci.toString();
    }
    
    @Override

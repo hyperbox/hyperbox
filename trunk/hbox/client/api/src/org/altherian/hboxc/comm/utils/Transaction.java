@@ -26,9 +26,9 @@ import net.engio.mbassy.listener.Handler;
 import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._AnswerReceiver;
-import org.altherian.hbox.comm.output.TaskOutput;
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.task.TaskStateEventOutput;
+import org.altherian.hbox.comm.out.TaskOut;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.task.TaskStateEventOut;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.states.TaskState;
 import org.altherian.hboxc._EventReceiver;
@@ -56,7 +56,7 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
    
    private final Request request;
    private volatile String taskId;
-   private TaskStateEventOutput evOut;
+   private TaskStateEventOut evOut;
    private volatile List<String> finishedTaskId;
    
    private String internalError = "";
@@ -164,7 +164,7 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
          if (!sendAndWait()) {
             return false;
          }
-         taskId = extractItem(TaskOutput.class).getId();
+         taskId = extractItem(TaskOut.class).getId();
          synchronized (this) {
             while (!finishedTaskId.contains(taskId)) {
                if (!b.isConnected()) {
@@ -234,12 +234,12 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
    
    @Handler
    @Override
-   public void post(EventOutput evOut) {
+   public void post(EventOut evOut) {
       Logger.track();
       
       Logger.verbose(evOut.toString());
-      if (evOut instanceof TaskStateEventOutput) {
-         TaskStateEventOutput tsEvOut = (TaskStateEventOutput) evOut;
+      if (evOut instanceof TaskStateEventOut) {
+         TaskStateEventOut tsEvOut = (TaskStateEventOut) evOut;
          Logger.debug("Got event for TaskState: " + tsEvOut.getTask().getState());
          if (tsEvOut.getTask().getState().isFinishing()) {
             finishedTaskId.add(tsEvOut.getTask().getId());

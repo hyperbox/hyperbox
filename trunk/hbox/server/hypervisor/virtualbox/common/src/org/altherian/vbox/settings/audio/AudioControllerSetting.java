@@ -22,13 +22,13 @@
 package org.altherian.vbox.settings.audio;
 
 import org.altherian.hbox.constant.AudioController;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class AudioControllerSetting extends StringSetting {
    
    public AudioControllerSetting(String value) {
-      super(MachineAttributes.AudioController, value);
+      super(MachineAttribute.AudioController, value);
    }
    
    public AudioControllerSetting(AudioController value) {

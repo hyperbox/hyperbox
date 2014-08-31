@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.general;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class DescriptionSetting extends StringSetting {
    
    public DescriptionSetting(String desc) {
-      super(MachineAttributes.Description, desc);
+      super(MachineAttribute.Description, desc);
    }
    
 }

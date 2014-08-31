@@ -24,7 +24,7 @@ package org.altherian.hboxc.front.gui.action.server;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
+import org.altherian.hbox.comm.in.ServerIn;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.server.ServerEditorDialog;
 import org.altherian.hboxc.front.gui.server._ServerSelector;
@@ -47,7 +47,7 @@ public class ServerConfigureAction extends AbstractAction {
    @Override
    public void actionPerformed(ActionEvent ae) {
       Logger.info("Action: Server Configure for Server #" + selector.getServer().getId());
-      ServerInput srvIn = ServerEditorDialog.getInput(selector.getServer().getId());
+      ServerIn srvIn = ServerEditorDialog.getInput(selector.getServer().getId());
       if (srvIn == null) {
          Logger.info("No server info was returned");
       } else {

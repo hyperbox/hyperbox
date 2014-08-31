@@ -21,7 +21,7 @@
 
 package org.altherian.hbox.comm;
 
-import org.altherian.hbox.comm.input.Action;
+import org.altherian.hbox.comm.in.Action;
 
 public interface _Actionnable {
    

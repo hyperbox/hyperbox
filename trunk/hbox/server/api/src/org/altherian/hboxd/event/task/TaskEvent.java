@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.event.task;
 
-import org.altherian.hbox.comm.output.TaskOutput;
+import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hbox.event.Event;
 import org.altherian.hboxd.comm.io.factory.TaskIoFactory;
 import org.altherian.hboxd.task._Task;
@@ -30,15 +30,15 @@ public abstract class TaskEvent extends Event {
    
    public TaskEvent(Enum<?> id, _Task t) {
       super(id);
-      set(TaskOutput.class, TaskIoFactory.get(t));
+      set(TaskOut.class, TaskIoFactory.get(t));
    }
    
    public String getTaskId() {
       return getTask().getId();
    }
    
-   public TaskOutput getTask() {
-      return get(TaskOutput.class);
+   public TaskOut getTask() {
+      return get(TaskOut.class);
    }
    
 }

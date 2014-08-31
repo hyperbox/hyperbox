@@ -26,9 +26,9 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.GuestNetworkInterfaceInput;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.output.hypervisor.GuestNetworkInterfaceOutput;
+import org.altherian.hbox.comm.in.GuestNetworkInterfaceIn;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.out.hypervisor.GuestNetworkInterfaceOut;
 import org.altherian.hboxd.comm.io.factory.GuestNetworkInterfaceIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
@@ -52,11 +52,11 @@ public class GuestNetworkInterfaceFindAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      MachineInput mIn = request.get(MachineInput.class);
-      GuestNetworkInterfaceInput gNicIn = request.get(GuestNetworkInterfaceInput.class);
+      MachineIn mIn = request.get(MachineIn.class);
+      GuestNetworkInterfaceIn gNicIn = request.get(GuestNetworkInterfaceIn.class);
       
       _RawGuestNetworkInterface rawGNic = hbox.getHypervisor().getMachine(mIn.getUuid()).getGuest().getNetworkInterfaceByMac(gNicIn.getMacAddress());
-      GuestNetworkInterfaceOutput gNicOut = GuestNetworkInterfaceIoFactory.get(rawGNic);
+      GuestNetworkInterfaceOut gNicOut = GuestNetworkInterfaceIoFactory.get(rawGNic);
 
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, gNicOut));
    }

@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.core.model;
 
-import org.altherian.hbox.constant.KeyboardModes;
+import org.altherian.hbox.constant.KeyboardMode;
 import org.altherian.hboxd.hypervisor._RawItem;
 
 public interface _Keyboard extends _RawItem {
@@ -30,6 +30,6 @@ public interface _Keyboard extends _RawItem {
    
    public void setMode(String mode);
    
-   public void setMode(KeyboardModes mode);
+   public void setMode(KeyboardMode mode);
    
 }

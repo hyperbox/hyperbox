@@ -21,17 +21,17 @@
 
 package org.altherian.vbox.settings.usb;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public class UsbOhciSetting extends BooleanSetting {
    
    public UsbOhciSetting(boolean isEnabled) {
-      super(MachineAttributes.UsbOhci, isEnabled);
+      super(MachineAttribute.UsbOhci, isEnabled);
    }
    
    public UsbOhciSetting(Long amount) {
-      super(MachineAttributes.UsbOhci, (amount > 0));
+      super(MachineAttribute.UsbOhci, (amount > 0));
    }
    
 }

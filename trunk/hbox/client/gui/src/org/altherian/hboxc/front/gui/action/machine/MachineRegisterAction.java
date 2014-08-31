@@ -24,10 +24,10 @@ package org.altherian.hboxc.front.gui.action.machine;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.input.StoreItemInput;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.in.StoreItemIn;
 import org.altherian.hbox.comm.io.factory.StoreItemIoFactory;
-import org.altherian.hbox.comm.output.StoreItemOutput;
+import org.altherian.hbox.comm.out.StoreItemOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.server._SingleServerSelector;
@@ -53,10 +53,10 @@ public final class MachineRegisterAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent ae) {
-      StoreItemOutput vboxFilePathOut = StoreItemChooser.getExisitingFile(select.getServer().getId());
+      StoreItemOut vboxFilePathOut = StoreItemChooser.getExisitingFile(select.getServer().getId());
       if (vboxFilePathOut != null) {
-         StoreItemInput vboxFilePathIn = StoreItemIoFactory.get(vboxFilePathOut);
-         Gui.post(new Request(Command.VBOX, HypervisorTasks.MachineRegister, new ServerInput(select.getServer().getId()), vboxFilePathIn));
+         StoreItemIn vboxFilePathIn = StoreItemIoFactory.get(vboxFilePathOut);
+         Gui.post(new Request(Command.VBOX, HypervisorTasks.MachineRegister, new ServerIn(select.getServer().getId()), vboxFilePathIn));
       }
    }
    

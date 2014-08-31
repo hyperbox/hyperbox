@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.general;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public final class OsTypeSetting extends StringSetting {
    
    public OsTypeSetting(String s) {
-      super(MachineAttributes.OsType, s);
+      super(MachineAttribute.OsType, s);
    }
    
 }

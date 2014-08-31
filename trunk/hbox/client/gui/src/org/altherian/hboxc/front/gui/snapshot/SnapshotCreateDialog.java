@@ -26,9 +26,9 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.SnapshotInput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.SnapshotIn;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.MainView;
 
@@ -58,10 +58,10 @@ public class SnapshotCreateDialog {
    private JButton saveButton;
    private JButton cancelButton;
    
-   private MachineOutput mOut;
-   private SnapshotInput snapIn;
+   private MachineOut mOut;
+   private SnapshotIn snapIn;
    
-   private void init(MachineOutput mOut) {
+   private void init(MachineOut mOut) {
       this.mOut = mOut;
       
       mainDialog = new JDialog(MainView.getMainFrame());
@@ -94,7 +94,7 @@ public class SnapshotCreateDialog {
       mainDialog.getRootPane().setDefaultButton(saveButton);
    }
    
-   public static void show(MachineOutput mOut) {
+   public static void show(MachineOut mOut) {
       instance = new SnapshotCreateDialog();
       instance.init(mOut);
       
@@ -110,11 +110,11 @@ public class SnapshotCreateDialog {
    }
    
    private void save() {
-      snapIn = new SnapshotInput();
+      snapIn = new SnapshotIn();
       snapIn.setName(nameField.getText());
       snapIn.setDescription(descArea.getText());
       
-      MachineInput mIn = new MachineInput(mOut);
+      MachineIn mIn = new MachineIn(mOut);
       
       Request req = new Request(Command.VBOX, HypervisorTasks.SnapshotTake);
       req.set(snapIn);

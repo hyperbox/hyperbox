@@ -22,7 +22,7 @@
 
 package org.altherian.hboxc.manager;
 
-import org.altherian.hbox.comm.input.ServerInput;
+import org.altherian.hbox.comm.in.ServerIn;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.server._Server;
 
@@ -34,7 +34,7 @@ public interface _Manager {
    
    public List<_Server> listServers();
    
-   public _Server getServer(ServerInput srvIn);
+   public _Server getServer(ServerIn srvIn);
    
    
    

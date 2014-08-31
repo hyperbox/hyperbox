@@ -25,7 +25,7 @@ package org.altherian.hboxd.security;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.SecurityAction;
 import org.altherian.hbox.comm.SecurityItem;
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
@@ -306,7 +306,7 @@ public class SecurityManager implements _SecurityManager {
    }
    
    @Override
-   public _User addUser(UserInput uIn) {
+   public _User addUser(UserIn uIn) {
       Logger.track();
       
       authorize(SecurityItem.User, SecurityAction.Add);
@@ -344,7 +344,7 @@ public class SecurityManager implements _SecurityManager {
    }
    
    @Override
-   public _User modifyUser(UserInput uIn) {
+   public _User modifyUser(UserIn uIn) {
       Logger.track();
       
       authorize(SecurityItem.User, SecurityAction.Modify);
@@ -447,18 +447,20 @@ public class SecurityManager implements _SecurityManager {
    }
    
    @Override
-   public List<_ActionPermission> listActionPermissions() {
-      return listActionPermissions(SecurityContext.getUser());
-   }
-   
-   @Override
-   public List<_ItemPermission> listItemPermissions() {
-      return listItemPermissions(SecurityContext.getUser());
-   }
-   
-   @Override
    public void removePermission(_User usr) {
       persistor.deletePermission(usr);
+   }
+   
+   @Override
+   public List<_EntityPermission> listPermission(String entityTypeId, String entityId) {
+      // TODO Auto-generated method stub
+      return null;
+   }
+   
+   @Override
+   public List<_UserPermission> listPermission(String entityTypeId, String entityId, _User usr) {
+      // TODO Auto-generated method stub
+      return null;
    }
    
 }

@@ -21,19 +21,19 @@
 
 package org.altherian.hboxc.event.module;
 
-import org.altherian.hbox.comm.output.ModuleOutput;
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.out.ModuleOut;
+import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.event.server.ServerEvent;
 
 public class ModuleEvent extends ServerEvent {
    
-   public ModuleEvent(Enum<?> eventId, ServerOutput srvOut, ModuleOutput objOut) {
+   public ModuleEvent(Enum<?> eventId, ServerOut srvOut, ModuleOut objOut) {
       super(eventId, srvOut);
-      set(ModuleOutput.class, objOut);
+      set(ModuleOut.class, objOut);
    }
    
-   public ModuleOutput getModule() {
-      return get(ModuleOutput.class);
+   public ModuleOut getModule() {
+      return get(ModuleOut.class);
    }
    
    @Override

@@ -21,9 +21,9 @@
 
 package org.altherian.hbox.comm.io.factory;
 
-import org.altherian.hbox.comm.input.Action;
-import org.altherian.hbox.comm.input.StorageControllerInput;
-import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
+import org.altherian.hbox.comm.in.Action;
+import org.altherian.hbox.comm.in.StorageControllerIn;
+import org.altherian.hbox.comm.out.storage.StorageControllerOut;
 
 public final class StorageControllerIoFactory {
    
@@ -36,12 +36,12 @@ public final class StorageControllerIoFactory {
     * 
     * @param scOut The Storage Controller output object to transform
     * @return an input Storage Controller object labelled as {@link Action#Modify}
-    * @see StorageControllerInput
-    * @see StorageControllerOutput
+    * @see StorageControllerIn
+    * @see StorageControllerOut
     * @see Action
     */
-   public static StorageControllerInput get(StorageControllerOutput scOut) {
-      StorageControllerInput scIn = new StorageControllerInput(scOut.getMachineUuid(), scOut.getName(), scOut.getType(), scOut.listSettings());
+   public static StorageControllerIn get(StorageControllerOut scOut) {
+      StorageControllerIn scIn = new StorageControllerIn(scOut.getMachineUuid(), scOut.getName(), scOut.getType(), scOut.listSettings());
       scIn.setAction(Action.Modify);
       return scIn;
    }

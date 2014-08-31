@@ -21,12 +21,12 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.output.host.HostOutput;
+import org.altherian.hbox.comm.out.host.HostOut;
 import org.altherian.hboxc.front.gui.Gui;
 
 import javax.swing.SwingWorker;
 
-public class HostGetWorker extends SwingWorker<HostOutput, Void> {
+public class HostGetWorker extends SwingWorker<HostOut, Void> {
    
    private _HostReceiver recv;
    private String srvId;
@@ -38,15 +38,15 @@ public class HostGetWorker extends SwingWorker<HostOutput, Void> {
    }
    
    @Override
-   protected HostOutput doInBackground() throws Exception {
-      HostOutput hostOut = Gui.getServer(srvId).getHost();
+   protected HostOut doInBackground() throws Exception {
+      HostOut hostOut = Gui.getServer(srvId).getHost();
       return hostOut;
    }
    
    @Override
    protected void done() {
       try {
-         HostOutput hostOut = get();
+         HostOut hostOut = get();
          recv.put(hostOut);
          recv.loadingFinished(true, null);
       } catch (Throwable t) {

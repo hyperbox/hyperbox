@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.cpu;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public class PaeSetting extends BooleanSetting {
    
    public PaeSetting(boolean isEnabled) {
-      super(MachineAttributes.PAE, isEnabled);
+      super(MachineAttribute.PAE, isEnabled);
    }
    
 }

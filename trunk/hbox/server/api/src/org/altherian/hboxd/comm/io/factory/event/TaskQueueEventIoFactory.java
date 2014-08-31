@@ -21,9 +21,9 @@
 
 package org.altherian.hboxd.comm.io.factory.event;
 
-import org.altherian.hbox.comm.output.TaskOutput;
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.task.TaskQueueEventOutput;
+import org.altherian.hbox.comm.out.TaskOut;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.task.TaskQueueEventOut;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.states.TaskQueueEvents;
@@ -41,13 +41,13 @@ public final class TaskQueueEventIoFactory implements _EventIoFactory {
    }
    
    @Override
-   public EventOutput get(_Hyperbox hbox, _Event ev) {
+   public EventOut get(_Hyperbox hbox, _Event ev) {
       Logger.track();
       
       switch ((HyperboxEvents) ev.getEventId()) {
          case TaskQueue:
             Logger.debug("Creating a new TaskQueueEvent of type " + ev.get(TaskQueueEvents.class));
-            return new TaskQueueEventOutput(ev.getTime(), ServerIoFactory.get(), ev.get(TaskOutput.class), ev.get(TaskQueueEvents.class));
+            return new TaskQueueEventOut(ev.getTime(), ServerIoFactory.get(), ev.get(TaskOut.class), ev.get(TaskQueueEvents.class));
          default:
             return null;
       }

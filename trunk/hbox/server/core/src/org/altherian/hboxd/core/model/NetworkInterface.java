@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.core.model;
 
-import org.altherian.hbox.constant.EntityTypes;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hboxd.hypervisor.vm.device._RawNetworkInterface;
 import org.altherian.hboxd.settings._Setting;
 
@@ -38,8 +38,8 @@ public class NetworkInterface implements _NetworkInterface {
    }
    
    @Override
-   public EntityTypes getType() {
-      return EntityTypes.NetworkInterace;
+   public Entity getType() {
+      return Entity.NetworkInterace;
    }
    
    @Override

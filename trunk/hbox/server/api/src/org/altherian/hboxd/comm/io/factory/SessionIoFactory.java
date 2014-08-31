@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.output.SessionOutput;
+import org.altherian.hbox.comm.out.SessionOut;
 import org.altherian.hboxd.session._Session;
 
 public class SessionIoFactory {
@@ -30,8 +30,8 @@ public class SessionIoFactory {
       // static only class
    }
    
-   public static SessionOutput get(_Session sess) {
-      return new SessionOutput(sess.getId(), UserIoFactory.get(sess.getUser()), sess.getState().toString(), sess.getCreateTime());
+   public static SessionOut get(_Session sess) {
+      return new SessionOut(sess.getId(), UserIoFactory.get(sess.getUser()), sess.getState().toString(), sess.getCreateTime());
    }
    
 }

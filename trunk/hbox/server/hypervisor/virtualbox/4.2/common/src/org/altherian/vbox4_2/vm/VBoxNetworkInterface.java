@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.vm;
 
-import org.altherian.hbox.constant.NetworkInterfaceSettings;
+import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawNetworkInterface;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings.StringSetting;
@@ -64,7 +64,7 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    
    @Override
    public boolean isEnabled() {
-      return ((BooleanSetting) getSetting(NetworkInterfaceSettings.Enabled)).getValue();
+      return ((BooleanSetting) getSetting(NetworkInterfaceAttribute.Enabled)).getValue();
    }
    
    @Override
@@ -76,7 +76,7 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    
    @Override
    public String getMacAddress() {
-      return ((StringSetting) getSetting(NetworkInterfaceSettings.MacAddress)).getValue();
+      return ((StringSetting) getSetting(NetworkInterfaceAttribute.MacAddress)).getValue();
    }
    
    @Override
@@ -88,7 +88,7 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    
    @Override
    public boolean isCableConnected() {
-      return ((BooleanSetting) getSetting(NetworkInterfaceSettings.CableConnected)).getValue();
+      return ((BooleanSetting) getSetting(NetworkInterfaceAttribute.CableConnected)).getValue();
    }
    
    @Override
@@ -100,7 +100,7 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    
    @Override
    public String getAttachMode() {
-      return ((StringSetting) getSetting(NetworkInterfaceSettings.AttachMode)).getValue();
+      return ((StringSetting) getSetting(NetworkInterfaceAttribute.AttachMode)).getValue();
    }
    
    @Override
@@ -112,7 +112,7 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    
    @Override
    public String getAttachName() {
-      return ((StringSetting) getSetting(NetworkInterfaceSettings.AttachName)).getValue();
+      return ((StringSetting) getSetting(NetworkInterfaceAttribute.AttachName)).getValue();
    }
    
    @Override
@@ -124,7 +124,7 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    
    @Override
    public String getAdapterType() {
-      return ((StringSetting) getSetting(NetworkInterfaceSettings.AdapterType)).getValue();
+      return ((StringSetting) getSetting(NetworkInterfaceAttribute.AdapterType)).getValue();
    }
    
    @Override

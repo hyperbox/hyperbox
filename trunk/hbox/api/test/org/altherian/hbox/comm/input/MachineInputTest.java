@@ -24,17 +24,19 @@ package org.altherian.hbox.comm.input;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
+import org.altherian.hbox.comm.in.MachineIn;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class MachineInputTest {
    
-   private MachineInput mIn;
+   private MachineIn mIn;
    
    @Before
    public void before() {
-      mIn = new MachineInput();
+      mIn = new MachineIn();
    }
    
    @After

@@ -27,8 +27,8 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.UserInput;
-import org.altherian.hbox.comm.output.security.UserOutput;
+import org.altherian.hbox.comm.in.UserIn;
+import org.altherian.hbox.comm.out.security.UserOut;
 import org.altherian.hboxd.comm.io.factory.UserIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
@@ -52,9 +52,9 @@ public class UserModifyAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      UserInput usrIn = request.get(UserInput.class);
+      UserIn usrIn = request.get(UserIn.class);
       _User usr = hbox.getSecurityManager().modifyUser(usrIn);
-      UserOutput usrOut = UserIoFactory.get(usr);
+      UserOut usrOut = UserIoFactory.get(usr);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, usrOut));
    }
    

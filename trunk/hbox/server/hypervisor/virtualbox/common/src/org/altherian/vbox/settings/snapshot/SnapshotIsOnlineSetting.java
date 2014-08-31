@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.snapshot;
 
-import org.altherian.hbox.constant.SnapshotAttributes;
+import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public class SnapshotIsOnlineSetting extends BooleanSetting {
    
    public SnapshotIsOnlineSetting(boolean value) {
-      super(SnapshotAttributes.IsOnline, value);
+      super(SnapshotAttribute.IsOnline, value);
    }
    
 }

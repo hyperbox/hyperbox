@@ -22,7 +22,7 @@
 
 package org.altherian.hboxc.front.gui.utils;
 
-import org.altherian.hbox.comm.output.ObjectOutput;
+import org.altherian.hbox.comm.out.ObjectOut;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 @SuppressWarnings("serial")
-public abstract class ObjectOutputTableModel<T extends ObjectOutput> extends AbstractTableModel {
+public abstract class ObjectOutputTableModel<T extends ObjectOut> extends AbstractTableModel {
    
    private List<String> columnNames = new ArrayList<String>();
    private List<Object> columnSettings = new ArrayList<Object>();

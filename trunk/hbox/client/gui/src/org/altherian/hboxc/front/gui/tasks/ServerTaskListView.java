@@ -25,8 +25,8 @@ package org.altherian.hboxc.front.gui.tasks;
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.TaskOutput;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.task.TaskAddedEvent;
 import org.altherian.hboxc.event.task.TaskRemovedEvent;
@@ -59,7 +59,7 @@ import javax.swing.SwingUtilities;
 
 public class ServerTaskListView implements _TaskSelector, _Refreshable {
    
-   private ServerOutput srvOut;
+   private ServerOut srvOut;
    
    private JLabel loadingLabel = new JLabel("Loading...");
    private ServerTaskListTableModel itemListModel;
@@ -130,7 +130,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
                itemList.clearSelection();
             }
             if ((ev.getClickCount() == 2) && (itemList.getSelectedRow() > -1)) {
-               TaskOutput tOut = itemListModel.getObjectAtRow(itemList.convertRowIndexToModel(itemList.getSelectedRow()));
+               TaskOut tOut = itemListModel.getObjectAtRow(itemList.convertRowIndexToModel(itemList.getSelectedRow()));
                TaskView.show(tOut);
             }
          } else {
@@ -141,10 +141,10 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
    }
    
    @Override
-   public List<TaskOutput> getSelection() {
+   public List<TaskOut> getSelection() {
       Logger.track();
       
-      List<TaskOutput> listSelectedItems = new ArrayList<TaskOutput>();
+      List<TaskOut> listSelectedItems = new ArrayList<TaskOut>();
       for (int row : itemList.getSelectedRows()) {
          listSelectedItems.add(itemListModel.getObjectAtRow(itemList.convertRowIndexToModel(row)));
       }
@@ -159,7 +159,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       }
    }
    
-   public void show(ServerOutput srvOut) {
+   public void show(ServerOut srvOut) {
       Logger.track();
       
       if (srvOut == null) {
@@ -218,7 +218,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       }
       
       @Override
-      public void add(List<TaskOutput> tOutList) {
+      public void add(List<TaskOut> tOutList) {
          Logger.track();
          
          itemListModel.add(tOutList);
@@ -248,7 +248,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       }
    }
    
-   private void add(final TaskOutput tOut) {
+   private void add(final TaskOut tOut) {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -261,7 +261,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       }
    }
    
-   private void update(final TaskOutput tOut) {
+   private void update(final TaskOut tOut) {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -274,7 +274,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       }
    }
    
-   private void remove(final TaskOutput tOut) {
+   private void remove(final TaskOut tOut) {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
             @Override

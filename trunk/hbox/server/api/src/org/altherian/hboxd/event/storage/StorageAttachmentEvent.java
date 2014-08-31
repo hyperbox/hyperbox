@@ -21,14 +21,14 @@
 
 package org.altherian.hboxd.event.storage;
 
-import org.altherian.hbox.constant.StorageDeviceAttributes;
+import org.altherian.hbox.constant.StorageDeviceAttribute;
 
 public abstract class StorageAttachmentEvent extends StorageControllerAttachmentDataModifiedEvent {
    
    public StorageAttachmentEvent(Enum<?> eventId, String vmId, String controllerId, Long portId, Long deviceId) {
       super(eventId, vmId, controllerId);
-      set(StorageDeviceAttributes.PortID, portId);
-      set(StorageDeviceAttributes.DeviceID, deviceId);
+      set(StorageDeviceAttribute.PortID, portId);
+      set(StorageDeviceAttribute.DeviceID, deviceId);
    }
    
 }

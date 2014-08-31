@@ -24,7 +24,7 @@ package org.altherian.hboxd.core.action.session;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 import org.altherian.hboxd.session.SessionContext;
@@ -46,7 +46,7 @@ public final class SessionLoginAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      UserInput uIn = request.get(UserInput.class);
+      UserIn uIn = request.get(UserIn.class);
       
       hbox.getSecurityManager().authenticate(uIn.getUsername(), uIn.getPassword());
       hbox.getSessionManager().getSession(SessionContext.getClient()).login();

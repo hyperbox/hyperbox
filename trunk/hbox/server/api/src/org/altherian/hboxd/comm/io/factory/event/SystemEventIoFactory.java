@@ -21,8 +21,8 @@
 
 package org.altherian.hboxd.comm.io.factory.event;
 
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.system.SystemStateEventOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.system.SystemStateEventOut;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.states.ServerState;
@@ -39,10 +39,10 @@ public final class SystemEventIoFactory implements _EventIoFactory {
    }
    
    @Override
-   public EventOutput get(_Hyperbox hbox, _Event ev) {
+   public EventOut get(_Hyperbox hbox, _Event ev) {
       switch ((HyperboxEvents) ev.getEventId()) {
          case SystemState:
-            return new SystemStateEventOutput(ev.getTime(), ServerIoFactory.get(), ev.get(ServerState.class));
+            return new SystemStateEventOut(ev.getTime(), ServerIoFactory.get(), ev.get(ServerState.class));
          default:
             return null;
       }

@@ -24,7 +24,8 @@ package org.altherian.hboxd.security;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.SecurityAction;
 import org.altherian.hbox.comm.SecurityItem;
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.UserIn;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxd.exception.security.SecurityException;
@@ -58,11 +59,11 @@ public interface _SecurityManager {
    
    public _User getUser(String usrId);
    
-   public _User addUser(UserInput uIn);
+   public _User addUser(UserIn uIn);
    
    public void removeUser(String usrId);
    
-   public _User modifyUser(UserInput uIn);
+   public _User modifyUser(UserIn uIn);
    
    public void setUserPassword(String userId, char[] password);
    
@@ -81,17 +82,22 @@ public interface _SecurityManager {
    public List<_ItemPermission> listItemPermissions(_User usr);
    
    /**
-    * For current user
+    * List possible permissions for the given entity by using its entity type and ID
     * 
-    * @return list of permissions
+    * @param entityTypeId The Entity Type ID to lookup - See {@link Entity} for default values
+    * @param entityId The Entity ID to lookup
+    * @return List of possible Permission IDs
     */
-   public List<_ActionPermission> listActionPermissions();
+   public List<_EntityPermission> listPermission(String entityTypeId, String entityId);
    
    /**
-    * For current user
+    * List user permissions for the given entity by using its entity type and ID
     * 
-    * @return list of permissions
+    * @param entityTypeId The Entity Type ID - See {@link Entity} for default values
+    * @param entityId The Entity ID
+    * @param usr The User to lookup the permission for
+    * @return List of possible Permission IDs
     */
-   public List<_ItemPermission> listItemPermissions();
+   public List<_UserPermission> listPermission(String entityTypeId, String entityId, _User usr);
    
 }

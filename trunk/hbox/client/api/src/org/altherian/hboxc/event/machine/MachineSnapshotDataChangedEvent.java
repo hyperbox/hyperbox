@@ -21,12 +21,12 @@
 
 package org.altherian.hboxc.event.machine;
 
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class MachineSnapshotDataChangedEvent extends MachineEvent {
    
-   public MachineSnapshotDataChangedEvent(String srvId, MachineOutput mOut) {
+   public MachineSnapshotDataChangedEvent(String srvId, MachineOut mOut) {
       super(ClientEvents.MachineSnapshotDataChanged, srvId, mOut);
    }
    

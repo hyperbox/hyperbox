@@ -26,7 +26,7 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
+import org.altherian.hbox.comm.in.ServerIn;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxd.comm.io.factory.MachineIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
@@ -51,10 +51,10 @@ public final class MachineListAction extends AbstractHyperboxMultiTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      if (!request.has(ServerInput.class)) {
+      if (!request.has(ServerIn.class)) {
          throw new HyperboxRuntimeException("missing serverinput");
       }
-      ServerInput srvIn = request.get(ServerInput.class);
+      ServerIn srvIn = request.get(ServerIn.class);
       
       List<_Machine> vms = hbox.getServer(srvIn.getId()).listMachines();
 

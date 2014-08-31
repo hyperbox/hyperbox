@@ -22,7 +22,7 @@
 
 package org.altherian.hboxd.event.security;
 
-import org.altherian.hbox.comm.output.security.UserOutput;
+import org.altherian.hbox.comm.out.security.UserOut;
 import org.altherian.hbox.event.Event;
 import org.altherian.hboxd.comm.io.factory.UserIoFactory;
 import org.altherian.hboxd.security._User;
@@ -34,8 +34,8 @@ public abstract class UserEvent extends Event {
       set(UserIoFactory.get(usr));
    }
    
-   public UserOutput getUser() {
-      return get(UserOutput.class);
+   public UserOut getUser() {
+      return get(UserOut.class);
    }
    
 }

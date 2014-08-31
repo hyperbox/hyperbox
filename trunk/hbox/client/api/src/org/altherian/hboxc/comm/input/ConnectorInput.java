@@ -22,20 +22,21 @@
 
 package org.altherian.hboxc.comm.input;
 
-import org.altherian.hbox.comm.input.ObjectInput;
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.ObjectIn;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hboxc.constant.ConnectorAttributes;
 
-public class ConnectorInput extends ObjectInput {
+public class ConnectorInput extends ObjectIn<Entity> {
    
    public ConnectorInput() {
-      
+      super(Entity.Connector);
    }
    
    public ConnectorInput(String id) {
-      super(id);
+      super(Entity.Connector, id);
    }
    
    public String getAddress() {
@@ -62,11 +63,11 @@ public class ConnectorInput extends ObjectInput {
       setSetting(new StringSettingIO(ConnectorAttributes.BackendId, backendId));
    }
    
-   public UserInput getCredentials() {
-      return (UserInput) getSetting(ConnectorAttributes.Credentials).getRawValue();
+   public UserIn getCredentials() {
+      return (UserIn) getSetting(ConnectorAttributes.Credentials).getRawValue();
    }
    
-   public void setCredentials(UserInput usrIn) {
+   public void setCredentials(UserIn usrIn) {
       setSetting(new SettingIO(ConnectorAttributes.Credentials, usrIn));
    }
    

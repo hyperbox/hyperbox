@@ -25,7 +25,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.altherian.hbox.constant.StorageControllerSettings;
+import org.altherian.hbox.constant.StorageControllerAttribute;
 
 public class RawStorageControllerTest {
    
@@ -36,9 +36,9 @@ public class RawStorageControllerTest {
    
    public static void validateFull(_RawStorageController rawSc) {
       validateSimple(rawSc);
-      assertNotNull(rawSc.getSetting(StorageControllerSettings.MinPortCount).getRawValue());
-      assertNotNull(rawSc.getSetting(StorageControllerSettings.MaxPortCount).getRawValue());
-      assertNotNull(rawSc.getSetting(StorageControllerSettings.MaxDeviceCount).getRawValue());
+      assertNotNull(rawSc.getSetting(StorageControllerAttribute.MinPortCount).getRawValue());
+      assertNotNull(rawSc.getSetting(StorageControllerAttribute.MaxPortCount).getRawValue());
+      assertNotNull(rawSc.getSetting(StorageControllerAttribute.MaxDeviceCount).getRawValue());
       assertTrue(rawSc.getMinPortCount() >= 0);
       assertTrue(rawSc.getMaxPortCount() >= 0);
       assertTrue(rawSc.getMaxPortCount() >= rawSc.getMinPortCount());

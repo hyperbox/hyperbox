@@ -23,12 +23,12 @@ package org.altherian.hboxc.server;
 
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.RequestProcessType;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.SessionInput;
-import org.altherian.hbox.comm.input.UserInput;
-import org.altherian.hbox.comm.output.SessionOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.security.UserOutput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.SessionIn;
+import org.altherian.hbox.comm.in.UserIn;
+import org.altherian.hbox.comm.out.SessionOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.security.UserOut;
 import org.altherian.hboxc.comm.utils.Transaction;
 import org.altherian.hboxc.exception.ServerDisconnectedException;
 
@@ -38,28 +38,28 @@ public interface _ServerWriter {
    
    public Transaction sendRequest(Request req, RequestProcessType type) throws ServerDisconnectedException;
    
-   public MachineOutput createMachine(MachineInput mIn);
+   public MachineOut createMachine(MachineIn mIn);
    
-   public MachineOutput registerMachine(MachineInput mIn);
+   public MachineOut registerMachine(MachineIn mIn);
    
-   public MachineOutput modifyMachine(MachineInput mIn);
+   public MachineOut modifyMachine(MachineIn mIn);
    
-   public MachineOutput unregisterMachine(MachineInput mIn);
+   public MachineOut unregisterMachine(MachineIn mIn);
    
-   public MachineOutput deleteMachine(MachineInput mIn);
+   public MachineOut deleteMachine(MachineIn mIn);
    
-   public void startMachine(MachineInput mIn);
+   public void startMachine(MachineIn mIn);
    
-   public void stopMachine(MachineInput mIn);
+   public void stopMachine(MachineIn mIn);
    
-   public void acpiPowerMachine(MachineInput mIn);
+   public void acpiPowerMachine(MachineIn mIn);
    
-   public UserOutput addUser(UserInput uIn);
+   public UserOut addUser(UserIn uIn);
    
-   public UserOutput modifyUser(UserInput uIn);
+   public UserOut modifyUser(UserIn uIn);
    
-   public UserOutput deleteUser(UserInput uIn);
+   public UserOut deleteUser(UserIn uIn);
    
-   public SessionOutput closeSession(SessionInput sIn);
+   public SessionOut closeSession(SessionIn sIn);
    
 }

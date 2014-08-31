@@ -21,17 +21,17 @@
 
 package org.altherian.vbox.settings.general;
 
-import org.altherian.hbox.constant.MachineAttributes;
-import org.altherian.hbox.constant.MouseModes;
+import org.altherian.hbox.constant.MachineAttribute;
+import org.altherian.hbox.constant.MouseMode;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class MouseModeSetting extends StringSetting {
    
    public MouseModeSetting(String mode) {
-      super(MachineAttributes.MouseMode, mode);
+      super(MachineAttribute.MouseMode, mode);
    }
    
-   public MouseModeSetting(MouseModes mode) {
+   public MouseModeSetting(MouseMode mode) {
       this(mode.toString());
    }
    

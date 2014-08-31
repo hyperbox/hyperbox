@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.cpu;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
 
 public class CpuCountSetting extends PositiveNumberSetting {
    
    public CpuCountSetting(long cpuCount) {
-      super(MachineAttributes.CpuCount, cpuCount);
+      super(MachineAttribute.CpuCount, cpuCount);
    }
    
 }

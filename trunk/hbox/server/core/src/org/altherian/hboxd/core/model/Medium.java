@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.core.model;
 
-import org.altherian.hbox.constant.EntityTypes;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hbox.exception.FeatureNotImplementedException;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 import org.altherian.hboxd.hypervisor.storage._RawMedium;
@@ -78,7 +78,7 @@ public class Medium implements _Medium {
    
    @Override
    public String getId() {
-      return server.getId() + "/" + EntityTypes.Medium + "/" + rawMed.getUuid();
+      return server.getId() + "/" + Entity.Medium + "/" + rawMed.getUuid();
    }
    
    @Override

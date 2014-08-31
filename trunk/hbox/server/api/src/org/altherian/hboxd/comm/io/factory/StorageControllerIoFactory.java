@@ -22,8 +22,8 @@
 package org.altherian.hboxd.comm.io.factory;
 
 import org.altherian.hbox.comm.io.SettingIO;
-import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
-import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
+import org.altherian.hbox.comm.out.storage.StorageControllerOut;
+import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
 import org.altherian.hboxd.core.model._MediumAttachment;
 import org.altherian.hboxd.core.model._StorageController;
 import org.altherian.hboxd.hypervisor.storage._RawStorageController;
@@ -37,20 +37,20 @@ public final class StorageControllerIoFactory {
       // Static class - cannot be instantiated
    }
    
-   public static StorageControllerOutput get(_StorageController sc) {
+   public static StorageControllerOut get(_StorageController sc) {
       List<SettingIO> settingsOut = SettingIoFactory.getList(sc.getSettings());
 
-      List<StorageDeviceAttachmentOutput> attachmentsOut = new ArrayList<StorageDeviceAttachmentOutput>();
+      List<StorageDeviceAttachmentOut> attachmentsOut = new ArrayList<StorageDeviceAttachmentOut>();
       for (_MediumAttachment attachment : sc.listMediumAttachment()) {
          attachmentsOut.add(MediumAttachmentIoFactory.get(attachment));
       }
       
-      StorageControllerOutput scIo = new StorageControllerOutput(sc.getMachineUuid(), sc.getId(), settingsOut, attachmentsOut);
+      StorageControllerOut scIo = new StorageControllerOut(sc.getMachineUuid(), sc.getId(), settingsOut, attachmentsOut);
       return scIo;
    }
    
-   public static StorageControllerOutput get(_RawStorageController sc) {
-      StorageControllerOutput scIo = new StorageControllerOutput(sc.getMachineUuid(), sc.getName(), SettingIoFactory.getList(sc.listSettings()));
+   public static StorageControllerOut get(_RawStorageController sc) {
+      StorageControllerOut scIo = new StorageControllerOut(sc.getMachineUuid(), sc.getName(), SettingIoFactory.getList(sc.listSettings()));
       return scIo;
    }
    

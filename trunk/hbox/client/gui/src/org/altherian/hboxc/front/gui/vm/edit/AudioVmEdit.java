@@ -23,13 +23,13 @@ package org.altherian.hboxc.front.gui.vm.edit;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.MachineInput;
+import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.constant.AudioController;
 import org.altherian.hbox.constant.AudioDriver;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.tool.logging.Logger;
 
 import java.awt.Component;
@@ -41,8 +41,8 @@ import javax.swing.JPanel;
 
 public final class AudioVmEdit {
    
-   private MachineInput mIn;
-   private MachineOutput mOut;
+   private MachineIn mIn;
+   private MachineOut mOut;
    
    private JPanel panel;
    private JLabel audioEnableLabel;
@@ -75,14 +75,14 @@ public final class AudioVmEdit {
       return panel;
    }
    
-   public void update(MachineOutput mOut, MachineInput mIn) {
+   public void update(MachineOut mOut, MachineIn mIn) {
       this.mIn = mIn;
       this.mOut = mOut;
       
-      if (mOut.hasSetting(MachineAttributes.AudioEnable)) {
-         audioEnableBox.setSelected(mOut.getSetting(MachineAttributes.AudioEnable).getBoolean());
+      if (mOut.hasSetting(MachineAttribute.AudioEnable)) {
+         audioEnableBox.setSelected(mOut.getSetting(MachineAttribute.AudioEnable).getBoolean());
       } else {
-         Logger.debug("Setting " + MachineAttributes.AudioEnable + " was not found for " + mOut.toString());
+         Logger.debug("Setting " + MachineAttribute.AudioEnable + " was not found for " + mOut.toString());
       }
       
       driverBox.removeAllItems();
@@ -90,10 +90,10 @@ public final class AudioVmEdit {
       for (AudioDriver driver : AudioDriver.values()) {
          driverBox.addItem(driver.toString());
       }
-      if (mOut.hasSetting(MachineAttributes.AudioDriver)) {
-         driverBox.setSelectedItem(mOut.getSetting(MachineAttributes.AudioDriver).getString());
+      if (mOut.hasSetting(MachineAttribute.AudioDriver)) {
+         driverBox.setSelectedItem(mOut.getSetting(MachineAttribute.AudioDriver).getString());
       } else {
-         Logger.debug("Setting " + MachineAttributes.AudioDriver + " was not found for " + mOut.toString());
+         Logger.debug("Setting " + MachineAttribute.AudioDriver + " was not found for " + mOut.toString());
       }
       
       controllerBox.removeAllItems();
@@ -101,22 +101,22 @@ public final class AudioVmEdit {
       for (AudioController controller : AudioController.values()) {
          controllerBox.addItem(controller.toString());
       }
-      if (mOut.hasSetting(MachineAttributes.AudioController)) {
-         controllerBox.setSelectedItem(mOut.getSetting(MachineAttributes.AudioController).getString());
+      if (mOut.hasSetting(MachineAttribute.AudioController)) {
+         controllerBox.setSelectedItem(mOut.getSetting(MachineAttribute.AudioController).getString());
       } else {
-         Logger.debug("Setting " + MachineAttributes.AudioController + " was not found for " + mOut.toString());
+         Logger.debug("Setting " + MachineAttribute.AudioController + " was not found for " + mOut.toString());
       }
    }
    
    public void save() {
-      if (!mOut.getSetting(MachineAttributes.AudioEnable).getBoolean().equals(audioEnableBox.isSelected())) {
-         mIn.setSetting(new BooleanSettingIO(MachineAttributes.AudioEnable, audioEnableBox.isSelected()));
+      if (!mOut.getSetting(MachineAttribute.AudioEnable).getBoolean().equals(audioEnableBox.isSelected())) {
+         mIn.setSetting(new BooleanSettingIO(MachineAttribute.AudioEnable, audioEnableBox.isSelected()));
       }
-      if (!mOut.getSetting(MachineAttributes.AudioDriver).getString().contentEquals(driverBox.getSelectedItem().toString())) {
-         mIn.setSetting(new StringSettingIO(MachineAttributes.AudioDriver, driverBox.getSelectedItem().toString()));
+      if (!mOut.getSetting(MachineAttribute.AudioDriver).getString().contentEquals(driverBox.getSelectedItem().toString())) {
+         mIn.setSetting(new StringSettingIO(MachineAttribute.AudioDriver, driverBox.getSelectedItem().toString()));
       }
-      if (!mOut.getSetting(MachineAttributes.AudioController).getString().contentEquals(controllerBox.getSelectedItem().toString())) {
-         mIn.setSetting(new StringSettingIO(MachineAttributes.AudioController, controllerBox.getSelectedItem().toString()));
+      if (!mOut.getSetting(MachineAttribute.AudioController).getString().contentEquals(controllerBox.getSelectedItem().toString())) {
+         mIn.setSetting(new StringSettingIO(MachineAttribute.AudioController, controllerBox.getSelectedItem().toString()));
       }
    }
    

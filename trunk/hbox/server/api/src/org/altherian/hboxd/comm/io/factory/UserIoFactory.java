@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.output.security.UserOutput;
+import org.altherian.hbox.comm.out.security.UserOut;
 import org.altherian.hboxd.security._User;
 
 public class UserIoFactory {
@@ -30,8 +30,8 @@ public class UserIoFactory {
       // static only class
    }
    
-   public static UserOutput get(_User user) {
-      return new UserOutput(user.getId(), user.getName(), user.getDomain());
+   public static UserOut get(_User user) {
+      return new UserOut(user.getId(), user.getName(), user.getDomain());
    }
    
 }

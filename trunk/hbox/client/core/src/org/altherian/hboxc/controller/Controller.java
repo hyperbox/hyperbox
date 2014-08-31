@@ -26,8 +26,8 @@ import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._AnswerReceiver;
 import org.altherian.hbox.comm._RequestReceiver;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.ServerInput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.ServerIn;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.Hyperbox;
@@ -59,6 +59,19 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
    
    private RequestWorker msgWorker;
    private Map<String, _ClientControllerAction> actionsMap;
+   
+   static {
+      try {
+         if (new File(Hyperbox.getConfigFilePath()).exists()) {
+            Configuration.init(Hyperbox.getConfigFilePath());
+         } else {
+            Logger.info("Default config file does not exist, skipping: " + Hyperbox.getConfigFilePath());
+         }
+      } catch (HyperboxException e) {
+         Logger.error(e);
+         System.exit(1);
+      }
+   }
    
    private void loadActions() throws HyperboxException {
       actionsMap = new HashMap<String, _ClientControllerAction>();
@@ -102,7 +115,6 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
       Logger.track();
       
       try {
-         Configuration.init();
          PreferencesManager.init();
          
          loadFront();
@@ -247,10 +259,10 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
                      recv.putAnswer(new Answer(mIn.getRequest(), action.getFinishReturn()));
                   } else {
                      Logger.track();
-                     if (req.has(ServerInput.class)) {
-                        core.getServer(req.get(ServerInput.class).getId()).sendRequest(req);
-                     } else if (req.has(MachineInput.class)) {
-                        core.getServer(req.get(MachineInput.class).getServerId()).sendRequest(req);
+                     if (req.has(ServerIn.class)) {
+                        core.getServer(req.get(ServerIn.class).getId()).sendRequest(req);
+                     } else if (req.has(MachineIn.class)) {
+                        core.getServer(req.get(MachineIn.class).getServerId()).sendRequest(req);
                      } else {
                         throw new HyperboxRuntimeException("Server ID is required for generic requests");
                      }

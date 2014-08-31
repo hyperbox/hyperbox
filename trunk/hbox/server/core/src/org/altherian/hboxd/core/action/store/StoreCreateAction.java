@@ -27,9 +27,9 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.StoreInput;
-import org.altherian.hbox.comm.output.StoreOutput;
-import org.altherian.hbox.constant.StoreAttributes;
+import org.altherian.hbox.comm.in.StoreIn;
+import org.altherian.hbox.comm.out.StoreOut;
+import org.altherian.hbox.constant.StoreAttribute;
 import org.altherian.hboxd.comm.io.factory.StoreIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
@@ -53,13 +53,13 @@ public class StoreCreateAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      StoreInput stoIn = request.get(StoreInput.class);
+      StoreIn stoIn = request.get(StoreIn.class);
       
-      String location = stoIn.getSetting(StoreAttributes.Location).getString();
-      String label = stoIn.getSetting(StoreAttributes.Label).getString();
+      String location = stoIn.getSetting(StoreAttribute.Location).getString();
+      String label = stoIn.getSetting(StoreAttribute.Label).getString();
       
       _Store store = hbox.getStoreManager().createStore(location, label);
-      StoreOutput stoOut = StoreIoFactory.get(store);
+      StoreOut stoOut = StoreIoFactory.get(store);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, stoOut));
    }
    

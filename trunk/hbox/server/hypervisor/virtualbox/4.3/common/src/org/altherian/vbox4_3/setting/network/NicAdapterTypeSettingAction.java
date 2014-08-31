@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.setting.network;
 
-import org.altherian.hbox.constant.NetworkInterfaceSettings;
+import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.hbox.exception.ConfigurationException;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.network.NicAdapterTypeSetting;
@@ -41,7 +41,7 @@ public class NicAdapterTypeSettingAction implements _NetworkInterfaceSettingActi
    
    @Override
    public String getSettingName() {
-      return NetworkInterfaceSettings.AdapterType.getId();
+      return NetworkInterfaceAttribute.AdapterType.getId();
    }
    
    @Override

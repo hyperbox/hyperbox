@@ -25,8 +25,8 @@ package org.altherian.hboxc.front.gui.action.server;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.exception.ServerDisconnectedException;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.MainView;
@@ -51,7 +51,7 @@ public class ServerShutdownAction extends AbstractAction {
    @Override
    public void actionPerformed(ActionEvent ae) {
       Logger.verbose("Will send shutdown signal to " + selector.getServers().size() + " servers");
-      for (ServerOutput srvOut : selector.getServers()) {
+      for (ServerOut srvOut : selector.getServers()) {
          Logger.info("Prompting user for shutdown of " + srvOut);
          int info = JOptionPane.showConfirmDialog(
                MainView.getMainFrame(),
@@ -64,7 +64,7 @@ public class ServerShutdownAction extends AbstractAction {
          if (info == JOptionPane.YES_OPTION) {
             Logger.info("User accepted, sending shutdown signal to " + srvOut);
             try {
-               Gui.post(new Request(Command.HBOX, HyperboxTasks.ServerShutdown, new ServerInput(srvOut.getId())));
+               Gui.post(new Request(Command.HBOX, HyperboxTasks.ServerShutdown, new ServerIn(srvOut.getId())));
             } catch (ServerDisconnectedException e) {
                // we ignore this exception as it can happen if the connection is terminated before the "ServerShutdown" packet reaches us.
                // TODO make sure the server sends finishing signals to everything so the disconnect is clean

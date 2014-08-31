@@ -27,8 +27,8 @@ public class MachineRegistrationEvent extends MachineEvent {
    
    private Boolean isRegistered;
    
-   public MachineRegistrationEvent(String uuid, Boolean isRegistrated) {
-      super(HyperboxEvents.MachineRegistration, uuid);
+   public MachineRegistrationEvent(String id, Boolean isRegistrated) {
+      super(HyperboxEvents.MachineRegistration, id);
       this.isRegistered = isRegistrated;
    }
    

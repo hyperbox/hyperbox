@@ -21,8 +21,8 @@
 
 package org.altherian.vbox4_3.vm;
 
-import org.altherian.hbox.constant.EntityTypes;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawMouse;
 import org.altherian.hboxd.settings.StringSetting;
 import org.altherian.hboxd.settings._Setting;
@@ -43,7 +43,7 @@ public class VBoxMouse implements _RawMouse {
    
    @Override
    public String getMouseMode() {
-      return ((StringSetting) machine.getSetting(MachineAttributes.MouseMode)).getValue();
+      return ((StringSetting) machine.getSetting(MachineAttribute.MouseMode)).getValue();
    }
    
    @Override
@@ -54,8 +54,8 @@ public class VBoxMouse implements _RawMouse {
    @Override
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
-      for (MachineAttributes setting : MachineAttributes.values()) {
-         if (setting.getDeviceType().equals(EntityTypes.Mouse)) {
+      for (MachineAttribute setting : MachineAttribute.values()) {
+         if (setting.getDeviceType().equals(Entity.Mouse)) {
             getSetting(setting);
          }
       }

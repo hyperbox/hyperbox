@@ -21,9 +21,9 @@
 
 package org.altherian.hboxd.comm.io.factory.event;
 
-import org.altherian.hbox.comm.output.StoreOutput;
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.store.StoreStateEventOutput;
+import org.altherian.hbox.comm.out.StoreOut;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.store.StoreStateEventOut;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.states.StoreState;
@@ -40,10 +40,10 @@ public final class StoreEventIoFactory implements _EventIoFactory {
    }
    
    @Override
-   public EventOutput get(_Hyperbox hbox, _Event ev) {
+   public EventOut get(_Hyperbox hbox, _Event ev) {
       switch ((HyperboxEvents) ev.getEventId()) {
          case StoreState:
-            return new StoreStateEventOutput(ev.getTime(), ServerIoFactory.get(), ev.get(StoreOutput.class), ev.get(StoreState.class));
+            return new StoreStateEventOut(ev.getTime(), ServerIoFactory.get(), ev.get(StoreOut.class), ev.get(StoreState.class));
          default:
             return null;
       }

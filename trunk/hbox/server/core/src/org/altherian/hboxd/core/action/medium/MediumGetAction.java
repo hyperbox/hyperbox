@@ -26,8 +26,8 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MediumInput;
-import org.altherian.hbox.comm.output.storage.MediumOutput;
+import org.altherian.hbox.comm.in.MediumIn;
+import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hbox.constant.MediumAttribute;
 import org.altherian.hboxd.comm.io.factory.MediumIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
@@ -55,9 +55,9 @@ public final class MediumGetAction extends ASingleTaskAction {
    public void run(Request request, _Hyperbox hbox) {
       Logger.track();
       
-      MediumInput medIn = request.get(MediumInput.class);
+      MediumIn medIn = request.get(MediumIn.class);
       
-      MediumOutput medOut = null;
+      MediumOut medOut = null;
       if (!AxStrings.isEmpty(medIn.getUuid())) {
          medOut = MediumIoFactory.get(hbox.getHypervisor().getMedium(medIn.getUuid()));
       } else {

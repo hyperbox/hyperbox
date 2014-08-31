@@ -24,9 +24,9 @@ package org.altherian.hboxc.front.gui.action.task;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.input.TaskInput;
-import org.altherian.hbox.comm.output.TaskOutput;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.in.TaskIn;
+import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.tasks._TaskSelector;
 import org.altherian.tool.logging.Logger;
@@ -48,10 +48,10 @@ public final class TaskCancelAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent arg0) {
-      for (TaskOutput tOut : selector.getSelection()) {
-         TaskInput tIn = new TaskInput(tOut.getId());
+      for (TaskOut tOut : selector.getSelection()) {
+         TaskIn tIn = new TaskIn(tOut.getId());
          Logger.debug("Canceling Task #" + tIn.getId());
-         Gui.post(new Request(Command.HBOX, HyperboxTasks.TaskCancel, new ServerInput(tOut.getServerId()), tIn));
+         Gui.post(new Request(Command.HBOX, HyperboxTasks.TaskCancel, new ServerIn(tOut.getServerId()), tIn));
       }
    }
    

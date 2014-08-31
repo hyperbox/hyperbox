@@ -21,12 +21,12 @@
 
 package org.altherian.hboxc.server;
 
-import org.altherian.hbox.comm.output.hypervisor.HypervisorOutput;
-import org.altherian.hbox.comm.output.storage.MediumOutput;
+import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
+import org.altherian.hbox.comm.out.storage.MediumOut;
 
 public interface _HypervisorReader {
    
-   public HypervisorOutput getInfo();
+   public HypervisorOut getInfo();
    
    public String getType();
    
@@ -40,6 +40,6 @@ public interface _HypervisorReader {
    
    public boolean hasToolsMedium();
 
-   public MediumOutput getToolsMedium();
+   public MediumOut getToolsMedium();
    
 }

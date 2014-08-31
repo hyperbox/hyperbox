@@ -24,7 +24,7 @@ package org.altherian.hboxd.core.action.task;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.TaskInput;
+import org.altherian.hbox.comm.in.TaskIn;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 
@@ -45,7 +45,7 @@ public class TaskCancelAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      TaskInput tIn = request.get(TaskInput.class);
+      TaskIn tIn = request.get(TaskIn.class);
       hbox.getTaskManager().remove(tIn.getId());
    }
    

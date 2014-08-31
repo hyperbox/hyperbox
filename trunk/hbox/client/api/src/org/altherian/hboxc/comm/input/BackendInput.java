@@ -22,10 +22,13 @@
 
 package org.altherian.hboxc.comm.input;
 
-import org.altherian.hbox.comm.input.ObjectInput;
+import org.altherian.hbox.comm.in.ObjectIn;
+import org.altherian.hbox.constant.Entity;
 
-public class BackendInput extends ObjectInput {
+public class BackendInput extends ObjectIn<Entity> {
    
-   // TODO
+   public BackendInput() {
+      super(Entity.Backend);
+   }
    
 }

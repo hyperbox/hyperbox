@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.output.storage.StorageControllerSubTypeOutput;
+import org.altherian.hbox.comm.out.storage.StorageControllerSubTypeOut;
 import org.altherian.hboxd.hypervisor.storage._RawStorageControllerSubType;
 
 public final class StorageControllerSubTypeIoFactory {
@@ -30,8 +30,8 @@ public final class StorageControllerSubTypeIoFactory {
       // static class
    }
    
-   public static StorageControllerSubTypeOutput get(_RawStorageControllerSubType subType) {
-      StorageControllerSubTypeOutput scstOut = new StorageControllerSubTypeOutput(subType.getId(), subType.getParentType());
+   public static StorageControllerSubTypeOut get(_RawStorageControllerSubType subType) {
+      StorageControllerSubTypeOut scstOut = new StorageControllerSubTypeOut(subType.getId(), subType.getParentType());
       return scstOut;
    }
    

@@ -22,7 +22,7 @@
 
 package org.altherian.hboxc.core.connector;
 
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hboxc.server._Server;
 import org.altherian.hboxc.state.ConnectionState;
 
@@ -46,7 +46,7 @@ public interface _Connector {
    
    public void setBackendId(String backendId);
    
-   public _Server connect(UserInput usrIn);
+   public _Server connect(UserIn usrIn);
    
    public void disconnect();
    

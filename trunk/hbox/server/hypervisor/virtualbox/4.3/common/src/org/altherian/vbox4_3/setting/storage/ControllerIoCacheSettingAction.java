@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.setting.storage;
 
-import org.altherian.hbox.constant.StorageControllerSettings;
+import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.storage.ControllerIoCacheSetting;
@@ -39,7 +39,7 @@ public final class ControllerIoCacheSettingAction implements _StorageControllerS
    
    @Override
    public String getSettingName() {
-      return StorageControllerSettings.IoCache.toString();
+      return StorageControllerAttribute.IoCache.toString();
    }
    
    @Override

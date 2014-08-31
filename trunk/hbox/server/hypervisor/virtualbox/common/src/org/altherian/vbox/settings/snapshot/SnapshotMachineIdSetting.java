@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.snapshot;
 
-import org.altherian.hbox.constant.SnapshotAttributes;
+import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class SnapshotMachineIdSetting extends StringSetting {
    
    public SnapshotMachineIdSetting(String id) {
-      super(SnapshotAttributes.MachineID, id);
+      super(SnapshotAttribute.MachineID, id);
    }
    
 }

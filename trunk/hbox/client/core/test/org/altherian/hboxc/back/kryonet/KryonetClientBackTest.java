@@ -21,7 +21,7 @@
 
 package org.altherian.hboxc.back.kryonet;
 
-import org.altherian.hbox.comm.input.ServerInput;
+import org.altherian.hbox.comm.in.ServerIn;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.back.BackendTest;
 import org.altherian.hboxc.core.back.kryonet.KryonetClientBack;
@@ -32,7 +32,7 @@ public class KryonetClientBackTest extends BackendTest {
    
    @BeforeClass
    public static void beforeClass() throws HyperboxException {
-      ServerInput srvIn = new ServerInput();
+      ServerIn srvIn = new ServerIn();
       BackendTest.init(new KryonetClientBack(), srvIn);
    }
    

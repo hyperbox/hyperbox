@@ -21,10 +21,10 @@
 
 package org.altherian.hboxc.server;
 
-import org.altherian.hbox.comm.output.hypervisor.GuestNetworkInterfaceOutput;
+import org.altherian.hbox.comm.out.hypervisor.GuestNetworkInterfaceOut;
 
 public interface _GuestReader {
    
-   public GuestNetworkInterfaceOutput findNetworkInterface(String macAddress);
+   public GuestNetworkInterfaceOut findNetworkInterface(String macAddress);
 
 }

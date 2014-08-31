@@ -26,12 +26,12 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.ServerInput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.ServerIn;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.hypervisor.OsTypeOutput;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.hypervisor.OsTypeOut;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.MainView;
 
@@ -52,7 +52,7 @@ import javax.swing.SwingWorker;
 public class VmCreateDialog {
    
    private static VmCreateDialog instance;
-   private ServerOutput srvOut;
+   private ServerOut srvOut;
    private JDialog mainDialog;
    
    private JPanel mainPanel;
@@ -65,9 +65,9 @@ public class VmCreateDialog {
    private JButton saveButton;
    private JButton cancelButton;
    
-   private MachineInput mIn;
+   private MachineIn mIn;
    
-   public VmCreateDialog(ServerOutput srvOut) {
+   public VmCreateDialog(ServerOut srvOut) {
       this.srvOut = srvOut;
    }
    
@@ -100,7 +100,7 @@ public class VmCreateDialog {
       mainDialog.getRootPane().setDefaultButton(saveButton);
    }
    
-   public static void show(final ServerOutput srvOut) {
+   public static void show(final ServerOut srvOut) {
       if (instance == null) {
          instance = new VmCreateDialog(srvOut);
          instance.init();
@@ -109,19 +109,19 @@ public class VmCreateDialog {
       instance.osBox.removeAllItems();
       instance.osBox.setEnabled(false);
       instance.osBox.addItem("Loading...");
-      new SwingWorker<List<OsTypeOutput>, Void>() {
+      new SwingWorker<List<OsTypeOut>, Void>() {
          
          @Override
-         protected List<OsTypeOutput> doInBackground() throws Exception {
+         protected List<OsTypeOut> doInBackground() throws Exception {
             return Gui.getReader().getServerReader(srvOut.getId()).listOsType();
          }
          
          @Override
          protected void done() {
-            List<OsTypeOutput> osTypes;
+            List<OsTypeOut> osTypes;
             try {
                osTypes = get();
-               for (OsTypeOutput osOut : osTypes) {
+               for (OsTypeOut osOut : osTypes) {
                   instance.osBox.addItem(osOut.getId());
                }
                instance.osBox.removeItem("Loading...");
@@ -152,11 +152,11 @@ public class VmCreateDialog {
    }
    
    private void save() {
-      mIn = new MachineInput();
+      mIn = new MachineIn();
       mIn.setName(nameField.getText());
-      mIn.setSetting(new StringSettingIO(MachineAttributes.OsType, osBox.getSelectedItem().toString()));
+      mIn.setSetting(new StringSettingIO(MachineAttribute.OsType, osBox.getSelectedItem().toString()));
       
-      Gui.post(new Request(Command.VBOX, HypervisorTasks.MachineCreate, new ServerInput(srvOut.getId()), mIn));
+      Gui.post(new Request(Command.VBOX, HypervisorTasks.MachineCreate, new ServerIn(srvOut.getId()), mIn));
       
       hide();
    }

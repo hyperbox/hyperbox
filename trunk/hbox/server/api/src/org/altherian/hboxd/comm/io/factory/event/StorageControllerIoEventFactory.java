@@ -21,14 +21,14 @@
 
 package org.altherian.hboxd.comm.io.factory.event;
 
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.storage.StorageControllerAddedEventOutput;
-import org.altherian.hbox.comm.output.event.storage.StorageControllerAttachmentDataModifiedEventOutput;
-import org.altherian.hbox.comm.output.event.storage.StorageControllerModifiedEventOutput;
-import org.altherian.hbox.comm.output.event.storage.StorageControllerRemovedEventOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.storage.StorageControllerAddedEventOut;
+import org.altherian.hbox.comm.out.event.storage.StorageControllerAttachmentDataModifiedEventOut;
+import org.altherian.hbox.comm.out.event.storage.StorageControllerModifiedEventOut;
+import org.altherian.hbox.comm.out.event.storage.StorageControllerRemovedEventOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.storage.StorageControllerOut;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.event._Event;
 import org.altherian.hboxd.comm.io.factory.MachineIoFactory;
@@ -51,24 +51,24 @@ public class StorageControllerIoEventFactory implements _EventIoFactory {
    }
    
    @Override
-   public EventOutput get(_Hyperbox hbox, _Event ev) {
+   public EventOut get(_Hyperbox hbox, _Event ev) {
       StorageControllerEvent event = (StorageControllerEvent) ev;
       
       _Machine vm = hbox.getServer().getMachine(event.getMachineId());
       
-      ServerOutput srvOut = ServerIoFactory.get();
-      MachineOutput vmOut = MachineIoFactory.getSimple(vm);
-      StorageControllerOutput stoOut = StorageControllerIoFactory.get(vm.getStorageController(event.getControllerId()));
+      ServerOut srvOut = ServerIoFactory.get();
+      MachineOut vmOut = MachineIoFactory.getSimple(vm);
+      StorageControllerOut stoOut = StorageControllerIoFactory.get(vm.getStorageController(event.getControllerId()));
       
       switch ((HyperboxEvents) event.getEventId()) {
          case StorageControllerAdded:
-            return new StorageControllerAddedEventOutput(ev.getTime(), srvOut, vmOut, stoOut);
+            return new StorageControllerAddedEventOut(ev.getTime(), srvOut, vmOut, stoOut);
          case StorageControllerModified:
-            return new StorageControllerModifiedEventOutput(ev.getTime(), srvOut, vmOut, stoOut);
+            return new StorageControllerModifiedEventOut(ev.getTime(), srvOut, vmOut, stoOut);
          case StorageControllerRemoved:
-            return new StorageControllerRemovedEventOutput(ev.getTime(), srvOut, vmOut, stoOut);
+            return new StorageControllerRemovedEventOut(ev.getTime(), srvOut, vmOut, stoOut);
          case StorageControllerAttachmentDataModified:
-            return new StorageControllerAttachmentDataModifiedEventOutput(ev.getTime(), srvOut, vmOut, stoOut);
+            return new StorageControllerAttachmentDataModifiedEventOut(ev.getTime(), srvOut, vmOut, stoOut);
          default:
             return null;
       }

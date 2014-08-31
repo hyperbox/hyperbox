@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.cpu;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public class CpuHotPlugSetting extends BooleanSetting {
    
    public CpuHotPlugSetting(boolean isEnabled) {
-      super(MachineAttributes.CpuHotPlug, isEnabled);
+      super(MachineAttribute.CpuHotPlug, isEnabled);
    }
    
 }

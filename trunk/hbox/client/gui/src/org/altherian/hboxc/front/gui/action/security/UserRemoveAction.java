@@ -25,8 +25,8 @@ package org.altherian.hboxc.front.gui.action.security;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.security.user._UserSelector;
@@ -52,7 +52,7 @@ public class UserRemoveAction extends AbstractAction {
    @Override
    public void actionPerformed(ActionEvent ae) {
       for (String userId : selector.getSelection()) {
-         Gui.post(new Request(Command.HBOX, HyperboxTasks.UserDelete, new ServerInput(selector.getServerId()), new UserInput(userId)));
+         Gui.post(new Request(Command.HBOX, HyperboxTasks.UserDelete, new ServerIn(selector.getServerId()), new UserIn(userId)));
       }
    }
    

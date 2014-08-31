@@ -22,10 +22,10 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 
 public interface _MachineReceiver extends _WorkerDataReceiver {
    
-   public void put(MachineOutput mOut);
+   public void put(MachineOut mOut);
 
 }

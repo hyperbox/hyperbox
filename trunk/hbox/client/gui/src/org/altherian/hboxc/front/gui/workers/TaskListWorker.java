@@ -22,19 +22,19 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.TaskOutput;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.utils.AnSwingWorker;
 import org.altherian.tool.logging.Logger;
 
 import java.util.List;
 
-public class TaskListWorker extends AnSwingWorker<Void, TaskOutput, _TaskListReceiver> {
+public class TaskListWorker extends AnSwingWorker<Void, TaskOut, _TaskListReceiver> {
    
-   private ServerOutput srvOut;
+   private ServerOut srvOut;
    
-   public TaskListWorker(_TaskListReceiver recv, ServerOutput srvOut) {
+   public TaskListWorker(_TaskListReceiver recv, ServerOut srvOut) {
       super(recv);
       this.srvOut = srvOut;
    }
@@ -42,7 +42,7 @@ public class TaskListWorker extends AnSwingWorker<Void, TaskOutput, _TaskListRec
    @Override
    protected Void doInBackground() throws Exception {
       
-      for (TaskOutput tOut : Gui.getServer(srvOut).listTasks()) {
+      for (TaskOut tOut : Gui.getServer(srvOut).listTasks()) {
          publish(tOut);
       }
       
@@ -50,7 +50,7 @@ public class TaskListWorker extends AnSwingWorker<Void, TaskOutput, _TaskListRec
    }
    
    @Override
-   protected void process(List<TaskOutput> tOutList) {
+   protected void process(List<TaskOut> tOutList) {
       getReceiver().add(tOutList);
    }
    
@@ -67,7 +67,7 @@ public class TaskListWorker extends AnSwingWorker<Void, TaskOutput, _TaskListRec
       }
    }
    
-   public static void run(_TaskListReceiver recv, ServerOutput srvOut) {
+   public static void run(_TaskListReceiver recv, ServerOut srvOut) {
       new TaskListWorker(recv, srvOut).execute();
    }
    

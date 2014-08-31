@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.video;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
 
 public class MonitorCountSetting extends PositiveNumberSetting {
    
    public MonitorCountSetting(long monitorCount) {
-      super(MachineAttributes.MonitorCount, monitorCount);
+      super(MachineAttribute.MonitorCount, monitorCount);
    }
    
 }

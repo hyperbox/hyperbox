@@ -21,7 +21,7 @@
 
 package org.altherian.hboxc.front.gui.tasks;
 
-import org.altherian.hbox.comm.output.TaskOutput;
+import org.altherian.hbox.comm.out.TaskOut;
 
 import java.util.List;
 
@@ -32,6 +32,6 @@ public interface _TaskSelector {
     * 
     * @return a List of String IDs for the tasks
     */
-   public List<TaskOutput> getSelection();
+   public List<TaskOut> getSelection();
    
 }

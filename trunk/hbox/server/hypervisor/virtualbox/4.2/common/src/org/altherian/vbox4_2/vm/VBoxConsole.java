@@ -22,8 +22,8 @@
 
 package org.altherian.vbox4_2.vm;
 
-import org.altherian.hbox.constant.EntityTypes;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawConsole;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings.PositiveNumberSetting;
@@ -46,8 +46,8 @@ public class VBoxConsole implements _RawConsole {
    @Override
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
-      for (MachineAttributes setting : MachineAttributes.values()) {
-         if (setting.getDeviceType().equals(EntityTypes.Console)) {
+      for (MachineAttribute setting : MachineAttribute.values()) {
+         if (setting.getDeviceType().equals(Entity.Console)) {
             getSetting(setting);
          }
       }
@@ -71,52 +71,52 @@ public class VBoxConsole implements _RawConsole {
    
    @Override
    public Boolean isEnabled() {
-      return getSetting(MachineAttributes.VrdeEnabled).getBoolean();
+      return getSetting(MachineAttribute.VrdeEnabled).getBoolean();
    }
    
    @Override
    public void setEnabled(Boolean enable) {
-      setSetting(new BooleanSetting(MachineAttributes.VrdeEnabled, enable));
+      setSetting(new BooleanSetting(MachineAttribute.VrdeEnabled, enable));
    }
    
    @Override
    public String getAuthType() {
-      return getSetting(MachineAttributes.VrdeAuthType).getString();
+      return getSetting(MachineAttribute.VrdeAuthType).getString();
    }
    
    @Override
    public void setAuthType(String authType) {
-      setSetting(new StringSetting(MachineAttributes.VrdeAuthType, authType));
+      setSetting(new StringSetting(MachineAttribute.VrdeAuthType, authType));
    }
    
    @Override
    public String getAuthLibrary() {
-      return getSetting(MachineAttributes.VrdeAuthLibrary).getString();
+      return getSetting(MachineAttribute.VrdeAuthLibrary).getString();
    }
    
    @Override
    public void setAuthLibrary(String library) {
-      setSetting(new StringSetting(MachineAttributes.VrdeAuthLibrary, library));
+      setSetting(new StringSetting(MachineAttribute.VrdeAuthLibrary, library));
    }
    
    @Override
    public Long getAuthTimeout() {
-      return getSetting(MachineAttributes.VrdeAuthTimeout).getNumber();
+      return getSetting(MachineAttribute.VrdeAuthTimeout).getNumber();
    }
    
    @Override
    public void setAuthTimeout(Long timeout) {
-      setSetting(new PositiveNumberSetting(MachineAttributes.VrdeAuthTimeout, timeout));
+      setSetting(new PositiveNumberSetting(MachineAttribute.VrdeAuthTimeout, timeout));
    }
    
    @Override
    public Boolean getAllowMultiConnection() {
-      return getSetting(MachineAttributes.VrdeMultiConnection).getBoolean();
+      return getSetting(MachineAttribute.VrdeMultiConnection).getBoolean();
    }
    
    @Override
    public void setAllowMultiConnection(Boolean allow) {
-      setSetting(new BooleanSetting(MachineAttributes.VrdeMultiConnection, allow));
+      setSetting(new BooleanSetting(MachineAttribute.VrdeMultiConnection, allow));
    }
    
    /*

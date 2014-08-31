@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.audio;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public final class AudioEnabled extends BooleanSetting {
    
    public AudioEnabled(boolean isEnabled) {
-      super(MachineAttributes.AudioEnable, isEnabled);
+      super(MachineAttribute.AudioEnable, isEnabled);
    }
    
 }

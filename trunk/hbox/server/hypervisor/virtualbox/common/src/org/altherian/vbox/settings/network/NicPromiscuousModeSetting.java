@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.network;
 
-import org.altherian.hbox.constant.NetworkInterfaceSettings;
+import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class NicPromiscuousModeSetting extends StringSetting {
    
    public NicPromiscuousModeSetting(String mode) {
-      super(NetworkInterfaceSettings.PromiscuousMode, mode);
+      super(NetworkInterfaceAttribute.PromiscuousMode, mode);
    }
    
 }

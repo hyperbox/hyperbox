@@ -25,30 +25,31 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.altherian.hbox.constant.StoreItemAttributes;
+import org.altherian.hbox.comm.out.StoreItemOut;
+import org.altherian.hbox.constant.StoreItemAttribute;
 
 public class StoreItemOutputTest {
    
-   public static void validateFull(StoreItemOutput siOut) {
+   public static void validateFull(StoreItemOut siOut) {
       validateSimple(siOut);
    }
    
-   public static void validateSimple(StoreItemOutput siOut) {
+   public static void validateSimple(StoreItemOut siOut) {
       assertNotNull(siOut);
       
-      assertTrue(siOut.hasSetting(StoreItemAttributes.Name));
-      assertNotNull(siOut.getSetting(StoreItemAttributes.Name).getString());
-      assertFalse(siOut.getSetting(StoreItemAttributes.Name).getString().isEmpty());
+      assertTrue(siOut.hasSetting(StoreItemAttribute.Name));
+      assertNotNull(siOut.getSetting(StoreItemAttribute.Name).getString());
+      assertFalse(siOut.getSetting(StoreItemAttribute.Name).getString().isEmpty());
       
-      assertTrue(siOut.hasSetting(StoreItemAttributes.Path));
-      assertNotNull(siOut.getSetting(StoreItemAttributes.Path).getString());
-      assertFalse(siOut.getSetting(StoreItemAttributes.Path).getString().isEmpty());
+      assertTrue(siOut.hasSetting(StoreItemAttribute.Path));
+      assertNotNull(siOut.getSetting(StoreItemAttribute.Path).getString());
+      assertFalse(siOut.getSetting(StoreItemAttribute.Path).getString().isEmpty());
       
-      assertTrue(siOut.hasSetting(StoreItemAttributes.Size));
-      assertNotNull(siOut.getSetting(StoreItemAttributes.Size).getNumber());
+      assertTrue(siOut.hasSetting(StoreItemAttribute.Size));
+      assertNotNull(siOut.getSetting(StoreItemAttribute.Size).getNumber());
       
-      assertTrue(siOut.hasSetting(StoreItemAttributes.IsContainer));
-      assertNotNull(siOut.getSetting(StoreItemAttributes.IsContainer).getBoolean());
+      assertTrue(siOut.hasSetting(StoreItemAttribute.IsContainer));
+      assertNotNull(siOut.getSetting(StoreItemAttribute.IsContainer).getBoolean());
    }
    
 }

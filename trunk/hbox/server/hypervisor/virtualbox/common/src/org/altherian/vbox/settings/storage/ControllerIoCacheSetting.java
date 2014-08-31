@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.storage;
 
-import org.altherian.hbox.constant.StorageControllerSettings;
+import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public final class ControllerIoCacheSetting extends BooleanSetting {
    
    public ControllerIoCacheSetting(Boolean isEnabled) {
-      super(StorageControllerSettings.IoCache, isEnabled);
+      super(StorageControllerAttribute.IoCache, isEnabled);
    }
    
 }

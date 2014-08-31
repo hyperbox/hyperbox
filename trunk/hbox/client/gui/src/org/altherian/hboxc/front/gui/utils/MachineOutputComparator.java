@@ -22,14 +22,14 @@
 
 package org.altherian.hboxc.front.gui.utils;
 
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 
 import java.util.Comparator;
 
-public class MachineOutputComparator implements Comparator<MachineOutput> {
+public class MachineOutputComparator implements Comparator<MachineOut> {
    
    @Override
-   public int compare(MachineOutput obj1, MachineOutput obj2) {
+   public int compare(MachineOut obj1, MachineOut obj2) {
       return obj1.getName().compareToIgnoreCase(obj2.getName());
    }
    

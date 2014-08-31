@@ -26,7 +26,7 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.output.network.NetworkInterfaceTypeOutput;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceTypeOut;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.AbstractHyperboxMultiTaskAction;
 import org.altherian.hboxd.session.SessionContext;
@@ -50,7 +50,7 @@ public class NetworkAdapterTypeListAction extends AbstractHyperboxMultiTaskActio
    public void run(Request request, _Hyperbox hbox) {
       List<String> typesId = hbox.getHypervisor().listNicAdapterTypes();
       for (String typeId : typesId) {
-         NetworkInterfaceTypeOutput nitOut = new NetworkInterfaceTypeOutput(typeId);
+         NetworkInterfaceTypeOut nitOut = new NetworkInterfaceTypeOut(typeId);
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, nitOut));
       }
    }

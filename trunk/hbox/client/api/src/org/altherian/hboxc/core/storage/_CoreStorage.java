@@ -22,7 +22,7 @@
 
 package org.altherian.hboxc.core.storage;
 
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.core._ConsoleViewer;
 import org.altherian.hboxc.core.connector._Connector;
@@ -51,9 +51,9 @@ public interface _CoreStorage {
    
    public Collection<_Connector> loadConnectors();
    
-   public void storeConnectorCredentials(String id, UserInput usrIn);
+   public void storeConnectorCredentials(String id, UserIn usrIn);
    
-   public UserInput loadConnectorCredentials(String id);
+   public UserIn loadConnectorCredentials(String id);
    
    public void removeConnectorCredentials(String id);
 

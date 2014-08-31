@@ -21,11 +21,11 @@
 
 package org.altherian.hboxc.event.machine;
 
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 
 public abstract class MachineUpdatedEvent extends MachineEvent {
    
-   public MachineUpdatedEvent(Enum<?> id, String srvId, MachineOutput mOut) {
+   public MachineUpdatedEvent(Enum<?> id, String srvId, MachineOut mOut) {
       super(id, srvId, mOut);
    }
    

@@ -25,15 +25,17 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.altherian.hbox.comm.out.TaskOut;
+
 public final class TaskOutputTest {
    
-   public static void validateSimple(TaskOutput tOut) {
+   public static void validateSimple(TaskOut tOut) {
       assertNotNull(tOut.getId());
       assertFalse(tOut.getId().isEmpty());
       assertNotNull(tOut.getState());
    }
    
-   public static void validateFull(TaskOutput tOut) {
+   public static void validateFull(TaskOut tOut) {
       validateSimple(tOut);
       assertNotNull(tOut.getActionId());
       assertNotNull(tOut.getCreateTime());
@@ -44,11 +46,11 @@ public final class TaskOutputTest {
       assertNotNull(tOut.getUser());
    }
    
-   public static void compareSimple(TaskOutput tOut01, TaskOutput tOut02) {
+   public static void compareSimple(TaskOut tOut01, TaskOut tOut02) {
       assertTrue(tOut01.getId().contentEquals(tOut02.getId()));
    }
    
-   public static void compareFull(TaskOutput tOut01, TaskOutput tOut02) {
+   public static void compareFull(TaskOut tOut01, TaskOut tOut02) {
       compareSimple(tOut01, tOut02);
    }
    

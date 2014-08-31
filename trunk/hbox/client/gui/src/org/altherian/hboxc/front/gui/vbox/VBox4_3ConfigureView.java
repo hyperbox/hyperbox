@@ -23,11 +23,11 @@ package org.altherian.hboxc.front.gui.vbox;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.HypervisorInput;
+import org.altherian.hbox.comm.in.HypervisorIn;
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.comm.output.hypervisor.HypervisorOutput;
-import org.altherian.hbox.constant.EntityTypes;
+import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Cancelable;
@@ -57,10 +57,10 @@ public class VBox4_3ConfigureView implements _Saveable, _Cancelable {
    
    private JDialog dialog;
    
-   private HypervisorOutput hypOut;
-   private HypervisorInput hypIn;
+   private HypervisorOut hypOut;
+   private HypervisorIn hypIn;
    
-   public static HypervisorInput getInput(String srvId) {
+   public static HypervisorIn getInput(String srvId) {
       return new VBox4_3ConfigureView().getUserInput(srvId);
    }
    
@@ -79,7 +79,7 @@ public class VBox4_3ConfigureView implements _Saveable, _Cancelable {
       buttonPanel.add(saveButton);
       buttonPanel.add(cancelButton);
       
-      dialog = JDialogBuilder.get("Hypervisor Configuration Edit", IconBuilder.getEntityType(EntityTypes.Server).getImage(), saveButton);
+      dialog = JDialogBuilder.get("Hypervisor Configuration Edit", IconBuilder.getEntityType(Entity.Server).getImage(), saveButton);
       dialog.add(machineFolderLabel);
       dialog.add(machineFolderValue, "growx, pushx, wrap");
       dialog.add(consoleModuleLabel);
@@ -89,7 +89,7 @@ public class VBox4_3ConfigureView implements _Saveable, _Cancelable {
       dialog.add(buttonPanel, "center, span 2");
    }
    
-   private HypervisorInput getUserInput(String srvId) {
+   private HypervisorIn getUserInput(String srvId) {
       hypOut = Gui.getServer(srvId).getHypervisor().getInfo();
       machineFolderValue.setText(hypOut.getSetting("vbox.global.machineFolder").getString());
       consoleModuleValue.setText(hypOut.getSetting("vbox.global.consoleModule").getString());
@@ -118,7 +118,7 @@ public class VBox4_3ConfigureView implements _Saveable, _Cancelable {
    
    @Override
    public void save() throws HyperboxException {
-      hypIn = new HypervisorInput();
+      hypIn = new HypervisorIn();
       hypIn.setSetting(new StringSettingIO("vbox.global.machineFolder", machineFolderValue.getText()));
       hypIn.setSetting(new StringSettingIO("vbox.global.consoleModule", consoleModuleValue.getText()));
       hypIn.setSetting(new BooleanSettingIO("vbox.global.virtEx", virtExValue.isSelected()));

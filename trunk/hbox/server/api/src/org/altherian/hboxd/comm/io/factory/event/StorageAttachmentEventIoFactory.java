@@ -21,11 +21,11 @@
 
 package org.altherian.hboxd.comm.io.factory.event;
 
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.storage.StorageControllerAttachmentDataModifiedEventOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.storage.StorageControllerAttachmentDataModifiedEventOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.storage.StorageControllerOut;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.event._Event;
 import org.altherian.hboxd.comm.io.factory.MachineIoFactory;
@@ -47,22 +47,22 @@ public class StorageAttachmentEventIoFactory implements _EventIoFactory {
    }
    
    @Override
-   public EventOutput get(_Hyperbox hbox, _Event ev) {
+   public EventOut get(_Hyperbox hbox, _Event ev) {
       StorageAttachmentEvent event = (StorageAttachmentEvent) ev;
       
       _Machine vm = hbox.getServer().getMachine(event.getMachineId());
       
-      ServerOutput srvOut = ServerIoFactory.get();
-      MachineOutput vmOut = MachineIoFactory.getSimple(vm);
-      StorageControllerOutput stoOut = StorageControllerIoFactory.get(vm.getStorageController(event.getControllerId()));
+      ServerOut srvOut = ServerIoFactory.get();
+      MachineOut vmOut = MachineIoFactory.getSimple(vm);
+      StorageControllerOut stoOut = StorageControllerIoFactory.get(vm.getStorageController(event.getControllerId()));
       
       switch ((HyperboxEvents) event.getEventId()) {
          case StorageAttachmentAdded:
-            return new StorageControllerAttachmentDataModifiedEventOutput(ev.getTime(), srvOut, vmOut, stoOut);
+            return new StorageControllerAttachmentDataModifiedEventOut(ev.getTime(), srvOut, vmOut, stoOut);
          case StorageAttachmentModified:
-            return new StorageControllerAttachmentDataModifiedEventOutput(ev.getTime(), srvOut, vmOut, stoOut);
+            return new StorageControllerAttachmentDataModifiedEventOut(ev.getTime(), srvOut, vmOut, stoOut);
          case StorageAttachmentRemoved:
-            return new StorageControllerAttachmentDataModifiedEventOutput(ev.getTime(), srvOut, vmOut, stoOut);
+            return new StorageControllerAttachmentDataModifiedEventOut(ev.getTime(), srvOut, vmOut, stoOut);
          default:
             return null;
       }

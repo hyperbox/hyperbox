@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.core.model;
 
-import org.altherian.hbox.constant.EntityTypes;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hboxd.settings._Settable;
 
 public interface _Device extends _Settable {
@@ -30,6 +30,6 @@ public interface _Device extends _Settable {
    
    public String getId();
    
-   public EntityTypes getType();
+   public Entity getType();
    
 }

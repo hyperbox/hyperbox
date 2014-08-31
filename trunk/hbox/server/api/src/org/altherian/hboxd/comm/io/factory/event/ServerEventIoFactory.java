@@ -21,10 +21,10 @@
 
 package org.altherian.hboxd.comm.io.factory.event;
 
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.server.ServerConnectionStateEventOutput;
-import org.altherian.hbox.comm.output.event.server.ServerPropertyChangedEventOutput;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.server.ServerConnectionStateEventOut;
+import org.altherian.hbox.comm.out.event.server.ServerPropertyChangedEventOut;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.states.ServerConnectionState;
@@ -45,20 +45,20 @@ public class ServerEventIoFactory implements _EventIoFactory {
    }
    
    @Override
-   public EventOutput get(_Hyperbox hbox, _Event ev) {
+   public EventOut get(_Hyperbox hbox, _Event ev) {
       if (!(ev instanceof ServerEvent)) {
          return null;
       }
       
-      ServerOutput srvOut = ServerIoFactory.get();
+      ServerOut srvOut = ServerIoFactory.get();
       switch ((HyperboxEvents) ev.getEventId()) {
          case ServerConnectionState:
             ServerConnectionState state = ((ServerConnectionStateEvent) ev).getState();
-            return new ServerConnectionStateEventOutput(ev.getTime(), srvOut, state);
+            return new ServerConnectionStateEventOut(ev.getTime(), srvOut, state);
          case ServerPropertyChanged:
             Object property = ((ServerPropertyChangedEvent) ev).getProperty();
             Object value = ((ServerPropertyChangedEvent) ev).getValue();
-            return new ServerPropertyChangedEventOutput(ev.getTime(), srvOut, property, value.toString());
+            return new ServerPropertyChangedEventOut(ev.getTime(), srvOut, property, value.toString());
          default:
             return null;
       }

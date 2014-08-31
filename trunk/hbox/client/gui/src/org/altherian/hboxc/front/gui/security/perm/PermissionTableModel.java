@@ -21,11 +21,11 @@
 
 package org.altherian.hboxc.front.gui.security.perm;
 
-import org.altherian.hbox.comm.input.PermissionInput;
+import org.altherian.hbox.comm.in.PermissionIn;
 import org.altherian.hboxc.front.gui.utils.AbstractListTableModel;
 
 @SuppressWarnings("serial")
-public class PermissionTableModel extends AbstractListTableModel<PermissionInput> {
+public class PermissionTableModel extends AbstractListTableModel<PermissionIn> {
    
    private final String itemTypeCol = "Item Type";
    private final String itemCol = "Item";
@@ -41,7 +41,7 @@ public class PermissionTableModel extends AbstractListTableModel<PermissionInput
    }
    
    @Override
-   protected Object getValueAt(PermissionInput obj, String columnName) {
+   protected Object getValueAt(PermissionIn obj, String columnName) {
       if (columnName.contentEquals(itemTypeCol)) {
          return obj.getItemTypeId();
       } else if (columnName.contentEquals(itemCol)) {

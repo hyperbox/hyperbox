@@ -21,19 +21,19 @@
 
 package org.altherian.hboxc.event.task;
 
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.TaskOutput;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hboxc.event.server.ServerEvent;
 
 public class TaskEvent extends ServerEvent {
    
-   public TaskEvent(Enum<?> eventId, ServerOutput srvOut, TaskOutput taskOut) {
+   public TaskEvent(Enum<?> eventId, ServerOut srvOut, TaskOut taskOut) {
       super(eventId, srvOut);
-      set(TaskOutput.class, taskOut);
+      set(TaskOut.class, taskOut);
    }
    
-   public TaskOutput getTask() {
-      return get(TaskOutput.class);
+   public TaskOut getTask() {
+      return get(TaskOut.class);
    }
    
    @Override

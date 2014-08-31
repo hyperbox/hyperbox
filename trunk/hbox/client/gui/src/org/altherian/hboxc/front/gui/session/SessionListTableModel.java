@@ -21,11 +21,11 @@
 
 package org.altherian.hboxc.front.gui.session;
 
-import org.altherian.hbox.comm.output.SessionOutput;
+import org.altherian.hbox.comm.out.SessionOut;
 import org.altherian.hboxc.front.gui.utils.AbstractOutputListTableModel;
 
 @SuppressWarnings("serial")
-public final class SessionListTableModel extends AbstractOutputListTableModel<SessionOutput> {
+public final class SessionListTableModel extends AbstractOutputListTableModel<SessionOut> {
    
    private final String ID = "ID";
    private final String USER = "User";
@@ -41,7 +41,7 @@ public final class SessionListTableModel extends AbstractOutputListTableModel<Se
    }
    
    @Override
-   protected Object getValueAt(SessionOutput sesOut, String columnName) {
+   protected Object getValueAt(SessionOut sesOut, String columnName) {
       if (columnName == ID) {
          return sesOut.getId();
       }

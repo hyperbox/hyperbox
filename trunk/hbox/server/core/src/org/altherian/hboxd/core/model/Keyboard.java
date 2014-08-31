@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.core.model;
 
-import org.altherian.hbox.constant.KeyboardModes;
+import org.altherian.hbox.constant.KeyboardMode;
 import org.altherian.hboxd.hypervisor.vm.device._RawKeyboard;
 import org.altherian.hboxd.settings._Setting;
 
@@ -70,7 +70,7 @@ public class Keyboard implements _Keyboard {
    }
    
    @Override
-   public void setMode(KeyboardModes mode) {
+   public void setMode(KeyboardMode mode) {
       // TODO Auto-generated method stub
       
    }

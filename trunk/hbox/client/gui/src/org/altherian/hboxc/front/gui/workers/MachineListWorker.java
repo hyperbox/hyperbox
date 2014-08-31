@@ -22,8 +22,8 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.tool.logging.Logger;
 
@@ -31,7 +31,7 @@ import java.util.List;
 
 import javax.swing.SwingWorker;
 
-public class MachineListWorker extends SwingWorker<Void, MachineOutput> {
+public class MachineListWorker extends SwingWorker<Void, MachineOut> {
    
    private _MachineListReceiver recv;
    private String serverId;
@@ -44,7 +44,7 @@ public class MachineListWorker extends SwingWorker<Void, MachineOutput> {
    @Override
    protected Void doInBackground() throws Exception {
       recv.loadingStarted();
-      for (MachineOutput mOut : Gui.getServer(serverId).listMachines()) {
+      for (MachineOut mOut : Gui.getServer(serverId).listMachines()) {
          publish(mOut);
       }
       
@@ -52,7 +52,7 @@ public class MachineListWorker extends SwingWorker<Void, MachineOutput> {
    }
    
    @Override
-   protected void process(List<MachineOutput> mOutList) {
+   protected void process(List<MachineOut> mOutList) {
       recv.add(mOutList);
    }
    
@@ -68,7 +68,7 @@ public class MachineListWorker extends SwingWorker<Void, MachineOutput> {
       }
    }
    
-   public static void get(_MachineListReceiver recv, ServerOutput srvOut) {
+   public static void get(_MachineListReceiver recv, ServerOut srvOut) {
       get(recv, srvOut.getId());
    }
    

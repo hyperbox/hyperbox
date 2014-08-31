@@ -21,10 +21,10 @@
 
 package org.altherian.hboxd.comm.io.factory.event;
 
-import org.altherian.hbox.comm.output.event.EventOutput;
-import org.altherian.hbox.comm.output.event.snapshot.SnapshotDeletedEventOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
+import org.altherian.hbox.comm.out.event.snapshot.SnapshotDeletedEventOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.event._Event;
 import org.altherian.hboxd.HBoxServer;
@@ -44,13 +44,13 @@ public class SnapshotDeletedEventIoFactory implements _EventIoFactory {
    }
    
    @Override
-   public EventOutput get(_Hyperbox hbox, _Event ev) {
+   public EventOut get(_Hyperbox hbox, _Event ev) {
       SnapshotEvent sEv = (SnapshotEvent) ev;
       
       _Machine vm = HBoxServer.get().getMachine(sEv.getMachineId());
-      MachineOutput mOut = MachineIoFactory.get(vm);
-      SnapshotOutput snapOut = new SnapshotOutput(sEv.getSnapshotUuid());
-      return new SnapshotDeletedEventOutput(sEv.getTime(), ServerIoFactory.get(), mOut, snapOut);
+      MachineOut mOut = MachineIoFactory.get(vm);
+      SnapshotOut snapOut = new SnapshotOut(sEv.getSnapshotUuid());
+      return new SnapshotDeletedEventOut(sEv.getTime(), ServerIoFactory.get(), mOut, snapOut);
    }
    
 }

@@ -21,7 +21,7 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.input.MachineInput;
+import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.tool.logging.Logger;
 
@@ -53,7 +53,7 @@ public class KeyboardTypeListWorker extends SwingWorker<Void, String> {
          
       });
       
-      for (String type : Gui.getServer(serverId).listKeyboardMode(new MachineInput(machineId))) {
+      for (String type : Gui.getServer(serverId).listKeyboardMode(new MachineIn(machineId))) {
          publish(type);
       }
       

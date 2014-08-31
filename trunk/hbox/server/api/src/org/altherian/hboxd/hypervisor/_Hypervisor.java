@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.hypervisor;
 
-import org.altherian.hbox.constant.EntityTypes;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hbox.data.Machine;
 import org.altherian.hbox.exception.HypervisorException;
 import org.altherian.hboxd.event._EventManager;
@@ -68,7 +68,7 @@ public interface _Hypervisor {
    
    public _RawMedium getMedium(String uuid);
    
-   public _RawMedium getMedium(String filePath, EntityTypes mediumType);
+   public _RawMedium getMedium(String filePath, Entity mediumType);
    
    public _RawMedium getMedium(String filePath, String mediumType);
    

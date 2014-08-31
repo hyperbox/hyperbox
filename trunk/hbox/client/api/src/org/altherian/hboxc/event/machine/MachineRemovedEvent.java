@@ -21,12 +21,12 @@
 
 package org.altherian.hboxc.event.machine;
 
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxc.event.ClientEvents;
 
 public final class MachineRemovedEvent extends MachineEvent {
    
-   public MachineRemovedEvent(String srvId, MachineOutput mOut) {
+   public MachineRemovedEvent(String srvId, MachineOut mOut) {
       super(ClientEvents.MachineRemoved, srvId, mOut);
    }
    

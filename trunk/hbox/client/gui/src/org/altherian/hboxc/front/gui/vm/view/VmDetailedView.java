@@ -24,7 +24,7 @@ package org.altherian.hboxc.front.gui.vm.view;
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.machine.MachineDataChangedEvent;
 import org.altherian.hboxc.event.machine.MachineRemovedEvent;
@@ -42,7 +42,7 @@ import javax.swing.SwingUtilities;
 
 public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    
-   private MachineOutput mOut;
+   private MachineOut mOut;
    
    private VmSummaryView summaryTab;
    private SnapshotManagementView snapTab;
@@ -92,7 +92,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
       }
    }
    
-   public void setUserSelection(MachineOutput mOut) {
+   public void setUserSelection(MachineOut mOut) {
       Logger.track();
       
       this.mOut = mOut;
@@ -177,7 +177,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    }
    
    @Override
-   public void put(MachineOutput mOut) {
+   public void put(MachineOut mOut) {
       Logger.track();
       
       this.mOut = mOut;

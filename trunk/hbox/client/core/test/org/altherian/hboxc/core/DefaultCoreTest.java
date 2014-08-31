@@ -21,8 +21,8 @@
 
 package org.altherian.hboxc.core;
 
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.event.CoreEventManager;
 import org.altherian.hboxc.event.FrontEventManager;
@@ -35,8 +35,8 @@ public final class DefaultCoreTest extends CoreTest {
    public static void beforeClass() throws HyperboxException {
       FrontEventManager.get().start();
       CoreEventManager.get().start();
-      ServerInput srvIn = new ServerInput();
-      init(new ClientCore(), srvIn, new UserInput());
+      ServerIn srvIn = new ServerIn();
+      init(new ClientCore(), srvIn, new UserIn());
    }
    
 }

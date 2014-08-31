@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.memory;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 
 public final class LargePagesSetting extends BooleanSetting {
    
    public LargePagesSetting(boolean isEnabled) {
-      super(MachineAttributes.LargePages, isEnabled);
+      super(MachineAttribute.LargePages, isEnabled);
    }
    
 }

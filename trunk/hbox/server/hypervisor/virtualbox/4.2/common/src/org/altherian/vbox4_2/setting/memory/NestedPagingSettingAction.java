@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.memory;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.memory.NestedPagingSetting;
@@ -40,7 +40,7 @@ public class NestedPagingSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.NestedPaging.toString();
+      return MachineAttribute.NestedPaging.toString();
    }
    
    @Override

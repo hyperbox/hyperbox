@@ -24,7 +24,7 @@ package org.altherian.hboxd.core.action.module;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ModuleInput;
+import org.altherian.hbox.comm.in.ModuleIn;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 
@@ -45,7 +45,7 @@ public class ModuleLoadAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      ModuleInput modIn = request.get(ModuleInput.class);
+      ModuleIn modIn = request.get(ModuleIn.class);
       hbox.getModuleManager().getModule(modIn.getId()).load();
    }
    

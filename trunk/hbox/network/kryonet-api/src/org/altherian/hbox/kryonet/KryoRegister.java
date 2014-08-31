@@ -26,67 +26,67 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.Message;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.Action;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.MediumInput;
-import org.altherian.hbox.comm.input.NetworkAttachModeInput;
-import org.altherian.hbox.comm.input.NetworkAttachNameInput;
-import org.altherian.hbox.comm.input.NetworkInterfaceInput;
-import org.altherian.hbox.comm.input.NetworkInterfaceTypeInput;
-import org.altherian.hbox.comm.input.OsTypeInput;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.input.SessionInput;
-import org.altherian.hbox.comm.input.SnapshotInput;
-import org.altherian.hbox.comm.input.StorageControllerInput;
-import org.altherian.hbox.comm.input.StorageControllerSubTypeInput;
-import org.altherian.hbox.comm.input.StorageControllerTypeInput;
-import org.altherian.hbox.comm.input.StorageDeviceAttachmentInput;
-import org.altherian.hbox.comm.input.StoreInput;
-import org.altherian.hbox.comm.input.StoreItemInput;
-import org.altherian.hbox.comm.input.TaskInput;
-import org.altherian.hbox.comm.input.UserInput;
+import org.altherian.hbox.comm.in.Action;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.MediumIn;
+import org.altherian.hbox.comm.in.NetworkAttachModeIn;
+import org.altherian.hbox.comm.in.NetworkAttachNameIn;
+import org.altherian.hbox.comm.in.NetworkInterfaceIn;
+import org.altherian.hbox.comm.in.NetworkInterfaceTypeIn;
+import org.altherian.hbox.comm.in.OsTypeIn;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.in.SessionIn;
+import org.altherian.hbox.comm.in.SnapshotIn;
+import org.altherian.hbox.comm.in.StorageControllerIn;
+import org.altherian.hbox.comm.in.StorageControllerSubTypeIn;
+import org.altherian.hbox.comm.in.StorageControllerTypeIn;
+import org.altherian.hbox.comm.in.StorageDeviceAttachmentIn;
+import org.altherian.hbox.comm.in.StoreIn;
+import org.altherian.hbox.comm.in.StoreItemIn;
+import org.altherian.hbox.comm.in.TaskIn;
+import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.PositiveNumberSettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.comm.output.ExceptionOutput;
-import org.altherian.hbox.comm.output.MachineMetricOutput;
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.SessionOutput;
-import org.altherian.hbox.comm.output.StoreItemOutput;
-import org.altherian.hbox.comm.output.StoreOutput;
-import org.altherian.hbox.comm.output.TaskOutput;
-import org.altherian.hbox.comm.output.event.UnknownEventOutput;
-import org.altherian.hbox.comm.output.event.machine.MachineDataChangeEventOutput;
-import org.altherian.hbox.comm.output.event.machine.MachineRegistrationEventOutput;
-import org.altherian.hbox.comm.output.event.machine.MachineStateEventOutput;
-import org.altherian.hbox.comm.output.event.session.SessionStateEventOutput;
-import org.altherian.hbox.comm.output.event.snapshot.SnapshotDeletedEventOutput;
-import org.altherian.hbox.comm.output.event.snapshot.SnapshotModifiedEventOutput;
-import org.altherian.hbox.comm.output.event.snapshot.SnapshotRestoredEventOutput;
-import org.altherian.hbox.comm.output.event.snapshot.SnapshotTakenEventOutput;
-import org.altherian.hbox.comm.output.event.store.StoreStateEventOutput;
-import org.altherian.hbox.comm.output.event.system.SystemStateEventOutput;
-import org.altherian.hbox.comm.output.event.task.TaskQueueEventOutput;
-import org.altherian.hbox.comm.output.event.task.TaskStateEventOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.hypervisor.MachineSessionOutput;
-import org.altherian.hbox.comm.output.hypervisor.OsTypeOutput;
-import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
-import org.altherian.hbox.comm.output.network.NetworkAttachModeOutput;
-import org.altherian.hbox.comm.output.network.NetworkAttachNameOutput;
-import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
-import org.altherian.hbox.comm.output.network.NetworkInterfaceTypeOutput;
-import org.altherian.hbox.comm.output.security.UserOutput;
-import org.altherian.hbox.comm.output.storage.MediumOutput;
-import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
-import org.altherian.hbox.comm.output.storage.StorageControllerSubTypeOutput;
-import org.altherian.hbox.comm.output.storage.StorageControllerTypeOutput;
-import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
-import org.altherian.hbox.constant.EntityTypes;
+import org.altherian.hbox.comm.out.ExceptionOut;
+import org.altherian.hbox.comm.out.MachineMetricOut;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.SessionOut;
+import org.altherian.hbox.comm.out.StoreItemOut;
+import org.altherian.hbox.comm.out.StoreOut;
+import org.altherian.hbox.comm.out.TaskOut;
+import org.altherian.hbox.comm.out.event.UnknownEventOut;
+import org.altherian.hbox.comm.out.event.machine.MachineDataChangeEventOut;
+import org.altherian.hbox.comm.out.event.machine.MachineRegistrationEventOut;
+import org.altherian.hbox.comm.out.event.machine.MachineStateEventOut;
+import org.altherian.hbox.comm.out.event.session.SessionStateEventOut;
+import org.altherian.hbox.comm.out.event.snapshot.SnapshotDeletedEventOut;
+import org.altherian.hbox.comm.out.event.snapshot.SnapshotModifiedEventOut;
+import org.altherian.hbox.comm.out.event.snapshot.SnapshotRestoredEventOut;
+import org.altherian.hbox.comm.out.event.snapshot.SnapshotTakenEventOut;
+import org.altherian.hbox.comm.out.event.store.StoreStateEventOut;
+import org.altherian.hbox.comm.out.event.system.SystemStateEventOut;
+import org.altherian.hbox.comm.out.event.task.TaskQueueEventOut;
+import org.altherian.hbox.comm.out.event.task.TaskStateEventOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.hypervisor.MachineSessionOut;
+import org.altherian.hbox.comm.out.hypervisor.OsTypeOut;
+import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
+import org.altherian.hbox.comm.out.network.NetworkAttachModeOut;
+import org.altherian.hbox.comm.out.network.NetworkAttachNameOut;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceTypeOut;
+import org.altherian.hbox.comm.out.security.UserOut;
+import org.altherian.hbox.comm.out.storage.MediumOut;
+import org.altherian.hbox.comm.out.storage.StorageControllerOut;
+import org.altherian.hbox.comm.out.storage.StorageControllerSubTypeOut;
+import org.altherian.hbox.comm.out.storage.StorageControllerTypeOut;
+import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hbox.constant.StorageControllerSubType;
 import org.altherian.hbox.constant.StorageControllerType;
-import org.altherian.hbox.constant.StoreAttributes;
-import org.altherian.hbox.constant.StoreItemAttributes;
+import org.altherian.hbox.constant.StoreAttribute;
+import org.altherian.hbox.constant.StoreItemAttribute;
 import org.altherian.hbox.states.ACPI;
 import org.altherian.hbox.states.MachineSessionStates;
 import org.altherian.hbox.states.MachineStates;
@@ -131,7 +131,7 @@ public class KryoRegister {
       kryo.register(AnswerType.class);
       kryo.register(Command.class);
       kryo.register(Action.class);
-      kryo.register(ExceptionOutput.class);
+      kryo.register(ExceptionOut.class);
       
       /*
        * Register Hyperbox API IO classes
@@ -140,94 +140,94 @@ public class KryoRegister {
       kryo.register(BooleanSettingIO.class);
       kryo.register(PositiveNumberSettingIO.class);
       
-      kryo.register(MachineInput.class);
-      kryo.register(MachineOutput.class);
+      kryo.register(MachineIn.class);
+      kryo.register(MachineOut.class);
       
-      kryo.register(MachineMetricOutput.class);
+      kryo.register(MachineMetricOut.class);
       
-      kryo.register(MachineSessionOutput.class);
+      kryo.register(MachineSessionOut.class);
       
-      kryo.register(StoreInput.class);
-      kryo.register(StoreOutput.class);
+      kryo.register(StoreIn.class);
+      kryo.register(StoreOut.class);
       
-      kryo.register(StoreItemInput.class);
-      kryo.register(StoreItemOutput.class);
+      kryo.register(StoreItemIn.class);
+      kryo.register(StoreItemOut.class);
       
-      kryo.register(MediumInput.class);
-      kryo.register(MediumOutput.class);
+      kryo.register(MediumIn.class);
+      kryo.register(MediumOut.class);
       
-      kryo.register(NetworkInterfaceInput.class);
-      kryo.register(NetworkInterfaceOutput.class);
+      kryo.register(NetworkInterfaceIn.class);
+      kryo.register(NetworkInterfaceOut.class);
       
-      kryo.register(NetworkAttachModeInput.class);
-      kryo.register(NetworkAttachModeOutput.class);
+      kryo.register(NetworkAttachModeIn.class);
+      kryo.register(NetworkAttachModeOut.class);
       
-      kryo.register(NetworkAttachNameInput.class);
-      kryo.register(NetworkAttachNameOutput.class);
+      kryo.register(NetworkAttachNameIn.class);
+      kryo.register(NetworkAttachNameOut.class);
       
-      kryo.register(NetworkInterfaceTypeInput.class);
-      kryo.register(NetworkInterfaceTypeOutput.class);
+      kryo.register(NetworkInterfaceTypeIn.class);
+      kryo.register(NetworkInterfaceTypeOut.class);
       
-      kryo.register(StorageControllerInput.class);
-      kryo.register(StorageControllerOutput.class);
+      kryo.register(StorageControllerIn.class);
+      kryo.register(StorageControllerOut.class);
       
-      kryo.register(StorageControllerTypeInput.class);
-      kryo.register(StorageControllerTypeOutput.class);
+      kryo.register(StorageControllerTypeIn.class);
+      kryo.register(StorageControllerTypeOut.class);
       
-      kryo.register(StorageControllerSubTypeInput.class);
-      kryo.register(StorageControllerSubTypeOutput.class);
+      kryo.register(StorageControllerSubTypeIn.class);
+      kryo.register(StorageControllerSubTypeOut.class);
       
-      kryo.register(StorageDeviceAttachmentInput.class);
-      kryo.register(StorageDeviceAttachmentOutput.class);
+      kryo.register(StorageDeviceAttachmentIn.class);
+      kryo.register(StorageDeviceAttachmentOut.class);
       
-      kryo.register(SnapshotInput.class);
-      kryo.register(SnapshotOutput.class);
+      kryo.register(SnapshotIn.class);
+      kryo.register(SnapshotOut.class);
       
-      kryo.register(UserInput.class);
-      kryo.register(UserOutput.class);
+      kryo.register(UserIn.class);
+      kryo.register(UserOut.class);
       
-      kryo.register(SessionOutput.class);
-      kryo.register(SessionInput.class);
+      kryo.register(SessionOut.class);
+      kryo.register(SessionIn.class);
       
-      kryo.register(ServerInput.class);
-      kryo.register(ServerOutput.class);
+      kryo.register(ServerIn.class);
+      kryo.register(ServerOut.class);
       
-      kryo.register(TaskInput.class);
-      kryo.register(TaskOutput.class);
+      kryo.register(TaskIn.class);
+      kryo.register(TaskOut.class);
       
-      kryo.register(OsTypeInput.class);
-      kryo.register(OsTypeOutput.class);
+      kryo.register(OsTypeIn.class);
+      kryo.register(OsTypeOut.class);
       
       /*
        * Events
        */
-      kryo.register(MachineDataChangeEventOutput.class);
-      kryo.register(MachineRegistrationEventOutput.class);
-      kryo.register(MachineStateEventOutput.class);
-      kryo.register(SessionStateEventOutput.class);
-      kryo.register(SnapshotModifiedEventOutput.class);
-      kryo.register(SnapshotDeletedEventOutput.class);
-      kryo.register(SnapshotRestoredEventOutput.class);
-      kryo.register(SnapshotTakenEventOutput.class);
-      kryo.register(StoreStateEventOutput.class);
-      kryo.register(SystemStateEventOutput.class);
-      kryo.register(TaskQueueEventOutput.class);
-      kryo.register(TaskStateEventOutput.class);
-      kryo.register(UnknownEventOutput.class);
+      kryo.register(MachineDataChangeEventOut.class);
+      kryo.register(MachineRegistrationEventOut.class);
+      kryo.register(MachineStateEventOut.class);
+      kryo.register(SessionStateEventOut.class);
+      kryo.register(SnapshotModifiedEventOut.class);
+      kryo.register(SnapshotDeletedEventOut.class);
+      kryo.register(SnapshotRestoredEventOut.class);
+      kryo.register(SnapshotTakenEventOut.class);
+      kryo.register(StoreStateEventOut.class);
+      kryo.register(SystemStateEventOut.class);
+      kryo.register(TaskQueueEventOut.class);
+      kryo.register(TaskStateEventOut.class);
+      kryo.register(UnknownEventOut.class);
       
       /*
        * Register Hyperbox API business classes
        */
       kryo.register(ACPI.class);
-      kryo.register(EntityTypes.class);
+      kryo.register(Entity.class);
       kryo.register(MachineSessionStates.class);
       kryo.register(MachineStates.class);
       kryo.register(ModuleState.class);
       kryo.register(ProgressTrackerState.class);
       kryo.register(SessionStates.class);
       kryo.register(StoreState.class);
-      kryo.register(StoreAttributes.class);
-      kryo.register(StoreItemAttributes.class);
+      kryo.register(StoreAttribute.class);
+      kryo.register(StoreItemAttribute.class);
       kryo.register(ServerState.class);
       kryo.register(TaskQueueEvents.class);
       kryo.register(TaskState.class);

@@ -21,15 +21,15 @@
 
 package org.altherian.hboxc.front.gui.snapshot;
 
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.hypervisor.SnapshotOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
 
 import java.util.List;
 
 public interface _SnapshotSelector {
    
-   public List<SnapshotOutput> getSelection();
+   public List<SnapshotOut> getSelection();
    
-   public MachineOutput getMachine();
+   public MachineOut getMachine();
    
 }

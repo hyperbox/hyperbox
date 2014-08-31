@@ -256,7 +256,7 @@
 		
 		<property name="os.type" value="${os.family}" />
 		<exec executable="svn" outputProperty="svn.raw.info">
-			<arg line="info --xml"/>
+			<arg line="info --xml ."/>
 		</exec>
 		<echo message="${svn.raw.info}" file="${out.dir}/svn.info"/>
 		
@@ -276,7 +276,7 @@
 		<xmlproperty file="${out.dir}/svn.server.info" keeproot="no" prefix="svn.server" />
 		<xmlproperty file="${out.dir}/svn.client.info" keeproot="no" prefix="svn.client" />
 
-		<property name="hbox.revision"						value="${svn.global.entry(revision)}" />
+		<property name="hbox.revision"						value="${svn.global.entry.commit(revision)}" />
 		<property name="hbox.api.revision"					value="${svn.api.entry.commit(revision)}" />
 		<property name="hbox.protocol.version"				value="${svn.api.protocol.entry.commit(revision)}" />
 		
@@ -323,6 +323,7 @@
 	
 	<target name="server.api.deploy" depends="configure">
 		<mkdir dir="${server.out.dir}/bin" />
+		<mkdir dir="${server.out.dir}/conf" />
 		<mkdir dir="${server.out.dir}/doc" />
 		<mkdir dir="${server.out.dir}/doc/manual" />
 		<mkdir dir="${server.out.dir}/doc/legal" />

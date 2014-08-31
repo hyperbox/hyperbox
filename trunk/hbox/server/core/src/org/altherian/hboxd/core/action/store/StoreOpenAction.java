@@ -24,7 +24,7 @@ package org.altherian.hboxd.core.action.store;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.StoreInput;
+import org.altherian.hbox.comm.in.StoreIn;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 import org.altherian.hboxd.store._Store;
@@ -46,7 +46,7 @@ public final class StoreOpenAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      StoreInput sIn = request.get(StoreInput.class);
+      StoreIn sIn = request.get(StoreIn.class);
       _Store s = hbox.getStoreManager().getStore(sIn.getId());
       s.open();
       hbox.getPersistor().updateStore(s);

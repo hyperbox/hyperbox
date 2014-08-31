@@ -25,7 +25,7 @@ package org.altherian.hboxc.front.gui.connector;
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.constant.EntityTypes;
+import org.altherian.hbox.constant.Entity;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.connector.ConnectorStateChangedEvent;
@@ -69,12 +69,12 @@ public class ConnectorDetailedView implements _Refreshable {
       modView = new ModuleListView();
       
       tabs = new JTabbedPane();
-      tabs.addTab("Summary", IconBuilder.getEntityType(EntityTypes.Server), summaryView.getComponent());
-      tabs.addTab("Host", IconBuilder.getEntityType(EntityTypes.Server), hostView.getComponent());
-      tabs.addTab("Tasks", IconBuilder.getEntityType(EntityTypes.Task), taskView.getComponent());
-      tabs.addTab("Stores", IconBuilder.getEntityType(EntityTypes.Store), storeView.getComponent());
-      tabs.addTab("Users", IconBuilder.getEntityType(EntityTypes.User), userView.getComponent());
-      tabs.addTab("Modules", IconBuilder.getEntityType(EntityTypes.Module), modView.getComponent());
+      tabs.addTab("Summary", IconBuilder.getEntityType(Entity.Server), summaryView.getComponent());
+      tabs.addTab("Host", IconBuilder.getEntityType(Entity.Server), hostView.getComponent());
+      tabs.addTab("Tasks", IconBuilder.getEntityType(Entity.Task), taskView.getComponent());
+      tabs.addTab("Stores", IconBuilder.getEntityType(Entity.Store), storeView.getComponent());
+      tabs.addTab("Users", IconBuilder.getEntityType(Entity.User), userView.getComponent());
+      tabs.addTab("Modules", IconBuilder.getEntityType(Entity.Module), modView.getComponent());
       
       loadingLabel = new JLabel("Loading...");
       loadingLabel.setVisible(false);

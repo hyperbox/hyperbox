@@ -21,12 +21,12 @@
 
 package org.altherian.hboxc.front.gui.vm;
 
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 
 import java.util.List;
 
 public interface _MachineSelector {
    
-   public List<MachineOutput> getMachines();
+   public List<MachineOut> getMachines();
    
 }

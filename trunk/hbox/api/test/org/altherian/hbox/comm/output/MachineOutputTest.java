@@ -26,8 +26,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.altherian.hbox.comm.io.SettingIO;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.storage.StorageControllerOutput;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.storage.StorageControllerOut;
 
 import java.util.Collection;
 
@@ -37,7 +37,7 @@ public class MachineOutputTest {
       // not used
    }
    
-   public static void validateFull(MachineOutput mOut) {
+   public static void validateFull(MachineOut mOut) {
       validateSimple(mOut);
       for (String settingName : mOut.listSettingsId()) {
          assertNotNull(settingName);
@@ -46,12 +46,12 @@ public class MachineOutputTest {
          assertNotNull(setting.getName());
          assertNotNull(setting.getRawValue());
       }
-      for (StorageControllerOutput scOut : mOut.listStorageController()) {
+      for (StorageControllerOut scOut : mOut.listStorageController()) {
          StorageControllerOutputTest.validateSimple(scOut);
       }
    }
    
-   public static void validateSimple(MachineOutput mOut) {
+   public static void validateSimple(MachineOut mOut) {
       assertNotNull(mOut);
       assertNotNull(mOut.getUuid());
       assertFalse(mOut.getUuid().isEmpty());
@@ -61,19 +61,19 @@ public class MachineOutputTest {
       assertFalse(mOut.getState().isEmpty());
    }
    
-   public static void validateList(Collection<MachineOutput> mOutList) {
-      for (MachineOutput mOut : mOutList) {
+   public static void validateList(Collection<MachineOut> mOutList) {
+      for (MachineOut mOut : mOutList) {
          validateSimple(mOut);
       }
    }
    
-   public static void compareSimple(MachineOutput mOut1, MachineOutput mOut2) {
+   public static void compareSimple(MachineOut mOut1, MachineOut mOut2) {
       assertTrue(mOut1.getUuid().contentEquals(mOut2.getUuid()));
       assertTrue(mOut1.getName().contentEquals(mOut2.getName()));
       assertTrue(mOut1.getState().contentEquals(mOut2.getState()));
    }
    
-   public static void compareFull(MachineOutput mOut1, MachineOutput mOut2) {
+   public static void compareFull(MachineOut mOut1, MachineOut mOut2) {
       compareSimple(mOut1, mOut2);
       
       assertTrue(mOut1.listSettingsId().size() == mOut2.listSettingsId().size());

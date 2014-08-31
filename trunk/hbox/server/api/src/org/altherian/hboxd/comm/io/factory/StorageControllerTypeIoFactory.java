@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.output.storage.StorageControllerTypeOutput;
+import org.altherian.hbox.comm.out.storage.StorageControllerTypeOut;
 import org.altherian.hboxd.hypervisor.storage._RawStorageControllerType;
 
 public final class StorageControllerTypeIoFactory {
@@ -30,8 +30,8 @@ public final class StorageControllerTypeIoFactory {
       // static class
    }
    
-   public static StorageControllerTypeOutput get(_RawStorageControllerType type) {
-      StorageControllerTypeOutput sctOut = new StorageControllerTypeOutput(type.getId(), type.getMinPort(), type.getMaxPort(), type.getMaxDevPerPort());
+   public static StorageControllerTypeOut get(_RawStorageControllerType type) {
+      StorageControllerTypeOut sctOut = new StorageControllerTypeOut(type.getId(), type.getMinPort(), type.getMaxPort(), type.getMaxDevPerPort());
       return sctOut;
    }
    

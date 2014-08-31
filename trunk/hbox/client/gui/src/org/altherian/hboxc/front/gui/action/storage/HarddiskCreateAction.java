@@ -24,8 +24,8 @@ package org.altherian.hboxc.front.gui.action.storage;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MediumInput;
-import org.altherian.hbox.comm.input.ServerInput;
+import org.altherian.hbox.comm.in.MediumIn;
+import org.altherian.hbox.comm.in.ServerIn;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.server._SingleServerSelector;
 import org.altherian.hboxc.front.gui.storage.HarddiskCreateDialog;
@@ -50,9 +50,9 @@ public class HarddiskCreateAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent ae) {
-      MediumInput medIn = HarddiskCreateDialog.show(select.getServer());
+      MediumIn medIn = HarddiskCreateDialog.show(select.getServer());
       if (medIn != null) {
-         Gui.post(new Request(Command.VBOX, HypervisorTasks.MediumCreate, new ServerInput(select.getId()), medIn));
+         Gui.post(new Request(Command.VBOX, HypervisorTasks.MediumCreate, new ServerIn(select.getServer().getId()), medIn));
       }
    }
    

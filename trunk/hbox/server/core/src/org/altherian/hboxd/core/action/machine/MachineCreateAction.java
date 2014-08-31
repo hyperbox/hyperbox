@@ -26,9 +26,9 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hbox.data.Machine;
 import org.altherian.hboxd.comm.io.factory.MachineIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
@@ -54,13 +54,13 @@ public final class MachineCreateAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      MachineInput mIn = request.get(MachineInput.class);
+      MachineIn mIn = request.get(MachineIn.class);
       String serverId = mIn.getServerId();
-      if (request.has(ServerInput.class)) {
-         serverId = request.get(ServerInput.class).getId();
+      if (request.has(ServerIn.class)) {
+         serverId = request.get(ServerIn.class).getId();
       }
       
-      String osTypeId = mIn.hasSetting(MachineAttributes.OsType) ? mIn.getSetting(MachineAttributes.OsType).getString() : null;
+      String osTypeId = mIn.hasSetting(MachineAttribute.OsType) ? mIn.getSetting(MachineAttribute.OsType).getString() : null;
       Machine settingTemplate = hbox.getHypervisor().getMachineSettings(osTypeId);
       _RawVM newVm = hbox.getHypervisor().createMachine(mIn.getUuid(), mIn.getName(), osTypeId);
       newVm.applyConfiguration(settingTemplate);

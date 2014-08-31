@@ -22,7 +22,7 @@
 package org.altherian.hboxd.core.action;
 
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
+import org.altherian.hbox.comm.in.ServerIn;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.server._Server;
 
@@ -31,8 +31,8 @@ public abstract class ServerAction extends ASingleTaskAction {
    @Override
    public void run(Request request, _Hyperbox hbox) {
       _Server srv = null;
-      if (request.has(ServerInput.class)) {
-         srv = hbox.getServer(request.get(ServerInput.class).getId());
+      if (request.has(ServerIn.class)) {
+         srv = hbox.getServer(request.get(ServerIn.class).getId());
       } else {
          srv = hbox.getServer();
       }

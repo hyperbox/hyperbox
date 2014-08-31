@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.vm;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hbox.constant.StorageControllerType;
 import org.altherian.hbox.data.Machine;
 import org.altherian.hbox.exception.FeatureNotImplementedException;
@@ -196,7 +196,7 @@ public final class VBoxMachine implements _RawVM {
    
    @Override
    public String getName() {
-      return getSetting(MachineAttributes.Name).getString();
+      return getSetting(MachineAttribute.Name).getString();
    }
    
    @Override

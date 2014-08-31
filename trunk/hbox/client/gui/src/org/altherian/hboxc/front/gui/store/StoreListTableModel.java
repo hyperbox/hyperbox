@@ -21,11 +21,11 @@
 
 package org.altherian.hboxc.front.gui.store;
 
-import org.altherian.hbox.comm.output.StoreOutput;
+import org.altherian.hbox.comm.out.StoreOut;
 import org.altherian.hboxc.front.gui.utils.AbstractOutputListTableModel;
 
 @SuppressWarnings("serial")
-public final class StoreListTableModel extends AbstractOutputListTableModel<StoreOutput> {
+public final class StoreListTableModel extends AbstractOutputListTableModel<StoreOut> {
    
    private final String ID = "ID";
    private final String LABEL = "Label";
@@ -41,7 +41,7 @@ public final class StoreListTableModel extends AbstractOutputListTableModel<Stor
    }
    
    @Override
-   protected Object getValueAt(StoreOutput obj, String columnName) {
+   protected Object getValueAt(StoreOut obj, String columnName) {
       if (ID.equalsIgnoreCase(columnName)) {
          return obj.getId();
       }

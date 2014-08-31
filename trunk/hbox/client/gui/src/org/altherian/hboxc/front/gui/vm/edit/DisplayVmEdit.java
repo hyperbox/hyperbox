@@ -23,12 +23,12 @@ package org.altherian.hboxc.front.gui.vm.edit;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.MachineInput;
+import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.PositiveNumberSettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.constant.MachineAttribute;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -41,8 +41,8 @@ import javax.swing.JTextField;
 
 public final class DisplayVmEdit {
    
-   private MachineInput mIn;
-   private MachineOutput mOut;
+   private MachineIn mIn;
+   private MachineOut mOut;
    
    private JPanel panel;
    private JLabel vramLabel;
@@ -127,52 +127,52 @@ public final class DisplayVmEdit {
       return panel;
    }
    
-   public void update(MachineOutput mOut, MachineInput mIn) {
+   public void update(MachineOut mOut, MachineIn mIn) {
       this.mIn = mIn;
       this.mOut = mOut;
       
-      vramField.setText(mOut.getSetting(MachineAttributes.VRAM).getString());
-      monitorCountField.setText(mOut.getSetting(MachineAttributes.MonitorCount).getString());
-      accel2dBox.setSelected(mOut.getSetting(MachineAttributes.Accelerate2dVideo).getBoolean());
-      accel3dBox.setSelected(mOut.getSetting(MachineAttributes.Accelerate3d).getBoolean());
-      vrdeEnableValue.setSelected(mOut.getSetting(MachineAttributes.VrdeEnabled).getBoolean());
-      vrdePortValue.setText(mOut.getSetting(MachineAttributes.VrdePort).getString());
-      vrdeAddressValue.setText(mOut.getSetting(MachineAttributes.VrdeAddress).getString());
-      vrdeAuthTypeValue.setText(mOut.getSetting(MachineAttributes.VrdeAuthType).getString());
-      vrdeAuthTimeoutValue.setText(mOut.getSetting(MachineAttributes.VrdeAuthTimeout).getString());
-      vrdeAllowMultiConnValue.setSelected(mOut.getSetting(MachineAttributes.VrdeMultiConnection).getBoolean());
+      vramField.setText(mOut.getSetting(MachineAttribute.VRAM).getString());
+      monitorCountField.setText(mOut.getSetting(MachineAttribute.MonitorCount).getString());
+      accel2dBox.setSelected(mOut.getSetting(MachineAttribute.Accelerate2dVideo).getBoolean());
+      accel3dBox.setSelected(mOut.getSetting(MachineAttribute.Accelerate3d).getBoolean());
+      vrdeEnableValue.setSelected(mOut.getSetting(MachineAttribute.VrdeEnabled).getBoolean());
+      vrdePortValue.setText(mOut.getSetting(MachineAttribute.VrdePort).getString());
+      vrdeAddressValue.setText(mOut.getSetting(MachineAttribute.VrdeAddress).getString());
+      vrdeAuthTypeValue.setText(mOut.getSetting(MachineAttribute.VrdeAuthType).getString());
+      vrdeAuthTimeoutValue.setText(mOut.getSetting(MachineAttribute.VrdeAuthTimeout).getString());
+      vrdeAllowMultiConnValue.setSelected(mOut.getSetting(MachineAttribute.VrdeMultiConnection).getBoolean());
    }
    
    public void save() {
-      if (!mOut.getSetting(MachineAttributes.VRAM).getString().contentEquals(vramField.getText())) {
-         mIn.setSetting(new PositiveNumberSettingIO(MachineAttributes.VRAM, Long.parseLong(vramField.getText())));
+      if (!mOut.getSetting(MachineAttribute.VRAM).getString().contentEquals(vramField.getText())) {
+         mIn.setSetting(new PositiveNumberSettingIO(MachineAttribute.VRAM, Long.parseLong(vramField.getText())));
       }
-      if (!mOut.getSetting(MachineAttributes.MonitorCount).getString().contentEquals(monitorCountField.getText())) {
-         mIn.setSetting(new PositiveNumberSettingIO(MachineAttributes.MonitorCount, Long.parseLong(monitorCountField.getText())));
+      if (!mOut.getSetting(MachineAttribute.MonitorCount).getString().contentEquals(monitorCountField.getText())) {
+         mIn.setSetting(new PositiveNumberSettingIO(MachineAttribute.MonitorCount, Long.parseLong(monitorCountField.getText())));
       }
-      if (!mOut.getSetting(MachineAttributes.Accelerate2dVideo).getBoolean().equals(accel2dBox.isSelected())) {
-         mIn.setSetting(new BooleanSettingIO(MachineAttributes.Accelerate2dVideo, accel2dBox.isSelected()));
+      if (!mOut.getSetting(MachineAttribute.Accelerate2dVideo).getBoolean().equals(accel2dBox.isSelected())) {
+         mIn.setSetting(new BooleanSettingIO(MachineAttribute.Accelerate2dVideo, accel2dBox.isSelected()));
       }
-      if (!mOut.getSetting(MachineAttributes.Accelerate3d).getBoolean().equals(accel3dBox.isSelected())) {
-         mIn.setSetting(new BooleanSettingIO(MachineAttributes.Accelerate3d, accel3dBox.isSelected()));
+      if (!mOut.getSetting(MachineAttribute.Accelerate3d).getBoolean().equals(accel3dBox.isSelected())) {
+         mIn.setSetting(new BooleanSettingIO(MachineAttribute.Accelerate3d, accel3dBox.isSelected()));
       }
-      if (!mOut.getSetting(MachineAttributes.VrdeEnabled).getBoolean().equals(vrdeEnableValue.isSelected())) {
-         mIn.setSetting(new BooleanSettingIO(MachineAttributes.VrdeEnabled, vrdeEnableValue.isSelected()));
+      if (!mOut.getSetting(MachineAttribute.VrdeEnabled).getBoolean().equals(vrdeEnableValue.isSelected())) {
+         mIn.setSetting(new BooleanSettingIO(MachineAttribute.VrdeEnabled, vrdeEnableValue.isSelected()));
       }
-      if (!mOut.getSetting(MachineAttributes.VrdePort).getString().contentEquals(vrdePortValue.getText())) {
-         mIn.setSetting(new PositiveNumberSettingIO(MachineAttributes.VrdePort, Long.parseLong(vrdePortValue.getText())));
+      if (!mOut.getSetting(MachineAttribute.VrdePort).getString().contentEquals(vrdePortValue.getText())) {
+         mIn.setSetting(new PositiveNumberSettingIO(MachineAttribute.VrdePort, Long.parseLong(vrdePortValue.getText())));
       }
-      if (!mOut.getSetting(MachineAttributes.VrdeAddress).getString().contentEquals(vrdeAddressValue.getText())) {
-         mIn.setSetting(new StringSettingIO(MachineAttributes.VrdeAddress, vrdeAddressValue.getText()));
+      if (!mOut.getSetting(MachineAttribute.VrdeAddress).getString().contentEquals(vrdeAddressValue.getText())) {
+         mIn.setSetting(new StringSettingIO(MachineAttribute.VrdeAddress, vrdeAddressValue.getText()));
       }
-      if (!mOut.getSetting(MachineAttributes.VrdeAuthType).getString().contentEquals(vrdeAuthTypeValue.getText())) {
-         mIn.setSetting(new StringSettingIO(MachineAttributes.VrdeAuthType, vrdeAuthTypeValue.getText()));
+      if (!mOut.getSetting(MachineAttribute.VrdeAuthType).getString().contentEquals(vrdeAuthTypeValue.getText())) {
+         mIn.setSetting(new StringSettingIO(MachineAttribute.VrdeAuthType, vrdeAuthTypeValue.getText()));
       }
-      if (!mOut.getSetting(MachineAttributes.VrdeAuthTimeout).getString().contentEquals(vrdeAuthTimeoutValue.getText())) {
-         mIn.setSetting(new StringSettingIO(MachineAttributes.VrdeAuthTimeout, vrdeAuthTimeoutValue.getText()));
+      if (!mOut.getSetting(MachineAttribute.VrdeAuthTimeout).getString().contentEquals(vrdeAuthTimeoutValue.getText())) {
+         mIn.setSetting(new StringSettingIO(MachineAttribute.VrdeAuthTimeout, vrdeAuthTimeoutValue.getText()));
       }
-      if (!mOut.getSetting(MachineAttributes.VrdeMultiConnection).getBoolean().equals(vrdeAllowMultiConnValue.isSelected())) {
-         mIn.setSetting(new BooleanSettingIO(MachineAttributes.VrdeMultiConnection, vrdeAllowMultiConnValue.isSelected()));
+      if (!mOut.getSetting(MachineAttribute.VrdeMultiConnection).getBoolean().equals(vrdeAllowMultiConnValue.isSelected())) {
+         mIn.setSetting(new BooleanSettingIO(MachineAttribute.VrdeMultiConnection, vrdeAllowMultiConnValue.isSelected()));
       }
    }
    

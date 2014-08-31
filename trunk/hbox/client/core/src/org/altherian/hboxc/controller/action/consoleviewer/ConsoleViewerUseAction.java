@@ -24,10 +24,10 @@ package org.altherian.hboxc.controller.action.consoleviewer;
 
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._AnswerReceiver;
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.controller.ClientTasks;
 import org.altherian.hboxc.controller.action.AbstractClientControllerSingleAction;
@@ -47,19 +47,19 @@ public class ConsoleViewerUseAction extends AbstractClientControllerSingleAction
    
    @Override
    public void run(_Core core, _Front view, Request req, _AnswerReceiver recv) throws HyperboxException {
-      ServerInput srvIn = req.get(ServerInput.class);
-      MachineInput mIn = req.get(MachineInput.class);
+      ServerIn srvIn = req.get(ServerIn.class);
+      MachineIn mIn = req.get(MachineIn.class);
       _Server srv = core.getServer(srvIn.getId());
       
-      MachineOutput mOut = srv.getMachine(mIn);
-      String consoleModule = mOut.getSetting(MachineAttributes.VrdeModule).getString();
+      MachineOut mOut = srv.getMachine(mIn);
+      String consoleModule = mOut.getSetting(MachineAttribute.VrdeModule).getString();
       _ConsoleViewer viewer = core.findConsoleViewer(srv.getHypervisor().getType(), consoleModule);
       
-      String address = mOut.getSetting(MachineAttributes.VrdeAddress).getString();
+      String address = mOut.getSetting(MachineAttribute.VrdeAddress).getString();
       if ((address == null) || address.isEmpty()) {
          address = core.getConnectorForServer(srv.getId()).getAddress();
       }
-      String port = mOut.getSetting(MachineAttributes.VrdePort).getString();
+      String port = mOut.getSetting(MachineAttribute.VrdePort).getString();
       
       String arg = viewer.getArgs();
       arg = arg.replace("%SA%", address);

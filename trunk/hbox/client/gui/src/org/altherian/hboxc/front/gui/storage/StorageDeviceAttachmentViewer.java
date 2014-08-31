@@ -23,10 +23,10 @@ package org.altherian.hboxc.front.gui.storage;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.MediumInput;
-import org.altherian.hbox.comm.input.StorageControllerTypeInput;
-import org.altherian.hbox.comm.input.StorageDeviceAttachmentInput;
-import org.altherian.hbox.comm.output.storage.StorageControllerTypeOutput;
+import org.altherian.hbox.comm.in.MediumIn;
+import org.altherian.hbox.comm.in.StorageControllerTypeIn;
+import org.altherian.hbox.comm.in.StorageDeviceAttachmentIn;
+import org.altherian.hbox.comm.out.storage.StorageControllerTypeOut;
 import org.altherian.hbox.constant.MediumAttribute;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.tool.FileSizeNumber;
@@ -42,7 +42,7 @@ import javax.swing.JPanel;
 public class StorageDeviceAttachmentViewer {
    
    private String srvId;
-   private StorageDeviceAttachmentInput sdaIn;
+   private StorageDeviceAttachmentIn sdaIn;
    private String scTypeId;
    
    private JPanel mainPanel;
@@ -108,7 +108,7 @@ public class StorageDeviceAttachmentViewer {
       mainPanel.add(mediumPanel, "wrap, growx, pushx");
    }
    
-   public JPanel show(String srvId, String scTypeId, StorageDeviceAttachmentInput sdaIn) {
+   public JPanel show(String srvId, String scTypeId, StorageDeviceAttachmentIn sdaIn) {
       Logger.track();
       
       this.srvId = srvId;
@@ -124,7 +124,7 @@ public class StorageDeviceAttachmentViewer {
       Logger.debug(sdaIn);
       attachTypeValue.setText(sdaIn.getDeviceType());
       portCountBox.removeAllItems();
-      StorageControllerTypeOutput sctOut = Gui.getServer(srvId).getStorageControllerType(new StorageControllerTypeInput(scTypeId));
+      StorageControllerTypeOut sctOut = Gui.getServer(srvId).getStorageControllerType(new StorageControllerTypeIn(scTypeId));
       for (long i = sctOut.getMinPort() - 1; i < sctOut.getMaxPort(); i++) {
          if (sctOut.getMaxPort() >= sctOut.getMinPort()) {
             String attachLocation = Long.toString(i);
@@ -142,7 +142,7 @@ public class StorageDeviceAttachmentViewer {
       }
    }
    
-   public JPanel show(MediumInput medIn) {
+   public JPanel show(MediumIn medIn) {
       Logger.track();
       
       if (medIn.hasSetting(MediumAttribute.Type)) {

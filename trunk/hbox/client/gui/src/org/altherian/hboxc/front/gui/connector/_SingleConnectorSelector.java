@@ -27,7 +27,5 @@ import org.altherian.hboxc.comm.output.ConnectorOutput;
 public interface _SingleConnectorSelector {
    
    public ConnectorOutput getConnector();
-   
-   public String getId();
 
 }

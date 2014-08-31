@@ -23,10 +23,10 @@ package org.altherian.hboxc.front.gui.vm.edit;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.input.MachineInput;
-import org.altherian.hbox.comm.input.NetworkInterfaceInput;
-import org.altherian.hbox.comm.output.hypervisor.MachineOutput;
-import org.altherian.hbox.comm.output.network.NetworkInterfaceOutput;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.NetworkInterfaceIn;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
 import org.altherian.hboxc.front.gui.network.NetworkInterfaceViewer;
 
 import java.awt.Component;
@@ -39,7 +39,7 @@ import javax.swing.JTabbedPane;
 public final class NetworkVmEdit {
    
    private String srvId;
-   private MachineInput mIn;
+   private MachineIn mIn;
    private JTabbedPane nicTabs;
    private List<NetworkInterfaceViewer> viewers;
    private JPanel panel;
@@ -55,14 +55,14 @@ public final class NetworkVmEdit {
       return panel;
    }
    
-   public void update(MachineOutput mOut, MachineInput mIn) {
+   public void update(MachineOut mOut, MachineIn mIn) {
       this.srvId = mOut.getServerId();
       this.mIn = mIn;
       
       nicTabs.removeAll();
       viewers.clear();
-      for (NetworkInterfaceOutput nicOut : mOut.listNetworkInterface()) {
-         NetworkInterfaceViewer viewer = NetworkInterfaceViewer.show(srvId, nicOut, new NetworkInterfaceInput(mOut.getUuid(), nicOut.getNicId()));
+      for (NetworkInterfaceOut nicOut : mOut.listNetworkInterface()) {
+         NetworkInterfaceViewer viewer = NetworkInterfaceViewer.show(srvId, nicOut, new NetworkInterfaceIn(mOut.getUuid(), nicOut.getNicId()));
          viewers.add(viewer);
          nicTabs.addTab("NIC " + (nicOut.getNicId() + 1), viewer.getPanel());
       }
@@ -71,7 +71,7 @@ public final class NetworkVmEdit {
    public void save() {
       if (mIn != null) {
          for (NetworkInterfaceViewer viewer : viewers) {
-            NetworkInterfaceInput nicIn = viewer.save();
+            NetworkInterfaceIn nicIn = viewer.save();
             if (nicIn != null) {
                mIn.addNetworkInterface(nicIn);
             }

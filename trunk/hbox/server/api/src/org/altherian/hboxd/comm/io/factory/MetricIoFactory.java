@@ -21,13 +21,13 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.output.MachineMetricOutput;
+import org.altherian.hbox.comm.out.MachineMetricOut;
 import org.altherian.hboxd.core.model._MachineMetric;
 
 public class MetricIoFactory {
    
-   public static MachineMetricOutput get(_MachineMetric metric) {
-      return new MachineMetricOutput(metric.getMachineUuid(), metric.getTime(), metric.getValue());
+   public static MachineMetricOut get(_MachineMetric metric) {
+      return new MachineMetricOut(metric.getMachineUuid(), metric.getTime(), metric.getValue());
    }
    
 }

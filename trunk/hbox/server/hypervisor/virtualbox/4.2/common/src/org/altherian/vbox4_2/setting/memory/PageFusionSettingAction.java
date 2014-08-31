@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.memory;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.memory.PagefusionSetting;
@@ -39,7 +39,7 @@ public class PageFusionSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.PageFusion.toString();
+      return MachineAttribute.PageFusion.toString();
    }
    
    @Override

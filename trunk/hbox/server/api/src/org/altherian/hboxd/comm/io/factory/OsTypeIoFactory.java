@@ -21,13 +21,13 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.output.hypervisor.OsTypeOutput;
+import org.altherian.hbox.comm.out.hypervisor.OsTypeOut;
 import org.altherian.hboxd.hypervisor._RawOsType;
 
 public class OsTypeIoFactory {
    
-   public static OsTypeOutput get(_RawOsType osType) {
-      OsTypeOutput osTypeIo = new OsTypeOutput(osType.getId(), osType.getName(), osType.getBitness());
+   public static OsTypeOut get(_RawOsType osType) {
+      OsTypeOut osTypeIo = new OsTypeOut(osType.getId(), osType.getName(), osType.getBitness());
       return osTypeIo;
    }
    

@@ -26,8 +26,8 @@ import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ModuleInput;
-import org.altherian.hbox.comm.output.ModuleOutput;
+import org.altherian.hbox.comm.in.ModuleIn;
+import org.altherian.hbox.comm.out.ModuleOut;
 import org.altherian.hboxd.comm.io.factory.ModuleIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
@@ -51,9 +51,9 @@ public class ModuleGetAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      ModuleInput modIn = request.get(ModuleInput.class);
+      ModuleIn modIn = request.get(ModuleIn.class);
       _Module mod = hbox.getModuleManager().getModule(modIn.getId());
-      ModuleOutput modOut = ModuleIoFactory.get(mod);
+      ModuleOut modOut = ModuleIoFactory.get(mod);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, modOut));
    }
    

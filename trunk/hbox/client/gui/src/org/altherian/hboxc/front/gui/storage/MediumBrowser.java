@@ -22,32 +22,32 @@
 
 package org.altherian.hboxc.front.gui.storage;
 
-import org.altherian.hbox.comm.input.MediumInput;
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.StoreItemOutput;
-import org.altherian.hbox.comm.output.storage.MediumOutput;
+import org.altherian.hbox.comm.in.MediumIn;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.StoreItemOut;
+import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.store.utils.StoreItemChooser;
 
 public class MediumBrowser {
    
-   private static MediumOutput getMedium(ServerOutput srvOut, StoreItemOutput siOut, String deviceType) {
-      MediumInput medIn = new MediumInput();
+   private static MediumOut getMedium(ServerOut srvOut, StoreItemOut siOut, String deviceType) {
+      MediumIn medIn = new MediumIn();
       medIn.setLocation(siOut.getPath());
       medIn.setType(deviceType);
-      MediumOutput medOut = Gui.getServer(srvOut).getMedium(medIn);
+      MediumOut medOut = Gui.getServer(srvOut).getMedium(medIn);
       return medOut;
    }
    
-   public static MediumOutput browse(ServerOutput srvOut, String deviceType) {
-      StoreItemOutput siOut = StoreItemChooser.getExisitingFile(srvOut.getId());
+   public static MediumOut browse(ServerOut srvOut, String deviceType) {
+      StoreItemOut siOut = StoreItemChooser.getExisitingFile(srvOut.getId());
       if ((siOut == null) || siOut.isContainer()) {
          return null;
       }
       return getMedium(srvOut, siOut, deviceType);
    }
    
-   public static MediumOutput browse(ServerOutput srvOut, String storeId, String deviceType) {
+   public static MediumOut browse(ServerOut srvOut, String storeId, String deviceType) {
       return browse(srvOut, deviceType);
    }
    

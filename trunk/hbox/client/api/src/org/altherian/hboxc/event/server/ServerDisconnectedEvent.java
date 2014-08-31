@@ -22,12 +22,12 @@
 
 package org.altherian.hboxc.event.server;
 
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class ServerDisconnectedEvent extends ServerEvent {
    
-   public ServerDisconnectedEvent(ServerOutput srv) {
+   public ServerDisconnectedEvent(ServerOut srv) {
       super(ClientEvents.ServerDisconnected, srv);
    }
    

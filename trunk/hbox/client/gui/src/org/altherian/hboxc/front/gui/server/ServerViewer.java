@@ -25,9 +25,9 @@ package org.altherian.hboxc.front.gui.server;
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.output.ServerOutput;
-import org.altherian.hbox.comm.output.event.hypervisor.HypervisorConnectedEventOutput;
-import org.altherian.hbox.comm.output.event.hypervisor.HypervisorDisconnectedEventOutput;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.comm.out.event.hypervisor.HypervisorConnectedEventOut;
+import org.altherian.hbox.comm.out.event.hypervisor.HypervisorDisconnectedEventOut;
 import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.server.ServerEvent;
 import org.altherian.hboxc.front.gui.Gui;
@@ -47,7 +47,7 @@ import javax.swing.SwingUtilities;
 
 public class ServerViewer implements _Refreshable, _ServerReceiver {
    
-   private ServerOutput srvOut;
+   private ServerOut srvOut;
    
    private HypervisorViewer hypViewer;
    
@@ -106,7 +106,7 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
       return panel;
    }
    
-   public void show(ServerOutput srvOut) {
+   public void show(ServerOut srvOut) {
       this.srvOut = srvOut;
       update();
    }
@@ -155,7 +155,7 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    
    // TODO move into the HypervisorViewer class
    @Handler
-   public void putHypervisorConnectEvent(HypervisorConnectedEventOutput ev) {
+   public void putHypervisorConnectEvent(HypervisorConnectedEventOut ev) {
       if (ev.getServer().getId().equals(srvOut.getId())) {
          hypViewer.show(Gui.getServer(srvOut).getHypervisor().getInfo());
       }
@@ -163,7 +163,7 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    
    // TODO move into the HypervisorViewer class
    @Handler
-   public void putHypervisorDisconnectEvent(HypervisorDisconnectedEventOutput ev) {
+   public void putHypervisorDisconnectEvent(HypervisorDisconnectedEventOut ev) {
       if (ev.getServer().getId().equals(srvOut.getId())) {
          hypViewer.setDisconnected();
       }
@@ -180,7 +180,7 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    }
    
    @Override
-   public void put(ServerOutput srvOut) {
+   public void put(ServerOut srvOut) {
       Logger.track();
       
       this.srvOut = srvOut;

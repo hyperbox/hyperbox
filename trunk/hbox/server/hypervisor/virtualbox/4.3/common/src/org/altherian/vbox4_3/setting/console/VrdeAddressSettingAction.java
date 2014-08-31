@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.setting.console;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox4_3.setting._MachineSettingAction;
@@ -38,7 +38,7 @@ public class VrdeAddressSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.VrdeAddress.getId();
+      return MachineAttribute.VrdeAddress.getId();
    }
    
    @Override
@@ -48,7 +48,7 @@ public class VrdeAddressSettingAction implements _MachineSettingAction {
    
    @Override
    public _Setting get(IMachine machine) {
-      return new StringSetting(MachineAttributes.VrdeAddress, machine.getVRDEServer().getVRDEProperty("TCP/Address"));
+      return new StringSetting(MachineAttribute.VrdeAddress, machine.getVRDEServer().getVRDEProperty("TCP/Address"));
    }
    
 }

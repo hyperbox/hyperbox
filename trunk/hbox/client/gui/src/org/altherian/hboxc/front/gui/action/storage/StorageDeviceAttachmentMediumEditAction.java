@@ -22,7 +22,7 @@
 package org.altherian.hboxc.front.gui.action.storage;
 
 import org.altherian.hbox.comm.HypervisorTasks;
-import org.altherian.hbox.comm.output.storage.StorageDeviceAttachmentOutput;
+import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.builder.PopupMenuBuilder;
 
@@ -36,9 +36,9 @@ import javax.swing.JPopupMenu;
 public class StorageDeviceAttachmentMediumEditAction extends AbstractAction {
    
    private String serverId;
-   private StorageDeviceAttachmentOutput sdaOut;
+   private StorageDeviceAttachmentOut sdaOut;
    
-   public StorageDeviceAttachmentMediumEditAction(String serverId, StorageDeviceAttachmentOutput sdaOut) {
+   public StorageDeviceAttachmentMediumEditAction(String serverId, StorageDeviceAttachmentOut sdaOut) {
       super("", IconBuilder.getTask(HypervisorTasks.MediumModify));
       this.serverId = serverId;
       this.sdaOut = sdaOut;

@@ -24,9 +24,9 @@ package org.altherian.hboxd.core.action.server;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
+import org.altherian.hbox.comm.in.ServerIn;
 import org.altherian.hbox.comm.io.SettingIO;
-import org.altherian.hbox.constant.ServerAttributes;
+import org.altherian.hbox.constant.ServerAttribute;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ServerAction;
 import org.altherian.hboxd.server._Server;
@@ -49,7 +49,7 @@ public class ServerConfigureAction extends ServerAction {
    
    @Override
    protected void run(Request request, _Hyperbox hbox, _Server srv) {
-      ServerInput srvIn = request.get(ServerInput.class);
+      ServerIn srvIn = request.get(ServerIn.class);
       
       Logger.debug("Available settings :");
       for (SettingIO set : srvIn.listSettings()) {
@@ -57,13 +57,13 @@ public class ServerConfigureAction extends ServerAction {
       }
       Logger.debug("--------------------");
 
-      if (srvIn.hasSetting(ServerAttributes.Name)) {
-         Logger.debug("Setting new name: " + srvIn.getSetting(ServerAttributes.LogLevel).getString());
-         srv.setName(srvIn.getSetting(ServerAttributes.Name).getString());
+      if (srvIn.hasSetting(ServerAttribute.Name)) {
+         Logger.debug("Setting new name: " + srvIn.getSetting(ServerAttribute.LogLevel).getString());
+         srv.setName(srvIn.getSetting(ServerAttribute.Name).getString());
       }
-      if (srvIn.hasSetting(ServerAttributes.LogLevel)) {
-         Logger.debug("Setting new log level: " + srvIn.getSetting(ServerAttributes.LogLevel).getString());
-         srv.setLogLevel(srvIn.getSetting(ServerAttributes.LogLevel).getString());
+      if (srvIn.hasSetting(ServerAttribute.LogLevel)) {
+         Logger.debug("Setting new log level: " + srvIn.getSetting(ServerAttribute.LogLevel).getString());
+         srv.setLogLevel(srvIn.getSetting(ServerAttribute.LogLevel).getString());
       }
       srv.save();
    }

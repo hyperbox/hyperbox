@@ -21,8 +21,8 @@
 
 package org.altherian.vbox4_3.setting.machine;
 
-import org.altherian.hbox.constant.KeyboardModes;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.KeyboardMode;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.general.KeyboardModeSetting;
 import org.altherian.vbox4_3.data.Mappings;
@@ -40,12 +40,12 @@ public final class KeyboardModeSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.KeyboardMode.toString();
+      return MachineAttribute.KeyboardMode.toString();
    }
    
    @Override
    public void set(IMachine machine, _Setting setting) {
-      machine.setKeyboardHIDType(Mappings.get(KeyboardModes.valueOf(setting.getString())));
+      machine.setKeyboardHIDType(Mappings.get(KeyboardMode.valueOf(setting.getString())));
    }
    
    @Override

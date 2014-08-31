@@ -24,7 +24,7 @@ package org.altherian.hboxd.task;
 import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._Client;
-import org.altherian.hbox.comm.output.event.EventOutput;
+import org.altherian.hbox.comm.out.event.EventOut;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.states.TaskState;
 import org.altherian.hboxd.core._Hyperbox;
@@ -170,7 +170,7 @@ public class HyperboxTask implements _Task, _Client {
    }
    
    @Override
-   public void post(EventOutput evOut) {
+   public void post(EventOut evOut) {
       // client.post(evOut);
    }
    

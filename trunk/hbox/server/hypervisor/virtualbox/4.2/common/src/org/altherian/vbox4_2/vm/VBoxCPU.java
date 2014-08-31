@@ -21,8 +21,8 @@
 
 package org.altherian.vbox4_2.vm;
 
-import org.altherian.hbox.constant.EntityTypes;
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawCPU;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.cpu.CpuCountSetting;
@@ -42,7 +42,7 @@ public final class VBoxCPU implements _RawCPU {
    
    @Override
    public long getAmount() {
-      return ((CpuCountSetting) getSetting(MachineAttributes.CpuCount)).getValue();
+      return ((CpuCountSetting) getSetting(MachineAttribute.CpuCount)).getValue();
    }
    
    @Override
@@ -53,8 +53,8 @@ public final class VBoxCPU implements _RawCPU {
    @Override
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
-      for (MachineAttributes setting : MachineAttributes.values()) {
-         if (setting.getDeviceType().equals(EntityTypes.CPU)) {
+      for (MachineAttribute setting : MachineAttribute.values()) {
+         if (setting.getDeviceType().equals(Entity.CPU)) {
             getSetting(setting);
          }
       }

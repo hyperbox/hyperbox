@@ -24,7 +24,7 @@ package org.altherian.hboxc.front.gui.action.module;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ServerInput;
+import org.altherian.hbox.comm.in.ServerIn;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.module._ModuleSelector;
@@ -45,7 +45,7 @@ public class ModuleRefreshAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent e) {
-      Gui.post(new Request(Command.HBOX, HyperboxTasks.ModuleRefresh, new ServerInput(selector.getServerId())));
+      Gui.post(new Request(Command.HBOX, HyperboxTasks.ModuleRefresh, new ServerIn(selector.getServerId())));
    }
    
 }

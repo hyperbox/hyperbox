@@ -24,9 +24,9 @@ package org.altherian.hboxc.front.gui.action.module;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.input.ModuleInput;
-import org.altherian.hbox.comm.input.ServerInput;
-import org.altherian.hbox.comm.output.ModuleOutput;
+import org.altherian.hbox.comm.in.ModuleIn;
+import org.altherian.hbox.comm.in.ServerIn;
+import org.altherian.hbox.comm.out.ModuleOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.module._ModuleSelector;
@@ -47,8 +47,8 @@ public class ModuleUnloadAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent e) {
-      for (ModuleOutput mod : selector.getModuleSelection()) {
-         Gui.post(new Request(Command.HBOX, HyperboxTasks.ModuleUnload, new ServerInput(selector.getServerId()), new ModuleInput(mod.getId())));
+      for (ModuleOut mod : selector.getModuleSelection()) {
+         Gui.post(new Request(Command.HBOX, HyperboxTasks.ModuleUnload, new ServerIn(selector.getServerId()), new ModuleIn(mod.getId())));
       }
    }
    

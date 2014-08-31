@@ -26,7 +26,7 @@ import net.engio.mbassy.listener.Handler;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._RequestReceiver;
-import org.altherian.hbox.comm.output.ServerOutput;
+import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.controller.ClientTasks;
 import org.altherian.hboxc.controller.MessageInput;
@@ -183,11 +183,11 @@ public final class Gui implements _Front {
       return getReader().getServerReader(id);
    }
    
-   public static ServerOutput getServerInfo(String id) {
+   public static ServerOut getServerInfo(String id) {
       return reader.getServerInfo(id);
    }
    
-   public static _ServerReader getServer(ServerOutput srvOut) {
+   public static _ServerReader getServer(ServerOut srvOut) {
       return getServer(srvOut.getId());
    }
    

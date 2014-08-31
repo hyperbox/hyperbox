@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_2.setting.motherboard;
 
-import org.altherian.hbox.constant.MachineAttributes;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings._Setting;
 import org.altherian.vbox.settings.motherboard.IoAPICSetting;
@@ -39,7 +39,7 @@ public class IoAPICSettingAction implements _MachineSettingAction {
    
    @Override
    public String getSettingName() {
-      return MachineAttributes.IoAPIC.toString();
+      return MachineAttribute.IoAPIC.toString();
    }
    
    @Override

@@ -21,13 +21,13 @@
 
 package org.altherian.vbox.settings.network;
 
-import org.altherian.hbox.constant.NetworkInterfaceSettings;
+import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.hboxd.settings.StringSetting;
 
 public class NicAdapterTypeSetting extends StringSetting {
    
    public NicAdapterTypeSetting(String adapterType) {
-      super(NetworkInterfaceSettings.AdapterType, adapterType);
+      super(NetworkInterfaceAttribute.AdapterType, adapterType);
    }
    
 }
