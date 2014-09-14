@@ -24,6 +24,8 @@ package org.altherian.hboxc.core;
 import net.engio.mbassy.listener.Handler;
 
 import org.altherian.hbox.comm.in.UserIn;
+import org.altherian.hbox.comm.out.hypervisor.MachineOut;
+import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.back._Backend;
@@ -50,6 +52,7 @@ import org.altherian.hboxc.server._Server;
 import org.altherian.hboxc.state.CoreState;
 import org.altherian.tool.logging.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -344,8 +347,8 @@ public class ClientCore implements _Core {
       
       _Connector conn = conns.remove(id);
       storage.storeConnectors(conns.values());
-      CoreEventManager.post(new ConnectorRemovedEvent(ConnectorIoFactory.get(conn)));
       storage.removeConnectorCredentials(id);
+      CoreEventManager.post(new ConnectorRemovedEvent(ConnectorIoFactory.get(conn)));
    }
    
    @Handler
@@ -363,6 +366,30 @@ public class ClientCore implements _Core {
          }
       }
       throw new HyperboxRuntimeException("No connected server was found under ID " + serverId);
+   }
+   
+   @Override
+   public void launchConsoleViewer(String serverId, String machineId) {
+      _Server srv = getServer(serverId);
+      MachineOut m = srv.getMachine(machineId);
+      _ConsoleViewer cView = findConsoleViewer(getServer(serverId).getHypervisor().getType(), m.getSetting(MachineAttribute.VrdeModule).getString());
+      String address = m.getSetting(MachineAttribute.VrdeAddress).getString();
+      if ((address == null) || address.isEmpty()) {
+         address = getConnectorForServer(srv.getId()).getAddress();
+      }
+      String port = m.getSetting(MachineAttribute.VrdePort).getString();
+      
+      String arg = cView.getArgs();
+      arg = arg.replace("%SA%", address);
+      arg = arg.replace("%SP%", port);
+      Logger.info("Starting Console viewer " + cView.getViewerPath() + " for machine " + m.getUuid() + " on server " + srv.getId()
+            + " with arguments: " + arg);
+      try {
+         new ProcessBuilder(new String[] { cView.getViewerPath(), arg }).start();
+      } catch (IOException e) {
+         throw new HyperboxRuntimeException("Couldn't launch Console Viewer: " + e.getMessage(), e);
+      }
+      
    }
    
 }
