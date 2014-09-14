@@ -73,6 +73,8 @@ public interface _Core {
    
    public List<_ConsoleViewer> listConsoleViewer(String hypervisorTypeId);
    
+   public void launchConsoleViewer(String serverId, String machineId);
+   
    public _Server getServer(String serverId);
    
    public _Connector getConnectorForServer(String serverId);

@@ -26,17 +26,11 @@ import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._AnswerReceiver;
 import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.in.ServerIn;
-import org.altherian.hbox.comm.out.hypervisor.MachineOut;
-import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.controller.ClientTasks;
 import org.altherian.hboxc.controller.action.AbstractClientControllerSingleAction;
-import org.altherian.hboxc.core._ConsoleViewer;
 import org.altherian.hboxc.core._Core;
 import org.altherian.hboxc.front._Front;
-import org.altherian.hboxc.server._Server;
-
-import java.io.IOException;
 
 public class ConsoleViewerUseAction extends AbstractClientControllerSingleAction {
    
@@ -49,26 +43,7 @@ public class ConsoleViewerUseAction extends AbstractClientControllerSingleAction
    public void run(_Core core, _Front view, Request req, _AnswerReceiver recv) throws HyperboxException {
       ServerIn srvIn = req.get(ServerIn.class);
       MachineIn mIn = req.get(MachineIn.class);
-      _Server srv = core.getServer(srvIn.getId());
-      
-      MachineOut mOut = srv.getMachine(mIn);
-      String consoleModule = mOut.getSetting(MachineAttribute.VrdeModule).getString();
-      _ConsoleViewer viewer = core.findConsoleViewer(srv.getHypervisor().getType(), consoleModule);
-      
-      String address = mOut.getSetting(MachineAttribute.VrdeAddress).getString();
-      if ((address == null) || address.isEmpty()) {
-         address = core.getConnectorForServer(srv.getId()).getAddress();
-      }
-      String port = mOut.getSetting(MachineAttribute.VrdePort).getString();
-      
-      String arg = viewer.getArgs();
-      arg = arg.replace("%SA%", address);
-      arg = arg.replace("%SP%", port);
-      try {
-         new ProcessBuilder(new String[] { viewer.getViewerPath(), arg }).start();
-      } catch (IOException e) {
-         view.postError(e, "Couldn't launch Console Viewer: " + e.getMessage());
-      }
+      core.launchConsoleViewer(srvIn.getId(), mIn.getUuid());
    }
    
 }
