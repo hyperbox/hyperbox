@@ -117,6 +117,15 @@
 	<property name="server.hyp.vbox.4_3.xpcom.classes.dir"			value="${build.class.dir}/srv-vb-4.3-xpcom" />
 	<property name="server.hyp.vbox.4_3.xpcom.jar.dir"				value="${build.module.jar.dir}/${server.hyp.vbox.4_3.xpcom.id}" />
 	
+	
+	<property name="server.hyp.vbox.4_3.mscom.id"					value="vbox-4.3-mscom" />
+	<property name="server.hyp.vbox.4_3.mscom.enable"				value="1" />
+	<property name="server.hyp.vbox.4_3.mscom.dir"					value="${server.hyp.vbox.dir}/4.3/mscom" />
+	<property name="server.hyp.vbox.4_3.mscom.src.dir"				value="${server.hyp.vbox.4_3.mscom.dir}/${src.dir}" />
+	<property name="server.hyp.vbox.4_3.mscom.lib.dir"				value="${server.hyp.vbox.4_3.mscom.dir}/${lib.dir}" />
+	<property name="server.hyp.vbox.4_3.mscom.classes.dir"			value="${build.class.dir}/srv-vb-4.3-mscom" />
+	<property name="server.hyp.vbox.4_3.mscom.jar.dir"				value="${build.module.jar.dir}/${server.hyp.vbox.4_3.mscom.id}" />
+	
 
 	<property name="kryo.api.src.dir"								value="${kryo.api.dir}/${src.dir}" />
 	<property name="kryo.api.lib.dir"								value="${kryo.api.dir}/${lib.dir}" />
@@ -177,6 +186,12 @@
 		<path refid="server.api.classpath"/>
 		<pathelement location="${server.hyp.vbox.4_3.xpcom.classes.dir}"/>
 		<fileset dir="${server.hyp.vbox.4_3.xpcom.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="server.hyp.vbox.4_3.mscom.classpath">
+		<path refid="server.api.classpath"/>
+		<pathelement location="${server.hyp.vbox.4_3.mscom.classes.dir}"/>
+		<fileset dir="${server.hyp.vbox.4_3.mscom.lib.dir}" includes="**/*.jar"/>
 	</path>
 	
 	<path id="kryo.api.classpath">
@@ -471,6 +486,34 @@
 	<extension-point name="server.hyp.vbox.4_3.xpcom.build" if="server.hyp.vbox.4_3.xpcom.enable" depends="server.hyp.vbox.4_3.xpcom.jar, server.hyp.vbox.4_3.xpcom.deploy"/>
 	<!--######################################-->
 	
+	<!--    Virtualbox 4.3 MSCOM Connector    -->
+	<target name="server.hyp.vbox.4_3.mscom.jar" if="server.hyp.vbox.4_3.mscom.enable" depends="server.api.compile">
+		<mkdir dir="${server.hyp.vbox.4_3.mscom.classes.dir}" />
+		<mkdir dir="${server.hyp.vbox.4_3.mscom.jar.dir}" />
+		<!-- create single output directory for each two lines just under -->
+		<javac source="1.6" target="1.6" debug="on" includeantruntime="false" srcdir="${server.hyp.vbox.helper.src.dir}" destdir="${server.hyp.vbox.4_3.mscom.classes.dir}" classpathref="server.hyp.vbox.4_3.mscom.classpath" />
+		<javac source="1.6" target="1.6" debug="on" includeantruntime="false" srcdir="${server.hyp.vbox.4_3.src.dir}" destdir="${server.hyp.vbox.4_3.mscom.classes.dir}" classpathref="server.hyp.vbox.4_3.mscom.classpath" />
+		<javac source="1.6" target="1.6" debug="on" includeantruntime="false" srcdir="${server.hyp.vbox.4_3.mscom.src.dir}" destdir="${server.hyp.vbox.4_3.mscom.classes.dir}" classpathref="server.hyp.vbox.4_3.mscom.classpath" />
+		
+		<jar destfile="${server.hyp.vbox.4_3.mscom.jar.dir}/vbmscom-4.3.jar">
+			<fileset dir="${server.hyp.vbox.4_3.mscom.classes.dir}" />
+		</jar>
+	</target>
+	
+	<target name="server.hyp.vbox.4_3.mscom.deploy" if="server.hyp.vbox.4_3.mscom.enable" depends="server.api.deploy, server.hyp.vbox.4_3.mscom.jar">
+		<property name="server.hyp.vbox.4_3.mscom.out.dir"	value="${server.out.module.dir}/${server.hyp.vbox.4_3.mscom.id}" />
+		<mkdir dir="${server.hyp.vbox.4_3.mscom.out.dir}" />
+		<copy file="${server.hyp.vbox.4_3.mscom.lib.dir}/vboxjmscom.jar" tofile="${server.hyp.vbox.4_3.mscom.out.dir}/vboxmscom-4.3.jar" />
+		<copy file="${server.hyp.vbox.4_3.mscom.lib.dir}/jacob.jar" tofile="${server.hyp.vbox.4_3.mscom.out.dir}/jacob.jar" />
+		<copy file="${server.hyp.vbox.4_3.mscom.lib.dir}/jacob-1.17-x64.dll" tofile="${server.hyp.vbox.4_3.mscom.out.dir}/jacob-1.17-x64.dll" />
+		<copy file="${server.hyp.vbox.4_3.mscom.jar.dir}/vbmscom-4.3.jar" tofile="${server.hyp.vbox.4_3.mscom.out.dir}/vbmscom-4.3.jar" />
+		<copy file="${server.hyp.vbox.4_3.mscom.dir}/${server.hyp.vbox.4_3.mscom.id}.xml" tofile="${server.out.module.dir}/${server.hyp.vbox.4_3.mscom.id}.xml" />
+		
+	</target>
+	
+	<extension-point name="server.hyp.vbox.4_3.mscom.build" if="server.hyp.vbox.4_3.mscom.enable" depends="server.hyp.vbox.4_3.mscom.jar, server.hyp.vbox.4_3.mscom.deploy"/>
+	<!--######################################-->
+	
 	<target name="kryo.api.compile" depends="api.compile">
 		<mkdir dir="${kryo.api.classes.dir}" />
 		<javac source="1.6" target="1.6" debug="on" includeantruntime="false" srcdir="${kryo.api.src.dir}" destdir="${kryo.api.classes.dir}" classpathref="kryo.api.classpath" />
@@ -582,7 +625,7 @@
 		<chmod file="${server.out.dir}/bin/hboxd" perm="ugo+rx" />
 	</target>
 	
-	<extension-point name="server.build" depends="server.build.linux, server.build.win, kryo.api.server.deploy, server.hyp.vbox.4_2.ws.build, server.hyp.vbox.4_2.xpcom.build, server.hyp.vbox.4_3.ws.build, server.hyp.vbox.4_3.xpcom.build" />
+	<extension-point name="server.build" depends="server.build.linux, server.build.win, kryo.api.server.deploy, server.hyp.vbox.4_2.ws.build, server.hyp.vbox.4_2.xpcom.build, server.hyp.vbox.4_3.ws.build, server.hyp.vbox.4_3.xpcom.build, server.hyp.vbox.4_3.mscom.build" />
 	
 	<extension-point name="build" depends="server.build, client.build" />
 	

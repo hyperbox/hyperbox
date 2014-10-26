@@ -64,14 +64,11 @@ public final class MachineEventIoFactory implements _EventIoFactory {
    @Override
    public EventOut get(_Hyperbox hbox, _Event ev) {
       MachineEvent mEv = (MachineEvent) ev;
-      MachineOut mOut = null;
+      MachineOut mOut = MachineIoFactory.get(mEv.getMachineId(), MachineStates.Unknown.getId());
       try {
-         if (HyperboxEvents.MachineRegistration.equals(mEv.getEventId())) {
-            mOut = MachineIoFactory.get(HBoxServer.get().getMachine(mEv.getMachineId()));
-         }
+         mOut = MachineIoFactory.get(HBoxServer.get().getMachine(mEv.getMachineId()));
       } catch (HyperboxRuntimeException e) {
          Logger.exception(e);
-         mOut = MachineIoFactory.get(mEv.getMachineId(), MachineStates.Unknown.getId());
       }
       switch ((HyperboxEvents) ev.getEventId()) {
          case MachineState:

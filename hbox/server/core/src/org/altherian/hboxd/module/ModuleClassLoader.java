@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.zip.ZipException;
 
 // TODO Use the urlList as cache to avoid scanning the file system everytime.
 // TODO do the same for resource (if possible?)
@@ -99,6 +100,9 @@ public class ModuleClassLoader extends ClassLoader implements _ModuleClassLoader
          
          byte classByte[] = byteStream.toByteArray();
          return defineClass(className, classByte, 0, classByte.length, getDomain(path.toURI().toURL()));
+      } catch (ZipException e) {
+         Logger.verbose(path.getAbsoluteFile() + " was skipped due to a JAR error: " + e.getMessage());
+         throw new ClassNotFoundException(className);
       } catch (IOException e) {
          throw new RuntimeException(e);
       } finally {
@@ -162,6 +166,9 @@ public class ModuleClassLoader extends ClassLoader implements _ModuleClassLoader
          } else {
             return getURL(path, entry);
          }
+      } catch (ZipException e) {
+         Logger.verbose(path.getAbsoluteFile() + " was skipped due to a JAR error: " + e.getMessage());
+         return null;
       } catch (IOException e1) {
          throw new RuntimeException(e1);
       } finally {

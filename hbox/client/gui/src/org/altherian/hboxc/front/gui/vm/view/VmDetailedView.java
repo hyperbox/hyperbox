@@ -85,7 +85,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
       }
       
       if (mOut.isAvailable()) {
-         summaryTab.show(mOut);
+         summaryTab.show(mOut, true);
          tabs.setEnabledAt(tabs.indexOfComponent(summaryTab.getComponent()), true);
          snapTab.show(mOut);
          tabs.setEnabledAt(tabs.indexOfComponent(snapTab.getComponent()), true);
