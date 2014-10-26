@@ -24,7 +24,7 @@
 	
 	<property file="build.properties"/>
 	
-	<property name="hbox.dir"										value="hbox" />
+	<property name="hbox.dir"										value="src" />
 	<property name="src.dir"										value="src" />
 	<property name="lib.dir"										value="lib" />
 	<property name="out.dir"										value="out" />
