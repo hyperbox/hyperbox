@@ -164,12 +164,12 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       Mappings.load();
       
       mediumRegister = new ConcurrentHashMap<String, VBoxMedium>();
-      if (Configuration.getSetting("virtualbox.ws.cache.medium.autoload", "0").contentEquals("1")) {
+      if (Configuration.getSetting("virtualbox.cache.medium.autoload", "0").contentEquals("1")) {
          Logger.verbose("Loading media registry");
          updateMediumRegistry();
       }
       
-      if (Configuration.getSetting("virtualbox.ws.cache.ostype.autoload", "0").contentEquals("1")) {
+      if (Configuration.getSetting("virtualbox.cache.ostype.autoload", "0").contentEquals("1")) {
          Logger.verbose("Loading OS Types");
          buildOsTypeCache();
       }
@@ -185,12 +185,12 @@ public abstract class VBoxHypervisor implements _Hypervisor {
          throw new HypervisorException("Unable to start the Event Manager Service : " + e.getMessage());
       }
       
-      EventManager.post(new HypervisorConnectedEvent(this));
-      
       Logger.info("Connected in " + (System.currentTimeMillis() - start) + "ms to " + host.getHostname());
       Logger.info("VB Version: " + vbMgr.getVBox().getVersion());
       Logger.info("VB Revision: " + vbMgr.getVBox().getRevision());
       Logger.info("Host OS: " + vbMgr.getVBox().getHost().getOperatingSystem() + " " + vbMgr.getVBox().getHost().getOSVersion());
+      
+      EventManager.post(new HypervisorConnectedEvent(this));
    }
    
    protected abstract void disconnect();

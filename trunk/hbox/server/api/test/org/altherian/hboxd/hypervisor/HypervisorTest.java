@@ -26,6 +26,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import org.altherian.hbox.Configuration;
 import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.constant.Entity;
 import org.altherian.hbox.constant.HardDiskFormat;
@@ -79,6 +80,7 @@ public abstract class HypervisorTest {
    public static void init(String options) throws HyperboxException {
       Logger.setLevel(LogLevel.Tracking);
       
+      Configuration.setSetting("core.eventmgr.class", DummyEventManager.class.getName());
       hypervisor.start(options);
       initialized = true;
    }
@@ -296,10 +298,11 @@ public abstract class HypervisorTest {
    @Test
    public void listMediums() {
       // TODO update for non-harcoded value
-      _RawMedium guestAddMed = hypervisor.getMedium("/usr/share/virtualbox/VBoxGuestAdditions.iso", Entity.DVD);
+      _RawMedium guestAddMed = hypervisor.getToolsMedium();
       RawMediumTest.validate(guestAddMed);
       
       List<_RawMedium> rawMedList = hypervisor.listMediums();
+      System.out.println("Number of mediums: " + rawMedList.size());
       for (_RawMedium rawMed : rawMedList) {
          RawMediumTest.validate(rawMed);
       }

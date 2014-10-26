@@ -399,13 +399,19 @@ public final class VmSummaryView {
       }
    }
    
-   public void show(final MachineOut mOut) {
+   public void show(MachineOut mOut, boolean forced) {
       Logger.track();
       
-      if ((this.mOut == null) || !this.mOut.equals(mOut)) {
+      if (forced || (this.mOut == null) || !this.mOut.equals(mOut)) {
          this.mOut = mOut;
          refresh();
       }
+   }
+   
+   public void show(MachineOut mOut) {
+      Logger.track();
+      
+      show(mOut, false);
    }
    
    public void refreshGeneral() {

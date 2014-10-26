@@ -561,7 +561,6 @@ public class SingleHostServer implements _Hyperbox, _Server {
    
    @Override
    public void setLogLevel(String logLevel) throws ServerLogLevelInvalidException {
-      
       try {
          Logger.setLevel(LogLevel.valueOf(logLevel));
          EventManager.post(new ServerPropertyChangedEvent(this, ServerAttribute.LogLevel, logLevel));
