@@ -22,6 +22,7 @@
 package org.altherian.hboxd.service;
 
 import org.altherian.hbox.exception.ServiceException;
+import org.altherian.hbox.states.ServiceState;
 
 /**
  * <p>
@@ -52,6 +53,13 @@ import org.altherian.hbox.exception.ServiceException;
  */
 // TODO review some service framework instead of using custom impl
 public interface _Service {
+   
+   /**
+    * Returns the service ID. This ID must be unique in a server
+    * 
+    * @return String of the service ID
+    */
+   public String getId();
    
    /**
     * Returns the current service state

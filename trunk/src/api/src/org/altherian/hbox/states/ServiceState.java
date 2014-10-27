@@ -19,7 +19,7 @@
  * 
  */
 
-package org.altherian.hboxd.service;
+package org.altherian.hbox.states;
 
 public enum ServiceState {
    
@@ -28,5 +28,6 @@ public enum ServiceState {
    Running,
    Stopping,
    Paused,
+   Unknown
    
 }

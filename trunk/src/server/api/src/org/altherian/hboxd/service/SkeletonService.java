@@ -23,8 +23,9 @@ package org.altherian.hboxd.service;
 
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.exception.ServiceException;
+import org.altherian.hbox.states.ServiceState;
 import org.altherian.hboxd.event.EventManager;
-import org.altherian.hboxd.event.service.ServiceStatusEvent;
+import org.altherian.hboxd.event.service.ServiceStateEvent;
 import org.altherian.tool.logging.Logger;
 
 import java.lang.Thread.UncaughtExceptionHandler;
@@ -73,7 +74,7 @@ public abstract class SkeletonService implements _Service, Runnable {
     * Called by {@link #setState(ServiceState)} to send events about the new state
     */
    protected void publishState() {
-      EventManager.post(new ServiceStatusEvent(this, state));
+      EventManager.post(new ServiceStateEvent(this, state));
    }
    
    @Override

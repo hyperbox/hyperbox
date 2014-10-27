@@ -30,12 +30,13 @@ import org.altherian.hbox.exception.FeatureNotImplementedException;
 import org.altherian.hbox.exception.HypervisorException;
 import org.altherian.hbox.exception.MachineException;
 import org.altherian.hbox.exception.ServiceException;
+import org.altherian.hbox.states.ServiceState;
 import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event._EventManager;
 import org.altherian.hboxd.event.hypervisor.HypervisorConfiguredEvent;
 import org.altherian.hboxd.event.hypervisor.HypervisorConnectedEvent;
 import org.altherian.hboxd.event.hypervisor.HypervisorDisconnectedEvent;
-import org.altherian.hboxd.event.service.ServiceStatusEvent;
+import org.altherian.hboxd.event.service.ServiceStateEvent;
 import org.altherian.hboxd.hypervisor.Hypervisor;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 import org.altherian.hboxd.hypervisor._RawOsType;
@@ -44,7 +45,6 @@ import org.altherian.hboxd.hypervisor.storage._RawMedium;
 import org.altherian.hboxd.hypervisor.storage._RawStorageControllerSubType;
 import org.altherian.hboxd.hypervisor.storage._RawStorageControllerType;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
-import org.altherian.hboxd.service.ServiceState;
 import org.altherian.hboxd.service._Service;
 import org.altherian.hboxd.settings.BooleanSetting;
 import org.altherian.hboxd.settings.StringSetting;
@@ -711,7 +711,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    }
    
    @Handler
-   public void putServiceStatusEvent(ServiceStatusEvent ev) {
+   public void putServiceStatusEvent(ServiceStateEvent ev) {
       Logger.track();
       
       if (ev.getService().equals(evMgrSvc) && ev.getState().equals(ServiceState.Stopped)) {

@@ -29,7 +29,7 @@ public enum HyperboxEvents {
    ServerShutdown,
    SystemState,
    
-   ServiceStatus,
+   ServiceState,
    
    ClientState,
    
@@ -46,7 +46,7 @@ public enum HyperboxEvents {
    ModuleDisabled,
    ModuleLoaded,
    ModuleUnloaded,
-   
+
    MachineState,
    MachineRegistration,
    MachineDataChange,
