@@ -21,6 +21,7 @@
 
 package org.altherian.hboxd.service;
 
+import org.altherian.hbox.states.ServiceState;
 import org.altherian.tool.logging.Logger;
 
 /**

@@ -106,4 +106,9 @@ public final class EventsManagementService extends SimpleLoopService {
       }
    }
    
+   @Override
+   public String getId() {
+      return "vbox-4.2-EventMgmtSvc";
+   }
+   
 }

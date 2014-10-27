@@ -96,7 +96,7 @@ public final class EventsManagementService extends SimpleLoopService {
          throw ErrorInterpreter.transform(e);
       } catch (RuntimeException r) {
          if ((r.getMessage() != null) && r.getMessage().contains("Connection refused")) {
-            Logger.error("Virtualbox broke the connection with us");
+            Logger.error("Virtualbox broke the connection with us, stopping the service");
             Logger.exception(r);
             stop();
          } else {
@@ -107,6 +107,11 @@ public final class EventsManagementService extends SimpleLoopService {
          Logger.exception(t);
          stop();
       }
+   }
+   
+   @Override
+   public String getId() {
+      return "vbox-4.3-EventMgmtSvc";
    }
    
 }
