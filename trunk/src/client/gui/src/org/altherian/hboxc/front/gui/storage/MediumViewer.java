@@ -46,6 +46,8 @@ public final class MediumViewer {
    private JLabel diskSizeValue;
    private JLabel locationLabel;
    private JLabel locationValue;
+   private JLabel baseLocationLabel;
+   private JLabel baseLocationValue;
    
    public MediumViewer(ServerOut srvOut) {
       typeLabel = new JLabel("Type");
@@ -58,6 +60,10 @@ public final class MediumViewer {
       diskSizeValue = new JLabel();
       locationLabel = new JLabel("Location");
       locationValue = new JLabel();
+      baseLocationLabel = new JLabel("Base Location");
+      baseLocationLabel.setVisible(false);
+      baseLocationValue = new JLabel();
+      baseLocationValue.setVisible(false);
       
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(typeLabel);
@@ -68,6 +74,8 @@ public final class MediumViewer {
       panel.add(sizeValue, "growx, wrap");
       panel.add(diskSizeLabel);
       panel.add(diskSizeValue, "growx, wrap");
+      panel.add(baseLocationLabel, "hidemode 3");
+      panel.add(baseLocationValue, " growx, wrap, hidemode 3");
       panel.add(locationLabel);
       panel.add(locationValue, "growx, wrap");
    }
@@ -96,6 +104,13 @@ public final class MediumViewer {
       }
       if (medOut.hasSetting(MediumAttribute.Location)) {
          locationValue.setText(medOut.getSetting(MediumAttribute.Location).getString());
+         baseLocationLabel.setVisible(medOut.hasParent());
+         baseLocationValue.setVisible(medOut.hasParent());
+         if (medOut.hasParent()) {
+            MediumOut baseMedOut = Gui.getServer(srvOut).getMedium(new MediumIn(medOut.getBaseUuid()));
+            baseLocationValue.setText(baseMedOut.getLocation());
+         }
+         
       }
       return getPanel();
    }

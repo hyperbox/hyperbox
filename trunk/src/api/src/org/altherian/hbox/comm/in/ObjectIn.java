@@ -26,6 +26,7 @@ import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
 import org.altherian.hbox.constant.Entity;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
+import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
 
 import java.util.ArrayList;
@@ -51,11 +52,20 @@ public abstract class ObjectIn<T extends Enum<?>> {
    }
    
    public ObjectIn(T entityTypeId) {
+      if (entityTypeId == null) {
+         throw new IllegalArgumentException("Entity Type cannot be null");
+      }
+
       setEntityTypeId(entityTypeId);
    }
    
    public ObjectIn(T entityTypeId, String id) {
       this(entityTypeId);
+
+      if (AxStrings.isEmpty(id)) {
+         throw new IllegalArgumentException("ID must have a value - Current value: " + id);
+      }
+
       this.id = id;
    }
    

@@ -376,7 +376,12 @@ public class StorageVmEdit {
                setIcon(IconBuilder.getDeviceType(obj));
                
                if (sdaIn.hasMedium()) {
-                  setText(sdaIn.getMedium().toString());
+                  if (sdaIn.getMedium().hasParent()) {
+                     // TODO create a getBase() directly in core
+                     setText(Gui.getServer(srvId).getMedium(new MediumIn(Gui.getServer(srvId).getMedium(sdaIn.getMedium()).getBaseUuid())).toString());
+                  } else {
+                     setText(sdaIn.getMedium().toString());
+                  }
                } else {
                   setText("No medium");
                }

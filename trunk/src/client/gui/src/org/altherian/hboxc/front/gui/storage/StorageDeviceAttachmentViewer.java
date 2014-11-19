@@ -26,6 +26,7 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.in.MediumIn;
 import org.altherian.hbox.comm.in.StorageControllerTypeIn;
 import org.altherian.hbox.comm.in.StorageDeviceAttachmentIn;
+import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hbox.comm.out.storage.StorageControllerTypeOut;
 import org.altherian.hbox.constant.MediumAttribute;
 import org.altherian.hboxc.front.gui.Gui;
@@ -64,6 +65,9 @@ public class StorageDeviceAttachmentViewer {
    private JLabel diskSizeValue;
    private JLabel locationLabel;
    private JLabel locationValue;
+   private JLabel baseLocationLabel;
+   private JLabel baseLocationValue;
+   
    
    public StorageDeviceAttachmentViewer() {
       portCountLabel = new JLabel("Port");
@@ -88,6 +92,10 @@ public class StorageDeviceAttachmentViewer {
       diskSizeValue = new JLabel();
       locationLabel = new JLabel("Location");
       locationValue = new JLabel();
+      baseLocationLabel = new JLabel("Base Location");
+      baseLocationLabel.setVisible(false);
+      baseLocationValue = new JLabel();
+      baseLocationValue.setVisible(false);
       
       mediumPanel = new JPanel(new MigLayout());
       mediumPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY), "Medium"));
@@ -100,6 +108,8 @@ public class StorageDeviceAttachmentViewer {
       mediumPanel.add(sizeValue, "growx, pushx, wrap");
       mediumPanel.add(diskSizeLabel);
       mediumPanel.add(diskSizeValue, "growx, pushx, wrap");
+      mediumPanel.add(baseLocationLabel, "hidemode 3");
+      mediumPanel.add(baseLocationValue, "growx, wrap, hidemode 3");
       mediumPanel.add(locationLabel);
       mediumPanel.add(locationValue, "growx, pushx, wrap");
       
@@ -169,6 +179,15 @@ public class StorageDeviceAttachmentViewer {
       }
       if (medIn.hasSetting(MediumAttribute.Location)) {
          locationValue.setText(medIn.getSetting(MediumAttribute.Location).getString());
+         baseLocationLabel.setVisible(medIn.hasParent());
+         baseLocationValue.setVisible(medIn.hasParent());
+         if (medIn.hasParent()) {
+            MediumOut medOut = Gui.getServer(srvId).getMedium(medIn);
+            Logger.debug("Requesting medium with UUID " + medOut.getBaseUuid());
+            MediumOut baseMedOut = Gui.getServer(srvId).getMedium(new MediumIn(medOut.getBaseUuid()));
+            baseLocationValue.setText(baseMedOut.getLocation());
+         }
+         
       }
       return getPanel();
    }
