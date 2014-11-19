@@ -33,6 +33,7 @@ import org.altherian.hboxc.front.gui.workers.NetworkAttachModeListWorker;
 import org.altherian.hboxc.front.gui.workers.NetworkAttachNameListWorker;
 import org.altherian.hboxc.front.gui.workers._NetworkAttachModeReceiver;
 import org.altherian.hboxc.front.gui.workers._NetworkAttachNameReceiver;
+import org.altherian.tool.logging.Logger;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -185,6 +186,7 @@ public class NetworkInterfaceViewer {
          if (attachModeValue.isEnabled()) {
             String attachTypeId = attachModeValue.getSelectedItem().toString();
             if ((attachTypeId != null) && !attachTypeId.isEmpty()) {
+               Logger.debug(attachTypeId + " was selected as attachment type, fetching list of attachment names");
                NetworkAttachNameListWorker.run(new NetworkAttachNameReceiver(), srvId, attachTypeId);
             }
          }
@@ -251,6 +253,7 @@ public class NetworkInterfaceViewer {
       @Override
       public void add(List<NetworkAttachNameOut> nanOut) {
          for (NetworkAttachNameOut attachName : nanOut) {
+            Logger.debug("Adding attachment name: " + attachName.getId());
             attachNameValue.addItem(attachName.getId());
          }
       }
