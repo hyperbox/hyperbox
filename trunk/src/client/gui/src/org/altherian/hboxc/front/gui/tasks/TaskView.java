@@ -163,18 +163,36 @@ public class TaskView implements _Cancelable {
          if (isSuccessful) {
             dialog.setTitle("Task Details - #" + tskOut.getId());
             actionField.setText(tskOut.getActionId());
-            createField.setText(tskOut.getCreateTime().toString());
-            endField.setText(tskOut.getStopTime().toString());
+            if (tskOut.getCreateTime() != null) {
+               createField.setText(tskOut.getCreateTime().toString());
+            } else {
+               createField.setText("N/A");
+            }
+            if (tskOut.getQueueTime() != null) {
+               queueField.setText(tskOut.getQueueTime().toString());
+            } else {
+               queueField.setText("N/A");
+            }
+            if (tskOut.getStartTime() != null) {
+               startField.setText(tskOut.getStartTime().toString());
+            } else {
+               startField.setText("N/A");
+            }
+            if (tskOut.getStopTime() != null) {
+               endField.setText(tskOut.getStopTime().toString());
+            } else {
+               endField.setText("N/A");
+            }
             if (tskOut.getError() != null) {
                errorField.setText(tskOut.getError().getError());
             } else {
                errorField.setText("N/A");
             }
             idField.setText(tskOut.getId());
-            queueField.setText(tskOut.getQueueTime().toString());
+            
             reqIdField.setText(tskOut.getRequestId());
             srvField.setText(srvName);
-            startField.setText(tskOut.getStartTime().toString());
+            
             stateField.setText(tskOut.getState().getId());
             userField.setText(tskOut.getUser().getDomainLogonName());
          } else {

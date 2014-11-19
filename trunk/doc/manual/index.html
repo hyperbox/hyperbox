@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--
 * 
 * Hyperbox - Enterprise Virtualization Manager
@@ -51,7 +51,7 @@
 				<li><a href="#il-linux">Linux</a>
 					<ol>
 						<li><a href="#il-linux-deb">Debian-based</a></li>
-						<li><a href="#il-linux-rh">Redhat-based</a></li>
+						<li><a href="#il-linux-rh">RedHat-based</a></li>
 					</ol>
 				</li>
 				<li><a href="#il-win">Windows</a></li>
@@ -157,7 +157,7 @@
 			<div class="tab">
 				<p>The Server is the cornerstone of an Hyperbox infrastructure, by being the bridge between different hypervisors, their management, extra features and the client.<br/>
 				It will abstract out all the specific implementations between the hypervisors and only keep the generic concepts, making it pluggable with virtually anything.<br/>
-				Finally, most free hypervisor products don't provide any kind of advanced entreprise features, focusing on the virtual side of things. The Server is meant to fill that gap.</p>
+				Finally, most free hypervisor products don't provide any kind of advanced enterprise features, focusing on the virtual side of things. The Server is meant to fill that gap.</p>
 				<p>The Server runs as a background process, as a Daemon or Service, but can also be run interactively. More details in the <a href="#il">Installation and Launch chapter</a>.</p>
 			</div> <!-- Server -->
 			
@@ -244,11 +244,11 @@
 						<pre>$ wget http://hyperbox.altherian.org/download/hbox_client-latest-linux_amd64.run</pre>
 						Run the installer
 						<pre>$ sudo sh hbox_client-latest-linux_amd64.run</pre>
-						The Client can then be launched via the main menu or by creating a shortcut poiting to &#60;INSTALL_DIR&#62;/hyperbox and setting the working dir to &#60;INSTALL_DIR&#62;
+						The Client can then be launched via the main menu or by creating a shortcut pointing to &#60;INSTALL_DIR&#62;/hyperbox and setting the working dir to &#60;INSTALL_DIR&#62;
 					</div> <!-- Client -->
 				</div> <!-- Hyperbox -->
 			</div> <!-- Debian -->
-			<h3><a id="il-linux-rh">Redhat</a></h3>
+			<h3><a id="il-linux-rh">RedHat</a></h3>
 			<div class="tab">
 				<h4>Virtualbox</h4>
 				<div class="tab">
@@ -277,7 +277,7 @@
 						<pre>$ curl -O http://hyperbox.altherian.org/download/hbox_client-latest-linux_amd64.run</pre>
 						Run the installer
 						<pre>$ sudo sh hbox_client-latest-linux_amd64.run</pre>
-						The Client can then be launched via the main menu or by creating a shortcut poiting to &#60;INSTALL_DIR&#62;/hyperbox and setting the working dir to &#60;INSTALL_DIR&#62;
+						The Client can then be launched via the main menu or by creating a shortcut pointing to &#60;INSTALL_DIR&#62;/hyperbox and setting the working dir to &#60;INSTALL_DIR&#62;
 					</div> <!-- Client -->
 				</div> <!-- Hyperbox -->
 			</div> <!-- Redhat -->
@@ -300,8 +300,8 @@
 		<h2><a id="il-others">Others</a></h2>
 		<div class="tab">
 			A ZIP package is available for the server and the client at the <a href="http://hyperbox.altherian.org/?downloads">Downloads</a> page.<br/>
-			Hyperbox doesn't require anything except for java to be available. All the data, log file and configuration are stored within the install directory.<br/>
-			Therefore, to run Hyperbox in any other system, simly unzip the file in the location of your choice and run Hyperbox by taking example from the Linux bash script.
+			Hyperbox doesn't require anything except for Java to be available. All the data, log file and configuration are stored within the install directory.<br/>
+			Therefore, to run Hyperbox in any other system, simply unzip the file in the location of your choice and run Hyperbox by taking example from the Linux bash script.
 		</div> <!-- Others -->
 
 		<h2><a id="il-fl">First launch</a></h2>
@@ -414,9 +414,9 @@
 		<div class="tab">
 			<p>Hypervisor connectors are shipped with modules loaded in Hyperbox. For managing modules, see the <a href="#m">Modules</a> section.</p>
 			<p>Once the modules are ready, you can connect to an hypervisor by right-clicking on the server &gt; Hypervisor &gt; Connect.<br/>
-			You will be prompted by dialog to choose which hypervisor connector you want to use, and optional options for the connector.<br/>
+			You will be prompted by dialogue to choose which hypervisor connector you want to use, and optional options for the connector.<br/>
 			<p>The options are implementation specific, so syntax/values will normally be provided by the author of the Hypervisor connector module.<br/>
-			For the Virtualbox modules shipped with Hyperbox, the following options are available (anything in square braquets [ ] are optional) :
+			For the Virtualbox modules shipped with Hyperbox, the following options are available (anything in square brackets [ ] are optional) :
 			<ul>
 				<li>WebServices: <code>[http[s]://][user:password@]host[:port]</code><br/>
 				Default value is <code>http://localhost:18083</code> and expects Virtualbox to be configured with <code>null</code> authentication for the WebServices - See the <a href="https://www.virtualbox.org/manual/ch08.html#vboxmanage-setproperty">webservauthlibrary property</a><br/>&nbsp;</li>
@@ -483,7 +483,7 @@
 		<div class="tab">
 			<h3>Client</h3>
 			<div class="tab">
-				The client stores all the config files in the following location, depending on the system :
+				The client stores all the configuration files in the following location, depending on the system :
 				<ul>
 					<li>Unix-based: $HOME/.hbox</li>
 					<li>Windows: %APPDATA%/Hyperbox</li>
@@ -509,35 +509,35 @@
 				<thead>
 					<tr>
 						<td>Name</td>
+						<td>Daemon Config File</td>
 						<td>Command-Line option</td>
 						<td>Environment Variable</td>
-						<td>Daemon Config File</td>
 						<td>Purpose</td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td>Log File</td>
+						<td>log.file</td>
 						<td>-Dlog.file</td>
 						<td>HBOX_LOG_FILE</td>
-						<td>log.file</td>
 						<td>Define where Hyperbox will log messages. Relative paths will start from the installation directory.</td>
 					</tr>
 					<tr>
 						<td>Log Output Level</td>
+						<td>log.level</td>
 						<td>-Dlog.level</td>
 						<td>HBOX_LOG_LEVEL</td>
-						<td>log.level</td>
 						<td>
-							Define the maximum loging level for Hyperbox. A level include all the levels above (in terms of verbosity). The following levels are available in increasing verbosity order :<br>
+							Define the maximum logging level for Hyperbox. A level include all the levels above (in terms of verbosity). The following levels are available in increasing verbosity order :<br>
 							FatalException - Only log exceptions stack traces that caused the server to stop. This is currently not used.<br>
 							Exception - Log exceptions stack traces that are not fatal. This is tightly linked to Error level as each error will also produce an exception entry.<br>
-							Error - Log errors that occured. This is tightly linked to Exception level as the message will be the exception message.<br>
+							Error - Log errors that occurred. This is tightly linked to Exception level as the message will be the exception message.<br>
 							Warning - Log warnings.<br>
 							Info - Log regular info messages. This is the default level.<br>
-							Verbose - Log precises info messages.<br>
-							Debug - Log debug info for each server activity, task and client request: This can be quite verbose and should not be kept on in live environement due to the performance penality.<br>
-							Tracking - Log code tracking info: This is very verbose and WILL inflict a high performance penality but will provide very detailed info for debugging.
+							Verbose - Log precise info messages.<br>
+							Debug - Log debug info for each server activity, task and client request: This can be quite verbose and should not be kept on in live environment due to the performance penalty.<br>
+							Tracking - Log code tracking info: This is very verbose and WILL inflict a high performance penalty but will provide very detailed info for debugging.
 						</td>
 					</tr>
 				</tbody>
@@ -548,25 +548,39 @@
 				<thead>
 					<tr>
 						<td>Name</td>
+						<td>Daemon Config File</td>
 						<td>Command-Line option</td>
 						<td>Environment Variable</td>
-						<td>Daemon Config File</td>
 						<td>Purpose</td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td>Server Name</td>
+						<td>server.name</td>
 						<td>-Dserver.name</td>
 						<td>HBOX_SERVER_NAME</td>
-						<td>server.name</td>
 						<td>Configure a name for the server that will be display in the client.<br>The hostname will be used as default value.</td>
 					</tr>
 					<tr>
 						<td>Kryonet Connector Port</td>
-						<td>-Dfront.kryonet.port</td>
-						<td>HBOX_FRONT_KRYONET_PORT</td>
-						<td>front.kryonet.port</td>
+						<td>kryonet.net.tcp.port</td>
+						<td>-Dkryonet.net.tcp.port</td>
+						<td>HBOX_KRYONET_NET_TCP_PORT</td>
+						<td>Define the listening port for the default client connector using <a href="https://github.com/EsotericSoftware/kryonet" target="_blank">Kryonet</a>.<br>Default value is 45612</td>
+					</tr>
+					<tr>
+						<td>Kryonet Connector Port</td>
+						<td>kryonet.net.buffer.write</td>
+						<td>-Dkryonet.net.buffer.write</td>
+						<td>HBOX_KRYONET_NET_BUFFER_WRITE</td>
+						<td>Define the listening port for the default client connector using <a href="https://github.com/EsotericSoftware/kryonet" target="_blank">Kryonet</a>.<br>Default value is 45612</td>
+					</tr>
+					<tr>
+						<td>Kryonet Connector Port</td>
+						<td>kryonet.net.tcp.port</td>
+						<td>-Dkryonet.net.tcp.port</td>
+						<td>HBOX_KRYONET_NET_TCP_PORT</td>
 						<td>Define the listening port for the default client connector using <a href="https://github.com/EsotericSoftware/kryonet" target="_blank">Kryonet</a>.<br>Default value is 45612</td>
 					</tr>
 				</tbody>
