@@ -121,7 +121,7 @@ public class MediumIn extends ObjectIn<Entity> implements _Actionnable {
    }
    
    public boolean hasParent() {
-      return (parentUuid != null);
+      return !AxStrings.isEmpty(getSetting(MediumAttribute.ParentUUID).getString()) || (parentUuid != null);
    }
    
    public String getLocation() {
