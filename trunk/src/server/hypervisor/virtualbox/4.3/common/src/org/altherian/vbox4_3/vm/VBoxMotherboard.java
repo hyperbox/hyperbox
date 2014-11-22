@@ -21,12 +21,12 @@
 
 package org.altherian.vbox4_3.vm;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawMotherboard;
-import org.altherian.hboxd.settings.BooleanSetting;
-import org.altherian.hboxd.settings.StringSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.BooleanSetting;
+import org.altherian.setting.StringSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.motherboard.ACPISetting;
 import org.altherian.vbox.settings.motherboard.HardwareUuidSetting;
 import org.altherian.vbox.settings.motherboard.IoAPICSetting;
@@ -78,7 +78,7 @@ public class VBoxMotherboard implements _RawMotherboard {
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
       for (MachineAttribute setting : MachineAttribute.values()) {
-         if (setting.getDeviceType().equals(Entity.Motherboard)) {
+         if (setting.getDeviceType().equals(EntityType.Motherboard)) {
             getSetting(setting);
          }
       }

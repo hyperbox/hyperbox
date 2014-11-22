@@ -22,7 +22,7 @@
 package org.altherian.hbox.comm.out;
 
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.StoreAttribute;
 import org.altherian.hbox.states.StoreState;
 
@@ -35,7 +35,7 @@ public final class StoreOut extends ObjectOut {
    }
    
    public StoreOut(String id, String label, String location, StoreState state) {
-      super(Entity.Store, id);
+      super(EntityType.Store, id);
       setSetting(new StringSettingIO(StoreAttribute.Label, label));
       setSetting(new StringSettingIO(StoreAttribute.Location, location));
       setSetting(new StringSettingIO(StoreAttribute.State, state.toString()));

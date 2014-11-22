@@ -23,28 +23,31 @@ package org.altherian.hbox.comm.in;
 
 import org.altherian.hbox.comm.io.StringSettingIO;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * IO object used to send or receive data about a VM
  * 
  * @author noteirak
  */
-public final class MachineIn extends ObjectIn<Entity> {
+public final class MachineIn extends ObjectIn<EntityType> {
    
    private String uuid;
    private Map<Long, NetworkInterfaceIn> nics = new HashMap<Long, NetworkInterfaceIn>();
    private Map<String, StorageControllerIn> strCtrs = new HashMap<String, StorageControllerIn>();
+   private Map<String, DeviceIn> devs = new HashMap<String, DeviceIn>();
    
    public MachineIn() {
-      super(Entity.Machine);
+      super(EntityType.Machine);
    }
    
    /**
@@ -53,7 +56,7 @@ public final class MachineIn extends ObjectIn<Entity> {
     * @param id The ID of the machine to send data about.
     */
    public MachineIn(String id) {
-      super(Entity.Machine, id);
+      super(EntityType.Machine, id);
       setUuid(id);
    }
    
@@ -62,7 +65,7 @@ public final class MachineIn extends ObjectIn<Entity> {
    }
    
    public MachineIn(String srvId, String vmId) {
-      super(Entity.Machine, vmId);
+      super(EntityType.Machine, vmId);
       setServerId(srvId);
       setUuid(vmId);
    }
@@ -155,6 +158,18 @@ public final class MachineIn extends ObjectIn<Entity> {
    
    public void removeNetworkInterface(long nicId) {
       nics.remove(nicId);
+   }
+   
+   public void addDevice(DeviceIn dev) {
+      devs.put(dev.getId(), dev);
+   }
+   
+   public DeviceIn getDevice(String id) {
+      return devs.get(id);
+   }
+   
+   public Set<DeviceIn> listDevice() {
+      return new HashSet<DeviceIn>(devs.values());
    }
    
    public List<NetworkInterfaceIn> listNetworkInterface() {

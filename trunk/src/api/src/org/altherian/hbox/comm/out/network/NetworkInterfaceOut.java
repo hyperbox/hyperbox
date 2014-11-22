@@ -23,7 +23,7 @@ package org.altherian.hbox.comm.out.network;
 
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.out.ObjectOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public final class NetworkInterfaceOut extends ObjectOut {
    }
    
    public NetworkInterfaceOut(Long nicId, List<SettingIO> settings) {
-      super(Entity.NetworkInterace, nicId.toString(), settings);
+      super(EntityType.NetworkInterace, nicId.toString(), settings);
       this.nicId = nicId;
    }
    

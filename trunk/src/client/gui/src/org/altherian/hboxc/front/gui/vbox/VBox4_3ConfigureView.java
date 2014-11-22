@@ -27,7 +27,7 @@ import org.altherian.hbox.comm.in.HypervisorIn;
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
 import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Cancelable;
@@ -79,7 +79,7 @@ public class VBox4_3ConfigureView implements _Saveable, _Cancelable {
       buttonPanel.add(saveButton);
       buttonPanel.add(cancelButton);
       
-      dialog = JDialogBuilder.get("Hypervisor Configuration Edit", IconBuilder.getEntityType(Entity.Server).getImage(), saveButton);
+      dialog = JDialogBuilder.get("Hypervisor Configuration Edit", IconBuilder.getEntityType(EntityType.Server).getImage(), saveButton);
       dialog.add(machineFolderLabel);
       dialog.add(machineFolderValue, "growx, pushx, wrap");
       dialog.add(consoleModuleLabel);

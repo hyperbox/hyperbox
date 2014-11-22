@@ -31,15 +31,15 @@ package org.altherian.hbox.constant;
 // TODO should be separated into devices
 public enum MachineAttribute {
    
-   ServerId(Entity.Machine),
-   IsAccessible(Entity.Machine),
+   ServerId(EntityType.Machine),
+   IsAccessible(EntityType.Machine),
    
    // ////////////////////////////////////
    // Audio Settings
    // ////////////////////////////////////
-   AudioController(Entity.Audio),
-   AudioDriver(Entity.Audio),
-   AudioEnable(Entity.Audio),
+   AudioController(EntityType.Audio),
+   AudioDriver(EntityType.Audio),
+   AudioEnable(EntityType.Audio),
    
    // /////////////////////////////////////
    // CPU Settings
@@ -47,19 +47,19 @@ public enum MachineAttribute {
    /**
     * Set the number of CPUs for the VM
     */
-   CpuCount(Entity.CPU),
+   CpuCount(EntityType.CPU),
    /**
-    * Set if CPUs should be hot-pluggable - Requires compatible OS
+    * Set if CPUs should be hot plug - Requires compatible OS
     */
-   CpuHotPlug(Entity.CPU),
+   CpuHotPlug(EntityType.CPU),
    /**
     * Set the CPUs execution cap - This value will set the cap for every virtual CPU attached to the guest and is in percentage of the Host CPU power
     */
-   CpuExecCap(Entity.CPU),
+   CpuExecCap(EntityType.CPU),
    /**
     * Set if Virtualbox should show virtual CPU to the guest, or give the host's CPU information.
     */
-   SyntheticCPU(Entity.CPU),
+   SyntheticCPU(EntityType.CPU),
    
    // /////////////////////////////////////
    // General settings
@@ -67,21 +67,21 @@ public enum MachineAttribute {
    /**
     * Machine name
     */
-   Name(Entity.Machine),
+   Name(EntityType.Machine),
    /**
     * OS Type of the machine<br/>
     */
-   OsType(Entity.Machine),
+   OsType(EntityType.Machine),
    /**
     * Open description about the VM
     */
-   Description(Entity.Machine),
+   Description(EntityType.Machine),
    
    // /////////////////////////////////////
    // Keyboard Settings
    // /////////////////////////////////////
    
-   KeyboardMode(Entity.Keyboard),
+   KeyboardMode(EntityType.Keyboard),
    
    // /////////////////////////////////////
    // Memory Settings
@@ -89,27 +89,27 @@ public enum MachineAttribute {
    /**
     * RAM amount in Megabytes
     */
-   Memory(Entity.Memory),
+   Memory(EntityType.Memory),
    /**
     * Is large page activated or not
     */
-   LargePages(Entity.Memory),
+   LargePages(EntityType.Memory),
    /**
     * Is page fusion activated or not
     */
-   PageFusion(Entity.Memory),
+   PageFusion(EntityType.Memory),
    /**
     * Set Nested Paging support for the VM
     */
-   NestedPaging(Entity.Memory),
+   NestedPaging(EntityType.Memory),
    /**
     * Set VT-x support for the VM (only for Intel CPU)
     */
-   Vtxvpid(Entity.Memory),
+   Vtxvpid(EntityType.Memory),
    /**
     * Ballon size in Mega Bytes
     */
-   GuestMemoryBalloon(Entity.Memory),
+   GuestMemoryBalloon(EntityType.Memory),
    
    // /////////////////////////////////////
    // Motherboard settings
@@ -119,32 +119,32 @@ public enum MachineAttribute {
     * Not currently implemented
     */
    // TODO implement
-   Firmware(Entity.Motherboard),
+   Firmware(EntityType.Motherboard),
    /**
     * Set the VM chipset<br/>
     * Not currently implemented
     */
    // TODO implement
-   Chipset(Entity.Motherboard),
+   Chipset(EntityType.Motherboard),
    /**
     * Set status of ACPI support for the VM
     */
-   ACPI(Entity.Motherboard),
+   ACPI(EntityType.Motherboard),
    /**
     * Set status of I/O APIC support for the VM
     */
-   IoAPIC(Entity.Motherboard),
+   IoAPIC(EntityType.Motherboard),
    /**
     * Change the hardware UUID (usually the same as the VM UUID)<br/>
     * Not currently implemented
     */
    // TODO implement
-   HardwareUuid(Entity.Motherboard),
+   HardwareUuid(EntityType.Motherboard),
    
    // /////////////////////////////////////
    // Mouse
    // /////////////////////////////////////
-   MouseMode(Entity.Mouse),
+   MouseMode(EntityType.Mouse),
    
    // /////////////////////////////////////
    // USB settings
@@ -152,13 +152,13 @@ public enum MachineAttribute {
    /**
     * Enable/Disable USB
     */
-   UsbOhci(Entity.USB),
+   UsbOhci(EntityType.USB),
    /**
     * Enable/Disable USB 2.0<br/>
     * Not currently implemented
     */
    // TODO implement
-   UsbEhci(Entity.USB),
+   UsbEhci(EntityType.USB),
    
    // /////////////////////////////////////
    // Video settings
@@ -166,19 +166,19 @@ public enum MachineAttribute {
    /**
     * Number of monitors attached the Guest OS
     */
-   MonitorCount(Entity.Display),
+   MonitorCount(EntityType.Display),
    /**
     * Amount of Video memory in Megabytes
     */
-   VRAM(Entity.Display),
+   VRAM(EntityType.Display),
    /**
     * Enable 2D acceleration
     */
-   Accelerate2dVideo(Entity.Display),
+   Accelerate2dVideo(EntityType.Display),
    /**
     * Enable 3D acceleration
     */
-   Accelerate3d(Entity.Display),
+   Accelerate3d(EntityType.Display),
    
    // /////////////////////////////////////
    // Virtualisation specific settings
@@ -188,48 +188,48 @@ public enum MachineAttribute {
     * Not currently implemented
     */
    // TODO implement
-   PAE(Entity.Machine),
+   PAE(EntityType.Machine),
    /**
     * Set if High Precision Event Timer should be turned on or off<br/>
     * Not currently implemented
     */
    // TODO implement
-   HPET(Entity.Machine),
+   HPET(EntityType.Machine),
    /**
     * If Intel VT-x / AMD-V should be used
     */
-   HwVirtEx(Entity.Machine),
+   HwVirtEx(EntityType.Machine),
    /**
     * Set if there should be an exclusive use of VT-x/AMD-V
     */
-   HwVirtExExcl(Entity.Machine),
+   HwVirtExExcl(EntityType.Machine),
    
    // /////////////////////////////////////
    // Snapshot infos
    // /////////////////////////////////////
-   RootSnapshotUuid(Entity.Machine),
-   CurrentSnapshotUuid(Entity.Machine),
-   HasSnapshot(Entity.Machine),
+   RootSnapshotUuid(EntityType.Machine),
+   CurrentSnapshotUuid(EntityType.Machine),
+   HasSnapshot(EntityType.Machine),
    
    /*
     * VRDE settings
     */
-   VrdeAuthType(Entity.Console),
-   VrdeAuthLibrary(Entity.Console),
-   VrdeAuthTimeout(Entity.Console),
-   VrdeEnabled(Entity.Console),
-   VrdeMultiConnection(Entity.Console),
-   VrdeAddress(Entity.Console),
-   VrdePort(Entity.Console),
-   VrdeModule(Entity.Console);
+   VrdeAuthType(EntityType.Console),
+   VrdeAuthLibrary(EntityType.Console),
+   VrdeAuthTimeout(EntityType.Console),
+   VrdeEnabled(EntityType.Console),
+   VrdeMultiConnection(EntityType.Console),
+   VrdeAddress(EntityType.Console),
+   VrdePort(EntityType.Console),
+   VrdeModule(EntityType.Console);
    
-   private Entity dt;
+   private EntityType dt;
    
-   private MachineAttribute(Entity type) {
+   private MachineAttribute(EntityType type) {
       dt = type;
    }
    
-   public Entity getDeviceType() {
+   public EntityType getDeviceType() {
       return dt;
    }
    

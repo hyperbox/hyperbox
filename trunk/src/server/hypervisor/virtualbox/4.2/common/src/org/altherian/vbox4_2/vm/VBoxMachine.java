@@ -47,7 +47,7 @@ import org.altherian.hboxd.hypervisor.vm.device._RawNetworkInterface;
 import org.altherian.hboxd.hypervisor.vm.device._RawUSB;
 import org.altherian.hboxd.hypervisor.vm.guest._RawGuest;
 import org.altherian.hboxd.hypervisor.vm.snapshot._RawSnapshot;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 import org.altherian.tool.logging.Logger;
 import org.altherian.vbox4_2.VBox;
 import org.altherian.vbox4_2.data.Mappings;

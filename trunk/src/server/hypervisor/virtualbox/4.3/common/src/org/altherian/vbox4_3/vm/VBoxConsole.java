@@ -22,18 +22,27 @@
 
 package org.altherian.vbox4_3.vm;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.MachineAttribute;
+import org.altherian.hbox.exception.ConfigurationException;
+import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxd.hypervisor.vm.device._RawConsole;
-import org.altherian.hboxd.settings.BooleanSetting;
-import org.altherian.hboxd.settings.PositiveNumberSetting;
-import org.altherian.hboxd.settings.StringSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.BooleanSetting;
+import org.altherian.setting.PositiveNumberSetting;
+import org.altherian.setting.StringSetting;
+import org.altherian.setting._Setting;
+import org.altherian.tool.logging.Logger;
+import org.altherian.vbox4_3.manager.VBoxSessionManager;
 import org.altherian.vbox4_3.manager.VBoxSettingManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import org.virtualbox_4_3.ISession;
+import org.virtualbox_4_3.VBoxException;
 
 public class VBoxConsole implements _RawConsole {
    
@@ -45,13 +54,16 @@ public class VBoxConsole implements _RawConsole {
    
    @Override
    public List<_Setting> listSettings() {
-      List<_Setting> settings = new ArrayList<_Setting>();
+      Set<_Setting> settings = new HashSet<_Setting>();
       for (MachineAttribute setting : MachineAttribute.values()) {
-         if (setting.getDeviceType().equals(Entity.Console)) {
+         if (setting.getDeviceType().equals(EntityType.Console)) {
             getSetting(setting);
          }
       }
-      return settings;
+      for (String id : listProperties()) {
+         settings.add(new StringSetting(id, getProperty(id)));
+      }
+      return new ArrayList<_Setting>(settings);
    }
    
    @Override
@@ -66,7 +78,11 @@ public class VBoxConsole implements _RawConsole {
    
    @Override
    public void setSetting(List<_Setting> s) {
-      machine.setSetting(s);
+      try {
+         machine.setSetting(s);
+      } catch (ConfigurationException e) {
+         setProperty(s);
+      }
    }
    
    @Override
@@ -117,6 +133,70 @@ public class VBoxConsole implements _RawConsole {
    @Override
    public void setAllowMultiConnection(Boolean allow) {
       setSetting(new BooleanSetting(MachineAttribute.VrdeMultiConnection, allow));
+   }
+   
+   @Override
+   public Set<String> listProperties() {
+      return new HashSet<String>(VBoxSessionManager.get().getCurrent(machine.getUuid()).getVRDEServer().getVRDEProperties());
+   }
+   
+   @Override
+   public boolean hasProperty(String key) {
+      return listProperties().contains(key);
+   }
+   
+   @Override
+   public String getProperty(String key) {
+      return VBoxSessionManager.get().getCurrent(machine.getUuid()).getVRDEServer().getVRDEProperty(key);
+   }
+   
+   public void setProperty(_Setting s) {
+      setProperty(s.getName(), s.getString());
+   }
+   
+   public void setProperty(List<_Setting> sList) {
+      for (_Setting s : sList) {
+         setProperty(s);
+      }
+   }
+   
+   @Override
+   public void setProperty(String key, String value) {
+      ISession session = VBoxSessionManager.get().lockAuto(machine.getUuid());
+      try {
+         Logger.debug("Setting VRDE Property with key " + key + " and value " + value);
+         session.getMachine().getVRDEServer().setVRDEProperty(key, value);
+      } catch (VBoxException e) {
+         throw new HyperboxRuntimeException(e.getMessage());
+      } finally {
+         VBoxSessionManager.get().unlockAuto(machine.getUuid(), true);
+      }
+   }
+   
+   @Override
+   public void unsetProperty(String key) {
+      setProperty(key, null);
+   }
+   
+   @Override
+   public Boolean isActive() {
+      // TODO Detect if console is active or not
+      return false;
+   }
+   
+   @Override
+   public String getAddress() {
+      return getSetting(MachineAttribute.VrdeAddress).getString();
+   }
+   
+   @Override
+   public Long getPort() {
+      return getSetting(MachineAttribute.VrdePort).getNumber();
+   }
+   
+   @Override
+   public String getProtocol() {
+      return getSetting(MachineAttribute.VrdeModule).getString();
    }
    
    /*

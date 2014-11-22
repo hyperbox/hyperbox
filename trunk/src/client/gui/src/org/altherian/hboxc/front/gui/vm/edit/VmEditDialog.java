@@ -28,7 +28,7 @@ import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.MainView;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
@@ -61,6 +61,7 @@ public class VmEditDialog {
    
    private final String GENERAL = "General";
    private final String SYSTEM = "System";
+   private final String CONSOLE = "Console";
    private final String DISPLAY = "Display";
    private final String STORAGE = "Storage";
    private final String AUDIO = "Audio";
@@ -86,6 +87,7 @@ public class VmEditDialog {
    
    private GeneralVmEdit generalEdit;
    private SystemVmEdit systemEdit;
+   private ConsoleVmEdit consoleEdit;
    private DisplayVmEdit displayEdit;
    private StorageVmEdit storageEdit;
    private AudioVmEdit audioEdit;
@@ -96,6 +98,7 @@ public class VmEditDialog {
    public VmEditDialog() {
       generalEdit = new GeneralVmEdit();
       systemEdit = new SystemVmEdit();
+      consoleEdit = new ConsoleVmEdit();
       displayEdit = new DisplayVmEdit();
       storageEdit = new StorageVmEdit();
       audioEdit = new AudioVmEdit();
@@ -111,6 +114,7 @@ public class VmEditDialog {
       
       sectionPanels.add(generalEdit.getComp(), GENERAL);
       sectionPanels.add(systemEdit.getComp(), SYSTEM);
+      sectionPanels.add(consoleEdit.getComp(), CONSOLE);
       sectionPanels.add(displayEdit.getComp(), DISPLAY);
       sectionPanels.add(storageEdit.getComp(), STORAGE);
       sectionPanels.add(audioEdit.getComp(), AUDIO);
@@ -119,6 +123,7 @@ public class VmEditDialog {
       listModel = new DefaultListModel();
       listModel.addElement(GENERAL);
       listModel.addElement(SYSTEM);
+      listModel.addElement(CONSOLE);
       listModel.addElement(DISPLAY);
       listModel.addElement(STORAGE);
       listModel.addElement(AUDIO);
@@ -179,6 +184,7 @@ public class VmEditDialog {
    public void save() {
       generalEdit.save();
       systemEdit.save();
+      consoleEdit.save();
       displayEdit.save();
       storageEdit.save();
       audioEdit.save();
@@ -242,17 +248,19 @@ public class VmEditDialog {
          JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
          
          if (label.getText() == GENERAL) {
-            label.setIcon(IconBuilder.getEntityType(Entity.Machine));
+            label.setIcon(IconBuilder.getEntityType(EntityType.Machine));
          } else if (label.getText() == SYSTEM) {
-            label.setIcon(IconBuilder.getEntityType(Entity.CPU));
+            label.setIcon(IconBuilder.getEntityType(EntityType.CPU));
+         } else if (label.getText() == CONSOLE) {
+            label.setIcon(IconBuilder.getEntityType(EntityType.Console));
          } else if (label.getText() == DISPLAY) {
-            label.setIcon(IconBuilder.getEntityType(Entity.Display));
+            label.setIcon(IconBuilder.getEntityType(EntityType.Display));
          } else if (label.getText() == STORAGE) {
-            label.setIcon(IconBuilder.getEntityType(Entity.HardDisk));
+            label.setIcon(IconBuilder.getEntityType(EntityType.HardDisk));
          } else if (label.getText() == AUDIO) {
-            label.setIcon(IconBuilder.getEntityType(Entity.Audio));
+            label.setIcon(IconBuilder.getEntityType(EntityType.Audio));
          } else if (label.getText() == NETWORK) {
-            label.setIcon(IconBuilder.getEntityType(Entity.Network));
+            label.setIcon(IconBuilder.getEntityType(EntityType.Network));
          } else {
             label.setIcon(null);
          }
@@ -288,6 +296,7 @@ public class VmEditDialog {
          } else {
             generalEdit.update(mOut, mIn);
             systemEdit.update(mOut, mIn);
+            consoleEdit.update(mOut, mIn);
             displayEdit.update(mOut, mIn);
             storageEdit.update(mOut, mIn);
             audioEdit.update(mOut, mIn);

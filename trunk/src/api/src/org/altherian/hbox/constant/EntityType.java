@@ -21,7 +21,7 @@
 
 package org.altherian.hbox.constant;
 
-public enum Entity {
+public enum EntityType {
    
    Attribute,
    Audio,

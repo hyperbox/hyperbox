@@ -22,7 +22,7 @@
 package org.altherian.hbox.comm.out.storage;
 
 import org.altherian.hbox.comm.out.ObjectOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 
 public class StorageControllerTypeOut extends ObjectOut {
    
@@ -36,7 +36,7 @@ public class StorageControllerTypeOut extends ObjectOut {
    }
    
    public StorageControllerTypeOut(String typeId, long minPort, long maxPort, long maxDevicePerPort) {
-      super(Entity.StorageControllerType, typeId);
+      super(EntityType.StorageControllerType, typeId);
       this.minPort = minPort;
       this.maxPort = maxPort;
       this.maxDevicePerPort = maxDevicePerPort;

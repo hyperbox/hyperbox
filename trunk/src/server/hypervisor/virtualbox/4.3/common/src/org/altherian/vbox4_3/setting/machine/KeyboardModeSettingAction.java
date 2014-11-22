@@ -23,7 +23,7 @@ package org.altherian.vbox4_3.setting.machine;
 
 import org.altherian.hbox.constant.KeyboardMode;
 import org.altherian.hbox.constant.MachineAttribute;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.general.KeyboardModeSetting;
 import org.altherian.vbox4_3.data.Mappings;
 import org.altherian.vbox4_3.setting._MachineSettingAction;

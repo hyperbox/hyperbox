@@ -27,7 +27,7 @@ import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.in.HypervisorIn;
 import org.altherian.hbox.comm.in.ServerIn;
-import org.altherian.hboxd.comm.io.factory.SettingIoFactory;
+import org.altherian.hbox.comm.io.factory.SettingIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 

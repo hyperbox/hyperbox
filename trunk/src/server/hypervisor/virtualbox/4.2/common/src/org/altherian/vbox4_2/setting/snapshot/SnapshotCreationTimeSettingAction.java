@@ -23,8 +23,8 @@ package org.altherian.vbox4_2.setting.snapshot;
 
 import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.hbox.exception.ConfigurationException;
-import org.altherian.hboxd.settings.PositiveNumberSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.PositiveNumberSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox4_2.setting._SnapshotSettingAction;
 
 import org.virtualbox_4_2.ISnapshot;

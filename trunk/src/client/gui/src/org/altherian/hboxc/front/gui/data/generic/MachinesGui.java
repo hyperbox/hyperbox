@@ -21,7 +21,7 @@
 
 package org.altherian.hboxc.front.gui.data.generic;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.front.gui.data.EntityGui;
 
 
@@ -30,7 +30,7 @@ public class MachinesGui extends EntityGui {
    public final static String id = "Machines";
    
    public MachinesGui() {
-      super(Entity.Machine.getId(), id, true);
+      super(EntityType.Machine.getId(), id, true);
    }
    
    @Override

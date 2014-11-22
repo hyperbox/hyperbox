@@ -23,7 +23,7 @@ package org.altherian.vbox.settings.audio;
 
 import org.altherian.hbox.constant.AudioController;
 import org.altherian.hbox.constant.MachineAttribute;
-import org.altherian.hboxd.settings.StringSetting;
+import org.altherian.setting.StringSetting;
 
 public class AudioControllerSetting extends StringSetting {
    

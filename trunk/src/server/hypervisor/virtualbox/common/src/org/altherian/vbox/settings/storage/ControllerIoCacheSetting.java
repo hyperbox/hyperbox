@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.storage;
 
 import org.altherian.hbox.constant.StorageControllerAttribute;
-import org.altherian.hboxd.settings.BooleanSetting;
+import org.altherian.setting.BooleanSetting;
 
 public final class ControllerIoCacheSetting extends BooleanSetting {
    

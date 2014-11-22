@@ -23,8 +23,8 @@ package org.altherian.vbox4_2.setting.console;
 
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.exception.machine.MachineLockingException;
-import org.altherian.hboxd.settings.StringSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.StringSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox4_2.manager.VBoxSessionManager;
 import org.altherian.vbox4_2.setting._MachineSettingAction;
 

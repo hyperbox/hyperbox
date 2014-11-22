@@ -22,12 +22,12 @@
 package org.altherian.hbox.comm.in;
 
 import org.altherian.hbox.comm.out.TaskOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 
-public class TaskIn extends ObjectIn<Entity> {
+public class TaskIn extends ObjectIn<EntityType> {
    
    private TaskIn() {
-      super(Entity.Task);
+      super(EntityType.Task);
    }
    
    public TaskIn(TaskOut tskOut) {
@@ -35,7 +35,7 @@ public class TaskIn extends ObjectIn<Entity> {
    }
    
    public TaskIn(String taskId) {
-      super(Entity.Task, taskId);
+      super(EntityType.Task, taskId);
    }
    
 }

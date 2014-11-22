@@ -27,7 +27,7 @@ import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.StoreOut;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.states.StoreState;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.hboxc.front.gui.action.connector.ConnectorConnectAction;
@@ -93,7 +93,7 @@ public class PopupMenuBuilder {
       Logger.track();
       
       JMenu machineMenu = new JMenu("Machine");
-      machineMenu.setIcon(IconBuilder.getEntityType(Entity.Machine));
+      machineMenu.setIcon(IconBuilder.getEntityType(EntityType.Machine));
       machineMenu.add(new JMenuItem(new MachineStartAction(select)));
       machineMenu.add(new JMenuItem(new MachineStopAction(select)));
       machineMenu.add(new JMenuItem(new MachineResetAction(select)));

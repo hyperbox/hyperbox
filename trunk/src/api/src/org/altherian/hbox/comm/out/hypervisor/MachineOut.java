@@ -25,7 +25,7 @@ import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.out.ObjectOut;
 import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
 import org.altherian.hbox.comm.out.storage.StorageControllerOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.states.MachineStates;
@@ -73,7 +73,7 @@ public class MachineOut extends ObjectOut {
    }
    
    private MachineOut(String serverId, String uuid, List<SettingIO> settings) {
-      super(Entity.Machine, uuid, settings);
+      super(EntityType.Machine, uuid, settings);
       this.uuid = uuid;
       this.serverId = serverId;
    }
@@ -90,7 +90,7 @@ public class MachineOut extends ObjectOut {
     * @param uuid The UUID of the machine to send data about.
     */
    public MachineOut(String serverId, String uuid) {
-      super(Entity.Machine, uuid);
+      super(EntityType.Machine, uuid);
       this.uuid = uuid;
       this.serverId = serverId;
    }

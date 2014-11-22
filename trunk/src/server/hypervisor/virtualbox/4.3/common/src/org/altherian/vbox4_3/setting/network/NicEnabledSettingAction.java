@@ -22,8 +22,8 @@
 package org.altherian.vbox4_3.setting.network;
 
 import org.altherian.hbox.constant.NetworkInterfaceAttribute;
-import org.altherian.hboxd.settings.BooleanSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.BooleanSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.network.NicEnabledSetting;
 import org.altherian.vbox4_3.setting._NetworkInterfaceSettingAction;
 

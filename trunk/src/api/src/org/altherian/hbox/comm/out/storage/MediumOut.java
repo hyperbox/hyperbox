@@ -24,7 +24,7 @@ package org.altherian.hbox.comm.out.storage;
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
 import org.altherian.hbox.comm.out.ObjectOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.MediumAttribute;
 import org.altherian.tool.AxStrings;
 
@@ -38,7 +38,7 @@ public class MediumOut extends ObjectOut {
    }
    
    public MediumOut(String uuid, List<SettingIO> settings) {
-      super(Entity.Medium, uuid, settings);
+      super(EntityType.Medium, uuid, settings);
       setSetting(new StringSettingIO(MediumAttribute.UUID, uuid));
       setSetting(settings);
    }

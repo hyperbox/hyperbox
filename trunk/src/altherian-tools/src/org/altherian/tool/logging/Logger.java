@@ -34,7 +34,7 @@ public class Logger {
    
    private static String logFileName;
    
-   private static LogLevel maxLevel;
+   private static LogLevel maxLevel = LogLevel.Info;
    private static Boolean printSql;
    
    private static SimpleDateFormat formater;
@@ -217,10 +217,11 @@ public class Logger {
    }
    
    private static String getCalling(Integer i, Boolean methodName) {
+      int depth = 4;
       if (methodName) {
          StackTraceElement e[] = Thread.currentThread().getStackTrace();
-         if ((e != null) && (e.length >= (3 + i))) {
-            StackTraceElement s = e[(3 + i)];
+         if ((e != null) && (e.length >= (depth + i))) {
+            StackTraceElement s = e[(depth + i)];
             if (s != null) {
                String finalValue = s.getClassName().substring((s.getClassName().lastIndexOf(".") + 1));
                if (methodName) {
@@ -231,7 +232,7 @@ public class Logger {
          }
          return null;
       } else {
-         return sun.reflect.Reflection.getCallerClass(i + 3).getSimpleName();
+         return sun.reflect.Reflection.getCallerClass(i + depth).getSimpleName();
       }
       
    }

@@ -21,18 +21,18 @@
 
 package org.altherian.hboxc.front.gui.data.generic;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.front.gui.data.EntityGui;
 
 public class HyperboxGui extends EntityGui {
    
    public HyperboxGui() {
-      super(Entity.Hyperbox.getId(), Entity.Hyperbox.getId(), true);
+      super(EntityType.Hyperbox.getId(), EntityType.Hyperbox.getId(), true);
    }
    
    @Override
    public String toString() {
-      return Entity.Hyperbox.getId();
+      return EntityType.Hyperbox.getId();
    }
    
    @Override

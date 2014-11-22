@@ -22,7 +22,7 @@
 package org.altherian.hbox.comm.out.storage;
 
 import org.altherian.hbox.comm.out.ObjectOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 
 public final class StorageControllerSubTypeOut extends ObjectOut {
    
@@ -34,7 +34,7 @@ public final class StorageControllerSubTypeOut extends ObjectOut {
    }
    
    public StorageControllerSubTypeOut(String id, String parentId) {
-      super(Entity.StorageControllerSubType, id);
+      super(EntityType.StorageControllerSubType, id);
       this.parentId = parentId;
    }
    

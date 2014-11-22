@@ -21,7 +21,7 @@
 
 package org.altherian.hboxc.front.gui;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.data.EntityGui;
 import org.altherian.hboxc.front.gui.data.generic.HyperboxGui;
@@ -70,14 +70,14 @@ public class EntityGenericTreeView extends JPanel implements _View {
    }
    
    private void load(EntityGui currentNode) {
-      if (Entity.Hyperbox.match(currentNode.getEntityTypeId())) {
+      if (EntityType.Hyperbox.match(currentNode.getEntityTypeId())) {
          treeModel.insertNode(new ServersGui(), currentNode);
          tree.scrollPathToVisible(new TreePath(currentNode.getChildAt(0)));
       }
-      if (Entity.Server.match(currentNode.getEntityTypeId())) {
+      if (EntityType.Server.match(currentNode.getEntityTypeId())) {
          treeModel.insertNode(new MachinesGui(), currentNode);
       }
-      if (Entity.Machine.match(currentNode.getEntityTypeId())) {
+      if (EntityType.Machine.match(currentNode.getEntityTypeId())) {
          treeModel.insertNode(new SnapshotsGui(), currentNode);
       }
    }

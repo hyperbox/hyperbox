@@ -22,9 +22,9 @@
 package org.altherian.hbox.comm.in;
 
 import org.altherian.hbox.comm.out.security.PermissionOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 
-public class PermissionIn extends ObjectIn<Entity> {
+public class PermissionIn extends ObjectIn<EntityType> {
    
    private String userId;
    private String itemTypeId;
@@ -33,7 +33,7 @@ public class PermissionIn extends ObjectIn<Entity> {
    private boolean isAllowed;
    
    public PermissionIn() {
-      super(Entity.Permission);
+      super(EntityType.Permission);
    }
    
    public PermissionIn(String userId, String itemTypeId, String actionId, boolean isAllowed) {

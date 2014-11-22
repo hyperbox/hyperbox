@@ -23,9 +23,11 @@ package org.altherian.hboxd.core.model;
 
 import org.altherian.hbox.comm.SecurityAction;
 import org.altherian.hbox.comm.SecurityItem;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.StorageControllerType;
 import org.altherian.hbox.states.ACPI;
 import org.altherian.hbox.states.MachineStates;
+import org.altherian.hboxd.exception.machine.DeviceNotFoundException;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 import org.altherian.hboxd.hypervisor.storage._RawStorageController;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
@@ -33,7 +35,7 @@ import org.altherian.hboxd.hypervisor.vm.device._RawNetworkInterface;
 import org.altherian.hboxd.hypervisor.vm.snapshot._RawSnapshot;
 import org.altherian.hboxd.security.SecurityContext;
 import org.altherian.hboxd.server._Server;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -268,6 +270,15 @@ public class Machine implements _Machine {
    @Override
    public void unlock(boolean saveChanges) {
       rawVm.unlock(saveChanges);
+   }
+   
+   @Override
+   public _Device getDevice(String deviceId) {
+      if (EntityType.Console.getId().equals(deviceId)) {
+         return new Console(this, rawVm.getConsole());
+      } else {
+         throw new DeviceNotFoundException("Device " + deviceId + " was not found");
+      }
    }
    
 }

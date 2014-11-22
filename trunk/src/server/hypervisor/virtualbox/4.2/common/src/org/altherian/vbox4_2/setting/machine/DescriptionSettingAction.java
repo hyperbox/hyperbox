@@ -22,8 +22,8 @@
 package org.altherian.vbox4_2.setting.machine;
 
 import org.altherian.hbox.constant.MachineAttribute;
-import org.altherian.hboxd.settings.StringSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.StringSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.general.DescriptionSetting;
 import org.altherian.vbox4_2.setting._MachineSettingAction;
 

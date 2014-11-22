@@ -24,6 +24,7 @@ package org.altherian.hboxd.comm.io.factory;
 
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
+import org.altherian.hbox.comm.io.factory.SettingIoFactory;
 import org.altherian.hbox.comm.out.hypervisor.HypervisorLoaderOut;
 import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
 import org.altherian.hbox.constant.HypervisorAttribute;

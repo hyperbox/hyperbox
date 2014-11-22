@@ -27,13 +27,14 @@ import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.in.Action;
+import org.altherian.hbox.comm.in.DeviceIn;
 import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.in.NetworkInterfaceIn;
 import org.altherian.hbox.comm.in.ServerIn;
 import org.altherian.hbox.comm.in.StorageControllerIn;
 import org.altherian.hbox.comm.in.StorageDeviceAttachmentIn;
+import org.altherian.hbox.comm.io.factory.SettingIoFactory;
 import org.altherian.hbox.constant.MachineAttribute;
-import org.altherian.hboxd.comm.io.factory.SettingIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 import org.altherian.hboxd.core.model._Machine;
@@ -96,6 +97,10 @@ public final class MachineModifyAction extends ASingleTaskAction {
       
       try {
          vm.setSetting(SettingIoFactory.getListIo(mIn.listSettings()));
+         
+         for (DeviceIn devIn : mIn.listDevice()) {
+            vm.getDevice(devIn.getId()).setSetting(SettingIoFactory.getListIo(devIn.listSettings()));
+         }
          
          for (NetworkInterfaceIn nIn : mIn.listNetworkInterface()) {
             _NetworkInterface nic = vm.getNetworkInterface(nIn.getNicId());

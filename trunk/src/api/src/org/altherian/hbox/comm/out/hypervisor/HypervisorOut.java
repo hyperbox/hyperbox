@@ -24,7 +24,7 @@ package org.altherian.hbox.comm.out.hypervisor;
 
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.out.ObjectOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.HypervisorAttribute;
 
 import java.util.List;
@@ -36,11 +36,11 @@ public class HypervisorOut extends ObjectOut {
    }
    
    public HypervisorOut(String id) {
-      super(Entity.Hypervisor, id);
+      super(EntityType.Hypervisor, id);
    }
    
    public HypervisorOut(String id, List<SettingIO> settings) {
-      super(Entity.Hypervisor, id, settings);
+      super(EntityType.Hypervisor, id, settings);
    }
    
    public String getType() {

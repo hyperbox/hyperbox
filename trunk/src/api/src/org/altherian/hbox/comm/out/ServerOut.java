@@ -22,7 +22,7 @@
 package org.altherian.hbox.comm.out;
 
 import org.altherian.hbox.comm.io.SettingIO;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.ServerAttribute;
 
 import java.util.Collection;
@@ -34,11 +34,11 @@ public class ServerOut extends ObjectOut {
    }
    
    public ServerOut(String id) {
-      super(Entity.Server, id);
+      super(EntityType.Server, id);
    }
    
    public ServerOut(String id, Collection<SettingIO> settings) {
-      super(Entity.Server, id, settings);
+      super(EntityType.Server, id, settings);
    }
    
    public String getName() {

@@ -28,7 +28,7 @@ import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.in.SnapshotIn;
-import org.altherian.hboxd.comm.io.factory.SettingIoFactory;
+import org.altherian.hbox.comm.io.factory.SettingIoFactory;
 import org.altherian.hboxd.comm.io.factory.SnapshotIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;

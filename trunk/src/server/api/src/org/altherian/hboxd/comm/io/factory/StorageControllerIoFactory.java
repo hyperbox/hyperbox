@@ -22,6 +22,7 @@
 package org.altherian.hboxd.comm.io.factory;
 
 import org.altherian.hbox.comm.io.SettingIO;
+import org.altherian.hbox.comm.io.factory.SettingIoFactory;
 import org.altherian.hbox.comm.out.storage.StorageControllerOut;
 import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
 import org.altherian.hboxd.core.model._MediumAttachment;

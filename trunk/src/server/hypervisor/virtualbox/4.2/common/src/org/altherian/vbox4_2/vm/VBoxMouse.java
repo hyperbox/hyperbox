@@ -21,11 +21,11 @@
 
 package org.altherian.vbox4_2.vm;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawMouse;
-import org.altherian.hboxd.settings.StringSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.StringSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.general.MouseModeSetting;
 import org.altherian.vbox4_2.manager.VBoxSettingManager;
 
@@ -55,7 +55,7 @@ public class VBoxMouse implements _RawMouse {
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
       for (MachineAttribute setting : MachineAttribute.values()) {
-         if (setting.getDeviceType().equals(Entity.Mouse)) {
+         if (setting.getDeviceType().equals(EntityType.Mouse)) {
             getSetting(setting);
          }
       }

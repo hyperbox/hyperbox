@@ -23,26 +23,31 @@ package org.altherian.hbox.comm.in;
 
 import org.altherian.hbox.comm._Actionnable;
 import org.altherian.hbox.comm.io.SettingIO;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 
 import java.util.List;
 
-public class DeviceInput extends ObjectIn<Entity> implements _Actionnable {
+public class DeviceIn extends ObjectIn<EntityType> implements _Actionnable {
    
    private Action action = Action.Create;
    private String machineUuid;
    private String devType;
    
-   public DeviceInput() {
-      super(Entity.Device);
+   public DeviceIn() {
+      super(EntityType.Device);
    }
    
-   public DeviceInput(String id) {
-      super(Entity.Device, id);
+   public DeviceIn(String id) {
+      super(EntityType.Device, id);
    }
    
-   public DeviceInput(String id, List<SettingIO> settings) {
-      super(Entity.Device, id, settings);
+   public DeviceIn(String id, String devType) {
+      super(EntityType.Device, id);
+      setDevType(devType);
+   }
+   
+   public DeviceIn(String id, String devType, List<SettingIO> settings) {
+      super(EntityType.Device, id, settings);
    }
    
    public String getMachineUuid() {

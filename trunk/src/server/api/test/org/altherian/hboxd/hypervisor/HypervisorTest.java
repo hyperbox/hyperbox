@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.altherian.hbox.Configuration;
 import org.altherian.hbox.comm.in.MachineIn;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.HardDiskFormat;
 import org.altherian.hbox.constant.KeyboardMode;
 import org.altherian.hbox.constant.MachineAttribute;
@@ -50,9 +50,9 @@ import org.altherian.hboxd.hypervisor.storage._RawStorageControllerType;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
 import org.altherian.hboxd.hypervisor.vm.device._RawNetworkInterface;
 import org.altherian.hboxd.hypervisor.vm.snapshot._RawSnapshot;
-import org.altherian.hboxd.settings.PositiveNumberSetting;
-import org.altherian.hboxd.settings.StringSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.PositiveNumberSetting;
+import org.altherian.setting.StringSetting;
+import org.altherian.setting._Setting;
 import org.altherian.tool.logging.LogLevel;
 import org.altherian.tool.logging.Logger;
 
@@ -319,7 +319,7 @@ public abstract class HypervisorTest {
       assertTrue(otherMed.getLocation().contentEquals(path));
       hypervisor.deleteMedium(rawMed.getUuid());
       try {
-         hypervisor.getMedium(path, Entity.HardDisk);
+         hypervisor.getMedium(path, EntityType.HardDisk);
          assertTrue(false);
       } catch (HypervisorException e) {
          assertTrue(true);

@@ -23,7 +23,7 @@ package org.altherian.hbox.comm.out.storage;
 
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.out.ObjectOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.StorageControllerAttribute;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class StorageControllerOut extends ObjectOut {
    }
    
    public StorageControllerOut(String vmId, String name, List<SettingIO> settings, List<StorageDeviceAttachmentOut> attachments) {
-      super(Entity.StorageController, name, settings);
+      super(EntityType.StorageController, name, settings);
       this.vmId = vmId;
       this.attachments = attachments;
    }

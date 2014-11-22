@@ -21,12 +21,12 @@
 
 package org.altherian.vbox4_2.vm;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.KeyboardMode;
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawKeyboard;
-import org.altherian.hboxd.settings.StringSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.StringSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.general.KeyboardModeSetting;
 import org.altherian.vbox4_2.manager.VBoxSettingManager;
 
@@ -61,7 +61,7 @@ public final class VBoxKeyboard implements _RawKeyboard {
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
       for (MachineAttribute setting : MachineAttribute.values()) {
-         if (setting.getDeviceType().equals(Entity.Keyboard)) {
+         if (setting.getDeviceType().equals(EntityType.Keyboard)) {
             getSetting(setting);
          }
       }

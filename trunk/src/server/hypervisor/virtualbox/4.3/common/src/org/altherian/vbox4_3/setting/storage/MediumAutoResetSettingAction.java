@@ -22,8 +22,8 @@
 package org.altherian.vbox4_3.setting.storage;
 
 import org.altherian.hbox.constant.MediumAttribute;
-import org.altherian.hboxd.settings.BooleanSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.BooleanSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.medium.MediumAutoResetSetting;
 import org.altherian.vbox4_3.setting._MediumSettingAction;
 

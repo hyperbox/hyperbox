@@ -19,7 +19,7 @@
  * 
  */
 
-package org.altherian.hboxd.settings;
+package org.altherian.setting;
 
 
 public abstract class BasicSetting implements _Setting {

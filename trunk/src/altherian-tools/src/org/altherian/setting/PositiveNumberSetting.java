@@ -19,20 +19,20 @@
  * 
  */
 
-package org.altherian.hboxd.settings;
+package org.altherian.setting;
 
-public class StringSetting extends BasicSetting {
+public class PositiveNumberSetting extends BasicSetting {
    
-   public StringSetting(String name, String value) {
+   public PositiveNumberSetting(String name, long value) {
       super(name, value);
    }
    
-   public StringSetting(Enum<?> setting, String value) {
+   public PositiveNumberSetting(Enum<?> setting, long value) {
       super(setting, value);
    }
    
-   public String getValue() {
-      return (String) getRawValue();
+   public long getValue() {
+      return (Long) getRawValue();
    }
    
 }

@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.general;
 
 import org.altherian.hbox.constant.MachineAttribute;
-import org.altherian.hboxd.settings.StringSetting;
+import org.altherian.setting.StringSetting;
 
 public class DescriptionSetting extends StringSetting {
    

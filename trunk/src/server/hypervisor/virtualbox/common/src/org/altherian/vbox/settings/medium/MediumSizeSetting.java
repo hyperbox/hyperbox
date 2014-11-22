@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.medium;
 
 import org.altherian.hbox.constant.MediumAttribute;
-import org.altherian.hboxd.settings.PositiveNumberSetting;
+import org.altherian.setting.PositiveNumberSetting;
 
 public class MediumSizeSetting extends PositiveNumberSetting {
    

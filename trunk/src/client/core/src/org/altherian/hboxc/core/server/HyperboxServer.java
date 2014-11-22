@@ -87,6 +87,7 @@ import org.altherian.hboxc.event.server.ServerModifiedEvent;
 import org.altherian.hboxc.factory.BackendFactory;
 import org.altherian.hboxc.server._GuestReader;
 import org.altherian.hboxc.server._HypervisorReader;
+import org.altherian.hboxc.server._Machine;
 import org.altherian.hboxc.server._Server;
 import org.altherian.hboxc.state.ConnectionState;
 import org.altherian.tool.AxBooleans;
@@ -896,7 +897,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
          refreshInfo();
       }
    }
-
+   
    @Override
    public _GuestReader getGuest(String machineUuid) {
       Logger.track();
@@ -976,6 +977,11 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       
       List<String> objOutList = trans.extractItems(String.class);
       return new HashSet<String>(objOutList);
+   }
+   
+   @Override
+   public _Machine getMachineReader(String id) {
+      return new Machine(this, id);
    }
    
 }

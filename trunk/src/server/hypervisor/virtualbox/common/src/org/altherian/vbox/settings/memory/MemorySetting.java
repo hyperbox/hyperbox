@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.memory;
 
 import org.altherian.hbox.constant.MachineAttribute;
-import org.altherian.hboxd.settings.PositiveNumberSetting;
+import org.altherian.setting.PositiveNumberSetting;
 
 public final class MemorySetting extends PositiveNumberSetting {
    

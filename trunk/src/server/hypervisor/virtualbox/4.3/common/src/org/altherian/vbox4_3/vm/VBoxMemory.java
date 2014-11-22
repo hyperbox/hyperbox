@@ -21,12 +21,12 @@
 
 package org.altherian.vbox4_3.vm;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawMemory;
-import org.altherian.hboxd.settings.BooleanSetting;
-import org.altherian.hboxd.settings.PositiveNumberSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.BooleanSetting;
+import org.altherian.setting.PositiveNumberSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.memory.LargePagesSetting;
 import org.altherian.vbox.settings.memory.MemorySetting;
 import org.altherian.vbox.settings.memory.NestedPagingSetting;
@@ -100,7 +100,7 @@ public final class VBoxMemory implements _RawMemory {
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
       for (MachineAttribute setting : MachineAttribute.values()) {
-         if (setting.getDeviceType().equals(Entity.Memory)) {
+         if (setting.getDeviceType().equals(EntityType.Memory)) {
             getSetting(setting);
          }
       }

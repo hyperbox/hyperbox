@@ -22,8 +22,8 @@
 package org.altherian.hboxd.core.model;
 
 import org.altherian.hboxd.hypervisor.storage._RawMedium;
-import org.altherian.hboxd.settings._Settable;
 import org.altherian.hboxd.task._ProgressTracker;
+import org.altherian.setting._Settable;
 
 import java.util.Set;
 

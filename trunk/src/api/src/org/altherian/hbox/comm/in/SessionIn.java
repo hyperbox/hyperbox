@@ -21,20 +21,20 @@
 
 package org.altherian.hbox.comm.in;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 
-public class SessionIn extends ObjectIn<Entity> {
+public class SessionIn extends ObjectIn<EntityType> {
    
    private String domain;
    private String username;
    private String password;
    
    private SessionIn() {
-      super(Entity.Session);
+      super(EntityType.Session);
    }
    
    public SessionIn(String id) {
-      super(Entity.Session, id);
+      super(EntityType.Session, id);
    }
    
    /**

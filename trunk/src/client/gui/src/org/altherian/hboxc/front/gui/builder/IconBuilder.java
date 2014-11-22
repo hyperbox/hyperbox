@@ -24,7 +24,7 @@ package org.altherian.hboxc.front.gui.builder;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.StorageControllerType;
 import org.altherian.hbox.states.MachineStates;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
@@ -152,23 +152,23 @@ public class IconBuilder {
    
    private static void initEntityTypes() {
       entTypes = new HashMap<String, ImageIcon>();
-      entTypes.put(Entity.Hyperbox.getId(), getHyperbox());
-      entTypes.put(Entity.Guest.getId(), new ImageIcon(ICONS_PATH + "monitor.png"));
-      entTypes.put(Entity.Machine.getId(), new ImageIcon(ICONS_PATH + "computer.png"));
-      entTypes.put(Entity.DVD.getId(), new ImageIcon(ICONS_PATH + "cd.png"));
-      entTypes.put(Entity.HardDisk.getId(), new ImageIcon(ICONS_PATH + "harddisk.png"));
-      entTypes.put(Entity.Floppy.getId(), new ImageIcon(ICONS_PATH + "disk.png"));
-      entTypes.put(Entity.Server.getId(), new ImageIcon(ICONS_PATH + "server.png"));
-      entTypes.put(Entity.Display.getId(), new ImageIcon(ICONS_PATH + "monitor.png"));
-      entTypes.put(Entity.CPU.getId(), new ImageIcon(ICONS_PATH + "shape_shadow.png"));
-      entTypes.put(Entity.Audio.getId(), new ImageIcon(ICONS_PATH + "sound.png"));
-      entTypes.put(Entity.Network.getId(), new ImageIcon(ICONS_PATH + "world.png"));
-      entTypes.put(Entity.DiskDrive.getId(), new ImageIcon(ICONS_PATH + "drive.png"));
-      entTypes.put(Entity.DvdDrive.getId(), new ImageIcon(ICONS_PATH + "drive_cd.png"));
-      entTypes.put(Entity.FloppyDrive.getId(), new ImageIcon(ICONS_PATH + "drive_disk.png"));
-      entTypes.put(Entity.User.getId(), new ImageIcon(ICONS_PATH + "user.png"));
-      entTypes.put(Entity.Store.getId(), new ImageIcon(ICONS_PATH + "store.png"));
-      entTypes.put(Entity.Task.getId(), new ImageIcon(ICONS_PATH + "task.png"));
+      entTypes.put(EntityType.Hyperbox.getId(), getHyperbox());
+      entTypes.put(EntityType.Guest.getId(), new ImageIcon(ICONS_PATH + "monitor.png"));
+      entTypes.put(EntityType.Machine.getId(), new ImageIcon(ICONS_PATH + "computer.png"));
+      entTypes.put(EntityType.DVD.getId(), new ImageIcon(ICONS_PATH + "cd.png"));
+      entTypes.put(EntityType.HardDisk.getId(), new ImageIcon(ICONS_PATH + "harddisk.png"));
+      entTypes.put(EntityType.Floppy.getId(), new ImageIcon(ICONS_PATH + "disk.png"));
+      entTypes.put(EntityType.Server.getId(), new ImageIcon(ICONS_PATH + "server.png"));
+      entTypes.put(EntityType.Display.getId(), new ImageIcon(ICONS_PATH + "monitor.png"));
+      entTypes.put(EntityType.CPU.getId(), new ImageIcon(ICONS_PATH + "shape_shadow.png"));
+      entTypes.put(EntityType.Audio.getId(), new ImageIcon(ICONS_PATH + "sound.png"));
+      entTypes.put(EntityType.Network.getId(), new ImageIcon(ICONS_PATH + "world.png"));
+      entTypes.put(EntityType.DiskDrive.getId(), new ImageIcon(ICONS_PATH + "drive.png"));
+      entTypes.put(EntityType.DvdDrive.getId(), new ImageIcon(ICONS_PATH + "drive_cd.png"));
+      entTypes.put(EntityType.FloppyDrive.getId(), new ImageIcon(ICONS_PATH + "drive_disk.png"));
+      entTypes.put(EntityType.User.getId(), new ImageIcon(ICONS_PATH + "user.png"));
+      entTypes.put(EntityType.Store.getId(), new ImageIcon(ICONS_PATH + "store.png"));
+      entTypes.put(EntityType.Task.getId(), new ImageIcon(ICONS_PATH + "task.png"));
    }
    
    public static ImageIcon getHyperbox() {
@@ -242,7 +242,7 @@ public class IconBuilder {
       }
    }
    
-   public static ImageIcon getEntityType(Entity type) {
+   public static ImageIcon getEntityType(EntityType type) {
       return getEntityType(type.getId());
    }
    
@@ -256,7 +256,7 @@ public class IconBuilder {
    }
    
    public static ImageIcon getDeviceType(String type) {
-      return getEntityType(Entity.valueOf(type));
+      return getEntityType(EntityType.valueOf(type));
    }
    
    public static ImageIcon getSnapshot(SnapshotOut snapOut) {

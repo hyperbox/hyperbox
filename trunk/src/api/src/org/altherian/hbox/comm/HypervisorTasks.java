@@ -288,10 +288,41 @@ public enum HypervisorTasks {
     * <p>
     * Request Object: none<br/>
     * Answer Object : MediumOutput<br/>
-    * Anwer Type : Single
+    * Answer Type : Single
     * </p>
     */
-   ToolsMediumGet;
+   ToolsMediumGet,
+   
+   /**
+    * <p>
+    * Request Object: DeviceInput<br/>
+    * Answer Object : SettingIO<br/>
+    * Answer Type : Multiple
+    * </p>
+    */
+   DevicePropertyList,
+   /**
+    * <p>
+    * Request Object: DeviceInput, SettingIO<br/>
+    * Answer Object : SettingIO<br/>
+    * Answer Type : Single
+    * </p>
+    */
+   DevicePropertyGet,
+   /**
+    * <p>
+    * Request Object: DeviceInput, SettingIO<br/>
+    * Answer Object : none<br/>
+    * </p>
+    */
+   DevicePropertySet,
+   /**
+    * <p>
+    * Request Object: DeviceInput, SettingIO<br/>
+    * Answer Object : none<br/>
+    * </p>
+    */
+   DevicePropertyUnset;
    
    public String getId() {
       return toString();

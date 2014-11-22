@@ -24,23 +24,23 @@ package org.altherian.hbox.comm.in;
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.ModuleAttribute;
 
 import java.util.List;
 
-public class ModuleIn extends ObjectIn<Entity> {
+public class ModuleIn extends ObjectIn<EntityType> {
    
    public ModuleIn() {
-      super(Entity.Module);
+      super(EntityType.Module);
    }
    
    public ModuleIn(String id) {
-      super(Entity.Module, id);
+      super(EntityType.Module, id);
    }
    
    public ModuleIn(String id, List<SettingIO> settings) {
-      super(Entity.Module, id, settings);
+      super(EntityType.Module, id, settings);
    }
    
    public String getDescriptorFile() {

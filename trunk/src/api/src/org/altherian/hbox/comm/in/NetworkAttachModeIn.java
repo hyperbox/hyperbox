@@ -21,16 +21,16 @@
 
 package org.altherian.hbox.comm.in;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 
-public class NetworkAttachModeIn extends ObjectIn<Entity> {
+public class NetworkAttachModeIn extends ObjectIn<EntityType> {
    
    public NetworkAttachModeIn() {
-      super(Entity.NetworkAttachMode);
+      super(EntityType.NetworkAttachMode);
    }
    
    public NetworkAttachModeIn(String id) {
-      super(Entity.NetworkAttachMode, id);
+      super(EntityType.NetworkAttachMode, id);
    }
    
 }

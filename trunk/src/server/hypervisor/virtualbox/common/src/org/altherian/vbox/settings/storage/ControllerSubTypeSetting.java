@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.storage;
 
 import org.altherian.hbox.constant.StorageControllerAttribute;
-import org.altherian.hboxd.settings.StringSetting;
+import org.altherian.setting.StringSetting;
 
 public class ControllerSubTypeSetting extends StringSetting {
    

@@ -25,7 +25,7 @@ import org.altherian.hbox.comm._Actionnable;
 import org.altherian.hbox.comm.io.PositiveNumberSettingIO;
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.MediumAttribute;
 import org.altherian.tool.AxStrings;
 
@@ -34,24 +34,24 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class MediumIn extends ObjectIn<Entity> implements _Actionnable {
+public class MediumIn extends ObjectIn<EntityType> implements _Actionnable {
    
    private Action action = Action.Create;
    private String parentUuid = null;
    private Set<String> childUuid = new HashSet<String>();
    
    public MediumIn() {
-      super(Entity.Medium);
+      super(EntityType.Medium);
    }
    
    public MediumIn(String uuid) {
-      super(Entity.Medium, uuid);
+      super(EntityType.Medium, uuid);
       setUuid(uuid);
       setAction(Action.Modify);
    }
    
    public MediumIn(String path, String type) {
-      super(Entity.Medium, path);
+      super(EntityType.Medium, path);
       setLocation(path);
       setType(type);
    }
@@ -61,7 +61,7 @@ public class MediumIn extends ObjectIn<Entity> implements _Actionnable {
    }
    
    public MediumIn(String uuid, List<SettingIO> settings) {
-      super(Entity.Medium, uuid, settings);
+      super(EntityType.Medium, uuid, settings);
       setUuid(uuid);
       setAction(Action.Modify);
    }

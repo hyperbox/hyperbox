@@ -35,7 +35,7 @@ import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
 import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hbox.comm.out.storage.StorageControllerOut;
 import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxc.controller.ClientTasks;
 import org.altherian.hboxc.event.FrontEventManager;
@@ -542,7 +542,7 @@ public final class VmSummaryView {
                   } else {
                      storagePanel.add(new JLabel("[" + sdaOut.getDeviceType() + "] Empty"));
                   }
-                  if (sdaOut.getDeviceType().contentEquals(Entity.DVD.getId())) {
+                  if (sdaOut.getDeviceType().contentEquals(EntityType.DVD.getId())) {
                      storagePanel.add(new JButton(new StorageDeviceAttachmentMediumEditAction(mOut.getServerId(), sdaOut)), "wrap");
                   } else {
                      storagePanel.add(new JLabel(""), "wrap");

@@ -21,11 +21,11 @@
 
 package org.altherian.vbox4_2.vm;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawDisplay;
-import org.altherian.hboxd.settings.PositiveNumberSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.PositiveNumberSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.video.MonitorCountSetting;
 import org.altherian.vbox.settings.video.VRamSetting;
 import org.altherian.vbox4_2.manager.VBoxSettingManager;
@@ -66,7 +66,7 @@ public final class VBoxDisplay implements _RawDisplay {
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
       for (MachineAttribute setting : MachineAttribute.values()) {
-         if (setting.getDeviceType().equals(Entity.Display)) {
+         if (setting.getDeviceType().equals(EntityType.Display)) {
             getSetting(setting);
          }
       }

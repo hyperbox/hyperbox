@@ -22,8 +22,8 @@
 package org.altherian.vbox4_3.setting.network;
 
 import org.altherian.hbox.constant.NetworkInterfaceAttribute;
-import org.altherian.hboxd.settings.StringSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.StringSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox4_3.setting._NetworkInterfaceSettingAction;
 
 import org.virtualbox_4_3.INetworkAdapter;

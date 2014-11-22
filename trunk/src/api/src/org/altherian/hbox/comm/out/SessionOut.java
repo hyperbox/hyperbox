@@ -22,7 +22,7 @@
 package org.altherian.hbox.comm.out;
 
 import org.altherian.hbox.comm.out.security.UserOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 
 import java.util.Date;
 
@@ -38,7 +38,7 @@ public class SessionOut extends ObjectOut {
    }
    
    public SessionOut(String id, UserOut user, String state, Date createTime) {
-      super(Entity.Session, id);
+      super(EntityType.Session, id);
       this.user = user;
       this.state = state;
       this.createTime = createTime;

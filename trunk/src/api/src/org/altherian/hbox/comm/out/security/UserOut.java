@@ -23,7 +23,7 @@ package org.altherian.hbox.comm.out.security;
 
 import org.altherian.hbox.comm.io.StringSettingIO;
 import org.altherian.hbox.comm.out.ObjectOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.UserAttribute;
 
 public class UserOut extends ObjectOut {
@@ -33,7 +33,7 @@ public class UserOut extends ObjectOut {
    }
    
    public UserOut(String id, String username, String domain) {
-      super(Entity.User, id);
+      super(EntityType.User, id);
       setSetting(new StringSettingIO(UserAttribute.Username, username));
       setSetting(new StringSettingIO(UserAttribute.Domain, domain));
    }

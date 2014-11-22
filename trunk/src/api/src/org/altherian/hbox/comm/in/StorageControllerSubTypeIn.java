@@ -21,16 +21,16 @@
 
 package org.altherian.hbox.comm.in;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 
-public final class StorageControllerSubTypeIn extends ObjectIn<Entity> {
+public final class StorageControllerSubTypeIn extends ObjectIn<EntityType> {
    
    private StorageControllerSubTypeIn() {
-      super(Entity.StorageControllerSubType);
+      super(EntityType.StorageControllerSubType);
    }
    
    public StorageControllerSubTypeIn(String id) {
-      super(Entity.StorageControllerSubType, id);
+      super(EntityType.StorageControllerSubType, id);
    }
    
 }

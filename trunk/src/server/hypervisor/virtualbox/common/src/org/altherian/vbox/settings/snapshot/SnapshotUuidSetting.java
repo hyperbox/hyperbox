@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.snapshot;
 
 import org.altherian.hbox.constant.SnapshotAttribute;
-import org.altherian.hboxd.settings.StringSetting;
+import org.altherian.setting.StringSetting;
 
 import java.util.UUID;
 

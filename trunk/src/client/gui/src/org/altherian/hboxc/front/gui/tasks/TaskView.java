@@ -24,7 +24,7 @@ package org.altherian.hboxc.front.gui.tasks;
 import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.out.TaskOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Cancelable;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
@@ -102,7 +102,7 @@ public class TaskView implements _Cancelable {
       errorField = JTextFieldUtils.createNonEditable();
       
       
-      dialog = JDialogBuilder.get(IconBuilder.getEntityType(Entity.Task).getImage());
+      dialog = JDialogBuilder.get(IconBuilder.getEntityType(EntityType.Task).getImage());
       dialog.getContentPane().setLayout(new MigLayout());
       
       dialog.add(idLabel);

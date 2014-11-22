@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.network;
 
 import org.altherian.hbox.constant.NetworkInterfaceAttribute;
-import org.altherian.hboxd.settings.StringSetting;
+import org.altherian.setting.StringSetting;
 
 public class NicMacAddressSetting extends StringSetting {
    

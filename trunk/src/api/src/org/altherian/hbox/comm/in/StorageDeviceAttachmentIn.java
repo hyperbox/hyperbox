@@ -22,9 +22,9 @@
 package org.altherian.hbox.comm.in;
 
 import org.altherian.hbox.comm._Actionnable;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 
-public final class StorageDeviceAttachmentIn extends ObjectIn<Entity> implements _Actionnable {
+public final class StorageDeviceAttachmentIn extends ObjectIn<EntityType> implements _Actionnable {
    
    private String controllerId;
    private String deviceType;
@@ -36,7 +36,7 @@ public final class StorageDeviceAttachmentIn extends ObjectIn<Entity> implements
    private Action action = Action.Create;
    
    private StorageDeviceAttachmentIn() {
-      super(Entity.StorageAttachment);
+      super(EntityType.StorageAttachment);
    }
    
    public StorageDeviceAttachmentIn(Long portId, Long deviceId) {
@@ -46,7 +46,7 @@ public final class StorageDeviceAttachmentIn extends ObjectIn<Entity> implements
    }
    
    public StorageDeviceAttachmentIn(String storageControllerId, Long portId, Long deviceId) {
-      super(Entity.StorageAttachment, storageControllerId + portId.toString() + deviceId.toString());
+      super(EntityType.StorageAttachment, storageControllerId + portId.toString() + deviceId.toString());
       this.controllerId = storageControllerId;
       this.portId = portId;
       this.deviceId = deviceId;

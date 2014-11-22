@@ -26,7 +26,6 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.PositiveNumberSettingIO;
-import org.altherian.hbox.comm.io.StringSettingIO;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.constant.MachineAttribute;
 
@@ -54,20 +53,6 @@ public final class DisplayVmEdit {
    private JCheckBox accel2dBox;
    private JCheckBox accel3dBox;
    
-   private JLabel vrdeEnableLabel;
-   private JLabel vrdePortLabel;
-   private JLabel vrdeAddressLabel;
-   private JLabel vrdeAuthTypeLabel;
-   private JLabel vrdeAuthTimeoutLabel;
-   private JLabel vrdeAllowMultiConnLabel;
-   
-   private JCheckBox vrdeEnableValue;
-   private JTextField vrdePortValue;
-   private JTextField vrdeAddressValue;
-   private JTextField vrdeAuthTypeValue;
-   private JTextField vrdeAuthTimeoutValue;
-   private JCheckBox vrdeAllowMultiConnValue;
-   
    public DisplayVmEdit() {
       vramLabel = new JLabel("VRAM");
       vramField = new JTextField();
@@ -89,38 +74,8 @@ public final class DisplayVmEdit {
       gfxPanel.add(accel3dLabel);
       gfxPanel.add(accel3dBox, "growx,pushx,wrap");
       
-      vrdeEnableLabel = new JLabel("Enabled");
-      vrdePortLabel = new JLabel("Port");
-      vrdeAddressLabel = new JLabel("Address");
-      vrdeAuthTypeLabel = new JLabel("Authentication Type");
-      vrdeAuthTimeoutLabel = new JLabel("Authentication Timeout");
-      vrdeAllowMultiConnLabel = new JLabel("Allow Multi Connections");
-      
-      vrdeEnableValue = new JCheckBox();
-      vrdePortValue = new JTextField();
-      vrdeAddressValue = new JTextField();
-      vrdeAuthTypeValue = new JTextField();
-      vrdeAuthTimeoutValue = new JTextField();
-      vrdeAllowMultiConnValue = new JCheckBox();
-      
-      JPanel vrdePanel = new JPanel(new MigLayout());
-      vrdePanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY), "Remote Console"));
-      vrdePanel.add(vrdeEnableLabel);
-      vrdePanel.add(vrdeEnableValue, "growx,pushx,wrap");
-      vrdePanel.add(vrdePortLabel);
-      vrdePanel.add(vrdePortValue, "growx,pushx,wrap");
-      vrdePanel.add(vrdeAddressLabel);
-      vrdePanel.add(vrdeAddressValue, "growx,pushx,wrap");
-      vrdePanel.add(vrdeAuthTypeLabel);
-      vrdePanel.add(vrdeAuthTypeValue, "growx,pushx,wrap");
-      vrdePanel.add(vrdeAuthTimeoutLabel);
-      vrdePanel.add(vrdeAuthTimeoutValue, "growx,pushx,wrap");
-      vrdePanel.add(vrdeAllowMultiConnLabel);
-      vrdePanel.add(vrdeAllowMultiConnValue, "growx,pushx,wrap");
-      
       panel = new JPanel(new MigLayout());
       panel.add(gfxPanel, "growx,pushx,wrap");
-      panel.add(vrdePanel, "growx,pushx,wrap");
    }
    
    public Component getComp() {
@@ -135,12 +90,6 @@ public final class DisplayVmEdit {
       monitorCountField.setText(mOut.getSetting(MachineAttribute.MonitorCount).getString());
       accel2dBox.setSelected(mOut.getSetting(MachineAttribute.Accelerate2dVideo).getBoolean());
       accel3dBox.setSelected(mOut.getSetting(MachineAttribute.Accelerate3d).getBoolean());
-      vrdeEnableValue.setSelected(mOut.getSetting(MachineAttribute.VrdeEnabled).getBoolean());
-      vrdePortValue.setText(mOut.getSetting(MachineAttribute.VrdePort).getString());
-      vrdeAddressValue.setText(mOut.getSetting(MachineAttribute.VrdeAddress).getString());
-      vrdeAuthTypeValue.setText(mOut.getSetting(MachineAttribute.VrdeAuthType).getString());
-      vrdeAuthTimeoutValue.setText(mOut.getSetting(MachineAttribute.VrdeAuthTimeout).getString());
-      vrdeAllowMultiConnValue.setSelected(mOut.getSetting(MachineAttribute.VrdeMultiConnection).getBoolean());
    }
    
    public void save() {
@@ -155,24 +104,6 @@ public final class DisplayVmEdit {
       }
       if (!mOut.getSetting(MachineAttribute.Accelerate3d).getBoolean().equals(accel3dBox.isSelected())) {
          mIn.setSetting(new BooleanSettingIO(MachineAttribute.Accelerate3d, accel3dBox.isSelected()));
-      }
-      if (!mOut.getSetting(MachineAttribute.VrdeEnabled).getBoolean().equals(vrdeEnableValue.isSelected())) {
-         mIn.setSetting(new BooleanSettingIO(MachineAttribute.VrdeEnabled, vrdeEnableValue.isSelected()));
-      }
-      if (!mOut.getSetting(MachineAttribute.VrdePort).getString().contentEquals(vrdePortValue.getText())) {
-         mIn.setSetting(new PositiveNumberSettingIO(MachineAttribute.VrdePort, Long.parseLong(vrdePortValue.getText())));
-      }
-      if (!mOut.getSetting(MachineAttribute.VrdeAddress).getString().contentEquals(vrdeAddressValue.getText())) {
-         mIn.setSetting(new StringSettingIO(MachineAttribute.VrdeAddress, vrdeAddressValue.getText()));
-      }
-      if (!mOut.getSetting(MachineAttribute.VrdeAuthType).getString().contentEquals(vrdeAuthTypeValue.getText())) {
-         mIn.setSetting(new StringSettingIO(MachineAttribute.VrdeAuthType, vrdeAuthTypeValue.getText()));
-      }
-      if (!mOut.getSetting(MachineAttribute.VrdeAuthTimeout).getString().contentEquals(vrdeAuthTimeoutValue.getText())) {
-         mIn.setSetting(new StringSettingIO(MachineAttribute.VrdeAuthTimeout, vrdeAuthTimeoutValue.getText()));
-      }
-      if (!mOut.getSetting(MachineAttribute.VrdeMultiConnection).getBoolean().equals(vrdeAllowMultiConnValue.isSelected())) {
-         mIn.setSetting(new BooleanSettingIO(MachineAttribute.VrdeMultiConnection, vrdeAllowMultiConnValue.isSelected()));
       }
    }
    

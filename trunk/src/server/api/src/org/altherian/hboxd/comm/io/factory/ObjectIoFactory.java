@@ -22,7 +22,8 @@
 package org.altherian.hboxd.comm.io.factory;
 
 import org.altherian.hbox.comm.in.ObjectIn;
-import org.altherian.hboxd.settings._Settable;
+import org.altherian.hbox.comm.io.factory.SettingIoFactory;
+import org.altherian.setting._Settable;
 
 public class ObjectIoFactory {
    

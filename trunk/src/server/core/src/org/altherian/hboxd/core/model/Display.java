@@ -22,7 +22,7 @@
 package org.altherian.hboxd.core.model;
 
 import org.altherian.hboxd.hypervisor.vm.device._RawDisplay;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 
 import java.util.List;
 

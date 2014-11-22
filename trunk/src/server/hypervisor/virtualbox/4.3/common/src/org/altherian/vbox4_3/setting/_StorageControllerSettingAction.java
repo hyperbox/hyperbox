@@ -21,7 +21,7 @@
 
 package org.altherian.vbox4_3.setting;
 
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 
 import org.virtualbox_4_3.IStorageController;
 import org.virtualbox_4_3.LockType;

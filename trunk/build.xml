@@ -625,7 +625,7 @@
 		<chmod file="${server.out.dir}/bin/hboxd" perm="ugo+rx" />
 	</target>
 	
-	<extension-point name="server.build" depends="server.build.linux, server.build.win, kryo.api.server.deploy, server.hyp.vbox.4_2.ws.build, server.hyp.vbox.4_2.xpcom.build, server.hyp.vbox.4_3.ws.build, server.hyp.vbox.4_3.xpcom.build, server.hyp.vbox.4_3.mscom.build" />
+	<extension-point name="server.build" depends="server.build.linux, server.build.win, kryo.api.server.deploy, server.hyp.vbox.4_2.ws.build, server.hyp.vbox.4_2.xpcom.build, server.hyp.vbox.4_3.ws.build, server.hyp.vbox.4_3.xpcom.build" />
 	
 	<extension-point name="build" depends="server.build, client.build" />
 	

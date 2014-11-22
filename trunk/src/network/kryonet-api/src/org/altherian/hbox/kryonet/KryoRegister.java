@@ -82,7 +82,7 @@ import org.altherian.hbox.comm.out.storage.StorageControllerOut;
 import org.altherian.hbox.comm.out.storage.StorageControllerSubTypeOut;
 import org.altherian.hbox.comm.out.storage.StorageControllerTypeOut;
 import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.StorageControllerSubType;
 import org.altherian.hbox.constant.StorageControllerType;
 import org.altherian.hbox.constant.StoreAttribute;
@@ -219,7 +219,7 @@ public class KryoRegister {
        * Register Hyperbox API business classes
        */
       kryo.register(ACPI.class);
-      kryo.register(Entity.class);
+      kryo.register(EntityType.class);
       kryo.register(MachineSessionStates.class);
       kryo.register(MachineStates.class);
       kryo.register(ModuleState.class);

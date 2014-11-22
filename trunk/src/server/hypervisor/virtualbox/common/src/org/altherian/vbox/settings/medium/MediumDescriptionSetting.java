@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.medium;
 
 import org.altherian.hbox.constant.MediumAttribute;
-import org.altherian.hboxd.settings.StringSetting;
+import org.altherian.setting.StringSetting;
 
 public class MediumDescriptionSetting extends StringSetting {
    

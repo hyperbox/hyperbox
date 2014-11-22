@@ -22,7 +22,7 @@
 package org.altherian.vbox4_3.setting.virtual;
 
 import org.altherian.hbox.constant.MachineAttribute;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.virtual.HwVirtExExclSetting;
 import org.altherian.vbox4_3.setting._MachineSettingAction;
 

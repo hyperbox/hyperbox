@@ -21,6 +21,7 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
+import org.altherian.hbox.comm.io.factory.SettingIoFactory;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
 import org.altherian.hbox.comm.out.storage.StorageControllerOut;
@@ -30,7 +31,7 @@ import org.altherian.hboxd.HBoxServer;
 import org.altherian.hboxd.core.model._Machine;
 import org.altherian.hboxd.core.model._NetworkInterface;
 import org.altherian.hboxd.core.model._StorageController;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 
 import java.util.ArrayList;
 import java.util.Arrays;
