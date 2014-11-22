@@ -74,9 +74,10 @@ public class Hyperbox {
       if (args.contains("-?") || args.contains("--help")) {
          System.out.println("Hyperbox available executable switches:\n");
          System.out.println("--help or -? : Print this help");
-         System.out.println("--apiversion : Print API version");
-         System.out.println("--apirevision : Print API revision");
-         System.out.println("--netversion : Print Net protocol version");
+         // TODO enable more command line switches
+         //System.out.println("--apiversion : Print API version");
+         //System.out.println("--apirevision : Print API revision");
+         //System.out.println("--netversion : Print Net protocol version");
          System.out.println("--version : Print Client version");
          System.out.println("--revision : Print Client revision");
          System.exit(0);

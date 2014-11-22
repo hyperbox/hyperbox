@@ -39,7 +39,7 @@ import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hbox.comm.out.storage.StorageControllerOut;
 import org.altherian.hbox.comm.out.storage.StorageControllerTypeOut;
 import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.StorageControllerType;
 import org.altherian.hboxc.HyperboxClient;
 import org.altherian.hboxc.front.gui.Gui;
@@ -143,8 +143,8 @@ public class StorageVmEdit {
       viewerLayout = new CardLayout();
       viewer = new JPanel(viewerLayout);
       viewer.add(emptyViewer, "");
-      viewer.add(scViewer.getPanel(), Entity.StorageController.getId());
-      viewer.add(sdaViewer.getPanel(), Entity.StorageAttachment.getId());
+      viewer.add(scViewer.getPanel(), EntityType.StorageController.getId());
+      viewer.add(sdaViewer.getPanel(), EntityType.StorageAttachment.getId());
       
       initMedMenu();
       initScMenu();
@@ -159,19 +159,19 @@ public class StorageVmEdit {
    
    private void initMedMenu() {
       addDvdDriveMenuItem = new JMenuItem("Empty CD/DVD Drive");
-      addDvdDriveMenuItem.setIcon(IconBuilder.getEntityType(Entity.DvdDrive));
+      addDvdDriveMenuItem.setIcon(IconBuilder.getEntityType(EntityType.DvdDrive));
       addDvdDriveMenuItem.addActionListener(new AddDeviceListener());
       
       addDvdImgMenuItem = new JMenuItem("Existing CD/DVD Image");
-      addDvdImgMenuItem.setIcon(IconBuilder.getEntityType(Entity.DvdDrive));
+      addDvdImgMenuItem.setIcon(IconBuilder.getEntityType(EntityType.DvdDrive));
       addDvdImgMenuItem.addActionListener(new AddDeviceListener());
       
       addFloppyDriveMenuItem = new JMenuItem("Empty Floppy Drive");
-      addFloppyDriveMenuItem.setIcon(IconBuilder.getEntityType(Entity.FloppyDrive));
+      addFloppyDriveMenuItem.setIcon(IconBuilder.getEntityType(EntityType.FloppyDrive));
       addFloppyDriveMenuItem.addActionListener(new AddDeviceListener());
       
       addFloppyImgMenuItem = new JMenuItem("Existing Floppy Image");
-      addFloppyImgMenuItem.setIcon(IconBuilder.getEntityType(Entity.FloppyDrive));
+      addFloppyImgMenuItem.setIcon(IconBuilder.getEntityType(EntityType.FloppyDrive));
       addFloppyImgMenuItem.addActionListener(new AddDeviceListener());
       
       addDiskNewMenuItem = new JMenuItem("New Disk Image");
@@ -329,7 +329,7 @@ public class StorageVmEdit {
                addAttachmentButton.setEnabled(true);
                removeAttachmentButton.setEnabled(false);
                scViewer.display(srvId, scIn);
-               viewerLayout.show(viewer, Entity.StorageController.getId());
+               viewerLayout.show(viewer, EntityType.StorageController.getId());
             }
             if (node.getUserObject() instanceof StorageDeviceAttachmentIn) {
                StorageDeviceAttachmentIn matIn = (StorageDeviceAttachmentIn) node.getUserObject();
@@ -340,7 +340,7 @@ public class StorageVmEdit {
                addAttachmentButton.setEnabled(true);
                removeAttachmentButton.setEnabled(true);
                sdaViewer.show(srvId, scIn.getType(), matIn);
-               viewerLayout.show(viewer, Entity.StorageAttachment.getId());
+               viewerLayout.show(viewer, EntityType.StorageAttachment.getId());
             }
          } else {
             viewerLayout.show(viewer, "");
@@ -364,14 +364,14 @@ public class StorageVmEdit {
             if (node.getUserObject() instanceof StorageDeviceAttachmentIn) {
                StorageDeviceAttachmentIn sdaIn = (StorageDeviceAttachmentIn) node.getUserObject();
                String obj = sdaIn.getDeviceType();
-               if (obj.contentEquals(Entity.HardDisk.getId())) {
-                  obj = Entity.DiskDrive.getId();
+               if (obj.contentEquals(EntityType.HardDisk.getId())) {
+                  obj = EntityType.DiskDrive.getId();
                }
-               if (obj.contentEquals(Entity.DVD.getId())) {
-                  obj = Entity.DvdDrive.getId();
+               if (obj.contentEquals(EntityType.DVD.getId())) {
+                  obj = EntityType.DvdDrive.getId();
                }
-               if (obj.contentEquals(Entity.Floppy.getId())) {
-                  obj = Entity.FloppyDrive.getId();
+               if (obj.contentEquals(EntityType.Floppy.getId())) {
+                  obj = EntityType.FloppyDrive.getId();
                }
                setIcon(IconBuilder.getDeviceType(obj));
                
@@ -453,7 +453,7 @@ public class StorageVmEdit {
             else if (dmtn.getUserObject() instanceof StorageDeviceAttachmentIn) {
                StorageDeviceAttachmentIn matIn = (StorageDeviceAttachmentIn) dmtn.getUserObject();
                
-               if (!matIn.getDeviceType().contentEquals(Entity.HardDisk.getId()) && matIn.hasMedium()) {
+               if (!matIn.getDeviceType().contentEquals(EntityType.HardDisk.getId()) && matIn.hasMedium()) {
                   JPopupMenu menu = new JPopupMenu();
                   menu.add(removeMediumMenuItem);
                   menu.add(removeDeviceMenuItem);
@@ -560,7 +560,7 @@ public class StorageVmEdit {
             }
             else if (node.getUserObject() instanceof StorageDeviceAttachmentIn) {
                StorageDeviceAttachmentIn sdaIn = (StorageDeviceAttachmentIn) node.getUserObject();
-               if (sdaIn.getDeviceType().contentEquals(Entity.HardDisk.getId())) {
+               if (sdaIn.getDeviceType().contentEquals(EntityType.HardDisk.getId())) {
                   JPopupMenu menu = new JPopupMenu();
                   menu.add(addDiskNewMenuItem);
                   menu.add(addDiskExistingMenuItem);
@@ -590,27 +590,27 @@ public class StorageVmEdit {
             if (node.getUserObject() instanceof StorageControllerIn) {
                StorageControllerIn scIn = (StorageControllerIn) node.getUserObject();
                if (ae.getSource().equals(addDvdDriveMenuItem)) {
-                  addEmpty(scIn, Entity.DVD.getId());
+                  addEmpty(scIn, EntityType.DVD.getId());
                }
                if (ae.getSource().equals(addDvdImgMenuItem)) {
-                  addMedium(scIn, Entity.DVD.getId());
+                  addMedium(scIn, EntityType.DVD.getId());
                }
                
                if (ae.getSource().equals(addDiskNewMenuItem)) {
                   MediumIn medIn = HarddiskCreateDialog.show(new ServerOut(srvId));
                   if (medIn != null) {
-                     add(scIn, Entity.HardDisk.getId(), medIn);
+                     add(scIn, EntityType.HardDisk.getId(), medIn);
                   }
                }
                if (ae.getSource().equals(addDiskExistingMenuItem)) {
-                  addMedium(scIn, Entity.HardDisk.getId());
+                  addMedium(scIn, EntityType.HardDisk.getId());
                }
                
                if (ae.getSource().equals(addFloppyDriveMenuItem)) {
-                  addEmpty(scIn, Entity.Floppy.getId());
+                  addEmpty(scIn, EntityType.Floppy.getId());
                }
                if (ae.getSource().equals(addFloppyImgMenuItem)) {
-                  addMedium(scIn, Entity.Floppy.getId());
+                  addMedium(scIn, EntityType.Floppy.getId());
                }
             }
             else if (node.getUserObject() instanceof StorageDeviceAttachmentIn) {

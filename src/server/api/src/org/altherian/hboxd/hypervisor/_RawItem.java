@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.hypervisor;
 
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 
 import java.util.List;
 

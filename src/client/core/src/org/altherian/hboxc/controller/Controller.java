@@ -61,11 +61,12 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
    private Map<String, _ClientControllerAction> actionsMap;
    
    static {
+      Logger.put(getHeader());
       try {
          if (new File(Hyperbox.getConfigFilePath()).exists()) {
             Configuration.init(Hyperbox.getConfigFilePath());
          } else {
-            Logger.info("Default config file does not exist, skipping: " + Hyperbox.getConfigFilePath());
+            Logger.debug("Default config file does not exist, skipping: " + Hyperbox.getConfigFilePath());
          }
       } catch (HyperboxException e) {
          Logger.error(e);

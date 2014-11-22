@@ -26,7 +26,7 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.in.MediumIn;
 import org.altherian.hbox.comm.in.StoreItemIn;
 import org.altherian.hbox.comm.out.ServerOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.HardDiskFormat;
 import org.altherian.hboxc.front.gui.MainView;
 import org.altherian.hboxc.front.gui._Cancelable;
@@ -179,7 +179,7 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
       String format = formatBox.getSelectedItem().toString();
       
       medIn = new MediumIn();
-      medIn.setDeviceType(Entity.HardDisk.getId());
+      medIn.setDeviceType(EntityType.HardDisk.getId());
       medIn.setLocation(path);
       medIn.setFormat(format);
       medIn.setLogicalSize(size);

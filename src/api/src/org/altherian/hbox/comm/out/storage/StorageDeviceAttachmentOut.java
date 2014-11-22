@@ -22,7 +22,7 @@
 package org.altherian.hbox.comm.out.storage;
 
 import org.altherian.hbox.comm.out.ObjectOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 
 public class StorageDeviceAttachmentOut extends ObjectOut {
    
@@ -39,7 +39,7 @@ public class StorageDeviceAttachmentOut extends ObjectOut {
    }
    
    public StorageDeviceAttachmentOut(String machineUuid, String controllerName, String mediumUuid, long portId, long deviceId, String deviceType) {
-      super(Entity.StorageAttachment, machineUuid + "|" + controllerName + "|" + portId + "|" + deviceId);
+      super(EntityType.StorageAttachment, machineUuid + "|" + controllerName + "|" + portId + "|" + deviceId);
       this.machineUuid = machineUuid;
       this.controllerName = controllerName;
       this.mediumUuid = mediumUuid;

@@ -25,7 +25,7 @@ import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.SecurityAction;
 import org.altherian.hbox.comm.SecurityItem;
 import org.altherian.hbox.comm.in.UserIn;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxd.exception.security.SecurityException;
@@ -84,7 +84,7 @@ public interface _SecurityManager {
    /**
     * List possible permissions for the given entity by using its entity type and ID
     * 
-    * @param entityTypeId The Entity Type ID to lookup - See {@link Entity} for default values
+    * @param entityTypeId The Entity Type ID to lookup - See {@link EntityType} for default values
     * @param entityId The Entity ID to lookup
     * @return List of possible Permission IDs
     */
@@ -93,7 +93,7 @@ public interface _SecurityManager {
    /**
     * List user permissions for the given entity by using its entity type and ID
     * 
-    * @param entityTypeId The Entity Type ID - See {@link Entity} for default values
+    * @param entityTypeId The Entity Type ID - See {@link EntityType} for default values
     * @param entityId The Entity ID
     * @param usr The User to lookup the permission for
     * @return List of possible Permission IDs

@@ -1,6 +1,6 @@
-/* 
+/*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -19,18 +19,18 @@
  * 
  */
 
-package org.altherian.hboxd.settings;
+package org.altherian.hboxc.core;
 
-public interface _Setting {
+import org.altherian.setting._Settable;
+
+import java.util.Set;
+
+public interface _Entity extends _Settable {
    
-   public String getName();
+   public String getId();
+
+   public void unsetSetting(String id);
    
-   public Object getRawValue();
-   
-   public Boolean getBoolean();
-   
-   public Long getNumber();
-   
-   public String getString();
+   public void unsetSettings(Set<String> ids);
    
 }

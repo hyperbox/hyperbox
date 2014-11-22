@@ -22,7 +22,7 @@
 package org.altherian.hbox.comm.out.network;
 
 import org.altherian.hbox.comm.out.ObjectOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 
 public class NetworkAttachModeOut extends ObjectOut {
    
@@ -32,7 +32,7 @@ public class NetworkAttachModeOut extends ObjectOut {
    }
    
    public NetworkAttachModeOut(String id) {
-      super(Entity.NetworkAttachMode, id);
+      super(EntityType.NetworkAttachMode, id);
    }
    
 }

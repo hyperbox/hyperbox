@@ -21,16 +21,16 @@
 
 package org.altherian.vbox4_2.factory;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.comm.io.factory.SettingIoFactory;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.KeyboardMode;
 import org.altherian.hbox.constant.MouseMode;
 import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.hbox.constant.StorageControllerType;
 import org.altherian.hbox.data.Device;
 import org.altherian.hbox.data.Machine;
-import org.altherian.hboxd.comm.io.factory.SettingIoFactory;
 import org.altherian.hboxd.hypervisor._RawOsType;
-import org.altherian.hboxd.settings.StringSetting;
+import org.altherian.setting.StringSetting;
 import org.altherian.vbox.settings.cpu.PaeSetting;
 import org.altherian.vbox.settings.general.KeyboardModeSetting;
 import org.altherian.vbox.settings.general.MouseModeSetting;
@@ -86,26 +86,26 @@ public final class OsTypeFactory {
       
       if (guestOs.getRecommendedFloppy()) {
          Device dev = new Device();
-         dev.setTypeId(Entity.StorageController.getId());
+         dev.setTypeId(EntityType.StorageController.getId());
          dev.setSetting(SettingIoFactory.get(new StringSetting(StorageControllerAttribute.Type, StorageControllerType.Floppy.getId())));
          vm.addDevice(dev);
       }
       
-      Device dvdStorCtrl = new Device(Entity.DvdDrive.getId());
-      dvdStorCtrl.setTypeId(Entity.DvdDrive.getId());
+      Device dvdStorCtrl = new Device(EntityType.DvdDrive.getId());
+      dvdStorCtrl.setTypeId(EntityType.DvdDrive.getId());
       dvdStorCtrl.setSetting(SettingIoFactory.get(new StringSetting(StorageControllerAttribute.Type, guestOs.getRecommendedDVDStorageBus().toString())));
       dvdStorCtrl.setSetting(SettingIoFactory.get(new StringSetting(StorageControllerAttribute.SubType, guestOs.getRecommendedDVDStorageController().toString())));
       vm.addDevice(dvdStorCtrl);
       
-      Device hddStorCtrl = new Device(Entity.DiskDrive.getId());
-      hddStorCtrl.setTypeId(Entity.DiskDrive.getId());
+      Device hddStorCtrl = new Device(EntityType.DiskDrive.getId());
+      hddStorCtrl.setTypeId(EntityType.DiskDrive.getId());
       hddStorCtrl.setSetting(SettingIoFactory.get(new MediumSizeSetting(guestOs.getRecommendedHDD())));
       hddStorCtrl.setSetting(SettingIoFactory.get(new StringSetting(StorageControllerAttribute.Type, guestOs.getRecommendedHDStorageBus().toString())));
       hddStorCtrl.setSetting(SettingIoFactory.get(new StringSetting(StorageControllerAttribute.SubType, guestOs.getRecommendedHDStorageController().toString())));
       vm.addDevice(hddStorCtrl);
       
       Device networkDevice = new Device();
-      networkDevice.setTypeId(Entity.Network.getId());
+      networkDevice.setTypeId(EntityType.Network.getId());
       networkDevice.setSetting(SettingIoFactory.get(new NicAdapterTypeSetting(guestOs.getAdapterType().toString())));
       
       return vm;

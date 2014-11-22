@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.cpu;
 
 import org.altherian.hbox.constant.MachineAttribute;
-import org.altherian.hboxd.settings.PositiveNumberSetting;
+import org.altherian.setting.PositiveNumberSetting;
 
 public class CpuCountSetting extends PositiveNumberSetting {
    

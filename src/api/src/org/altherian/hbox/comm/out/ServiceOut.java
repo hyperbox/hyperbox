@@ -21,7 +21,7 @@
 
 package org.altherian.hbox.comm.out;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.states.ServiceState;
 
 public class ServiceOut extends ObjectOut {
@@ -33,7 +33,7 @@ public class ServiceOut extends ObjectOut {
    }
    
    public ServiceOut(String svcId, ServiceState state) {
-      super(Entity.Service, svcId);
+      super(EntityType.Service, svcId);
       this.state = state;
    }
    

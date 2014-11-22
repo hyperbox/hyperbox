@@ -22,7 +22,7 @@
 package org.altherian.hbox.comm.out.hypervisor;
 
 import org.altherian.hbox.comm.out.ObjectOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 
 public class OsTypeOut extends ObjectOut {
    
@@ -35,7 +35,7 @@ public class OsTypeOut extends ObjectOut {
    }
    
    public OsTypeOut(String id, String name, Long bitness) {
-      super(Entity.OsType, id);
+      super(EntityType.OsType, id);
       this.id = id;
       this.name = name;
       this.bitness = bitness;

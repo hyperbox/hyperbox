@@ -21,6 +21,7 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
+import org.altherian.hbox.comm.io.factory.SettingIoFactory;
 import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
 import org.altherian.hboxd.hypervisor.vm.snapshot._RawSnapshot;
 

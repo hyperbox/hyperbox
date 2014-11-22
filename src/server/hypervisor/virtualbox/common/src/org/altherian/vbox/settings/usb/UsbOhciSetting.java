@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.usb;
 
 import org.altherian.hbox.constant.MachineAttribute;
-import org.altherian.hboxd.settings.BooleanSetting;
+import org.altherian.setting.BooleanSetting;
 
 public class UsbOhciSetting extends BooleanSetting {
    

@@ -85,6 +85,7 @@ import org.altherian.hboxc.event.task.TaskRemovedEvent;
 import org.altherian.hboxc.event.task.TaskStateChangedEvent;
 import org.altherian.hboxc.server._GuestReader;
 import org.altherian.hboxc.server._HypervisorReader;
+import org.altherian.hboxc.server._Machine;
 import org.altherian.hboxc.server._ServerReader;
 import org.altherian.tool.logging.Logger;
 
@@ -448,7 +449,7 @@ public class CachedServerReader implements _ServerReader {
       
       CoreEventManager.post(new ModuleEvent(HyperboxEvents.ModuleLoaded, ev.getServer(), ev.getModule()));
    }
-
+   
    private void refreshTask(TaskIn tIn) {
       try {
          TaskOut tOut = reader.getTask(tIn);
@@ -728,6 +729,11 @@ public class CachedServerReader implements _ServerReader {
    @Override
    public String getLogLevel() {
       return reader.getLogLevel();
+   }
+   
+   @Override
+   public _Machine getMachineReader(String id) {
+      return reader.getMachineReader(id);
    }
    
 }

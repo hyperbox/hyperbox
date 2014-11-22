@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -19,21 +19,21 @@
  * 
  */
 
-package org.altherian.hboxd.settings;
+package org.altherian.hboxd.exception.machine;
 
-
-import java.util.List;
-
-public interface _Settable {
+@SuppressWarnings("serial")
+public class DeviceException extends MachineException {
    
-   public List<_Setting> getSettings();
+   public DeviceException(String s, Throwable t) {
+      super(s, t);
+   }
    
-   public _Setting getSetting(String settingId);
+   public DeviceException(Throwable t) {
+      super(t);
+   }
    
-   public void setSetting(_Setting setting);
-   
-   public void setSetting(List<_Setting> settings);
-
-   public boolean hasSetting(String settingId);
+   public DeviceException(String s) {
+      super(s);
+   }
    
 }

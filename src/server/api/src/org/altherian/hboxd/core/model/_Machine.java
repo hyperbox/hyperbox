@@ -26,7 +26,7 @@ import org.altherian.hbox.states.ACPI;
 import org.altherian.hbox.states.MachineStates;
 import org.altherian.hboxd.hypervisor.vm.snapshot._RawSnapshot;
 import org.altherian.hboxd.server._Server;
-import org.altherian.hboxd.settings._Settable;
+import org.altherian.setting._Settable;
 
 import java.util.List;
 import java.util.Set;
@@ -48,7 +48,7 @@ public interface _Machine extends _Settable {
    public void lock();
    
    public void unlock(boolean success);
-
+   
    public void powerOn();
    
    public void powerOff();
@@ -95,4 +95,6 @@ public interface _Machine extends _Settable {
    
    public _RawSnapshot getSnapshot(String snapshotId);
    
+   public _Device getDevice(String deviceId);
+
 }

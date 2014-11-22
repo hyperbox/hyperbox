@@ -21,11 +21,11 @@
 
 package org.altherian.vbox4_3.vm;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawUSB;
-import org.altherian.hboxd.settings.BooleanSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.BooleanSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.usb.UsbEhciSetting;
 import org.altherian.vbox.settings.usb.UsbOhciSetting;
 import org.altherian.vbox4_3.manager.VBoxSettingManager;
@@ -66,7 +66,7 @@ public class VBoxUSB implements _RawUSB {
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
       for (MachineAttribute setting : MachineAttribute.values()) {
-         if (setting.getDeviceType().equals(Entity.USB)) {
+         if (setting.getDeviceType().equals(EntityType.USB)) {
             getSetting(setting);
          }
       }

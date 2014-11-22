@@ -21,7 +21,7 @@
 
 package org.altherian.hbox.comm.out;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 
 public class ProgressTrackerOut extends ObjectOut {
    
@@ -35,7 +35,7 @@ public class ProgressTrackerOut extends ObjectOut {
    }
    
    public ProgressTrackerOut(String id, String type, String state) {
-      super(Entity.ProgressTracker, id);
+      super(EntityType.ProgressTracker, id);
       this.type = type;
       this.state = state;
    }

@@ -21,7 +21,7 @@
 
 package org.altherian.hboxd.core.model;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event.storage.StorageAttachmentAddedEvent;
 import org.altherian.hboxd.event.storage.StorageAttachmentModifiedEvent;
@@ -31,7 +31,7 @@ import org.altherian.hboxd.hypervisor._Hypervisor;
 import org.altherian.hboxd.hypervisor.storage._RawMedium;
 import org.altherian.hboxd.hypervisor.storage._RawMediumAttachment;
 import org.altherian.hboxd.hypervisor.storage._RawStorageController;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 
 import java.util.HashSet;
 import java.util.List;
@@ -55,8 +55,8 @@ public class StorageController implements _StorageController {
    }
    
    @Override
-   public Entity getType() {
-      return Entity.StorageController;
+   public EntityType getType() {
+      return EntityType.StorageController;
    }
    
    @Override

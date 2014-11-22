@@ -22,7 +22,7 @@
 package org.altherian.hbox.comm.out;
 
 import org.altherian.hbox.comm.io.SettingIO;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.ModuleAttribute;
 
 import java.util.Collection;
@@ -34,11 +34,11 @@ public class ModuleOut extends ObjectOut {
    }
    
    public ModuleOut(String id) {
-      super(Entity.Module, id);
+      super(EntityType.Module, id);
    }
    
    public ModuleOut(String id, Collection<SettingIO> settings) {
-      super(Entity.Module, id, settings);
+      super(EntityType.Module, id, settings);
    }
    
    public String getDescriptorFile() {

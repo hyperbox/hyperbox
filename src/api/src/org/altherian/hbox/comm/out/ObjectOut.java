@@ -24,7 +24,7 @@ package org.altherian.hbox.comm.out;
 import org.altherian.hbox.comm.io.NullSettingIO;
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.utils.Settings;
 import org.altherian.tool.logging.Logger;
 
@@ -61,7 +61,7 @@ public abstract class ObjectOut {
    }
    
    protected ObjectOut() {
-      setEntityTypeId(Entity.Unknown);
+      setEntityTypeId(EntityType.Unknown);
    }
    
    public ObjectOut(String entityTypeId, String id) {
@@ -85,7 +85,7 @@ public abstract class ObjectOut {
    }
    
    /**
-    * See {@link Entity} for natives values
+    * See {@link EntityType} for natives values
     * 
     * @return Entity Type ID
     */

@@ -23,8 +23,8 @@ package org.altherian.vbox4_2.setting.machine;
 
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
-import org.altherian.hboxd.settings.BooleanSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.BooleanSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox4_2.setting._MachineSettingAction;
 
 import org.virtualbox_4_2.IMachine;

@@ -21,7 +21,8 @@
 
 package org.altherian.vbox4_3.manager;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.comm.io.factory.SettingIoFactory;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.hbox.constant.StorageControllerAttribute;
@@ -32,8 +33,7 @@ import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.utils.Settings;
 import org.altherian.hboxd.HBoxServer;
-import org.altherian.hboxd.comm.io.factory.SettingIoFactory;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 import org.altherian.tool.logging.Logger;
 import org.altherian.vbox4_3.VBox;
 import org.altherian.vbox4_3.setting._MachineSettingAction;
@@ -189,7 +189,7 @@ public class VBoxSettingManager {
          vmActions.get(setting.getName()).set(vm, setting);
       }
       
-      for (Device dev : vmData.listDevices(Entity.DvdDrive.getId())) {
+      for (Device dev : vmData.listDevices(EntityType.DvdDrive.getId())) {
          String controllerType = dev.getSetting(StorageControllerAttribute.Type).getString();
          String controllerSubType = dev.getSetting(StorageControllerAttribute.SubType).getString();
          try {
@@ -205,7 +205,7 @@ public class VBoxSettingManager {
          vm.attachDeviceWithoutMedium(controllerType, 0, 0, DeviceType.DVD);
       }
       
-      for (Device dev : vmData.listDevices(Entity.DiskDrive.getId())) {
+      for (Device dev : vmData.listDevices(EntityType.DiskDrive.getId())) {
          String controllerType = dev.getSetting(StorageControllerAttribute.Type).getString();
          String controllerSubType = dev.getSetting(StorageControllerAttribute.SubType).getString();
          try {
@@ -220,7 +220,7 @@ public class VBoxSettingManager {
          vm.getStorageControllerByName(controllerType).setControllerType(StorageControllerType.valueOf(controllerSubType));
       }
       
-      for (Device dev : vmData.listDevices(Entity.Network.getId())) {
+      for (Device dev : vmData.listDevices(EntityType.Network.getId())) {
          Long maxNic = VBox.get().getSystemProperties().getMaxNetworkAdapters(vm.getChipsetType());
          NetworkAdapterType adapterType = NetworkAdapterType.valueOf(dev.getSetting(NetworkInterfaceAttribute.AdapterType).getString());
          for (long i = 0; maxNic > i; i++) {

@@ -26,17 +26,17 @@ import org.altherian.hbox.comm.in.ObjectIn;
 import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.constant.ConnectorAttributes;
 
-public class ConnectorInput extends ObjectIn<Entity> {
+public class ConnectorInput extends ObjectIn<EntityType> {
    
    public ConnectorInput() {
-      super(Entity.Connector);
+      super(EntityType.Connector);
    }
    
    public ConnectorInput(String id) {
-      super(Entity.Connector, id);
+      super(EntityType.Connector, id);
    }
    
    public String getAddress() {

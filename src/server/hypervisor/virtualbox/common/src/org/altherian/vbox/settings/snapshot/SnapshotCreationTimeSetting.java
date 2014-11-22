@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.snapshot;
 
 import org.altherian.hbox.constant.SnapshotAttribute;
-import org.altherian.hboxd.settings.PositiveNumberSetting;
+import org.altherian.setting.PositiveNumberSetting;
 
 import java.util.Date;
 

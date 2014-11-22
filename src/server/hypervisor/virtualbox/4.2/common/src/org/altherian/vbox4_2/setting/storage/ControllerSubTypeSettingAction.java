@@ -22,7 +22,7 @@
 package org.altherian.vbox4_2.setting.storage;
 
 import org.altherian.hbox.constant.StorageControllerAttribute;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.storage.ControllerSubTypeSetting;
 import org.altherian.vbox4_2.setting._StorageControllerSettingAction;
 

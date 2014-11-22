@@ -22,18 +22,18 @@
 package org.altherian.hbox.comm.in;
 
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.StoreAttribute;
 
 // TODO add getters/setters
-public final class StoreIn extends ObjectIn<Entity> {
+public final class StoreIn extends ObjectIn<EntityType> {
    
    public StoreIn() {
-      super(Entity.Store, "-1");
+      super(EntityType.Store, "-1");
    }
    
    public StoreIn(String id) {
-      super(Entity.Store, id);
+      super(EntityType.Store, id);
    }
    
    public void setLabel(String label) {

@@ -33,7 +33,7 @@ import org.altherian.hbox.comm.out.event.machine.MachineRegistrationEventOut;
 import org.altherian.hbox.comm.out.event.server.ServerConnectionStateEventOut;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.states.MachineStates;
 import org.altherian.hboxc.PreferencesManager;
 import org.altherian.hboxc.comm.input.ConnectorInput;
@@ -141,8 +141,8 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
       detailLayout = new CardLayout();
       detailViews = new JPanel(detailLayout);
       detailViews.add(EmptyPanel, EmptyPanelId);
-      detailViews.add(conView.getComponent(), Entity.Connector.getId());
-      detailViews.add(vmView.getComponent(), Entity.Machine.getId());
+      detailViews.add(conView.getComponent(), EntityType.Connector.getId());
+      detailViews.add(vmView.getComponent(), EntityType.Machine.getId());
       //detailViews.add(srvView.getComponent(), EntityTypes.Server.getId());
       JScrollPane detailPane = new JScrollPane(detailViews);
       detailPane.setBorder(BorderFactory.createEmptyBorder());
@@ -165,10 +165,10 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    }
    
    private void initEntities() {
-      entities.put(Entity.Server.getId(), new HashMap<String, DefaultMutableTreeNode>());
-      entities.put(Entity.Machine.getId(), new HashMap<String, DefaultMutableTreeNode>());
-      entities.put(Entity.Snapshot.getId(), new HashMap<String, DefaultMutableTreeNode>());
-      entities.put(Entity.Store.getId(), new HashMap<String, DefaultMutableTreeNode>());
+      entities.put(EntityType.Server.getId(), new HashMap<String, DefaultMutableTreeNode>());
+      entities.put(EntityType.Machine.getId(), new HashMap<String, DefaultMutableTreeNode>());
+      entities.put(EntityType.Snapshot.getId(), new HashMap<String, DefaultMutableTreeNode>());
+      entities.put(EntityType.Store.getId(), new HashMap<String, DefaultMutableTreeNode>());
    }
    
    public JComponent getComponent() {
@@ -599,17 +599,17 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
             
             if (node != null) {
                if (node.getUserObject() instanceof MachineOut) {
-                  detailLayout.show(detailViews, Entity.Machine.getId());
+                  detailLayout.show(detailViews, EntityType.Machine.getId());
                   vmView.setUserSelection((MachineOut) node.getUserObject());
                }
                if (node.getUserObject() instanceof ServerOut) {
-                  detailLayout.show(detailViews, Entity.Server.getId());
+                  detailLayout.show(detailViews, EntityType.Server.getId());
                   srvView.show((ServerOut) node.getUserObject());
                }
                if (node.getUserObject() instanceof ConnectorOutput) {
                   ConnectorOutput conOut = (ConnectorOutput) node.getUserObject();
                   Logger.debug("Connector ID " + conOut.getId() + " under label " + conOut.getLabel() + " is selected");
-                  detailLayout.show(detailViews, Entity.Connector.getId());
+                  detailLayout.show(detailViews, EntityType.Connector.getId());
                   conView.show(conOut);
                }
             } else {

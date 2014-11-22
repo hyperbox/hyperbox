@@ -21,10 +21,10 @@
 
 package org.altherian.vbox4_3.vm;
 
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawCPU;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.cpu.CpuCountSetting;
 import org.altherian.vbox4_3.manager.VBoxSettingManager;
 
@@ -54,7 +54,7 @@ public final class VBoxCPU implements _RawCPU {
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
       for (MachineAttribute setting : MachineAttribute.values()) {
-         if (setting.getDeviceType().equals(Entity.CPU)) {
+         if (setting.getDeviceType().equals(EntityType.CPU)) {
             getSetting(setting);
          }
       }

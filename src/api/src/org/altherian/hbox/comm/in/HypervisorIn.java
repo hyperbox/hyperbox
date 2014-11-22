@@ -24,17 +24,17 @@ package org.altherian.hbox.comm.in;
 
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.HypervisorAttribute;
 
-public class HypervisorIn extends ObjectIn<Entity> {
+public class HypervisorIn extends ObjectIn<EntityType> {
    
    public HypervisorIn() {
-      super(Entity.Hypervisor);
+      super(EntityType.Hypervisor);
    }
    
    public HypervisorIn(String id) {
-      super(Entity.Hypervisor, id);
+      super(EntityType.Hypervisor, id);
    }
    
    public String getConnectOptions() {

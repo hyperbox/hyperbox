@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.snapshot;
 
 import org.altherian.hbox.constant.SnapshotAttribute;
-import org.altherian.hboxd.settings.BooleanSetting;
+import org.altherian.setting.BooleanSetting;
 
 public class SnapshotIsOnlineSetting extends BooleanSetting {
    

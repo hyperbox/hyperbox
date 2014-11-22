@@ -19,17 +19,17 @@
  * 
  */
 
-package org.altherian.hboxd.comm.io.factory;
+package org.altherian.hbox.comm.io.factory;
 
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.PositiveNumberSettingIO;
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hboxd.settings.BooleanSetting;
-import org.altherian.hboxd.settings.PositiveNumberSetting;
-import org.altherian.hboxd.settings.StringSetting;
-import org.altherian.hboxd.settings._Settable;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.BooleanSetting;
+import org.altherian.setting.PositiveNumberSetting;
+import org.altherian.setting.StringSetting;
+import org.altherian.setting._Settable;
+import org.altherian.setting._Setting;
 
 import java.util.ArrayList;
 import java.util.Collection;

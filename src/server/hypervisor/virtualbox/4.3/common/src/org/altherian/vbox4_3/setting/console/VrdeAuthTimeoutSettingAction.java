@@ -23,8 +23,8 @@
 package org.altherian.vbox4_3.setting.console;
 
 import org.altherian.hbox.constant.MachineAttribute;
-import org.altherian.hboxd.settings.PositiveNumberSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.PositiveNumberSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox4_3.setting._MachineSettingAction;
 
 import org.virtualbox_4_3.IMachine;

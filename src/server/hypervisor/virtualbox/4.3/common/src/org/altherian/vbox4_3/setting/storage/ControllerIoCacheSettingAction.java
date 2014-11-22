@@ -22,8 +22,8 @@
 package org.altherian.vbox4_3.setting.storage;
 
 import org.altherian.hbox.constant.StorageControllerAttribute;
-import org.altherian.hboxd.settings.BooleanSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.BooleanSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.storage.ControllerIoCacheSetting;
 import org.altherian.vbox4_3.setting._StorageControllerSettingAction;
 

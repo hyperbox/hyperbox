@@ -25,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.in.ServerIn;
 import org.altherian.hbox.comm.out.ServerOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Cancelable;
@@ -79,7 +79,7 @@ public class ServerEditorDialog implements _Saveable, _Cancelable {
       buttonPanel.add(saveButton);
       buttonPanel.add(cancelButton);
       
-      dialog = JDialogBuilder.get("Server Configuration", IconBuilder.getEntityType(Entity.Server).getImage(), saveButton);
+      dialog = JDialogBuilder.get("Server Configuration", IconBuilder.getEntityType(EntityType.Server).getImage(), saveButton);
       dialog.add(nameLabel);
       dialog.add(nameValue, "growx, pushx, wrap");
       dialog.add(logLevelLabel);

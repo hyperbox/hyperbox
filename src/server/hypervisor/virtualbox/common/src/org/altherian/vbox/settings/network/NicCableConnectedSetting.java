@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.network;
 
 import org.altherian.hbox.constant.NetworkInterfaceAttribute;
-import org.altherian.hboxd.settings.BooleanSetting;
+import org.altherian.setting.BooleanSetting;
 
 public class NicCableConnectedSetting extends BooleanSetting {
    

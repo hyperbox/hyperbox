@@ -23,8 +23,8 @@ package org.altherian.vbox4_2.setting.storage;
 
 import org.altherian.hbox.constant.MediumAttribute;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
-import org.altherian.hboxd.settings.PositiveNumberSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.PositiveNumberSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox4_2.setting._MediumSettingAction;
 
 import org.virtualbox_4_2.IMedium;

@@ -78,6 +78,8 @@ public interface _ServerReader {
    
    public MachineOut getMachine(String vmId);
    
+   public _Machine getMachineReader(String id);
+
    public MediumOut getMedium(MediumIn mIn);
    
    public SessionOut getSession(SessionIn sIn);

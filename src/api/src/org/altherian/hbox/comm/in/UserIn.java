@@ -22,12 +22,12 @@
 package org.altherian.hbox.comm.in;
 
 import org.altherian.hbox.comm.out.security.UserOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public final class UserIn extends ObjectIn<Entity> {
+public final class UserIn extends ObjectIn<EntityType> {
    
    private String domain;
    private String username;
@@ -35,11 +35,11 @@ public final class UserIn extends ObjectIn<Entity> {
    private Set<PermissionIn> perms = new HashSet<PermissionIn>();
    
    public UserIn() {
-      super(Entity.User);
+      super(EntityType.User);
    }
    
    public UserIn(String id) {
-      super(Entity.User, id);
+      super(EntityType.User, id);
    }
    
    public UserIn(UserOut usrOut) {

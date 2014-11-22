@@ -23,17 +23,17 @@ package org.altherian.hbox.comm.in;
 
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.GuestNetworkInterfaceAttribute;
 
-public class GuestNetworkInterfaceIn extends ObjectIn<Entity> {
+public class GuestNetworkInterfaceIn extends ObjectIn<EntityType> {
    
    public GuestNetworkInterfaceIn() {
-      super(Entity.GuestNetworkInterface);
+      super(EntityType.GuestNetworkInterface);
    }
    
    public GuestNetworkInterfaceIn(String id) {
-      super(Entity.GuestNetworkInterface, id);
+      super(EntityType.GuestNetworkInterface, id);
    }
    
    public boolean isUp() {

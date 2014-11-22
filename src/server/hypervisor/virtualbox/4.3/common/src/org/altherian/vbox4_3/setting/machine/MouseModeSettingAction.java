@@ -23,8 +23,8 @@ package org.altherian.vbox4_3.setting.machine;
 
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hbox.constant.MouseMode;
-import org.altherian.hboxd.settings.StringSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.StringSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.general.MouseModeSetting;
 import org.altherian.vbox4_3.data.Mappings;
 import org.altherian.vbox4_3.setting._MachineSettingAction;

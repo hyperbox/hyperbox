@@ -22,15 +22,15 @@
 package org.altherian.hbox.comm.in;
 
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.SnapshotAttribute;
 
 import java.util.UUID;
 
-public class SnapshotIn extends ObjectIn<Entity> {
+public class SnapshotIn extends ObjectIn<EntityType> {
    
    public SnapshotIn() {
-      super(Entity.Snapshot);
+      super(EntityType.Snapshot);
    }
    
    public SnapshotIn(String id) {

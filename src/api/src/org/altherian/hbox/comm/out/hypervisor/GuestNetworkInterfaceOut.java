@@ -24,7 +24,7 @@ package org.altherian.hbox.comm.out.hypervisor;
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
 import org.altherian.hbox.comm.out.ObjectOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.GuestNetworkInterfaceAttribute;
 
 public class GuestNetworkInterfaceOut extends ObjectOut {
@@ -34,7 +34,7 @@ public class GuestNetworkInterfaceOut extends ObjectOut {
    }
    
    public GuestNetworkInterfaceOut(String id, boolean isUp, String macAddress) {
-      super(Entity.GuestNetworkInterface, id);
+      super(EntityType.GuestNetworkInterface, id);
       setSetting(new BooleanSettingIO(GuestNetworkInterfaceAttribute.IsUp, isUp));
       setSetting(new StringSettingIO(GuestNetworkInterfaceAttribute.MacAddress, macAddress));
    }

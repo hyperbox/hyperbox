@@ -22,8 +22,8 @@
 package org.altherian.vbox4_3.setting.memory;
 
 import org.altherian.hbox.constant.MachineAttribute;
-import org.altherian.hboxd.settings.PositiveNumberSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.PositiveNumberSetting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.memory.GuestMemoryBalloonSetting;
 import org.altherian.vbox4_3.setting._MachineSettingAction;
 

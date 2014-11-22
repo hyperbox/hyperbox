@@ -22,7 +22,7 @@
 package org.altherian.vbox4_2.setting.memory;
 
 import org.altherian.hbox.constant.MachineAttribute;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 import org.altherian.tool.logging.Logger;
 import org.altherian.vbox.settings.memory.MemorySetting;
 import org.altherian.vbox4_2.setting._MachineSettingAction;

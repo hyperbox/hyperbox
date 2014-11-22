@@ -23,7 +23,7 @@ package org.altherian.vbox4_3.setting.snapshot;
 
 import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.hbox.exception.ConfigurationException;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.snapshot.SnapshotHasChildren;
 import org.altherian.vbox4_3.setting._SnapshotSettingAction;
 

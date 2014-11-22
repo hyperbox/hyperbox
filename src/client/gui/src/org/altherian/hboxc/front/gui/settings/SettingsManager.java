@@ -25,7 +25,7 @@ package org.altherian.hboxc.front.gui.settings;
 import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.HypervisorTasks;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.front.gui.MainView;
 import org.altherian.hboxc.front.gui._Cancelable;
 import org.altherian.hboxc.front.gui._Saveable;
@@ -161,9 +161,9 @@ public class SettingsManager implements _Saveable, _Cancelable {
          JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
          
          if (label.getText() == GENERAL) {
-            label.setIcon(IconBuilder.getEntityType(Entity.Machine));
+            label.setIcon(IconBuilder.getEntityType(EntityType.Machine));
          } else if (label.getText() == VIEWERS) {
-            label.setIcon(IconBuilder.getEntityType(Entity.Display));
+            label.setIcon(IconBuilder.getEntityType(EntityType.Display));
          } else {
             label.setIcon(null);
          }

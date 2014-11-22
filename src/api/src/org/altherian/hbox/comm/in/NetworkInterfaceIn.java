@@ -25,7 +25,7 @@ import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
 import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 
-public class NetworkInterfaceIn extends DeviceInput {
+public class NetworkInterfaceIn extends DeviceIn {
    
    private long nicId;
    

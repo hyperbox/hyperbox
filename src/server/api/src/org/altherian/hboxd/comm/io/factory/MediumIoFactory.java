@@ -21,6 +21,7 @@
 
 package org.altherian.hboxd.comm.io.factory;
 
+import org.altherian.hbox.comm.io.factory.SettingIoFactory;
 import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hboxd.core.model._Medium;
 import org.altherian.hboxd.hypervisor.storage._RawMedium;

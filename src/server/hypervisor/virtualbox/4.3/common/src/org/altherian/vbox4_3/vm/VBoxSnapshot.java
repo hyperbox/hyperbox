@@ -25,7 +25,7 @@ import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event.snapshot.SnapshotChangedEvent;
 import org.altherian.hboxd.hypervisor.vm.snapshot._RawSnapshot;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.snapshot.SnapshotDescriptionSetting;
 import org.altherian.vbox.settings.snapshot.SnapshotNameSetting;
 import org.altherian.vbox4_3.VBox;

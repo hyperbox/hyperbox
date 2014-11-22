@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.video;
 
 import org.altherian.hbox.constant.MachineAttribute;
-import org.altherian.hboxd.settings.PositiveNumberSetting;
+import org.altherian.setting.PositiveNumberSetting;
 
 public class MonitorCountSetting extends PositiveNumberSetting {
    

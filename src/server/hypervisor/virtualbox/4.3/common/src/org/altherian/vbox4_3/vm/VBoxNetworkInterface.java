@@ -23,9 +23,9 @@ package org.altherian.vbox4_3.vm;
 
 import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.hboxd.hypervisor.vm.device._RawNetworkInterface;
-import org.altherian.hboxd.settings.BooleanSetting;
-import org.altherian.hboxd.settings.StringSetting;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting.BooleanSetting;
+import org.altherian.setting.StringSetting;
+import org.altherian.setting._Setting;
 import org.altherian.tool.logging.Logger;
 import org.altherian.vbox.settings.network.NicAdapterTypeSetting;
 import org.altherian.vbox.settings.network.NicAttachModeSetting;

@@ -23,7 +23,7 @@ package org.altherian.vbox4_3.setting.storage;
 
 import org.altherian.hbox.constant.MediumAttribute;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 import org.altherian.vbox.settings.medium.MediumLocationSetting;
 import org.altherian.vbox4_3.setting._MediumSettingAction;
 

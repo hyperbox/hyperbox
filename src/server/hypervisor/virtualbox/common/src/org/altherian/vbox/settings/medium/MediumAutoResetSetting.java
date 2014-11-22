@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.medium;
 
 import org.altherian.hbox.constant.MediumAttribute;
-import org.altherian.hboxd.settings.BooleanSetting;
+import org.altherian.setting.BooleanSetting;
 
 public class MediumAutoResetSetting extends BooleanSetting {
    

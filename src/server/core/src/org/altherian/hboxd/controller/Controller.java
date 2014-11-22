@@ -56,11 +56,12 @@ public final class Controller implements _Controller {
    private Thread shutdownHook;
    
    static {
+      Logger.put(getHeader());
       try {
          if (new File(Hyperbox.getConfigFilePath()).exists()) {
             Configuration.init(Hyperbox.getConfigFilePath());
          } else {
-            Logger.info("Default config file does not exist, skipping: " + Hyperbox.getConfigFilePath());
+            Logger.debug("Default config file does not exist, skipping: " + Hyperbox.getConfigFilePath());
          }
       } catch (HyperboxException e) {
          Logger.error(e);
@@ -139,7 +140,6 @@ public final class Controller implements _Controller {
             Logger.log(logFilename, 4);
          }
          
-         Logger.put(getHeader());
          Logger.info("Hyperbox Init Sequence started");
          
          SecurityContext.init();

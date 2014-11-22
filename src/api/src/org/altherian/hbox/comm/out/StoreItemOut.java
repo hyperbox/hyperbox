@@ -24,7 +24,7 @@ package org.altherian.hbox.comm.out;
 import org.altherian.hbox.comm.io.BooleanSettingIO;
 import org.altherian.hbox.comm.io.PositiveNumberSettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.StoreItemAttribute;
 
 public final class StoreItemOut extends ObjectOut {
@@ -35,7 +35,7 @@ public final class StoreItemOut extends ObjectOut {
    }
    
    public StoreItemOut(String storeId, String name, String path, long size, boolean isContainer) {
-      super(Entity.StoreItem, name + "|" + path);
+      super(EntityType.StoreItem, name + "|" + path);
       setSetting(new StringSettingIO(StoreItemAttribute.StoreId, storeId));
       setSetting(new StringSettingIO(StoreItemAttribute.Name, name));
       setSetting(new StringSettingIO(StoreItemAttribute.Path, path));

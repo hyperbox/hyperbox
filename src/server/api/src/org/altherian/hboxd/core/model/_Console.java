@@ -1,6 +1,6 @@
-/* 
+/*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -19,20 +19,21 @@
  * 
  */
 
-package org.altherian.hboxd.settings;
+package org.altherian.hboxd.core.model;
 
-public class BooleanSetting extends BasicSetting {
+
+public interface _Console extends _Device {
    
-   public BooleanSetting(String name, boolean value) {
-      super(name, value);
-   }
+   public String getAddress();
    
-   public BooleanSetting(Enum<?> setting, boolean value) {
-      super(setting, value);
-   }
+   public Long getPort();
    
-   public boolean getValue() {
-      return (Boolean) getRawValue();
-   }
+   public String getProtocol();
+   
+   public boolean isEnable();
+   
+   public void setEnable(boolean isEnable);
+   
+   public boolean isActive();
    
 }

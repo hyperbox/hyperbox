@@ -24,7 +24,7 @@ package org.altherian.hbox.comm.out.hypervisor;
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
 import org.altherian.hbox.comm.out.ObjectOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.SnapshotAttribute;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class SnapshotOut extends ObjectOut {
    }
    
    public SnapshotOut(String uuid) {
-      super(Entity.Snapshot, uuid);
+      super(EntityType.Snapshot, uuid);
       setSetting(new StringSettingIO(SnapshotAttribute.Uuid, uuid));
    }
    
@@ -68,7 +68,7 @@ public class SnapshotOut extends ObjectOut {
    }
    
    public SnapshotOut(String uuid, List<SettingIO> settings, String parent, List<String> children) {
-      super(Entity.Snapshot, uuid);
+      super(EntityType.Snapshot, uuid);
       setSetting(settings);
       setParent(parent);
       setChildren(children);

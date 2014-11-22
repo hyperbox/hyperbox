@@ -1,4 +1,4 @@
-/* 
+/*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
  * 
@@ -19,10 +19,13 @@
  * 
  */
 
-package org.altherian.hboxd.settings;
+package org.altherian.setting;
 
+
+import org.altherian.tool.logging.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,10 +47,12 @@ public class SettingManager {
    }
    
    public _Setting get(String settingName) {
+      Logger.track();
       return settingMap.get(settingName);
    }
    
    public _Setting get(Enum<?> settingEnum) {
+      Logger.track();
       return settingMap.get(settingEnum.toString());
    }
    
@@ -58,7 +63,18 @@ public class SettingManager {
    }
    
    public void set(_Setting setting) {
+      Logger.track();
       settingMap.put(setting.getName(), setting);
+   }
+   
+   public void unset(String id) {
+      unset(Arrays.asList(id));
+   }
+   
+   public void unset(List<String> ids) {
+      for (String id : ids) {
+         settingMap.remove(id);
+      }
    }
    
 }

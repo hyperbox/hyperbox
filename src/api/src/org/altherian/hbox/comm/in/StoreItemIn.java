@@ -22,14 +22,14 @@
 package org.altherian.hbox.comm.in;
 
 import org.altherian.hbox.comm.io.StringSettingIO;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.StoreItemAttribute;
 
 //TODO add getters/setters
-public final class StoreItemIn extends ObjectIn<Entity> {
+public final class StoreItemIn extends ObjectIn<EntityType> {
    
    public StoreItemIn() {
-      super(Entity.StoreItem, "-1");
+      super(EntityType.StoreItem, "-1");
    }
    
    public StoreItemIn(String path) {

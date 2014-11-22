@@ -22,7 +22,7 @@
 package org.altherian.vbox.settings.storage;
 
 import org.altherian.hbox.constant.StorageControllerAttribute;
-import org.altherian.hboxd.settings.PositiveNumberSetting;
+import org.altherian.setting.PositiveNumberSetting;
 
 public class ControllerPortCountSetting extends PositiveNumberSetting {
    

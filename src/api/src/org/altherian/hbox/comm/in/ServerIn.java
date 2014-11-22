@@ -23,18 +23,18 @@ package org.altherian.hbox.comm.in;
 
 import org.altherian.hbox.comm.io.StringSettingIO;
 import org.altherian.hbox.comm.out.ServerOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.ServerAttribute;
 
 
-public class ServerIn extends ObjectIn<Entity> {
+public class ServerIn extends ObjectIn<EntityType> {
    
    public ServerIn() {
-      super(Entity.Server);
+      super(EntityType.Server);
    }
    
    public ServerIn(String id) {
-      super(Entity.Server, id);
+      super(EntityType.Server, id);
    }
    
    public ServerIn(ServerOut srvOut) {

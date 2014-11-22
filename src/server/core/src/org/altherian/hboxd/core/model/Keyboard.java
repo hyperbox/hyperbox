@@ -23,7 +23,7 @@ package org.altherian.hboxd.core.model;
 
 import org.altherian.hbox.constant.KeyboardMode;
 import org.altherian.hboxd.hypervisor.vm.device._RawKeyboard;
-import org.altherian.hboxd.settings._Setting;
+import org.altherian.setting._Setting;
 
 import java.util.List;
 

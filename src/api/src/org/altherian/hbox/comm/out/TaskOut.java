@@ -22,7 +22,7 @@
 package org.altherian.hbox.comm.out;
 
 import org.altherian.hbox.comm.out.security.UserOut;
-import org.altherian.hbox.constant.Entity;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.states.TaskState;
 
 import java.util.Date;
@@ -48,7 +48,7 @@ public class TaskOut extends ObjectOut {
    }
    
    public TaskOut(String serverId, String taskId) {
-      super(Entity.Task, taskId);
+      super(EntityType.Task, taskId);
       this.serverId = serverId;
    }
    

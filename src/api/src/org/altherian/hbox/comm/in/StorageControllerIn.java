@@ -23,6 +23,7 @@ package org.altherian.hbox.comm.in;
 
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.StorageControllerAttribute;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StorageControllerIn extends DeviceInput {
+public class StorageControllerIn extends DeviceIn {
    
    private Map<String, StorageDeviceAttachmentIn> attachments = new HashMap<String, StorageDeviceAttachmentIn>();
    
@@ -51,7 +52,7 @@ public class StorageControllerIn extends DeviceInput {
    }
    
    public StorageControllerIn(String machineUuid, String name, String type, List<SettingIO> settings) {
-      super(name, settings);
+      super(name, EntityType.StorageController.getId(), settings);
       setName(name);
       setMachineUuid(machineUuid);
    }

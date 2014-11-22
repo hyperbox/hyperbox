@@ -24,6 +24,7 @@ package org.altherian.hboxc.core.storage;
 
 import org.altherian.hbox.Configuration;
 import org.altherian.hbox.comm.in.UserIn;
+import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.core._ConsoleViewer;
@@ -75,7 +76,10 @@ public class UserProfileCoreStorage implements _CoreStorage {
          storage.alias(CONNECTOR_ID, _Connector.class, Connector.class);
          // legacy name
          storage.alias("org.altherian.hbox.comm.input.UserInput", UserIn.class);
+         // legacy name
+         storage.alias("org.altherian.hbox.constant.Entity", EntityType.class);
          storage.alias("user", UserIn.class);
+         storage.alias("entity", EntityType.class);
          storage.omitField(Connector.class, "server");
          storage.omitField(Connector.class, "state");
          
