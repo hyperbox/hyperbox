@@ -43,7 +43,7 @@ public class Configuration {
    public static final String CFG_SEPARATOR = ".";
    public static final String CFG_ENV_PREFIX = "HBOX";
    public static final String CFG_ENV_SEPERATOR = "_";
-   public static final String CFGKEY_CONF_USER_DATA_PATH = "conf.user.data.path";
+   public static final String CFGKEY_CONF_USER_DATA_PATH = "conf.user.data.location";
    private static Map<String, String> settings = new HashMap<String, String>();
    private static Properties properties = new Properties();;
    
@@ -100,22 +100,26 @@ public class Configuration {
       }
    }
    
+   public static String getSetting(String key, Object defaultValue) {
+      return getSetting(key, defaultValue.toString());
+   }
+   
    public static String getSetting(String key, String defaultValue) {
       Logger.debug("Trying to get setting " + key + " with default value " + defaultValue);
-      Logger.debug("settings.containsKey(" + key + "): " + settings.containsKey(key));
-      Logger.debug("System.getenv().containsKey(" + getEnvVarName(key) + "): " + System.getenv().containsKey(getEnvVarName(key)));
-      Logger.debug("properties.containsKey(" + key + "): " + properties.containsKey(key));
       
+      Logger.debug("settings.containsKey(" + key + "): " + settings.containsKey(key));
       if (settings.containsKey(key)) {
          Logger.debug("Returning config value");
          return settings.get(key);
       }
       
+      Logger.debug("System.getenv().containsKey(" + getEnvVarName(key) + "): " + System.getenv().containsKey(getEnvVarName(key)));
       if (System.getenv().containsKey(getEnvVarName(key))) {
          Logger.debug("Returning environment value");
          return System.getenv(getEnvVarName(key));
       }
       
+      Logger.debug("properties.containsKey(" + key + "): " + properties.containsKey(key));
       if (properties.containsKey(key)) {
          Logger.debug("Returning properties value");
          return properties.getProperty(key);
@@ -131,8 +135,6 @@ public class Configuration {
    public static boolean hasSetting(String key) {
       return settings.containsKey(key) || System.getenv().containsKey(getEnvVarName(key)) || properties.containsKey(key);
    }
-   
-   
    
    public static String getSettingOrFail(String key) throws ConfigurationException {
       if (!hasSetting(key)) {
