@@ -61,7 +61,7 @@ public class SecurityContext {
    }
    
    private static boolean isAdminThread() {
-      return (adminThreads != null) && adminThreads.values().contains(Thread.currentThread());
+      return (adminThreads != null) && (adminThreads.isEmpty() || adminThreads.values().contains(Thread.currentThread()));
    }
    
    public static void initSecurityManager(_SecurityManager secMgr) {

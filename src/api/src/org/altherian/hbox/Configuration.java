@@ -45,7 +45,7 @@ public class Configuration {
    public static final String CFG_ENV_SEPERATOR = "_";
    public static final String CFGKEY_CONF_USER_DATA_PATH = "conf.user.data.location";
    private static Map<String, String> settings = new HashMap<String, String>();
-   private static Properties properties = new Properties();;
+   private static Properties properties = new Properties();
    
    private Configuration() {
       // static only

@@ -76,9 +76,9 @@ public class Hyperbox {
          System.out.println("Hyperbox available executable switches:\n");
          System.out.println("--help or -? : Print this help");
          // TODO enable more command line switches
-         //System.out.println("--apiversion : Print API version");
-         //System.out.println("--apirevision : Print API revision");
-         //System.out.println("--netversion : Print Net protocol version");
+         System.out.println("--apiversion : Print API version");
+         System.out.println("--apirevision : Print API revision");
+         System.out.println("--netversion : Print Net protocol version");
          System.out.println("--version : Print Server version");
          System.out.println("--revision : Print Server revision");
          System.exit(0);
