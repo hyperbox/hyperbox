@@ -45,6 +45,7 @@ public class ConsoleViewerFactory {
    public static List<_ConsoleViewer> getDefaults() {
       List<_ConsoleViewer> viewers = new ArrayList<_ConsoleViewer>();
       
+      // TODO add check for Linux
       viewers.add(get(".*", "Oracle VM VirtualBox Extension Pack", "C:/Windows/system32/mstsc.exe", "/v:%SA%:%SP%"));
       
       return viewers;

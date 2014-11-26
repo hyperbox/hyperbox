@@ -53,7 +53,7 @@ public class Logger {
    public static void setLevel(LogLevel level) {
       if (level != maxLevel) {
          maxLevel = level;
-         put("Changed LogLevel to " + maxLevel, LogLevel.Debug);
+         debug("Changed LogLevel to " + maxLevel);
       }
    }
    
