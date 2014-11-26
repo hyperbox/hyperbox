@@ -23,6 +23,7 @@ package org.altherian.vbox4_2.ws;
 
 import org.altherian.hbox.exception.HypervisorException;
 import org.altherian.hboxd.hypervisor.Hypervisor;
+import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
 import org.altherian.vbox4_2.VBoxHypervisor;
 
@@ -40,6 +41,7 @@ import org.virtualbox_4_2.VirtualBoxManager;
       schemes = { "vbox-4.2-ws" })
 public final class VBoxWSHypervisor extends VBoxHypervisor {
    
+   protected final String defaultProtocol = "http";
    protected final String defaultHost = "localhost";
    protected final int defaultPort = 18083;
    protected final String defaultUser = "";
@@ -58,6 +60,7 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
    
    @Override
    protected VirtualBoxManager connect(String options) {
+      String protocol = defaultProtocol;
       String host = defaultHost;
       int port = defaultPort;
       String username = defaultUser;
@@ -65,11 +68,13 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
       
       if ((options != null) && !options.isEmpty()) {
          try {
-            if (!options.contains("://")) {
-               options = "http://" + options;
-            }
             Logger.debug("Given connect options: " + options);
+            if (!options.contains("://")) {
+               options = defaultProtocol + "://" + options;
+            }
+            Logger.debug("Adapted raw connect options: " + options);
             URI uri = new URI(options);
+            protocol = uri.getScheme();
             host = uri.getHost();
             if (uri.getPort() > 0) {
                port = uri.getPort();
@@ -92,11 +97,11 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
          
          VirtualBoxManager mgr = VirtualBoxManager.createInstance(null);
          
-         String connInfo = "http://" + host + ":" + port;
+         String connInfo = protocol + "://" + host + ":" + port;
          Logger.debug("Connection info: " + connInfo);
          Logger.debug("User: " + username);
-         Logger.debug("Password given: " + ((password != null) && !password.isEmpty()));
-         mgr.connect("http://" + host + ":" + port, username, password);
+         Logger.debug("Password given: " + (AxStrings.isEmpty(password)));
+         mgr.connect(connInfo, username, password);
          
          return mgr;
       } catch (VBoxException e) {
