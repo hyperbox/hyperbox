@@ -65,13 +65,13 @@ public class H2SqlPersistor extends SqlPersistor {
       try {
          conn.commit();
       } catch (SQLException e) {
-         Logger.error("Error when trying to commit the H2 engine connection: " + e.getMessage());
+         Logger.warning("Error when trying to commit the H2 engine connection: " + e.getMessage());
       }
       
       try {
          conn.close();
       } catch (SQLException e) {
-         Logger.error("Error when trying to close the H2 engine connection: " + e.getMessage());
+         Logger.warning("Error when trying to close the H2 engine connection: " + e.getMessage());
       }
       
    }
@@ -82,9 +82,9 @@ public class H2SqlPersistor extends SqlPersistor {
          if ((conn == null) || (conn.isClosed()) || (!conn.isValid(3))) {
             String connectString =
                   Configuration.getSetting(CFGKEY_H2_CONNECT_PROTOCOL, CFGVAL_H2_CONNECT_PROTOCOL) +
-                        Configuration.getSetting(CFGKEY_H2_DATA_FOLDER, CFGVAL_H2_DATA_FOLDER) +
-                        Configuration.getSetting(CFGKEY_H2_DATA_SEP, CFGVAL_H2_DATA_SEP) +
-                        Configuration.getSetting(CFGKEY_H2_DATA_FILE, CFGVAL_H2_DATA_FILE);
+                  Configuration.getSetting(CFGKEY_H2_DATA_FOLDER, CFGVAL_H2_DATA_FOLDER) +
+                  Configuration.getSetting(CFGKEY_H2_DATA_SEP, CFGVAL_H2_DATA_SEP) +
+                  Configuration.getSetting(CFGKEY_H2_DATA_FILE, CFGVAL_H2_DATA_FILE);
             String user = Configuration.getSetting(CFGKEY_H2_USER, CFGVAL_H2_USER);
             String pass = Configuration.getSetting(CFGKEY_H2_PASS, CFGVAL_H2_PASS);
             
