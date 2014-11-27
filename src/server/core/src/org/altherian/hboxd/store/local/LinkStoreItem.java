@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -22,27 +22,23 @@
 package org.altherian.hboxd.store.local;
 
 import org.altherian.hbox.exception.HyperboxRuntimeException;
+import org.altherian.hboxd.exception.StoreException;
 import org.altherian.hboxd.store._Store;
 import org.altherian.hboxd.store._StoreItem;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class FolderStoreItem implements _StoreItem {
+public class LinkStoreItem implements _StoreItem {
    
    private _Store store;
    private File location;
    
-   public FolderStoreItem(_Store store, String path) {
+   public LinkStoreItem(_Store store, String path) {
       this.store = store;
       location = new File(path);
-      if (!location.exists()) {
-         throw new HyperboxRuntimeException(path + " does not exist");
-      }
-      if (!location.isDirectory()) {
-         throw new HyperboxRuntimeException(path + " is not a folder");
-      }
       if (!location.isAbsolute()) {
          throw new HyperboxRuntimeException(path + " must be a full path");
       }
@@ -70,20 +66,26 @@ public final class FolderStoreItem implements _StoreItem {
    
    @Override
    public List<_StoreItem> listItems() {
-      List<_StoreItem> list = new ArrayList<_StoreItem>();
-      if (location.isDirectory()) {
-         for (File f : location.listFiles()) {
-            if (f.isDirectory()) {
-               list.add(new FolderStoreItem(store, f.getAbsolutePath()));
-            } else if (f.isFile()) {
-               list.add(new FileStoreItem(store, f.getAbsolutePath()));
-            } else {
-               // symlink
-               list.add(new LinkStoreItem(store, f.getAbsolutePath()));
+      try {
+         File realLoc = location.getCanonicalFile();
+         List<_StoreItem> list = new ArrayList<_StoreItem>();
+         if (realLoc.isDirectory()) {
+            for (File f : realLoc.listFiles()) {
+               if (f.isDirectory()) {
+                  list.add(new FolderStoreItem(store, f.getAbsolutePath()));
+               } else if (f.isFile()) {
+                  list.add(new FileStoreItem(store, f.getAbsolutePath()));
+               } else {
+                  // symlink
+                  list.add(new LinkStoreItem(store, f.getAbsolutePath()));
+               }
             }
          }
+         return list;
+      } catch (IOException e) {
+         throw new StoreException(e);
       }
-      return list;
+      
    }
    
    @Override
