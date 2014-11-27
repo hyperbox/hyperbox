@@ -22,7 +22,6 @@
 package org.altherian.hboxc.updater;
 
 import org.altherian.hboxc.exception.UpdaterNoNewUpdateException;
-import org.altherian.hboxc.exception.UpdaterNotEnabledException;
 import org.altherian.hboxc.exception.UpdaterScheduleException;
 
 import java.util.Date;
@@ -33,8 +32,11 @@ import java.util.List;
  */
 public interface _Updater {
    
+   public final String CFGKEY_UPDATER_AUTORUN = "updater.autorun";
+   public final String CFGVAL_UPDATER_AUTORUN = "1";
+   
    public final String CFGKEY_UPDATER_CHANNEL = "updater.channel";
-   public final String CFGVAL_UPDATER_CHANNEL = Channel.New.toString();
+   public final String CFGVAL_UPDATER_CHANNEL = Channel.Fresh.toString();
    
    public final String CFGKEY_UPDATER_ENABLE = "updater.schedule.enable";
    public final String CFGVAL_UPDATER_ENABLE = "1";
@@ -46,8 +48,12 @@ public interface _Updater {
    public final String CFGVAL_UPDATER_REPOSITORY_LOCATION = "http://hyperbox.altherian.org/update/";
    
    public final String CFGKEY_UPDATER_REPOSITORY_EXTENSION = "updater.repository.extension";
-   public final String CFGVAL_UPDATER_REPOSITORY_EXTENSION = "xml";
+   public final String CFGVAL_UPDATER_REPOSITORY_EXTENSION = "";
    
+   public void start();
+   
+   public void stop();
+
    /**
     * Get the current configured channel for the Schedule check
     * 
@@ -119,17 +125,9 @@ public interface _Updater {
    /**
     * Get the time when the last scheduled check was made
     * 
-    * @return Date object of the last scheduled check, or null if no scheduled check ever ran
+    * @return Date object of the last scheduled check, or <code>null</code> if no scheduled check ever ran
     */
    public Date getLastScheduleDate();
-   
-   /**
-    * Get the time and date of the next scheduled check
-    * 
-    * @return Date of the next scheduled check
-    * @throws UpdaterNotEnabledException If Scheduled checks are disabled
-    */
-   public Date getNextScheduleDate() throws UpdaterNotEnabledException;
    
    /**
     * Get the error(s) of the last schedule check
@@ -137,17 +135,6 @@ public interface _Updater {
     * @return List of error messages, empty if no error occurred
     */
    public List<String> getLastScheduleErrors();
-   
-   /**
-    * Schedule the next check, without changing the regular schedule check interval
-    * <p>
-    * Any value lesser or equal to 0 will schedule the check to run now.
-    * </p>
-    * 
-    * @param timestamp Timestamp for the next check
-    * @throws UpdaterScheduleException If an error occurred during the scheduling
-    */
-   public void scheduleNext(long timestamp) throws UpdaterScheduleException;
    
    /**
     * Check if an update is available

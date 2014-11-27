@@ -33,7 +33,7 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.states.TaskState;
 import org.altherian.hboxc._EventReceiver;
 import org.altherian.hboxc.back._Backend;
-import org.altherian.hboxc.event.CoreEventManager;
+import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.event.backend.BackendStateEvent;
 import org.altherian.hboxc.exception.ServerDisconnectedException;
 import org.altherian.tool.logging.Logger;
@@ -159,7 +159,7 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
       Logger.track();
       
       Logger.verbose("Waiting until task is finished");
-      CoreEventManager.get().register(this);
+      EventManager.get().register(this);
       try {
          if (!sendAndWait()) {
             return false;
@@ -187,7 +187,7 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
       } finally {
          endTime = System.currentTimeMillis();
          Logger.debug("Transaction took " + (endTime - startTime) + "ms");
-         CoreEventManager.get().unregister(this);
+         EventManager.get().unregister(this);
       }
    }
    

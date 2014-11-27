@@ -32,7 +32,7 @@ import org.altherian.hbox.comm.out.event.hypervisor.HypervisorEventOut;
 import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
 import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hboxc.comm.utils.Transaction;
-import org.altherian.hboxc.event.FrontEventManager;
+import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.server._HypervisorReader;
 import org.altherian.hboxc.server._Server;
 import org.altherian.tool.logging.Logger;
@@ -56,7 +56,7 @@ public class HypervisorReader implements _HypervisorReader {
    
    public HypervisorReader(_Server srv) {
       this.srv = srv;
-      FrontEventManager.register(this);
+      EventManager.register(this);
       refresh();
    }
    

@@ -27,7 +27,7 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.out.event.hypervisor.HypervisorConnectedEventOut;
 import org.altherian.hbox.comm.out.event.hypervisor.HypervisorDisconnectedEventOut;
 import org.altherian.hbox.comm.out.host.HostOut;
-import org.altherian.hboxc.event.FrontEventManager;
+import org.altherian.hboxc.front.gui.FrontEventManager;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.workers.HostGetWorker;
 import org.altherian.hboxc.front.gui.workers._HostReceiver;

@@ -56,7 +56,7 @@ public final class Controller implements _Controller {
    private Thread shutdownHook;
    
    static {
-      Logger.put(getHeader());
+      Logger.raw(getHeader());
       try {
          if (new File(Hyperbox.getConfigFilePath()).exists()) {
             Configuration.init(Hyperbox.getConfigFilePath());

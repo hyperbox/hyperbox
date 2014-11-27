@@ -36,8 +36,7 @@ import org.altherian.hboxc.PreferencesManager;
 import org.altherian.hboxc.controller.action._ClientControllerAction;
 import org.altherian.hboxc.core.ClientCore;
 import org.altherian.hboxc.core.CoreReader;
-import org.altherian.hboxc.event.CoreEventManager;
-import org.altherian.hboxc.event.FrontEventManager;
+import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.exception.ServerDisconnectedException;
 import org.altherian.hboxc.front._Front;
 import org.altherian.hboxc.front.minimal.MiniUI;
@@ -61,7 +60,7 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
    private Map<String, _ClientControllerAction> actionsMap;
    
    static {
-      Logger.put(getHeader());
+      Logger.raw(getHeader());
       try {
          if (new File(Hyperbox.getConfigFilePath()).exists()) {
             Configuration.init(Hyperbox.getConfigFilePath());
@@ -129,7 +128,7 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
             if (!logFile.toLowerCase().contentEquals("none")) {
                Logger.log(logFile, 4);
             }
-            Logger.put(getHeader());
+            Logger.raw(getHeader());
          } catch (IOException e) {
             front.postError(e, "Launch error: " + e.getMessage());
             System.exit(1);
@@ -139,8 +138,7 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
             Logger.debug(name + ": " + System.getenv(name));
          }
          
-         FrontEventManager.get().start();
-         CoreEventManager.get().start(new CoreToFrontEventProcessor(FrontEventManager.get()));
+         EventManager.get().start();
          
          loadActions();
          
@@ -178,8 +176,7 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
             msgWorker.stop();
          }
          
-         CoreEventManager.get().stop();
-         FrontEventManager.get().stop();
+         EventManager.get().stop();
          
          PreferencesManager.savePref();
          System.exit(0);

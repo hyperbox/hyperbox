@@ -28,15 +28,17 @@ import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.tool.logging.Logger;
 
 import java.lang.Thread.UncaughtExceptionHandler;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public final class DefaultEventManager implements _EventManager, Runnable, UncaughtExceptionHandler {
+public class DefaultEventManager implements _EventManager, Runnable, UncaughtExceptionHandler {
    
    private String label;
    
-   private _EventProcessor postProcessor;
-   private MBassador<Object> eventBus;
+   private Set<_EventProcessor> postProcessors = new HashSet<_EventProcessor>();
+   protected MBassador<Object> eventBus;
    private BlockingQueue<Object> eventsQueue;
    private boolean running;
    private Thread worker;
@@ -86,7 +88,7 @@ public final class DefaultEventManager implements _EventManager, Runnable, Uncau
    
    @Override
    public void start(_EventProcessor postProcessor) throws HyperboxException {
-      this.postProcessor = postProcessor;
+      postProcessors.add(postProcessor);
       start();
    }
    
@@ -127,6 +129,14 @@ public final class DefaultEventManager implements _EventManager, Runnable, Uncau
       }
    }
    
+   protected void publish(Object event) throws Throwable {
+      send(event);
+   }
+   
+   protected final void send(Object event) {
+      eventBus.publish(event);
+   }
+   
    @Override
    public void run() {
       Logger.track();
@@ -137,8 +147,8 @@ public final class DefaultEventManager implements _EventManager, Runnable, Uncau
          try {
             Object event = eventsQueue.take();
             Logger.debug("Processing Event " + event.getClass().getSimpleName() + ": " + event.toString());
-            eventBus.publish(event);
-            if (postProcessor != null) {
+            publish(event);
+            for (_EventProcessor postProcessor : postProcessors) {
                postProcessor.post(event);
             }
          } catch (InterruptedException e) {
@@ -149,6 +159,11 @@ public final class DefaultEventManager implements _EventManager, Runnable, Uncau
          }
       }
       Logger.debug("Event Manager - " + label + " Worker halted.");
+   }
+   
+   @Override
+   public void add(_EventProcessor postProcessor) {
+      postProcessors.add(postProcessor);
    }
    
    

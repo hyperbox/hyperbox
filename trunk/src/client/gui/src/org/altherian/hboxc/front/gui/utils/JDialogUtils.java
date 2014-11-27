@@ -19,23 +19,26 @@
  * 
  */
 
-package org.altherian.hboxc.updater;
+package org.altherian.hboxc.front.gui.utils;
 
-import java.net.URL;
-import java.util.Date;
+import org.altherian.hboxc.front.gui.action.CloseAction;
 
-public interface _Release {
+import java.awt.event.KeyEvent;
+
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.KeyStroke;
+
+public class JDialogUtils {
    
-   public String getChannel();
+   private static KeyStroke escapeKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
    
-   public String getVersion();
-   
-   public String getRevision();
-   
-   public Date getDate();
-   
-   public URL getChangeLogURL();
-   
-   public URL getDownloadURL();
+   public static void setCloseOnEscapeKey(JDialog comp, boolean close) {
+      if (close) {
+         comp.getRootPane().registerKeyboardAction(new CloseAction(comp), escapeKeyStroke, JComponent.WHEN_IN_FOCUSED_WINDOW);
+      } else {
+         comp.getRootPane().getInputMap().remove(escapeKeyStroke);
+      }
+   }
    
 }

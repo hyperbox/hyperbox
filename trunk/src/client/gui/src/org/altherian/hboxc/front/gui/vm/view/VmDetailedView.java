@@ -25,9 +25,9 @@ import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
-import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.machine.MachineDataChangedEvent;
 import org.altherian.hboxc.event.machine.MachineRemovedEvent;
+import org.altherian.hboxc.front.gui.FrontEventManager;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.snapshot.SnapshotManagementView;
 import org.altherian.hboxc.front.gui.workers.MachineGetWorker;

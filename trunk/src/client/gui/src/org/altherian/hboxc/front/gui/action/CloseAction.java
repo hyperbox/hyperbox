@@ -19,23 +19,27 @@
  * 
  */
 
-package org.altherian.hboxc.updater;
+package org.altherian.hboxc.front.gui.action;
 
-import java.net.URL;
-import java.util.Date;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
 
-public interface _Release {
+import javax.swing.AbstractAction;
+
+@SuppressWarnings("serial")
+public class CloseAction extends AbstractAction {
    
-   public String getChannel();
+   private Component obj;
    
-   public String getVersion();
+   public CloseAction(Component obj) {
+      super("Close");
+      this.obj = obj;
+      setEnabled(true);
+   }
    
-   public String getRevision();
-   
-   public Date getDate();
-   
-   public URL getChangeLogURL();
-   
-   public URL getDownloadURL();
+   @Override
+   public void actionPerformed(ActionEvent e) {
+      obj.setVisible(false);
+   }
    
 }

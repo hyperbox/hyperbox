@@ -19,22 +19,41 @@
  * 
  */
 
-package org.altherian.hboxc.event;
+package org.altherian.hboxc.front.gui;
 
-import org.altherian.hbox.exception.HyperboxException;
+import org.altherian.hboxc.event._EventManager;
+import org.altherian.tool.logging.Logger;
 
-public interface _EventManager extends _EventProcessor {
+public final class FrontEventManager {
    
-   public void start() throws HyperboxException;
+   private static _EventManager evMgr;
    
-   public void start(_EventProcessor postProcessor) throws HyperboxException;
+   private FrontEventManager() {
+      // not to be used
+   }
    
-   public void stop();
+   static {
+      evMgr = new GuiEventManager("GUI-EvMgr");
+   }
    
-   public void register(Object o);
+   public static _EventManager get() {
+      return evMgr;
+   }
    
-   public void unregister(Object o);
+   public static void register(Object o) {
+      Logger.debug(o.getClass().getSimpleName() + " has registered");
+      evMgr.register(o);
+   }
    
-   public void add(_EventProcessor postProcessor);
-
+   public static void unregister(Object o) {
+      Logger.debug(o.getClass().getSimpleName() + " has unregistered");
+      evMgr.unregister(o);
+   }
+   
+   public static void post(Object o) {
+      Logger.track();
+      
+      evMgr.post(o);
+   }
+   
 }

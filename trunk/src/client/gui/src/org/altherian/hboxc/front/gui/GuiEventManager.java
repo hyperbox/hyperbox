@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -19,22 +19,38 @@
  * 
  */
 
-package org.altherian.hboxc.event;
+package org.altherian.hboxc.front.gui;
 
 import org.altherian.hbox.exception.HyperboxException;
+import org.altherian.hboxc.event.DefaultEventManager;
 
-public interface _EventManager extends _EventProcessor {
-   
-   public void start() throws HyperboxException;
-   
-   public void start(_EventProcessor postProcessor) throws HyperboxException;
-   
-   public void stop();
-   
-   public void register(Object o);
-   
-   public void unregister(Object o);
-   
-   public void add(_EventProcessor postProcessor);
+import java.lang.reflect.InvocationTargetException;
 
+import javax.swing.SwingUtilities;
+
+public class GuiEventManager extends DefaultEventManager {
+   
+   public GuiEventManager(String string) {
+      super(string);
+      
+   }
+   
+   @Override
+   public void start() throws HyperboxException {
+      super.start();
+      eventBus.addErrorHandler(new ErrorDisplay());
+   }
+   
+   @Override
+   protected void publish(final Object event) throws InterruptedException, InvocationTargetException {
+      SwingUtilities.invokeLater(new Runnable() {
+         
+         @Override
+         public void run() {
+            GuiEventManager.this.send(event);
+         }
+         
+      });
+   }
+   
 }

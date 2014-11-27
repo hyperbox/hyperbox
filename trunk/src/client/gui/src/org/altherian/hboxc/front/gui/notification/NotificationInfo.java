@@ -19,23 +19,15 @@
  * 
  */
 
-package org.altherian.hboxc.updater;
+package org.altherian.hboxc.front.gui.notification;
 
-import java.net.URL;
-import java.util.Date;
+import org.altherian.tool.logging.Logger;
 
-public interface _Release {
+@SuppressWarnings("serial")
+public class NotificationInfo extends Notification {
    
-   public String getChannel();
-   
-   public String getVersion();
-   
-   public String getRevision();
-   
-   public Date getDate();
-   
-   public URL getChangeLogURL();
-   
-   public URL getDownloadURL();
+   public NotificationInfo() {
+      Logger.track();
+   }
    
 }

@@ -27,10 +27,10 @@ import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.TaskOut;
-import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.task.TaskAddedEvent;
 import org.altherian.hboxc.event.task.TaskRemovedEvent;
 import org.altherian.hboxc.event.task.TaskStateChangedEvent;
+import org.altherian.hboxc.front.gui.FrontEventManager;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.task.TaskCancelAction;
 import org.altherian.hboxc.front.gui.workers.TaskListWorker;

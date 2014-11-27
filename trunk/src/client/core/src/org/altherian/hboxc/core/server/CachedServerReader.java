@@ -70,7 +70,7 @@ import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.states.TaskQueueEvents;
-import org.altherian.hboxc.event.CoreEventManager;
+import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.event.machine.MachineAddedEvent;
 import org.altherian.hboxc.event.machine.MachineDataChangedEvent;
 import org.altherian.hboxc.event.machine.MachineRemovedEvent;
@@ -134,7 +134,7 @@ public class CachedServerReader implements _ServerReader {
       
       snapOutCache = new HashMap<String, Map<String, SnapshotOut>>();
       
-      CoreEventManager.get().register(this);
+      EventManager.get().register(this);
    }
    
    private void insertSnapshot(String vmId, SnapshotOut snapOut) {
@@ -231,7 +231,7 @@ public class CachedServerReader implements _ServerReader {
       updateMachine(ev.getMachine());
       refreshSnapshot(ev.getMachine().getUuid(), ev.getSnapshotUuid());
       refreshSnapshot(ev.getMachine().getUuid(), ev.getSnapshot().getParentUuid());
-      CoreEventManager.post(new SnapshotTakenEvent(ev.getServer(), ev.getMachine(), ev.getSnapshot()));
+      EventManager.post(new SnapshotTakenEvent(ev.getServer(), ev.getMachine(), ev.getSnapshot()));
    }
    
    @Handler
@@ -245,7 +245,7 @@ public class CachedServerReader implements _ServerReader {
       }
       updateMachine(ev.getMachine());
       removeSnapshot(ev.getMachine().getUuid(), ev.getSnapshotUuid());
-      CoreEventManager.post(new SnapshotDeletedEvent(ev.getServer(), ev.getMachine(), ev.getSnapshot()));
+      EventManager.post(new SnapshotDeletedEvent(ev.getServer(), ev.getMachine(), ev.getSnapshot()));
    }
    
    @Handler
@@ -254,7 +254,7 @@ public class CachedServerReader implements _ServerReader {
       
       updateMachine(ev.getMachine());
       updateSnapshot(ev.getMachine().getUuid(), ev.getSnapshot());
-      CoreEventManager.post(new SnapshotRestoredEvent(ev.getServer(), ev.getMachine(), ev.getSnapshot()));
+      EventManager.post(new SnapshotRestoredEvent(ev.getServer(), ev.getMachine(), ev.getSnapshot()));
    }
    
    @Handler
@@ -262,7 +262,7 @@ public class CachedServerReader implements _ServerReader {
       Logger.track();
       
       updateSnapshot(ev.getMachine().getUuid(), ev.getSnapshot());
-      CoreEventManager.post(new SnapshotModifiedEvent(ev.getServer(), ev.getMachine(), ev.getSnapshot()));
+      EventManager.post(new SnapshotModifiedEvent(ev.getServer(), ev.getMachine(), ev.getSnapshot()));
    }
    
    @Handler
@@ -270,7 +270,7 @@ public class CachedServerReader implements _ServerReader {
       Logger.track();
       
       updateMachine(ev.getMachine());
-      CoreEventManager.post(new MachineDataChangedEvent(reader.getId(), getMachine(ev.getMachine().getUuid())));
+      EventManager.post(new MachineDataChangedEvent(reader.getId(), getMachine(ev.getMachine().getUuid())));
    }
    
    @Handler
@@ -279,10 +279,10 @@ public class CachedServerReader implements _ServerReader {
       
       if (ev.isRegistered()) {
          insertMachine(ev.getMachine());
-         CoreEventManager.post(new MachineAddedEvent(ev.getServerId(), ev.getMachine()));
+         EventManager.post(new MachineAddedEvent(ev.getServerId(), ev.getMachine()));
       } else {
          deleteMachine(ev.getUuid());
-         CoreEventManager.post(new MachineRemovedEvent(ev.getServerId(), ev.getMachine()));
+         EventManager.post(new MachineRemovedEvent(ev.getServerId(), ev.getMachine()));
       }
       
    }
@@ -292,7 +292,7 @@ public class CachedServerReader implements _ServerReader {
       Logger.track();
       
       updateMachine(ev.getMachine());
-      CoreEventManager.post(new MachineStateChangedEvent(reader.getId(), getMachine(ev.getMachine().getUuid())));
+      EventManager.post(new MachineStateChangedEvent(reader.getId(), getMachine(ev.getMachine().getUuid())));
    }
    
    private void insertMachine(String vmId) {
@@ -426,7 +426,7 @@ public class CachedServerReader implements _ServerReader {
       Logger.track();
       
       updateTask(ev.getTask());
-      CoreEventManager.post(new TaskStateChangedEvent(ev.getServer(), ev.getTask()));
+      EventManager.post(new TaskStateChangedEvent(ev.getServer(), ev.getTask()));
    }
    
    @Handler
@@ -435,11 +435,11 @@ public class CachedServerReader implements _ServerReader {
       
       if (ev.getQueueEvent().equals(TaskQueueEvents.TaskAdded)) {
          insertTask(ev.getTask());
-         CoreEventManager.post(new TaskAddedEvent(ev.getServer(), ev.getTask()));
+         EventManager.post(new TaskAddedEvent(ev.getServer(), ev.getTask()));
       }
       if (ev.getQueueEvent().equals(TaskQueueEvents.TaskRemoved)) {
          removeTask(ev.getTask());
-         CoreEventManager.post(new TaskRemovedEvent(ev.getServer(), ev.getTask()));
+         EventManager.post(new TaskRemovedEvent(ev.getServer(), ev.getTask()));
       }
    }
    
@@ -447,7 +447,7 @@ public class CachedServerReader implements _ServerReader {
    public void putModuleEventOutput(ModuleEventOut ev) {
       Logger.track();
       
-      CoreEventManager.post(new ModuleEvent(HyperboxEvents.ModuleLoaded, ev.getServer(), ev.getModule()));
+      EventManager.post(new ModuleEvent(HyperboxEvents.ModuleLoaded, ev.getServer(), ev.getModule()));
    }
    
    private void refreshTask(TaskIn tIn) {

@@ -33,7 +33,7 @@ import org.altherian.hbox.kryonet.KryoRegister;
 import org.altherian.hbox.kryonet.KryoUncaughtExceptionHandler;
 import org.altherian.hbox.kryonet.KryonetDefaultSettings;
 import org.altherian.hboxc.back._Backend;
-import org.altherian.hboxc.event.CoreEventManager;
+import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.event.backend.BackendConnectionStateEvent;
 import org.altherian.hboxc.event.backend.BackendStateEvent;
 import org.altherian.hboxc.state.BackendConnectionState;
@@ -66,7 +66,7 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
       
       if ((state != null) && !this.state.equals(state)) {
          this.state = state;
-         CoreEventManager.post(new BackendStateEvent(this, state));
+         EventManager.post(new BackendStateEvent(this, state));
       } else {
          Logger.debug("Got a null state or state matches current one");
       }
@@ -77,7 +77,7 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
       
       if ((connState != null) && !this.connState.equals(connState)) {
          this.connState = connState;
-         CoreEventManager.post(new BackendConnectionStateEvent(this, connState));
+         EventManager.post(new BackendConnectionStateEvent(this, connState));
       } else {
          Logger.debug("Got a null state or state matches current one");
       }
@@ -226,7 +226,7 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
             }
          }
          if (object instanceof EventOut) {
-            CoreEventManager.get().post(object);
+            EventManager.get().post(object);
          }
       }
       

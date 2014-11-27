@@ -59,31 +59,6 @@ public final class MainMenu {
       srvMenu = new JMenu("Server");
       srvMenu.add(srvConnectMenuItem);
       
-      // TODO relocate in Server list
-      /*
-      addVmItem = new JMenuItem(new MachineRegisterAction());
-      createVmItem = new JMenuItem(new MachineCreateAction());
-      vmMenu = new JMenu("Machine");
-      vmMenu.add(addVmItem);
-      vmMenu.add(createVmItem);
-       */
-      
-      // TODO relocate in Server list
-      /*
-      createMediumItem = new JMenuItem(new HarddiskCreateAction());
-      medMenu = new JMenu("Medium");
-      medMenu.add(createMediumItem);
-       */
-      
-      // TODO relocate in Server list
-      /*
-      stoCreateItem = new JMenuItem(new StoreCreateAction());
-      stoRegisterItem = new JMenuItem(new StoreRegisterAction());
-      stoMenu = new JMenu("Stores");
-      stoMenu.add(stoCreateItem);
-      stoMenu.add(stoRegisterItem);
-       */
-      
       aboutItem = new JMenuItem(new AboutAction());
       helpMenu = new JMenu("Help");
       helpMenu.add(aboutItem);

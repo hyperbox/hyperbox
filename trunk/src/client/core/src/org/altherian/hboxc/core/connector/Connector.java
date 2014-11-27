@@ -27,7 +27,7 @@ import net.engio.mbassy.listener.Handler;
 import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.comm.io.factory.ConnectorIoFactory;
-import org.altherian.hboxc.event.CoreEventManager;
+import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.event.connector.ConnectorConnectedEvent;
 import org.altherian.hboxc.event.connector.ConnectorDisconnectedEvent;
 import org.altherian.hboxc.event.connector.ConnectorStateChangedEvent;
@@ -65,11 +65,11 @@ public class Connector implements _Connector {
       if ((this.state == null) || !this.state.equals(state)) {
          this.state = state;
          if (state.equals(ConnectionState.Connected)) {
-            CoreEventManager.post(new ConnectorConnectedEvent(ConnectorIoFactory.get(this)));
+            EventManager.post(new ConnectorConnectedEvent(ConnectorIoFactory.get(this)));
          } else if (state.equals(ConnectionState.Disconnected)) {
-            CoreEventManager.post(new ConnectorDisconnectedEvent(ConnectorIoFactory.get(this)));
+            EventManager.post(new ConnectorDisconnectedEvent(ConnectorIoFactory.get(this)));
          } else {
-            CoreEventManager.post(new ConnectorStateChangedEvent(ConnectorIoFactory.get(this), state));
+            EventManager.post(new ConnectorStateChangedEvent(ConnectorIoFactory.get(this), state));
          }
       } else {
          Logger.debug("Ignoring setState() - " + getState() + " is same as current");
@@ -136,7 +136,7 @@ public class Connector implements _Connector {
       setState(ConnectionState.Connecting);
       
       try {
-         CoreEventManager.register(this);
+         EventManager.register(this);
          server = ServerFactory.get();
          server.connect(address, backendId, usrIn);
          serverId = server.getId();
@@ -163,7 +163,7 @@ public class Connector implements _Connector {
          }
          
          setState(ConnectionState.Disconnected);
-         CoreEventManager.unregister(this);
+         EventManager.unregister(this);
       } else {
          Logger.debug("Ignoring disconnect call, already in " + getState() + " state");
       }
