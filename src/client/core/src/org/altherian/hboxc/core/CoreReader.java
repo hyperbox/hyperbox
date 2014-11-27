@@ -34,11 +34,12 @@ import org.altherian.hboxc.comm.output.BackendOutput;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.hboxc.comm.output.ConsoleViewerOutput;
 import org.altherian.hboxc.core.server.CachedServerReader;
-import org.altherian.hboxc.event.CoreEventManager;
+import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.event.server.ServerDisconnectedEvent;
 import org.altherian.hboxc.factory.BackendFactory;
 import org.altherian.hboxc.server._ServerReader;
 import org.altherian.hboxc.state.CoreState;
+import org.altherian.hboxc.updater._Updater;
 import org.altherian.tool.logging.Logger;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class CoreReader implements _CoreReader {
    
    public CoreReader(_Core core) {
       this.core = core;
-      CoreEventManager.get().register(this);
+      EventManager.get().register(this);
    }
    
    @Override
@@ -117,6 +118,11 @@ public class CoreReader implements _CoreReader {
    @Override
    public ConnectorOutput getConnectorForServer(String srvId) {
       return ConnectorIoFactory.get(core.getConnectorForServer(srvId));
+   }
+   
+   @Override
+   public _Updater getUpdater() {
+      return core.getUpdater();
    }
    
 }

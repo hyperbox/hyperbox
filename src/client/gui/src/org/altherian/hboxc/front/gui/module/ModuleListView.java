@@ -26,8 +26,8 @@ import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.out.ModuleOut;
 import org.altherian.hbox.comm.out.ServerOut;
-import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.module.ModuleEvent;
+import org.altherian.hboxc.front.gui.FrontEventManager;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.module.ModuleRefreshAction;
 import org.altherian.hboxc.front.gui.action.module.ModuleRegisterAction;

@@ -23,16 +23,16 @@ package org.altherian.hboxc.event;
 
 import org.altherian.tool.logging.Logger;
 
-public final class FrontEventManager {
+public final class EventManager {
    
    private static _EventManager evMgr;
    
-   private FrontEventManager() {
-      // not to be used
+   private EventManager() {
+      // static only
    }
    
    static {
-      evMgr = new DefaultEventManager("GUI-EvMgr");
+      evMgr = new DefaultEventManager("Core-EvMgr");
    }
    
    public static _EventManager get() {
@@ -40,12 +40,14 @@ public final class FrontEventManager {
    }
    
    public static void register(Object o) {
-      Logger.debug(o.getClass().getSimpleName() + " has registered");
+      Logger.track();
+      
       evMgr.register(o);
    }
    
    public static void unregister(Object o) {
-      Logger.debug(o.getClass().getSimpleName() + " has unregistered");
+      Logger.track();
+      
       evMgr.unregister(o);
    }
    

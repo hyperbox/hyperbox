@@ -28,6 +28,7 @@ import org.altherian.hboxc.comm.input.ConnectorInput;
 import org.altherian.hboxc.core.connector._Connector;
 import org.altherian.hboxc.server._Server;
 import org.altherian.hboxc.state.CoreState;
+import org.altherian.hboxc.updater._Updater;
 
 import java.util.List;
 
@@ -78,5 +79,7 @@ public interface _Core {
    public _Server getServer(String serverId);
    
    public _Connector getConnectorForServer(String serverId);
+   
+   public _Updater getUpdater();
    
 }

@@ -31,7 +31,7 @@ import org.altherian.hboxc.controller.ClientTasks;
 import org.altherian.hboxc.controller.action.AbstractClientControllerSingleAction;
 import org.altherian.hboxc.core._ConsoleViewer;
 import org.altherian.hboxc.core._Core;
-import org.altherian.hboxc.event.FrontEventManager;
+import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.event.consoleviewer.ConsoleViewerModifiedEvent;
 import org.altherian.hboxc.front._Front;
 
@@ -51,7 +51,7 @@ public class ConsoleViewerModifyAction extends AbstractClientControllerSingleAct
       viewer.setArgs(coreViewInput.getArgs());
       viewer.save();
       
-      FrontEventManager.post(new ConsoleViewerModifiedEvent(ConsoleViewerIoFactory.getOut(viewer)));
+      EventManager.post(new ConsoleViewerModifiedEvent(ConsoleViewerIoFactory.getOut(viewer)));
    }
    
 }

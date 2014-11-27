@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -19,42 +19,25 @@
  * 
  */
 
-package org.altherian.hboxc.event;
+package org.altherian.hboxc.exception;
 
-import org.altherian.tool.logging.Logger;
-
-public final class CoreEventManager {
+@SuppressWarnings("serial")
+public class UpdaterRepositoryInvalidFormatException extends UpdaterException {
    
-   private static _EventManager evMgr;
-   
-   private CoreEventManager() {
-      // static only
+   public UpdaterRepositoryInvalidFormatException() {
+      super("Repository is using an invalid format");
    }
    
-   static {
-      evMgr = new DefaultEventManager("Core-EvMgr");
+   public UpdaterRepositoryInvalidFormatException(String s) {
+      super(s);
    }
    
-   public static _EventManager get() {
-      return evMgr;
+   public UpdaterRepositoryInvalidFormatException(Throwable t) {
+      super(t);
    }
    
-   public static void register(Object o) {
-      Logger.track();
-      
-      evMgr.register(o);
-   }
-   
-   public static void unregister(Object o) {
-      Logger.track();
-      
-      evMgr.unregister(o);
-   }
-   
-   public static void post(Object o) {
-      Logger.track();
-      
-      evMgr.post(o);
+   public UpdaterRepositoryInvalidFormatException(String s, Throwable t) {
+      super(s, t);
    }
    
 }

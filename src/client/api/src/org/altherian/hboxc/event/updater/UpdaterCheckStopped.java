@@ -19,23 +19,14 @@
  * 
  */
 
-package org.altherian.hboxc.updater;
+package org.altherian.hboxc.event.updater;
 
-import java.net.URL;
-import java.util.Date;
+import org.altherian.hboxc.event.ClientEvents;
 
-public interface _Release {
+public class UpdaterCheckStopped extends UpdaterEvent {
    
-   public String getChannel();
-   
-   public String getVersion();
-   
-   public String getRevision();
-   
-   public Date getDate();
-   
-   public URL getChangeLogURL();
-   
-   public URL getDownloadURL();
+   public UpdaterCheckStopped() {
+      super(ClientEvents.UpdaterCheckStopped);
+   }
    
 }

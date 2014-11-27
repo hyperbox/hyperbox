@@ -43,7 +43,7 @@ import org.altherian.hbox.comm.output.MediumOutputTest;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.comm.utils.Transaction;
-import org.altherian.hboxc.event.CoreEventManager;
+import org.altherian.hboxc.event.EventManager;
 import org.altherian.tool.logging.LogLevel;
 import org.altherian.tool.logging.Logger;
 
@@ -65,7 +65,7 @@ public abstract class BackendTest {
       
       BackendTest.backend = b;
       
-      CoreEventManager.get().start();
+      EventManager.get().start();
       b.start();
       assertFalse(b.isConnected());
       assertTrue(b.isConnected());
@@ -87,7 +87,7 @@ public abstract class BackendTest {
    
    @AfterClass
    public static void afterClass() {
-      CoreEventManager.get().stop();
+      EventManager.get().stop();
    }
    
    @Test

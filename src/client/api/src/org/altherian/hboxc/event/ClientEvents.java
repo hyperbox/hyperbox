@@ -28,7 +28,7 @@ public enum ClientEvents {
    MachineRemoved,
    
    MachineSnapshotDataChanged,
-
+   
    MediumAdd,
    MediumUpdate,
    MediumRemoved,
@@ -62,5 +62,9 @@ public enum ClientEvents {
    TaskStateChanged,
    TaskAdded,
    TaskRemoved,
+   
+   UpdaterCheckStarted,
+   UpdaterCheckStopped,
+   UpdaterUpdateAvailable,
    
 }

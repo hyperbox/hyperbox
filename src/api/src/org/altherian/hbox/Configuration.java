@@ -113,6 +113,12 @@ public class Configuration {
          return settings.get(key);
       }
       
+      Logger.debug("System.getProperty(" + key + ") != null: " + (System.getProperty(key) != null));
+      if (System.getProperty(key) != null) {
+         Logger.debug("Returning system property");
+         return System.getProperty(key);
+      }
+      
       Logger.debug("System.getenv().containsKey(" + getEnvVarName(key) + "): " + System.getenv().containsKey(getEnvVarName(key)));
       if (System.getenv().containsKey(getEnvVarName(key))) {
          Logger.debug("Returning environment value");

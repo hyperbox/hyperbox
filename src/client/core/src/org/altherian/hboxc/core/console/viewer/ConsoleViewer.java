@@ -25,7 +25,7 @@ package org.altherian.hboxc.core.console.viewer;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.comm.io.factory.ConsoleViewerIoFactory;
 import org.altherian.hboxc.core._ConsoleViewer;
-import org.altherian.hboxc.event.CoreEventManager;
+import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.event.consoleviewer.ConsoleViewerModifiedEvent;
 
 import java.io.File;
@@ -108,7 +108,7 @@ public class ConsoleViewer implements _ConsoleViewer {
          throw new HyperboxRuntimeException(viewerPath + " is not a file");
       }
 
-      CoreEventManager.get().post(new ConsoleViewerModifiedEvent(ConsoleViewerIoFactory.getOut(this)));
+      EventManager.get().post(new ConsoleViewerModifiedEvent(ConsoleViewerIoFactory.getOut(this)));
    }
    
 }

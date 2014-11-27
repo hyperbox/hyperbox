@@ -39,7 +39,6 @@ import org.altherian.hboxc.PreferencesManager;
 import org.altherian.hboxc.comm.input.ConnectorInput;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.hboxc.controller.ClientTasks;
-import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.connector.ConnectorAddedEvent;
 import org.altherian.hboxc.event.connector.ConnectorConnectedEvent;
 import org.altherian.hboxc.event.connector.ConnectorDisconnectedEvent;

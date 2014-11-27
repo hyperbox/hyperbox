@@ -28,8 +28,8 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.event.hypervisor.HypervisorConnectedEventOut;
 import org.altherian.hbox.comm.out.event.hypervisor.HypervisorDisconnectedEventOut;
-import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.server.ServerEvent;
+import org.altherian.hboxc.front.gui.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.hypervisor.HypervisorViewer;
@@ -47,7 +47,7 @@ import javax.swing.SwingUtilities;
 
 public class ServerViewer implements _Refreshable, _ServerReceiver {
    
-   private ServerOut srvOut;
+   private String srvId;
    
    private HypervisorViewer hypViewer;
    
@@ -107,8 +107,7 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    }
    
    public void show(ServerOut srvOut) {
-      this.srvOut = srvOut;
-      update();
+      update(srvOut);
    }
    
    private void clear() {
@@ -118,29 +117,24 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    @Override
    public void refresh() {
       clear();
-      ServerGetWorker.get(this, srvOut.getId());
+      ServerGetWorker.get(this, srvId);
    }
    
-   private void update() {
+   private void update(ServerOut srvOut) {
       if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-               update();
-            }
-         });
+         Logger.warning("ServerViewer::update() call out of EDT");
+      }
+      
+      idValue.setText(srvOut.getId());
+      nameValue.setText(srvOut.getName());
+      typeValue.setText(srvOut.getType());
+      versionValue.setText(srvOut.getVersion());
+      netProtocolValue.setText(srvOut.getNetworkProtocolVersion() != null ? srvOut.getNetworkProtocolVersion() : "Unknown");
+      
+      if (srvOut.isHypervisorConnected()) {
+         hypViewer.show(Gui.getServer(srvOut).getHypervisor().getInfo());
       } else {
-         idValue.setText(srvOut.getId());
-         nameValue.setText(srvOut.getName());
-         typeValue.setText(srvOut.getType());
-         versionValue.setText(srvOut.getVersion());
-         netProtocolValue.setText(srvOut.getNetworkProtocolVersion() != null ? srvOut.getNetworkProtocolVersion() : "Unknown");
-         
-         if (srvOut.isHypervisorConnected()) {
-            hypViewer.show(Gui.getServer(srvOut).getHypervisor().getInfo());
-         } else {
-            hypViewer.setDisconnected();
-         }
+         hypViewer.setDisconnected();
       }
    }
    
@@ -148,7 +142,7 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    public void putServerEvent(ServerEvent ev) {
       Logger.track();
       
-      if (ev.getServer().getId().equals(srvOut.getId())) {
+      if (ev.getServer().getId().equals(srvId)) {
          refresh();
       }
    }
@@ -156,15 +150,15 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    // TODO move into the HypervisorViewer class
    @Handler
    public void putHypervisorConnectEvent(HypervisorConnectedEventOut ev) {
-      if (ev.getServer().getId().equals(srvOut.getId())) {
-         hypViewer.show(Gui.getServer(srvOut).getHypervisor().getInfo());
+      if (ev.getServer().getId().equals(srvId)) {
+         hypViewer.show(Gui.getServer(srvId).getHypervisor().getInfo());
       }
    }
    
    // TODO move into the HypervisorViewer class
    @Handler
    public void putHypervisorDisconnectEvent(HypervisorDisconnectedEventOut ev) {
-      if (ev.getServer().getId().equals(srvOut.getId())) {
+      if (ev.getServer().getId().equals(srvId)) {
          hypViewer.setDisconnected();
       }
    }
@@ -183,8 +177,7 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    public void put(ServerOut srvOut) {
       Logger.track();
       
-      this.srvOut = srvOut;
-      update();
+      update(srvOut);
    }
    
 }

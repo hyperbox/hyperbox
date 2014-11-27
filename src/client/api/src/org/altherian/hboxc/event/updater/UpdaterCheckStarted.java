@@ -19,16 +19,14 @@
  * 
  */
 
-package org.altherian.hboxc.updater;
+package org.altherian.hboxc.event.updater;
 
-import java.util.concurrent.Callable;
+import org.altherian.hboxc.event.ClientEvents;
 
-public class UpdaterWorker implements Callable<_Release> {
+public class UpdaterCheckStarted extends UpdaterEvent {
    
-   @Override
-   public _Release call() throws Exception {
-      // TODO Auto-generated method stub
-      return null;
+   public UpdaterCheckStarted() {
+      super(ClientEvents.UpdaterCheckStarted);
    }
    
 }

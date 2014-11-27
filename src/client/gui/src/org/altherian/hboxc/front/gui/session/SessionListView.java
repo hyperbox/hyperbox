@@ -25,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.exception.HyperboxException;
-import org.altherian.hboxc.event.FrontEventManager;
+import org.altherian.hboxc.front.gui.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.tool.logging.Logger;
 

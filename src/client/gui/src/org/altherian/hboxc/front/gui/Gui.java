@@ -32,8 +32,11 @@ import org.altherian.hboxc.controller.ClientTasks;
 import org.altherian.hboxc.controller.MessageInput;
 import org.altherian.hboxc.core._CoreReader;
 import org.altherian.hboxc.event.CoreStateEvent;
-import org.altherian.hboxc.event.FrontEventManager;
+import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.front._Front;
+import org.altherian.hboxc.front.gui.action.CloseAction;
+import org.altherian.hboxc.front.gui.builder.JDialogBuilder;
+import org.altherian.hboxc.front.gui.utils.JDialogUtils;
 import org.altherian.hboxc.server._ServerReader;
 import org.altherian.hboxc.state.CoreState;
 import org.altherian.tool.logging.Logger;
@@ -45,9 +48,13 @@ import java.awt.Toolkit;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 public final class Gui implements _Front {
@@ -61,15 +68,19 @@ public final class Gui implements _Front {
    public void start() throws HyperboxException {
       Logger.track();
       
-      FrontEventManager.register(this);
-      
       try {
          UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
       } catch (Exception e) {
          Logger.error("Couldn't switch to the System Look & Feel");
       }
+      EventQueueProxy proxy = new EventQueueProxy();
       EventQueue queue = Toolkit.getDefaultToolkit().getSystemEventQueue();
-      queue.push(new EventQueueProxy());
+      queue.push(proxy);
+      
+      FrontEventManager.get().start();
+      EventManager.get().add(FrontEventManager.get());
+      FrontEventManager.register(this);
+      
       mainView = new MainView();
    }
    
@@ -98,10 +109,35 @@ public final class Gui implements _Front {
    public void postError(String s) {
       Logger.track();
       
+      showError(s);
+   }
+   
+   public static void showError(String s) {
       JOptionPane.showMessageDialog(null,
             s,
             "Error",
             JOptionPane.ERROR_MESSAGE);
+   }
+   
+   public static void showError(Throwable t) {
+      showError(t.getMessage());
+   }
+   
+   public static void showCopyPasteHelper(String label, String value) {
+      JLabel infoLabel = new JLabel(label);
+      JTextField valueField = new JTextField(value);
+      JButton closeButton = new JButton("Close");
+      JDialog dialog = JDialogBuilder.get("Copy/Paste Helper", closeButton);
+      dialog.add(infoLabel, "growx,pushx,wrap");
+      dialog.add(valueField, "growx,pushx,wrap");
+      dialog.add(closeButton, "spanx, center");
+      closeButton.setAction(new CloseAction(dialog));
+      JDialogUtils.setCloseOnEscapeKey(dialog, true);
+      valueField.selectAll();
+      valueField.requestFocus();
+      dialog.pack();
+      dialog.setLocationRelativeTo(dialog.getParent());
+      dialog.setVisible(true);
    }
    
    @Override
@@ -134,23 +170,28 @@ public final class Gui implements _Front {
    
    private class EventQueueProxy extends EventQueue {
       
+      private void displayError(Throwable t) {
+         JTextArea textArea = new JTextArea();
+         textArea.setEditable(false);
+         StringWriter writer = new StringWriter();
+         t.printStackTrace(new PrintWriter(writer));
+         textArea.setText(writer.toString());
+         
+         JScrollPane scrollPane = new JScrollPane(textArea);
+         scrollPane.setPreferredSize(new Dimension(750, 300));
+         
+         JOptionPane.showMessageDialog(null, scrollPane, "An Error Has Occurred", JOptionPane.ERROR_MESSAGE);
+      }
+      
       @Override
       protected void dispatchEvent(AWTEvent newEvent) {
          try {
             super.dispatchEvent(newEvent);
          } catch (Throwable t) {
-            JTextArea textArea = new JTextArea();
-            textArea.setEditable(false);
-            StringWriter writer = new StringWriter();
-            t.printStackTrace(new PrintWriter(writer));
-            textArea.setText(writer.toString());
-            
-            JScrollPane scrollPane = new JScrollPane(textArea);
-            scrollPane.setPreferredSize(new Dimension(750, 300));
-            
-            JOptionPane.showMessageDialog(null, scrollPane, "An Error Has Occurred", JOptionPane.ERROR_MESSAGE);
+            displayError(t);
          }
       }
+      
    }
    
    @Override

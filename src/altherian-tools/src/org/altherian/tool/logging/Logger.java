@@ -104,9 +104,11 @@ public class Logger {
       put(o, LogLevel.Error);
    }
    
+   public static void raw(Object o) {
+      put(o, LogLevel.Raw);
+   }
+   
    public static void log(String fileName) throws IOException {
-      Logger.track();
-      
       if (fileName != null) {
          System.out.println("Configure filename: " + fileName);
          logFileName = fileName;
@@ -167,7 +169,7 @@ public class Logger {
       log(fileName);
    }
    
-   public static void put(Object o, LogLevel type) {
+   private static void put(Object o, LogLevel type) {
       if (isLevel(type)) {
          if (o == null) {
             o = new String("[ ! [NULL] ! ]");
@@ -176,11 +178,14 @@ public class Logger {
          String time = formater.format(new Date());
          String output = "";
          switch (type) {
+            case Raw:
+               output = o.toString();
+               break;
             case FatalException:
-               output = time + " |FatalExcept| " + Thread.currentThread().getName() + " | " + getCalling(1) + " | " + o;
+               output = time + " |FatalExcept| " + Thread.currentThread().getName() + " | " + getCalling(false) + " | " + o;
                break;
             case Exception:
-               output = time + " |E X C E P T I O N| " + Thread.currentThread().getName() + " | " + getCalling(1);
+               output = time + " |E X C E P T I O N| " + Thread.currentThread().getName() + " | " + getCalling(false);
                break;
             case Error:
                output = time + " |ERROR ERROR| " + o;
@@ -195,10 +200,10 @@ public class Logger {
                output = time + " |  verbose  | " + o;
                break;
             case Debug:
-               output = time + " |   debug   | " + Thread.currentThread().getName() + " | " + getCalling(1) + " | " + o;
+               output = time + " |   debug   | " + Thread.currentThread().getName() + " | " + getCalling(false) + " | " + o;
                break;
             case Tracking:
-               output = time + " | tracking  | " + Thread.currentThread().getName() + " | " + getCalling(1, true);
+               output = time + " | tracking  | " + Thread.currentThread().getName() + " | " + getCalling(true);
                break;
             default:
                output = time + " | UNKNWON | " + o;
@@ -208,31 +213,25 @@ public class Logger {
       }
    }
    
-   public static void put(String s) {
+   private static void put(String s) {
       output.println(s);
    }
    
-   private static String getCalling(Integer i) {
-      return getCalling(i + 1, false);
-   }
-   
-   private static String getCalling(Integer i, Boolean methodName) {
+   private static String getCalling(boolean methodName) {
       int depth = 4;
       if (methodName) {
          StackTraceElement e[] = Thread.currentThread().getStackTrace();
-         if ((e != null) && (e.length >= (depth + i))) {
-            StackTraceElement s = e[(depth + i)];
+         if ((e != null) && (e.length >= depth)) {
+            StackTraceElement s = e[depth];
             if (s != null) {
                String finalValue = s.getClassName().substring((s.getClassName().lastIndexOf(".") + 1));
-               if (methodName) {
-                  finalValue = finalValue + "." + s.getMethodName() + "():" + s.getLineNumber();
-               }
+               finalValue = finalValue + "." + s.getMethodName() + "():" + s.getLineNumber();
                return finalValue;
             }
          }
          return null;
       } else {
-         return sun.reflect.Reflection.getCallerClass(i + depth).getSimpleName();
+         return sun.reflect.Reflection.getCallerClass(depth + 1).getSimpleName();
       }
       
    }

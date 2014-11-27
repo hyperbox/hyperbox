@@ -32,7 +32,7 @@ import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.security.PermissionOut;
 import org.altherian.hbox.comm.out.security.UserOut;
-import org.altherian.hboxc.event.FrontEventManager;
+import org.altherian.hboxc.front.gui.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.tool.logging.Logger;

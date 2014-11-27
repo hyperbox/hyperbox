@@ -28,6 +28,7 @@ import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.hboxc.comm.output.ConsoleViewerOutput;
 import org.altherian.hboxc.server._ServerReader;
 import org.altherian.hboxc.state.CoreState;
+import org.altherian.hboxc.updater._Updater;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public interface _CoreReader {
    public ConnectorOutput getConnector(String id);
    
    public ConnectorOutput getConnectorForServer(String srvId);
-
+   
    public ServerOut getServer(ConnectorInput conIn);
    
    public ServerOut getServerInfo(String id);
@@ -52,5 +53,7 @@ public interface _CoreReader {
    public List<ConsoleViewerOutput> listConsoleViewers();
    
    public List<BackendOutput> listBackends();
+   
+   public _Updater getUpdater();
    
 }

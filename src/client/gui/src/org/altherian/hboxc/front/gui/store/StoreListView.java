@@ -28,7 +28,7 @@ import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.StoreOut;
 import org.altherian.hbox.comm.out.event.store.StoreStateEventOut;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
-import org.altherian.hboxc.event.FrontEventManager;
+import org.altherian.hboxc.front.gui.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.store.StoreCreateAction;

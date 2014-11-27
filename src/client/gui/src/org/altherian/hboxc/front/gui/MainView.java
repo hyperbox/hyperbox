@@ -24,11 +24,11 @@ package org.altherian.hboxc.front.gui;
 import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hboxc.PreferencesManager;
-import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.tasks.TaskListView;
 import org.altherian.tool.logging.Logger;
 
+import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
@@ -37,6 +37,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
 
 public final class MainView {
    
@@ -47,6 +48,7 @@ public final class MainView {
    
    private ServerMachineView vmListView;
    private JSplitPane vSplit;
+   private JPanel notificationPanel;
    
    public static JFrame getMainFrame() {
       return instance.mainFrame;
@@ -67,12 +69,12 @@ public final class MainView {
       mainFrame.setJMenuBar(mainMenu.getComponent());
       mainFrame.addWindowListener(new WindowLManager());
       
-      
+      notificationPanel = new NotificationPanel();
       
       TaskListView taskList = new TaskListView();
       
       JPanel listView = new JPanel(new MigLayout("ins 0"));
-      listView.add(vmListView.getComponent(), "grow,push,wrap");
+      listView.add(vmListView.getComponent(), "grow, push, wrap");
       vSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, listView, taskList.getComponent());
       vSplit.setResizeWeight(1);
       vSplit.setDividerLocation(Integer.parseInt(PreferencesManager.get(MainView.class.getName()).getProperty(
@@ -85,30 +87,38 @@ public final class MainView {
          }
       });
       
+      mainFrame.add(notificationPanel, BorderLayout.NORTH);
       mainFrame.add(vSplit);
       FrontEventManager.register(this);
    }
    
    public void show() {
-      Logger.track();
-      
-      int width = Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFrameWidth.getId(), "990"));
-      int height = Integer.parseInt(PreferencesManager.get(MainView.class.getName()).getProperty(Config.MainFrameHeight.getId(), "772"));
-      mainFrame.setSize(width, height);
-      
-      // FIXME make sure the position still exists, in case we go from two screens to one screen.
-      if (PreferencesManager.get().containsKey(Config.MainFramePosX.getId())
-            && PreferencesManager.get().containsKey(Config.MainFramePosY.getId())) {
-         int x = Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFramePosX.getId()));
-         int y = Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFramePosY.getId()));
-         mainFrame.setLocation(x, y);
+      if (!SwingUtilities.isEventDispatchThread()) {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+               show();
+            }
+         });
       } else {
-         mainFrame.setLocationRelativeTo(null);
+         int width = Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFrameWidth.getId(), "990"));
+         int height = Integer.parseInt(PreferencesManager.get(MainView.class.getName()).getProperty(Config.MainFrameHeight.getId(), "772"));
+         mainFrame.setSize(width, height);
+         
+         // FIXME make sure the position still exists, in case we go from two screens to one screen.
+         if (PreferencesManager.get().containsKey(Config.MainFramePosX.getId())
+               && PreferencesManager.get().containsKey(Config.MainFramePosY.getId())) {
+            int x = Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFramePosX.getId()));
+            int y = Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFramePosY.getId()));
+            mainFrame.setLocation(x, y);
+         } else {
+            mainFrame.setLocationRelativeTo(null);
+         }
+         
+         mainFrame.setExtendedState(Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFrameState.getId(),
+               Integer.toString(JFrame.NORMAL))));
+         mainFrame.setVisible(true);
       }
-      
-      mainFrame.setExtendedState(Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFrameState.getId(),
-            Integer.toString(JFrame.NORMAL))));
-      mainFrame.setVisible(true);
    }
    
    public void hide() {

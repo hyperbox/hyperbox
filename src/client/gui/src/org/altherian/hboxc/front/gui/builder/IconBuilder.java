@@ -75,6 +75,7 @@ public class IconBuilder {
       clientTasks = new EnumMap<ClientTasks, ImageIcon>(ClientTasks.class);
       clientTasks.put(ClientTasks.ConnectorConnect, new ImageIcon(ICONS_PATH + "server_connect.png"));
       clientTasks.put(ClientTasks.ConnectorGet, new ImageIcon(ICONS_PATH + "details.png"));
+      clientTasks.put(ClientTasks.NotificationClose, new ImageIcon(ICONS_PATH + "cross.png"));
       clientTasks.put(ClientTasks.Exit, new ImageIcon(ICONS_PATH + "exit.png"));
    }
    

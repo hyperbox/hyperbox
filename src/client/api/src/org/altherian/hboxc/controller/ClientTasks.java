@@ -47,6 +47,8 @@ public enum ClientTasks {
    BackendModify,
    BackendRemove,
    
+   NotificationClose,
+
    Exit,
    
 }

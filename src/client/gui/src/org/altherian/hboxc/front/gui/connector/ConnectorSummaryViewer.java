@@ -26,8 +26,8 @@ import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
 
 import org.altherian.hboxc.comm.output.ConnectorOutput;
-import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.connector.ConnectorEvent;
+import org.altherian.hboxc.front.gui.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.server.ServerViewer;

@@ -79,7 +79,7 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.back._Backend;
 import org.altherian.hboxc.comm.io.factory.ServerIoFactory;
 import org.altherian.hboxc.comm.utils.Transaction;
-import org.altherian.hboxc.event.CoreEventManager;
+import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.event.backend.BackendConnectionStateEvent;
 import org.altherian.hboxc.event.server.ServerConnectedEvent;
 import org.altherian.hboxc.event.server.ServerDisconnectedEvent;
@@ -764,7 +764,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
          hypReader = null;
       }
       
-      CoreEventManager.post(new ServerModifiedEvent(ServerIoFactory.get(this)));
+      EventManager.post(new ServerModifiedEvent(ServerIoFactory.get(this)));
    }
    
    @Override
@@ -775,7 +775,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       
       ansRecv = new HashMap<String, _AnswerReceiver>();
       try {
-         CoreEventManager.register(this);
+         EventManager.register(this);
          backend = BackendFactory.get(backendId);
          backend.start();
          backend.connect(address);
@@ -815,7 +815,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
          refreshInfo();
          
          setState(ConnectionState.Connected);
-         CoreEventManager.post(new ServerConnectedEvent(ServerIoFactory.get(this)));
+         EventManager.post(new ServerConnectedEvent(ServerIoFactory.get(this)));
       } catch (Throwable e) {
          Logger.exception(e);
          disconnect();
@@ -847,8 +847,8 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
          backend = null;
          ansRecv = null;
          setState(ConnectionState.Disconnected);
-         CoreEventManager.post(new ServerDisconnectedEvent(ServerIoFactory.get(this)));
-         CoreEventManager.unregister(this);
+         EventManager.post(new ServerDisconnectedEvent(ServerIoFactory.get(this)));
+         EventManager.unregister(this);
       }
       
    }

@@ -35,9 +35,8 @@ import org.altherian.hboxc.comm.io.factory.ConsoleViewerIoFactory;
 import org.altherian.hboxc.core.connector._Connector;
 import org.altherian.hboxc.core.storage.UserProfileCoreStorage;
 import org.altherian.hboxc.core.storage._CoreStorage;
-import org.altherian.hboxc.event.CoreEventManager;
+import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.event.CoreStateEvent;
-import org.altherian.hboxc.event.FrontEventManager;
 import org.altherian.hboxc.event.connector.ConnectorAddedEvent;
 import org.altherian.hboxc.event.connector.ConnectorModifiedEvent;
 import org.altherian.hboxc.event.connector.ConnectorRemovedEvent;
@@ -48,8 +47,10 @@ import org.altherian.hboxc.exception.ConsoleViewerNotFoundForType;
 import org.altherian.hboxc.factory.BackendFactory;
 import org.altherian.hboxc.factory.ConnectorFactory;
 import org.altherian.hboxc.factory.ConsoleViewerFactory;
+import org.altherian.hboxc.factory.UpdaterFactory;
 import org.altherian.hboxc.server._Server;
 import org.altherian.hboxc.state.CoreState;
+import org.altherian.hboxc.updater._Updater;
 import org.altherian.tool.logging.Logger;
 
 import java.io.IOException;
@@ -83,13 +84,15 @@ public class ClientCore implements _Core {
    private Map<String, _Connector> conns;
    private Map<String, _Server> servers;
    
+   private _Updater updater;
+   
    private void setState(CoreState state) {
       Logger.track();
       
       if (!this.state.equals(state)) {
          Logger.verbose("Changing Core State to " + state);
          this.state = state;
-         FrontEventManager.post(new CoreStateEvent(this.state));
+         EventManager.post(new CoreStateEvent(this.state));
       } else {
          Logger.debug("Ignoring new state, same as old: " + state);
       }
@@ -121,17 +124,19 @@ public class ClientCore implements _Core {
                throw new HyperboxException("Invalid Connector data: duplicate ID for " + conn.getId());
             }
             conns.put(conn.getId(), conn);
-            CoreEventManager.post(new ConnectorAddedEvent(ConnectorIoFactory.get(conn)));
+            EventManager.post(new ConnectorAddedEvent(ConnectorIoFactory.get(conn)));
          }
       }
    }
    
    @Override
    public void init() throws HyperboxException {
-      CoreEventManager.get().register(this);
+      EventManager.get().register(this);
       
       storage = new UserProfileCoreStorage();
       storage.init();
+      
+      updater = UpdaterFactory.get();
    }
    
    @Override
@@ -172,10 +177,18 @@ public class ClientCore implements _Core {
             }
          }
          
-         storage.storeViewers(consoleViewers.values());
-         storage.storeConnectors(conns.values());
+         if (storage != null) {
+            storage.storeViewers(consoleViewers.values());
+            storage.storeConnectors(conns.values());
+            
+            storage.stop();
+            storage = null;
+         }
          
-         storage.stop();
+         if (updater != null) {
+            updater.stop();
+            updater = null;
+         }
          
          setState(CoreState.Stopped);
       }
@@ -235,7 +248,7 @@ public class ClientCore implements _Core {
       storage.storeViewers(consoleViewers.values());
       consoleViewers.put(conView.getId(), conView);
       
-      FrontEventManager.post(new ConsoleViewerAddedEvent(ConsoleViewerIoFactory.getOut(conView)));
+      EventManager.post(new ConsoleViewerAddedEvent(ConsoleViewerIoFactory.getOut(conView)));
       
       return conView;
    }
@@ -248,7 +261,7 @@ public class ClientCore implements _Core {
       viewer.remove();
       consoleViewers.remove(id);
       
-      FrontEventManager.post(new ConsoleViewerAddedEvent(ConsoleViewerIoFactory.getOut(viewer)));
+      EventManager.post(new ConsoleViewerAddedEvent(ConsoleViewerIoFactory.getOut(viewer)));
    }
    
    @Override
@@ -301,7 +314,7 @@ public class ClientCore implements _Core {
       storage.storeConnectorCredentials(conn.getId(), usrIn);
       conns.put(conn.getId(), conn);
       storage.storeConnectors(new ArrayList<_Connector>(conns.values()));
-      CoreEventManager.post(new ConnectorAddedEvent(ConnectorIoFactory.get(conn)));
+      EventManager.post(new ConnectorAddedEvent(ConnectorIoFactory.get(conn)));
       return conn;
    }
    
@@ -316,7 +329,7 @@ public class ClientCore implements _Core {
          storage.storeConnectorCredentials(conn.getId(), usrIn);
       }
       storage.storeConnectors(conns.values());
-      CoreEventManager.post(new ConnectorModifiedEvent(ConnectorIoFactory.get(conn)));
+      EventManager.post(new ConnectorModifiedEvent(ConnectorIoFactory.get(conn)));
       return conn;
    }
    
@@ -348,7 +361,7 @@ public class ClientCore implements _Core {
       _Connector conn = conns.remove(id);
       storage.storeConnectors(conns.values());
       storage.removeConnectorCredentials(id);
-      CoreEventManager.post(new ConnectorRemovedEvent(ConnectorIoFactory.get(conn)));
+      EventManager.post(new ConnectorRemovedEvent(ConnectorIoFactory.get(conn)));
    }
    
    @Handler
@@ -356,6 +369,15 @@ public class ClientCore implements _Core {
       Logger.track();
       
       servers.remove(ev.getServer().getId());
+   }
+   
+   @Handler
+   private void putStarted(CoreStateEvent ev) {
+      Logger.track();
+      
+      if (CoreState.Started.equals(ev.getState())) {
+         updater.start();
+      }
    }
    
    @Override
@@ -390,6 +412,11 @@ public class ClientCore implements _Core {
          throw new HyperboxRuntimeException("Couldn't launch Console Viewer: " + e.getMessage(), e);
       }
       
+   }
+   
+   @Override
+   public _Updater getUpdater() {
+      return updater;
    }
    
 }

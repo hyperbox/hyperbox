@@ -29,13 +29,14 @@ import org.altherian.hboxc.updater._Updater;
 public class UpdaterFactory {
    
    public static final String CFGKEY_UPDATER_CLASS = "updater.class";
+   public static final String CFGVAL_UPDATER_CLASS = Updater.class.getName();
    
    private UpdaterFactory() {
       // only static
    }
    
    public static _Updater get() {
-      return HyperboxClient.loadClass(_Updater.class, Configuration.getSetting(CFGKEY_UPDATER_CLASS, Updater.class.getName()));
+      return HyperboxClient.loadClass(_Updater.class, Configuration.getSetting(CFGKEY_UPDATER_CLASS, CFGVAL_UPDATER_CLASS));
    }
    
 }

@@ -21,44 +21,35 @@
 
 package org.altherian.hboxc.front.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Dialog;
+import net.engio.mbassy.IPublicationErrorHandler;
+import net.engio.mbassy.PublicationError;
 
-import javax.swing.JDialog;
-import javax.swing.JLabel;
+import java.awt.Dimension;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class ErrorDisplay {
-   
-   private static boolean init = false;
-   private static JDialog errorDialog;
-   private static JLabel descLabel;
-   private static JTextArea errorStack;
-   
-   private static void init() {
-      errorDialog = new JDialog(MainView.getMainFrame());
-      errorDialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-      
-      descLabel = new JLabel();
-      errorStack = new JTextArea(10, 30);
-      
-      errorDialog.add(descLabel, BorderLayout.NORTH);
-      errorDialog.add(errorStack, BorderLayout.SOUTH);
-      
-      init = true;
-   }
+public class ErrorDisplay implements IPublicationErrorHandler {
    
    public static void display(String description, Throwable t) {
-      if (!init) {
-         init();
-      }
-      descLabel.setText(description);
-      errorStack.setText(null);
-      for (StackTraceElement stEl : t.getStackTrace()) {
-         errorStack.append(stEl.toString() + "\n");
-      }
-      errorDialog.pack();
-      errorDialog.setVisible(true);
+      JTextArea textArea = new JTextArea();
+      textArea.setEditable(false);
+      StringWriter writer = new StringWriter();
+      t.printStackTrace(new PrintWriter(writer));
+      textArea.setText(writer.toString());
+      
+      JScrollPane scrollPane = new JScrollPane(textArea);
+      scrollPane.setPreferredSize(new Dimension(750, 300));
+      
+      JOptionPane.showMessageDialog(null, scrollPane, "An Error Has Occurred", JOptionPane.ERROR_MESSAGE);
+   }
+   
+   @Override
+   public void handleError(PublicationError error) {
+      display(error.getMessage(), error.getCause());
    }
    
 }

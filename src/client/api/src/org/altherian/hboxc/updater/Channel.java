@@ -31,6 +31,6 @@ public enum Channel {
    /**
     * Builds from repository, not stable
     */
-   New
+   Fresh
    
 }

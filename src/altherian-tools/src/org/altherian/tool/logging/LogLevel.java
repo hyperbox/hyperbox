@@ -23,6 +23,7 @@ package org.altherian.tool.logging;
 
 public enum LogLevel {
    
+   Raw(0, false),
    FatalException(10, true),
    Exception(20, true),
    Error(30, true),
@@ -47,5 +48,5 @@ public enum LogLevel {
    public Boolean isError() {
       return isError;
    }
-
+   
 }
