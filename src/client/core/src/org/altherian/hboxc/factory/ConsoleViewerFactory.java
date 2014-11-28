@@ -33,10 +33,6 @@ public class ConsoleViewerFactory {
    private ConsoleViewerFactory() {
    }
    
-   public static _ConsoleViewer get(String hypervisorId, String moduleId, String viewerPath) {
-      return get(hypervisorId, moduleId, viewerPath, "");
-   }
-   
    public static _ConsoleViewer get(String hypervisorId, String moduleId, String viewerPath, String args) {
       String id = hypervisorId + moduleId;
       return new ConsoleViewer(id, hypervisorId, moduleId, viewerPath, args);
