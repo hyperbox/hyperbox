@@ -35,8 +35,8 @@ import org.altherian.hboxc.comm.io.factory.ConsoleViewerIoFactory;
 import org.altherian.hboxc.core.connector._Connector;
 import org.altherian.hboxc.core.storage.UserProfileCoreStorage;
 import org.altherian.hboxc.core.storage._CoreStorage;
-import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.event.CoreStateEvent;
+import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.event.connector.ConnectorAddedEvent;
 import org.altherian.hboxc.event.connector.ConnectorModifiedEvent;
 import org.altherian.hboxc.event.connector.ConnectorRemovedEvent;
@@ -234,7 +234,7 @@ public class ClientCore implements _Core {
    }
    
    @Override
-   public _ConsoleViewer addConsoleViewer(String hypervisorId, String moduleId, String viewerPath) {
+   public _ConsoleViewer addConsoleViewer(String hypervisorId, String moduleId, String viewerPath, String viewerArgs) {
       Logger.track();
       
       String id = hypervisorId + moduleId;
@@ -242,7 +242,7 @@ public class ClientCore implements _Core {
          throw new HyperboxRuntimeException("Console viewer already exist for this Hypervisor and Module");
       }
       
-      _ConsoleViewer conView = ConsoleViewerFactory.get(hypervisorId, moduleId, viewerPath);
+      _ConsoleViewer conView = ConsoleViewerFactory.get(hypervisorId, moduleId, viewerPath, viewerArgs);
       conView.save();
       
       storage.storeViewers(consoleViewers.values());

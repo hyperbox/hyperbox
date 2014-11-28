@@ -62,7 +62,7 @@ public interface _Core {
    
    public void removeConnector(String id);
    
-   public _ConsoleViewer addConsoleViewer(String hypervisorId, String moduleId, String viewerPath);
+   public _ConsoleViewer addConsoleViewer(String hypervisorId, String moduleId, String viewerPath, String args);
    
    public void removeConsoleViewer(String id);
    
