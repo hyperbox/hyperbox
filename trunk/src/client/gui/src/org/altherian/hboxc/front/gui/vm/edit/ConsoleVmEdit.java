@@ -81,17 +81,17 @@ public class ConsoleVmEdit {
       
       panel = new JPanel(new MigLayout());
       panel.add(enableLabel);
-      panel.add(enableValue, "growx,pushx,wrap");
+      panel.add(enableValue, "growx, pushx, wrap");
       panel.add(portLabel);
-      panel.add(portValue, "growx,pushx,wrap");
+      panel.add(portValue, "growx, pushx, wrap");
       panel.add(addressLabel);
-      panel.add(addressValue, "growx,pushx,wrap");
+      panel.add(addressValue, "growx, pushx, wrap");
       panel.add(authTypeLabel);
-      panel.add(authTypeValue, "growx,pushx,wrap");
+      panel.add(authTypeValue, "growx, pushx, wrap");
       panel.add(authTimeoutLabel);
-      panel.add(authTimeoutValue, "growx,pushx,wrap");
+      panel.add(authTimeoutValue, "growx, pushx, wrap");
       panel.add(allowMultiConnLabel);
-      panel.add(allowMultiConnValue, "growx,pushx,wrap");
+      panel.add(allowMultiConnValue, "growx, pushx, wrap");
    }
    
    public Component getComp() {
@@ -111,7 +111,7 @@ public class ConsoleVmEdit {
       
       if ("VNC".equals(mOut.getSetting(MachineAttribute.VrdeModule).getString())) {
          panel.add(vncPassLabel);
-         panel.add(vncPassField, "growx,pushx,wrap");
+         panel.add(vncPassField, "growx, pushx, wrap");
          if (Gui.getServer(mOut.getServerId()).getMachineReader(mOut.getUuid()).getConsole().hasSetting("VNCPassword")) {
             vncPassField.setText(Gui.getServer(mOut.getServerId()).getMachineReader(mOut.getUuid()).getConsole().getSetting("VNCPassword")
                   .getString());
@@ -138,7 +138,7 @@ public class ConsoleVmEdit {
       if (!mOut.getSetting(MachineAttribute.VrdeMultiConnection).getBoolean().equals(allowMultiConnValue.isSelected())) {
          mIn.setSetting(new BooleanSettingIO(MachineAttribute.VrdeMultiConnection, allowMultiConnValue.isSelected()));
       }
-      if ("VNC".equals(mOut.getSetting(MachineAttribute.VrdeModule).getString())) {
+      if ("VNC".equals(mOut.getSetting(MachineAttribute.VrdeModule).getString()) && !vncPassField.getText().isEmpty()) {
          ConsoleIn conIn = new ConsoleIn();
          conIn.setSetting(new StringSettingIO("VNCPassword", vncPassField.getText()));
          mIn.addDevice(conIn);
