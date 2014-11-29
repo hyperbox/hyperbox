@@ -26,17 +26,16 @@ import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.comm.out.hypervisor.ScreenshotOut;
 import org.altherian.hboxc.front.gui.Gui;
-import org.altherian.tool.logging.Logger;
+import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
 
-import javax.swing.SwingWorker;
+import java.util.concurrent.ExecutionException;
 
-public class MachineGetScreenshotWorker extends SwingWorker<ScreenshotOut, Void> {
+public class MachineGetScreenshotWorker extends AxSwingWorker<_MachineScreenshotReceiver, ScreenshotOut, Void> {
    
-   private _MachineScreenshotReceiver recv;
    private MachineOut mOut;
    
    public MachineGetScreenshotWorker(_MachineScreenshotReceiver recv, MachineOut mOut) {
-      this.recv = recv;
+      super(recv);
       this.mOut = mOut;
    }
    
@@ -46,20 +45,13 @@ public class MachineGetScreenshotWorker extends SwingWorker<ScreenshotOut, Void>
    }
    
    @Override
-   protected void done() {
-      Logger.track();
-      
-      try {
-         ScreenshotOut scrOut = get();
-         recv.put(scrOut);
-         recv.loadingFinished(true, null);
-      } catch (Throwable e) {
-         recv.loadingFinished(false, e.getMessage());
-      }
+   protected void innerDone() throws InterruptedException, ExecutionException {
+      ScreenshotOut scrOut = get();
+      getReceiver().put(scrOut);
    }
    
-   public static void get(_MachineScreenshotReceiver recv, MachineOut mOut) {
-      new MachineGetScreenshotWorker(recv, mOut).execute();
+   public static void execute(_MachineScreenshotReceiver recv, MachineOut mOut) {
+      (new MachineGetScreenshotWorker(recv, mOut)).execute();
    }
    
 }

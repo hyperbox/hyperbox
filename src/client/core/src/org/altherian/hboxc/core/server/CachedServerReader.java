@@ -87,6 +87,7 @@ import org.altherian.hboxc.server._GuestReader;
 import org.altherian.hboxc.server._HypervisorReader;
 import org.altherian.hboxc.server._Machine;
 import org.altherian.hboxc.server._ServerReader;
+import org.altherian.hboxc.server.task._Task;
 import org.altherian.tool.logging.Logger;
 
 import java.util.ArrayList;
@@ -734,6 +735,11 @@ public class CachedServerReader implements _ServerReader {
    @Override
    public _Machine getMachineReader(String id) {
       return reader.getMachineReader(id);
+   }
+   
+   @Override
+   public _Task getTask(String id) {
+      return reader.getTask(id);
    }
    
 }

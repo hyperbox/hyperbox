@@ -89,7 +89,7 @@ public class HostViewer implements _Refreshable, _HostReceiver {
    
    public void show(String srvId) {
       this.srvId = srvId;
-      HostGetWorker.get(this, srvId);
+      HostGetWorker.execute(this, srvId);
    }
    
    @Override

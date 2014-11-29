@@ -48,6 +48,7 @@ import org.altherian.hboxc.factory.BackendFactory;
 import org.altherian.hboxc.factory.ConnectorFactory;
 import org.altherian.hboxc.factory.ConsoleViewerFactory;
 import org.altherian.hboxc.factory.UpdaterFactory;
+import org.altherian.hboxc.server._Machine;
 import org.altherian.hboxc.server._Server;
 import org.altherian.hboxc.state.CoreState;
 import org.altherian.hboxc.updater._Updater;
@@ -388,6 +389,11 @@ public class ClientCore implements _Core {
          }
       }
       throw new HyperboxRuntimeException("No connected server was found under ID " + serverId);
+   }
+   
+   @Override
+   public void launchConsoleViewer(_Machine machine) {
+      launchConsoleViewer(machine.getServer().getId(), machine.getId());
    }
    
    @Override

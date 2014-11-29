@@ -119,7 +119,7 @@ public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
    public void refresh() {
       
       if (isDisplayAvailable()) {
-         MachineGetScreenshotWorker.get(this, mOut);
+         MachineGetScreenshotWorker.execute(this, mOut);
       } else {
          statusLabel.setText("No output available");
          stop();

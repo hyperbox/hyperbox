@@ -23,26 +23,22 @@ package org.altherian.hboxc.front.gui.workers;
 
 import org.altherian.hbox.comm.out.network.NetworkAttachModeOut;
 import org.altherian.hboxc.front.gui.Gui;
-import org.altherian.tool.logging.Logger;
+import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
 
 import java.util.List;
 
-import javax.swing.SwingWorker;
-
-public class NetworkAttachModeListWorker extends SwingWorker<Void, NetworkAttachModeOut> {
+public class NetworkAttachModeListWorker extends AxSwingWorker<_NetworkAttachModeReceiver, Void, NetworkAttachModeOut> {
    
-   private _NetworkAttachModeReceiver recv;
-   private String serverId;
+   private String srvId;
    
    public NetworkAttachModeListWorker(_NetworkAttachModeReceiver recv, String serverId) {
-      this.recv = recv;
-      this.serverId = serverId;
-      recv.loadingStarted();
+      super(recv);
+      this.srvId = serverId;
    }
    
    @Override
    protected Void doInBackground() throws Exception {
-      for (NetworkAttachModeOut ostOut : Gui.getServer(serverId).listNetworkAttachModes()) {
+      for (NetworkAttachModeOut ostOut : Gui.getServer(srvId).listNetworkAttachModes()) {
          publish(ostOut);
       }
       
@@ -51,23 +47,11 @@ public class NetworkAttachModeListWorker extends SwingWorker<Void, NetworkAttach
    
    @Override
    protected void process(List<NetworkAttachModeOut> ostOutList) {
-      recv.add(ostOutList);
+      getReceiver().add(ostOutList);
    }
    
-   @Override
-   protected void done() {
-      Logger.track();
-      
-      try {
-         get();
-         recv.loadingFinished(true, null);
-      } catch (Throwable e) {
-         recv.loadingFinished(false, e.getMessage());
-      }
-   }
-   
-   public static void run(_NetworkAttachModeReceiver recv, String serverId) {
-      new NetworkAttachModeListWorker(recv, serverId).execute();
+   public static void execute(_NetworkAttachModeReceiver recv, String serverId) {
+      (new NetworkAttachModeListWorker(recv, serverId)).execute();
    }
    
 }

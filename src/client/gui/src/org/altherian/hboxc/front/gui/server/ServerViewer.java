@@ -117,7 +117,7 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    @Override
    public void refresh() {
       clear();
-      ServerGetWorker.get(this, srvId);
+      ServerGetWorker.execute(this, srvId);
    }
    
    private void update(ServerOut srvOut) {
@@ -142,7 +142,7 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    public void putServerEvent(ServerEvent ev) {
       Logger.track();
       
-      if (ev.getServer().getId().equals(srvId)) {
+      if ((srvId != null) && ev.getServer().getId().equals(srvId)) {
          refresh();
       }
    }
@@ -150,7 +150,7 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    // TODO move into the HypervisorViewer class
    @Handler
    public void putHypervisorConnectEvent(HypervisorConnectedEventOut ev) {
-      if (ev.getServer().getId().equals(srvId)) {
+      if ((srvId != null) && ev.getServer().getId().equals(srvId)) {
          hypViewer.show(Gui.getServer(srvId).getHypervisor().getInfo());
       }
    }
@@ -158,7 +158,7 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    // TODO move into the HypervisorViewer class
    @Handler
    public void putHypervisorDisconnectEvent(HypervisorDisconnectedEventOut ev) {
-      if (ev.getServer().getId().equals(srvId)) {
+      if ((srvId != null) && ev.getServer().getId().equals(srvId)) {
          hypViewer.setDisconnected();
       }
    }

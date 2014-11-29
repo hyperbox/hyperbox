@@ -1,7 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
- * hyperbox at altherian dot org
+ * Copyright (C) 2014 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -22,39 +21,37 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.out.ServerOut;
-import org.altherian.hbox.comm.out.TaskOut;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceTypeOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
 
 import java.util.List;
 
-public class TaskListWorker extends AxSwingWorker<_TaskListReceiver, Void, TaskOut> {
+public class NetworkInterfaceTypeListWorker extends AxSwingWorker<_NetworkInterfaceTypeReceiver, Void, NetworkInterfaceTypeOut> {
    
-   private ServerOut srvOut;
+   private String srvId;
    
-   public TaskListWorker(_TaskListReceiver recv, ServerOut srvOut) {
+   public NetworkInterfaceTypeListWorker(_NetworkInterfaceTypeReceiver recv, String srvId) {
       super(recv);
-      this.srvOut = srvOut;
+      this.srvId = srvId;
    }
    
    @Override
    protected Void doInBackground() throws Exception {
-      
-      for (TaskOut tOut : Gui.getServer(srvOut).listTasks()) {
-         publish(tOut);
+      for (NetworkInterfaceTypeOut nicTypeOut : Gui.getServer(srvId).listNetworkInterfaceTypes()) {
+         publish(nicTypeOut);
       }
       
       return null;
    }
    
    @Override
-   protected void process(List<TaskOut> tOutList) {
-      getReceiver().add(tOutList);
+   protected void process(List<NetworkInterfaceTypeOut> nicTypeOut) {
+      getReceiver().add(nicTypeOut);
    }
    
-   public static void execute(_TaskListReceiver recv, ServerOut srvOut) {
-      (new TaskListWorker(recv, srvOut)).execute();
+   public static void execute(_NetworkInterfaceTypeReceiver recv, String srvId) {
+      (new NetworkInterfaceTypeListWorker(recv, srvId)).execute();
    }
    
 }

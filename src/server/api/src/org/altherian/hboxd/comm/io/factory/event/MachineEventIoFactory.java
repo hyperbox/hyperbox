@@ -38,7 +38,6 @@ import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.event.machine.MachineEvent;
 import org.altherian.hboxd.event.machine.MachineRegistrationEvent;
 import org.altherian.hboxd.event.machine.MachineStateEvent;
-import org.altherian.tool.logging.Logger;
 
 public final class MachineEventIoFactory implements _EventIoFactory {
    
@@ -46,7 +45,6 @@ public final class MachineEventIoFactory implements _EventIoFactory {
       try {
          return MachineIoFactory.get(HBoxServer.get().getMachine(id));
       } catch (HyperboxRuntimeException e) {
-         Logger.exception(e);
          return MachineIoFactory.get(id, MachineStates.Unknown.getId());
       }
    }
@@ -64,15 +62,11 @@ public final class MachineEventIoFactory implements _EventIoFactory {
    @Override
    public EventOut get(_Hyperbox hbox, _Event ev) {
       MachineEvent mEv = (MachineEvent) ev;
-      MachineOut mOut = MachineIoFactory.get(mEv.getMachineId(), MachineStates.Unknown.getId());
-      try {
-         mOut = MachineIoFactory.get(HBoxServer.get().getMachine(mEv.getMachineId()));
-      } catch (HyperboxRuntimeException e) {
-         Logger.exception(e);
-      }
+      MachineOut mOut = getObjOut(mEv.getMachineId());
+      
       switch ((HyperboxEvents) ev.getEventId()) {
          case MachineState:
-            return new MachineStateEventOut(mEv.getTime(), ServerIoFactory.get(), getObjOut(mEv.getMachineId()), ((MachineStateEvent) ev).getState());
+            return new MachineStateEventOut(mEv.getTime(), ServerIoFactory.get(), mOut, ((MachineStateEvent) ev).getState());
          case MachineRegistration:
             return new MachineRegistrationEventOut(mEv.getTime(), ServerIoFactory.get(), mOut,
                   ((MachineRegistrationEvent) mEv).isRegistrated());

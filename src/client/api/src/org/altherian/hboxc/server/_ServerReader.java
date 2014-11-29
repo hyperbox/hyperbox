@@ -54,6 +54,7 @@ import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hbox.comm.out.storage.StorageControllerSubTypeOut;
 import org.altherian.hbox.comm.out.storage.StorageControllerTypeOut;
 import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
+import org.altherian.hboxc.server.task._Task;
 
 import java.util.List;
 import java.util.Set;
@@ -79,7 +80,7 @@ public interface _ServerReader {
    public MachineOut getMachine(String vmId);
    
    public _Machine getMachineReader(String id);
-
+   
    public MediumOut getMedium(MediumIn mIn);
    
    public SessionOut getSession(SessionIn sIn);
@@ -164,4 +165,6 @@ public interface _ServerReader {
    
    public Set<String> listLogLevel();
    
+   public _Task getTask(String id);
+
 }

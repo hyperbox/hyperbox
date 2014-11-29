@@ -26,6 +26,7 @@ import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.back._Backend;
 import org.altherian.hboxc.comm.input.ConnectorInput;
 import org.altherian.hboxc.core.connector._Connector;
+import org.altherian.hboxc.server._Machine;
 import org.altherian.hboxc.server._Server;
 import org.altherian.hboxc.state.CoreState;
 import org.altherian.hboxc.updater._Updater;
@@ -76,6 +77,8 @@ public interface _Core {
    
    public void launchConsoleViewer(String serverId, String machineId);
    
+   public void launchConsoleViewer(_Machine machine);
+
    public _Server getServer(String serverId);
    
    public _Connector getConnectorForServer(String serverId);

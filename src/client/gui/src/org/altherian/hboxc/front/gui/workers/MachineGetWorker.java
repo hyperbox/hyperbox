@@ -24,43 +24,33 @@ package org.altherian.hboxc.front.gui.workers;
 
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxc.front.gui.Gui;
-import org.altherian.tool.logging.Logger;
+import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
 
-import javax.swing.SwingWorker;
+import java.util.concurrent.ExecutionException;
 
-public class MachineGetWorker extends SwingWorker<MachineOut, Void> {
+public class MachineGetWorker extends AxSwingWorker<_MachineReceiver, MachineOut, Void> {
    
-   private _MachineReceiver recv;
    private MachineOut mOut;
    
    public MachineGetWorker(_MachineReceiver recv, MachineOut mOut) {
-      this.recv = recv;
+      super(recv);
       this.mOut = mOut;
    }
    
    @Override
    protected MachineOut doInBackground() throws Exception {
-      recv.loadingStarted();
       MachineOut newMachineOut = Gui.getServer(mOut.getServerId()).getMachine(mOut.getUuid());
       return newMachineOut;
    }
    
    @Override
-   protected void done() {
-      Logger.track();
-      
-      try {
-         MachineOut mOut = get();
-         recv.put(mOut);
-         recv.loadingFinished(true, null);
-      } catch (Throwable e) {
-         Logger.exception(e);
-         recv.loadingFinished(false, e.getMessage());
-      }
+   protected void innerDone() throws InterruptedException, ExecutionException {
+      MachineOut mOut = get();
+      getReceiver().put(mOut);
    }
    
-   public static void get(_MachineReceiver recv, MachineOut mOut) {
-      new MachineGetWorker(recv, mOut).execute();
+   public static void execute(_MachineReceiver recv, MachineOut mOut) {
+      (new MachineGetWorker(recv, mOut)).execute();
    }
    
 }

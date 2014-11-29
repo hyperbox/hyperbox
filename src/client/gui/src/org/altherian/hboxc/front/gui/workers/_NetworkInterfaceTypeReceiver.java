@@ -21,37 +21,12 @@
 
 package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.out.ModuleOut;
-import org.altherian.hboxc.front.gui.Gui;
-import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
+import org.altherian.hbox.comm.out.network.NetworkInterfaceTypeOut;
 
 import java.util.List;
 
-public class ModuleListWorker extends AxSwingWorker<_ModuleListReceiver, Void, ModuleOut> {
+public interface _NetworkInterfaceTypeReceiver extends _WorkerDataReceiver {
    
-   private String srvId;
-   
-   public ModuleListWorker(_ModuleListReceiver recv, String srvId) {
-      super(recv);
-      this.srvId = srvId;
-   }
-   
-   @Override
-   protected Void doInBackground() throws Exception {
-      for (ModuleOut modOut : Gui.getServer(srvId).listModules()) {
-         publish(modOut);
-      }
-      
-      return null;
-   }
-   
-   @Override
-   protected void process(List<ModuleOut> objOutList) {
-      getReceiver().add(objOutList);
-   }
-   
-   public static void execute(_ModuleListReceiver recv, String srvId) {
-      (new ModuleListWorker(recv, srvId)).execute();
-   }
+   public void add(List<NetworkInterfaceTypeOut> objOutList);
    
 }

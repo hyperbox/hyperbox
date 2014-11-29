@@ -24,28 +24,24 @@ package org.altherian.hboxc.front.gui.workers;
 import org.altherian.hbox.comm.in.NetworkAttachModeIn;
 import org.altherian.hbox.comm.out.network.NetworkAttachNameOut;
 import org.altherian.hboxc.front.gui.Gui;
-import org.altherian.tool.logging.Logger;
+import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
 
 import java.util.List;
 
-import javax.swing.SwingWorker;
-
-public class NetworkAttachNameListWorker extends SwingWorker<Void, NetworkAttachNameOut> {
+public class NetworkAttachNameListWorker extends AxSwingWorker<_NetworkAttachNameReceiver, Void, NetworkAttachNameOut> {
    
-   private _NetworkAttachNameReceiver recv;
-   private String serverId;
+   private String srvId;
    private String netAttachModeId;
    
-   public NetworkAttachNameListWorker(_NetworkAttachNameReceiver recv, String serverId, String netAttachModeId) {
-      this.recv = recv;
-      this.serverId = serverId;
+   public NetworkAttachNameListWorker(_NetworkAttachNameReceiver recv, String srvId, String netAttachModeId) {
+      super(recv);
+      this.srvId = srvId;
       this.netAttachModeId = netAttachModeId;
-      recv.loadingStarted();
    }
    
    @Override
    protected Void doInBackground() throws Exception {
-      for (NetworkAttachNameOut nanOut : Gui.getServer(serverId).listNetworkAttachNames(new NetworkAttachModeIn(netAttachModeId))) {
+      for (NetworkAttachNameOut nanOut : Gui.getServer(srvId).listNetworkAttachNames(new NetworkAttachModeIn(netAttachModeId))) {
          publish(nanOut);
       }
       
@@ -54,23 +50,11 @@ public class NetworkAttachNameListWorker extends SwingWorker<Void, NetworkAttach
    
    @Override
    protected void process(List<NetworkAttachNameOut> nanOut) {
-      recv.add(nanOut);
+      getReceiver().add(nanOut);
    }
    
-   @Override
-   protected void done() {
-      Logger.track();
-      
-      try {
-         get();
-         recv.loadingFinished(true, null);
-      } catch (Throwable e) {
-         recv.loadingFinished(false, e.getMessage());
-      }
-   }
-   
-   public static void run(_NetworkAttachNameReceiver recv, String serverId, String netAttachModeId) {
-      new NetworkAttachNameListWorker(recv, serverId, netAttachModeId).execute();
+   public static void execute(_NetworkAttachNameReceiver recv, String srvId, String netAttachModeId) {
+      (new NetworkAttachNameListWorker(recv, srvId, netAttachModeId)).execute();
    }
    
 }

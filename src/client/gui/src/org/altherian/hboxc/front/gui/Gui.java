@@ -55,6 +55,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 public final class Gui implements _Front {
@@ -81,7 +82,13 @@ public final class Gui implements _Front {
       EventManager.get().add(FrontEventManager.get());
       FrontEventManager.register(this);
       
-      mainView = new MainView();
+      SwingUtilities.invokeLater(new Runnable() {
+         @Override
+         public void run() {
+            mainView = new MainView();
+         }
+      });
+      
    }
    
    @Override

@@ -108,7 +108,7 @@ public class ModuleListView implements _ModuleSelector, _Refreshable, _ModuleLis
    
    @Override
    public void refresh() {
-      ModuleListWorker.run(this, srvId);
+      ModuleListWorker.execute(this, srvId);
    }
    
    @Override

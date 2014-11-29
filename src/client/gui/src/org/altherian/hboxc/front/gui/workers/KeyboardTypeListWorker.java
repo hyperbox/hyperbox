@@ -23,36 +23,23 @@ package org.altherian.hboxc.front.gui.workers;
 
 import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hboxc.front.gui.Gui;
-import org.altherian.tool.logging.Logger;
+import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
 
 import java.util.List;
 
-import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
-
-public class KeyboardTypeListWorker extends SwingWorker<Void, String> {
+public class KeyboardTypeListWorker extends AxSwingWorker<_KeyboardTypeListReceiver, Void, String> {
    
-   private _KeyboardTypeListReceiver recv;
    private String serverId;
    private String machineId;
    
    public KeyboardTypeListWorker(_KeyboardTypeListReceiver recv, String serverId, String machineId) {
-      this.recv = recv;
+      super(recv);
       this.serverId = serverId;
       this.machineId = machineId;
    }
    
    @Override
    protected Void doInBackground() throws Exception {
-      SwingUtilities.invokeLater(new Runnable() {
-         
-         @Override
-         public void run() {
-            recv.loadingStarted();
-         }
-         
-      });
-      
       for (String type : Gui.getServer(serverId).listKeyboardMode(new MachineIn(machineId))) {
          publish(type);
       }
@@ -62,23 +49,11 @@ public class KeyboardTypeListWorker extends SwingWorker<Void, String> {
    
    @Override
    protected void process(List<String> typeList) {
-      recv.add(typeList);
+      getReceiver().add(typeList);
    }
    
-   @Override
-   protected void done() {
-      Logger.track();
-      
-      try {
-         get();
-         recv.loadingFinished(true, null);
-      } catch (Throwable e) {
-         recv.loadingFinished(false, e.getMessage());
-      }
-   }
-   
-   public static void get(_KeyboardTypeListReceiver recv, String serverId, String machineId) {
-      new KeyboardTypeListWorker(recv, serverId, machineId).execute();
+   public static void execute(_KeyboardTypeListReceiver recv, String serverId, String machineId) {
+      (new KeyboardTypeListWorker(recv, serverId, machineId)).execute();
    }
    
 }

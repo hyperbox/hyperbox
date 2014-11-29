@@ -22,10 +22,11 @@
 
 package org.altherian.hboxc.core;
 
+
 public interface _ConsoleViewer extends _ConsoleViewerWriter, _ConsoleViewerReader {
    
    public void save();
-
-   public void remove();
    
+   public void remove();
+
 }

@@ -64,11 +64,11 @@ public final class AudioVmEdit {
       
       panel = new JPanel(new MigLayout());
       panel.add(audioEnableLabel);
-      panel.add(audioEnableBox, "growx,pushx,wrap");
+      panel.add(audioEnableBox, "growx, pushx, wrap");
       panel.add(driverLabel);
-      panel.add(driverBox, "growx,pushx,wrap");
+      panel.add(driverBox, "growx, pushx, wrap");
       panel.add(controllerLabel);
-      panel.add(controllerBox, "growx,pushx,wrap");
+      panel.add(controllerBox, "growx, pushx, wrap");
    }
    
    public Component getComp() {

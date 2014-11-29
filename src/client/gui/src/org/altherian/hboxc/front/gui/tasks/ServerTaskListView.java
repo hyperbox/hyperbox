@@ -155,7 +155,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
    public void refresh() {
       if (!isLoading) {
          isLoading = true;
-         TaskListWorker.run(new TaskListReceiver(), srvOut);
+         TaskListWorker.execute(new TaskListReceiver(), srvOut);
       }
    }
    
