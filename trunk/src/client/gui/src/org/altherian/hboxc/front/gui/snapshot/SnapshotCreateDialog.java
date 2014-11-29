@@ -23,10 +23,6 @@ package org.altherian.hboxc.front.gui.snapshot;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.altherian.hbox.comm.Command;
-import org.altherian.hbox.comm.HypervisorTasks;
-import org.altherian.hbox.comm.Request;
-import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.in.SnapshotIn;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxc.front.gui.Gui;
@@ -114,12 +110,7 @@ public class SnapshotCreateDialog {
       snapIn.setName(nameField.getText());
       snapIn.setDescription(descArea.getText());
       
-      MachineIn mIn = new MachineIn(mOut);
-      
-      Request req = new Request(Command.VBOX, HypervisorTasks.SnapshotTake);
-      req.set(snapIn);
-      req.set(mIn);
-      Gui.post(req);
+      Gui.getServer(mOut.getServerId()).getMachineReader(mOut.getUuid()).takeSnapshot(snapIn);
       
       hide();
    }

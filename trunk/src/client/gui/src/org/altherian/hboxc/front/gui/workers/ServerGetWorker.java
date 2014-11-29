@@ -23,41 +23,32 @@ package org.altherian.hboxc.front.gui.workers;
 
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.front.gui.Gui;
-import org.altherian.tool.logging.Logger;
+import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
 
-import javax.swing.SwingWorker;
+import java.util.concurrent.ExecutionException;
 
-public class ServerGetWorker extends SwingWorker<ServerOut, Void> {
+public class ServerGetWorker extends AxSwingWorker<_ServerReceiver, ServerOut, Void> {
    
-   private _ServerReceiver recv;
    private String srvId;
    
    public ServerGetWorker(_ServerReceiver recv, String srvId) {
-      this.recv = recv;
+      super(recv);
       this.srvId = srvId;
    }
    
    @Override
    protected ServerOut doInBackground() throws Exception {
-      recv.loadingStarted();
       ServerOut newSrvOut = Gui.getServerInfo(srvId);
       return newSrvOut;
    }
    
    @Override
-   protected void done() {
-      Logger.track();
-      
-      try {
-         ServerOut srvOut = get();
-         recv.put(srvOut);
-         recv.loadingFinished(true, null);
-      } catch (Throwable e) {
-         recv.loadingFinished(false, e.getMessage());
-      }
+   protected void innerDone() throws InterruptedException, ExecutionException {
+      ServerOut srvOut = get();
+      getReceiver().put(srvOut);
    }
    
-   public static void get(_ServerReceiver recv, String srvId) {
+   public static void execute(_ServerReceiver recv, String srvId) {
       new ServerGetWorker(recv, srvId).execute();
    }
    

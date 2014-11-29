@@ -26,40 +26,48 @@ import org.altherian.hboxc.front.gui.workers._WorkerDataReceiver;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.concurrent.ExecutionException;
 
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
-public abstract class AnSwingWorker<T, V, K extends _WorkerDataReceiver> extends SwingWorker<T, V> {
+public abstract class AxSwingWorker<K extends _WorkerDataReceiver, T, V> extends SwingWorker<T, V> {
    
    private K recv;
    
-   public AnSwingWorker(final K recv) {
+   public AxSwingWorker(K recv) {
+      setReceiver(recv);
+   }
+   
+   protected K getReceiver() {
+      return recv;
+   }
+   
+   protected void setReceiver(final K recv) {
       this.recv = recv;
       
       addPropertyChangeListener(new PropertyChangeListener() {
          
          @Override
          public void propertyChange(PropertyChangeEvent ev) {
-            // FIXME change
             if ("state".equals(ev.getPropertyName()) && (SwingWorker.StateValue.STARTED == ev.getNewValue())) {
-               if (SwingUtilities.isEventDispatchThread()) {
-                  recv.loadingStarted();
-               } else {
-                  SwingUtilities.invokeLater(new Runnable() {
-                     @Override
-                     public void run() {
-                        recv.loadingStarted();
-                     }
-                  });
-               }
+               recv.loadingStarted();
             }
          }
       });
    }
    
-   protected K getReceiver() {
-      return recv;
+   @Override
+   protected final void done() {
+      try {
+         innerDone();
+         recv.loadingFinished(true, null);
+      } catch (Throwable t) {
+         recv.loadingFinished(false, t.getMessage());
+      }
+   }
+   
+   protected void innerDone() throws InterruptedException, ExecutionException {
+      get();
    }
    
 }

@@ -163,7 +163,7 @@ public class PermissionAddDialog implements _Saveable, _Cancelable, _MachineList
          }
          
          if (SecurityItem.Machine.equals(itemTypeValue.getSelectedItem())) {
-            MachineListWorker.get(PermissionAddDialog.this, serverId);
+            MachineListWorker.execute(PermissionAddDialog.this, serverId);
          }
       }
       

@@ -76,12 +76,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
       Logger.track();
       
       if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-               update();
-            }
-         });
+         Logger.exception(new Exception("Not on EDT"));
       }
       
       if (mOut.isAvailable()) {
@@ -107,7 +102,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    public void getMachineUpdate(MachineDataChangedEvent ev) {
       Logger.track();
       
-      if (ev.getUuid().contentEquals(mOut.getUuid())) {
+      if ((mOut != null) && ev.getUuid().contentEquals(mOut.getUuid())) {
          Logger.track();
          put(ev.getMachine());
       }
@@ -117,7 +112,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    public void getMachineRemove(MachineRemovedEvent ev) {
       Logger.track();
       
-      if (ev.getUuid().contentEquals(mOut.getUuid())) {
+      if ((mOut != null) && ev.getUuid().contentEquals(mOut.getUuid())) {
          Logger.track();
          clear();
       }
@@ -186,7 +181,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    
    @Override
    public void refresh() {
-      MachineGetWorker.get(this, mOut);
+      MachineGetWorker.execute(this, mOut);
    }
    
 }

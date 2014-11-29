@@ -163,7 +163,7 @@ public class VmEditDialog {
    
    private void show(MachineOut mOut) {
       mIn = new MachineIn(mOut);
-      MachineGetWorker.get(new MachineReceiver(), mOut);
+      MachineGetWorker.execute(new MachineReceiver(), mOut);
       mainDialog.setTitle(mOut.getName() + " - Settings");
       mainDialog.setLocationRelativeTo(mainDialog.getParent());
       mainDialog.setVisible(true);

@@ -21,6 +21,11 @@
 
 package org.altherian.hboxc.core.server;
 
+import org.altherian.hbox.comm.Command;
+import org.altherian.hbox.comm.HypervisorTasks;
+import org.altherian.hbox.comm.Request;
+import org.altherian.hbox.comm.in.MachineIn;
+import org.altherian.hbox.comm.in.SnapshotIn;
 import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.core.Entity;
 import org.altherian.hboxc.server._Console;
@@ -65,6 +70,14 @@ public class Machine extends Entity implements _Machine {
    @Override
    public _Server getServer() {
       return srv;
+   }
+   
+   @Override
+   public void takeSnapshot(SnapshotIn snapshotIn) {
+      Request req = new Request(Command.VBOX, HypervisorTasks.SnapshotTake);
+      req.set(MachineIn.class, new MachineIn(getId()));
+      req.set(SnapshotIn.class, snapshotIn);
+      srv.sendRequest(req);
    }
    
 }

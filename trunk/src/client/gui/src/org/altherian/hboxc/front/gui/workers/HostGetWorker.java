@@ -23,18 +23,17 @@ package org.altherian.hboxc.front.gui.workers;
 
 import org.altherian.hbox.comm.out.host.HostOut;
 import org.altherian.hboxc.front.gui.Gui;
+import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
 
-import javax.swing.SwingWorker;
+import java.util.concurrent.ExecutionException;
 
-public class HostGetWorker extends SwingWorker<HostOut, Void> {
+public class HostGetWorker extends AxSwingWorker<_HostReceiver, HostOut, Void> {
    
-   private _HostReceiver recv;
    private String srvId;
    
-   private HostGetWorker(_HostReceiver recv, String srvId) {
-      this.recv = recv;
+   public HostGetWorker(_HostReceiver recv, String srvId) {
+      super(recv);
       this.srvId = srvId;
-      recv.loadingStarted();
    }
    
    @Override
@@ -44,18 +43,13 @@ public class HostGetWorker extends SwingWorker<HostOut, Void> {
    }
    
    @Override
-   protected void done() {
-      try {
-         HostOut hostOut = get();
-         recv.put(hostOut);
-         recv.loadingFinished(true, null);
-      } catch (Throwable t) {
-         recv.loadingFinished(false, t.getMessage());
-      }
+   protected void innerDone() throws InterruptedException, ExecutionException {
+      HostOut hostOut = get();
+      getReceiver().put(hostOut);
    }
    
-   public static void get(_HostReceiver recv, String srvId) {
-      new HostGetWorker(recv, srvId).execute();
+   public static void execute(_HostReceiver recv, String srvId) {
+      (new HostGetWorker(recv, srvId)).execute();
    }
-
+   
 }

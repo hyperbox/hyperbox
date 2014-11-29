@@ -26,25 +26,21 @@ import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.comm.out.hypervisor.OsTypeOut;
 import org.altherian.hboxc.front.gui.Gui;
-import org.altherian.tool.logging.Logger;
+import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
 
 import java.util.List;
 
-import javax.swing.SwingWorker;
-
-public class OsTypeListWorker extends SwingWorker<Void, OsTypeOut> {
+public class OsTypeListWorker extends AxSwingWorker<_OsTypeListReceiver, Void, OsTypeOut> {
    
-   private _OsTypeListReceiver recv;
    private MachineOut mOut;
    
    public OsTypeListWorker(_OsTypeListReceiver recv, MachineOut mOut) {
-      this.recv = recv;
+      super(recv);
       this.mOut = mOut;
    }
    
    @Override
    protected Void doInBackground() throws Exception {
-      recv.loadingStarted();
       for (OsTypeOut ostOut : Gui.getServer(mOut.getServerId()).listOsType(new MachineIn(mOut))) {
          publish(ostOut);
       }
@@ -54,22 +50,10 @@ public class OsTypeListWorker extends SwingWorker<Void, OsTypeOut> {
    
    @Override
    protected void process(List<OsTypeOut> ostOutList) {
-      recv.add(ostOutList);
+      getReceiver().add(ostOutList);
    }
    
-   @Override
-   protected void done() {
-      Logger.track();
-      
-      try {
-         get();
-         recv.loadingFinished(true, null);
-      } catch (Throwable e) {
-         recv.loadingFinished(false, e.getMessage());
-      }
-   }
-   
-   public static void run(_OsTypeListReceiver recv, MachineOut mOut) {
+   public static void execute(_OsTypeListReceiver recv, MachineOut mOut) {
       new OsTypeListWorker(recv, mOut).execute();
    }
    

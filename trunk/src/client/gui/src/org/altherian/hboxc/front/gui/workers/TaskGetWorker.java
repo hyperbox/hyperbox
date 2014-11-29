@@ -24,44 +24,32 @@ package org.altherian.hboxc.front.gui.workers;
 import org.altherian.hbox.comm.in.TaskIn;
 import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hboxc.front.gui.Gui;
-import org.altherian.tool.logging.Logger;
+import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
 
-import javax.swing.SwingWorker;
+import java.util.concurrent.ExecutionException;
 
-public class TaskGetWorker extends SwingWorker<Void, Void> {
+public class TaskGetWorker extends AxSwingWorker<_TaskReceiver, TaskOut, Void> {
    
-   private _TaskReceiver recv;
    private TaskOut objOut;
    
    public TaskGetWorker(_TaskReceiver recv, TaskOut objOut) {
-      this.recv = recv;
+      super(recv);
       this.objOut = objOut;
    }
    
    @Override
-   protected Void doInBackground() throws Exception {
-      recv.loadingStarted();
-      TaskOut newObjOut = Gui.getServer(objOut.getServerId()).getTask(new TaskIn(objOut));
-      recv.put(newObjOut);
-      
-      return null;
+   protected TaskOut doInBackground() throws Exception {
+      return Gui.getServer(objOut.getServerId()).getTask(new TaskIn(objOut));
    }
    
    @Override
-   protected void done() {
-      Logger.track();
-      
-      try {
-         get();
-         recv.loadingFinished(true, null);
-      } catch (Throwable e) {
-         Logger.exception(e);
-         recv.loadingFinished(false,e.getMessage());
-      }
+   protected void innerDone() throws InterruptedException, ExecutionException {
+      TaskOut tOut = get();
+      getReceiver().put(tOut);
    }
    
-   public static void get(_TaskReceiver recv, TaskOut objOut) {
-      new TaskGetWorker(recv, objOut).execute();
+   public static void execute(_TaskReceiver recv, TaskOut objOut) {
+      (new TaskGetWorker(recv, objOut)).execute();
    }
    
 }

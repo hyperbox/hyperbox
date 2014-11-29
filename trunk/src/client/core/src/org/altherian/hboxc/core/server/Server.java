@@ -89,6 +89,7 @@ import org.altherian.hboxc.server._GuestReader;
 import org.altherian.hboxc.server._HypervisorReader;
 import org.altherian.hboxc.server._Machine;
 import org.altherian.hboxc.server._Server;
+import org.altherian.hboxc.server.task._Task;
 import org.altherian.hboxc.state.ConnectionState;
 import org.altherian.tool.AxBooleans;
 import org.altherian.tool.logging.Logger;
@@ -100,7 +101,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class HyperboxServer implements _Server, _AnswerReceiver {
+public class Server implements _Server, _AnswerReceiver {
    
    private Map<String, _AnswerReceiver> ansRecv;
    private _Backend backend;
@@ -643,7 +644,7 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
       
       Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.TaskGet, tIn));
       if (!trans.sendAndWait()) {
-         throw new HyperboxRuntimeException("Unable to get Task");
+         throw new HyperboxRuntimeException("Unable to get Task: " + trans.getError());
       }
       TaskOut tOut = trans.extractItem(TaskOut.class);
       return tOut;
@@ -982,6 +983,11 @@ public class HyperboxServer implements _Server, _AnswerReceiver {
    @Override
    public _Machine getMachineReader(String id) {
       return new Machine(this, id);
+   }
+   
+   @Override
+   public _Task getTask(String id) {
+      return new Task(this, id);
    }
    
 }

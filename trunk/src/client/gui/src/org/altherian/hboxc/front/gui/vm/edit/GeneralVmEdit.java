@@ -34,6 +34,7 @@ import org.altherian.hboxc.front.gui.workers.KeyboardTypeListWorker;
 import org.altherian.hboxc.front.gui.workers.OsTypeListWorker;
 import org.altherian.hboxc.front.gui.workers._KeyboardTypeListReceiver;
 import org.altherian.hboxc.front.gui.workers._OsTypeListReceiver;
+import org.altherian.tool.logging.Logger;
 
 import java.awt.Component;
 import java.util.List;
@@ -108,7 +109,7 @@ public class GeneralVmEdit {
       nameField.setText(mOut.getName());
       descArea.setText(mOut.getSetting(MachineAttribute.Description).getString());
       
-      KeyboardTypeListWorker.get(new KeyboardListReceiver(), mOut.getServerId(), mOut.getUuid());
+      KeyboardTypeListWorker.execute(new KeyboardListReceiver(), mOut.getServerId(), mOut.getUuid());
       
       try {
          mouseTypeBox.removeAllItems();
@@ -119,7 +120,7 @@ public class GeneralVmEdit {
       } catch (Throwable t) {
          HyperboxClient.getView().postError("Unable to retrieve list of Mouse modes", t);
       }
-      OsTypeListWorker.run(new OsTypeLoader(), mOut);
+      OsTypeListWorker.execute(new OsTypeLoader(), mOut);
    }
    
    public void save() {
@@ -176,29 +177,40 @@ public class GeneralVmEdit {
       
       @Override
       public void loadingStarted() {
+         Logger.track();
+         
          keyboardTypeBox.setEnabled(false);
          keyboardTypeBox.removeAllItems();
          keyboardTypeBox.addItem("Loading...");
          keyboardTypeBox.setSelectedItem("Loading...");
+         Logger.track();
       }
       
       @Override
       public void loadingFinished(boolean isSuccessful, String message) {
+         Logger.track();
+         
          keyboardTypeBox.removeItem("Loading...");
          keyboardTypeBox.setEnabled(isSuccessful);
          if (isSuccessful) {
+            Logger.track();
             keyboardTypeBox.setSelectedItem(mOut.getSetting(MachineAttribute.KeyboardMode).getRawValue());
          } else {
+            Logger.track();
             keyboardTypeBox.removeAllItems();
             keyboardTypeBox.addItem("Failed to load Keyboard Types list: " + message);
          }
+         Logger.track();
       }
       
       @Override
       public void add(List<String> keyboardList) {
+         Logger.track();
          for (String keyboard : keyboardList) {
+            Logger.track();
             keyboardTypeBox.addItem(keyboard);
          }
+         Logger.track();
       }
       
    }

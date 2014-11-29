@@ -138,7 +138,7 @@ public class TaskView implements _Cancelable {
    private void display(TaskOut tskOut) {
       this.tskOut = tskOut;
       dialog.setTitle("Task Details");
-      TaskGetWorker.get(new TaskReceiver(), tskOut);
+      TaskGetWorker.execute(new TaskReceiver(), tskOut);
       dialog.setVisible(true);
    }
    

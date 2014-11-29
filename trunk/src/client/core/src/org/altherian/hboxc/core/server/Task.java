@@ -19,17 +19,28 @@
  * 
  */
 
-package org.altherian.hboxc.server;
+package org.altherian.hboxc.core.server;
 
-import org.altherian.hbox.comm.in.SnapshotIn;
-import org.altherian.hboxc.core._Entity;
+import org.altherian.hbox.comm.Command;
+import org.altherian.hbox.comm.HyperboxTasks;
+import org.altherian.hbox.comm.Request;
+import org.altherian.hbox.comm.in.TaskIn;
+import org.altherian.hboxc.server._Server;
+import org.altherian.hboxc.server.task._Task;
 
-public interface _Machine extends _Entity {
+public class Task implements _Task {
    
-   public _Server getServer();
+   private _Server srv;
+   private String taskId;
    
-   public _Console getConsole();
+   public Task(_Server srv, String taskId) {
+      this.srv = srv;
+      this.taskId = taskId;
+   }
    
-   public void takeSnapshot(SnapshotIn snapshotIn);
+   @Override
+   public void cancel() {
+      srv.sendRequest(new Request(Command.HBOX, HyperboxTasks.TaskCancel, new TaskIn(taskId)));
+   }
    
 }
