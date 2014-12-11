@@ -24,20 +24,19 @@ package org.altherian.hboxc.front.gui.connector;
 
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.hboxc.event.connector.ConnectorEvent;
+import org.altherian.hboxc.event.connector.ConnectorRemovedEvent;
+import org.altherian.hboxc.exception.ConnectorNotFoundException;
 import org.altherian.hboxc.front.gui.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.server.ServerViewer;
-
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 public class ConnectorSummaryViewer implements _Refreshable {
    
@@ -95,8 +94,12 @@ public class ConnectorSummaryViewer implements _Refreshable {
    
    @Override
    public void refresh() {
-      conOut = Gui.getReader().getConnector(conOut.getId());
-      update();
+      try {
+         conOut = Gui.getReader().getConnector(conOut.getId());
+         update();
+      } catch (ConnectorNotFoundException e) {
+         stateLabel.setText(e.getMessage());
+      }
    }
    
    public void show(ConnectorOutput conOut) {
@@ -105,29 +108,25 @@ public class ConnectorSummaryViewer implements _Refreshable {
    }
    
    protected void update() {
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-               update();
-            }
-         });
+      labelValue.setText(conOut.getLabel());
+      addressValue.setText(conOut.getAddress());
+      backendValue.setText(conOut.getBackendId());
+      stateValue.setText(conOut.getState().toString());
+      if (conOut.isConnected()) {
+         srvView.getComponent().setVisible(true);
+         srvView.show(conOut.getServer());
       } else {
-         labelValue.setText(conOut.getLabel());
-         addressValue.setText(conOut.getAddress());
-         backendValue.setText(conOut.getBackendId());
-         stateValue.setText(conOut.getState().toString());
-         if (conOut.isConnected()) {
-            srvView.getComponent().setVisible(true);
-            srvView.show(conOut.getServer());
-         } else {
-            srvView.getComponent().setVisible(false);
-         }
+         srvView.getComponent().setVisible(false);
       }
    }
    
    public JComponent getComponent() {
       return panel;
+   }
+   
+   @Handler
+   protected void putConnectorRemovedEvent(ConnectorRemovedEvent ev) {
+      conOut = null;
    }
    
    @Handler
