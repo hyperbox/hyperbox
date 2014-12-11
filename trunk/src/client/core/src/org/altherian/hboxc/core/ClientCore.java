@@ -22,7 +22,6 @@
 package org.altherian.hboxc.core;
 
 import net.engio.mbassy.listener.Handler;
-
 import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.constant.MachineAttribute;
@@ -42,6 +41,7 @@ import org.altherian.hboxc.event.connector.ConnectorModifiedEvent;
 import org.altherian.hboxc.event.connector.ConnectorRemovedEvent;
 import org.altherian.hboxc.event.consoleviewer.ConsoleViewerAddedEvent;
 import org.altherian.hboxc.event.server.ServerDisconnectedEvent;
+import org.altherian.hboxc.exception.ConnectorNotFoundException;
 import org.altherian.hboxc.exception.ConsoleViewerNotFound;
 import org.altherian.hboxc.exception.ConsoleViewerNotFoundForType;
 import org.altherian.hboxc.factory.BackendFactory;
@@ -53,7 +53,6 @@ import org.altherian.hboxc.server._Server;
 import org.altherian.hboxc.state.CoreState;
 import org.altherian.hboxc.updater._Updater;
 import org.altherian.tool.logging.Logger;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -292,7 +291,7 @@ public class ClientCore implements _Core {
    @Override
    public _Connector getConnector(String id) {
       if (!conns.containsKey(id)) {
-         throw new HyperboxRuntimeException("No Connector for ID " + id);
+         throw new ConnectorNotFoundException("No Connector for ID " + id);
       }
       return conns.get(id);
    }
