@@ -1,0 +1,195 @@
+#!/bin/bash
+###########################################################################
+#
+# Hyperbox - Enterprise Virtualization Manager
+# Copyright (C) 2013 Maxime Dor
+# 
+# http://hyperbox.altherian.org
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or 
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+
+### BEGIN INIT INFO
+# Provides:          hyperbox
+# Required-Start:    $syslog $local_fs $network
+# Required-Stop:     $syslog $local_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start/Stop the Hyperbox Server as daemon
+### END INIT INFO
+
+RETVAL=0
+IS_DEBIAN_BASED=false
+IS_REDHAT_BASED=false
+
+INSTALL_DIR=/opt/hboxd
+EXEC="$INSTALL_DIR/bin/hboxd"
+PID_FILE="/var/run/hboxd.pid"
+RUNAS=noteirak
+ARGS_START="$INSTALL_DIR"
+
+log_start() {
+	if $IS_DEBIAN_BASED; then
+		log_daemon_msg "$@"
+	elif $IS_REDHAT_BASED; then
+		echo -n "$@:"
+	else
+		echo -n "$@:"
+	fi
+}
+
+log_success() {
+	if $IS_DEBIAN_BASED; then
+		log_success_msg "$@"
+	elif $IS_REDHAT_BASED; then
+		success "$@"
+	else
+		echo " $@"
+	fi
+}
+
+log_failure() {
+	if $IS_DEBIAN_BASED; then
+		log_failure_msg "$@"
+	elif $IS_REDHAT_BASED; then
+		failure "$@"
+	else
+		echo " $@"
+	fi
+}
+
+checkRoot() {
+	if [ ! $(whoami) = "root" ]; then
+		return 1
+	else
+		return 0
+	fi
+}
+
+hboxd_isRunning() {
+	if ! [ -f $PID_FILE ]; then
+		return 1
+	else
+		if $IS_DEBIAND_BASED; then
+			PIDOFPROC=$(pidofproc -p $PID_FILE java)
+			if [[ -z "$PIDOFPROC" ]]; then
+				return 2
+			else
+				echo $PIDOFPROC | grep -qs $(cat $PID_FILE)
+				if [ $? -eq 0 ]; then
+					return 0
+				else
+					return 2
+				fi
+			fi
+		elif $IS_REDHAT_BASED; then
+			status -p $PID_FILE java
+		else
+			ps -ef | grep $EXEC | grep $(cat $PID_FILE) > /dev/null
+			if [ $? -eq 0 ]; then
+				return 0
+			else
+				return 2
+			fi
+		fi
+	fi
+}
+
+hboxd_start() {
+	checkRoot
+	RETVAL=$?
+	if ! checkRoot; then
+		log_failure "This script must run as root"
+	else
+		if hboxd_isRunning; then
+	                log_failure_msg "Hyperbox is already started"
+        	        exit 1
+	        fi
+
+		log_start "Starting Hyperbox Server"
+		hboxd_isRunning
+		if [ $? -eq 0 ]; then
+			log_failure "already running"
+			RETVAL=1
+		else
+			PID=$(su - $RUNAS -c "$EXEC $ARGS_START")
+			if [ $PID -ge 1 ]; then
+				echo $PID > $PID_FILE
+				log_success
+			else
+				log_failure "Unable to start Daemon"
+			fi
+		fi	
+	fi
+}
+
+hboxd_stop() {
+	log_start "Stopping Hyperbox Server"
+	if ! hboxd_isRunning; then
+		log_failure "Already stopped"
+	else
+		while hboxd_isRunning; do
+			kill $(pidofproc -p $PID_FILE java)
+			sleep 0.5
+		done
+		rm -f $PID_FILE
+		log_success
+	fi
+}
+
+hboxd_status() {
+	hboxd_isRunning
+	RETVAL=$?
+	if [ $RETVAL -eq 0 ]; then
+		echo "Hyperbox Server is running (pid $(pidofproc -p $PID_FILE java))"
+	elif [ $RETVAL -eq 1 ]; then
+		echo "Hyperbox Server is not running"
+	else
+		echo "Hyperbox Server did not shutdown properly"
+	fi
+}
+
+hboxd_restart() {
+	hboxd_stop && hboxd_start
+}
+
+if [ -f /lib/lsb/init-functions ]; then
+	IS_DEBIAN_BASED=true
+	. /lib/lsb/init-functions
+fi
+if [ -f /etc/init.d/functions ]; then
+	IS_REDHAT_BASED=true
+	. /etc/init.d/functions
+fi
+
+case "$1" in
+start)
+	hboxd_start
+	;;
+stop)
+	hboxd_stop
+	;;
+restart)
+	hboxd_restart
+	;;
+status)
+	hboxd_status
+	;;
+*)
+	echo "Usage: $0 {start|stop|restart|status}"
+	RETVAL=1
+esac
+
+exit $RETVAL
