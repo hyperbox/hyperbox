@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.session;
@@ -32,7 +31,6 @@ import org.altherian.hboxd.security.SecurityContext;
 import org.altherian.hboxd.security._User;
 import org.altherian.hboxd.task._TaskManager;
 import org.altherian.tool.logging.Logger;
-
 import java.util.Date;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -117,7 +115,8 @@ public abstract class AbstractSession implements _Session {
             worker.join(1000);
          } catch (InterruptedException e) {
             Logger.debug("Session worker thread ID: " + worker.getId());
-            Logger.debug("Thread ID #" + Thread.currentThread().getId() + " [" + Thread.currentThread().getName() + "] forcefully destroyed for Session ID #" + getId());
+            Logger.debug("Thread ID #" + Thread.currentThread().getId() + " [" + Thread.currentThread().getName() + "] forcefully destroyed for Session ID #"
+                  + getId());
          }
       }
       
@@ -177,5 +176,5 @@ public abstract class AbstractSession implements _Session {
    protected _Client getClient() {
       return client;
    }
-
+   
 }

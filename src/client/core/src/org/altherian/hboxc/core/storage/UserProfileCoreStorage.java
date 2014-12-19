@@ -12,12 +12,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.core.storage;
@@ -32,13 +31,11 @@ import org.altherian.hboxc.core.connector.Connector;
 import org.altherian.hboxc.core.connector._Connector;
 import org.altherian.hboxc.core.console.viewer.ConsoleViewer;
 import org.altherian.tool.logging.Logger;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-
 import com.thoughtworks.xstream.XStream;
 
 public class UserProfileCoreStorage implements _CoreStorage {

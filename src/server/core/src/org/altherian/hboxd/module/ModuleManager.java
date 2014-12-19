@@ -21,7 +21,6 @@
 package org.altherian.hboxd.module;
 
 import net.engio.mbassy.listener.Handler;
-
 import org.altherian.hbox.Configuration;
 import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event.module.ModuleRegisteredEvent;
@@ -32,7 +31,6 @@ import org.altherian.hboxd.exception.module.ModuleAlreadyRegisteredException;
 import org.altherian.hboxd.factory.ModuleFactory;
 import org.altherian.tool.AxBooleans;
 import org.altherian.tool.logging.Logger;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;

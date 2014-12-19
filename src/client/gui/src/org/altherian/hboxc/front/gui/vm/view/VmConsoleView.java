@@ -12,18 +12,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.vm.view;
 
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.comm.out.hypervisor.ScreenshotOut;
 import org.altherian.hboxc.front.gui._Refreshable;
@@ -33,7 +31,6 @@ import org.altherian.hboxc.front.gui.workers._MachineScreenshotReceiver;
 import org.altherian.helper.swing.AncestorAdaptor;
 import org.altherian.helper.swing.JLabelIconAutoResize;
 import org.altherian.tool.logging.Logger;
-
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -62,6 +59,7 @@ public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
       
       panel = new JPanel(new MigLayout("ins 0"));
       panel.addAncestorListener(new AncestorAdaptor() {
+         
          @Override
          public void ancestorAdded(AncestorEvent event) {
             isVisible = true;

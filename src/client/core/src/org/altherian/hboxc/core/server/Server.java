@@ -12,18 +12,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.core.server;
 
 import net.engio.mbassy.listener.Handler;
-
 import org.altherian.hbox.Configuration;
 import org.altherian.hbox.HyperboxAPI;
 import org.altherian.hbox.comm.Answer;
@@ -93,7 +91,6 @@ import org.altherian.hboxc.server.task._Task;
 import org.altherian.hboxc.state.ConnectionState;
 import org.altherian.tool.AxBooleans;
 import org.altherian.tool.logging.Logger;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;

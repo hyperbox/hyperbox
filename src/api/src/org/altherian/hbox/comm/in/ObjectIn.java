@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hbox.comm.in;
@@ -28,12 +27,10 @@ import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 public abstract class ObjectIn<T extends Enum<?>> {
    
@@ -55,17 +52,17 @@ public abstract class ObjectIn<T extends Enum<?>> {
       if (entityTypeId == null) {
          throw new IllegalArgumentException("Entity Type cannot be null");
       }
-
+      
       setEntityTypeId(entityTypeId);
    }
    
    public ObjectIn(T entityTypeId, String id) {
       this(entityTypeId);
-
+      
       if (AxStrings.isEmpty(id)) {
          throw new IllegalArgumentException("ID must have a value - Current value: " + id);
       }
-
+      
       this.id = id;
    }
    

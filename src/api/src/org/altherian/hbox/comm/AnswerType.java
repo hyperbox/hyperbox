@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hbox.comm;
@@ -95,7 +94,8 @@ public enum AnswerType {
    FAILED(2, true),
    
    /**
-    * Sent during a multi-steps task to inform that an error occurred and that a step couldn't be performed, but the transaction will be continue anyway.
+    * Sent during a multi-steps task to inform that an error occurred and that a step couldn't be performed, but the transaction will be continue
+    * anyway.
     */
    ERROR(1, true),
    
@@ -121,7 +121,8 @@ public enum AnswerType {
    UNKNOWN(2, true),
    
    /**
-    * While processing a task/command, a server error occurred and therefore the current state of the system is unknown or unstable. This most likely refers to a bug either in the server itself or one
+    * While processing a task/command, a server error occurred and therefore the current state of the system is unknown or unstable. This most likely
+    * refers to a bug either in the server itself or one
     * of its plugings.<br/>
     * If more information is known, it will be sent alongside this status message.
     */

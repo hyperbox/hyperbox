@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.core.model;
@@ -32,7 +31,6 @@ import org.altherian.hboxd.hypervisor.storage._RawMedium;
 import org.altherian.hboxd.hypervisor.storage._RawMediumAttachment;
 import org.altherian.hboxd.hypervisor.storage._RawStorageController;
 import org.altherian.setting._Setting;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -220,9 +218,9 @@ public class StorageController implements _StorageController {
       _MediumAttachment medAtt = new MediumAttachment(
             vm.getUuid(),
             rawMedAtt.hasMedium() ? rawMedAtt.getMedium().getUuid() : null,
-                  rawSto.getName(),
-                  rawMedAtt.getPortId(),
-                  rawMedAtt.getDeviceId(), rawMedAtt.getDeviceType(), rawMedAtt.isPassThrough());
+            rawSto.getName(),
+            rawMedAtt.getPortId(),
+            rawMedAtt.getDeviceId(), rawMedAtt.getDeviceType(), rawMedAtt.isPassThrough());
       
       return medAtt;
    }

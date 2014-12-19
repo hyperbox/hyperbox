@@ -12,12 +12,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.persistence.sql;
@@ -26,7 +25,6 @@ import org.altherian.hboxd.factory.SecurityUserFactory;
 import org.altherian.hboxd.security._User;
 import org.altherian.helper.sql.EasyPreparedStatement;
 import org.altherian.tool.logging.Logger;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -53,15 +51,15 @@ public class UserSQL {
       Logger.track();
       
       sql.getConn()
-      .createStatement()
-      .executeUpdate(
-            "CREATE TABLE IF NOT EXISTS `" + TABLE + "` (`"
-                  + ID + "` VARCHAR(255) NOT NULL, `"
-                  + FULLNAME + "` VARCHAR(255) NULL DEFAULT NULL, `"
-                  + USERNAME + "` VARCHAR(255) NOT NULL,`"
-                  + DOMAIN + "` VARCHAR(255) NULL DEFAULT NULL,`"
-                  + SALT + "` VARCHAR(255) NULL DEFAULT NULL,`"
-                  + PASSWORD + "` VARBINARY(255) NULL DEFAULT NULL,PRIMARY KEY (`" + ID + "`))");
+            .createStatement()
+            .executeUpdate(
+                  "CREATE TABLE IF NOT EXISTS `" + TABLE + "` (`"
+                        + ID + "` VARCHAR(255) NOT NULL, `"
+                        + FULLNAME + "` VARCHAR(255) NULL DEFAULT NULL, `"
+                        + USERNAME + "` VARCHAR(255) NOT NULL,`"
+                        + DOMAIN + "` VARCHAR(255) NULL DEFAULT NULL,`"
+                        + SALT + "` VARCHAR(255) NULL DEFAULT NULL,`"
+                        + PASSWORD + "` VARBINARY(255) NULL DEFAULT NULL,PRIMARY KEY (`" + ID + "`))");
    }
    
    public static String getInsertQuery() {

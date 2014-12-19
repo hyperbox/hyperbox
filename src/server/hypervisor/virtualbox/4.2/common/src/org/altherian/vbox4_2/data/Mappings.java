@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.vbox4_2.data;
@@ -30,7 +29,6 @@ import org.altherian.hbox.states.MachineSessionStates;
 import org.altherian.hbox.states.MachineStates;
 import org.altherian.tool.BiEnumMap;
 import org.altherian.tool.logging.Logger;
-
 import org.virtualbox_4_2.AudioControllerType;
 import org.virtualbox_4_2.AudioDriverType;
 import org.virtualbox_4_2.FirmwareType;

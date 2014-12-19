@@ -12,12 +12,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.security;
@@ -27,7 +26,6 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Arrays;
-
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
@@ -36,7 +34,8 @@ import javax.crypto.spec.PBEKeySpec;
  * Original code credit to Jerry Orr
  * </p>
  * <p>
- * Original Code source on <a href="http://www.javacodegeeks.com/2012/05/secure-password-storage-donts-dos-and.html">Java Code Geeks - Secure Password Storage</a>
+ * Original Code source on <a href="http://www.javacodegeeks.com/2012/05/secure-password-storage-donts-dos-and.html">Java Code Geeks - Secure Password
+ * Storage</a>
  * </p>
  * 
  * @author noteirak
@@ -86,6 +85,5 @@ public class PasswordEncryptionService {
       
       return salt;
    }
-   
    
 }

@@ -11,19 +11,17 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc;
 
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.controller.Controller;
-
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -31,7 +29,7 @@ public final class HyperboxClientApplicationStart {
    
    public static void main(String[] args) throws HyperboxException {
       Hyperbox.processArgs(new HashSet<String>(Arrays.asList(args)));
-
+      
       new Controller().start();
    }
    

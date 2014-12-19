@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.core.action.snapshot;
@@ -36,7 +35,6 @@ import org.altherian.hboxd.hypervisor.vm._RawVM;
 import org.altherian.hboxd.hypervisor.vm.snapshot._RawSnapshot;
 import org.altherian.hboxd.session.SessionContext;
 import org.altherian.tool.logging.Logger;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -58,7 +56,7 @@ public class SnapshotGetAction extends ASingleTaskAction {
       SnapshotIn snapIn = request.get(SnapshotIn.class);
       
       Logger.debug("Fetching Snapshot #" + snapIn.getUuid() + " of VM #" + mIn.getUuid());
-
+      
       _RawVM rawVM = hbox.getHypervisor().getMachine(mIn.getUuid());
       _RawSnapshot rawSnap = rawVM.getSnapshot(snapIn.getUuid());
       

@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.vbox4_2.factory;
@@ -47,7 +46,6 @@ import org.altherian.vbox.settings.virtual.HpetSetting;
 import org.altherian.vbox.settings.virtual.HwVirtExExclSetting;
 import org.altherian.vbox4_2.VBoxOsType;
 import org.altherian.vbox4_2.data.Mappings;
-
 import org.virtualbox_4_2.IGuestOSType;
 
 public final class OsTypeFactory {
@@ -94,14 +92,16 @@ public final class OsTypeFactory {
       Device dvdStorCtrl = new Device(EntityType.DvdDrive.getId());
       dvdStorCtrl.setTypeId(EntityType.DvdDrive.getId());
       dvdStorCtrl.setSetting(SettingIoFactory.get(new StringSetting(StorageControllerAttribute.Type, guestOs.getRecommendedDVDStorageBus().toString())));
-      dvdStorCtrl.setSetting(SettingIoFactory.get(new StringSetting(StorageControllerAttribute.SubType, guestOs.getRecommendedDVDStorageController().toString())));
+      dvdStorCtrl.setSetting(SettingIoFactory
+            .get(new StringSetting(StorageControllerAttribute.SubType, guestOs.getRecommendedDVDStorageController().toString())));
       vm.addDevice(dvdStorCtrl);
       
       Device hddStorCtrl = new Device(EntityType.DiskDrive.getId());
       hddStorCtrl.setTypeId(EntityType.DiskDrive.getId());
       hddStorCtrl.setSetting(SettingIoFactory.get(new MediumSizeSetting(guestOs.getRecommendedHDD())));
       hddStorCtrl.setSetting(SettingIoFactory.get(new StringSetting(StorageControllerAttribute.Type, guestOs.getRecommendedHDStorageBus().toString())));
-      hddStorCtrl.setSetting(SettingIoFactory.get(new StringSetting(StorageControllerAttribute.SubType, guestOs.getRecommendedHDStorageController().toString())));
+      hddStorCtrl.setSetting(SettingIoFactory
+            .get(new StringSetting(StorageControllerAttribute.SubType, guestOs.getRecommendedHDStorageController().toString())));
       vm.addDevice(hddStorCtrl);
       
       Device networkDevice = new Device();

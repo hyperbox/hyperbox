@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.core.model;
@@ -27,7 +26,6 @@ import org.altherian.hbox.states.MachineStates;
 import org.altherian.hboxd.hypervisor.vm.snapshot._RawSnapshot;
 import org.altherian.hboxd.server._Server;
 import org.altherian.setting._Settable;
-
 import java.util.List;
 import java.util.Set;
 
@@ -96,5 +94,5 @@ public interface _Machine extends _Settable {
    public _RawSnapshot getSnapshot(String snapshotId);
    
    public _Device getDevice(String deviceId);
-
+   
 }

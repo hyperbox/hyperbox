@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.core.model;
@@ -24,7 +23,6 @@ package org.altherian.hboxd.core.model;
 import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxd.hypervisor.vm.device._RawNetworkInterface;
 import org.altherian.setting._Setting;
-
 import java.util.List;
 
 public class NetworkInterface implements _NetworkInterface {
@@ -166,6 +164,5 @@ public class NetworkInterface implements _NetworkInterface {
       // TODO add security check
       rawNic.setAdapterType(adapterType);
    }
-
    
 }

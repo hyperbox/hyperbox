@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.core;
@@ -24,7 +23,6 @@ package org.altherian.hboxd.core;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import net.engio.mbassy.listener.Handler;
-
 import org.altherian.hbox.comm.out.event.EventOut;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxd.core.model.MachineTest;
@@ -33,11 +31,9 @@ import org.altherian.hboxd.hypervisor.vm._RawVM;
 import org.altherian.hboxd.server._Server;
 import org.altherian.tool.logging.LogLevel;
 import org.altherian.tool.logging.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

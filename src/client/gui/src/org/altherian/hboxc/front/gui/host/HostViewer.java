@@ -11,19 +11,17 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.host;
 
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.out.event.hypervisor.HypervisorConnectedEventOut;
 import org.altherian.hbox.comm.out.event.hypervisor.HypervisorDisconnectedEventOut;
 import org.altherian.hbox.comm.out.host.HostOut;
@@ -33,7 +31,6 @@ import org.altherian.hboxc.front.gui.workers.HostGetWorker;
 import org.altherian.hboxc.front.gui.workers._HostReceiver;
 import org.altherian.helper.swing.JTextFieldUtils;
 import org.altherian.tool.logging.Logger;
-
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -55,7 +52,6 @@ public class HostViewer implements _Refreshable, _HostReceiver {
    private JTextField memFreeValue;
    private JLabel memTotalLabel;
    private JTextField memTotalValue;
-   
    
    private JPanel panel;
    

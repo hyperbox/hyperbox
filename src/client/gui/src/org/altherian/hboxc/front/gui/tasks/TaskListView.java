@@ -11,19 +11,17 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.tasks;
 
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
@@ -37,13 +35,11 @@ import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.task.TaskCancelAction;
 import org.altherian.hboxc.front.gui.utils.RefreshUtil;
 import org.altherian.tool.logging.Logger;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -100,6 +96,7 @@ public class TaskListView implements _TaskSelector, _Refreshable {
    public void refresh(final String serverId) {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                refresh(serverId);
@@ -120,6 +117,7 @@ public class TaskListView implements _TaskSelector, _Refreshable {
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                refresh();
@@ -139,6 +137,7 @@ public class TaskListView implements _TaskSelector, _Refreshable {
    private void add(final TaskOut tOut) {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                add(tOut);
@@ -152,6 +151,7 @@ public class TaskListView implements _TaskSelector, _Refreshable {
    private void update(final TaskOut tOut) {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                update(tOut);
@@ -165,6 +165,7 @@ public class TaskListView implements _TaskSelector, _Refreshable {
    private void remove(final TaskOut tOut) {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                remove(tOut);

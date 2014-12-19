@@ -11,18 +11,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui;
 
 import net.engio.mbassy.listener.Handler;
-
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._RequestReceiver;
@@ -40,14 +38,12 @@ import org.altherian.hboxc.front.gui.utils.JDialogUtils;
 import org.altherian.hboxc.server._ServerReader;
 import org.altherian.hboxc.state.CoreState;
 import org.altherian.tool.logging.Logger;
-
 import java.awt.AWTEvent;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -83,6 +79,7 @@ public final class Gui implements _Front {
       FrontEventManager.register(this);
       
       SwingUtilities.invokeLater(new Runnable() {
+         
          @Override
          public void run() {
             mainView = new MainView();

@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd;
@@ -27,7 +26,6 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxd.persistence._Persistor;
 import org.altherian.hboxd.server._Server;
 import org.altherian.tool.logging.Logger;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
 import java.net.URL;
@@ -36,7 +34,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executors;
-
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
@@ -250,7 +247,7 @@ public class HBoxServer {
    public static boolean hasSetting(String key) {
       Logger.track();
       try {
-         Logger.debug("Checking key \""+key+"\" in storage");
+         Logger.debug("Checking key \"" + key + "\" in storage");
          return persistor.loadSetting(key) != null;
       } catch (Throwable e) {
          Logger.debug("Key is not in storage, checking in memory or env - Error: " + e.getMessage());

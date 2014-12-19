@@ -12,12 +12,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.security;
@@ -40,7 +39,6 @@ import org.altherian.hboxd.persistence._SecurityPersistor;
 import org.altherian.security.PasswordEncryptionService;
 import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
-
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
@@ -264,7 +262,6 @@ public class SecurityManager implements _SecurityManager {
       }
    }
    
-   
    @Override
    public void authorize(SecurityItem item, SecurityAction action, String itemId) {
       Logger.track();
@@ -369,6 +366,7 @@ public class SecurityManager implements _SecurityManager {
    }
    
    private class UserIdGenerator {
+      
       private Integer nextId = 1;
       
       public String get() {

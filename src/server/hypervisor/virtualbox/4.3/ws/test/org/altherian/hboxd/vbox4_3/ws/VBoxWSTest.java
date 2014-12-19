@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.vbox4_3.ws;
@@ -25,7 +24,6 @@ import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxd.hypervisor.DummyEventManager;
 import org.altherian.hboxd.hypervisor.HypervisorTest;
 import org.altherian.vbox4_3.ws.VBoxWSHypervisor;
-
 import org.junit.BeforeClass;
 
 public class VBoxWSTest extends HypervisorTest {

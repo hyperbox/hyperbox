@@ -12,12 +12,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.controller.action.backend;
@@ -32,7 +31,6 @@ import org.altherian.hboxc.controller.ClientTasks;
 import org.altherian.hboxc.controller.action.AbstractClientControllerSingleAction;
 import org.altherian.hboxc.core._Core;
 import org.altherian.hboxc.front._Front;
-
 import java.util.List;
 
 public class BackendListAction extends AbstractClientControllerSingleAction {

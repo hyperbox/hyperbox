@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.persistence.sql;
@@ -30,7 +29,6 @@ import org.altherian.hboxd.security._ItemPermission;
 import org.altherian.hboxd.security._User;
 import org.altherian.helper.sql.EasyPreparedStatement;
 import org.altherian.tool.logging.Logger;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -55,14 +53,14 @@ public class PermissionSQL {
       Logger.track();
       
       sql.getConn()
-      .createStatement()
-      .executeUpdate(
-            "CREATE TABLE IF NOT EXISTS `" + TABLE + "` (`"
-                  + UserSQL.ID + "` VARCHAR(255) NULL DEFAULT NULL, `"
-                  + ITEM_TYPE_ID + "` VARCHAR(255) NOT NULL,`"
-                  + ACTION_ID + "` VARCHAR(255) NOT NULL,`"
-                  + ITEM_ID + "` VARCHAR(255) NULL DEFAULT NULL,`"
-                  + ALLOWED + "` INT(1) NOT NULL DEFAULT 0,PRIMARY KEY (`" + UserSQL.ID + "`))");
+            .createStatement()
+            .executeUpdate(
+                  "CREATE TABLE IF NOT EXISTS `" + TABLE + "` (`"
+                        + UserSQL.ID + "` VARCHAR(255) NULL DEFAULT NULL, `"
+                        + ITEM_TYPE_ID + "` VARCHAR(255) NOT NULL,`"
+                        + ACTION_ID + "` VARCHAR(255) NOT NULL,`"
+                        + ITEM_ID + "` VARCHAR(255) NULL DEFAULT NULL,`"
+                        + ALLOWED + "` INT(1) NOT NULL DEFAULT 0,PRIMARY KEY (`" + UserSQL.ID + "`))");
    }
    
    public static String getActionListQuery() {
@@ -142,7 +140,7 @@ public class PermissionSQL {
    
    public static void populateSetQuery(EasyPreparedStatement stmt, _User usr, SecurityItem item, SecurityAction action, String itemId,
          Boolean isAllowed)
-               throws SQLException {
+         throws SQLException {
       stmt.setString(usr.getId());
       stmt.setString(item.toString());
       stmt.setString(action.toString());
@@ -167,7 +165,7 @@ public class PermissionSQL {
       stmt.setString(item);
       stmt.setString(action);
    }
-
+   
    public static String getItemDeleteQuery() {
       return getUserDeleteQuery() + " AND " + ITEM_TYPE_ID + " = ? AND " + ACTION_ID + " = ? AND " + ITEM_ID + " = ?";
    }

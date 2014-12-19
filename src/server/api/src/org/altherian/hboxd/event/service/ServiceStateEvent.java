@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.event.service;
@@ -24,7 +23,6 @@ package org.altherian.hboxd.event.service;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.states.ServiceState;
 import org.altherian.hboxd.service._Service;
-
 
 public class ServiceStateEvent extends ServiceEvent {
    
@@ -36,5 +34,5 @@ public class ServiceStateEvent extends ServiceEvent {
    public ServiceState getState() {
       return get(ServiceState.class);
    }
-
+   
 }

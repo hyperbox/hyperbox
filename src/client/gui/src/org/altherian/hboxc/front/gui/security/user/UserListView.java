@@ -12,19 +12,17 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.security.user;
 
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.event.security.UserEventOut;
@@ -40,13 +38,11 @@ import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.server._SingleServerSelector;
 import org.altherian.hboxc.front.gui.utils.RefreshUtil;
 import org.altherian.tool.logging.Logger;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -99,7 +95,6 @@ public class UserListView implements _UserSelector, _Refreshable, _SingleServerS
       panel.add(errorLabel, "hidemode 3, growx, pushx, wrap");
       panel.add(buttonPanel, "hidemode 3, growx, pushx, wrap");
       panel.add(scrollPane, "hidemode 3, grow, push, wrap");
-      
       
       actions = new JPopupMenu();
       actions.add(new JMenuItem(new UserModifyAction(this)));
@@ -164,6 +159,7 @@ public class UserListView implements _UserSelector, _Refreshable, _SingleServerS
    @Override
    public void refresh() {
       SwingUtilities.invokeLater(new Runnable() {
+         
          @Override
          public void run() {
             try {

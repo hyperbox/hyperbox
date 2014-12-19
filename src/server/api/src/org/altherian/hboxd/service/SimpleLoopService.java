@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.service;
@@ -29,7 +28,8 @@ import org.altherian.tool.logging.Logger;
  * Basic implementation of a looping type of service. Default sleep time between loop is 1000ms. Can be changed with setSleepTime().
  * </p>
  * <p>
- * {@link #beforeRunning()}, {@link #beforeLooping()}, {@link #afterLooping()} and {@link #afterRunning()} can be overridden if any init and/or destruct code is needed.
+ * {@link #beforeRunning()}, {@link #beforeLooping()}, {@link #afterLooping()} and {@link #afterRunning()} can be overridden if any init and/or
+ * destruct code is needed.
  * </p>
  * TODO javadoc
  * 

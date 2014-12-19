@@ -11,18 +11,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.core.server;
 
 import net.engio.mbassy.listener.Handler;
-
 import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.in.MediumIn;
 import org.altherian.hbox.comm.in.NetworkAttachModeIn;
@@ -89,7 +87,6 @@ import org.altherian.hboxc.server._Machine;
 import org.altherian.hboxc.server._ServerReader;
 import org.altherian.hboxc.server.task._Task;
 import org.altherian.tool.logging.Logger;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -97,7 +94,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
 
 public class CachedServerReader implements _ServerReader {
    
@@ -117,7 +113,6 @@ public class CachedServerReader implements _ServerReader {
    private Set<String> invalidMedOutSet;
    
    private Map<String, Map<String, SnapshotOut>> snapOutCache;
-   
    
    public CachedServerReader(_ServerReader reader) {
       this.reader = reader;

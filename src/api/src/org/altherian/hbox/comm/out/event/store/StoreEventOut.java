@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hbox.comm.out.event.store;
@@ -24,7 +23,6 @@ package org.altherian.hbox.comm.out.event.store;
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.StoreOut;
 import org.altherian.hbox.comm.out.event.EventOut;
-
 import java.util.Date;
 
 public abstract class StoreEventOut extends EventOut {
@@ -41,6 +39,7 @@ public abstract class StoreEventOut extends EventOut {
    public StoreOut getStore() {
       return get(StoreOut.class);
    }
+   
    public String getStoreId() {
       return getStore().getId();
    }

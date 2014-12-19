@@ -11,18 +11,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.tasks;
 
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.front.gui.Gui;
@@ -33,7 +31,6 @@ import org.altherian.hboxc.front.gui.utils.CancelableUtils;
 import org.altherian.hboxc.front.gui.workers.TaskGetWorker;
 import org.altherian.hboxc.front.gui.workers._TaskReceiver;
 import org.altherian.helper.swing.JTextFieldUtils;
-
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -100,7 +97,6 @@ public class TaskView implements _Cancelable {
       
       errorLabel = new JLabel("Error");
       errorField = JTextFieldUtils.createNonEditable();
-      
       
       dialog = JDialogBuilder.get(IconBuilder.getEntityType(EntityType.Task).getImage());
       dialog.getContentPane().setLayout(new MigLayout());

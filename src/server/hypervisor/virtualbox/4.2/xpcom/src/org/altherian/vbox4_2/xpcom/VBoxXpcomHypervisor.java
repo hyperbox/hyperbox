@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.vbox4_2.xpcom;
@@ -26,9 +25,7 @@ import org.altherian.hboxd.hypervisor.Hypervisor;
 import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
 import org.altherian.vbox4_2.VBoxHypervisor;
-
 import java.io.File;
-
 import org.virtualbox_4_2.VirtualBoxManager;
 
 @Hypervisor(
@@ -62,7 +59,7 @@ public final class VBoxXpcomHypervisor extends VBoxHypervisor {
       Logger.debug("java.library.path - " + System.getProperty("java.library.path"));
       File libxpcom = new File(options + "/libvboxjxpcom.so");
       Logger.debug("Lib exists - " + libxpcom.getAbsolutePath() + " - " + libxpcom.isFile());
-
+      
       VirtualBoxManager mgr = VirtualBoxManager.createInstance(options);
       if (mgr.getVBox().getVersion().contains("OSE") && (mgr.getVBox().getRevision() < 50393)) {
          throw new HypervisorException(
