@@ -1,4 +1,4 @@
-/* 
+/*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
  * 
@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hbox.comm.io.factory;
@@ -32,7 +31,8 @@ public final class StorageControllerIoFactory {
    }
    
    /**
-    * Create the equivalent in an Input object of this Storage Controller output object. The input object will have its {@link Action} set to {@link Action#Modify}
+    * Create the equivalent in an Input object of this Storage Controller output object. The input object will have its {@link Action} set to
+    * {@link Action#Modify}
     * 
     * @param scOut The Storage Controller output object to transform
     * @return an input Storage Controller object labelled as {@link Action#Modify}

@@ -12,18 +12,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.core;
 
 import net.engio.mbassy.listener.Handler;
-
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.comm.input.ConnectorInput;
 import org.altherian.hboxc.comm.io.factory.BackendIoFactory;
@@ -41,7 +39,6 @@ import org.altherian.hboxc.server._ServerReader;
 import org.altherian.hboxc.state.CoreState;
 import org.altherian.hboxc.updater._Updater;
 import org.altherian.tool.logging.Logger;
-
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;

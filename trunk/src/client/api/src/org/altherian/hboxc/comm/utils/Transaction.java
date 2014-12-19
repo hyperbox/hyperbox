@@ -11,18 +11,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.comm.utils;
 
 import net.engio.mbassy.listener.Handler;
-
 import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._AnswerReceiver;
@@ -37,7 +35,6 @@ import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.event.backend.BackendStateEvent;
 import org.altherian.hboxc.exception.ServerDisconnectedException;
 import org.altherian.tool.logging.Logger;
-
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -119,7 +116,8 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
    }
    
    /**
-    * Will wait until the end of the transaction and return the final status. It will contain the body being all answers except for the leading & training ones.<br/>
+    * Will wait until the end of the transaction and return the final status. It will contain the body being all answers except for the leading &
+    * training ones.<br/>
     * More precisely, will include all Answers where <code>(isExchangeInProgress() && !isExchangeStarted() && !isExchangedFinished())</code><br/>
     * See getBody() for the data.
     * 
@@ -198,7 +196,7 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
    @Override
    public void putAnswer(Answer ans) {
       Logger.track();
-
+      
       if (ans.getExchangeId().contentEquals(request.getExchangeId())) {
          lastMessageTime = System.currentTimeMillis();
          if (ans.isExchangeStarted()) {

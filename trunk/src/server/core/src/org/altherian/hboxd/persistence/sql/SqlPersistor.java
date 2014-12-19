@@ -12,12 +12,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.persistence.sql;
@@ -37,7 +36,6 @@ import org.altherian.hboxd.security._UserGroup;
 import org.altherian.hboxd.store._Store;
 import org.altherian.helper.sql.EasyPreparedStatement;
 import org.altherian.tool.logging.Logger;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,7 +67,8 @@ public abstract class SqlPersistor implements _Persistor {
    
    @Override
    public void updateStore(_Store store) {
-      String stmtSql = "UPDATE " + StoreSQL.TABLE + " SET " + StoreSQL.NAME + " = ?, " + StoreSQL.PATH + " = ?, " + StoreSQL.STATUS + " = ? WHERE " + StoreSQL.ID + " = ?";
+      String stmtSql = "UPDATE " + StoreSQL.TABLE + " SET " + StoreSQL.NAME + " = ?, " + StoreSQL.PATH + " = ?, " + StoreSQL.STATUS + " = ? WHERE "
+            + StoreSQL.ID + " = ?";
       try {
          EasyPreparedStatement stmt = new EasyPreparedStatement(getConn().prepareStatement(stmtSql));
          
@@ -100,12 +99,13 @@ public abstract class SqlPersistor implements _Persistor {
    @Override
    public _Store getStore(String id) {
       try {
-         EasyPreparedStatement prepStmt = new EasyPreparedStatement(getConn().prepareStatement("SELECT * FROM " + StoreSQL.TABLE + "WHERE " + StoreSQL.ID + " = " + id));
+         EasyPreparedStatement prepStmt = new EasyPreparedStatement(getConn().prepareStatement(
+               "SELECT * FROM " + StoreSQL.TABLE + "WHERE " + StoreSQL.ID + " = " + id));
          
          try {
             ResultSet rSet = prepStmt.executeQuery();
-            if(!rSet.next()) {
-               throw new HyperboxRuntimeException("No Store by this ID: "+id);
+            if (!rSet.next()) {
+               throw new HyperboxRuntimeException("No Store by this ID: " + id);
             }
             
             String storeId = rSet.getString(StoreSQL.ID);
@@ -338,7 +338,7 @@ public abstract class SqlPersistor implements _Persistor {
          try {
             SettingSQL.populateSetSettingQuery(stmt, name, value);
             if (stmt.executeUpdate() < 1) {
-               throw new HyperboxRuntimeException("Unable to set setting "+name);
+               throw new HyperboxRuntimeException("Unable to set setting " + name);
             }
          } finally {
             stmt.close();

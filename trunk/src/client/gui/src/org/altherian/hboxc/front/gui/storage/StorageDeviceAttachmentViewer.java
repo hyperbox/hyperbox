@@ -11,18 +11,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.storage;
 
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.in.MediumIn;
 import org.altherian.hbox.comm.in.StorageControllerTypeIn;
 import org.altherian.hbox.comm.in.StorageDeviceAttachmentIn;
@@ -32,9 +30,7 @@ import org.altherian.hbox.constant.MediumAttribute;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.tool.FileSizeNumber;
 import org.altherian.tool.logging.Logger;
-
 import java.awt.Color;
-
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -67,7 +63,6 @@ public class StorageDeviceAttachmentViewer {
    private JLabel locationValue;
    private JLabel baseLocationLabel;
    private JLabel baseLocationValue;
-   
    
    public StorageDeviceAttachmentViewer() {
       portCountLabel = new JLabel("Port");

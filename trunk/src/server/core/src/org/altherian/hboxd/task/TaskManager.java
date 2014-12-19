@@ -11,18 +11,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.task;
 
 import net.engio.mbassy.listener.Handler;
-
 import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Request;
@@ -40,7 +38,6 @@ import org.altherian.hboxd.event.task.TaskQueueEvent;
 import org.altherian.hboxd.security.SecurityContext;
 import org.altherian.hboxd.session.SessionContext;
 import org.altherian.tool.logging.Logger;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -201,7 +198,8 @@ public final class TaskManager implements _TaskManager {
             if (!finishedTaskDeque.contains(t) && (finishedTaskDeque.remainingCapacity() == 0)) {
                _Task oldTask = finishedTaskDeque.pollLast();
                tasks.remove(oldTask.getId());
-               Logger.debug("Removed Request #" + oldTask.getRequest().getExchangeId() + " [" + oldTask.getRequest().getCommand() + ":" + oldTask.getRequest().getName() + "] from queue.");
+               Logger.debug("Removed Request #" + oldTask.getRequest().getExchangeId() + " [" + oldTask.getRequest().getCommand() + ":"
+                     + oldTask.getRequest().getName() + "] from queue.");
                EventManager.post(new TaskQueueEvent(TaskQueueEvents.TaskRemoved, oldTask));
             }
             finishedTaskDeque.offerFirst(t);

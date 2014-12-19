@@ -12,19 +12,17 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.tasks;
 
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hboxc.event.task.TaskAddedEvent;
@@ -37,14 +35,12 @@ import org.altherian.hboxc.front.gui.workers.TaskListWorker;
 import org.altherian.hboxc.front.gui.workers._TaskListReceiver;
 import org.altherian.helper.swing.MouseWheelController;
 import org.altherian.tool.logging.Logger;
-
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -171,12 +167,14 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
    }
    
    private class TaskListReceiver implements _TaskListReceiver {
+      
       @Override
       public void loadingStarted() {
          Logger.track();
          
          if (!SwingUtilities.isEventDispatchThread()) {
             SwingUtilities.invokeLater(new Runnable() {
+               
                @Override
                public void run() {
                   loadingStarted();
@@ -193,6 +191,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       private void finish() {
          if (!SwingUtilities.isEventDispatchThread()) {
             SwingUtilities.invokeLater(new Runnable() {
+               
                @Override
                public void run() {
                   finish();
@@ -251,6 +250,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
    private void add(final TaskOut tOut) {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                add(tOut);
@@ -264,6 +264,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
    private void update(final TaskOut tOut) {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                update(tOut);
@@ -277,6 +278,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
    private void remove(final TaskOut tOut) {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                remove(tOut);

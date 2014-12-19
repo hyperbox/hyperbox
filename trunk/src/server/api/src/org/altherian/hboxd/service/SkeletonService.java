@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.service;
@@ -27,7 +26,6 @@ import org.altherian.hbox.states.ServiceState;
 import org.altherian.hboxd.event.EventManager;
 import org.altherian.hboxd.event.service.ServiceStateEvent;
 import org.altherian.tool.logging.Logger;
-
 import java.lang.Thread.UncaughtExceptionHandler;
 
 /**
@@ -37,7 +35,8 @@ import java.lang.Thread.UncaughtExceptionHandler;
  * <p>
  * This skeleton implementation events using the default Server implementation.<br/>
  * If a different event management is required, methods starting with publish can be overwritten.<br/>
- * This implements do NOT send the @link {@link ServiceState#Running} and @link {@link ServiceState#Stopped} state and relies on the implementation to do so.
+ * This implements do NOT send the @link {@link ServiceState#Running} and @link {@link ServiceState#Stopped} state and relies on the implementation to
+ * do so.
  * </p>
  * <p>
  * The thread startup & shutdown condition must be set in starting() and stopping().<br/>

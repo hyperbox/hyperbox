@@ -11,19 +11,17 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.snapshot;
 
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
@@ -41,7 +39,6 @@ import org.altherian.hboxc.front.gui.action.snapshot.SnapshotRestoreAction;
 import org.altherian.hboxc.front.gui.action.snapshot.SnapshotTakeAction;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.tool.logging.Logger;
-
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -49,7 +46,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -109,7 +105,6 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       infoSnapButton = new JButton(new SnapshotModifyAction(this));
       infoSnapButton.setIcon(IconBuilder.getTask(HypervisorTasks.SnapshotGet));
       
-      
       snapNodes = new HashMap<String, DefaultMutableTreeNode>();
       topNode = new DefaultMutableTreeNode("Snapshots");
       treeModel = new DefaultTreeModel(topNode);
@@ -164,6 +159,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                setCurrentState();
@@ -199,6 +195,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    private void refreshCurrentState() {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                refreshCurrentState();
@@ -250,6 +247,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    private void refreshDisplay() {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                refreshDisplay();
@@ -270,6 +268,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                refresh();
@@ -316,6 +315,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                clear();
@@ -365,7 +365,8 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    private class TreeCellRenderer extends DefaultTreeCellRenderer {
       
       @Override
-      public Component getTreeCellRendererComponent(JTree rawTree, Object value, boolean isSelected, boolean isExpanded, boolean isLeaf, int row, boolean hasFocus) {
+      public Component getTreeCellRendererComponent(JTree rawTree, Object value, boolean isSelected, boolean isExpanded, boolean isLeaf, int row,
+            boolean hasFocus) {
          DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
          super.getTreeCellRendererComponent(rawTree, value, isSelected, isExpanded, isLeaf, row, hasFocus);
          
@@ -406,7 +407,6 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       }
       return snapOutList;
    }
-   
    
    @Handler
    public void putMachineStateChanged(MachineStateChangedEvent ev) {
@@ -452,7 +452,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
          refresh();
       }
    }
-
+   
    @Override
    public MachineOut getMachine() {
       return Gui.getServer(srvId).getMachine(vmUuid);

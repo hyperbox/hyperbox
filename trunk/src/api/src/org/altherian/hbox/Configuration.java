@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hbox;
@@ -24,7 +23,6 @@ package org.altherian.hbox;
 import org.altherian.hbox.exception.ConfigurationException;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.tool.logging.Logger;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -50,7 +48,6 @@ public class Configuration {
    private Configuration() {
       // static only
    }
-   
    
    public static String getUserDataPath() throws HyperboxException {
       if (hasSetting(CFGKEY_CONF_USER_DATA_PATH)) {

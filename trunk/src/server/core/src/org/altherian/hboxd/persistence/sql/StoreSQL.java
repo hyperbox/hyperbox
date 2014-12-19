@@ -12,18 +12,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.persistence.sql;
 
 import org.altherian.tool.logging.Logger;
-
 import java.sql.SQLException;
 
 public class StoreSQL {
@@ -46,11 +44,11 @@ public class StoreSQL {
       Logger.track();
       
       sql.getConn()
-      .createStatement()
-      .executeUpdate(
-            "CREATE TABLE IF NOT EXISTS `" + TABLE + "` (`" + ID
-            + "` VARCHAR(50) NOT NULL,`" + NAME + "` VARCHAR(300) NOT NULL,`" + PATH + "` VARCHAR(300) NOT NULL,`" + MODULE_ID
-            + "` VARCHAR(300) NOT NULL,`" + STATUS + "` VARCHAR(255) NOT NULL,PRIMARY KEY (`" + ID + "`))");
+            .createStatement()
+            .executeUpdate(
+                  "CREATE TABLE IF NOT EXISTS `" + TABLE + "` (`" + ID
+                        + "` VARCHAR(50) NOT NULL,`" + NAME + "` VARCHAR(300) NOT NULL,`" + PATH + "` VARCHAR(300) NOT NULL,`" + MODULE_ID
+                        + "` VARCHAR(300) NOT NULL,`" + STATUS + "` VARCHAR(255) NOT NULL,PRIMARY KEY (`" + ID + "`))");
    }
    
    public static String getInsertQuery() {

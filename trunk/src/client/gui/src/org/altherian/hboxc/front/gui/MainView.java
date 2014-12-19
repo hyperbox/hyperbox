@@ -11,29 +11,25 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui;
 
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hboxc.PreferencesManager;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.tasks.TaskListView;
 import org.altherian.tool.logging.Logger;
-
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -95,6 +91,7 @@ public final class MainView {
    public void show() {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                show();

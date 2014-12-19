@@ -12,21 +12,18 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.utils;
 
 import org.altherian.hboxc.front.gui._Cancelable;
 import org.altherian.hboxc.front.gui.action.CancelAction;
-
 import java.awt.event.KeyEvent;
-
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
@@ -35,7 +32,7 @@ public class CancelableUtils {
    private CancelableUtils() {
       // static only
    }
-
+   
    private static final String cancelAction = "cancel";
    private static KeyStroke escapeKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
    

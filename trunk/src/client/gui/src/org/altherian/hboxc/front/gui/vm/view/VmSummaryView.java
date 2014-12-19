@@ -11,19 +11,17 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.vm.view;
 
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.in.MediumIn;
@@ -47,7 +45,6 @@ import org.altherian.helper.swing.BorderUtils;
 import org.altherian.helper.swing.JTextFieldUtils;
 import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,7 +52,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -535,14 +531,14 @@ public final class VmSummaryView {
       Logger.track();
       
       clearNetwork();
-      new SwingWorker<List<StorageDeviceAttachmentOut>,Void>() {
+      new SwingWorker<List<StorageDeviceAttachmentOut>, Void>() {
          
          @Override
          protected List<StorageDeviceAttachmentOut> doInBackground() throws Exception {
             for (NetworkInterfaceOut nicOut : mOut.listNetworkInterface()) {
                if (nicOut.isEnabled()) {
                   GuestNetworkInterfaceOut gNicOut = null;
-                  try  {
+                  try {
                      gNicOut = Gui.getReader().getServerReader(mOut.getServerId()).getGuest(mOut.getUuid())
                            .findNetworkInterface(nicOut.getMacAddress());
                   } catch (Throwable t) {
@@ -561,7 +557,6 @@ public final class VmSummaryView {
          }
          
       }.execute();
-      
       
    }
    

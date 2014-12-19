@@ -12,12 +12,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.action.server;
@@ -32,9 +31,7 @@ import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.MainView;
 import org.altherian.hboxc.front.gui.server._ServerSelector;
 import org.altherian.tool.logging.Logger;
-
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
@@ -58,9 +55,9 @@ public class ServerShutdownAction extends AbstractAction {
                "This will shutdown the Hyperbox Server, canceling all running and pending tasks and disconnect all users.\n"
                      + "The server can only be restarted from the host itself.\n"
                      + "Are you sure?",
-                     "Shutdown confirmation",
-                     JOptionPane.WARNING_MESSAGE,
-                     JOptionPane.OK_CANCEL_OPTION);
+               "Shutdown confirmation",
+               JOptionPane.WARNING_MESSAGE,
+               JOptionPane.OK_CANCEL_OPTION);
          if (info == JOptionPane.YES_OPTION) {
             Logger.info("User accepted, sending shutdown signal to " + srvOut);
             try {

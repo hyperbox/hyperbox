@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.vbox4_2;
@@ -55,13 +54,11 @@ import org.altherian.vbox4_2.storage.VbStorageControllerSubType;
 import org.altherian.vbox4_2.storage.VbStorageControllerType;
 import org.altherian.vbox4_2.storage.VirtualboxMedium;
 import org.altherian.vbox4_2.vm.VBoxMachine;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.virtualbox_4_2.AccessMode;
 import org.virtualbox_4_2.CleanupMode;
 import org.virtualbox_4_2.DeviceType;
@@ -92,7 +89,8 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    
    /**
     * Waiting coefficient to use on ISession::getTimeRemaining() with Thread.sleep() while waiting for task in progress to finish.<br/>
-    * Virtualbox returns a waiting time in seconds, this coefficient allow to turn it into milliseconds and set a 'shorter' waiting time for a more reactive update.<br/>
+    * Virtualbox returns a waiting time in seconds, this coefficient allow to turn it into milliseconds and set a 'shorter' waiting time for a more
+    * reactive update.<br/>
     * Default value waits half of the estimated time reported by Virtualbox.
     */
    private final int waitingCoef = 500;

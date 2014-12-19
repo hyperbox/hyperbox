@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.comm.io.factory;
@@ -28,7 +27,6 @@ import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
 import org.altherian.hboxd.core.model._MediumAttachment;
 import org.altherian.hboxd.core.model._StorageController;
 import org.altherian.hboxd.hypervisor.storage._RawStorageController;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +38,7 @@ public final class StorageControllerIoFactory {
    
    public static StorageControllerOut get(_StorageController sc) {
       List<SettingIO> settingsOut = SettingIoFactory.getList(sc.getSettings());
-
+      
       List<StorageDeviceAttachmentOut> attachmentsOut = new ArrayList<StorageDeviceAttachmentOut>();
       for (_MediumAttachment attachment : sc.listMediumAttachment()) {
          attachmentsOut.add(MediumAttachmentIoFactory.get(attachment));

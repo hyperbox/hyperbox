@@ -11,18 +11,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui;
 
 import net.engio.mbassy.listener.Handler;
-
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.in.SnapshotIn;
@@ -61,7 +59,6 @@ import org.altherian.hboxc.front.gui.vm._MachineSelector;
 import org.altherian.hboxc.front.gui.vm.view.VmDetailedView;
 import org.altherian.helper.swing.MouseWheelController;
 import org.altherian.tool.logging.Logger;
-
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
@@ -73,7 +70,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -179,6 +175,7 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                clear();
@@ -214,6 +211,7 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                refresh(conOut);
@@ -237,6 +235,7 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                refresh(srvOut);
@@ -267,6 +266,7 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                addConnector(conOut);
@@ -287,6 +287,7 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                updateConnector(conOut);
@@ -312,6 +313,7 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                removeConnector(conOut);
@@ -329,6 +331,7 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                addMachine(serverId, mOut);
@@ -356,6 +359,7 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                updateMachine(serverId, mOut);
@@ -382,6 +386,7 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                removeMachine(serverId, id);
@@ -625,7 +630,8 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    private class TreeCellRenderer extends DefaultTreeCellRenderer {
       
       @Override
-      public Component getTreeCellRendererComponent(JTree rawTree, Object value, boolean isSelected, boolean isExpanded, boolean isLeaf, int row, boolean hasFocus) {
+      public Component getTreeCellRendererComponent(JTree rawTree, Object value, boolean isSelected, boolean isExpanded, boolean isLeaf, int row,
+            boolean hasFocus) {
          super.getTreeCellRendererComponent(rawTree, value, isSelected, isExpanded, isLeaf, row, hasFocus);
          DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
          if ((node != topNode) && (node.getUserObject() != null)) {

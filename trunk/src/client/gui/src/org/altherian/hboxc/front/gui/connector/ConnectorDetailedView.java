@@ -12,19 +12,17 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.connector;
 
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.hboxc.event.connector.ConnectorStateChangedEvent;
@@ -38,7 +36,6 @@ import org.altherian.hboxc.front.gui.security.user.UserListView;
 import org.altherian.hboxc.front.gui.store.StoreListView;
 import org.altherian.hboxc.front.gui.tasks.ServerTaskListView;
 import org.altherian.tool.logging.Logger;
-
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -98,6 +95,7 @@ public class ConnectorDetailedView implements _Refreshable {
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                update(conOut);

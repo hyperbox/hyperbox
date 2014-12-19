@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.front.kryonet;
@@ -31,12 +30,10 @@ import org.altherian.hbox.kryonet.KryonetDefaultSettings;
 import org.altherian.hboxd.front._Front;
 import org.altherian.hboxd.front._RequestReceiver;
 import org.altherian.tool.logging.Logger;
-
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.HashMap;
 import java.util.Map;
-
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -145,7 +142,8 @@ public class KryonetServerFront implements _Front {
             
             Request req = (Request) object;
             _Client client = clients.get(connection.getID());
-            Logger.debug("Received request from " + client.getId() + " (" + client.getAddress() + ") : " + req.getExchangeId() + " - " + req.getCommand() + " - " + req.getName());
+            Logger.debug("Received request from " + client.getId() + " (" + client.getAddress() + ") : " + req.getExchangeId() + " - " + req.getCommand()
+                  + " - " + req.getName());
             r.postRequest(client, req);
          }
       }

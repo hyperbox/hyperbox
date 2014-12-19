@@ -12,12 +12,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.persistence;
@@ -28,7 +27,6 @@ import org.altherian.hboxd.security._ActionPermission;
 import org.altherian.hboxd.security._ItemPermission;
 import org.altherian.hboxd.security._User;
 import org.altherian.hboxd.security._UserGroup;
-
 import java.util.List;
 
 public interface _SecurityPersistor {
@@ -49,7 +47,6 @@ public interface _SecurityPersistor {
    
    public void setUserPassword(_User user, byte[] password);
    
-   
    /*--- Group Management ---*/
    public List<_UserGroup> listGroups();
    
@@ -60,7 +57,6 @@ public interface _SecurityPersistor {
    public void updateGroup(_UserGroup group);
    
    public void deleteGroup(_UserGroup group);
-   
    
    /*--- Group Membership ---*/
    public List<_User> listUsers(_UserGroup group);
@@ -79,7 +75,7 @@ public interface _SecurityPersistor {
    public void deletePermission(_User usr, SecurityItem item, SecurityAction action);
    
    public void deletePermission(_User usr, SecurityItem item, SecurityAction action, String itemId);
-
+   
    public List<_ActionPermission> listActionPermissions(_User usr);
    
    public List<_ItemPermission> listItemPermissions(_User usr);

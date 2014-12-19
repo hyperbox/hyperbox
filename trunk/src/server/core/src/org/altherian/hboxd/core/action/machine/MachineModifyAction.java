@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.core.action.machine;
@@ -45,7 +44,6 @@ import org.altherian.hboxd.core.model._StorageController;
 import org.altherian.hboxd.server._Server;
 import org.altherian.hboxd.session.SessionContext;
 import org.altherian.tool.logging.Logger;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -139,7 +137,8 @@ public final class MachineModifyAction extends ASingleTaskAction {
                      _MediumAttachment medAtt = sc.getMediumAttachment(sdaIn.getPortId(), sdaIn.getDeviceId());
                      if (medAtt == null) {
                         Logger.track();
-                        SessionContext.getClient().putAnswer(new Answer(request, AnswerType.WARNING, "Trying to modify a storage attachment that doesn't exist, skipping"));
+                        SessionContext.getClient().putAnswer(
+                              new Answer(request, AnswerType.WARNING, "Trying to modify a storage attachment that doesn't exist, skipping"));
                      } else {
                         // We either want to replace or create or change nothing if UUID are the same
                         if (sdaIn.hasMedium() && (sdaIn.getMedium().getAction() == Action.Create)) {

@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.service;
@@ -26,7 +25,8 @@ import org.altherian.hbox.states.ServiceState;
 
 /**
  * <p>
- * A service for Hyperbox is a module that run in its own thread(s) and is used to perform continuous and/or lengthy background activities that shouldn't be run on the main core thread.<br/>
+ * A service for Hyperbox is a module that run in its own thread(s) and is used to perform continuous and/or lengthy background activities that
+ * shouldn't be run on the main core thread.<br/>
  * A service is expected to manage its own life-cycle and events registration(s) if any is required.
  * </p>
  * <p>
@@ -78,8 +78,10 @@ public interface _Service {
    public void startAndRun() throws ServiceException;
    
    /**
-    * Requests the service to stop. this method should ensure the service thread will stop (by setting a stop variable or sending an interprocess message per example) and then return.<br/>
-    * After stop() has been called, _Core will either wait for the service to finish using isRunning() and mark the service as "stopped" or reach wait timeout and mark the service as zombie.
+    * Requests the service to stop. this method should ensure the service thread will stop (by setting a stop variable or sending an interprocess
+    * message per example) and then return.<br/>
+    * After stop() has been called, _Core will either wait for the service to finish using isRunning() and mark the service as "stopped" or reach wait
+    * timeout and mark the service as zombie.
     * 
     * @throws ServiceException If anything prevented the service to stop
     */

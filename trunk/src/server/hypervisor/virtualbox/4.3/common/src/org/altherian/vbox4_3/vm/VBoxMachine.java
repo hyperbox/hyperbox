@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.vbox4_3.vm;
@@ -52,13 +51,11 @@ import org.altherian.vbox4_3.manager.VBoxSessionManager;
 import org.altherian.vbox4_3.manager.VBoxSettingManager;
 import org.altherian.vbox4_3.storage.VBoxStorageController;
 import org.altherian.vbox4_3.vm.guest.VBoxGuest;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.virtualbox_4_3.Holder;
 import org.virtualbox_4_3.IMachine;
 import org.virtualbox_4_3.IProgress;
@@ -74,7 +71,8 @@ public final class VBoxMachine implements _RawVM {
    
    /**
     * Waiting coefficient to use on ISession::getTimeRemaining() with Thread.sleep() while waiting for task in progress to finish.<br/>
-    * Virtualbox returns a waiting time in seconds, this coefficient allow to turn it into milliseconds and set a 'shorter' waiting time for a more reactive update.<br/>
+    * Virtualbox returns a waiting time in seconds, this coefficient allow to turn it into milliseconds and set a 'shorter' waiting time for a more
+    * reactive update.<br/>
     * Default value waits half of the estimated time reported by Virtualbox.
     */
    private final int waitingCoef = 500;

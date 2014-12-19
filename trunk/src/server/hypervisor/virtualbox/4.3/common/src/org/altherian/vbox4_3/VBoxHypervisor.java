@@ -11,18 +11,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.vbox4_3;
 
 import net.engio.mbassy.listener.Handler;
-
 import org.altherian.hbox.Configuration;
 import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.data.Machine;
@@ -60,13 +58,11 @@ import org.altherian.vbox4_3.storage.VBoxMedium;
 import org.altherian.vbox4_3.storage.VBoxStorageControllerSubType;
 import org.altherian.vbox4_3.storage.VBoxStorageControllerType;
 import org.altherian.vbox4_3.vm.VBoxMachine;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.virtualbox_4_3.AccessMode;
 import org.virtualbox_4_3.CleanupMode;
 import org.virtualbox_4_3.DeviceType;
@@ -100,7 +96,8 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    
    /**
     * Waiting coefficient to use on ISession::getTimeRemaining() with Thread.sleep() while waiting for task in progress to finish.<br/>
-    * Virtualbox returns a waiting time in seconds, this coefficient allow to turn it into milliseconds and set a 'shorter' waiting time for a more reactive update.<br/>
+    * Virtualbox returns a waiting time in seconds, this coefficient allow to turn it into milliseconds and set a 'shorter' waiting time for a more
+    * reactive update.<br/>
     * Default value waits half of the estimated time reported by Virtualbox.
     */
    private final int waitingCoef = 500;
@@ -639,8 +636,6 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       throw new FeatureNotImplementedException();
    }
    
-   
-   
    @Override
    public String getVersion() {
       if (vbMgr != null) {
@@ -658,8 +653,6 @@ public abstract class VBoxHypervisor implements _Hypervisor {
          return "Not Connected";
       }
    }
-   
-   
    
    @Override
    public _RawVM createMachine(String name) {

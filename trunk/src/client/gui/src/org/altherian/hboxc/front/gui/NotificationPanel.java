@@ -11,27 +11,23 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui;
 
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hboxc.event.updater.UpdaterUpdateAvailableEvent;
 import org.altherian.hboxc.front.gui.notification.UpdateAvailableNotification;
 import org.altherian.tool.logging.Logger;
-
 import java.awt.Component;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")

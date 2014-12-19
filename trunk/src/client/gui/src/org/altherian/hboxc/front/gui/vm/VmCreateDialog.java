@@ -11,18 +11,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.vm;
 
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
@@ -34,12 +32,10 @@ import org.altherian.hbox.comm.out.hypervisor.OsTypeOut;
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.MainView;
-
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -136,7 +132,6 @@ public class VmCreateDialog {
          }
          
       }.execute();
-      
       
       instance.mainDialog.pack();
       instance.mainDialog.setSize(475, instance.mainDialog.getHeight());

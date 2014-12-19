@@ -12,19 +12,17 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.server;
 
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.event.hypervisor.HypervisorConnectedEventOut;
 import org.altherian.hbox.comm.out.event.hypervisor.HypervisorDisconnectedEventOut;
@@ -37,7 +35,6 @@ import org.altherian.hboxc.front.gui.workers.ServerGetWorker;
 import org.altherian.hboxc.front.gui.workers._ServerReceiver;
 import org.altherian.helper.swing.JTextFieldUtils;
 import org.altherian.tool.logging.Logger;
-
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -93,7 +90,6 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
       srvPanel.add(versionValue, "growx,pushx,wrap");
       srvPanel.add(netProtocolLabel);
       srvPanel.add(netProtocolValue, "growx,pushx,wrap");
-      
       
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(srvPanel, "growx, pushx,wrap");

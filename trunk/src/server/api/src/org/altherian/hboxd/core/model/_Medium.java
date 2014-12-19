@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.core.model;
@@ -24,7 +23,6 @@ package org.altherian.hboxd.core.model;
 import org.altherian.hboxd.hypervisor.storage._RawMedium;
 import org.altherian.hboxd.task._ProgressTracker;
 import org.altherian.setting._Settable;
-
 import java.util.Set;
 
 public interface _Medium extends _Settable {
@@ -32,7 +30,7 @@ public interface _Medium extends _Settable {
    public String getId();
    
    public String getUuid();
-
+   
    public String getDescription();
    
    public void setDescription(String desc);

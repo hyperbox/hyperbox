@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.core;
@@ -30,7 +29,6 @@ import org.altherian.hboxc.server._Machine;
 import org.altherian.hboxc.server._Server;
 import org.altherian.hboxc.state.CoreState;
 import org.altherian.hboxc.updater._Updater;
-
 import java.util.List;
 
 public interface _Core {
@@ -78,7 +76,7 @@ public interface _Core {
    public void launchConsoleViewer(String serverId, String machineId);
    
    public void launchConsoleViewer(_Machine machine);
-
+   
    public _Server getServer(String serverId);
    
    public _Connector getConnectorForServer(String serverId);

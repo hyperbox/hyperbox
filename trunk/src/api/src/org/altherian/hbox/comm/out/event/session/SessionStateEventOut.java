@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hbox.comm.out.event.session;
@@ -26,7 +25,6 @@ import org.altherian.hbox.comm.out.SessionOut;
 import org.altherian.hbox.comm.out.event.EventOut;
 import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.states.SessionStates;
-
 import java.util.Date;
 
 public final class SessionStateEventOut extends EventOut {

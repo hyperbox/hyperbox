@@ -12,12 +12,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.factory;
@@ -26,7 +25,6 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.states.StoreState;
 import org.altherian.hboxd.store._Store;
 import org.altherian.hboxd.store.local.FolderStore;
-
 import java.io.File;
 
 public class StoreFactory {
@@ -34,7 +32,7 @@ public class StoreFactory {
    private StoreFactory() {
       throw new RuntimeException("Not allowed");
    }
-
+   
    public static _Store get(String moduleId, String storeId, String storeName, String storePath, StoreState storeState) {
       if (moduleId.equalsIgnoreCase("localFolder")) {
          return new FolderStore(storeId, storeName, new File(storePath), storeState);

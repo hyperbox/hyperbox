@@ -11,18 +11,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.security.perm;
 
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.SecurityAccess;
 import org.altherian.hbox.comm.SecurityAction;
 import org.altherian.hbox.comm.SecurityItem;
@@ -36,11 +34,9 @@ import org.altherian.hboxc.front.gui.action.SaveAction;
 import org.altherian.hboxc.front.gui.builder.JDialogBuilder;
 import org.altherian.hboxc.front.gui.workers.MachineListWorker;
 import org.altherian.hboxc.front.gui.workers._MachineListReceiver;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;

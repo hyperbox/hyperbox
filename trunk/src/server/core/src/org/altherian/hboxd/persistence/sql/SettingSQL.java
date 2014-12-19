@@ -12,19 +12,17 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.persistence.sql;
 
 import org.altherian.helper.sql.EasyPreparedStatement;
 import org.altherian.tool.logging.Logger;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -45,9 +43,9 @@ public class SettingSQL {
       Logger.track();
       
       sql.getConn()
-      .createStatement()
-      .executeUpdate(
-            "CREATE TABLE IF NOT EXISTS `" + TABLE + "` (`" + NAME
+            .createStatement()
+            .executeUpdate(
+                  "CREATE TABLE IF NOT EXISTS `" + TABLE + "` (`" + NAME
                         + "` VARCHAR(255) NOT NULL,`" + VALUE + "` VARCHAR(255),PRIMARY KEY (`" + NAME + "`))");
    }
    
@@ -62,7 +60,7 @@ public class SettingSQL {
    }
    
    public static String getLoadSettingQuery() {
-      return "SELECT * FROM "+TABLE+" WHERE settingName = ?";
+      return "SELECT * FROM " + TABLE + " WHERE settingName = ?";
    }
    
    public static void populateLoadSettingQuery(EasyPreparedStatement stmt, String name) throws SQLException {

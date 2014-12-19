@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.vbox4_2.manager;
@@ -46,13 +45,11 @@ import org.altherian.vbox4_2.storage.VirtualboxStorageController;
 import org.altherian.vbox4_2.vm.VBoxMachine;
 import org.altherian.vbox4_2.vm.VBoxNetworkInterface;
 import org.altherian.vbox4_2.vm.VBoxSnapshot;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.virtualbox_4_2.AccessMode;
 import org.virtualbox_4_2.DeviceType;
 import org.virtualbox_4_2.IMachine;

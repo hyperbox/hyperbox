@@ -25,12 +25,10 @@ import org.altherian.hboxd.module.Module;
 import org.altherian.hboxd.module._Module;
 import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -38,7 +36,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -78,7 +75,7 @@ public class ModuleFactory {
             String url = (String) xPath.evaluate("/module/url", doc, XPathConstants.STRING);
             Logger.debug("url: " + url);
             NodeList providerNodeList = (NodeList) xPath.evaluate("/module/providers/provider", doc, XPathConstants.NODESET);
-            Map<String,String> providers = new HashMap<String,String>();
+            Map<String, String> providers = new HashMap<String, String>();
             Logger.debug("providers: " + providerNodeList.getLength());
             for (int i = 0; i < providerNodeList.getLength(); i++) {
                String type = (String) xPath.evaluate("type", providerNodeList.item(i), XPathConstants.STRING);
@@ -101,7 +98,7 @@ public class ModuleFactory {
             Logger.debug("mod abs path: " + modPath.getPath());
             Logger.debug("mod path read: " + modPath.canRead());
             if (!modPath.canRead()) {
-               throw new ModuleInvalidDescriptorFileException("Module base path is not readable: "+modPath.getAbsolutePath());
+               throw new ModuleInvalidDescriptorFileException("Module base path is not readable: " + modPath.getAbsolutePath());
             }
             
             Logger.debug("Found a valid module for " + descriptorFile.getAbsolutePath());

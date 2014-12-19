@@ -12,19 +12,17 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.settings;
 
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hboxc.comm.output.ConsoleViewerOutput;
 import org.altherian.hboxc.event.consoleviewer.ConsoleViewerEvent;
 import org.altherian.hboxc.front.gui.FrontEventManager;
@@ -35,12 +33,10 @@ import org.altherian.hboxc.front.gui.vm.console.viewer.ConsoleViewerEditor;
 import org.altherian.hboxc.front.gui.vm.console.viewer.ConsoleViewerTableModel;
 import org.altherian.hboxc.front.gui.vm.console.viewer._ConsoleViewerSelector;
 import org.altherian.tool.logging.Logger;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;

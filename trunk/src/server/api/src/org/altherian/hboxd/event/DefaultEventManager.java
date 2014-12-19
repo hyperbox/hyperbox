@@ -11,24 +11,21 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.event;
 
 import net.engio.mbassy.bus.MBassador;
 import net.engio.mbassy.bus.config.BusConfiguration;
-
 import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxd.security.SecurityContext;
 import org.altherian.tool.logging.Logger;
-
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -49,7 +46,7 @@ public final class DefaultEventManager implements _EventManager, Runnable {
       worker = new Thread(this, "EvMgrWT");
       worker.setDaemon(true);
       SecurityContext.addAdminThread(worker);
-
+      
       worker.start();
       Logger.verbose("Event Manager Started");
    }

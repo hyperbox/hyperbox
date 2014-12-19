@@ -12,21 +12,18 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.utils;
 
 import org.altherian.hbox.comm.out.ObjectOut;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
 
 @SuppressWarnings("serial")
@@ -43,7 +40,7 @@ public abstract class ObjectOutputTableModel<T extends ObjectOut> extends Abstra
    
    public void add(T item) {
       if (data.add(item)) {
-         fireTableRowsInserted(data.size()-1, data.size()-1);
+         fireTableRowsInserted(data.size() - 1, data.size() - 1);
       }
    }
    

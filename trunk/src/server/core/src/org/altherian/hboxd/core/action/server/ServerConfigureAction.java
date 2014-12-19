@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.core.action.server;
@@ -31,7 +30,6 @@ import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ServerAction;
 import org.altherian.hboxd.server._Server;
 import org.altherian.tool.logging.Logger;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,7 +54,7 @@ public class ServerConfigureAction extends ServerAction {
          Logger.debug(set.getName());
       }
       Logger.debug("--------------------");
-
+      
       if (srvIn.hasSetting(ServerAttribute.Name)) {
          Logger.debug("Setting new name: " + srvIn.getSetting(ServerAttribute.LogLevel).getString());
          srv.setName(srvIn.getSetting(ServerAttribute.Name).getString());

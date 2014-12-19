@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hbox.states;
@@ -74,7 +73,8 @@ public enum MachineStates {
    Saving,
    
    /**
-    * The machine is not currently running, but the execution state of the machine has been saved to an external file when it was running, from where it can be resumed.
+    * The machine is not currently running, but the execution state of the machine has been saved to an external file when it was running, from where
+    * it can be resumed.
     */
    Saved,
    
@@ -89,12 +89,14 @@ public enum MachineStates {
    Stuck,
    
    /**
-    * The process running the machine has terminated abnormally. This may indicate a crash of the VM process in host execution context, or the VM process has been terminated externally.
+    * The process running the machine has terminated abnormally. This may indicate a crash of the VM process in host execution context, or the VM
+    * process has been terminated externally.
     */
    Aborted,
    
    /**
-    * The machine is about to be teleported to a different host or process. It is possible to pause a machine in this state, but it will go to the TeleportingPausedVM state and it will not be possible
+    * The machine is about to be teleported to a different host or process. It is possible to pause a machine in this state, but it will go to the
+    * TeleportingPausedVM state and it will not be possible
     * to resume it again unless the teleportation fails.
     */
    Teleporting,
@@ -120,13 +122,15 @@ public enum MachineStates {
    FaultTolerantSyncing,
    
    /**
-    * A live snapshot is being taken. The machine is running normally, but some of the runtime configuration options are inaccessible. Also, if paused while in this state it will transition to Saving
+    * A live snapshot is being taken. The machine is running normally, but some of the runtime configuration options are inaccessible. Also, if paused
+    * while in this state it will transition to Saving
     * and it will not be resume the execution until the snapshot operation has completed.
     */
    SnapshotLive,
    
    /**
-    * A machine snapshot is being deleted; this can take a long time since this may require merging differencing media. This value indicates that the machine is not running while the snapshot is being
+    * A machine snapshot is being deleted; this can take a long time since this may require merging differencing media. This value indicates that the
+    * machine is not running while the snapshot is being
     * deleted.
     */
    SnapshotDeletingOff,

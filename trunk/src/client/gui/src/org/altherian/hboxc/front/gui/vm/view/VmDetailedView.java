@@ -11,19 +11,17 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.vm.view;
 
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxc.event.machine.MachineDataChangedEvent;
 import org.altherian.hboxc.event.machine.MachineRemovedEvent;
@@ -33,7 +31,6 @@ import org.altherian.hboxc.front.gui.snapshot.SnapshotManagementView;
 import org.altherian.hboxc.front.gui.workers.MachineGetWorker;
 import org.altherian.hboxc.front.gui.workers._MachineReceiver;
 import org.altherian.tool.logging.Logger;
-
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -123,6 +120,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                clear();
@@ -140,6 +138,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    public void loadingStarted() {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                loadingStarted();

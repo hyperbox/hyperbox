@@ -1,4 +1,4 @@
-/* 
+/*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
  * 
@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.task;
@@ -25,7 +24,6 @@ import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.states.TaskState;
 import org.altherian.hboxd.core.action._HyperboxAction;
 import org.altherian.hboxd.security._User;
-
 import java.util.Date;
 
 public interface _Task {

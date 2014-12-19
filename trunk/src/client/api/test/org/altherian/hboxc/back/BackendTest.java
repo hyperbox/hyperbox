@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.back;
@@ -24,7 +23,6 @@ package org.altherian.hboxc.back;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
@@ -46,11 +44,9 @@ import org.altherian.hboxc.comm.utils.Transaction;
 import org.altherian.hboxc.event.EventManager;
 import org.altherian.tool.logging.LogLevel;
 import org.altherian.tool.logging.Logger;
-
 import java.util.List;
 import java.util.Queue;
 import java.util.UUID;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

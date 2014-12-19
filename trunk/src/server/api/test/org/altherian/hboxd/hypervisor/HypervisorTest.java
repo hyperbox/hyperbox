@@ -11,12 +11,11 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.hypervisor;
@@ -25,7 +24,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
 import org.altherian.hbox.Configuration;
 import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.constant.EntityType;
@@ -55,11 +53,9 @@ import org.altherian.setting.StringSetting;
 import org.altherian.setting._Setting;
 import org.altherian.tool.logging.LogLevel;
 import org.altherian.tool.logging.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

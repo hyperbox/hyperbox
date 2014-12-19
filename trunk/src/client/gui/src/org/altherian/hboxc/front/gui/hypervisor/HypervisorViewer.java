@@ -12,20 +12,17 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.hypervisor;
 
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
-
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -95,6 +92,7 @@ public class HypervisorViewer {
    private void toogleConnected(final boolean isConnected) {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                toogleConnected(isConnected);
@@ -118,6 +116,7 @@ public class HypervisorViewer {
    public void show(final HypervisorOut srvOut) {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                show(srvOut);
@@ -136,6 +135,7 @@ public class HypervisorViewer {
    public void setDisconnected() {
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                setDisconnected();

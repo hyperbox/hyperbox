@@ -12,18 +12,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.hypervisor;
 
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.in.HypervisorIn;
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.hypervisor.HypervisorLoaderOut;
@@ -34,7 +32,6 @@ import org.altherian.hboxc.front.gui._Saveable;
 import org.altherian.hboxc.front.gui.action.CancelAction;
 import org.altherian.hboxc.front.gui.action.SaveAction;
 import org.altherian.hboxc.front.gui.builder.JDialogBuilder;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -70,7 +67,6 @@ public class HypervisorConnectView implements _Saveable, _Cancelable {
       
       connectButton = new JButton(new SaveAction(this, "Connect"));
       cancelButton = new JButton(new CancelAction(this));
-      
       
       JPanel centerPanel = new JPanel(new MigLayout("ins 0"));
       centerPanel.add(loaderLabel);

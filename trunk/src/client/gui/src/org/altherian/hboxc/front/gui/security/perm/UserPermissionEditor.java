@@ -11,18 +11,16 @@
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.security.perm;
 
 import net.miginfocom.swing.MigLayout;
-
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
 import org.altherian.hbox.comm.Request;
@@ -36,13 +34,11 @@ import org.altherian.hboxc.front.gui.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.tool.logging.Logger;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -144,6 +140,7 @@ public class UserPermissionEditor implements _Refreshable {
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                clear();
@@ -160,6 +157,7 @@ public class UserPermissionEditor implements _Refreshable {
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
+            
             @Override
             public void run() {
                refresh();
