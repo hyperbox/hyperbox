@@ -2,19 +2,19 @@
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
  * hyperbox at altherian dot org
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -107,7 +107,7 @@ public class SecurityManager implements _SecurityManager {
       Logger.track();
       
       this.persistor = persistor;
-      superUsr = new User("0", "Admin");
+      superUsr = new SystemUser();
       return superUsr;
    }
    
@@ -292,6 +292,19 @@ public class SecurityManager implements _SecurityManager {
       usernames.remove(id);
       users.remove(id);
    }
+
+   protected void reloadUser(String id) {
+      unloadUser(id);
+      loadUser(id);
+   }
+   
+   protected void reloadCache() {
+      Map<String, _User> usernameCache = new HashMap<String, _User>();
+      for (_User u : users.values()) {
+         usernameCache.put(u.getDomainLogonName(), u);
+      }
+      usernames = usernameCache;
+   }
    
    @Override
    public _User getUser(String usrId) {
@@ -346,7 +359,7 @@ public class SecurityManager implements _SecurityManager {
       
       authorize(SecurityItem.User, SecurityAction.Modify);
       
-      _User user = persistor.getUser(uIn.getId());
+      _User user = users.get(uIn.getId());
       
       if (uIn.getUsername() != null) {
          user.setName(uIn.getUsername());
@@ -358,7 +371,13 @@ public class SecurityManager implements _SecurityManager {
       user.save();
       
       persistor.updateUser(user);
+      
+      if ((uIn.getPassword() != null) && (uIn.getPassword().length > 0)) {
+         setUserPassword(user, uIn.getPassword());
+      }
+      
       loadUser(user.getId());
+      reloadCache();
       
       EventManager.post(new UserModifiedEvent(getUser(user.getId())));
       
