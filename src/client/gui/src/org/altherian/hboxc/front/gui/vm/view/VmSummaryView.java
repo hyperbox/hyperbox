@@ -51,6 +51,8 @@ import java.awt.event.ActionListener;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -469,6 +471,7 @@ public final class VmSummaryView {
          Logger.exception(new Exception());
       }
 
+      
       clearStorage();
       if (controllers.isEmpty()) {
          for (StorageControllerOut scOut : mOut.listStorageController()) {
@@ -476,10 +479,28 @@ public final class VmSummaryView {
          }
       }
 
-      for (StorageControllerOut scOut : controllers.values()) {
+      List<StorageControllerOut> scSorted = new ArrayList<StorageControllerOut>(controllers.values());
+      Collections.sort(scSorted, new Comparator<StorageControllerOut>() {
+         
+         @Override
+         public int compare(StorageControllerOut o1, StorageControllerOut o2) {
+            return o1.getName().compareTo(o2.getName());
+         }
+         
+      });
+      for (StorageControllerOut scOut : scSorted) {
          try {
             storagePanel.add(new JLabel(scOut.getType()), "wrap");
-            for (StorageDeviceAttachmentOut sdaOut : scOut.getAttachments()) {
+            List<StorageDeviceAttachmentOut> scaSorted = new ArrayList<StorageDeviceAttachmentOut>(scOut.getAttachments());
+            Collections.sort(scaSorted, new Comparator<StorageDeviceAttachmentOut>() {
+
+               @Override
+               public int compare(StorageDeviceAttachmentOut o1, StorageDeviceAttachmentOut o2) {
+                  return (o1.getPortId() + ":" + o1.getDeviceId()).compareTo((o2.getPortId() + ":" + o2.getDeviceId()));
+               }
+
+            });
+            for (StorageDeviceAttachmentOut sdaOut : scaSorted) {
                storagePanel.add(new JLabel(""));
                storagePanel.add(new JLabel(sdaOut.getPortId() + ":" + sdaOut.getDeviceId()));
 
