@@ -307,8 +307,8 @@
 		<property name="client.out.dir.abs"					location="${client.out.dir}" />
 		<property name="dist.out.dir.abs"					location="${dist.out.dir}" />
 		
-		<property name="client.out.dist.package"			value="hbox_client-${hbox.version}-${hbox.revision}-${os.type}_${os.arch}" />
-		<property name="server.out.dist.package"			value="hbox_server-${hbox.version}-${hbox.revision}-${os.type}_${os.arch}" />
+		<property name="client.out.dist.package"			value="hbox_${hbox.version}-${hbox.revision}-${os.type}_${os.arch}-client" />
+		<property name="server.out.dist.package"			value="hbox_${hbox.version}-${hbox.revision}-${os.type}_${os.arch}-server" />
 		
 		<echo message="OS Architecture:              ${os.arch}" />
 		<echo message="OS Type:                      ${os.type}" />
