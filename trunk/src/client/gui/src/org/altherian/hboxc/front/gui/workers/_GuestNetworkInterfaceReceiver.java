@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  *
  * http://hyperbox.altherian.org
  *
@@ -11,22 +11,20 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 
-package org.altherian.hboxd.comm.io.factory;
+package org.altherian.hboxc.front.gui.workers;
 
-import org.altherian.hbox.comm.out.StoreOut;
-import org.altherian.hboxd.store._Store;
+import org.altherian.hbox.comm.out.hypervisor.GuestNetworkInterfaceOut;
 
-public final class StoreIoFactory {
-
-   public static StoreOut get(_Store s) {
-      return new StoreOut(s.getId(), s.getLabel(), s.getLocation());
-   }
-
+public interface _GuestNetworkInterfaceReceiver extends _WorkerDataReceiver {
+   
+   public void put(GuestNetworkInterfaceOut gNicOut);
+   
 }

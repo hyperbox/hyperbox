@@ -94,15 +94,6 @@ public enum HyperboxTasks {
    StoreUnregister,
    
    /**
-    * Not Implemented
-    */
-   StoreOpen,
-   /**
-    * Not Implemented
-    */
-   StoreClose,
-   
-   /**
     * Not implemented
     */
    StoreItemList,

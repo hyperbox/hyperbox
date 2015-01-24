@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2015 Maxime Dor
  * 
  * http://hyperbox.altherian.org
  * 
@@ -18,21 +18,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.altherian.hboxd.event.store;
+package org.altherian.hboxd.hypervisor.net;
 
-import org.altherian.hbox.event.HyperboxEvents;
-import org.altherian.hbox.states.StoreState;
-import org.altherian.hboxd.store._Store;
+import java.util.List;
 
-public final class StoreStateEvent extends StoreEvent {
-   
-   public StoreStateEvent(_Store s) {
-      super(HyperboxEvents.StoreState, s);
-      set(s.getState());
-   }
-   
-   public StoreState getState() {
-      return get(StoreState.class);
-   }
-   
+public interface _NetAdaptor {
+
+   public String getId();
+
+   public String getLabel();
+
+   public _NetMode getMode();
+
+   public List<_NetService> getServices();
+
 }

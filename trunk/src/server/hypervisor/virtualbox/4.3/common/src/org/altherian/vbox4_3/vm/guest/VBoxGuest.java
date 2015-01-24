@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2014 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -37,31 +37,31 @@ import org.virtualbox_4_3.LockType;
 import org.virtualbox_4_3.VBoxException;
 
 public class VBoxGuest implements _RawGuest {
-   
+
    private String machineUuid;
    private ISession session;
-   
+
    public VBoxGuest(VBoxMachine vm) {
       machineUuid = vm.getUuid();
    }
-   
+
    private IMachine getVm() {
       return VBox.get().findMachine(machineUuid);
    }
-   
+
    private void lockAuto() {
       session = VBoxSessionManager.get().lockAuto(machineUuid, LockType.Shared);
    }
-   
+
    private void unlockAuto() {
       unlockAuto(false);
    }
-   
+
    private void unlockAuto(boolean saveSettings) {
       VBoxSessionManager.get().unlockAuto(machineUuid, saveSettings);
       session = null;
    }
-   
+
    @Override
    public boolean hasHypervisorTools() {
       lockAuto();
@@ -73,7 +73,7 @@ public class VBoxGuest implements _RawGuest {
          unlockAuto();
       }
    }
-   
+
    @Override
    public _RawHypervisorTools getHypervisorTools() {
       // TODO Auto-generated method stub
@@ -86,11 +86,11 @@ public class VBoxGuest implements _RawGuest {
          unlockAuto();
       }
    }
-   
+
    private int getNicCount() {
       return Integer.parseInt(AxStrings.getNonEmpty(getVm().getGuestPropertyValue("/VirtualBox/GuestInfo/Net/Count"), "0"));
    }
-   
+
    @Override
    public List<_RawGuestNetworkInterface> listNetworkInterfaces() {
       List<_RawGuestNetworkInterface> list = new ArrayList<_RawGuestNetworkInterface>();
@@ -99,13 +99,7 @@ public class VBoxGuest implements _RawGuest {
       }
       return list;
    }
-   
-   @Override
-   public _RawGuestNetworkInterface getNetworkInterfaceById(String id) {
-      // TODO check if ID is valid
-      return new VBoxGuestNetworkInterface(machineUuid, Integer.parseInt(id));
-   }
-   
+
    @Override
    public _RawGuestNetworkInterface getNetworkInterfaceByMac(String macAddress) {
       macAddress = macAddress.replace(":", "").toUpperCase();
@@ -114,7 +108,7 @@ public class VBoxGuest implements _RawGuest {
             return new VBoxGuestNetworkInterface(machineUuid, i);
          }
       }
-      throw new HyperboxRuntimeException("No NIC matching MAC " + macAddress);
+      return null;
    }
-   
+
 }

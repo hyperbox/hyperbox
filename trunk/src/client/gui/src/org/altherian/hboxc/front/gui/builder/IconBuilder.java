@@ -83,10 +83,8 @@ public class IconBuilder {
       hbTasks.put(HyperboxTasks.UserModify, new ImageIcon(ICONS_PATH + "user_edit.png"));
       
       hbTasks.put(HyperboxTasks.StoreGet, new ImageIcon(ICONS_PATH + "store_browse.png"));
-      hbTasks.put(HyperboxTasks.StoreClose, new ImageIcon(ICONS_PATH + "store_close.png"));
       hbTasks.put(HyperboxTasks.StoreCreate, new ImageIcon(ICONS_PATH + "store_create.png"));
       hbTasks.put(HyperboxTasks.StoreDelete, new ImageIcon(ICONS_PATH + "store_delete.png"));
-      hbTasks.put(HyperboxTasks.StoreOpen, new ImageIcon(ICONS_PATH + "store_open.png"));
       hbTasks.put(HyperboxTasks.StoreRegister, new ImageIcon(ICONS_PATH + "store_register.png"));
       hbTasks.put(HyperboxTasks.StoreUnregister, new ImageIcon(ICONS_PATH + "store_unregister.png"));
    }

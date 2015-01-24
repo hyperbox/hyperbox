@@ -1,4 +1,4 @@
-<!--
+﻿<!--
  * 
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
@@ -301,14 +301,14 @@
 		<property name="server.out.module.dir"				value="${server.out.dir}/modules" />
 		<property name="client.out.dir"						value="${out.dir}/bin/${platform}/client" />
 		<property name="client.out.module.dir"				value="${client.out.dir}/modules" />
-		<property name="dist.out.dir"						value="${out.dir}/dist/${platform}" />
+		<property name="dist.out.dir"						value="${out.dir}/dist" />
 		
 		<property name="server.out.dir.abs"					location="${server.out.dir}" />
 		<property name="client.out.dir.abs"					location="${client.out.dir}" />
 		<property name="dist.out.dir.abs"					location="${dist.out.dir}" />
 		
-		<property name="client.out.dist.package"			value="hbox_${hbox.version}-${hbox.revision}-${os.type}_${os.arch}-client" />
-		<property name="server.out.dist.package"			value="hbox_${hbox.version}-${hbox.revision}-${os.type}_${os.arch}-server" />
+		<property name="client.out.dist.package"			value="hbox_${hbox.version}.${hbox.revision}-${os.type}_${os.arch}-client" />
+		<property name="server.out.dist.package"			value="hbox_${hbox.version}.${hbox.revision}-${os.type}_${os.arch}-server" />
 		
 		<echo message="OS Architecture:              ${os.arch}" />
 		<echo message="OS Type:                      ${os.type}" />
@@ -534,8 +534,8 @@
     <target name="server.compile" depends="server.api.compile, kryo.api.compile">
     	<mkdir dir="${server.core.classes.dir}" />
     	<javac source="1.6" target="1.6" debug="on" includeantruntime="false" srcdir="${server.core.src.dir}" destdir="${server.core.classes.dir}" classpathref="server.classpath" />
-		<echo file="${server.core.classes.dir}/server.build.properties" append="false">revision=${hbox.revision}${line.separator}</echo>
 		<echo file="${server.core.classes.dir}/server.build.properties" append="true">version=${hbox.version}${line.separator}</echo>
+		<echo file="${server.core.classes.dir}/server.build.properties" append="false">revision=${hbox.revision}${line.separator}</echo>
     </target>
 
 	<target name="server.deploy" depends="server.api.deploy">
@@ -556,8 +556,8 @@
 	<target name="client.compile" depends="client.api.compile, kryo.api.compile">
     	<mkdir dir="${client.classes.dir}" />
     	<javac source="1.6" target="1.6" debug="on" includeantruntime="false" srcdir="${client.src.dir}" destdir="${client.classes.dir}" classpathref="client.classpath" />
-		<echo file="${client.classes.dir}/client.build.properties" append="false">revision=${hbox.revision}${line.separator}</echo>
 		<echo file="${client.classes.dir}/client.build.properties" append="true">version=${hbox.version}${line.separator}</echo>
+		<echo file="${client.classes.dir}/client.build.properties" append="false">revision=${hbox.revision}${line.separator}</echo>
     </target>
 	
 	<target name="client.deploy" depends="client.api.deploy">
@@ -677,7 +677,6 @@
 	<target name="server.build.dist.win" if="isWin" depends="configureDist">
 		<echo message="NSIS Dir:           ${tools.nsis.dir}" />
 		<echo message="Binaries Dir:       ${server.out.dir.abs}" />
-		<mkdir dir="${out.dir}/dist/${os.family}.${os.arch}" />
 		<copy file="scripts/server/installer/server-installer.nsi" tofile="${dist.build.out.dir}/server-installer.nsi" overwrite="true" />
 		<replace file="${dist.build.out.dir}/server-installer.nsi" token="@SERVER_INSTALLER_OUTPUT@" value="${dist.out.dir.abs}/${server.out.dist.package}.exe" />
 		<replace file="${dist.build.out.dir}/server-installer.nsi" token="@SERVER_OUT_BIN_DIR@" value="${server.out.dir.abs}" />
