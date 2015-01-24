@@ -30,8 +30,6 @@ public interface _RawGuest {
    
    public List<_RawGuestNetworkInterface> listNetworkInterfaces();
    
-   public _RawGuestNetworkInterface getNetworkInterfaceById(String id);
-   
    public _RawGuestNetworkInterface getNetworkInterfaceByMac(String macAddress);
    
 }

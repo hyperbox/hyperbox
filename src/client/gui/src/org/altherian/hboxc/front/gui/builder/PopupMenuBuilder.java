@@ -27,7 +27,6 @@ import org.altherian.hbox.comm.out.StoreOut;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
 import org.altherian.hbox.constant.EntityType;
-import org.altherian.hbox.states.StoreState;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.hboxc.front.gui.action.connector.ConnectorConnectAction;
 import org.altherian.hboxc.front.gui.action.connector.ConnectorDisconnectAction;
@@ -61,9 +60,7 @@ import org.altherian.hboxc.front.gui.action.storage.HypervisorToolsMediumAttachA
 import org.altherian.hboxc.front.gui.action.storage.MediumAttachAction;
 import org.altherian.hboxc.front.gui.action.storage.MediumDettachAction;
 import org.altherian.hboxc.front.gui.action.store.StoreBrowseAction;
-import org.altherian.hboxc.front.gui.action.store.StoreCloseAction;
 import org.altherian.hboxc.front.gui.action.store.StoreDeleteAction;
-import org.altherian.hboxc.front.gui.action.store.StoreOpenAction;
 import org.altherian.hboxc.front.gui.action.store.StoreUnregisterAction;
 import org.altherian.hboxc.front.gui.connector._ConnectorSelector;
 import org.altherian.hboxc.front.gui.module._ModuleSelector;
@@ -163,19 +160,11 @@ public class PopupMenuBuilder {
    
    public static JPopupMenu get(_StoreSelector stoSelect, StoreOut stoOut) {
       Action browse = new StoreBrowseAction(stoSelect);
-      browse.setEnabled(stoOut.getState().equals(StoreState.Open));
-      Action close = new StoreCloseAction(stoSelect);
-      close.setEnabled(stoOut.getState().equals(StoreState.Open));
-      Action open = new StoreOpenAction(stoSelect);
-      open.setEnabled(stoOut.getState().equals(StoreState.Closed));
       Action unregister = new StoreUnregisterAction(stoSelect);
       Action delete = new StoreDeleteAction(stoSelect);
       
       JPopupMenu actions = new JPopupMenu();
       actions.add(new JMenuItem(browse));
-      actions.add(new JSeparator(JSeparator.HORIZONTAL));
-      actions.add(new JMenuItem(close));
-      actions.add(new JMenuItem(open));
       actions.add(new JSeparator(JSeparator.HORIZONTAL));
       actions.add(new JMenuItem(unregister));
       actions.add(new JMenuItem(delete));

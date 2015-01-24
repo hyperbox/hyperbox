@@ -20,7 +20,6 @@
 
 package org.altherian.hboxd.store;
 
-import org.altherian.hbox.states.StoreState;
 
 public interface _Store {
    
@@ -39,25 +38,6 @@ public interface _Store {
     * @return a String for this store's label
     */
    public String getLabel();
-   
-   /**
-    * Open this store for use
-    */
-   public void open();
-   
-   /**
-    * Close this store for use
-    */
-   public void close();
-   
-   public boolean isOpen();
-   
-   /**
-    * Get the state of this store
-    * 
-    * @return a StoreState value
-    */
-   public StoreState getState();
    
    public String getLocation();
    

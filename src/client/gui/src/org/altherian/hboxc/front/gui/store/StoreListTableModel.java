@@ -29,14 +29,12 @@ public final class StoreListTableModel extends AbstractOutputListTableModel<Stor
    private final String ID = "ID";
    private final String LABEL = "Label";
    private final String LOC = "Location";
-   private final String STATE = "State";
    
    @Override
    protected void addColumns() {
       addColumn(ID);
       addColumn(LABEL);
       addColumn(LOC);
-      addColumn(STATE);
    }
    
    @Override
@@ -49,9 +47,6 @@ public final class StoreListTableModel extends AbstractOutputListTableModel<Stor
       }
       if (LOC.equalsIgnoreCase(columnName)) {
          return obj.getLocation();
-      }
-      if (STATE.equalsIgnoreCase(columnName)) {
-         return obj.getState();
       }
       return null;
    }

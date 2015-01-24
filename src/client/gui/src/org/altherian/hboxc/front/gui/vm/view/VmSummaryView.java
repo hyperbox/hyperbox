@@ -27,7 +27,6 @@ import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.in.MediumIn;
 import org.altherian.hbox.comm.in.ServerIn;
 import org.altherian.hbox.comm.out.event.storage.StorageControllerAttachmentDataModifiedEventOut;
-import org.altherian.hbox.comm.out.hypervisor.GuestNetworkInterfaceOut;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
 import org.altherian.hbox.comm.out.storage.MediumOut;
@@ -62,16 +61,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
 
 public final class VmSummaryView {
-
+   
    private MachineOut mOut;
    private Map<String, StorageControllerOut> controllers;
-
+   
    private JPanel panel;
-
+   
    private JPanel generalPanel;
    private JLabel nameLabel;
    private JTextField nameField;
@@ -81,7 +78,7 @@ public final class VmSummaryView {
    private JTextField stateField;
    private JLabel osTypeLabel;
    private JTextField osTypeField;
-
+   
    private JPanel systemPanel;
    private JLabel cpuCountLabel;
    private JTextField cpuCountValue;
@@ -89,7 +86,7 @@ public final class VmSummaryView {
    private JTextField memoryValue;
    private JLabel accelLabel;
    private JTextField accelValue;
-
+   
    private JPanel displayPanel;
    private JLabel vramLabel;
    private JTextField vramValue;
@@ -98,35 +95,28 @@ public final class VmSummaryView {
    private JLabel consoleAddressLabel;
    private JTextField consoleAddressValue;
    private JButton consoleConnectButton;
-
+   
    private JPanel storagePanel;
-
+   
    private JPanel audioPanel;
    private JLabel hostDriverLabel;
    private JTextField hostDriverValue;
    private JLabel audioControllerLabel;
    private JTextField audioControllerValue;
-
+   
    private JPanel networkPanel;
-
+   
    private JPanel descPanel;
    private JTextArea descArea;
-
-   private boolean isRefreshing = false;
-
+   
    public VmSummaryView() {
       Logger.track();
       init();
    }
-
+   
    private void init() {
       Logger.track();
-
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
+      
       initGeneral();
       initSystem();
       initDisplay();
@@ -134,7 +124,7 @@ public final class VmSummaryView {
       initAudio();
       initNetwork();
       initDesc();
-
+      
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(generalPanel, "growx, pushx, wrap");
       panel.add(systemPanel, "growx, pushx, wrap");
@@ -143,25 +133,25 @@ public final class VmSummaryView {
       panel.add(audioPanel, "growx, pushx, wrap");
       panel.add(networkPanel, "growx, pushx, wrap");
       panel.add(descPanel, "growx, pushx, wrap");
-
+      
       FrontEventManager.register(this);
    }
-
+   
    private void initGeneral() {
       Logger.track();
-
+      
       nameLabel = new JLabel("Name");
       nameField = JTextFieldUtils.createNonEditable();
-
+      
       uuidLabel = new JLabel("UUID");
       uuidField = JTextFieldUtils.createNonEditable();
-
+      
       stateLabel = new JLabel("Status");
       stateField = JTextFieldUtils.createNonEditable();
-
+      
       osTypeLabel = new JLabel("OS Type");
       osTypeField = JTextFieldUtils.createNonEditable();
-
+      
       generalPanel = new JPanel(new MigLayout());
       generalPanel.setBorder(BorderUtils.createTitledBorder(Color.gray, "General"));
       generalPanel.add(nameLabel);
@@ -173,17 +163,17 @@ public final class VmSummaryView {
       generalPanel.add(osTypeLabel);
       generalPanel.add(osTypeField, "growx, pushx, wrap");
    }
-
+   
    private void initSystem() {
       Logger.track();
-
+      
       cpuCountLabel = new JLabel("vCPU");
       cpuCountValue = JTextFieldUtils.createNonEditable();
       memoryLabel = new JLabel("Memory");
       memoryValue = JTextFieldUtils.createNonEditable();
       accelLabel = new JLabel("Acceleration");
       accelValue = JTextFieldUtils.createNonEditable();
-
+      
       systemPanel = new JPanel(new MigLayout());
       systemPanel.setBorder(BorderUtils.createTitledBorder(Color.gray, "System"));
       systemPanel.add(cpuCountLabel);
@@ -193,10 +183,10 @@ public final class VmSummaryView {
       systemPanel.add(accelLabel);
       systemPanel.add(accelValue, "growx, pushx, wrap");
    }
-
+   
    private void initDisplay() {
       Logger.track();
-
+      
       vramLabel = new JLabel("VRAM");
       vramValue = JTextFieldUtils.createNonEditable();
       consoleModuleLabel = new JLabel("Console Module");
@@ -206,7 +196,7 @@ public final class VmSummaryView {
       consoleConnectButton = new JButton("Connect");
       consoleConnectButton.setEnabled(false);
       consoleConnectButton.addActionListener(new ConnectAction());
-
+      
       displayPanel = new JPanel(new MigLayout());
       displayPanel.setBorder(BorderUtils.createTitledBorder(Color.GRAY, "Display"));
       displayPanel.add(vramLabel);
@@ -217,23 +207,23 @@ public final class VmSummaryView {
       displayPanel.add(consoleAddressValue, "growx, pushx");
       displayPanel.add(consoleConnectButton, "wrap");
    }
-
+   
    private void initStorage() {
       Logger.track();
-
+      
       controllers = new HashMap<String, StorageControllerOut>();
       storagePanel = new JPanel(new MigLayout());
       storagePanel.setBorder(BorderUtils.createTitledBorder(Color.gray, "Storage"));
    }
-
+   
    private void initAudio() {
       Logger.track();
-
+      
       hostDriverLabel = new JLabel("Host Driver");
       hostDriverValue = JTextFieldUtils.createNonEditable();
       audioControllerLabel = new JLabel("Controller");
       audioControllerValue = JTextFieldUtils.createNonEditable();
-
+      
       audioPanel = new JPanel(new MigLayout());
       audioPanel.setBorder(BorderUtils.createTitledBorder(Color.gray, "Audio"));
       audioPanel.add(hostDriverLabel);
@@ -241,118 +231,78 @@ public final class VmSummaryView {
       audioPanel.add(audioControllerLabel);
       audioPanel.add(audioControllerValue, "growx, pushx, wrap");
    }
-
+   
    private void initNetwork() {
       Logger.track();
-
+      
       networkPanel = new JPanel(new MigLayout());
       networkPanel.setBorder(BorderUtils.createTitledBorder(Color.gray, "Network"));
    }
-
+   
    private void initDesc() {
       Logger.track();
-
+      
       descArea = new JTextArea();
       descArea.setEditable(false);
-
+      
       descPanel = new JPanel(new MigLayout());
       descPanel.setBorder(BorderUtils.createTitledBorder(Color.gray, "Description"));
       descPanel.add(descArea, "grow, push, wrap");
    }
-
+   
    private void clearGeneral() {
       Logger.track();
-
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
+      
       nameField.setText(null);
       uuidField.setText(null);
       stateField.setText(null);
       osTypeField.setText(null);
    }
-
+   
    private void clearSystem() {
       Logger.track();
-
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
+      
       cpuCountValue.setText(null);
       memoryValue.setText(null);
       accelValue.setText(null);
    }
-
+   
    private void clearDisplay() {
       Logger.track();
-
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
+      
       vramValue.setText(null);
       consoleModuleValue.setText(null);
       consoleAddressValue.setText(null);
    }
-
+   
    private void clearStorage() {
       Logger.track();
-
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
+      
       storagePanel.removeAll();
    }
-
+   
    private void clearAudio() {
       Logger.track();
-
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
+      
       hostDriverValue.setText(null);
       audioControllerValue.setText(null);
    }
-
+   
    private void clearNetwork() {
       Logger.track();
 
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
       networkPanel.removeAll();
    }
-
+   
    private void clearDesc() {
       Logger.track();
-
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
+      
       descArea.setText(null);
    }
-
+   
    public void clear() {
       Logger.track();
-
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
+      
       mOut = null;
       clearGeneral();
       clearSystem();
@@ -362,44 +312,34 @@ public final class VmSummaryView {
       clearNetwork();
       clearDesc();
    }
-
+   
    public void show(MachineOut mOut, boolean forced) {
       Logger.track();
-
+      
       if (forced || (this.mOut == null) || !this.mOut.equals(mOut)) {
          this.mOut = mOut;
          refresh();
       }
    }
-
+   
    public void show(MachineOut mOut) {
       Logger.track();
-
+      
       show(mOut, false);
    }
-
+   
    public void refreshGeneral() {
       Logger.track();
-
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
+      
       nameField.setText(mOut.getName());
       uuidField.setText(mOut.getUuid());
       stateField.setText(mOut.getState());
       osTypeField.setText(mOut.getSetting(MachineAttribute.OsType).getString());
    }
-
+   
    public void refreshSystem() {
       Logger.track();
-
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
+      
       cpuCountValue.setText(mOut.getSetting(MachineAttribute.CpuCount).getString());
       memoryValue.setText(mOut.getSetting(MachineAttribute.Memory).getString() + " MB");
       List<String> extList = new ArrayList<String>();
@@ -425,25 +365,20 @@ public final class VmSummaryView {
       for (String ext : extList) {
          extBuilder.append(ext + ", ");
       }
-
+      
       if (extBuilder.lastIndexOf(", ") >= 0) {
          extBuilder.delete(extBuilder.lastIndexOf(", "), extBuilder.length());
       }
       accelValue.setText(extBuilder.toString());
    }
-
+   
    public void refreshDisplay() {
       Logger.track();
-
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
+      
       vramValue.setText(mOut.getSetting(MachineAttribute.VRAM).getString());
-
+      
       consoleModuleValue.setText(mOut.getSetting(MachineAttribute.VrdeModule).getString());
-
+      
       if (mOut.getSetting(MachineAttribute.VrdeEnabled).getBoolean()) {
          try {
             URI addrUri = new URI(Gui.getReader().getConnectorForServer(mOut.getServerId()).getAddress());
@@ -457,20 +392,14 @@ public final class VmSummaryView {
          } catch (URISyntaxException e) {
             consoleAddressValue.setText("Invalid address: " + e.getMessage());
          }
-         
+
       } else {
          consoleAddressValue.setText("Not available (Disabled or Console Module not installed)");
       }
    }
-
+   
    public void refreshStorage() {
       Logger.track();
-
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
       
       clearStorage();
       if (controllers.isEmpty()) {
@@ -478,32 +407,32 @@ public final class VmSummaryView {
             controllers.put(scOut.getId(), scOut);
          }
       }
-
+      
       List<StorageControllerOut> scSorted = new ArrayList<StorageControllerOut>(controllers.values());
       Collections.sort(scSorted, new Comparator<StorageControllerOut>() {
-         
+
          @Override
          public int compare(StorageControllerOut o1, StorageControllerOut o2) {
             return o1.getName().compareTo(o2.getName());
          }
-         
+
       });
       for (StorageControllerOut scOut : scSorted) {
          try {
             storagePanel.add(new JLabel(scOut.getType()), "wrap");
             List<StorageDeviceAttachmentOut> scaSorted = new ArrayList<StorageDeviceAttachmentOut>(scOut.getAttachments());
             Collections.sort(scaSorted, new Comparator<StorageDeviceAttachmentOut>() {
-
+               
                @Override
                public int compare(StorageDeviceAttachmentOut o1, StorageDeviceAttachmentOut o2) {
                   return (o1.getPortId() + ":" + o1.getDeviceId()).compareTo((o2.getPortId() + ":" + o2.getDeviceId()));
                }
-
+               
             });
             for (StorageDeviceAttachmentOut sdaOut : scaSorted) {
                storagePanel.add(new JLabel(""));
                storagePanel.add(new JLabel(sdaOut.getPortId() + ":" + sdaOut.getDeviceId()));
-
+               
                storagePanel.add(new JLabel(""));
                storagePanel.add(new JLabel(""));
                if (sdaOut.hasMediumInserted()) {
@@ -525,27 +454,18 @@ public final class VmSummaryView {
          } catch (Throwable e) {
             storagePanel.removeAll();
             storagePanel.add(new JLabel("Unable to load storage info: " + e.getMessage()));
-            storagePanel.revalidate();
-         } finally {
-            storagePanel.repaint();
-            storagePanel.revalidate();
          }
       }
    }
-
+   
    public void refreshAudio() {
       Logger.track();
-
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
+      
       audioPanel.removeAll();
       if (mOut.getSetting(MachineAttribute.AudioEnable).getBoolean()) {
          hostDriverValue.setText(mOut.getSetting(MachineAttribute.AudioDriver).getString());
          audioControllerValue.setText(mOut.getSetting(MachineAttribute.AudioController).getString());
-
+         
          audioPanel.add(hostDriverLabel);
          audioPanel.add(hostDriverValue, "growx, pushx, wrap");
          audioPanel.add(audioControllerLabel);
@@ -555,88 +475,47 @@ public final class VmSummaryView {
       }
       audioPanel.revalidate();
    }
-
+   
    public void refreshNetwork() {
       Logger.track();
-
+      
       clearNetwork();
-      new SwingWorker<List<StorageDeviceAttachmentOut>, Void>() {
-
-         @Override
-         protected List<StorageDeviceAttachmentOut> doInBackground() throws Exception {
-            for (NetworkInterfaceOut nicOut : mOut.listNetworkInterface()) {
-               if (nicOut.isEnabled()) {
-                  GuestNetworkInterfaceOut gNicOut = null;
-                  try {
-                     gNicOut = Gui.getReader().getServerReader(mOut.getServerId()).getGuest(mOut.getUuid())
-                           .findNetworkInterface(nicOut.getMacAddress());
-                  } catch (Throwable t) {
-                     gNicOut = null;
-                  }
-
-                  networkPanel.add(NetworkInterfaceSummary.get(nicOut, gNicOut), "growx, pushx, wrap");
-               }
-            }
-            return null;
+      for (NetworkInterfaceOut nicOut : mOut.listNetworkInterface()) {
+         if (nicOut.isEnabled()) {
+            networkPanel.add(new NetworkInterfaceSummary(mOut.getServerId(), mOut.getUuid(), nicOut), "growx, pushx, wrap");
          }
-
-         @Override
-         protected void done() {
-            networkPanel.revalidate();
-         }
-
-      }.execute();
-
+      }
    }
-
+   
    public void refreshDesc() {
       Logger.track();
-
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
+      
       descArea.setText(mOut.getSetting(MachineAttribute.Description).getString());
    }
-
+   
    public void refresh() {
       Logger.track();
-
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not in EDT");
-         Logger.exception(new Exception());
-      }
-
-      try {
-         if (!isRefreshing) {
-            isRefreshing = true;
-            if (mOut == null) {
-               clear();
-            } else {
-               refreshGeneral();
-               refreshSystem();
-               refreshDisplay();
-               controllers.clear();
-               refreshStorage();
-               refreshAudio();
-               refreshNetwork();
-               refreshDesc();
-               panel.revalidate();
-               panel.repaint();
-            }
-         } else {
-            Logger.warning("Trying to refresh VM info while already refreshing");
-         }
-      } finally {
-         isRefreshing = false;
+      
+      if (mOut == null) {
+         clear();
+      } else {
+         refreshGeneral();
+         refreshSystem();
+         refreshDisplay();
+         controllers.clear();
+         refreshStorage();
+         refreshAudio();
+         refreshNetwork();
+         refreshDesc();
+         panel.revalidate();
+         panel.repaint();
       }
    }
-
+   
    public JComponent getComponent() {
       return panel;
    }
-
+   
    @Handler
    public void putMachineStateChangedEvent(MachineStateChangedEvent ev) {
       if ((mOut != null) && ev.getUuid().contentEquals(mOut.getUuid())) {
@@ -645,7 +524,7 @@ public final class VmSummaryView {
          consoleConnectButton.setEnabled(ev.getMachine().getState().equalsIgnoreCase("running"));
       }
    }
-
+   
    @Handler
    public void putStorageControllerAttachmentDataChanged(StorageControllerAttachmentDataModifiedEventOut ev) {
       if ((mOut != null) && ev.getUuid().contentEquals(mOut.getUuid())) {
@@ -653,16 +532,16 @@ public final class VmSummaryView {
          refreshStorage();
       }
    }
-
+   
    private class ConnectAction implements ActionListener {
-
+      
       @Override
       public void actionPerformed(ActionEvent ae) {
          Logger.track();
-
+         
          Gui.post(new Request(ClientTasks.ConsoleViewerUse, new ServerIn(mOut.getServerId()), new MachineIn(mOut)));
       }
-
+      
    }
-
+   
 }

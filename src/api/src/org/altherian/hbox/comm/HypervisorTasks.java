@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -34,11 +34,11 @@ import org.altherian.hbox.comm.out.storage.StorageControllerOut;
 /**
  * Core tasks that can be performed on the Hyperbox server.<br/>
  * These core tasks are the Virtualbox Tasks.
- * 
+ *
  * @author noteirak
  */
 public enum HypervisorTasks {
-   
+
    /**
     * Get the list of registered VMs
     * <p>
@@ -48,10 +48,10 @@ public enum HypervisorTasks {
     * </p>
     */
    MachineList,
-   
+
    MachineLock,
    MachineUnlock,
-   
+
    /**
     * Get the details of a VM
     * <p>
@@ -61,7 +61,7 @@ public enum HypervisorTasks {
     * </p>
     */
    MachineGet,
-   
+
    /**
     * Request PowerOn of a PoweredOff VM
     * <p>
@@ -71,7 +71,7 @@ public enum HypervisorTasks {
     * </p>
     */
    MachinePowerOn,
-   
+
    /**
     * Request PowerOff on a PoweredOn or Paused VM
     * <p>
@@ -81,7 +81,7 @@ public enum HypervisorTasks {
     * </p>
     */
    MachinePowerOff,
-   
+
    /**
     * Request Pause of a Running VM
     * <p>
@@ -91,7 +91,7 @@ public enum HypervisorTasks {
     * </p>
     */
    MachinePause,
-   
+
    /**
     * Request Resume of a paused VM
     * <p>
@@ -101,7 +101,7 @@ public enum HypervisorTasks {
     * </p>
     */
    MachineResume,
-   
+
    /**
     * Request to save the state of a Running VM
     * <p>
@@ -111,7 +111,7 @@ public enum HypervisorTasks {
     * </p>
     */
    MachineSaveState,
-   
+
    /**
     * Request to reset a PoweredOn VM
     * <p>
@@ -121,7 +121,7 @@ public enum HypervisorTasks {
     * </p>
     */
    MachineReset,
-   
+
    /**
     * Request to send a Sleep Button ACPI event (Press Sleep Button) on a Running VM
     * <p>
@@ -131,7 +131,7 @@ public enum HypervisorTasks {
     * </p>
     */
    MachineAcpiSleepButton,
-   
+
    /**
     * Request to send a Power Button ACPI event (Press Sleep Button) on a Running VM
     * <p>
@@ -141,7 +141,7 @@ public enum HypervisorTasks {
     * </p>
     */
    MachineAcpiPowerButton,
-   
+
    /**
     * Request to modify settings of a VM
     * <p>
@@ -151,7 +151,7 @@ public enum HypervisorTasks {
     * </p>
     */
    MachineModify,
-   
+
    /**
     * Create a blank new VM, without pre-configured settings - Name & OsType must be provided.<br/>
     * This will Answer with a MachineIO.<br/>
@@ -163,7 +163,7 @@ public enum HypervisorTasks {
     * </p>
     */
    MachineCreate,
-   
+
    /**
     * Register a VM given its machine description file
     * <p>
@@ -173,7 +173,7 @@ public enum HypervisorTasks {
     * </p>
     */
    MachineRegister,
-   
+
    /**
     * Unregister the VM, without deleting any file
     * <p>
@@ -183,7 +183,7 @@ public enum HypervisorTasks {
     * </p>
     */
    MachineUnregister,
-   
+
    /**
     * Unregister and delete all the VM files
     * <p>
@@ -193,11 +193,11 @@ public enum HypervisorTasks {
     * </p>
     */
    MachineDelete,
-   
+
    MachineDisplayGetScreenshot,
-   
+
    NetworkInterfaceList,
-   
+
    /**
     * Get the details of a Network Interface
     * <p>
@@ -208,13 +208,13 @@ public enum HypervisorTasks {
     */
    NetworkInterfaceGetInfo,
    NetworkInterfaceModify,
-   
+
    NetworkAttachModeList,
    NetworkAttachNameList,
    NetworkAdapterTypeList,
-   
+
    StorageControllerList,
-   
+
    /**
     * Get the details of a Storage Controller
     * <p>
@@ -227,29 +227,29 @@ public enum HypervisorTasks {
    StorageControllerAdd,
    StorageControllerModify,
    StorageControllerRemove,
-   
+
    StorageControllerMediumAttachmentList,
    StorageControllerMediumAttachmentGet,
    StorageControllerMediumAttachmentAdd,
    StorageControllerMediumAttachmentRemove,
-   
+
    StorageControllerTypeList,
    StorageControllerTypeGet,
    StorageControllerSubTypeList,
    StorageControllerSubTypeGet,
-   
+
    GuestGet,
    GuestNetworkInterfaceList,
    GuestNetworkInterfaceGet,
    /**
     * <p>
     * Request Objects : {@link MachineIn}, {@link GuestNetworkInterfaceIn}<br/>
-    * Answer Object : {@link GuestNetworkInterfaceOut}<br/>
+    * Answer Object : {@link GuestNetworkInterfaceOut} or <code>null</code><br/>
     * Answer Type : Single
     * </p>
     */
    GuestNetworkInterfaceFind,
-   
+
    MediumList,
    MediumGet,
    MediumCreate,
@@ -257,7 +257,7 @@ public enum HypervisorTasks {
    MediumDelete,
    MediumRegister,
    MediumUnregister,
-   
+
    /**
     * Mount a medium to a storage attachment
     * <p>
@@ -268,10 +268,10 @@ public enum HypervisorTasks {
     */
    MediumMount,
    MediumUnmount,
-   
+
    OsTypeList,
    OsTypeGetMachineSettings,
-   
+
    SnapshotGet,
    SnapshotGetCurrent,
    SnapshotGetRoot,
@@ -279,10 +279,10 @@ public enum HypervisorTasks {
    SnapshotTake,
    SnapshotRestore,
    SnapshotDelete,
-   
+
    KeyboardModeList,
    MouseModeList,
-   
+
    /**
     * <p>
     * Request Object: none<br/>
@@ -291,7 +291,7 @@ public enum HypervisorTasks {
     * </p>
     */
    ToolsMediumGet,
-   
+
    /**
     * <p>
     * Request Object: DeviceInput<br/>
@@ -322,9 +322,9 @@ public enum HypervisorTasks {
     * </p>
     */
    DevicePropertyUnset;
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

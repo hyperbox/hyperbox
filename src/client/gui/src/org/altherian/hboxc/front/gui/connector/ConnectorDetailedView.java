@@ -2,19 +2,19 @@
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
  * hyperbox at altherian dot org
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -40,7 +40,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 public class ConnectorDetailedView implements _Refreshable {
@@ -57,7 +56,8 @@ public class ConnectorDetailedView implements _Refreshable {
    private UserListView userView;
    private ModuleListView modView;
    
-   public ConnectorDetailedView() {
+   public ConnectorDetailedView(ConnectorOutput conOut) {
+      this.conOut = conOut;
       summaryView = new ConnectorSummaryViewer();
       hostView = new HostViewer();
       taskView = new ServerTaskListView();
@@ -81,42 +81,32 @@ public class ConnectorDetailedView implements _Refreshable {
       panel.add(tabs, "grow,push,wrap");
       
       FrontEventManager.register(this);
+
+      update();
    }
-   
-   public void show(ConnectorOutput conOut) {
-      Logger.track();
-      
+
+   private void update(ConnectorOutput conOut) {
       this.conOut = conOut;
-      refresh();
+      update();
    }
    
-   private void update(final ConnectorOutput conOut) {
+   private void update() {
       Logger.track();
-      
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            
-            @Override
-            public void run() {
-               update(conOut);
-            }
-         });
+
+      summaryView.show(conOut);
+      tabs.setEnabledAt(tabs.indexOfComponent(hostView.getComponent()), conOut.isConnected());
+      tabs.setEnabledAt(tabs.indexOfComponent(taskView.getComponent()), conOut.isConnected());
+      tabs.setEnabledAt(tabs.indexOfComponent(storeView.getComponent()), conOut.isConnected());
+      tabs.setEnabledAt(tabs.indexOfComponent(userView.getComponent()), conOut.isConnected());
+      tabs.setEnabledAt(tabs.indexOfComponent(modView.getComponent()), conOut.isConnected());
+      if (conOut.isConnected()) {
+         hostView.show(conOut.getServerId());
+         taskView.show(conOut.getServer());
+         storeView.show(conOut.getServer());
+         userView.show(conOut.getServer());
+         modView.show(conOut.getServer());
       } else {
-         summaryView.show(conOut);
-         tabs.setEnabledAt(tabs.indexOfComponent(hostView.getComponent()), conOut.isConnected());
-         tabs.setEnabledAt(tabs.indexOfComponent(taskView.getComponent()), conOut.isConnected());
-         tabs.setEnabledAt(tabs.indexOfComponent(storeView.getComponent()), conOut.isConnected());
-         tabs.setEnabledAt(tabs.indexOfComponent(userView.getComponent()), conOut.isConnected());
-         tabs.setEnabledAt(tabs.indexOfComponent(modView.getComponent()), conOut.isConnected());
-         if (conOut.isConnected()) {
-            hostView.show(conOut.getServerId());
-            taskView.show(conOut.getServer());
-            storeView.show(conOut.getServer());
-            userView.show(conOut.getServer());
-            modView.show(conOut.getServer());
-         } else {
-            tabs.setSelectedComponent(summaryView.getComponent());
-         }
+         tabs.setSelectedComponent(summaryView.getComponent());
       }
    }
    
