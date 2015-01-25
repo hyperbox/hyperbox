@@ -45,7 +45,7 @@ public class NicAttachModeSettingAction implements _NetworkInterfaceSettingActio
    @Override
    public void set(INetworkAdapter nic, _Setting setting) {
       try {
-         nic.setAttachmentType(NetworkAttachmentType.valueOf(setting.getRawValue().toString()));
+         nic.setAttachmentType(NetworkAttachmentType.valueOf(setting.getValue().toString()));
       } catch (VBoxException e) {
          throw new ConfigurationException(e.getMessage());
       } catch (IllegalArgumentException e) {

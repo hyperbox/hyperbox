@@ -34,9 +34,9 @@ public class RawStorageControllerTest {
    
    public static void validateFull(_RawStorageController rawSc) {
       validateSimple(rawSc);
-      assertNotNull(rawSc.getSetting(StorageControllerAttribute.MinPortCount).getRawValue());
-      assertNotNull(rawSc.getSetting(StorageControllerAttribute.MaxPortCount).getRawValue());
-      assertNotNull(rawSc.getSetting(StorageControllerAttribute.MaxDeviceCount).getRawValue());
+      assertNotNull(rawSc.getSetting(StorageControllerAttribute.MinPortCount).getValue());
+      assertNotNull(rawSc.getSetting(StorageControllerAttribute.MaxPortCount).getValue());
+      assertNotNull(rawSc.getSetting(StorageControllerAttribute.MaxDeviceCount).getValue());
       assertTrue(rawSc.getMinPortCount() >= 0);
       assertTrue(rawSc.getMaxPortCount() >= 0);
       assertTrue(rawSc.getMaxPortCount() >= rawSc.getMinPortCount());

@@ -27,17 +27,18 @@ import org.altherian.hboxd.hypervisor.net._NetMode;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import org.virtualbox_4_3.NetworkAttachmentType;
 
 
 public enum VBoxNetMode implements _NetMode {
-   
+
    Bridged(new HashSet<_NetServiceType>(), true, false, false, false),
    Generic(new HashSet<_NetServiceType>(), false, true, false, false),
    HostOnly(new HashSet<_NetServiceType>(Arrays.asList(NetServiceType.IPv4, NetServiceType.DHCP)), true, false, true, true),
    Internal(new HashSet<_NetServiceType>(), false, true, false, false),
    NAT(new HashSet<_NetServiceType>(Arrays.asList(NetServiceType.NAT)), false, false, false, false),
    NATNetwork(new HashSet<_NetServiceType>(Arrays.asList(NetServiceType.DHCP, NetServiceType.NAT)), true, false, true, true);
-
+   
    protected String id;
    protected String label;
    protected Set<_NetServiceType> services;
@@ -45,7 +46,7 @@ public enum VBoxNetMode implements _NetMode {
    protected boolean canLinkNetworkName;
    protected boolean canAddAdaptor;
    protected boolean canRemoveAdaptor;
-   
+
    private VBoxNetMode(Set<_NetServiceType> services, boolean canLinkAdaptor, boolean canLinkNetworkName, boolean canAddAdaptor, boolean canRemoveAdaptor) {
       this.services = new HashSet<_NetServiceType>(services);
       this.canLinkAdaptor = canLinkAdaptor;
@@ -53,42 +54,42 @@ public enum VBoxNetMode implements _NetMode {
       this.canAddAdaptor = canAddAdaptor;
       this.canRemoveAdaptor = canRemoveAdaptor;
    }
-
+   
    @Override
    public String getId() {
       return toString();
    }
-
+   
    @Override
    public String getLabel() {
       return toString();
    }
-
+   
    @Override
    public Set<_NetServiceType> getSupportedServices() {
       return new HashSet<_NetServiceType>(services);
    }
-
+   
    @Override
    public boolean canLinkAdaptor() {
       return canLinkAdaptor;
    }
-
+   
    @Override
    public boolean canLinkNetworkName() {
       return canLinkNetworkName;
    }
-
+   
    @Override
    public boolean canAddAdaptor() {
       return canAddAdaptor;
    }
-
+   
    @Override
    public boolean canRemoveAdaptor() {
       return canRemoveAdaptor;
    }
-
+   
    public static VBoxNetMode getEnum(String modeId) {
       try {
          return VBoxNetMode.valueOf(modeId);
@@ -97,4 +98,8 @@ public enum VBoxNetMode implements _NetMode {
       }
    }
 
+   public static VBoxNetMode getEnum(NetworkAttachmentType type) {
+      return getEnum(type.toString());
+   }
+   
 }

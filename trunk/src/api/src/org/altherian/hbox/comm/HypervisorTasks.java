@@ -212,6 +212,15 @@ public enum HypervisorTasks {
    NetworkAttachModeList,
    NetworkAttachNameList,
    NetworkAdapterTypeList,
+   
+   NetModeList,
+   NetModeGet,
+   
+   NetAdaptorList,
+   NetAdaptorGet,
+   NetAdaptorAdd,
+   NetAdaptorModify,
+   NetAdaptorRemove,
 
    StorageControllerList,
 

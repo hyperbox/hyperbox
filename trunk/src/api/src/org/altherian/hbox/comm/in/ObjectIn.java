@@ -1,25 +1,26 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hbox.comm.in;
 
+import org.altherian.hbox.comm._Actionnable;
 import org.altherian.hbox.comm.io.NullSettingIO;
 import org.altherian.hbox.comm.io.SettingIO;
 import org.altherian.hbox.comm.io.StringSettingIO;
@@ -32,10 +33,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class ObjectIn<T extends Enum<?>> {
+public abstract class ObjectIn<T extends Enum<?>> implements _Actionnable {
    
    private T entityTypeId;
    private String id = "";
+   private Action action = Action.Create;
    private boolean changed = false;
    private Map<String, SettingIO> settings = new HashMap<String, SettingIO>(5);
    
@@ -54,6 +56,7 @@ public abstract class ObjectIn<T extends Enum<?>> {
       }
       
       setEntityTypeId(entityTypeId);
+      setAction(Action.Create);
    }
    
    public ObjectIn(T entityTypeId, String id) {
@@ -63,7 +66,7 @@ public abstract class ObjectIn<T extends Enum<?>> {
          throw new IllegalArgumentException("ID must have a value - Current value: " + id);
       }
       
-      this.id = id;
+      setId(id);
    }
    
    public ObjectIn(T entityTypeId, List<SettingIO> settings) {
@@ -83,7 +86,7 @@ public abstract class ObjectIn<T extends Enum<?>> {
    
    /**
     * See {@link EntityType} for natives values
-    * 
+    *
     * @return Entity Type ID
     */
    public T getEntityTypeId() {
@@ -93,11 +96,16 @@ public abstract class ObjectIn<T extends Enum<?>> {
    /**
     * Get the most significant ID value for this object. The significance can change depending on the state of the object.<br/>
     * The default behaviour returns the id value given in the constructors, or an empty string if none was given
-    * 
+    *
     * @return The most significant ID as a String, or an empty string if no ID exists within the object.
     */
    public String getId() {
       return id;
+   }
+   
+   protected void setId(String id) {
+      this.id = id;
+      setAction(Action.Modify);
    }
    
    public void setSetting(List<SettingIO> settings) {
@@ -108,7 +116,7 @@ public abstract class ObjectIn<T extends Enum<?>> {
    
    /**
     * Change this object config data according to the setting given.
-    * 
+    *
     * @param sIo The SettingIO containing the setting data (name and value).
     */
    // TODO add a check in equals() on SettingIO to keep track if a setting was set with an actual different value - related to hasNewData()
@@ -119,7 +127,7 @@ public abstract class ObjectIn<T extends Enum<?>> {
    
    /**
     * Retrieve the setting linked to the given name.
-    * 
+    *
     * @param name The name of the wanted setting.
     * @return The setting object containing the value.
     * @throws HyperboxRuntimeException In case the setting does not exist.
@@ -138,7 +146,7 @@ public abstract class ObjectIn<T extends Enum<?>> {
    
    /**
     * Retrieve the setting for the given machine settings name.
-    * 
+    *
     * @param name The MachineSettings enum id to use
     * @return a SettingIO object that contains the setting data.
     * @throws HyperboxRuntimeException In case the setting does not exist.
@@ -171,12 +179,22 @@ public abstract class ObjectIn<T extends Enum<?>> {
    
    /**
     * Check if this object settings changed from the last time they were set
-    * 
+    *
     * @return true if any setting changed, false if not
     */
    // TODO revamp this so it performs the check better
    public boolean hasNewData() {
       return changed;
+   }
+   
+   @Override
+   public Action getAction() {
+      return action;
+   }
+
+   @Override
+   public void setAction(Action action) {
+      this.action = action;
    }
    
 }

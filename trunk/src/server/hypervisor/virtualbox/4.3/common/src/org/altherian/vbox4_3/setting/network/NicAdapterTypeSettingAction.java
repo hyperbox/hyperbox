@@ -45,11 +45,11 @@ public class NicAdapterTypeSettingAction implements _NetworkInterfaceSettingActi
    @Override
    public void set(INetworkAdapter nic, _Setting setting) {
       try {
-         nic.setAdapterType(NetworkAdapterType.valueOf(setting.getRawValue().toString()));
+         nic.setAdapterType(NetworkAdapterType.valueOf(setting.getValue().toString()));
       } catch (VBoxException e) {
          throw new ConfigurationException(e.getMessage());
       } catch (IllegalArgumentException e) {
-         throw new ConfigurationException("Unkown adapter type [" + setting.getRawValue().toString() + "]");
+         throw new ConfigurationException("Unkown adapter type [" + setting.getValue().toString() + "]");
       }
    }
    

@@ -42,7 +42,7 @@ public class ControllerSubTypeSettingAction implements _StorageControllerSetting
    
    @Override
    public void set(IStorageController sct, _Setting setting) {
-      StorageControllerType type = StorageControllerType.valueOf(setting.getRawValue().toString());
+      StorageControllerType type = StorageControllerType.valueOf(setting.getValue().toString());
       sct.setControllerType(type);
    }
    

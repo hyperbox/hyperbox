@@ -43,7 +43,7 @@ public class MemorySettingAction implements _MachineSettingAction {
    @Override
    public void set(IMachine machine, _Setting setting) {
       machine.setMemorySize(setting.getNumber());
-      Logger.debug(machine.getId() + " changed RAM to " + setting.getRawValue().toString());
+      Logger.debug(machine.getId() + " changed RAM to " + setting.getValue().toString());
    }
    
    @Override
