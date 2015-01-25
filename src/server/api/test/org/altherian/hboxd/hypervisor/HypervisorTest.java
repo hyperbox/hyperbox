@@ -269,7 +269,7 @@ public abstract class HypervisorTest {
       
       for (_RawNetworkInterface resultNic : resultVm.listNetworkInterfaces()) {
          for (_Setting s : resultNic.listSettings()) {
-            assertNotNull(resultNic.getSetting(s.getName()).getRawValue());
+            assertNotNull(resultNic.getSetting(s.getName()).getValue());
          }
       }
    }

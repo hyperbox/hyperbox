@@ -41,7 +41,7 @@ public class NicMacAddressSettingAction implements _NetworkInterfaceSettingActio
    
    @Override
    public void set(INetworkAdapter nic, _Setting setting) {
-      nic.setMACAddress(setting.getRawValue().toString());
+      nic.setMACAddress(setting.getValue().toString());
    }
    
    @Override

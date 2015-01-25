@@ -92,12 +92,12 @@ public final class VirtualboxMedium implements _RawMedium {
    
    @Override
    public String getState() {
-      return VBoxSettingManager.get(this, MediumAttribute.State).getRawValue().toString();
+      return VBoxSettingManager.get(this, MediumAttribute.State).getValue().toString();
    }
    
    @Override
    public String getVariant() {
-      return VBoxSettingManager.get(this, MediumAttribute.Variant).getRawValue().toString();
+      return VBoxSettingManager.get(this, MediumAttribute.Variant).getValue().toString();
    }
    
    @Override
@@ -112,7 +112,7 @@ public final class VirtualboxMedium implements _RawMedium {
    
    @Override
    public String getName() {
-      return VBoxSettingManager.get(this, MediumAttribute.Name).getRawValue().toString();
+      return VBoxSettingManager.get(this, MediumAttribute.Name).getValue().toString();
    }
    
    @Override
@@ -127,17 +127,17 @@ public final class VirtualboxMedium implements _RawMedium {
    
    @Override
    public String getFormat() {
-      return VBoxSettingManager.get(this, MediumAttribute.Format).getRawValue().toString();
+      return VBoxSettingManager.get(this, MediumAttribute.Format).getValue().toString();
    }
    
    @Override
    public String getMediumFormat() {
-      return VBoxSettingManager.get(this, MediumAttribute.MediumFormat).getRawValue().toString();
+      return VBoxSettingManager.get(this, MediumAttribute.MediumFormat).getValue().toString();
    }
    
    @Override
    public String getType() {
-      return VBoxSettingManager.get(this, MediumAttribute.Type).getRawValue().toString();
+      return VBoxSettingManager.get(this, MediumAttribute.Type).getValue().toString();
    }
    
    @Override

@@ -44,7 +44,7 @@ public class SettingIoFactory {
          return new BooleanSettingIO(s.getName(), ((BooleanSetting) s).getValue());
       } else {
          // TODO add support for serializable
-         return new StringSettingIO(s.getName(), s.getRawValue().toString());
+         return new StringSettingIO(s.getName(), s.getValue().toString());
       }
    }
    

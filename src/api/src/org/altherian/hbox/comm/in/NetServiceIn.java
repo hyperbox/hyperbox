@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2015 Maxime Dor
  *
  * http://hyperbox.altherian.org
  *
@@ -11,23 +11,28 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 
-package org.altherian.setting;
+package org.altherian.hbox.comm.in;
 
-public class PositiveNumberSetting extends BasicSetting<Long> {
+import org.altherian.hbox.constant.EntityType;
 
-   public PositiveNumberSetting(String name, long value) {
-      super(name, value);
+
+public class NetServiceIn extends ObjectIn<EntityType> {
+   
+   public NetServiceIn() {
+      super(EntityType.NetService);
    }
 
-   public PositiveNumberSetting(Enum<?> setting, long value) {
-      super(setting, value);
+   public NetServiceIn(EntityType entityTypeId, String id) {
+      this();
+      setId(id);
    }
 
 }

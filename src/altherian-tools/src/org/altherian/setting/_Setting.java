@@ -24,7 +24,7 @@ public interface _Setting {
    
    public String getName();
    
-   public Object getRawValue();
+   public Object getValue();
    
    public Boolean getBoolean();
    

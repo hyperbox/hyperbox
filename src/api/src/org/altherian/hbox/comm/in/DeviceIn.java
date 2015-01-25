@@ -27,7 +27,6 @@ import java.util.List;
 
 public class DeviceIn extends ObjectIn<EntityType> implements _Actionnable {
    
-   private Action action = Action.Create;
    private String machineUuid;
    private String devType;
    
@@ -68,16 +67,6 @@ public class DeviceIn extends ObjectIn<EntityType> implements _Actionnable {
     */
    public void setDevType(String devType) {
       this.devType = devType;
-   }
-   
-   @Override
-   public Action getAction() {
-      return action;
-   }
-   
-   @Override
-   public void setAction(Action action) {
-      this.action = action;
    }
    
 }

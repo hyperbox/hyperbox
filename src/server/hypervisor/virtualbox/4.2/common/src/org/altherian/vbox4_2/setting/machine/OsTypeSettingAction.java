@@ -41,7 +41,7 @@ public class OsTypeSettingAction implements _MachineSettingAction {
    
    @Override
    public void set(IMachine machine, _Setting setting) {
-      String osType = setting.getRawValue().toString();
+      String osType = setting.getValue().toString();
       machine.setOSTypeId(osType);
    }
    
