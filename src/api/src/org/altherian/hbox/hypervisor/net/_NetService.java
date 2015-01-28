@@ -26,11 +26,11 @@ import org.altherian.hbox.constant.NetServiceType;
 
 
 public interface _NetService {
-
-   public String getId();
-
-   public String getLabel();
    
+   public String getId();
+   
+   public String getLabel();
+
    /**
     * Get the type ID for the net service
     *
@@ -38,7 +38,9 @@ public interface _NetService {
     * @see NetServiceType Default supported options
     */
    public String getType();
-
+   
    public boolean isEnabled();
 
+   public void setEnabled(boolean isEnabled);
+   
 }

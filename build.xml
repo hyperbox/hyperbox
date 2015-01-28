@@ -642,7 +642,6 @@
 	
 	<target name="configureDist" depends="configure">
 		<property name="dist.build.out.dir" value="${build.dir}/dist" />
-		<mkdir dir="${out.dir}/dist/${os.family}.${os.arch}" />
 		<mkdir dir="${dist.build.out.dir}" />
 	</target>
 	

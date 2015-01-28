@@ -59,6 +59,8 @@ import org.altherian.vbox4_2.data.Mappings;
 import org.altherian.vbox4_2.factory.OsTypeFactory;
 import org.altherian.vbox4_2.host.VirtualboxHost;
 import org.altherian.vbox4_2.manager.VBoxSessionManager;
+import org.altherian.vbox4_2.net.VBoxBridgedAdaptor;
+import org.altherian.vbox4_2.net.VBoxHostOnlyAdaptor;
 import org.altherian.vbox4_2.net.VBoxNetMode;
 import org.altherian.vbox4_2.service.EventsManagementService;
 import org.altherian.vbox4_2.storage.VbStorageControllerSubType;
@@ -790,7 +792,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
             if (!nic.getInterfaceType().equals(HostNetworkInterfaceType.Bridged)) {
                throw new HyperboxRuntimeException("Adaptor of type " + type + " with ID " + adaptorId + " was not found");
             }
-            return new VBoxAdaptor(nic.getId(), nic.getName(), type);
+            return new VBoxBridgedAdaptor(nic);
          case Generic:
             for (String driver : vbMgr.getVBox().getGenericNetworkDrivers()) {
                if (driver.equalsIgnoreCase(adaptorId)) {
@@ -803,7 +805,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
             if (!nic.getInterfaceType().equals(HostNetworkInterfaceType.HostOnly)) {
                throw new HyperboxRuntimeException("Adaptor of type " + type + " with ID " + adaptorId + " was not found");
             }
-            return new VBoxAdaptor(nic.getId(), nic.getName(), type);
+            return new VBoxHostOnlyAdaptor(nic);
          case Internal:
             for (String internalNet : vbMgr.getVBox().getInternalNetworks()) {
                if (internalNet.equalsIgnoreCase(adaptorId)) {

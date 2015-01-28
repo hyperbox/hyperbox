@@ -19,35 +19,33 @@
  *
  */
 
-package org.altherian.vbox4_3.net;
+package org.altherian.hboxd.comm.io.factory;
 
+import org.altherian.hbox.comm.in.NetServiceIP4In;
+import org.altherian.hbox.comm.in.NetServiceIn;
+import org.altherian.hbox.comm.out.network.NetServiceOut;
 import org.altherian.hbox.constant.NetServiceType;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.hypervisor.net._NetService;
-import org.altherian.hbox.hypervisor.net._NetServiceIP4;
-import org.altherian.vbox.net.VBoxAdaptor;
-import org.altherian.vbox4_3.VBox;
-import org.virtualbox_4_3.IHostNetworkInterface;
+import org.altherian.hboxd.hypervisor.net.NetServiceIPv4;
 
 
-public class VBoxHostOnlyAdaptor extends VBoxAdaptor {
+public class NetServiceIoFactory {
 
-   public VBoxHostOnlyAdaptor(IHostNetworkInterface nic) {
-      super(nic.getId(), nic.getName(), VBoxNetMode.HostOnly);
+   private NetServiceIoFactory() {
+      // only static
    }
    
-   @Override
-   protected void process(_NetService service) {
-      if (NetServiceType.IPv4.is(service.getType())) {
-         _NetServiceIP4 ip4Svc = (_NetServiceIP4) service;
-         IHostNetworkInterface nic = VBox.get().getHost().findHostNetworkInterfaceById(getId());
-         if (ip4Svc.isEnabled()) {
-            nic.enableStaticIPConfig(ip4Svc.getIP(), ip4Svc.getMask());
-         } else {
-            nic.enableStaticIPConfig("", "");
-         }
+   public static NetServiceOut get(_NetService svc) {
+      return null;
+   }
+   
+   public static _NetService get(NetServiceIn svcIn) {
+      if (NetServiceType.IPv4.is(svcIn.getServiceTypeId())) {
+         NetServiceIP4In ip4In = (NetServiceIP4In) svcIn;
+         return new NetServiceIPv4(ip4In.isEnabled(), ip4In.getIP(), ip4In.getMask());
       } else {
-         throw new HyperboxRuntimeException("Service type " + service.getType() + " is not supported by VirtualBox");
+         throw new HyperboxRuntimeException(svcIn.getServiceTypeId() + " is not supported");
       }
    }
 
