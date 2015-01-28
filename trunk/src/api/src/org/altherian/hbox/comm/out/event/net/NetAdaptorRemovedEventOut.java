@@ -19,27 +19,20 @@
  *
  */
 
-package org.altherian.hboxd.exception.net;
+package org.altherian.hbox.comm.out.event.net;
 
-import org.altherian.hbox.exception.HyperboxRuntimeException;
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.event.HyperboxEvents;
+import java.util.Date;
 
+public class NetAdaptorRemovedEventOut extends NetAdaptorEventOut {
 
-@SuppressWarnings("serial")
-public class InvalidNetworkModeException extends HyperboxRuntimeException {
-   
-   private String mode;
-
-   public InvalidNetworkModeException(String mode) {
-      this(mode, mode + "is not a valid network mode");
-   }
-   
-   public InvalidNetworkModeException(String mode, String message) {
-      super(message);
-      this.mode = mode;
+   protected NetAdaptorRemovedEventOut() {
+      // Used for (de)serialization
    }
 
-   public String getMode() {
-      return mode;
+   public NetAdaptorRemovedEventOut(Date time, ServerOut srvOut, String hypId, String netModeId, String netAdaptorId) {
+      super(time, HyperboxEvents.NetAdaptorRemoved, srvOut, hypId, netModeId, netAdaptorId);
    }
 
 }

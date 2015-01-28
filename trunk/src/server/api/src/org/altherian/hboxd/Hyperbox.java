@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,7 +29,7 @@ import java.util.Set;
 public class Hyperbox {
    
    private static Properties buildProperties;
-   private static String version = "0.0.0";
+   private static String version = "0";
    private static String revision = "0";
    private static String cfgFile = "conf/main.cfg";
    
@@ -47,7 +47,7 @@ public class Hyperbox {
    }
    
    public static String getVersionFull() {
-      return getVersion() + "." + getRevision();
+      return HyperboxAPI.getFullVersion(getVersion(), getRevision());
    }
    
    public static String getConfigFilePath() {
@@ -58,8 +58,8 @@ public class Hyperbox {
       buildProperties = new Properties();
       try {
          buildProperties.load(Hyperbox.class.getResourceAsStream("/server.build.properties"));
-         version = buildProperties.getProperty("version", "0.0.0");
-         revision = buildProperties.getProperty("revision", "0");
+         version = buildProperties.getProperty("version", version);
+         revision = buildProperties.getProperty("revision", revision);
       } catch (IOException e) {
          failedToLoad(e);
       } catch (NullPointerException e) {
@@ -82,7 +82,7 @@ public class Hyperbox {
          System.exit(0);
       }
       if (args.contains("--version")) {
-         System.out.println(getVersion());
+         System.out.println(getVersionFull());
          System.exit(0);
       }
       if (args.contains("--revision")) {

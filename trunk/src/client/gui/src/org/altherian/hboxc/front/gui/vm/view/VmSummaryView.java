@@ -39,7 +39,7 @@ import org.altherian.hboxc.event.machine.MachineStateChangedEvent;
 import org.altherian.hboxc.front.gui.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.action.storage.StorageDeviceAttachmentMediumEditAction;
-import org.altherian.hboxc.front.gui.network.NetworkInterfaceSummary;
+import org.altherian.hboxc.front.gui.net.NetworkInterfaceSummary;
 import org.altherian.helper.swing.BorderUtils;
 import org.altherian.helper.swing.JTextFieldUtils;
 import org.altherian.tool.AxStrings;

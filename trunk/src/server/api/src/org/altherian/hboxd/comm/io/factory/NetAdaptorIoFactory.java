@@ -22,7 +22,7 @@
 package org.altherian.hboxd.comm.io.factory;
 
 import org.altherian.hbox.comm.out.network.NetAdaptorOut;
-import org.altherian.hboxd.hypervisor.net._NetAdaptor;
+import org.altherian.hbox.hypervisor.net._NetAdaptor;
 
 
 public class NetAdaptorIoFactory {

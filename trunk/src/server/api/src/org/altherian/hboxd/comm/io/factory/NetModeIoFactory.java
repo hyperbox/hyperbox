@@ -22,25 +22,24 @@
 package org.altherian.hboxd.comm.io.factory;
 
 import org.altherian.hbox.comm.out.network.NetModeOut;
-import org.altherian.hbox.constant._NetServiceType;
-import org.altherian.hboxd.hypervisor.net._NetMode;
+import org.altherian.hbox.hypervisor.net._NetMode;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class NetModeIoFactory {
-
+   
    private NetModeIoFactory() {
       // only static
    }
-
+   
    public static NetModeOut get(_NetMode netMode) {
       List<String> svcs = new ArrayList<String>();
-      for (_NetServiceType svcType : netMode.getSupportedServices()) {
-         svcs.add(svcType.getId());
+      for (String svcType : netMode.getSupportedServices()) {
+         svcs.add(svcType);
       }
       return new NetModeOut(netMode.getId(), netMode.getLabel(), svcs, netMode.canLinkAdaptor(), netMode.canAddAdaptor(), netMode.canRemoveAdaptor(),
             netMode.canLinkNetworkName());
    }
-
+   
 }

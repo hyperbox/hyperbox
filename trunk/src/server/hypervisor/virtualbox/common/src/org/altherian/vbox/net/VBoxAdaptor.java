@@ -18,51 +18,66 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.altherian.vbox4_3.net;
+package org.altherian.vbox.net;
 
-import org.altherian.hboxd.hypervisor.net._NetAdaptor;
-import org.altherian.hboxd.hypervisor.net._NetMode;
-import org.altherian.hboxd.hypervisor.net._NetService;
+import org.altherian.hbox.hypervisor.net._NetAdaptor;
+import org.altherian.hbox.hypervisor.net._NetMode;
+import org.altherian.hbox.hypervisor.net._NetService;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class VBoxAdaptor implements _NetAdaptor {
-   
+
    private String id;
    private String label;
    private _NetMode mode;
-   private List<_NetService> services;
-   
+   private Map<String, _NetService> services = new HashMap<String, _NetService>();
+
    public VBoxAdaptor(String id, String label, _NetMode mode) {
       this(id, label, mode, new ArrayList<_NetService>());
    }
-   
+
    public VBoxAdaptor(String id, String label, _NetMode mode, List<_NetService> services) {
       this.id = id;
       this.label = label;
       this.mode = mode;
-      this.services = new ArrayList<_NetService>(services);
+      for (_NetService service : services) {
+         setService(service);
+      }
    }
-   
+
    @Override
    public String getId() {
       return id;
    }
-   
+
    @Override
    public String getLabel() {
       return label;
    }
-   
+
    @Override
    public _NetMode getMode() {
       return mode;
    }
-   
+
    @Override
    public List<_NetService> getServices() {
-      return new ArrayList<_NetService>(services);
+      return new ArrayList<_NetService>(services.values());
    }
-   
+
+   public void setService(_NetService service) {
+      if (mode.getSupportedServices().contains(service.getType())) {
+         process(service);
+         services.put(service.getType(), service);
+      }
+   }
+
+   protected void process(_NetService service) {
+      // stub
+   }
+
 }

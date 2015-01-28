@@ -24,7 +24,7 @@ package org.altherian.hboxc.front.gui.security.user;
 import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.comm.out.security.UserOut;
-import org.altherian.hbox.exception.HyperboxException;
+import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.front.gui._Cancelable;
 import org.altherian.hboxc.front.gui._Saveable;
 import org.altherian.hboxc.front.gui.action.CancelAction;
@@ -41,9 +41,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class UserEditor implements _Saveable, _Cancelable {
-   
+
    private UserPermissionEditor permEditor;
-   
+
    private JLabel domainLabel;
    private JTextField domainValue;
    private JLabel usernameLabel;
@@ -52,42 +52,42 @@ public class UserEditor implements _Saveable, _Cancelable {
    private JPasswordField firstPassValue;
    private JLabel secondPassLabel;
    private JPasswordField secondPassValue;
-   
+
    private JPanel buttonPanel;
    private JButton saveButton;
    private JButton cancelButton;
-   
+
    private JDialog dialog;
-   
+
    private UserIn usrIn;
    private UserOut usrOut;
-   
+
    public UserEditor() {
       permEditor = new UserPermissionEditor();
-      
+
       domainValue = new JTextField();
       domainLabel = new JLabel("Domain");
       domainLabel.setLabelFor(domainValue);
-      
+
       usernameValue = new JTextField();
       usernameLabel = new JLabel("Username");
       usernameLabel.setLabelFor(usernameValue);
-      
+
       firstPassValue = new JPasswordField();
       firstPassLabel = new JLabel("Enter New Password");
       firstPassLabel.setLabelFor(firstPassValue);
-      
+
       secondPassValue = new JPasswordField();
       secondPassLabel = new JLabel("Confirm New Password");
       secondPassLabel.setLabelFor(secondPassValue);
-      
+
       saveButton = new JButton(new SaveAction(this));
       cancelButton = new JButton(new CancelAction(this));
-      
+
       buttonPanel = new JPanel(new MigLayout("ins 0"));
       buttonPanel.add(saveButton);
       buttonPanel.add(cancelButton);
-      
+
       dialog = JDialogBuilder.get(saveButton);
       dialog.add(usernameLabel);
       dialog.add(usernameValue, "growx, pushx, wrap");
@@ -98,97 +98,97 @@ public class UserEditor implements _Saveable, _Cancelable {
       dialog.add(permEditor.getComponent(), "hidemode 3,span 2, growx, pushx, wrap");
       dialog.add(buttonPanel, "span 2, center, bottom");
    }
-   
+
    public UserIn create() {
       Logger.track();
-      
+
       dialog.setTitle("Create new User");
       permEditor.getComponent().setVisible(false);
       show();
       return usrIn;
    }
-   
+
    public UserIn edit(String serverId, UserOut usrOut) {
       Logger.track();
-      
+
       dialog.setTitle("Editing user " + usrOut.getDomainLogonName());
       this.usrOut = usrOut;
-      
+
       domainValue.setText(usrOut.getDomain());
       usernameValue.setText(usrOut.getUsername());
-      
+
       permEditor.show(serverId, usrOut);
-      
+
       show();
       return usrIn;
    }
-   
+
    public static UserIn getInput() {
       Logger.track();
-      
+
       return new UserEditor().create();
    }
-   
+
    public static UserIn getInput(String serverId, UserOut usrOut) {
       Logger.track();
-      
+
       return new UserEditor().edit(serverId, usrOut);
    }
-   
+
    private void show() {
       Logger.track();
-      
+
       dialog.pack();
       dialog.setSize(375, dialog.getHeight());
       dialog.setLocationRelativeTo(dialog.getParent());
       dialog.setVisible(true);
    }
-   
+
    private void hide() {
       Logger.track();
-      
+
       dialog.setVisible(false);
    }
-   
+
    @Override
    public void cancel() {
       Logger.track();
-      
+
       hide();
    }
-   
+
    @Override
-   public void save() throws HyperboxException {
+   public void save() {
       Logger.track();
-      
+
       if (usrOut != null) {
          usrIn = new UserIn(usrOut.getId());
          permEditor.save();
       } else {
          usrIn = new UserIn();
-         
+
          if (!domainValue.getText().isEmpty()) {
             usrIn.setDomain(domainValue.getText());
          }
-         
+
          if ((firstPassValue.getPassword().length == 0) || (secondPassValue.getPassword().length == 0)) {
-            throw new HyperboxException("Password cannot be empty");
+            throw new HyperboxRuntimeException("Password cannot be empty");
          }
       }
-      
+
       if (usernameValue.getText().isEmpty()) {
-         throw new HyperboxException("Username cannot be empty");
+         throw new HyperboxRuntimeException("Username cannot be empty");
       }
       usrIn.setUsername(usernameValue.getText());
-      
+
       if ((firstPassValue.getPassword().length > 0) || (secondPassValue.getPassword().length > 0)) {
          if (!Arrays.equals(firstPassValue.getPassword(), secondPassValue.getPassword())) {
-            throw new HyperboxException("Password do not match");
+            throw new HyperboxRuntimeException("Password do not match");
          }
          usrIn.setPassword(firstPassValue.getPassword());
       }
-      
+
       hide();
    }
-   
+
 }

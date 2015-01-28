@@ -27,7 +27,7 @@ import java.util.List;
 
 
 public class NetModeOut extends ObjectOut {
-   
+
    private String label;
    private List<String> netServices;
    private boolean canLinkAdaptor;
@@ -35,6 +35,10 @@ public class NetModeOut extends ObjectOut {
    private boolean canRemoveAdaptor;
    private boolean canLinkNetworkName;
 
+   protected NetModeOut() {
+      // Serialization
+   }
+   
    public NetModeOut(String id, String label, List<String> netServices, boolean canLinkAdaptor, boolean canAddAdaptor, boolean canRemoveAdaptor,
          boolean canLinkNetworkName) {
       super(EntityType.NetMode, id);
@@ -45,29 +49,29 @@ public class NetModeOut extends ObjectOut {
       this.canRemoveAdaptor = canRemoveAdaptor;
       this.canLinkNetworkName = canLinkNetworkName;
    }
-   
+
    public String getLabel() {
       return label;
    }
-   
+
    public List<String> getNetServices() {
       return netServices;
    }
-   
+
    public boolean canLinkAdaptor() {
       return canLinkAdaptor;
    }
-   
+
    public boolean canAddAdaptor() {
       return canAddAdaptor;
    }
-   
+
    public boolean canRemoveAdaptor() {
       return canRemoveAdaptor;
    }
-   
+
    public boolean canLinkNetworkName() {
       return canLinkNetworkName;
    }
-   
+
 }

@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.altherian.hboxc.front.gui.network;
+package org.altherian.hboxc.front.gui.net;
 
 import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.out.hypervisor.GuestNetworkInterfaceOut;

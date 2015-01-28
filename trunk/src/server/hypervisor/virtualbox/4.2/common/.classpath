@@ -4,6 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Server-API"/>
 	<classpathentry kind="lib" path="lib/vboxjxpcom.jar"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/VB-Helper"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/VB"/>
 	<classpathentry kind="output" path="eclipse-bin"/>
 </classpath>

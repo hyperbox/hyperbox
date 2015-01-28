@@ -31,6 +31,10 @@ public class NetAdaptorOut extends ObjectOut {
    private String modeId;
    private boolean hasServices;
    
+   protected NetAdaptorOut() {
+      // Serialization
+   }
+   
    public NetAdaptorOut(String id, String label, String modeId, boolean hasServices) {
       super(EntityType.NetAdaptor, id);
       this.label = label;

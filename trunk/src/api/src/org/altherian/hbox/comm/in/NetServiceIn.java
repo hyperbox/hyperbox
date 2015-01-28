@@ -26,13 +26,37 @@ import org.altherian.hbox.constant.EntityType;
 
 public class NetServiceIn extends ObjectIn<EntityType> {
    
-   public NetServiceIn() {
+   private String serviceTypeId;
+   private boolean enabled;
+   
+   protected NetServiceIn() {
       super(EntityType.NetService);
    }
-
-   public NetServiceIn(EntityType entityTypeId, String id) {
+   
+   public NetServiceIn(String serviceTypeId) {
       this();
+      setServiceTypeId(serviceTypeId);
+   }
+
+   public NetServiceIn(String serviceTypeId, String id) {
+      this(serviceTypeId);
       setId(id);
+   }
+
+   public String getServiceTypeId() {
+      return serviceTypeId;
+   }
+
+   public void setServiceTypeId(String serviceTypeId) {
+      this.serviceTypeId = serviceTypeId;
+   }
+
+   public boolean isEnabled() {
+      return enabled;
+   }
+
+   public void setEnabled(boolean enabled) {
+      this.enabled = enabled;
    }
 
 }

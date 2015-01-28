@@ -31,11 +31,13 @@ import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.host.HostViewer;
+import org.altherian.hboxc.front.gui.hypervisor.HypervisorNetViewer;
 import org.altherian.hboxc.front.gui.module.ModuleListView;
 import org.altherian.hboxc.front.gui.security.user.UserListView;
 import org.altherian.hboxc.front.gui.store.StoreListView;
 import org.altherian.hboxc.front.gui.tasks.ServerTaskListView;
 import org.altherian.tool.logging.Logger;
+import java.util.concurrent.ExecutionException;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -68,6 +70,7 @@ public class ConnectorDetailedView implements _Refreshable {
       tabs = new JTabbedPane();
       tabs.addTab("Summary", IconBuilder.getEntityType(EntityType.Server), summaryView.getComponent());
       tabs.addTab("Host", IconBuilder.getEntityType(EntityType.Server), hostView.getComponent());
+      tabs.addTab("Network", IconBuilder.getEntityType(EntityType.Network), null);
       tabs.addTab("Tasks", IconBuilder.getEntityType(EntityType.Task), taskView.getComponent());
       tabs.addTab("Stores", IconBuilder.getEntityType(EntityType.Store), storeView.getComponent());
       tabs.addTab("Users", IconBuilder.getEntityType(EntityType.User), userView.getComponent());
@@ -95,12 +98,14 @@ public class ConnectorDetailedView implements _Refreshable {
 
       summaryView.show(conOut);
       tabs.setEnabledAt(tabs.indexOfComponent(hostView.getComponent()), conOut.isConnected());
+      tabs.setEnabledAt(tabs.indexOfTab("Network"), conOut.isConnected());
       tabs.setEnabledAt(tabs.indexOfComponent(taskView.getComponent()), conOut.isConnected());
       tabs.setEnabledAt(tabs.indexOfComponent(storeView.getComponent()), conOut.isConnected());
       tabs.setEnabledAt(tabs.indexOfComponent(userView.getComponent()), conOut.isConnected());
       tabs.setEnabledAt(tabs.indexOfComponent(modView.getComponent()), conOut.isConnected());
       if (conOut.isConnected()) {
          hostView.show(conOut.getServerId());
+         tabs.setComponentAt(tabs.indexOfTab("Network"), new HypervisorNetViewer(conOut.getId(), conOut.getServerId()).getComponent());
          taskView.show(conOut.getServer());
          storeView.show(conOut.getServer());
          userView.show(conOut.getServer());
@@ -114,12 +119,22 @@ public class ConnectorDetailedView implements _Refreshable {
    public void refresh() {
       Logger.track();
       
-      new SwingWorker<Void, Void>() {
+      new SwingWorker<ConnectorOutput, Void>() {
          
          @Override
-         protected Void doInBackground() throws Exception {
-            update(Gui.getReader().getConnector(conOut.getId()));
-            return null;
+         protected ConnectorOutput doInBackground() throws Exception {
+            return Gui.getReader().getConnector(conOut.getId());
+         }
+
+         @Override
+         protected void done() {
+            try {
+               update(get());
+            } catch (InterruptedException e) {
+               Gui.showError(e);
+            } catch (ExecutionException e) {
+               Gui.showError(e);
+            }
          }
          
       }.execute();
@@ -131,8 +146,6 @@ public class ConnectorDetailedView implements _Refreshable {
    
    @Handler
    private void putConnectorStateEvent(ConnectorStateChangedEvent ev) {
-      Logger.track();
-      
       refresh();
    }
    
