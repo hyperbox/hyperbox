@@ -25,7 +25,7 @@ import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.in.NetworkInterfaceIn;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
-import org.altherian.hboxc.front.gui.network.NetworkInterfaceViewer;
+import org.altherian.hboxc.front.gui.net.NetworkInterfaceViewer;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;

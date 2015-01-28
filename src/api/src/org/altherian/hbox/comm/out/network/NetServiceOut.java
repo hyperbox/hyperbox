@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2014 Maxime Dor
+ * Copyright (C) 2015 Maxime Dor
  *
  * http://hyperbox.altherian.org
  *
@@ -19,17 +19,31 @@
  *
  */
 
-package org.altherian.hboxd.hypervisor.net;
+package org.altherian.hbox.comm.out.network;
 
-import org.altherian.hbox.constant._NetServiceType;
+import org.altherian.hbox.comm.out.ObjectOut;
 
 
-public interface _NetService {
+public class NetServiceOut extends ObjectOut {
    
-   public String getId();
+   private String serviceTypeId;
+   private boolean enabled;
    
-   public String getLabel();
+   protected NetServiceOut() {
+      // Serialization
+   }
 
-   public _NetServiceType getType();
+   public NetServiceOut(String svcTypeId, boolean enabled) {
+      serviceTypeId = svcTypeId;
+      this.enabled = enabled;
+   }
+   
+   public String getServiceTypeId() {
+      return serviceTypeId;
+   }
+
+   public boolean isEnabled() {
+      return enabled;
+   }
    
 }

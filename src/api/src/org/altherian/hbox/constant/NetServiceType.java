@@ -21,8 +21,10 @@
 
 package org.altherian.hbox.constant;
 
+import org.altherian.hbox.hypervisor.net._NetService;
 
-public enum NetServiceType implements _NetServiceType {
+
+public enum NetServiceType {
 
    IPv4,
    IPv6,
@@ -31,14 +33,16 @@ public enum NetServiceType implements _NetServiceType {
    NAT,
    PXE;
    
-   @Override
    public String getId() {
-      return toString().toLowerCase();
-   }
-   
-   @Override
-   public String getLabel() {
       return toString();
+   }
+
+   public boolean typeOf(_NetService svc) {
+      return this.getId() == svc.getType();
+   }
+
+   public boolean is(Object o) {
+      return this.getId().equalsIgnoreCase(o.toString());
    }
 
 }

@@ -21,9 +21,8 @@
 package org.altherian.vbox4_3.net;
 
 import org.altherian.hbox.constant.NetServiceType;
-import org.altherian.hbox.constant._NetServiceType;
+import org.altherian.hbox.hypervisor.net._NetMode;
 import org.altherian.hboxd.exception.net.InvalidNetworkModeException;
-import org.altherian.hboxd.hypervisor.net._NetMode;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,65 +30,65 @@ import org.virtualbox_4_3.NetworkAttachmentType;
 
 
 public enum VBoxNetMode implements _NetMode {
-
-   Bridged(new HashSet<_NetServiceType>(), true, false, false, false),
-   Generic(new HashSet<_NetServiceType>(), false, true, false, false),
-   HostOnly(new HashSet<_NetServiceType>(Arrays.asList(NetServiceType.IPv4, NetServiceType.DHCP)), true, false, true, true),
-   Internal(new HashSet<_NetServiceType>(), false, true, false, false),
-   NAT(new HashSet<_NetServiceType>(Arrays.asList(NetServiceType.NAT)), false, false, false, false),
-   NATNetwork(new HashSet<_NetServiceType>(Arrays.asList(NetServiceType.DHCP, NetServiceType.NAT)), true, false, true, true);
    
+   Bridged(new HashSet<String>(), true, false, false, false),
+   Generic(new HashSet<String>(), false, true, false, false),
+   HostOnly(new HashSet<String>(Arrays.asList(NetServiceType.IPv4.getId(), NetServiceType.DHCP.getId())), true, false, true, true),
+   Internal(new HashSet<String>(), false, true, false, false),
+   NAT(new HashSet<String>(Arrays.asList(NetServiceType.NAT.getId())), false, false, false, false),
+   NATNetwork(new HashSet<String>(Arrays.asList(NetServiceType.DHCP.getId(), NetServiceType.NAT.getId())), true, false, true, true);
+
    protected String id;
    protected String label;
-   protected Set<_NetServiceType> services;
+   protected Set<String> services;
    protected boolean canLinkAdaptor;
    protected boolean canLinkNetworkName;
    protected boolean canAddAdaptor;
    protected boolean canRemoveAdaptor;
-
-   private VBoxNetMode(Set<_NetServiceType> services, boolean canLinkAdaptor, boolean canLinkNetworkName, boolean canAddAdaptor, boolean canRemoveAdaptor) {
-      this.services = new HashSet<_NetServiceType>(services);
+   
+   private VBoxNetMode(Set<String> services, boolean canLinkAdaptor, boolean canLinkNetworkName, boolean canAddAdaptor, boolean canRemoveAdaptor) {
+      this.services = new HashSet<String>(services);
       this.canLinkAdaptor = canLinkAdaptor;
       this.canLinkNetworkName = canLinkNetworkName;
       this.canAddAdaptor = canAddAdaptor;
       this.canRemoveAdaptor = canRemoveAdaptor;
    }
-   
+
    @Override
    public String getId() {
       return toString();
    }
-   
+
    @Override
    public String getLabel() {
       return toString();
    }
-   
+
    @Override
-   public Set<_NetServiceType> getSupportedServices() {
-      return new HashSet<_NetServiceType>(services);
+   public Set<String> getSupportedServices() {
+      return new HashSet<String>(services);
    }
-   
+
    @Override
    public boolean canLinkAdaptor() {
       return canLinkAdaptor;
    }
-   
+
    @Override
    public boolean canLinkNetworkName() {
       return canLinkNetworkName;
    }
-   
+
    @Override
    public boolean canAddAdaptor() {
       return canAddAdaptor;
    }
-   
+
    @Override
    public boolean canRemoveAdaptor() {
       return canRemoveAdaptor;
    }
-   
+
    public static VBoxNetMode getEnum(String modeId) {
       try {
          return VBoxNetMode.valueOf(modeId);
@@ -97,9 +96,9 @@ public enum VBoxNetMode implements _NetMode {
          throw new InvalidNetworkModeException(modeId);
       }
    }
-
+   
    public static VBoxNetMode getEnum(NetworkAttachmentType type) {
       return getEnum(type.toString());
    }
-   
+
 }

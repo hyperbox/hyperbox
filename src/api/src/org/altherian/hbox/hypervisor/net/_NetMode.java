@@ -18,46 +18,45 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.altherian.hboxd.hypervisor.net;
+package org.altherian.hbox.hypervisor.net;
 
-import org.altherian.hbox.constant._NetServiceType;
 import java.util.Set;
 
 public interface _NetMode {
-   
-   public String getId();
-   
-   public String getLabel();
-   
-   public Set<_NetServiceType> getSupportedServices();
 
+   public String getId();
+
+   public String getLabel();
+
+   public Set<String> getSupportedServices();
+   
    /**
     * Can this network mode support adaptor?
     *
     * @return true if yes, false if not
     */
    public boolean canLinkAdaptor();
-   
+
    /**
     * Can we add a new adaptor for this network mode?
     *
     * @return true if yes, false if not
     */
    public boolean canAddAdaptor();
-   
+
    /**
     * Can we remove an existing adaptor for this network mode?
     *
     * @return true if yes, false if not
     */
    public boolean canRemoveAdaptor();
-
+   
    /**
     * Can this network mode support arbitrary network name?
     *
     * @return true if yes, false if not
     */
    public boolean canLinkNetworkName();
-   
-   
+
+
 }

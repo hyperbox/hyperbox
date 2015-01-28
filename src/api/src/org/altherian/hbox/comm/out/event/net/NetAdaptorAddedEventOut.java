@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2014 Maxime Dor
+ * Copyright (C) 2015 Maxime Dor
  *
  * http://hyperbox.altherian.org
  *
@@ -19,13 +19,20 @@
  *
  */
 
-package org.altherian.hbox.constant;
+package org.altherian.hbox.comm.out.event.net;
 
+import org.altherian.hbox.comm.out.ServerOut;
+import org.altherian.hbox.event.HyperboxEvents;
+import java.util.Date;
 
-public interface _NetServiceType {
+public class NetAdaptorAddedEventOut extends NetAdaptorEventOut {
+   
+   protected NetAdaptorAddedEventOut() {
+      // Used for (de)serialization
+   }
 
-   public String getId();
-
-   public String getLabel();
-
+   public NetAdaptorAddedEventOut(Date time, ServerOut srvOut, String hypId, String netModeId, String netAdaptorId) {
+      super(time, HyperboxEvents.NetAdaptorAdded, srvOut, hypId, netModeId, netAdaptorId);
+   }
+   
 }

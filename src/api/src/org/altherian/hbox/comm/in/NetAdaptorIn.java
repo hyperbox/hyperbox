@@ -22,50 +22,52 @@
 package org.altherian.hbox.comm.in;
 
 import org.altherian.hbox.constant.EntityType;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class NetAdaptorIn extends ObjectIn<EntityType> {
-
+   
    private String label;
    private String modeId;
-   private List<NetServiceIn> services;
-   
+   private List<NetServiceIn> services = new ArrayList<NetServiceIn>();
+
    public NetAdaptorIn() {
       super(EntityType.NetAdaptor);
    }
-   
-   public NetAdaptorIn(String id) {
+
+   public NetAdaptorIn(String modeId, String id) {
       this();
       setId(id);
+      setModeId(modeId);
    }
-   
+
    public String getLabel() {
       return label;
    }
-   
+
    public void setLabel(String label) {
       this.label = label;
    }
-   
+
    public String getModeId() {
       return modeId;
    }
-   
+
    public void setModeId(String modeId) {
       this.modeId = modeId;
    }
-   
+
    public List<NetServiceIn> getServices() {
       return services;
    }
-   
+
    public void setServices(List<NetServiceIn> services) {
       this.services = services;
    }
-
+   
    public void addService(NetServiceIn service) {
       services.add(service);
    }
-   
+
 }
