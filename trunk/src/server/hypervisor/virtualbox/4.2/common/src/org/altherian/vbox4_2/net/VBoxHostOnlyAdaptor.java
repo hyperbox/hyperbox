@@ -19,23 +19,23 @@
  *
  */
 
-package org.altherian.vbox4_3.net;
+package org.altherian.vbox4_2.net;
 
 import org.altherian.hbox.constant.NetServiceType;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.hypervisor.net._NetService;
 import org.altherian.hbox.hypervisor.net._NetServiceIP4;
 import org.altherian.vbox.net.VBoxAdaptor;
-import org.altherian.vbox4_3.VBox;
-import org.virtualbox_4_3.IHostNetworkInterface;
+import org.altherian.vbox4_2.VBox;
+import org.virtualbox_4_2.IHostNetworkInterface;
 
 
 public class VBoxHostOnlyAdaptor extends VBoxAdaptor {
-
+   
    public VBoxHostOnlyAdaptor(IHostNetworkInterface nic) {
       super(nic.getId(), nic.getName(), VBoxNetMode.HostOnly);
    }
-   
+
    @Override
    protected void process(_NetService service) {
       if (NetServiceType.IPv4.is(service.getType())) {
@@ -50,5 +50,5 @@ public class VBoxHostOnlyAdaptor extends VBoxAdaptor {
          throw new HyperboxRuntimeException("Service type " + service.getType() + " is not supported by VirtualBox");
       }
    }
-
+   
 }

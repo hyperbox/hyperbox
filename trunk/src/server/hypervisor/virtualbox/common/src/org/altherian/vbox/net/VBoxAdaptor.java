@@ -20,6 +20,7 @@
 
 package org.altherian.vbox.net;
 
+import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.hypervisor.net._NetAdaptor;
 import org.altherian.hbox.hypervisor.net._NetMode;
 import org.altherian.hbox.hypervisor.net._NetService;
@@ -30,16 +31,16 @@ import java.util.Map;
 
 
 public class VBoxAdaptor implements _NetAdaptor {
-
+   
    private String id;
    private String label;
    private _NetMode mode;
    private Map<String, _NetService> services = new HashMap<String, _NetService>();
-
+   
    public VBoxAdaptor(String id, String label, _NetMode mode) {
       this(id, label, mode, new ArrayList<_NetService>());
    }
-
+   
    public VBoxAdaptor(String id, String label, _NetMode mode, List<_NetService> services) {
       this.id = id;
       this.label = label;
@@ -48,36 +49,37 @@ public class VBoxAdaptor implements _NetAdaptor {
          setService(service);
       }
    }
-
+   
    @Override
    public String getId() {
       return id;
    }
-
+   
    @Override
    public String getLabel() {
       return label;
    }
-
+   
    @Override
    public _NetMode getMode() {
       return mode;
    }
-
+   
    @Override
    public List<_NetService> getServices() {
       return new ArrayList<_NetService>(services.values());
    }
-
+   
+   @Override
    public void setService(_NetService service) {
       if (mode.getSupportedServices().contains(service.getType())) {
          process(service);
          services.put(service.getType(), service);
       }
    }
-
+   
    protected void process(_NetService service) {
-      // stub
+      throw new HyperboxRuntimeException(service.getType() + " is not supported by " + getMode().getId() + " adaptor");
    }
-
+   
 }

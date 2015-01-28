@@ -19,17 +19,23 @@
  *
  */
 
-package org.altherian.hbox.hypervisor.net;
+package org.altherian.vbox4_3.net;
+
+import org.altherian.hbox.exception.HyperboxRuntimeException;
+import org.altherian.hbox.hypervisor.net._NetService;
+import org.altherian.vbox.net.VBoxAdaptor;
+import org.virtualbox_4_3.IHostNetworkInterface;
 
 
-public interface _NetServiceIP4 extends _NetService {
+public class VBoxBridgedAdaptor extends VBoxAdaptor {
+   
+   public VBoxBridgedAdaptor(IHostNetworkInterface nic) {
+      super(nic.getId(), nic.getName(), VBoxNetMode.Bridged);
+   }
 
-   public String getIP();
-
-   public String getMask();
-
-   public void setIP(String ip);
-
-   public void setMask(String mask);
-
+   @Override
+   protected void process(_NetService service) {
+      throw new HyperboxRuntimeException(service.getType() + " is not supported by Bridged adaptor");
+   }
+   
 }

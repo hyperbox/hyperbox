@@ -61,6 +61,8 @@ import org.altherian.vbox4_3.data.Mappings;
 import org.altherian.vbox4_3.factory.OsTypeFactory;
 import org.altherian.vbox4_3.host.VBoxHost;
 import org.altherian.vbox4_3.manager.VBoxSessionManager;
+import org.altherian.vbox4_3.net.VBoxHostOnlyAdaptor;
+import org.altherian.vbox4_3.net.VBoxNatNetworkAdaptor;
 import org.altherian.vbox4_3.net.VBoxNetMode;
 import org.altherian.vbox4_3.service.EventsManagementService;
 import org.altherian.vbox4_3.storage.VBoxMedium;
@@ -877,7 +879,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
             if (!nic.getInterfaceType().equals(HostNetworkInterfaceType.HostOnly)) {
                throw new HyperboxRuntimeException("Adaptor of type "+type+" with ID "+adaptorId+" was not found");
             }
-            return new VBoxAdaptor(nic.getId(), nic.getName(), type);
+            return new VBoxHostOnlyAdaptor(nic);
          case Internal:
             for (String internalNet : vbMgr.getVBox().getInternalNetworks()) {
                if (internalNet.equalsIgnoreCase(adaptorId)) {
@@ -889,7 +891,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
             throw new InvalidNetworkModeException(modeId,modeId+" does not support network adaptor");
          case NATNetwork:
             INATNetwork natNet = vbMgr.getVBox().findNATNetworkByName(adaptorId);
-            return new VBoxAdaptor(natNet.getNetworkName(), natNet.getNetworkName(), type);
+            return new VBoxNatNetworkAdaptor(natNet);
          default:
             Logger.warning("Got a valid but non supported net mode: " + modeId);
             throw new InvalidNetworkModeException(modeId);

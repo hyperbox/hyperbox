@@ -27,9 +27,12 @@ import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.in.NetAdaptorIn;
+import org.altherian.hbox.comm.in.NetServiceIn;
 import org.altherian.hbox.comm.out.network.NetAdaptorOut;
 import org.altherian.hbox.hypervisor.net._NetAdaptor;
+import org.altherian.hbox.hypervisor.net._NetService;
 import org.altherian.hboxd.comm.io.factory.NetAdaptorIoFactory;
+import org.altherian.hboxd.comm.io.factory.NetServiceIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ServerAction;
 import org.altherian.hboxd.server._Server;
@@ -38,25 +41,28 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NetAdaptorAddAction extends ServerAction {
-
+   
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.NetAdaptorAdd.getId());
    }
-
+   
    @Override
    public boolean isQueueable() {
       return true;
    }
-
+   
    @Override
    protected void run(Request request, _Hyperbox hbox, _Server srv) {
       NetAdaptorIn adaptIn = request.get(NetAdaptorIn.class);
       _NetAdaptor adapt = srv.getHypervisor().createAdaptor(adaptIn.getModeId(), adaptIn.getLabel());
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, NetAdaptorOut.class, NetAdaptorIoFactory.get(adapt)));
       if (!adaptIn.getServices().isEmpty()) {
-         //TODO complete
+         for (NetServiceIn svcIn : adaptIn.getServices()) {
+            _NetService svc = NetServiceIoFactory.get(svcIn);
+            adapt.setService(svc);
+         }
       }
    }
-   
+
 }

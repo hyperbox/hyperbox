@@ -19,17 +19,16 @@
  *
  */
 
-package org.altherian.hbox.hypervisor.net;
+package org.altherian.vbox4_3.net;
+
+import org.altherian.vbox.net.VBoxAdaptor;
+import org.virtualbox_4_3.INATNetwork;
 
 
-public interface _NetServiceIP4 extends _NetService {
-
-   public String getIP();
-
-   public String getMask();
-
-   public void setIP(String ip);
-
-   public void setMask(String mask);
+public class VBoxNatNetworkAdaptor extends VBoxAdaptor {
+   
+   public VBoxNatNetworkAdaptor(INATNetwork natNet) {
+      super(natNet.getNetworkName(), natNet.getNetworkName(), VBoxNetMode.NATNetwork);
+   }
 
 }
