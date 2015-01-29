@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -290,7 +290,7 @@ public final class VmSummaryView {
    
    private void clearNetwork() {
       Logger.track();
-
+      
       networkPanel.removeAll();
    }
    
@@ -392,7 +392,7 @@ public final class VmSummaryView {
          } catch (URISyntaxException e) {
             consoleAddressValue.setText("Invalid address: " + e.getMessage());
          }
-
+         
       } else {
          consoleAddressValue.setText("Not available (Disabled or Console Module not installed)");
       }
@@ -410,12 +410,12 @@ public final class VmSummaryView {
       
       List<StorageControllerOut> scSorted = new ArrayList<StorageControllerOut>(controllers.values());
       Collections.sort(scSorted, new Comparator<StorageControllerOut>() {
-
+         
          @Override
          public int compare(StorageControllerOut o1, StorageControllerOut o2) {
             return o1.getName().compareTo(o2.getName());
          }
-
+         
       });
       for (StorageControllerOut scOut : scSorted) {
          try {

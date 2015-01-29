@@ -1,22 +1,21 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2015 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxc.front.gui.net;
@@ -42,7 +41,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class NetAdaptorDialog implements _Saveable, _Cancelable {
-
+   
    private String modeId;
    private String adaptId;
    
@@ -54,7 +53,7 @@ public class NetAdaptorDialog implements _Saveable, _Cancelable {
    private JButton cancelButton;
    
    private JDialog dialog;
-
+   
    private NetAdaptorDialog(String srvId, String modeId, String adaptId) {
       this.modeId = modeId;
       this.adaptId = adaptId;
@@ -64,11 +63,11 @@ public class NetAdaptorDialog implements _Saveable, _Cancelable {
       buttonsPanel = new JPanel(new MigLayout("ins 0"));
       buttonsPanel.add(saveButton);
       buttonsPanel.add(cancelButton);
-
+      
       dialog = JDialogBuilder.get("Add Network Adaptor", saveButton);
       dialog.getContentPane().add(new JLabel("Mode: "));
       dialog.getContentPane().add(new JLabel(modeId), "left, growx, pushx, span, wrap");
-
+      
       NetModeOut modeOut = Gui.getServer(srvId).getHypervisor().getNetworkMode(modeId);
       for (String svcTypeId : modeOut.getNetServices()) {
          NetServiceOut svcOut = null;
@@ -85,26 +84,26 @@ public class NetAdaptorDialog implements _Saveable, _Cancelable {
             Logger.warning("Service Type " + svcTypeId + " for Mode " + modeOut.getId() + " is not supported");
          }
       }
-
+      
       dialog.getContentPane().add(buttonsPanel, "center");
    }
-
+   
    private NetAdaptorIn getInputPrivate() {
       show();
       return adaptIn;
    }
-
+   
    public static NetAdaptorIn getInput(String srvId, String modeId, String adaptId) {
       // TODO get precise class for different mode
       return new NetAdaptorDialog(srvId, modeId, adaptId).getInputPrivate();
    }
-
+   
    private void show() {
       dialog.pack();
       dialog.setLocationRelativeTo(dialog.getParent());
       dialog.setVisible(true);
    }
-
+   
    private void hide() {
       dialog.setVisible(false);
    }
@@ -129,5 +128,5 @@ public class NetAdaptorDialog implements _Saveable, _Cancelable {
       Logger.track();
       hide();
    }
-
+   
 }

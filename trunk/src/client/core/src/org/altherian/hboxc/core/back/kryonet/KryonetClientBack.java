@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -47,20 +47,20 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
 public final class KryonetClientBack implements _Backend, UncaughtExceptionHandler {
-
+   
    private Map<String, _AnswerReceiver> ansReceivers;
    private Client client;
    private volatile BackendStates state = BackendStates.Stopped;
    private volatile BackendConnectionState connState = BackendConnectionState.Disconnected;
-
+   
    @Override
    public String getId() {
       return "Kryonet";
    }
-
+   
    private void setState(BackendStates state) {
       Logger.track();
-
+      
       if ((state != null) && !this.state.equals(state)) {
          this.state = state;
          EventManager.post(new BackendStateEvent(this, state));
@@ -68,10 +68,10 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
          Logger.debug("Got a null state or state matches current one");
       }
    }
-
+   
    private void setState(BackendConnectionState connState) {
       Logger.track();
-
+      
       if ((connState != null) && !this.connState.equals(connState)) {
          this.connState = connState;
          EventManager.post(new BackendConnectionStateEvent(this, connState));
@@ -79,11 +79,11 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
          Logger.debug("Got a null state or state matches current one");
       }
    }
-
+   
    @Override
    public void start() throws HyperboxException {
       Logger.track();
-
+      
       setState(BackendStates.Starting);
       try {
          Logger.info("Backend Init Sequence started");
@@ -105,19 +105,19 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
       } catch (Throwable e) {
          stop(e);
       }
-
+      
    }
-
+   
    private void stop(Throwable e) throws HyperboxException {
       Logger.error("Backend Init Sequence failed");
       stop();
       throw new HyperboxException("Unable to connect to init Kryonet backend : " + e.getMessage());
    }
-
+   
    @Override
    public void stop() {
       Logger.track();
-
+      
       setState(BackendStates.Stopping);
       disconnect();
       if (client != null) {
@@ -125,22 +125,22 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
       }
       setState(BackendStates.Stopped);
    }
-
+   
    @Override
    public void setAnswerReceiver(String requestId, _AnswerReceiver ar) {
       ansReceivers.put(requestId, ar);
    }
-
+   
    @Override
    public void connect(String address) throws HyperboxException {
       Logger.track();
-
+      
       if (!state.equals(BackendStates.Started)) {
          throw new HyperboxException("Backend is not initialized");
       }
-
+      
       setState(BackendConnectionState.Connecting);
-
+      
       String[] options = address.split(":", 2);
       String host = options[0];
       Integer port = options.length == 2 ? Integer.parseInt(options[1]) : Integer.parseInt(KryonetDefaultSettings.CFGVAL_KRYO_NET_TCP_PORT);
@@ -151,7 +151,7 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
             throw new HyperboxException("Invalid port number: " + options[1]);
          }
       }
-
+      
       try {
          client.connect(5000, host, port);
          client.getUpdateThread().setUncaughtExceptionHandler(new KryoUncaughtExceptionHandler());
@@ -167,47 +167,47 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
          throw new HyperboxException(message, e);
       }
    }
-
+   
    @Override
    public void disconnect() {
       Logger.track();
-
+      
       if ((client != null) && client.isConnected()) {
          setState(BackendConnectionState.Disconnecting);
          client.close();
       }
       setState(BackendConnectionState.Disconnected);
    }
-
+   
    @Override
    public boolean isConnected() {
       return (client != null) && client.isConnected();
    }
-
+   
    @Override
    public void putRequest(Request req) {
       Logger.track();
-
+      
       if (!isConnected()) {
          Logger.debug("Tried to send a message but client is not connected");
          throw new HyperboxRuntimeException("Client is not connected to a server");
       }
-
+      
       Logger.debug("Sending request");
       client.sendTCP(req);
       Logger.debug("Send request");
    }
-
+   
    private class MainListener extends Listener {
-
+      
       @Override
       public void connected(Connection connection) {
          Logger.track();
-
+         
          Logger.info(connection.getRemoteAddressTCP().getAddress() + " connected.");
          setState(BackendConnectionState.Connected);
       }
-
+      
       @Override
       public void received(Connection connection, Object object) {
          if (object.getClass().equals(Answer.class)) {
@@ -226,21 +226,21 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
             EventManager.get().post(object);
          }
       }
-
+      
       @Override
       public void disconnected(Connection connection) {
          Logger.track();
-
+         
          Logger.info("Disconnected from Hyperbox server");
          disconnect();
       }
    }
-
+   
    @Override
    public void uncaughtException(Thread t, Throwable e) {
       Logger.error("Error in protocol: " + e.getMessage());
       stop();
       throw new HyperboxRuntimeException("Error in protocol", e);
    }
-
+   
 }
