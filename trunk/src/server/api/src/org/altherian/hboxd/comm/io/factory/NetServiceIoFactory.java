@@ -23,10 +23,12 @@ package org.altherian.hboxd.comm.io.factory;
 
 import org.altherian.hbox.comm.in.NetServiceIP4In;
 import org.altherian.hbox.comm.in.NetServiceIn;
+import org.altherian.hbox.comm.out.network.NetServiceIP4Out;
 import org.altherian.hbox.comm.out.network.NetServiceOut;
 import org.altherian.hbox.constant.NetServiceType;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.hypervisor.net._NetService;
+import org.altherian.hbox.hypervisor.net._NetServiceIP4;
 import org.altherian.hboxd.hypervisor.net.NetServiceIPv4;
 
 
@@ -37,7 +39,12 @@ public class NetServiceIoFactory {
    }
    
    public static NetServiceOut get(_NetService svc) {
-      return null;
+      if (NetServiceType.IPv4.is(svc.getType())) {
+         _NetServiceIP4 ip4 = (_NetServiceIP4) svc;
+         return new NetServiceIP4Out(ip4.isEnabled(), ip4.getIP(), ip4.getMask());
+      } else {
+         throw new HyperboxRuntimeException(svc.getType() + " is not supported");
+      }
    }
    
    public static _NetService get(NetServiceIn svcIn) {

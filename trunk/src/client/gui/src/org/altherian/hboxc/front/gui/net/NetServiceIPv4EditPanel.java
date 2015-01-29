@@ -28,6 +28,8 @@ import org.altherian.hbox.comm.out.network.NetServiceIP4Out;
 import org.altherian.hbox.comm.out.network.NetServiceOut;
 import org.altherian.hbox.constant.NetServiceType;
 import org.altherian.helper.swing.JTextFieldShadow;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -36,7 +38,7 @@ import javax.swing.JTextField;
 
 // TODO disable/enable field depending on the enable value
 public class NetServiceIPv4EditPanel implements _NetServiceEditor {
-   
+
    private JLabel enableLabel;
    private JCheckBox enableValue;
    private JLabel ipLabel;
@@ -46,15 +48,28 @@ public class NetServiceIPv4EditPanel implements _NetServiceEditor {
    private JPanel panel;
 
    public NetServiceIPv4EditPanel(NetServiceOut netSvcOut) {
-      enableLabel = new JLabel("Enable");
-      enableValue = new JCheckBox();
       ipLabel = new JLabel("IP Address");
       ipValue = new JTextFieldShadow("1.2.3.4");
       ipValue.setColumns(16);
+      ipValue.setEnabled(false);
+
       maskLabel = new JLabel("Subnet Mask");
       maskValue = new JTextFieldShadow("a.b.c.d");
       maskValue.setColumns(16);
-      
+      maskValue.setEnabled(false);
+
+      enableLabel = new JLabel("Enable");
+      enableValue = new JCheckBox();
+      enableValue.addItemListener(new ItemListener() {
+
+         @Override
+         public void itemStateChanged(ItemEvent e) {
+            ipValue.setEnabled(enableValue.isSelected());
+            maskValue.setEnabled(enableValue.isSelected());
+         }
+
+      });
+
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(enableLabel);
       panel.add(enableValue, "growx, pushx, wrap");
@@ -70,20 +85,23 @@ public class NetServiceIPv4EditPanel implements _NetServiceEditor {
          maskValue.setText(ip4Out.getMask());
       }
    }
-   
+
    @Override
    public String getServiceId() {
       return NetServiceType.IPv4.getId();
    }
-   
+
    @Override
    public JComponent getComponent() {
       return panel;
    }
-   
+
    @Override
    public NetServiceIn getInput() {
-      return new NetServiceIP4In(enableValue.isSelected(), ipValue.getText(), maskValue.getText());
+      return new NetServiceIP4In(
+            enableValue.isSelected(),
+            enableValue.isSelected() ? ipValue.getText() : null,
+                  enableValue.isSelected() ? maskValue.getText() : null);
    }
 
 }

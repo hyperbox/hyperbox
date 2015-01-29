@@ -35,27 +35,29 @@ import javax.swing.AbstractAction;
 
 
 @SuppressWarnings("serial")
-public class NetAdaptorAddAction extends AbstractAction {
+public class NetAdaptorEditAction extends AbstractAction {
    
    private String srvId;
    private String modeId;
+   private String adaptId;
    
-   public NetAdaptorAddAction(String srvId, String modeId) {
-      super("Add", IconBuilder.getTask(HypervisorTasks.NetAdaptorAdd));
+   public NetAdaptorEditAction(String srvId, String modeId, String adaptId) {
+      super("Edit", IconBuilder.getTask(HypervisorTasks.NetAdaptorModify));
       this.srvId = srvId;
       this.modeId = modeId;
+      this.adaptId = adaptId;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
-      NetAdaptorIn adaptIn = NetAdaptorDialog.getInput(srvId, modeId, null);
+      NetAdaptorIn adaptIn = NetAdaptorDialog.getInput(srvId, modeId, adaptId);
       if (adaptIn != null) {
-         Request req = new Request(Command.VBOX, HypervisorTasks.NetAdaptorAdd, adaptIn);
+         Request req = new Request(Command.VBOX, HypervisorTasks.NetAdaptorModify, adaptIn);
          req.set(ServerIn.class, new ServerIn(srvId));
          Gui.post(req);
       } else {
          Logger.debug("Net Adaptor creation: null input returned");
       }
    }
-   
+
 }

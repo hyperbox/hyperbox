@@ -26,13 +26,14 @@ import org.altherian.hboxd.exception.net.InvalidNetworkModeException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import org.virtualbox_4_2.NetworkAttachmentType;
 
 
 public enum VBoxNetMode implements _NetMode {
 
    Bridged(new HashSet<String>(), true, false, false, false),
    Generic(new HashSet<String>(), false, true, false, false),
-   HostOnly(new HashSet<String>(Arrays.asList(NetServiceType.IPv4.getId(), NetServiceType.DHCP.getId())), true, false, true, true),
+   HostOnly(new HashSet<String>(Arrays.asList(NetServiceType.IPv4.getId()/*, NetServiceType.DHCP.getId()*/)), true, false, true, true),
    Internal(new HashSet<String>(), false, true, false, false),
    NAT(new HashSet<String>(Arrays.asList(NetServiceType.NAT.getId())), false, false, false, false);
    
@@ -86,13 +87,17 @@ public enum VBoxNetMode implements _NetMode {
    public boolean canRemoveAdaptor() {
       return canRemoveAdaptor;
    }
-   
+
    public static VBoxNetMode getEnum(String modeId) {
       try {
          return VBoxNetMode.valueOf(modeId);
       } catch (IllegalArgumentException e) {
          throw new InvalidNetworkModeException(modeId);
       }
+   }
+   
+   public static VBoxNetMode getEnum(NetworkAttachmentType type) {
+      return getEnum(type.toString());
    }
    
 }
