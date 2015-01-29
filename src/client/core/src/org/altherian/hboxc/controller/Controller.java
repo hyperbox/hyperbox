@@ -21,6 +21,7 @@
 package org.altherian.hboxc.controller;
 
 import org.altherian.hbox.Configuration;
+import org.altherian.hbox.HyperboxAPI;
 import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._AnswerReceiver;
@@ -50,13 +51,13 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public final class Controller implements _ClientMessageReceiver, _RequestReceiver {
-
+   
    private ClientCore core;
    private _Front front = new MiniUI();
-
+   
    private RequestWorker msgWorker;
    private Map<String, _ClientControllerAction> actionsMap;
-
+   
    static {
       Logger.raw(getHeader());
       try {
@@ -70,30 +71,24 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
          System.exit(1);
       }
    }
-
+   
    private void loadActions() throws HyperboxException {
       actionsMap = new HashMap<String, _ClientControllerAction>();
-
+      
       ShutdownAction.c = this;
-
+      
       for (_ClientControllerAction ac : HyperboxClient.getAllOrFail(_ClientControllerAction.class)) {
          actionsMap.put(ac.getRegistration().toString(), ac);
       }
    }
-
+   
    public static String getHeader() {
-      StringBuilder header = new StringBuilder();
-      header.append("Hyperbox " + Hyperbox.getFullVersion());
-      header.append(" - ");
-      header.append("Java " + System.getProperty("java.version") + " " + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version"));
-      header.append(" - ");
-      header.append(System.getProperty("os.name") + " " + System.getProperty("os.version") + " " + System.getProperty("os.arch"));
-      return header.toString();
+      return HyperboxAPI.getLogHeader(Hyperbox.getFullVersion());
    }
-
+   
    private void loadFront() throws HyperboxException {
       String classToLoad = MiniUI.class.getName();
-
+      
       if (Configuration.hasSetting("view.class")) {
          classToLoad = Configuration.getSetting("view.class");
       } else if (!GraphicsEnvironment.isHeadless()) {
@@ -101,25 +96,25 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
       } else {
          // TODO create Console view
       }
-
+      
       try {
          front = HyperboxClient.loadClass(_Front.class, classToLoad);
       } catch (HyperboxRuntimeException e) {
          throw new HyperboxException(e);
       }
    }
-
+   
    public void start() throws HyperboxException {
       Logger.track();
-
+      
       try {
          PreferencesManager.init();
-
+         
          loadFront();
-
+         
          String logLevel = Configuration.getSetting("log.level", LogLevel.Info.toString());
          Logger.setLevel(LogLevel.valueOf(logLevel));
-
+         
          String defaultLogFilePath = PreferencesManager.getUserPrefPath().getAbsolutePath() + File.separator + "log" + File.separator + "hbox.log";
          try {
             String logFile = Configuration.getSetting("log.file", defaultLogFilePath);
@@ -131,26 +126,26 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
             front.postError(e, "Launch error: " + e.getMessage());
             System.exit(1);
          }
-
+         
          for (String name : System.getenv().keySet()) {
             Logger.debug(name + ": " + System.getenv(name));
          }
-
+         
          EventManager.get().start();
-
+         
          loadActions();
-
+         
          msgWorker = new RequestWorker();
          msgWorker.start();
-
+         
          front.start();
          front.setRequestReceiver(this);
-
+         
          core = new ClientCore();
          core.init();
          front.setCoreReader(new CoreReader(core));
          core.start();
-
+         
          HyperboxClient.initView(front);
       } catch (Throwable t) {
          Logger.exception(t);
@@ -158,10 +153,10 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
          stop();
       }
    }
-
+   
    public void stop() {
       Logger.track();
-
+      
       try {
          if (core != null) {
             core.stop();
@@ -173,60 +168,60 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
          if (msgWorker != null) {
             msgWorker.stop();
          }
-
+         
          EventManager.get().stop();
-
+         
          PreferencesManager.savePref();
          System.exit(0);
       } catch (Throwable t) {
          System.exit(1);
       }
    }
-
+   
    @Override
    public void post(MessageInput mIn) {
       Logger.track();
-
+      
       msgWorker.post(mIn);
    }
-
+   
    @Override
    public void putRequest(Request request) {
       Logger.track();
-
+      
       msgWorker.post(new MessageInput(request));
    }
-
+   
    private class RequestWorker implements _ClientMessageReceiver, Runnable {
-
+      
       private boolean running;
       private Thread thread;
       private BlockingQueue<MessageInput> queue;
-
+      
       @Override
       public void post(MessageInput mIn) {
          Logger.track();
-
+         
          if (!queue.offer(mIn)) {
             throw new HyperboxRuntimeException("Couldn't queue the request : queue is full (" + queue.size() + " messages)");
          } else {
             Logger.track();
          }
       }
-
+      
       public void start() throws HyperboxException {
          Logger.track();
-
+         
          running = true;
          queue = new LinkedBlockingQueue<MessageInput>();
          thread = new Thread(this, "FRQMGR");
          thread.setDaemon(true);
          thread.start();
       }
-
+      
       public void stop() {
          Logger.track();
-
+         
          running = false;
          thread.interrupt();
          try {
@@ -235,7 +230,7 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
             Logger.debug("Worker thread didn't stop on request after 5 sec");
          }
       }
-
+      
       @Override
       public void run() {
          Logger.verbose("RequestWorker Thread started");
@@ -245,7 +240,7 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
                Logger.track();
                Request req = mIn.getRequest();
                _AnswerReceiver recv = mIn.getReceiver();
-
+               
                try {
                   if (actionsMap.containsKey(mIn.getRequest().getName())) {
                      Logger.track();
@@ -286,7 +281,7 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
          Logger.track();
          Logger.verbose("RequestWorker Thread halted");
       }
-
+      
    }
-
+   
 }

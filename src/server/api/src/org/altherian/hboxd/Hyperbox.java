@@ -29,8 +29,8 @@ import java.util.Set;
 public class Hyperbox {
    
    private static Properties buildProperties;
-   private static String version = "0";
-   private static String revision = "0";
+   private static String version;
+   private static String revision;
    private static String cfgFile = "conf/main.cfg";
    
    private static void failedToLoad(Exception e) {
@@ -58,12 +58,13 @@ public class Hyperbox {
       buildProperties = new Properties();
       try {
          buildProperties.load(Hyperbox.class.getResourceAsStream("/server.build.properties"));
-         version = buildProperties.getProperty("version", version);
-         revision = buildProperties.getProperty("revision", revision);
       } catch (IOException e) {
          failedToLoad(e);
       } catch (NullPointerException e) {
          failedToLoad(e);
+      } finally {
+         version = buildProperties.getProperty("version", HyperboxAPI.VERSION_UNKNOWN);
+         revision = buildProperties.getProperty("revision", HyperboxAPI.REVISION_UNKNOWN);
       }
    }
    
