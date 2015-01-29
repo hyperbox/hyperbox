@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -137,7 +137,7 @@ public interface _Hypervisor {
     * @return List of network modes or empty list if none is found
     */
    public List<_NetMode> listNetworkModes();
-
+   
    public _NetMode getNetworkMode(String id);
    
    /**
@@ -146,7 +146,7 @@ public interface _Hypervisor {
     * @return List of network adaptors or empty list if none is found
     */
    public List<_NetAdaptor> listAdaptors();
-
+   
    /**
     * List all network adaptors for the given network mode
     *
@@ -159,7 +159,7 @@ public interface _Hypervisor {
    public _NetAdaptor createAdaptor(String modeId, String name) throws InvalidNetworkModeException;
    
    public void removeAdaptor(String modeId, String adaptorId) throws InvalidNetworkModeException;
-
+   
    public _NetAdaptor getNetAdaptor(String modId, String adaptorId) throws NetworkAdaptorNotFoundException;
    
 }

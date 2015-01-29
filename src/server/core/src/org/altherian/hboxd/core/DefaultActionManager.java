@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -33,13 +33,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class DefaultActionManager implements _ActionManager {
-
+   
    private Map<String, _HyperboxAction> actions = new HashMap<String, _HyperboxAction>();;
-
+   
    @Override
    public void start() throws HyperboxException {
       Logger.track();
-
+      
       Set<_HyperboxAction> subTypes = HBoxServer.getAtLeastOneOrFail(_HyperboxAction.class);
       for (_HyperboxAction action : subTypes) {
          List<String> mappings = action.getRegistrations();
@@ -53,12 +53,12 @@ public class DefaultActionManager implements _ActionManager {
          }
       }
    }
-
+   
    @Override
    public _HyperboxAction get(Request req) {
       return get(req.getCommand() + req.getName());
    }
-
+   
    @Override
    public _HyperboxAction get(String id) {
       if (actions.containsKey(id)) {
@@ -69,12 +69,12 @@ public class DefaultActionManager implements _ActionManager {
          throw new HyperboxCommunicationException("No matching action for " + id);
       }
    }
-
+   
    @Override
    public void stop() {
       Logger.track();
-
+      
       actions.clear();
    }
-
+   
 }

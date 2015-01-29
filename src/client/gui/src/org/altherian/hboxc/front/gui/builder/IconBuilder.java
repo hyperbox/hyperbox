@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -118,7 +118,7 @@ public class IconBuilder {
       vbTasks.put(HypervisorTasks.MediumCreate, new ImageIcon(ICONS_PATH + "database_add.png"));
       vbTasks.put(HypervisorTasks.MediumRegister, new ImageIcon(ICONS_PATH + "database_link.png"));
       vbTasks.put(HypervisorTasks.MediumModify, new ImageIcon(ICONS_PATH + "cd_modify.png"));
-
+      
       vbTasks.put(HypervisorTasks.NetAdaptorAdd, new ImageIcon(ICONS_PATH + "add.png"));
       vbTasks.put(HypervisorTasks.NetAdaptorModify, new ImageIcon(ICONS_PATH + "edit.png"));
       vbTasks.put(HypervisorTasks.NetAdaptorRemove, new ImageIcon(ICONS_PATH + "cross.png"));

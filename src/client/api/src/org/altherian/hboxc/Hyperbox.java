@@ -2,19 +2,19 @@
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
  * hyperbox at altherian dot org
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -31,20 +31,20 @@ import java.util.Properties;
 import java.util.Set;
 
 public class Hyperbox {
-
+   
    private static Properties buildProperties;
    private static String version;
    private static String revision;
-
+   
    public static String getConfigFilePath() throws HyperboxException {
       return Configuration.getUserDataPath() + File.separator + "main.cfg";
    }
-
+   
    private static void failedToLoad(Exception e) {
       Logger.error("Unable to access the build.properties file: " + e.getMessage());
       Logger.error("Version and revision will not be accurate");
    }
-
+   
    static {
       buildProperties = new Properties();
       try {
@@ -58,11 +58,11 @@ public class Hyperbox {
          revision = buildProperties.getProperty("revision", HyperboxAPI.REVISION_UNKNOWN);
       }
    }
-
+   
    public static String getVersion() {
       return version;
    }
-
+   
    public static String getRevision() {
       return revision;
    }
@@ -70,10 +70,10 @@ public class Hyperbox {
    public static String getFullVersion() {
       return HyperboxAPI.getFullVersion(getVersion(), getRevision());
    }
-
+   
    public static void processArgs(Set<String> args) {
       HyperboxAPI.processArgs(args);
-
+      
       if (args.contains("-?") || args.contains("--help")) {
          System.out.println("Hyperbox available executable switches:\n");
          System.out.println("--help or -? : Print this help");
@@ -94,5 +94,5 @@ public class Hyperbox {
          System.exit(0);
       }
    }
-
+   
 }

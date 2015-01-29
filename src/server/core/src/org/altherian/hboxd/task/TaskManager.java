@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -49,40 +49,40 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public final class TaskManager implements _TaskManager {
-
+   
    private volatile boolean running;
    private long taskId = 1;
    private volatile _Task currentTask;
-
+   
    private Map<String, _Task> tasks;
    private BlockingQueue<_Task> taskQueue;
    private BlockingDeque<_Task> finishedTaskDeque;
-
+   
    private TaskQueueWorker queueWorker = new TaskQueueWorker();
    private Thread worker;
-
+   
    private _Hyperbox hbox;
-
+   
    @Override
    public void start(_Hyperbox hbox) {
       Logger.track();
-
+      
       this.hbox = hbox;
-
+      
       taskQueue = new LinkedBlockingQueue<_Task>();
       finishedTaskDeque = new LinkedBlockingDeque<_Task>(10);
       Logger.debug("Task history size: " + finishedTaskDeque.remainingCapacity());
       tasks = new HashMap<String, _Task>();
       worker = new Thread(queueWorker, "TaskMgrQW");
       SecurityContext.addAdminThread(worker);
-
+      
       EventManager.register(this);
    }
-
+   
    @Override
    public void stop() {
       Logger.track();
-
+      
       running = false;
       if ((worker != null) && !Thread.currentThread().equals(worker)) {
          worker.interrupt();
@@ -94,7 +94,7 @@ public final class TaskManager implements _TaskManager {
          }
       }
    }
-
+   
    @Override
    public void process(Request req) {
       Logger.track();
@@ -116,7 +116,7 @@ public final class TaskManager implements _TaskManager {
          SessionContext.getClient().putAnswer(new Answer(req, AnswerType.UNKNOWN, e));
       }
    }
-
+   
    @Override
    public List<_Task> list() {
       List<_Task> taskList = new ArrayList<_Task>();
@@ -131,31 +131,31 @@ public final class TaskManager implements _TaskManager {
       }
       return taskList;
    }
-
+   
    @Override
    public void remove(String taskId) {
       Logger.track();
-
+      
       _Task task = get(taskId);
       task.cancel();
       queueWorker.remove(task);
    }
-
+   
    @Override
    public _Task get(String taskId) {
       if (!tasks.containsKey(taskId)) {
          throw new HyperboxRuntimeException("Unknown Task ID: " + taskId);
       }
-
+      
       return tasks.get(taskId);
    }
-
+   
    private static class TaskWorker {
-
+      
       public static void execute(Request req, _HyperboxAction ca, _Hyperbox hbox) {
          try {
             Logger.debug("Processing Request #" + req.getExchangeId());
-
+            
             SessionContext.getClient().putAnswer(new Answer(req, ca.getStartReturn()));
             try {
                ca.run(req, hbox);
@@ -175,14 +175,14 @@ public final class TaskManager implements _TaskManager {
             SessionContext.getClient().putAnswer(new Answer(req, AnswerType.SERVER_ERROR, e));
          }
       }
-
+      
    }
-
+   
    private class TaskQueueWorker implements Runnable {
-
+      
       private boolean add(_Task t) {
          Logger.track();
-
+         
          if (!taskQueue.offer(t)) {
             return false;
          }
@@ -192,11 +192,11 @@ public final class TaskManager implements _TaskManager {
          EventManager.post(new TaskQueueEvent(TaskQueueEvents.TaskAdded, t));
          return true;
       }
-
+      
       // TODO use events to clean up the queues
       private void remove(_Task t) {
          Logger.track();
-
+         
          if (t != null) {
             taskQueue.remove(t);
             if (!finishedTaskDeque.contains(t) && (finishedTaskDeque.remainingCapacity() == 0)) {
@@ -211,10 +211,10 @@ public final class TaskManager implements _TaskManager {
                   + "]");
          }
       }
-
+      
       public void queue(Request req, _HyperboxAction ca) {
          Logger.track();
-
+         
          Logger.debug("Queueing Request #" + req.getExchangeId());
          SessionContext.getClient().putAnswer(new Answer(req, AnswerType.STARTED));
          // TODO do a better Task ID generator
@@ -227,14 +227,14 @@ public final class TaskManager implements _TaskManager {
             SessionContext.getClient().putAnswer(new Answer(req, AnswerType.SERVER_ERROR));
          }
       }
-
+      
       @Override
       public void run() {
          Logger.track();
-
+         
          running = true;
          Logger.verbose("Task Queue Worker started");
-
+         
          while (running) {
             try {
                while ((taskQueue.peek() == null) || taskQueue.peek().getState().equals(TaskState.Created)) {
@@ -255,26 +255,26 @@ public final class TaskManager implements _TaskManager {
          Logger.info("Task Queue Worker halted");
       }
    }
-
+   
    @Handler
    public void putSystemEvent(SystemStateEvent ev) {
       Logger.track();
-
+      
       if (ServerState.Running.equals(ev.getState())) {
          worker.start();
       }
    }
-
+   
    @Override
    public long getHistorySize() {
       // TODO Auto-generated method stub
       return 0;
    }
-
+   
    @Override
    public void setHistorySize(long size) {
       // TODO Auto-generated method stub
-
+      
    }
-
+   
 }

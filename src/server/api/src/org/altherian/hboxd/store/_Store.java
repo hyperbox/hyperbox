@@ -20,7 +20,6 @@
 
 package org.altherian.hboxd.store;
 
-
 public interface _Store {
    
    /**
