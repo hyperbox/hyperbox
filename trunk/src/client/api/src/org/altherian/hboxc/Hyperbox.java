@@ -31,48 +31,49 @@ import java.util.Properties;
 import java.util.Set;
 
 public class Hyperbox {
-   
+
    private static Properties buildProperties;
-   private static String version = "0";
-   private static String revision = "0";
-   
+   private static String version;
+   private static String revision;
+
    public static String getConfigFilePath() throws HyperboxException {
       return Configuration.getUserDataPath() + File.separator + "main.cfg";
    }
-   
+
    private static void failedToLoad(Exception e) {
       Logger.error("Unable to access the build.properties file: " + e.getMessage());
       Logger.error("Version and revision will not be accurate");
    }
-   
+
    static {
       buildProperties = new Properties();
       try {
          buildProperties.load(Hyperbox.class.getResourceAsStream("/client.build.properties"));
-         version = buildProperties.getProperty("version", version);
-         revision = buildProperties.getProperty("revision", revision);
       } catch (IOException e) {
          failedToLoad(e);
       } catch (NullPointerException e) {
          failedToLoad(e);
+      } finally {
+         version = buildProperties.getProperty("version", HyperboxAPI.VERSION_UNKNOWN);
+         revision = buildProperties.getProperty("revision", HyperboxAPI.REVISION_UNKNOWN);
       }
    }
-   
+
    public static String getVersion() {
       return version;
    }
-   
+
    public static String getRevision() {
       return revision;
    }
-
+   
    public static String getFullVersion() {
       return HyperboxAPI.getFullVersion(getVersion(), getRevision());
    }
-   
+
    public static void processArgs(Set<String> args) {
       HyperboxAPI.processArgs(args);
-      
+
       if (args.contains("-?") || args.contains("--help")) {
          System.out.println("Hyperbox available executable switches:\n");
          System.out.println("--help or -? : Print this help");
@@ -93,5 +94,5 @@ public class Hyperbox {
          System.exit(0);
       }
    }
-   
+
 }
