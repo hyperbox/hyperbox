@@ -24,6 +24,7 @@ package org.altherian.hboxc.server;
 import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
 import org.altherian.hbox.comm.out.network.NetAdaptorOut;
 import org.altherian.hbox.comm.out.network.NetModeOut;
+import org.altherian.hbox.comm.out.network.NetServiceOut;
 import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hboxd.exception.net.InvalidNetworkModeException;
 import org.altherian.hboxd.exception.net.NetworkAdaptorNotFoundException;
@@ -79,5 +80,7 @@ public interface _Hypervisor {
    public void removeAdaptor(String modeId, String adaptorId) throws InvalidNetworkModeException;
 
    public NetAdaptorOut getNetAdaptor(String modId, String adaptorId) throws NetworkAdaptorNotFoundException;
+   
+   public NetServiceOut getNetService(String modeId, String adaptorId, String svcTypeId) throws NetworkAdaptorNotFoundException;
 
 }

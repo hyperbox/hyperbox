@@ -25,6 +25,7 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.in.NetAdaptorIn;
 import org.altherian.hbox.comm.in.NetServiceIn;
 import org.altherian.hbox.comm.out.network.NetModeOut;
+import org.altherian.hbox.comm.out.network.NetServiceOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Cancelable;
 import org.altherian.hboxc.front.gui._Saveable;
@@ -40,38 +41,42 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class NetAdaptorAddDialog implements _Saveable, _Cancelable {
-   
-   //private String srvId;
-   private String modeId;
+public class NetAdaptorDialog implements _Saveable, _Cancelable {
 
+   private String modeId;
+   private String adaptId;
+   
    private NetAdaptorIn adaptIn;
    private List<_NetServiceEditor> svcEditors = new ArrayList<_NetServiceEditor>();
-
+   
    private JPanel buttonsPanel;
    private JButton saveButton;
    private JButton cancelButton;
-
-   private JDialog dialog;
    
-   private NetAdaptorAddDialog(String srvId, String modeId) {
-      //this.srvId = srvId;
+   private JDialog dialog;
+
+   private NetAdaptorDialog(String srvId, String modeId, String adaptId) {
       this.modeId = modeId;
+      this.adaptId = adaptId;
       saveButton = new JButton(new SaveAction(this));
       cancelButton = new JButton(new CancelAction(this));
-
+      
       buttonsPanel = new JPanel(new MigLayout("ins 0"));
       buttonsPanel.add(saveButton);
       buttonsPanel.add(cancelButton);
-      
+
       dialog = JDialogBuilder.get("Add Network Adaptor", saveButton);
       dialog.getContentPane().add(new JLabel("Mode: "));
       dialog.getContentPane().add(new JLabel(modeId), "left, growx, pushx, span, wrap");
-      
+
       NetModeOut modeOut = Gui.getServer(srvId).getHypervisor().getNetworkMode(modeId);
       for (String svcTypeId : modeOut.getNetServices()) {
+         NetServiceOut svcOut = null;
+         if (adaptId != null) {
+            svcOut = Gui.getServer(srvId).getHypervisor().getNetService(modeId, adaptId, svcTypeId);
+         }
          Logger.debug("Getting editor for " + svcTypeId + " on " + modeId);
-         _NetServiceEditor editor = NetServiceEditFactory.get(svcTypeId, null);
+         _NetServiceEditor editor = NetServiceEditFactory.get(svcTypeId, svcOut);
          if (editor != null) {
             svcEditors.add(editor);
             editor.getComponent().setBorder(BorderFactory.createTitledBorder(svcTypeId));
@@ -80,40 +85,39 @@ public class NetAdaptorAddDialog implements _Saveable, _Cancelable {
             Logger.warning("Service Type " + svcTypeId + " for Mode " + modeOut.getId() + " is not supported");
          }
       }
-      
+
       dialog.getContentPane().add(buttonsPanel, "center");
    }
-   
+
    private NetAdaptorIn getInputPrivate() {
       show();
       return adaptIn;
    }
-   
-   public static NetAdaptorIn getInput(String srvId, String modeId) {
+
+   public static NetAdaptorIn getInput(String srvId, String modeId, String adaptId) {
       // TODO get precise class for different mode
-      return new NetAdaptorAddDialog(srvId, modeId).getInputPrivate();
+      return new NetAdaptorDialog(srvId, modeId, adaptId).getInputPrivate();
    }
-   
+
    private void show() {
       dialog.pack();
       dialog.setLocationRelativeTo(dialog.getParent());
       dialog.setVisible(true);
    }
-   
+
    private void hide() {
       dialog.setVisible(false);
    }
-
+   
    @Override
    public void cancel() {
       adaptIn = null;
       hide();
    }
-
+   
    @Override
    public void save() {
-      adaptIn = new NetAdaptorIn();
-      adaptIn.setModeId(modeId);
+      adaptIn = new NetAdaptorIn(modeId, adaptId);
       for (_NetServiceEditor svcEditor : svcEditors) {
          NetServiceIn svcIn = svcEditor.getInput();
          if (svcIn != null) {
@@ -125,5 +129,5 @@ public class NetAdaptorAddDialog implements _Saveable, _Cancelable {
       Logger.track();
       hide();
    }
-   
+
 }

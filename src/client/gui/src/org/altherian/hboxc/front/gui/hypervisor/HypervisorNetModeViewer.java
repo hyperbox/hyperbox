@@ -30,6 +30,7 @@ import org.altherian.hboxc.front.gui.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.network.NetAdaptorAddAction;
+import org.altherian.hboxc.front.gui.action.network.NetAdaptorEditAction;
 import org.altherian.hboxc.front.gui.action.network.NetAdaptorRemoveAction;
 import org.altherian.tool.logging.Logger;
 import java.awt.Component;
@@ -66,9 +67,11 @@ public class HypervisorNetModeViewer implements _Refreshable {
          for (NetAdaptorOut adapt : adaptors) {
             panel.add(new JLabel(adapt.getLabel()), "growx, pushx");
             if (mode.canRemoveAdaptor()) {
+               panel.add(new JButton(new NetAdaptorEditAction(srvId, mode.getId(), adapt.getId())));
                panel.add(new JButton(new NetAdaptorRemoveAction(srvId, mode.getId(), adapt.getId())), "wrap");
+               
             } else {
-               panel.add(new JLabel(), "wrap");
+               panel.add(new JLabel(), "span 2, wrap");
             }
          }
       }

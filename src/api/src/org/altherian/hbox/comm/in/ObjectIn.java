@@ -104,8 +104,13 @@ public abstract class ObjectIn<T extends Enum<?>> implements _Actionnable {
    }
    
    protected void setId(String id) {
-      this.id = id;
-      setAction(Action.Modify);
+      if (AxStrings.isEmpty(id)) {
+         this.id = null;
+         setAction(Action.Create);
+      } else {
+         this.id = id;
+         setAction(Action.Modify);
+      }
    }
    
    public void setSetting(List<SettingIO> settings) {

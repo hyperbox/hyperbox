@@ -23,15 +23,17 @@ package org.altherian.hbox.hypervisor.net;
 import java.util.List;
 
 public interface _NetAdaptor {
-   
-   public String getId();
-   
-   public String getLabel();
-   
-   public _NetMode getMode();
-   
-   public List<_NetService> getServices();
 
+   public String getId();
+
+   public String getLabel();
+
+   public _NetMode getMode();
+
+   public List<_NetService> getServices();
+   
    public void setService(_NetService svc);
    
+   public _NetService getService(String serviceTypeId);
+
 }
