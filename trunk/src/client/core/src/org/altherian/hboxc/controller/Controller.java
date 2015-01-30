@@ -121,7 +121,6 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
             if (!logFile.toLowerCase().contentEquals("none")) {
                Logger.log(logFile, 4);
             }
-            Logger.raw(getHeader());
          } catch (IOException e) {
             front.postError(e, "Launch error: " + e.getMessage());
             System.exit(1);
@@ -170,8 +169,6 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
          }
          
          EventManager.get().stop();
-         
-         PreferencesManager.savePref();
          System.exit(0);
       } catch (Throwable t) {
          System.exit(1);

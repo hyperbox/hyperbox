@@ -23,6 +23,7 @@ package org.altherian.hboxc.front.gui.workers;
 import org.altherian.hbox.comm.out.ModuleOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
+import org.altherian.hboxc.front.gui.worker.receiver._ModuleListReceiver;
 import java.util.List;
 
 public class ModuleListWorker extends AxSwingWorker<_ModuleListReceiver, Void, ModuleOut> {

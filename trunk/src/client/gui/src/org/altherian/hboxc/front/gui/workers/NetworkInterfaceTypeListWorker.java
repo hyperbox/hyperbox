@@ -23,6 +23,7 @@ package org.altherian.hboxc.front.gui.workers;
 import org.altherian.hbox.comm.out.network.NetworkInterfaceTypeOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
+import org.altherian.hboxc.front.gui.worker.receiver._NetworkInterfaceTypeReceiver;
 import java.util.List;
 
 public class NetworkInterfaceTypeListWorker extends AxSwingWorker<_NetworkInterfaceTypeReceiver, Void, NetworkInterfaceTypeOut> {

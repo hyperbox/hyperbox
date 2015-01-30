@@ -1,7 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
- * hyperbox at altherian dot org
+ * Copyright (C) 2015 Maxime Dor
  *
  * http://hyperbox.altherian.org
  *
@@ -12,33 +11,33 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 
 package org.altherian.hbox.comm.out.event.hypervisor;
 
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
-import org.altherian.hbox.event.HyperboxEvents;
 import java.util.Date;
 
-public class HypervisorConnectedEventOut extends HypervisorConnectionStateEventOut {
-
-   protected HypervisorConnectedEventOut() {
+public abstract class HypervisorConnectionStateEventOut extends HypervisorEventOut {
+   
+   protected HypervisorConnectionStateEventOut() {
       // Used for serialization
    }
-
-   public HypervisorConnectedEventOut(Date time, ServerOut srvOut, HypervisorOut hypOut) {
-      super(time, HyperboxEvents.HypervisorConnected, srvOut, hypOut);
+   
+   public HypervisorConnectionStateEventOut(Date time, Enum<?> id, ServerOut srvOut, HypervisorOut hypOut) {
+      super(time, id, srvOut, hypOut);
    }
-
+   
    @Override
    public String toString() {
-      return "Server " + getServer().getName() + " connected to Hypervisor " + getHypervisor().getId() + " @ " + getTime();
+      return "Hypervisor " + getHypervisor().getId() + " changed connection state @ " + getTime();
    }
-
+   
 }

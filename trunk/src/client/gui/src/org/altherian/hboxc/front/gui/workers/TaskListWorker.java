@@ -25,6 +25,7 @@ import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
+import org.altherian.hboxc.front.gui.worker.receiver._TaskListReceiver;
 import java.util.List;
 
 public class TaskListWorker extends AxSwingWorker<_TaskListReceiver, Void, TaskOut> {

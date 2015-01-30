@@ -25,6 +25,7 @@ import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
+import org.altherian.hboxc.front.gui.worker.receiver._MachineListReceiver;
 import java.util.List;
 
 public class MachineListWorker extends AxSwingWorker<_MachineListReceiver, Void, MachineOut> {

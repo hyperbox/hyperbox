@@ -23,6 +23,7 @@ package org.altherian.hboxc.front.gui.workers;
 import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
+import org.altherian.hboxc.front.gui.worker.receiver._KeyboardTypeListReceiver;
 import java.util.List;
 
 public class KeyboardTypeListWorker extends AxSwingWorker<_KeyboardTypeListReceiver, Void, String> {

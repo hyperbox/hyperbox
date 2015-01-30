@@ -24,6 +24,7 @@ import org.altherian.hbox.comm.in.NetworkAttachModeIn;
 import org.altherian.hbox.comm.out.network.NetworkAttachNameOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
+import org.altherian.hboxc.front.gui.worker.receiver._NetworkAttachNameReceiver;
 import java.util.List;
 
 public class NetworkAttachNameListWorker extends AxSwingWorker<_NetworkAttachNameReceiver, Void, NetworkAttachNameOut> {

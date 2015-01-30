@@ -26,6 +26,7 @@ import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.comm.out.hypervisor.ScreenshotOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
+import org.altherian.hboxc.front.gui.worker.receiver._MachineScreenshotReceiver;
 import java.util.concurrent.ExecutionException;
 
 public class MachineGetScreenshotWorker extends AxSwingWorker<_MachineScreenshotReceiver, ScreenshotOut, Void> {

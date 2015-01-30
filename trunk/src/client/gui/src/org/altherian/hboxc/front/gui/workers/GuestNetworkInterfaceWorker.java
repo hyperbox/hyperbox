@@ -24,6 +24,7 @@ import org.altherian.hbox.comm.out.hypervisor.GuestNetworkInterfaceOut;
 import org.altherian.hbox.comm.out.network.NetworkInterfaceOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
+import org.altherian.hboxc.front.gui.worker.receiver._GuestNetworkInterfaceReceiver;
 import java.util.concurrent.ExecutionException;
 
 public class GuestNetworkInterfaceWorker extends AxSwingWorker<_GuestNetworkInterfaceReceiver, GuestNetworkInterfaceOut, Void> {

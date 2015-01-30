@@ -34,7 +34,6 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.SwingUtilities;
 
 public final class MainView {
 
@@ -59,8 +58,6 @@ public final class MainView {
    }
 
    public MainView() {
-      Logger.track();
-
       vmListView = new ServerMachineView();
       mainMenu = new MainMenu();
 
@@ -92,9 +89,6 @@ public final class MainView {
    }
 
    public void show() {
-      if (!SwingUtilities.isEventDispatchThread()) {
-         Logger.warning("Not EDT");
-      }
       int width = Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFrameWidth, "990"));
       int height = Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFrameHeight, "772"));
       mainFrame.setSize(width, height);
