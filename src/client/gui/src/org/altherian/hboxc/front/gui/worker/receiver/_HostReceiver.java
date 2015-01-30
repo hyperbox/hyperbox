@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2014 Maxime Dor
  *
  * http://hyperbox.altherian.org
  *
@@ -18,21 +18,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.altherian.hbox.exception;
+package org.altherian.hboxc.front.gui.worker.receiver;
 
-@SuppressWarnings("serial")
-public class HyperboxRuntimeException extends RuntimeException {
+import org.altherian.hbox.comm.out.host.HostOut;
 
-   public HyperboxRuntimeException(String s) {
-      super(s);
-   }
+public interface _HostReceiver extends _WorkerDataReceiver {
 
-   public HyperboxRuntimeException(Throwable t) {
-      super(t);
-   }
-
-   public HyperboxRuntimeException(String s, Throwable t) {
-      super(s, t);
-   }
+   public void put(HostOut hostOut);
 
 }

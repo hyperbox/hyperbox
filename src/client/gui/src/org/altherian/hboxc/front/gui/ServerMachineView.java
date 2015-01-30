@@ -74,7 +74,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -362,17 +361,11 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
 
    @Override
    public void refresh() {
-      Logger.track();
-
-      Logger.debug("Is EDT? " + SwingUtilities.isEventDispatchThread());
       List<ConnectorOutput> conOutList = Gui.getReader().listConnectors();
       refresh(conOutList);
    }
 
    private void refresh(ConnectorOutput conOut) {
-      Logger.track();
-
-      Logger.debug("Is EDT? " + SwingUtilities.isEventDispatchThread());
       DefaultMutableTreeNode conNode = conNodes.get(conOut.getId());
       conNode.removeAllChildren();
       treeModel.reload(conNode);

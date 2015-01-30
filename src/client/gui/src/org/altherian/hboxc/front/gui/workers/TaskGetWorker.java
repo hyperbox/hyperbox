@@ -24,6 +24,7 @@ import org.altherian.hbox.comm.in.TaskIn;
 import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
+import org.altherian.hboxc.front.gui.worker.receiver._TaskReceiver;
 import java.util.concurrent.ExecutionException;
 
 public class TaskGetWorker extends AxSwingWorker<_TaskReceiver, TaskOut, Void> {

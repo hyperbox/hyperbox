@@ -27,10 +27,10 @@ import org.altherian.hbox.comm.out.event.hypervisor.HypervisorDisconnectedEventO
 import org.altherian.hbox.comm.out.host.HostOut;
 import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui._Refreshable;
+import org.altherian.hboxc.front.gui.utils.RefreshUtil;
+import org.altherian.hboxc.front.gui.worker.receiver._HostReceiver;
 import org.altherian.hboxc.front.gui.workers.HostGetWorker;
-import org.altherian.hboxc.front.gui.workers._HostReceiver;
 import org.altherian.helper.swing.JTextFieldUtils;
-import org.altherian.tool.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -52,7 +52,7 @@ public class HostViewer implements _Refreshable, _HostReceiver {
    private JLabel memTotalLabel;
    private JTextField memTotalValue;
 
-   private JLabel error;
+   private JLabel status;
    private JPanel dataPanel;
    private JPanel panel;
 
@@ -81,24 +81,25 @@ public class HostViewer implements _Refreshable, _HostReceiver {
       dataPanel.add(memTotalLabel);
       dataPanel.add(memTotalValue, "growx,pushx,wrap");
 
-      error = new JLabel();
-      error.setVisible(false);
+      status = new JLabel();
+      status.setVisible(false);
 
       panel = new JPanel(new MigLayout());
-      panel.add(error, "growx, pushx, wrap, hidemode 3");
-      panel.add(dataPanel, "grow, push, wrap,hidemode 3");
+      panel.add(status, "growx, pushx, wrap, hidemode 3");
+      panel.add(dataPanel, "grow, push, wrap, hidemode 3");
 
+      RefreshUtil.set(panel, this);
       ViewEventManager.register(this);
    }
 
    public void show(String srvId) {
       this.srvId = srvId;
-      HostGetWorker.execute(this, srvId);
+      refresh();
    }
 
    @Override
    public void refresh() {
-      show(srvId);
+      HostGetWorker.execute(this, srvId);
    }
 
    private void clear() {
@@ -118,13 +119,15 @@ public class HostViewer implements _Refreshable, _HostReceiver {
    @Override
    public void loadingStarted() {
       clear();
+      dataPanel.setEnabled(false);
+      dataPanel.setVisible(false);
+      status.setText("Loading...");
    }
 
    @Override
    public void loadingFinished(boolean isSuccessful, String message) {
-      dataPanel.setVisible(isSuccessful);
-      error.setVisible(!isSuccessful);
-      error.setText(message);
+      setDataVisible(isSuccessful);
+      status.setText(message);
    }
 
    @Override
@@ -141,21 +144,24 @@ public class HostViewer implements _Refreshable, _HostReceiver {
    }
 
    @Handler
-   public void putHypervisorConnected(final HypervisorConnectedEventOut ev) {
-      Logger.track();
-
+   public void putHypervisorConnected(HypervisorConnectedEventOut ev) {
       if (srvId.contentEquals(ev.getServerId())) {
          refresh();
       }
    }
 
    @Handler
-   public void putHypervisorDisconnected(final HypervisorDisconnectedEventOut ev) {
-      Logger.track();
-
+   public void putHypervisorDisconnected(HypervisorDisconnectedEventOut ev) {
       if (srvId.contentEquals(ev.getServerId())) {
          refresh();
       }
+   }
+
+   private void setDataVisible(boolean isVisible) {
+      status.setVisible(!isVisible);
+      status.setEnabled(!isVisible);
+      dataPanel.setVisible(isVisible);
+      dataPanel.setEnabled(isVisible);
    }
 
 }

@@ -1,6 +1,6 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
- * Copyright (C) 2013 Maxime Dor
+ * Copyright (C) 2015 Maxime Dor
  *
  * http://hyperbox.altherian.org
  *
@@ -11,27 +11,33 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 
 package org.altherian.hbox.exception;
 
-@SuppressWarnings("serial")
-public class HyperboxRuntimeException extends RuntimeException {
 
-   public HyperboxRuntimeException(String s) {
+@SuppressWarnings("serial")
+public class HypervisorNotConnectedException extends HypervisorException {
+   
+   public HypervisorNotConnectedException() {
+      super("Hypervisor is not connected");
+   }
+   
+   public HypervisorNotConnectedException(String s) {
       super(s);
    }
 
-   public HyperboxRuntimeException(Throwable t) {
+   public HypervisorNotConnectedException(Throwable t) {
       super(t);
    }
-
-   public HyperboxRuntimeException(String s, Throwable t) {
+   
+   public HypervisorNotConnectedException(String s, Throwable t) {
       super(s, t);
    }
 

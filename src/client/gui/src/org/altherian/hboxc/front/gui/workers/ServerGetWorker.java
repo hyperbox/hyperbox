@@ -23,6 +23,7 @@ package org.altherian.hboxc.front.gui.workers;
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.utils.AxSwingWorker;
+import org.altherian.hboxc.front.gui.worker.receiver._ServerReceiver;
 import java.util.concurrent.ExecutionException;
 
 public class ServerGetWorker extends AxSwingWorker<_ServerReceiver, ServerOut, Void> {
