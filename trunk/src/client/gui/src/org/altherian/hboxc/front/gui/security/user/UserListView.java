@@ -28,7 +28,7 @@ import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.event.security.UserEventOut;
 import org.altherian.hbox.comm.out.security.UserOut;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
-import org.altherian.hboxc.front.gui.FrontEventManager;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.security.UserCreateAction;
@@ -100,7 +100,7 @@ public class UserListView implements _UserSelector, _Refreshable, _SingleServerS
       actions.add(new JMenuItem(new UserModifyAction(this)));
       actions.add(new JMenuItem(new UserRemoveAction(this)));
       
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
       RefreshUtil.set(panel, this);
    }
    

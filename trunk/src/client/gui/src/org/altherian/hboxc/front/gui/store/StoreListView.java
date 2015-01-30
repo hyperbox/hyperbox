@@ -26,7 +26,7 @@ import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.StoreOut;
 import org.altherian.hbox.comm.out.event.store.StoreEventOut;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
-import org.altherian.hboxc.front.gui.FrontEventManager;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.store.StoreCreateAction;
@@ -94,7 +94,7 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
       panel.add(buttonPanel, "hidemode 3, growx, pushx, wrap");
       panel.add(scrollPane, "hidemode 3, grow, push, wrap");
       
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
    }
    
    public JComponent getComponent() {

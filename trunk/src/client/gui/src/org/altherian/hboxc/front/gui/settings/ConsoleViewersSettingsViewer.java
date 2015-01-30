@@ -25,7 +25,7 @@ import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
 import org.altherian.hboxc.comm.output.ConsoleViewerOutput;
 import org.altherian.hboxc.event.consoleviewer.ConsoleViewerEvent;
-import org.altherian.hboxc.front.gui.FrontEventManager;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.action.ConsoleViewerCreateAction;
 import org.altherian.hboxc.front.gui.action.ConsoleViewerRemoveAction;
@@ -58,7 +58,7 @@ public class ConsoleViewersSettingsViewer implements _ConsoleViewerSelector {
    public ConsoleViewersSettingsViewer() {
       Logger.track();
       
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
       
       consViewerTableModel = new ConsoleViewerTableModel();
       consViewerTable = new JTable(consViewerTableModel);

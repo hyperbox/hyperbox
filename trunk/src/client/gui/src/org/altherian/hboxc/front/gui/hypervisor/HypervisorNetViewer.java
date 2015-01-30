@@ -25,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.out.network.NetModeOut;
 import org.altherian.hboxc.event.connector.ConnectorStateChangedEvent;
 import org.altherian.hboxc.event.server.ServerConnectionStateEvent;
-import org.altherian.hboxc.front.gui.FrontEventManager;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.utils.RefreshUtil;
@@ -49,7 +49,7 @@ public class HypervisorNetViewer implements _Refreshable {
       panel = new JPanel(new MigLayout("ins 0"));
       RefreshUtil.set(panel, this);
       refresh();
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
    }
    
    public JComponent getComponent() {

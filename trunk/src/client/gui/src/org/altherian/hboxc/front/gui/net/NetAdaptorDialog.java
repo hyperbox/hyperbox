@@ -125,7 +125,6 @@ public class NetAdaptorDialog implements _Saveable, _Cancelable {
             Logger.info("No user data for Service of type " + svcEditor.getServiceId());
          }
       }
-      Logger.track();
       hide();
    }
    

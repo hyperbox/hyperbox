@@ -30,7 +30,7 @@ import org.altherian.hboxc.event.machine.MachineStateChangedEvent;
 import org.altherian.hboxc.event.snapshot.SnapshotDeletedEvent;
 import org.altherian.hboxc.event.snapshot.SnapshotModifiedEvent;
 import org.altherian.hboxc.event.snapshot.SnapshotTakenEvent;
-import org.altherian.hboxc.front.gui.FrontEventManager;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.snapshot.SnapshotDeleteAction;
@@ -127,7 +127,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
       mainPanel.add(buttonPanel, "hidemode 3, growx, pushx, wrap");
       mainPanel.add(treeView, "hidemode 3, grow, push, wrap");
       
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
    }
    
    private boolean isSame(MachineOut mOut) {

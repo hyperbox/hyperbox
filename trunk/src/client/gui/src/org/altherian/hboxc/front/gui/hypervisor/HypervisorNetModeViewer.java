@@ -25,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.out.event.net.NetAdaptorEventOut;
 import org.altherian.hbox.comm.out.network.NetAdaptorOut;
 import org.altherian.hbox.comm.out.network.NetModeOut;
-import org.altherian.hboxc.front.gui.FrontEventManager;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.network.NetAdaptorAddAction;
@@ -49,7 +49,7 @@ public class HypervisorNetModeViewer implements _Refreshable {
    public HypervisorNetModeViewer(String srvId, NetModeOut mode) {
       this.srvId = srvId;
       this.mode = mode;
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
       refresh();
    }
    

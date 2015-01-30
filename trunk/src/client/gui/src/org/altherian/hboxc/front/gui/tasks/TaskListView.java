@@ -29,7 +29,7 @@ import org.altherian.hboxc.event.connector.ConnectorStateChangedEvent;
 import org.altherian.hboxc.event.task.TaskAddedEvent;
 import org.altherian.hboxc.event.task.TaskRemovedEvent;
 import org.altherian.hboxc.event.task.TaskStateChangedEvent;
-import org.altherian.hboxc.front.gui.FrontEventManager;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.task.TaskCancelAction;
@@ -77,7 +77,7 @@ public class TaskListView implements _TaskSelector, _Refreshable {
       actions = new JPopupMenu();
       actions.add(new JMenuItem(new TaskCancelAction(this)));
       
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
    }
    
    public JComponent getComponent() {

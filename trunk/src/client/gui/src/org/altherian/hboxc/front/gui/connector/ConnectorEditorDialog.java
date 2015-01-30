@@ -23,7 +23,6 @@ package org.altherian.hboxc.front.gui.connector;
 import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.in.UserIn;
-import org.altherian.hboxc.PreferencesManager;
 import org.altherian.hboxc.comm.input.ConnectorInput;
 import org.altherian.hboxc.comm.output.BackendOutput;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
@@ -65,26 +64,6 @@ public final class ConnectorEditorDialog implements _Saveable, _Cancelable {
    
    private String conId = "-1";
    private ClientTasks task;
-   
-   public void saveLoginInfo() {
-      Logger.track();
-      
-      PreferencesManager.get("defaultgui").setProperty("host", hostnameField.getText());
-      PreferencesManager.get("defaultgui").setProperty("username", userField.getText());
-   }
-   
-   public void loadLoginInfo() {
-      Logger.track();
-      
-      if (PreferencesManager.get("defaultgui").getProperty("host") != null) {
-         hostnameField.setText(PreferencesManager.get("defaultgui").getProperty("host"));
-         userField.requestFocus();
-         if (PreferencesManager.get("defaultgui").getProperty("username") != null) {
-            userField.setText(PreferencesManager.get("defaultgui").getProperty("username"));
-            passField.requestFocus();
-         }
-      }
-   }
    
    private ConnectorEditorDialog() {
       Logger.track();

@@ -25,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.out.ModuleOut;
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.event.module.ModuleEvent;
-import org.altherian.hboxc.front.gui.FrontEventManager;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.module.ModuleRefreshAction;
 import org.altherian.hboxc.front.gui.action.module.ModuleRegisterAction;
@@ -90,7 +90,7 @@ public class ModuleListView implements _ModuleSelector, _Refreshable, _ModuleLis
       panel.add(buttonPanel, "hidemode 3, growx, pushx, wrap");
       panel.add(scrollPane, "hidemode 3, grow, push, wrap");
       
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
    }
    
    public void show(ServerOut srvOut) {

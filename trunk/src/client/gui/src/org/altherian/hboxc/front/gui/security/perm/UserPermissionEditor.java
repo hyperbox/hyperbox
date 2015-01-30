@@ -30,7 +30,7 @@ import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.security.PermissionOut;
 import org.altherian.hbox.comm.out.security.UserOut;
-import org.altherian.hboxc.front.gui.FrontEventManager;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.tool.logging.Logger;
@@ -125,7 +125,7 @@ public class UserPermissionEditor implements _Refreshable {
       panel.add(scrollPane, "grow, push, wrap");
       panel.add(buttonPanel, "growx, pushx, wrap");
       
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
    }
    
    public void show(String serverId, UserOut usrOut) {

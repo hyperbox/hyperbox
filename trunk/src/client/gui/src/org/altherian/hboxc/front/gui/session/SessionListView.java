@@ -23,7 +23,7 @@ package org.altherian.hboxc.front.gui.session;
 import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.exception.HyperboxException;
-import org.altherian.hboxc.front.gui.FrontEventManager;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.tool.logging.Logger;
 import javax.swing.JComponent;
@@ -50,7 +50,7 @@ public final class SessionListView {
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(scrollPane, "grow,push");
       
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
    }
    
    public JComponent getComponent() {
