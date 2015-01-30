@@ -2,19 +2,19 @@
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
  * hyperbox at altherian dot org
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,7 +28,7 @@ import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hboxc.event.task.TaskAddedEvent;
 import org.altherian.hboxc.event.task.TaskRemovedEvent;
 import org.altherian.hboxc.event.task.TaskStateChangedEvent;
-import org.altherian.hboxc.front.gui.FrontEventManager;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.task.TaskCancelAction;
 import org.altherian.hboxc.front.gui.workers.TaskListWorker;
@@ -51,7 +51,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
-import javax.swing.SwingUtilities;
 
 public class ServerTaskListView implements _TaskSelector, _Refreshable {
    
@@ -65,7 +64,6 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
    private JScrollPane pane;
    
    private JPopupMenu actions;
-   private volatile boolean isLoading;
    
    public ServerTaskListView() {
       Logger.track();
@@ -93,7 +91,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       actions = new JPopupMenu();
       actions.add(new JMenuItem(new TaskCancelAction(this)));
       
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
    }
    
    public JComponent getComponent() {
@@ -149,15 +147,10 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
    
    @Override
    public void refresh() {
-      if (!isLoading) {
-         isLoading = true;
-         TaskListWorker.execute(new TaskListReceiver(), srvOut);
-      }
+      TaskListWorker.execute(new TaskListReceiver(), srvOut);
    }
    
    public void show(ServerOut srvOut) {
-      Logger.track();
-      
       if (srvOut == null) {
          itemListModel.clear();
       } else {
@@ -170,38 +163,15 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       
       @Override
       public void loadingStarted() {
-         Logger.track();
-         
-         if (!SwingUtilities.isEventDispatchThread()) {
-            SwingUtilities.invokeLater(new Runnable() {
-               
-               @Override
-               public void run() {
-                  loadingStarted();
-               }
-            });
-         } else {
-            loadingLabel.setVisible(true);
-            panel.setEnabled(false);
-            panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            itemListModel.clear();
-         }
+         loadingLabel.setVisible(true);
+         panel.setEnabled(false);
+         panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+         itemListModel.clear();
       }
       
       private void finish() {
-         if (!SwingUtilities.isEventDispatchThread()) {
-            SwingUtilities.invokeLater(new Runnable() {
-               
-               @Override
-               public void run() {
-                  finish();
-               }
-            });
-         } else {
-            isLoading = false;
-            panel.setEnabled(false);
-            panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-         }
+         panel.setEnabled(false);
+         panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
       }
       
       @Override
@@ -240,53 +210,21 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
    
    @Handler
    private void putTaskStateEvent(TaskStateChangedEvent ev) {
-      Logger.track();
-      
       if (ev.getServer().getId().equals(srvOut.getId())) {
          update(ev.getTask());
       }
    }
    
-   private void add(final TaskOut tOut) {
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            
-            @Override
-            public void run() {
-               add(tOut);
-            }
-         });
-      } else {
-         itemListModel.add(tOut);
-      }
+   private void add(TaskOut tOut) {
+      itemListModel.add(tOut);
    }
    
-   private void update(final TaskOut tOut) {
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            
-            @Override
-            public void run() {
-               update(tOut);
-            }
-         });
-      } else {
-         itemListModel.update(tOut);
-      }
+   private void update(TaskOut tOut) {
+      itemListModel.update(tOut);
    }
    
-   private void remove(final TaskOut tOut) {
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            
-            @Override
-            public void run() {
-               remove(tOut);
-            }
-         });
-      } else {
-         itemListModel.remove(tOut);
-      }
+   private void remove(TaskOut tOut) {
+      itemListModel.remove(tOut);
    }
    
 }

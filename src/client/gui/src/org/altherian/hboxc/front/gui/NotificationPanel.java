@@ -37,7 +37,7 @@ public class NotificationPanel extends JPanel {
    
    public NotificationPanel() {
       super(new MigLayout("ins 0"));
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
       setVisible(false);
    }
    

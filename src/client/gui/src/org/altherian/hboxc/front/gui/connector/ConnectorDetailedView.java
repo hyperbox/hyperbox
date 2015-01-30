@@ -2,19 +2,19 @@
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
  * hyperbox at altherian dot org
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,8 +26,8 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.hboxc.event.connector.ConnectorStateChangedEvent;
-import org.altherian.hboxc.front.gui.FrontEventManager;
 import org.altherian.hboxc.front.gui.Gui;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.host.HostViewer;
@@ -45,19 +45,19 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingWorker;
 
 public class ConnectorDetailedView implements _Refreshable {
-   
+
    private ConnectorOutput conOut;
    private JTabbedPane tabs;
    private JLabel loadingLabel;
    private JPanel panel;
-   
+
    private ConnectorSummaryViewer summaryView;
    private HostViewer hostView;
    private ServerTaskListView taskView;
    private StoreListView storeView;
    private UserListView userView;
    private ModuleListView modView;
-   
+
    public ConnectorDetailedView(ConnectorOutput conOut) {
       this.conOut = conOut;
       summaryView = new ConnectorSummaryViewer();
@@ -66,7 +66,7 @@ public class ConnectorDetailedView implements _Refreshable {
       storeView = new StoreListView();
       userView = new UserListView();
       modView = new ModuleListView();
-      
+
       tabs = new JTabbedPane();
       tabs.addTab("Summary", IconBuilder.getEntityType(EntityType.Server), summaryView.getComponent());
       tabs.addTab("Host", IconBuilder.getEntityType(EntityType.Server), hostView.getComponent());
@@ -75,27 +75,25 @@ public class ConnectorDetailedView implements _Refreshable {
       tabs.addTab("Stores", IconBuilder.getEntityType(EntityType.Store), storeView.getComponent());
       tabs.addTab("Users", IconBuilder.getEntityType(EntityType.User), userView.getComponent());
       tabs.addTab("Modules", IconBuilder.getEntityType(EntityType.Module), modView.getComponent());
-      
+
       loadingLabel = new JLabel("Loading...");
       loadingLabel.setVisible(false);
-      
+
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(loadingLabel, "growx,pushx,wrap,hidemode 3");
       panel.add(tabs, "grow,push,wrap");
-      
-      FrontEventManager.register(this);
-      
+
+      ViewEventManager.register(this);
+
       update();
    }
-   
+
    private void update(ConnectorOutput conOut) {
       this.conOut = conOut;
       update();
    }
-   
+
    private void update() {
-      Logger.track();
-      
       summaryView.show(conOut);
       tabs.setEnabledAt(tabs.indexOfComponent(hostView.getComponent()), conOut.isConnected());
       tabs.setEnabledAt(tabs.indexOfTab("Network"), conOut.isConnected());
@@ -114,18 +112,18 @@ public class ConnectorDetailedView implements _Refreshable {
          tabs.setSelectedComponent(summaryView.getComponent());
       }
    }
-   
+
    @Override
    public void refresh() {
       Logger.track();
-      
+
       new SwingWorker<ConnectorOutput, Void>() {
-         
+
          @Override
          protected ConnectorOutput doInBackground() throws Exception {
             return Gui.getReader().getConnector(conOut.getId());
          }
-         
+
          @Override
          protected void done() {
             try {
@@ -136,17 +134,19 @@ public class ConnectorDetailedView implements _Refreshable {
                Gui.showError(e);
             }
          }
-         
+
       }.execute();
    }
-   
+
    public JComponent getComponent() {
       return panel;
    }
-   
+
    @Handler
    private void putConnectorStateEvent(ConnectorStateChangedEvent ev) {
-      refresh();
+      if (conOut.getId().equals(ev.getConnector().getId())) {
+         refresh();
+      }
    }
-   
+
 }

@@ -27,7 +27,7 @@ import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.hboxc.event.connector.ConnectorEvent;
 import org.altherian.hboxc.event.connector.ConnectorRemovedEvent;
 import org.altherian.hboxc.exception.ConnectorNotFoundException;
-import org.altherian.hboxc.front.gui.FrontEventManager;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.server.ServerViewer;
@@ -88,7 +88,7 @@ public class ConnectorSummaryViewer implements _Refreshable {
       panel.add(srvView.getComponent(), "growx, pushx, wrap");
       srvView.getComponent().setVisible(true);
       
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
    }
    
    @Override

@@ -23,11 +23,11 @@ package org.altherian.hboxc.front.gui;
 import org.altherian.hboxc.event._EventManager;
 import org.altherian.tool.logging.Logger;
 
-public final class FrontEventManager {
+public final class ViewEventManager {
    
    private static _EventManager evMgr;
    
-   private FrontEventManager() {
+   private ViewEventManager() {
       // not to be used
    }
    

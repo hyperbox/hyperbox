@@ -36,7 +36,7 @@ import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.hboxc.controller.ClientTasks;
 import org.altherian.hboxc.event.machine.MachineStateChangedEvent;
-import org.altherian.hboxc.front.gui.FrontEventManager;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.action.storage.StorageDeviceAttachmentMediumEditAction;
 import org.altherian.hboxc.front.gui.net.NetworkInterfaceSummary;
@@ -134,7 +134,7 @@ public final class VmSummaryView {
       panel.add(networkPanel, "growx, pushx, wrap");
       panel.add(descPanel, "growx, pushx, wrap");
       
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
    }
    
    private void initGeneral() {

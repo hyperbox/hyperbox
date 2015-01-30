@@ -25,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxc.event.machine.MachineDataChangedEvent;
 import org.altherian.hboxc.event.machine.MachineRemovedEvent;
-import org.altherian.hboxc.front.gui.FrontEventManager;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.snapshot.SnapshotManagementView;
 import org.altherian.hboxc.front.gui.workers.MachineGetWorker;
@@ -67,7 +67,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
       panel.add(errorLabel, "growx, pushx, wrap, hidemode 3");
       panel.add(tabs, "grow, push, wrap, hidemode 3");
       
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
       
       refresh();
    }

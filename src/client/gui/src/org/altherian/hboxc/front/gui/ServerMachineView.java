@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -74,6 +74,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -83,30 +84,30 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 public final class ServerMachineView implements _MachineSelector, _ServerSelector, _ConnectorSelector, _Refreshable {
-   
+
    private static final JPanel EmptyPanel = new JPanel();
-   
-   private DefaultMutableTreeNode topNode;
-   private DefaultTreeModel treeModel;
-   private JTree tree;
-   private JScrollPane treeView;
-   
+
+   private Map<String, DefaultMutableTreeNode> conNodes = new HashMap<String, DefaultMutableTreeNode>();
    private Map<String, Map<String, DefaultMutableTreeNode>> entities;
-   
+   private Map<String, DefaultMutableTreeNode> srvNodes = new HashMap<String, DefaultMutableTreeNode>();
+   private DefaultMutableTreeNode topNode;
+
+   private JTree tree;
+
+   private DefaultTreeModel treeModel;
+   private JScrollPane treeView;
    private Map<String, SnapshotOut> vmCurrentSnaps = new HashMap<String, SnapshotOut>();
    private Map<String, Map<String, DefaultMutableTreeNode>> vmNodes = new HashMap<String, Map<String, DefaultMutableTreeNode>>();
-   private Map<String, DefaultMutableTreeNode> srvNodes = new HashMap<String, DefaultMutableTreeNode>();
-   private Map<String, DefaultMutableTreeNode> conNodes = new HashMap<String, DefaultMutableTreeNode>();
-   
+
    private JSplitPane vSplit;
-   
+
    public ServerMachineView() {
       Logger.track();
-      
+
       entities = new HashMap<String, Map<String, DefaultMutableTreeNode>>();
       initEntities();
       vmCurrentSnaps = new HashMap<String, SnapshotOut>();
-      
+
       topNode = new DefaultMutableTreeNode("Hyperbox");
       treeModel = new DefaultTreeModel(topNode);
       tree = new JTree(treeModel);
@@ -117,62 +118,261 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
       tree.setShowsRootHandles(true);
       treeView = new JScrollPane(tree);
       treeView.setBorder(BorderFactory.createEmptyBorder());
-      
+
       vSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, EmptyPanel);
       vSplit.setResizeWeight(0);
-      vSplit.setDividerLocation(Integer.parseInt(PreferencesManager.get(ServerMachineView.class.getName()).getProperty(
-            JSplitPane.DIVIDER_LOCATION_PROPERTY, "168")));
+      vSplit.setDividerLocation(Integer.parseInt(PreferencesManager.get().getProperty(JSplitPane.DIVIDER_LOCATION_PROPERTY, "168")));
       vSplit.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY, new PropertyChangeListener() {
-         
+
          @Override
          public void propertyChange(PropertyChangeEvent evt) {
-            PreferencesManager.get(this.getClass().getName()).setProperty(JSplitPane.DIVIDER_LOCATION_PROPERTY, evt.getNewValue().toString());
+            PreferencesManager.get().setProperty(JSplitPane.DIVIDER_LOCATION_PROPERTY, evt.getNewValue().toString());
          }
       });
-      
+
       RefreshUtil.set(vSplit, this);
-      FrontEventManager.register(this);
+      ViewEventManager.register(this);
    }
-   
+
+   private void addConnector(ConnectorOutput conOut) {
+      Logger.track();
+
+      DefaultMutableTreeNode conNode = new DefaultMutableTreeNode(conOut);
+      treeModel.insertNodeInto(conNode, topNode, topNode.getChildCount());
+      tree.scrollPathToVisible(new TreePath(conNode.getPath()));
+      conNodes.put(conOut.getId(), conNode);
+      refresh(conOut);
+   }
+
+   private void addMachine(final String serverId, final MachineOut mOut) {
+      Logger.track();
+
+      if (!vmNodes.get(serverId).containsKey(mOut.getId())) {
+         DefaultMutableTreeNode srvNode = srvNodes.get(serverId);
+         DefaultMutableTreeNode node = new DefaultMutableTreeNode(mOut);
+         treeModel.insertNodeInto(node, srvNode, srvNode.getChildCount());
+         tree.scrollPathToVisible(new TreePath(node.getPath()));
+         vmNodes.get(serverId).put(mOut.getId(), node);
+         if (mOut.isAvailable() && mOut.hasSnapshots()) {
+            SnapshotOut snapOut = Gui.getServer(serverId).getSnapshot(new MachineIn(mOut), new SnapshotIn(mOut.getCurrentSnapshot()));
+            vmCurrentSnaps.put(mOut.getId(), snapOut);
+         }
+         treeModel.reload(node);
+      }
+   }
+
+   private void clear() {
+      entities.clear();
+      topNode.removeAllChildren();
+      treeModel.reload();
+   }
+
+   public JComponent getComponent() {
+      return vSplit;
+   }
+
+   @Override
+   public ConnectorOutput getConnector() {
+      try {
+         ConnectorOutput conOut = ((ConnectorOutput) ((DefaultMutableTreeNode) tree.getSelectionPath().getLastPathComponent()).getUserObject());
+         Logger.debug("Connector ID " + conOut.getId() + " under label " + conOut.getLabel() + " is selected");
+         return conOut;
+      } catch (Throwable e) {
+         Logger.debug("No connector is selected");
+         return null;
+      }
+   }
+
+   @Override
+   public List<MachineOut> getMachines() {
+      Logger.track();
+
+      List<MachineOut> selectedVms = new ArrayList<MachineOut>();
+      for (TreePath path : tree.getSelectionPaths()) {
+         DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
+         if (node.getUserObject() instanceof MachineOut) {
+            selectedVms.add((MachineOut) node.getUserObject());
+         }
+      }
+      return selectedVms;
+   }
+
+   @Override
+   public ServerOut getServer() {
+      try {
+         Object o = ((DefaultMutableTreeNode) tree.getSelectionPath().getLastPathComponent()).getUserObject();
+         if (o instanceof ConnectorOutput) {
+            return ((ConnectorOutput) o).getServer();
+         } else if (o instanceof ServerOut) {
+            return (ServerOut) o;
+         } else {
+            return null;
+         }
+      } catch (Throwable e) {
+         Logger.debug("No connector is selected");
+         return null;
+      }
+   }
+
+   @Override
+   public List<ServerOut> getServers() {
+      List<ServerOut> selectedSrv = new ArrayList<ServerOut>();
+      for (TreePath path : tree.getSelectionPaths()) {
+         DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
+         if (node.getUserObject() instanceof ServerOut) {
+            selectedSrv.add((ServerOut) node.getUserObject());
+         }
+         if (node.getUserObject() instanceof ConnectorOutput) {
+            selectedSrv.add(((ConnectorOutput) node.getUserObject()).getServer());
+         }
+      }
+      return selectedSrv;
+   }
+
    private void initEntities() {
       entities.put(EntityType.Server.getId(), new HashMap<String, DefaultMutableTreeNode>());
       entities.put(EntityType.Machine.getId(), new HashMap<String, DefaultMutableTreeNode>());
       entities.put(EntityType.Snapshot.getId(), new HashMap<String, DefaultMutableTreeNode>());
       entities.put(EntityType.Store.getId(), new HashMap<String, DefaultMutableTreeNode>());
    }
-   
-   public JComponent getComponent() {
-      return vSplit;
+
+   @Override
+   public List<ConnectorOutput> listConnectors() {
+      List<ConnectorOutput> conOutList = new ArrayList<ConnectorOutput>();
+      try {
+         for (TreePath path : tree.getSelectionPaths()) {
+            ConnectorOutput conOut = ((ConnectorOutput) ((DefaultMutableTreeNode) path.getLastPathComponent()).getUserObject());
+            Logger.debug("Connector ID " + conOut.getId() + " under label " + conOut.getLabel() + " is selected");
+            conOutList.add(conOut);
+         }
+         return conOutList;
+      } catch (Throwable e) {
+         Logger.debug("Not everything selected is a connector, returning empty list");
+         conOutList.clear();
+         return conOutList;
+      }
    }
-   
-   private void clear() {
+
+   @Handler
+   private void putConnectorAdded(ConnectorAddedEvent ev) {
       Logger.track();
-      
-      entities.clear();
-      topNode.removeAllChildren();
-      treeModel.reload();
+
+      addConnector(ev.getConnector());
    }
-   
+
+   @Handler
+   private void putConnectorConnected(ConnectorConnectedEvent ev) {
+      Logger.track();
+
+      updateConnector(ev.getConnector());
+      refresh(ev.getConnector());
+   }
+
+   @Handler
+   private void putConnectorDisconnected(ConnectorDisconnectedEvent ev) {
+      Logger.track();
+
+      updateConnector(ev.getConnector());
+      refresh(ev.getConnector());
+   }
+
+   @Handler
+   private void putConnectorModified(ConnectorModifiedEvent ev) {
+      Logger.track();
+
+      updateConnector(ev.getConnector());
+   }
+
+   @Handler
+   private void putConnectorRemoved(ConnectorRemovedEvent ev) {
+      Logger.track();
+
+      removeConnector(ev.getConnector());
+   }
+
+   @Handler
+   private void putConnectorStateChanged(ConnectorStateChangedEvent ev) {
+      Logger.track();
+
+      updateConnector(ev.getConnector());
+   }
+
+   @Handler
+   public void putHypervisorConnected(HypervisorConnectedEventOut ev) {
+      Logger.track();
+
+      updateServer(ev.getServer());
+      refresh(ev.getServer());
+   }
+
+   @Handler
+   private void putHypervisorDisconnected(HypervisorDisconnectedEventOut ev) {
+      Logger.track();
+
+      updateServer(ev.getServer());
+      refresh(ev.getServer());
+   }
+
+   @Handler
+   private void putMachineAdd(MachineAddedEvent ev) {
+      Logger.track();
+
+      addMachine(ev.getServerId(), ev.getMachine());
+   }
+
+   @Handler
+   private void putMachineRegistration(MachineRegistrationEventOut ev) {
+      Logger.track();
+
+      if (ev.isRegistered()) {
+         addMachine(ev.getServerId(), ev.getMachine());
+      } else {
+         removeMachine(ev.getServerId(), ev.getMachine().getId());
+      }
+   }
+
+   @Handler
+   private void putMachineRemove(MachineRemovedEvent ev) {
+      Logger.track();
+
+      removeMachine(ev.getServerId(), ev.getMachine().getUuid());
+   }
+
+   @Handler
+   private void putMachineUpdate(MachineStateChangedEvent ev) {
+      Logger.track();
+
+      updateMachine(ev.getServerId(), ev.getMachine());
+   }
+
+   @Handler
+   private void putMachineUpdate(MachineUpdatedEvent ev) {
+      Logger.track();
+
+      updateMachine(ev.getServerId(), ev.getMachine());
+   }
+
+   @Handler
+   private void putServerConnectionStateChange(ServerConnectionStateEventOut ev) {
+      Logger.track();
+
+      updateServer(ev.getServer());
+      refresh(ev.getServer());
+   }
+
    @Override
    public void refresh() {
       Logger.track();
-      
+
+      Logger.debug("Is EDT? " + SwingUtilities.isEventDispatchThread());
       List<ConnectorOutput> conOutList = Gui.getReader().listConnectors();
       refresh(conOutList);
    }
-   
-   private void refresh(List<ConnectorOutput> conOutList) {
-      Logger.track();
-      
-      clear();
-      for (ConnectorOutput conOut : conOutList) {
-         addConnector(conOut);
-      }
-   }
-   
+
    private void refresh(ConnectorOutput conOut) {
       Logger.track();
-      
+
+      Logger.debug("Is EDT? " + SwingUtilities.isEventDispatchThread());
       DefaultMutableTreeNode conNode = conNodes.get(conOut.getId());
       conNode.removeAllChildren();
       treeModel.reload(conNode);
@@ -182,10 +382,19 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
          refresh(conOut.getServer());
       }
    }
-   
+
+   private void refresh(List<ConnectorOutput> conOutList) {
+      Logger.track();
+
+      clear();
+      for (ConnectorOutput conOut : conOutList) {
+         addConnector(conOut);
+      }
+   }
+
    private void refresh(ServerOut srvOut) {
       Logger.track();
-      
+
       DefaultMutableTreeNode srvNode = srvNodes.get(srvOut.getId());
       srvNode.removeAllChildren();
       vmNodes.get(srvOut.getId()).clear();
@@ -202,59 +411,36 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
          Logger.debug(srvOut.getName() + " is not connected, skipping VM listing");
       }
    }
-   
-   private void addConnector(ConnectorOutput conOut) {
+
+   private void removeConnector(final ConnectorOutput conOut) {
       Logger.track();
-      
-      DefaultMutableTreeNode conNode = new DefaultMutableTreeNode(conOut);
-      treeModel.insertNodeInto(conNode, topNode, topNode.getChildCount());
-      tree.scrollPathToVisible(new TreePath(conNode.getPath()));
-      conNodes.put(conOut.getId(), conNode);
-      refresh(conOut);
+
+      topNode.remove(conNodes.remove(conOut.getId()));
+      treeModel.reload(topNode);
    }
-   
+
+   private void removeMachine(final String serverId, final String id) {
+      Logger.track();
+
+      if (vmNodes.get(serverId).containsKey(id)) {
+         vmCurrentSnaps.remove(id);
+         treeModel.removeNodeFromParent(vmNodes.get(serverId).remove(id));
+      } else {
+         Logger.warning("Trying to remove machine not in the view: " + serverId + " - " + id);
+      }
+   }
+
    private void updateConnector(final ConnectorOutput conOut) {
       Logger.track();
-      
+
       DefaultMutableTreeNode conNode = conNodes.get(conOut.getId());
       conNode.setUserObject(conOut);
       treeModel.reload(conNode);
    }
-   
-   private void updateServer(ServerOut srvOut) {
-      Logger.track();
-      
-      DefaultMutableTreeNode conNode = srvNodes.get(srvOut.getId());
-      updateConnector(Gui.getReader().getConnector(((ConnectorOutput) conNode.getUserObject()).getId()));
-   }
-   
-   private void removeConnector(final ConnectorOutput conOut) {
-      Logger.track();
-      
-      topNode.remove(conNodes.remove(conOut.getId()));
-      treeModel.reload(topNode);
-   }
-   
-   private void addMachine(final String serverId, final MachineOut mOut) {
-      Logger.track();
-      
-      if (!vmNodes.get(serverId).containsKey(mOut.getId())) {
-         DefaultMutableTreeNode srvNode = srvNodes.get(serverId);
-         DefaultMutableTreeNode node = new DefaultMutableTreeNode(mOut);
-         treeModel.insertNodeInto(node, srvNode, srvNode.getChildCount());
-         tree.scrollPathToVisible(new TreePath(node.getPath()));
-         vmNodes.get(serverId).put(mOut.getId(), node);
-         if (mOut.isAvailable() && mOut.hasSnapshots()) {
-            SnapshotOut snapOut = Gui.getServer(serverId).getSnapshot(new MachineIn(mOut), new SnapshotIn(mOut.getCurrentSnapshot()));
-            vmCurrentSnaps.put(mOut.getId(), snapOut);
-         }
-         treeModel.reload(node);
-      }
-   }
-   
+
    private void updateMachine(final String serverId, final MachineOut mOut) {
       Logger.track();
-      
+
       if (vmNodes.get(serverId).containsKey(mOut.getId())) {
          if (mOut.hasSnapshots()) {
             SnapshotOut snapOut = Gui.getServer(serverId).getSnapshot(new MachineIn(mOut), new SnapshotIn(mOut.getCurrentSnapshot()));
@@ -267,236 +453,17 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
          treeModel.reload(node);
       }
    }
-   
-   private void removeMachine(final String serverId, final String id) {
+
+   private void updateServer(ServerOut srvOut) {
       Logger.track();
-      
-      if (vmNodes.get(serverId).containsKey(id)) {
-         vmCurrentSnaps.remove(id);
-         treeModel.removeNodeFromParent(vmNodes.get(serverId).remove(id));
-      } else {
-         Logger.warning("Trying to remove machine not in the view: " + serverId + " - " + id);
-      }
+
+      DefaultMutableTreeNode conNode = srvNodes.get(srvOut.getId());
+      updateConnector(Gui.getReader().getConnector(((ConnectorOutput) conNode.getUserObject()).getId()));
    }
-   
-   @Handler
-   public void putHypervisorConnected(HypervisorConnectedEventOut ev) {
-      Logger.track();
-      
-      updateServer(ev.getServer());
-      refresh(ev.getServer());
-   }
-   
-   @Handler
-   public void putHypervisorDisconnected(HypervisorDisconnectedEventOut ev) {
-      Logger.track();
-      
-      updateServer(ev.getServer());
-      refresh(ev.getServer());
-   }
-   
-   @Handler
-   public void putServerConnectionStateChange(ServerConnectionStateEventOut ev) {
-      Logger.track();
-      
-      updateServer(ev.getServer());
-      refresh(ev.getServer());
-   }
-   
-   @Handler
-   public void putMachineUpdate(MachineUpdatedEvent ev) {
-      Logger.track();
-      
-      updateMachine(ev.getServerId(), ev.getMachine());
-   }
-   
-   @Handler
-   public void putMachineUpdate(final MachineStateChangedEvent ev) {
-      Logger.track();
-      
-      updateMachine(ev.getServerId(), ev.getMachine());
-   }
-   
-   @Handler
-   public void putMachineRegistration(final MachineRegistrationEventOut ev) {
-      Logger.track();
-      
-      if (ev.isRegistered()) {
-         addMachine(ev.getServerId(), ev.getMachine());
-      } else {
-         removeMachine(ev.getServerId(), ev.getMachine().getId());
-      }
-   }
-   
-   @Handler
-   public void putMachineAdd(final MachineAddedEvent ev) {
-      Logger.track();
-      
-      addMachine(ev.getServerId(), ev.getMachine());
-   }
-   
-   @Handler
-   public void putMachineRemove(final MachineRemovedEvent ev) {
-      Logger.track();
-      
-      removeMachine(ev.getServerId(), ev.getMachine().getUuid());
-   }
-   
-   @Handler
-   public void putConnectorAdded(final ConnectorAddedEvent ev) {
-      Logger.track();
-      
-      addConnector(ev.getConnector());
-   }
-   
-   @Handler
-   public void putConnectorModified(final ConnectorModifiedEvent ev) {
-      Logger.track();
-      
-      updateConnector(ev.getConnector());
-   }
-   
-   @Handler
-   public void putConnectorRemoved(ConnectorRemovedEvent ev) {
-      Logger.track();
-      
-      removeConnector(ev.getConnector());
-   }
-   
-   @Handler
-   public void putConnectorConnected(ConnectorConnectedEvent ev) {
-      Logger.track();
-      
-      updateConnector(ev.getConnector());
-      refresh(ev.getConnector());
-   }
-   
-   @Handler
-   public void putConnectorDisconnected(ConnectorDisconnectedEvent ev) {
-      Logger.track();
-      
-      updateConnector(ev.getConnector());
-      refresh(ev.getConnector());
-   }
-   
-   @Handler
-   public void putConnectorStateChanged(ConnectorStateChangedEvent ev) {
-      Logger.track();
-      
-      updateConnector(ev.getConnector());
-   }
-   
-   @Override
-   public List<MachineOut> getMachines() {
-      Logger.track();
-      
-      List<MachineOut> selectedVms = new ArrayList<MachineOut>();
-      for (TreePath path : tree.getSelectionPaths()) {
-         DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
-         if (node.getUserObject() instanceof MachineOut) {
-            selectedVms.add((MachineOut) node.getUserObject());
-         }
-      }
-      return selectedVms;
-   }
-   
-   @Override
-   public List<ServerOut> getServers() {
-      List<ServerOut> selectedSrv = new ArrayList<ServerOut>();
-      for (TreePath path : tree.getSelectionPaths()) {
-         DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
-         if (node.getUserObject() instanceof ServerOut) {
-            selectedSrv.add((ServerOut) node.getUserObject());
-         }
-         if (node.getUserObject() instanceof ConnectorOutput) {
-            selectedSrv.add(((ConnectorOutput) node.getUserObject()).getServer());
-         }
-      }
-      return selectedSrv;
-   }
-   
-   private class TreeMouseListener extends MouseAdapter {
-      
-      private void showPopup(MouseEvent ev) {
-         if (ev.isPopupTrigger()) {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-            if (node != null) {
-               if (node.getUserObject() instanceof MachineOut) {
-                  JPopupMenu vmPopupMenu = PopupMenuBuilder.get(ServerMachineView.this, (MachineOut) node.getUserObject());
-                  vmPopupMenu.show(ev.getComponent(), ev.getX(), ev.getY());
-               }
-               if (node.getUserObject() instanceof ConnectorOutput) {
-                  ConnectorOutput conOut = (ConnectorOutput) node.getUserObject();
-                  JPopupMenu conPopupMenu = PopupMenuBuilder.get(ServerMachineView.this, ServerMachineView.this, conOut);
-                  conPopupMenu.show(ev.getComponent(), ev.getX(), ev.getY());
-               }
-            }
-         }
-      }
-      
-      @Override
-      public void mouseReleased(MouseEvent ev) {
-         showPopup(ev);
-      }
-      
-      @Override
-      public void mousePressed(MouseEvent ev) {
-         showPopup(ev);
-      }
-      
-      @Override
-      public void mouseClicked(MouseEvent ev) {
-         if ((ev.getButton() == MouseEvent.BUTTON1) && (ev.getClickCount() == 2)) {
-            if (tree.getLastSelectedPathComponent() != null) {
-               DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-               if ((node != null) && (node.getUserObject() instanceof ConnectorOutput)) {
-                  final ConnectorOutput conOut = (ConnectorOutput) node.getUserObject();
-                  if (!conOut.isConnected()) {
-                     Logger.debug("User request: Connect to server using " + conOut);
-                     new SwingWorker<Void, Void>() {
-                        
-                        @Override
-                        protected Void doInBackground() throws Exception {
-                           Gui.post(new Request(ClientTasks.ConnectorConnect, new ConnectorInput(conOut.getId())));
-                           return null;
-                        }
-                     }.execute();
-                  }
-               }
-            }
-         } else {
-            showPopup(ev);
-         }
-      }
-   }
-   
-   private class TreeSelectListener implements TreeSelectionListener {
-      
-      @Override
-      public void valueChanged(TreeSelectionEvent ev) {
-         if (ev.getNewLeadSelectionPath() != null) {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode) ev.getNewLeadSelectionPath().getLastPathComponent();
-            
-            if (node != null) {
-               if (node.getUserObject() instanceof MachineOut) {
-                  vSplit.setRightComponent(new JScrollPane(new VmDetailedView((MachineOut) node.getUserObject()).getComponent()));
-               }
-               if (node.getUserObject() instanceof ConnectorOutput) {
-                  vSplit.setRightComponent(new JScrollPane(new ConnectorDetailedView((ConnectorOutput) node.getUserObject()).getComponent()));
-               }
-            } else {
-               vSplit.setRightComponent(EmptyPanel);
-            }
-         } else {
-            vSplit.setRightComponent(EmptyPanel);
-         }
-      }
-      
-   }
-   
+
    @SuppressWarnings("serial")
    private class TreeCellRenderer extends DefaultTreeCellRenderer {
-      
+
       @Override
       public Component getTreeCellRendererComponent(JTree rawTree, Object value, boolean isSelected, boolean isExpanded, boolean isLeaf, int row,
             boolean hasFocus) {
@@ -538,57 +505,89 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
                Logger.warning("Unknown object: " + node.getUserObject().getClass().getName());
             }
          }
-         
+
          return this;
       }
-      
+
    }
-   
-   @Override
-   public ServerOut getServer() {
-      try {
-         Object o = ((DefaultMutableTreeNode) tree.getSelectionPath().getLastPathComponent()).getUserObject();
-         if (o instanceof ConnectorOutput) {
-            return ((ConnectorOutput) o).getServer();
-         } else if (o instanceof ServerOut) {
-            return (ServerOut) o;
+
+   private class TreeMouseListener extends MouseAdapter {
+
+      @Override
+      public void mouseClicked(MouseEvent ev) {
+         if ((ev.getButton() == MouseEvent.BUTTON1) && (ev.getClickCount() == 2)) {
+            if (tree.getLastSelectedPathComponent() != null) {
+               DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+               if ((node != null) && (node.getUserObject() instanceof ConnectorOutput)) {
+                  final ConnectorOutput conOut = (ConnectorOutput) node.getUserObject();
+                  if (!conOut.isConnected()) {
+                     Logger.debug("User request: Connect to server using " + conOut);
+                     new SwingWorker<Void, Void>() {
+
+                        @Override
+                        protected Void doInBackground() throws Exception {
+                           Gui.post(new Request(ClientTasks.ConnectorConnect, new ConnectorInput(conOut.getId())));
+                           return null;
+                        }
+                     }.execute();
+                  }
+               }
+            }
          } else {
-            return null;
+            showPopup(ev);
          }
-      } catch (Throwable e) {
-         Logger.debug("No connector is selected");
-         return null;
       }
-   }
-   
-   @Override
-   public ConnectorOutput getConnector() {
-      try {
-         ConnectorOutput conOut = ((ConnectorOutput) ((DefaultMutableTreeNode) tree.getSelectionPath().getLastPathComponent()).getUserObject());
-         Logger.debug("Connector ID " + conOut.getId() + " under label " + conOut.getLabel() + " is selected");
-         return conOut;
-      } catch (Throwable e) {
-         Logger.debug("No connector is selected");
-         return null;
+
+      @Override
+      public void mousePressed(MouseEvent ev) {
+         showPopup(ev);
       }
-   }
-   
-   @Override
-   public List<ConnectorOutput> listConnectors() {
-      List<ConnectorOutput> conOutList = new ArrayList<ConnectorOutput>();
-      try {
-         for (TreePath path : tree.getSelectionPaths()) {
-            ConnectorOutput conOut = ((ConnectorOutput) ((DefaultMutableTreeNode) path.getLastPathComponent()).getUserObject());
-            Logger.debug("Connector ID " + conOut.getId() + " under label " + conOut.getLabel() + " is selected");
-            conOutList.add(conOut);
+
+      @Override
+      public void mouseReleased(MouseEvent ev) {
+         showPopup(ev);
+      }
+
+      private void showPopup(MouseEvent ev) {
+         if (ev.isPopupTrigger()) {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+            if (node != null) {
+               if (node.getUserObject() instanceof MachineOut) {
+                  JPopupMenu vmPopupMenu = PopupMenuBuilder.get(ServerMachineView.this, (MachineOut) node.getUserObject());
+                  vmPopupMenu.show(ev.getComponent(), ev.getX(), ev.getY());
+               }
+               if (node.getUserObject() instanceof ConnectorOutput) {
+                  ConnectorOutput conOut = (ConnectorOutput) node.getUserObject();
+                  JPopupMenu conPopupMenu = PopupMenuBuilder.get(ServerMachineView.this, ServerMachineView.this, conOut);
+                  conPopupMenu.show(ev.getComponent(), ev.getX(), ev.getY());
+               }
+            }
          }
-         return conOutList;
-      } catch (Throwable e) {
-         Logger.debug("Not everything selected is a connector, returning empty list");
-         conOutList.clear();
-         return conOutList;
       }
-      
    }
-   
+
+   private class TreeSelectListener implements TreeSelectionListener {
+
+      @Override
+      public void valueChanged(TreeSelectionEvent ev) {
+         if (ev.getNewLeadSelectionPath() != null) {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) ev.getNewLeadSelectionPath().getLastPathComponent();
+
+            if (node != null) {
+               if (node.getUserObject() instanceof MachineOut) {
+                  vSplit.setRightComponent(new JScrollPane(new VmDetailedView((MachineOut) node.getUserObject()).getComponent()));
+               }
+               if (node.getUserObject() instanceof ConnectorOutput) {
+                  vSplit.setRightComponent(new JScrollPane(new ConnectorDetailedView((ConnectorOutput) node.getUserObject()).getComponent()));
+               }
+            } else {
+               vSplit.setRightComponent(EmptyPanel);
+            }
+         } else {
+            vSplit.setRightComponent(EmptyPanel);
+         }
+      }
+
+   }
+
 }

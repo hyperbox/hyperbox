@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -63,25 +63,24 @@ public final class Gui implements _Front {
    
    @Override
    public void start() throws HyperboxException {
-      Logger.track();
-      
-      try {
-         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-      } catch (Exception e) {
-         Logger.error("Couldn't switch to the System Look & Feel");
-      }
       EventQueueProxy proxy = new EventQueueProxy();
       EventQueue queue = Toolkit.getDefaultToolkit().getSystemEventQueue();
       queue.push(proxy);
       
-      FrontEventManager.get().start();
-      EventManager.get().add(FrontEventManager.get());
-      FrontEventManager.register(this);
+      ViewEventManager.get().start();
+      EventManager.get().add(ViewEventManager.get());
+      ViewEventManager.register(this);
       
       SwingUtilities.invokeLater(new Runnable() {
          
          @Override
          public void run() {
+            try {
+               UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+               Logger.error("Couldn't switch to the System Look & Feel");
+            }
+            
             mainView = new MainView();
          }
       });
@@ -90,8 +89,6 @@ public final class Gui implements _Front {
    
    @Override
    public void stop() {
-      Logger.track();
-      
       if (mainView != null) {
          mainView.hide();
       }
@@ -99,8 +96,6 @@ public final class Gui implements _Front {
    
    @Override
    public void postError(Throwable t) {
-      Logger.track();
-      
       if (t.getCause() != null) {
          postError(t.getCause().getMessage());
       } else {
@@ -111,16 +106,11 @@ public final class Gui implements _Front {
    
    @Override
    public void postError(String s) {
-      Logger.track();
-      
       showError(s);
    }
    
    public static void showError(String s) {
-      JOptionPane.showMessageDialog(null,
-            s,
-            "Error",
-            JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(null, s, "Error", JOptionPane.ERROR_MESSAGE);
    }
    
    public static void showError(Throwable t) {
@@ -146,8 +136,6 @@ public final class Gui implements _Front {
    
    @Override
    public void postError(Throwable t, String s) {
-      Logger.track();
-      
       postError(s);
    }
    
@@ -158,8 +146,6 @@ public final class Gui implements _Front {
    
    @Handler
    public void getCoreState(CoreStateEvent event) {
-      Logger.track();
-      
       CoreState state = event.get(CoreState.class);
       Logger.debug("Got CoreState event : " + state);
       

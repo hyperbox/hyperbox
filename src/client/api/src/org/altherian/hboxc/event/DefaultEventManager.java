@@ -74,8 +74,6 @@ public class DefaultEventManager implements _EventManager, Runnable, UncaughtExc
    
    @Override
    public void start() throws HyperboxException {
-      Logger.track();
-      
       Logger.verbose("Event Manager - " + label + " - is starting");
       eventBus = new MBassador<Object>(BusConfiguration.Default());
       eventsQueue = new LinkedBlockingQueue<Object>();
@@ -91,8 +89,6 @@ public class DefaultEventManager implements _EventManager, Runnable, UncaughtExc
    
    @Override
    public void stop() {
-      Logger.track();
-      
       if (running) {
          Logger.verbose("Event Manager - " + label + " - is stopping");
          stopWorker();
@@ -103,8 +99,6 @@ public class DefaultEventManager implements _EventManager, Runnable, UncaughtExc
    
    @Override
    public void register(Object o) {
-      Logger.track();
-      
       eventBus.subscribe(o);
    }
    
@@ -115,8 +109,6 @@ public class DefaultEventManager implements _EventManager, Runnable, UncaughtExc
    
    @Override
    public void post(Object o) {
-      Logger.track();
-      
       if (eventsQueue != null) {
          if (!eventsQueue.offer(o)) {
             Logger.error("Event Manager - " + label + " queue is full, cannot add " + o.getClass().getSimpleName());
@@ -136,8 +128,6 @@ public class DefaultEventManager implements _EventManager, Runnable, UncaughtExc
    
    @Override
    public void run() {
-      Logger.track();
-      
       Logger.debug("Event Manager - " + label + " Worker Started");
       running = true;
       while (running) {
