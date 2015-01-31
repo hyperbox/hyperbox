@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,9 +29,10 @@ import org.altherian.hboxc.event.machine.MachineSnapshotDataChangedEvent;
 import org.altherian.hboxc.event.machine.MachineStateChangedEvent;
 import org.altherian.hboxc.event.snapshot.SnapshotDeletedEvent;
 import org.altherian.hboxc.event.snapshot.SnapshotModifiedEvent;
+import org.altherian.hboxc.event.snapshot.SnapshotRestoredEvent;
 import org.altherian.hboxc.event.snapshot.SnapshotTakenEvent;
-import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui.Gui;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.snapshot.SnapshotDeleteAction;
 import org.altherian.hboxc.front.gui.action.snapshot.SnapshotModifyAction;
@@ -52,7 +53,6 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -90,8 +90,6 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    private Map<String, SnapshotOut> snaps;
    
    public SnapshotManagementView() {
-      Logger.track();
-      
       currentStateNode = new DefaultMutableTreeNode(new CurrentState());
       
       refreshProgress = new JProgressBar();
@@ -135,16 +133,12 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    }
    
    private void add(SnapshotOut snapOut) {
-      Logger.track();
-      
       if (!snaps.containsKey(snapOut.getUuid())) {
          snaps.put(snapOut.getUuid(), snapOut);
       }
    }
    
    private void process(String snapUuid) {
-      Logger.track();
-      
       SnapshotOut snapOut = Gui.getServer(srvId).getSnapshot(vmUuid, snapUuid);
       if (snapOut != null) {
          add(snapOut);
@@ -155,34 +149,20 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    }
    
    private void setCurrentState() {
-      Logger.track();
-      
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            
-            @Override
-            public void run() {
-               setCurrentState();
-            }
-         });
-      } else {
-         if (currentStateNode.getParent() != null) {
-            treeModel.removeNodeFromParent(currentStateNode);
-         }
-         
-         DefaultMutableTreeNode parentNode = topNode;
-         if ((currentSnapUuid != null) && snapNodes.containsKey(currentSnapUuid)) {
-            parentNode = snapNodes.get(currentSnapUuid);
-         }
-         
-         treeModel.insertNodeInto(currentStateNode, parentNode, parentNode.getChildCount());
-         tree.scrollPathToVisible(new TreePath(currentStateNode.getPath()));
+      if (currentStateNode.getParent() != null) {
+         treeModel.removeNodeFromParent(currentStateNode);
       }
+      
+      DefaultMutableTreeNode parentNode = topNode;
+      if ((currentSnapUuid != null) && snapNodes.containsKey(currentSnapUuid)) {
+         parentNode = snapNodes.get(currentSnapUuid);
+      }
+      
+      treeModel.insertNodeInto(currentStateNode, parentNode, parentNode.getChildCount());
+      tree.scrollPathToVisible(new TreePath(currentStateNode.getPath()));
    }
    
    public void show(MachineOut newVmOut) {
-      Logger.track();
-      
       if ((newVmOut != null) && ((vmUuid == null) || !vmUuid.equals(newVmOut.getUuid()))) {
          srvId = newVmOut.getServerId();
          vmUuid = newVmOut.getUuid();
@@ -193,22 +173,10 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    }
    
    private void refreshCurrentState() {
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            
-            @Override
-            public void run() {
-               refreshCurrentState();
-            }
-         });
-      } else {
-         treeModel.reload(currentStateNode);
-      }
+      treeModel.reload(currentStateNode);
    }
    
    private void clearData() {
-      Logger.track();
-      
       currentState = null;
       hasSnap = false;
       currentSnapUuid = null;
@@ -217,8 +185,6 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    }
    
    private void refreshData() {
-      Logger.track();
-      
       clearData();
       
       MachineOut mOut = Gui.getServer(srvId).getMachine(vmUuid);
@@ -245,65 +211,43 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    }
    
    private void refreshDisplay() {
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            
-            @Override
-            public void run() {
-               refreshDisplay();
-            }
-         });
-      } else {
-         clear();
-         if (hasSnap) {
-            addDisplay(topNode, rootSnapUuid);
-         }
-         setCurrentState();
+      clear();
+      if (hasSnap) {
+         addDisplay(topNode, rootSnapUuid);
       }
+      setCurrentState();
    }
    
    @Override
    public void refresh() {
-      Logger.track();
+      Logger.debug("Refreshing Snapshot Data for " + vmUuid);
+
+      refreshProgress.setIndeterminate(true);
+      refreshProgress.setVisible(true);
+      tree.setEnabled(false);
       
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            
-            @Override
-            public void run() {
-               refresh();
-            }
-         });
-      } else {
-         Logger.debug("Refreshing Snapshot Data for " + vmUuid);
+      new SwingWorker<Void, Void>() {
          
-         refreshProgress.setIndeterminate(true);
-         refreshProgress.setVisible(true);
-         tree.setEnabled(false);
+         @Override
+         protected Void doInBackground() throws Exception {
+            refreshData();
+            return null;
+         }
          
-         new SwingWorker<Void, Void>() {
-            
-            @Override
-            protected Void doInBackground() throws Exception {
-               refreshData();
-               return null;
+         @Override
+         protected void done() {
+            try {
+               get();
+               refreshDisplay();
+            } catch (Throwable t) {
+               Logger.exception(t);
+            } finally {
+               refreshProgress.setIndeterminate(false);
+               refreshProgress.setVisible(false);
+               tree.setEnabled(true);
             }
-            
-            @Override
-            protected void done() {
-               try {
-                  get();
-                  refreshDisplay();
-               } catch (Throwable t) {
-                  Logger.exception(t);
-               } finally {
-                  refreshProgress.setIndeterminate(false);
-                  refreshProgress.setVisible(false);
-                  tree.setEnabled(true);
-               }
-            }
-         }.execute();
-      }
+         }
+      }.execute();
    }
    
    public JComponent getComponent() {
@@ -311,26 +255,14 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    }
    
    private void clear() {
-      Logger.track();
-      
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            
-            @Override
-            public void run() {
-               clear();
-            }
-         });
-      } else {
-         takeSnapButton.setEnabled(false);
-         restoreSnapButton.setEnabled(false);
-         delSnapButton.setEnabled(false);
-         infoSnapButton.setEnabled(false);
-         currentStateNode.removeFromParent();
-         snapNodes.clear();
-         topNode.removeAllChildren();
-         treeModel.reload();
-      }
+      takeSnapButton.setEnabled(false);
+      restoreSnapButton.setEnabled(false);
+      delSnapButton.setEnabled(false);
+      infoSnapButton.setEnabled(false);
+      currentStateNode.removeFromParent();
+      snapNodes.clear();
+      topNode.removeAllChildren();
+      treeModel.reload();
    }
    
    private class TreeListener implements TreeSelectionListener {
@@ -409,9 +341,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    }
    
    @Handler
-   public void putMachineStateChanged(MachineStateChangedEvent ev) {
-      Logger.track();
-      
+   private void putMachineStateChanged(MachineStateChangedEvent ev) {
       if (isSame(ev.getMachine())) {
          currentState = ev.getMachine().getState();
          refreshCurrentState();
@@ -419,35 +349,35 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
    }
    
    @Handler
-   public void putMachineSnapshotDataChangeEvent(MachineSnapshotDataChangedEvent ev) {
-      Logger.track();
-      
+   private void putMachineSnapshotDataChangeEvent(MachineSnapshotDataChangedEvent ev) {
       if (isSame(ev.getMachine())) {
          refresh();
       }
    }
    
    @Handler
-   public void putSnapshotTakenEvent(SnapshotTakenEvent ev) {
-      Logger.track();
-      
+   private void putSnapshotTakenEvent(SnapshotTakenEvent ev) {
       if (isSame(ev.getMachine())) {
          refresh();
       }
    }
    
    @Handler
-   public void putSnapshotDeletedEvent(SnapshotDeletedEvent ev) {
-      Logger.track();
-      
+   private void putSnapshotDeletedEvent(SnapshotDeletedEvent ev) {
       if (isSame(ev.getMachine())) {
          refresh();
       }
    }
    
-   public void putSnapshotModifiedEvent(SnapshotModifiedEvent ev) {
-      Logger.track();
-      
+   @Handler
+   private void putSnapshotModifiedEvent(SnapshotModifiedEvent ev) {
+      if (isSame(ev.getMachine())) {
+         refresh();
+      }
+   }
+
+   @Handler
+   private void putSnapshotRestoredEvent(SnapshotRestoredEvent ev) {
       if (isSame(ev.getMachine())) {
          refresh();
       }
