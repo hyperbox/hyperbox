@@ -39,7 +39,7 @@ import javax.swing.JTextField;
 
 public class HostViewer implements _Refreshable, _HostReceiver {
 
-   private String srvId;
+   private final String srvId;
 
    private JLabel hostnameLabel;
    private JTextField hostnameValue;
@@ -56,7 +56,9 @@ public class HostViewer implements _Refreshable, _HostReceiver {
    private JPanel dataPanel;
    private JPanel panel;
 
-   public HostViewer() {
+   public HostViewer(String srvId) {
+      this.srvId = srvId;
+
       hostnameLabel = new JLabel("Hostname");
       memPercLabel = new JLabel("Memory Usage");
       memUsedLabel = new JLabel("Memory Used");
@@ -90,11 +92,6 @@ public class HostViewer implements _Refreshable, _HostReceiver {
 
       RefreshUtil.set(panel, this);
       ViewEventManager.register(this);
-   }
-
-   public void show(String srvId) {
-      this.srvId = srvId;
-      refresh();
    }
 
    @Override

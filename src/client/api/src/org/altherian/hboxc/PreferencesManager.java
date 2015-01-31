@@ -31,27 +31,27 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class PreferencesManager {
-
+   
    private static String defaultPerfExtention = ".pref";
    private static File userPrefPath;
    private static String userPrefFilename = "global" + defaultPerfExtention;
    private static File userPrefFile;
    private static JProperties userPref;
-
+   
    static {
       Runtime.getRuntime().addShutdownHook(new Thread() {
-
+         
          @Override
          public void run() {
             savePref();
          }
       });
    }
-
+   
    protected PreferencesManager() {
       // static only
    }
-
+   
    private static JProperties loadPref(File prefFile) throws HyperboxException {
       JProperties newSettings = new JProperties();
       try {
@@ -63,42 +63,42 @@ public class PreferencesManager {
       }
       return newSettings;
    }
-
+   
    public static void init() throws HyperboxException {
       initUserPref();
    }
-
+   
    public static void initUserPref() throws HyperboxException {
       initUserPrefAll(Configuration.getUserDataPath());
-
+      
       userPrefFile = new File(userPrefPath.getAbsolutePath() + File.separator + userPrefFilename);
       userPref = loadPref(userPrefFile);
       Logger.verbose("Default Preference Extention: " + defaultPerfExtention);
       Logger.verbose("User Preference Path: " + userPrefPath.getAbsolutePath());
       Logger.verbose("User Global Preference File: " + userPrefFile.getAbsolutePath());
    }
-
+   
    private static void initUserPrefAll(String homePath) throws HyperboxException {
       userPrefPath = new File(homePath);
       if (!userPrefPath.exists() && !userPrefPath.mkdirs()) {
          throw new HyperboxException("Unable to create User preference folder: " + userPrefPath.getAbsolutePath());
       }
    }
-
+   
    public static boolean has(String namespace) {
       File configFile = new File(userPrefPath + File.separator + namespace + defaultPerfExtention);
       return configFile.exists() && configFile.isFile() && configFile.canRead();
    }
-
+   
    /**
-    * Without trailing file separator
+    * Without trailing file separator & absolute path
     *
     * @return where to store the settings
     */
-   public static File getUserPrefPath() {
-      return userPrefPath;
+   public static String getUserPrefPath() {
+      return userPrefPath.getAbsolutePath();
    }
-
+   
    /**
     * Get preferences of the user, saved in the roaming profile or in $HOME/.hbox
     *
@@ -107,11 +107,11 @@ public class PreferencesManager {
    public static JProperties getUserPref() {
       return userPref;
    }
-
+   
    public static JProperties get() {
       return getUserPref();
    }
-
+   
    public static void savePref() {
       try {
          Logger.verbose("Saving global user preferences to " + userPrefFile);
@@ -120,5 +120,5 @@ public class PreferencesManager {
          Logger.error("Unable to save user preferences: " + e.getMessage());
       }
    }
-
+   
 }
