@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,6 +29,8 @@ import org.altherian.hbox.exception.MachineDisplayNotAvailableException;
 import org.altherian.hbox.exception.MachineException;
 import org.altherian.hbox.states.ACPI;
 import org.altherian.hbox.states.MachineStates;
+import org.altherian.hboxd.event.EventManager;
+import org.altherian.hboxd.event.snapshot.SnapshotRestoredEvent;
 import org.altherian.hboxd.hypervisor.perf._RawMetricMachine;
 import org.altherian.hboxd.hypervisor.storage._RawStorageController;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
@@ -68,7 +70,7 @@ import org.virtualbox_4_3.StorageBus;
 import org.virtualbox_4_3.VBoxException;
 
 public final class VBoxMachine implements _RawVM {
-   
+
    /**
     * Waiting coefficient to use on ISession::getTimeRemaining() with Thread.sleep() while waiting for task in progress to finish.<br/>
     * Virtualbox returns a waiting time in seconds, this coefficient allow to turn it into milliseconds and set a 'shorter' waiting time for a more
@@ -76,9 +78,9 @@ public final class VBoxMachine implements _RawVM {
     * Default value waits half of the estimated time reported by Virtualbox.
     */
    private final int waitingCoef = 500;
-   
+
    private String uuid;
-   
+
    private VBoxConsole console;
    private VBoxCPU cpu;
    private VBoxDisplay display;
@@ -87,14 +89,14 @@ public final class VBoxMachine implements _RawVM {
    private VBoxMotherboard motherboard;
    private VBoxMouse mouse;
    private VBoxUSB usb;
-   
+
    private VBoxGuest guest;
-   
+
    private ISession session = null;
-   
+
    public VBoxMachine(String uuid) {
       this.uuid = uuid;
-      
+
       console = new VBoxConsole(this);
       cpu = new VBoxCPU(this);
       display = new VBoxDisplay(this);
@@ -105,7 +107,7 @@ public final class VBoxMachine implements _RawVM {
       usb = new VBoxUSB(this);
       guest = new VBoxGuest(this);
    }
-   
+
    /**
     * Create a new VirtualboxMachine object with the given UUID and State
     *
@@ -114,33 +116,33 @@ public final class VBoxMachine implements _RawVM {
    public VBoxMachine(IMachine machine) {
       this(machine.getId());
    }
-   
+
    @Override
    public void saveChanges() {
       Logger.track();
-      
+
       try {
          getRaw().saveSettings();
       } catch (VBoxException e) {
          throw new MachineException(e.getMessage(), e);
       }
    }
-   
+
    @Override
    public void discardChanges() {
       Logger.track();
-      
+
       try {
          getRaw().discardSettings();
       } catch (VBoxException e) {
          throw new MachineException(e.getMessage(), e);
       }
    }
-   
+
    protected void lock(LockType lockType) {
       session = VBoxSessionManager.get().lock(getUuid(), lockType);
    }
-   
+
    @Override
    public void lock() {
       if (getRaw().getSessionState().equals(SessionState.Locked)) {
@@ -149,59 +151,59 @@ public final class VBoxMachine implements _RawVM {
          lock(LockType.Write);
       }
    }
-   
+
    protected void lockAutoWrite() {
       session = VBoxSessionManager.get().lockAuto(getUuid(), LockType.Write);
    }
-   
+
    protected void lockAutoShared() {
       session = VBoxSessionManager.get().lockAuto(getUuid(), LockType.Shared);
    }
-   
+
    protected void lockAuto() {
       session = VBoxSessionManager.get().lockAuto(getUuid());
    }
-   
+
    @Override
    public void unlock() {
       unlock(true);
    }
-   
+
    @Override
    public void unlock(boolean saveChanges) {
       VBoxSessionManager.get().unlock(getUuid(), saveChanges);
       session = null;
    }
-   
+
    private void unlockAuto() {
       unlockAuto(false);
    }
-   
+
    private void unlockAuto(boolean saveSettings) {
       VBoxSessionManager.get().unlockAuto(getUuid(), saveSettings);
       session = null;
    }
-   
+
    @Override
    public String getUuid() {
       return uuid;
    }
-   
+
    @Override
    public boolean isAccessible() {
       return getRaw().getAccessible();
    }
-   
+
    @Override
    public String getName() {
       return getSetting(MachineAttribute.Name).getString();
    }
-   
+
    @Override
    public MachineStates getState() {
       return Mappings.get(getRaw().getState());
    }
-   
+
    private IMachine getRaw() {
       session = VBoxSessionManager.get().getLock(uuid);
       if ((session != null) && session.getState().equals(SessionState.Locked)) {
@@ -210,16 +212,16 @@ public final class VBoxMachine implements _RawVM {
          return VBox.get().findMachine(uuid);
       }
    }
-   
+
    @Override
    public String toString() {
       return getName() + " (" + getUuid() + ")";
    }
-   
+
    @Override
    public void powerOn() throws MachineException {
       Logger.track();
-      
+
       IMachine rawMachine = getRaw();
       session = VBox.getSession();
       try {
@@ -245,11 +247,11 @@ public final class VBoxMachine implements _RawVM {
          }
       }
    }
-   
+
    @Override
    public void powerOff() throws MachineException {
       Logger.track();
-      
+
       try {
          lockAuto();
          IProgress p = session.getConsole().powerDown();
@@ -267,11 +269,11 @@ public final class VBoxMachine implements _RawVM {
          unlock();
       }
    }
-   
+
    @Override
    public void pause() throws MachineException {
       Logger.track();
-      
+
       try {
          lockAuto();
          session.getConsole().pause();
@@ -281,11 +283,11 @@ public final class VBoxMachine implements _RawVM {
          unlockAuto();
       }
    }
-   
+
    @Override
    public void resume() throws MachineException {
       Logger.track();
-      
+
       try {
          lockAuto();
          session.getConsole().resume();
@@ -295,11 +297,11 @@ public final class VBoxMachine implements _RawVM {
          unlockAuto();
       }
    }
-   
+
    @Override
    public void saveState() throws MachineException {
       Logger.track();
-      
+
       try {
          lockAuto();
          IProgress p = session.getConsole().saveState();
@@ -316,7 +318,7 @@ public final class VBoxMachine implements _RawVM {
          unlock();
       }
    }
-   
+
    @Override
    public void reset() throws MachineException {
       Logger.track();
@@ -329,11 +331,11 @@ public final class VBoxMachine implements _RawVM {
          unlockAuto();
       }
    }
-   
+
    @Override
    public void sendAcpi(ACPI acpi) throws MachineException {
       Logger.track();
-      
+
       try {
          lockAuto();
          if (acpi.equals(ACPI.PowerButton)) {
@@ -350,77 +352,77 @@ public final class VBoxMachine implements _RawVM {
          unlockAuto();
       }
    }
-   
+
    @Override
    public List<_RawMetricMachine> getMetrics() {
       Logger.track();
-      
+
       throw new FeatureNotImplementedException();
    }
-   
+
    @Override
    public _Setting getSetting(Object getName) {
       return VBoxSettingManager.get(this, getName);
    }
-   
+
    @Override
    public List<_Setting> listSettings() {
       return VBoxSettingManager.list(this);
    }
-   
+
    @Override
    public void setSetting(_Setting s) {
       VBoxSettingManager.set(this, Arrays.asList(s));
    }
-   
+
    @Override
    public void setSetting(List<_Setting> s) {
       VBoxSettingManager.set(this, s);
    }
-   
+
    @Override
    public _RawCPU getCpu() {
       return cpu;
    }
-   
+
    @Override
    public _RawDisplay getDisplay() {
       return display;
    }
-   
+
    @Override
    public _RawKeyboard getKeyboard() {
       return keyboard;
    }
-   
+
    @Override
    public _RawMemory getMemory() {
       return memory;
    }
-   
+
    @Override
    public _RawMotherboard getMotherboard() {
       return motherboard;
    }
-   
+
    @Override
    public _RawMouse getMouse() {
       return mouse;
    }
-   
+
    @Override
    public _RawUSB getUsb() {
       return usb;
    }
-   
+
    @Override
    public Set<_RawNetworkInterface> listNetworkInterfaces() {
       Logger.track();
-      
+
       Set<_RawNetworkInterface> nics = new HashSet<_RawNetworkInterface>();
       // TODO do this better to avoid endless loop - Check using ISystemProperties maybe?
       long i = 0;
-      
+
       try {
          while (i < 8) {
             getRaw().getNetworkAdapter(i);
@@ -430,11 +432,11 @@ public final class VBoxMachine implements _RawVM {
       } catch (VBoxException e) {
          throw new HyperboxRuntimeException("Unable to list NICs", e);
       }
-      
+
       return nics;
-      
+
    }
-   
+
    @Override
    public _RawNetworkInterface getNetworkInterface(long nicId) {
       try {
@@ -445,7 +447,7 @@ public final class VBoxMachine implements _RawVM {
          throw new HyperboxRuntimeException("Couldn't get NIC #" + nicId + " from " + getName() + " because : " + e.getMessage());
       }
    }
-   
+
    @Override
    public Set<_RawStorageController> listStoroageControllers() {
       Set<_RawStorageController> storageCtrls = new HashSet<_RawStorageController>();
@@ -458,18 +460,18 @@ public final class VBoxMachine implements _RawVM {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    @Override
    public _RawStorageController getStorageController(String name) {
       return new VBoxStorageController(this, getRaw().getStorageControllerByName(name));
    }
-   
+
    @Override
    public _RawStorageController addStorageController(String type, String name) {
       Logger.track();
-      
+
       StorageBus bus = StorageBus.valueOf(type);
-      
+
       lockAuto();
       try {
          IStorageController strCtrl = getRaw().addStorageController(name, bus);
@@ -479,12 +481,12 @@ public final class VBoxMachine implements _RawVM {
          unlockAuto(true);
       }
    }
-   
+
    @Override
    public _RawStorageController addStorageController(StorageControllerType type, String name) {
       return addStorageController(type.getId(), name);
    }
-   
+
    @Override
    public void removeStorageController(String name) {
       lockAuto();
@@ -496,12 +498,12 @@ public final class VBoxMachine implements _RawVM {
          unlockAuto();
       }
    }
-   
+
    @Override
    public boolean hasSnapshot() {
       return getRaw().getCurrentSnapshot() != null;
    }
-   
+
    @Override
    public _RawSnapshot getRootSnapshot() {
       if (hasSnapshot()) {
@@ -510,7 +512,7 @@ public final class VBoxMachine implements _RawVM {
          return null;
       }
    }
-   
+
    @Override
    public _RawSnapshot getSnapshot(String id) {
       try {
@@ -521,7 +523,7 @@ public final class VBoxMachine implements _RawVM {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    @Override
    public _RawSnapshot getCurrentSnapshot() {
       try {
@@ -530,11 +532,11 @@ public final class VBoxMachine implements _RawVM {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    @Override
    public _RawSnapshot takeSnapshot(String name, String description) {
       Logger.track();
-      
+
       lockAuto();
       try {
          IProgress p = session.getConsole().takeSnapshot(name, description);
@@ -557,11 +559,11 @@ public final class VBoxMachine implements _RawVM {
          unlockAuto();
       }
    }
-   
+
    @Override
    public void deleteSnapshot(String id) {
       Logger.track();
-      
+
       lockAuto();
       try {
          IProgress p = session.getConsole().deleteSnapshot(id);
@@ -582,11 +584,11 @@ public final class VBoxMachine implements _RawVM {
          unlockAuto();
       }
    }
-   
+
    @Override
    public void restoreSnapshot(String id) {
       Logger.track();
-      
+
       lockAuto();
       try {
          ISnapshot snapshot = getRaw().findSnapshot(id);
@@ -599,7 +601,9 @@ public final class VBoxMachine implements _RawVM {
             }
          }
          Logger.debug("Return code : " + p.getResultCode());
-         if (p.getResultCode() != 0) {
+         if (p.getResultCode() == 0) {
+            EventManager.post(new SnapshotRestoredEvent(uuid, snapshot.getId()));
+         } else {
             throw new MachineException(p.getErrorInfo().getText());
          }
       } catch (VBoxException e) {
@@ -608,12 +612,12 @@ public final class VBoxMachine implements _RawVM {
          unlockAuto();
       }
    }
-   
+
    @Override
    public _RawConsole getConsole() {
       return console;
    }
-   
+
    @Override
    public void applyConfiguration(Machine rawData) {
       lockAuto();
@@ -626,13 +630,13 @@ public final class VBoxMachine implements _RawVM {
          unlockAuto();
       }
    }
-   
+
    @Override
    public String getLocation() {
       File settingFiles = new File(getRaw().getSettingsFilePath());
       return settingFiles.getAbsoluteFile().getParent();
    }
-   
+
    // TODO provide a screenshot size
    @Override
    public byte[] takeScreenshot() {
@@ -643,7 +647,7 @@ public final class VBoxMachine implements _RawVM {
          Holder<Long> bpp = new Holder<Long>();
          Holder<Integer> xOrigin = new Holder<Integer>();
          Holder<Integer> yOrigin = new Holder<Integer>();
-         
+
          try {
             session.getConsole().getDisplay().getScreenResolution(0l, width, height, bpp, xOrigin, yOrigin);
          } catch (NullPointerException e) {
@@ -657,10 +661,10 @@ public final class VBoxMachine implements _RawVM {
          unlockAuto();
       }
    }
-   
+
    @Override
    public _RawGuest getGuest() {
       return guest;
    }
-   
+
 }
