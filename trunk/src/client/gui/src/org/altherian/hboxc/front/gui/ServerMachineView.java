@@ -25,8 +25,7 @@ import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.in.SnapshotIn;
 import org.altherian.hbox.comm.out.ServerOut;
-import org.altherian.hbox.comm.out.event.hypervisor.HypervisorConnectedEventOut;
-import org.altherian.hbox.comm.out.event.hypervisor.HypervisorDisconnectedEventOut;
+import org.altherian.hbox.comm.out.event.hypervisor.HypervisorConnectionStateEventOut;
 import org.altherian.hbox.comm.out.event.machine.MachineRegistrationEventOut;
 import org.altherian.hbox.comm.out.event.server.ServerConnectionStateEventOut;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
@@ -64,6 +63,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -253,14 +253,14 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    }
 
    @Handler
-   private void putConnectorAdded(ConnectorAddedEvent ev) {
+   private void putConnectorAddedEvent(ConnectorAddedEvent ev) {
       Logger.track();
 
       addConnector(ev.getConnector());
    }
 
    @Handler
-   private void putConnectorConnected(ConnectorConnectedEvent ev) {
+   private void putConnectorConnectedEvent(ConnectorConnectedEvent ev) {
       Logger.track();
 
       updateConnector(ev.getConnector());
@@ -268,7 +268,7 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    }
 
    @Handler
-   private void putConnectorDisconnected(ConnectorDisconnectedEvent ev) {
+   private void putConnectorDisconnectedEvent(ConnectorDisconnectedEvent ev) {
       Logger.track();
 
       updateConnector(ev.getConnector());
@@ -276,28 +276,28 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    }
 
    @Handler
-   private void putConnectorModified(ConnectorModifiedEvent ev) {
+   private void putConnectorModifiedEvent(ConnectorModifiedEvent ev) {
       Logger.track();
 
       updateConnector(ev.getConnector());
    }
 
    @Handler
-   private void putConnectorRemoved(ConnectorRemovedEvent ev) {
+   private void putConnectorRemovedEvent(ConnectorRemovedEvent ev) {
       Logger.track();
 
       removeConnector(ev.getConnector());
    }
 
    @Handler
-   private void putConnectorStateChanged(ConnectorStateChangedEvent ev) {
+   private void putConnectorStateChangedEvent(ConnectorStateChangedEvent ev) {
       Logger.track();
 
       updateConnector(ev.getConnector());
    }
 
    @Handler
-   public void putHypervisorConnected(HypervisorConnectedEventOut ev) {
+   public void putHypervisorConnectionStateEvent(HypervisorConnectionStateEventOut ev) {
       Logger.track();
 
       updateServer(ev.getServer());
@@ -305,22 +305,14 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    }
 
    @Handler
-   private void putHypervisorDisconnected(HypervisorDisconnectedEventOut ev) {
-      Logger.track();
-
-      updateServer(ev.getServer());
-      refresh(ev.getServer());
-   }
-
-   @Handler
-   private void putMachineAdd(MachineAddedEvent ev) {
+   private void putMachineAddEvent(MachineAddedEvent ev) {
       Logger.track();
 
       addMachine(ev.getServerId(), ev.getMachine());
    }
 
    @Handler
-   private void putMachineRegistration(MachineRegistrationEventOut ev) {
+   private void putMachineRegistrationEvent(MachineRegistrationEventOut ev) {
       Logger.track();
 
       if (ev.isRegistered()) {
@@ -331,28 +323,28 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    }
 
    @Handler
-   private void putMachineRemove(MachineRemovedEvent ev) {
+   private void putMachineRemoveEvent(MachineRemovedEvent ev) {
       Logger.track();
 
       removeMachine(ev.getServerId(), ev.getMachine().getUuid());
    }
 
    @Handler
-   private void putMachineUpdate(MachineStateChangedEvent ev) {
+   private void putMachineUpdateEvent(MachineStateChangedEvent ev) {
       Logger.track();
 
       updateMachine(ev.getServerId(), ev.getMachine());
    }
 
    @Handler
-   private void putMachineUpdate(MachineUpdatedEvent ev) {
+   private void putMachineUpdateEvent(MachineUpdatedEvent ev) {
       Logger.track();
 
       updateMachine(ev.getServerId(), ev.getMachine());
    }
 
    @Handler
-   private void putServerConnectionStateChange(ServerConnectionStateEventOut ev) {
+   private void putServerConnectionStateChangeEvent(ServerConnectionStateEventOut ev) {
       Logger.track();
 
       updateServer(ev.getServer());
@@ -380,6 +372,15 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
       Logger.track();
 
       clear();
+      Collections.sort(conOutList, new Comparator<ConnectorOutput>() {
+         
+         @Override
+         public int compare(ConnectorOutput o1, ConnectorOutput o2) {
+            Logger.track();
+            return o1.getLabel().compareTo(o2.getLabel());
+         }
+
+      });
       for (ConnectorOutput conOut : conOutList) {
          addConnector(conOut);
       }

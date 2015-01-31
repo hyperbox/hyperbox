@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -214,14 +214,14 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putMachineSnapDataChangedEvent(MachineSnapshotDataChangedEventOut ev) {
+   private void putMachineSnapDataChangedEvent(MachineSnapshotDataChangedEventOut ev) {
       Logger.track();
       
       snapOutCache.remove(ev.getUuid());
    }
    
    @Handler
-   public void putSnapshotTakenEvent(SnapshotTakenEventOut ev) {
+   private void putSnapshotTakenEvent(SnapshotTakenEventOut ev) {
       Logger.track();
       
       updateMachine(ev.getMachine());
@@ -231,7 +231,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putSnashotDeletedEvent(SnapshotDeletedEventOut ev) {
+   private void putSnashotDeletedEvent(SnapshotDeletedEventOut ev) {
       Logger.track();
       
       SnapshotOut deletedSnap = snapOutCache.get(ev.getUuid()).get(ev.getSnapshotUuid());
@@ -245,7 +245,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putSnapshotRestoredEvent(SnapshotRestoredEventOut ev) {
+   private void putSnapshotRestoredEvent(SnapshotRestoredEventOut ev) {
       Logger.track();
       
       updateMachine(ev.getMachine());
@@ -254,7 +254,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putSnashopModifiedEvent(SnapshotModifiedEventOut ev) {
+   private void putSnashopModifiedEvent(SnapshotModifiedEventOut ev) {
       Logger.track();
       
       updateSnapshot(ev.getMachine().getUuid(), ev.getSnapshot());
@@ -262,7 +262,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putMachineDataChangedEvent(MachineDataChangeEventOut ev) {
+   private void putMachineDataChangedEvent(MachineDataChangeEventOut ev) {
       Logger.track();
       
       updateMachine(ev.getMachine());
@@ -270,7 +270,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putMachineRegistrationEvent(MachineRegistrationEventOut ev) {
+   private void putMachineRegistrationEvent(MachineRegistrationEventOut ev) {
       Logger.track();
       
       if (ev.isRegistered()) {
@@ -284,7 +284,7 @@ public class CachedServerReader implements _ServerReader {
    }
    
    @Handler
-   public void putMachineStateEvent(MachineStateEventOut ev) {
+   private void putMachineStateEvent(MachineStateEventOut ev) {
       Logger.track();
       
       updateMachine(ev.getMachine());
