@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2015 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,34 +23,39 @@ package org.altherian.vbox4_3.net;
 import org.altherian.hbox.constant.NetServiceType;
 import org.altherian.hbox.hypervisor.net._NetMode;
 import org.altherian.hboxd.exception.net.InvalidNetworkModeException;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.virtualbox_4_3.NetworkAttachmentType;
 
 public enum VBoxNetMode implements _NetMode {
    
-   Bridged(new HashSet<String>(), true, false, false, false),
-   Generic(new HashSet<String>(), false, true, false, false),
-   HostOnly(new HashSet<String>(Arrays.asList(NetServiceType.IPv4.getId()/*, NetServiceType.DHCP.getId()*/)), true, false, true, true),
-   Internal(new HashSet<String>(), false, true, false, false),
-   NAT(new HashSet<String>(Arrays.asList(NetServiceType.NAT.getId())), false, false, false, false),
-   NATNetwork(new HashSet<String>(Arrays.asList(NetServiceType.DHCP.getId(), NetServiceType.NAT.getId())), true, false, true, true);
+   Bridged(true, false, false, false, false),
+   Generic(false, true, false, false, false),
+   HostOnly(true, false, true, true, false, NetServiceType.IPv4_Address, NetServiceType.IPv4_Netmask),
+   Internal(false, true, false, false, false),
+   NAT(false, false, false, false, false, NetServiceType.NAT_IPv4),
+   NATNetwork(true, false, true, true, true, NetServiceType.IPv4_Network, NetServiceType.DHCP_IPv4, NetServiceType.IPv6, NetServiceType.IPv6_Gateway,
+         NetServiceType.NAT_IPv4);
    
    protected String id;
    protected String label;
-   protected Set<String> services;
-   protected boolean canLinkAdaptor;
-   protected boolean canLinkNetworkName;
+   protected Set<String> services = new HashSet<String>();
+   protected boolean canUseAdaptor;
+   protected boolean canUseNetworkName;
    protected boolean canAddAdaptor;
    protected boolean canRemoveAdaptor;
+   protected boolean canRenameAdaptor;
    
-   private VBoxNetMode(Set<String> services, boolean canLinkAdaptor, boolean canLinkNetworkName, boolean canAddAdaptor, boolean canRemoveAdaptor) {
-      this.services = new HashSet<String>(services);
-      this.canLinkAdaptor = canLinkAdaptor;
-      this.canLinkNetworkName = canLinkNetworkName;
+   private VBoxNetMode(boolean canUseAdaptor, boolean canUseNetworkName, boolean canAddAdaptor, boolean canRemoveAdaptor, boolean canRenameAdaptor,
+         NetServiceType... services) {
+      for (NetServiceType type : services) {
+         this.services.add(type.getId());
+      }
+      this.canUseAdaptor = canUseAdaptor;
+      this.canUseNetworkName = canUseNetworkName;
       this.canAddAdaptor = canAddAdaptor;
       this.canRemoveAdaptor = canRemoveAdaptor;
+      this.canRenameAdaptor = canRenameAdaptor;
    }
    
    @Override
@@ -69,13 +74,13 @@ public enum VBoxNetMode implements _NetMode {
    }
    
    @Override
-   public boolean canLinkAdaptor() {
-      return canLinkAdaptor;
+   public boolean canUseAdaptor() {
+      return canUseAdaptor;
    }
    
    @Override
-   public boolean canLinkNetworkName() {
-      return canLinkNetworkName;
+   public boolean canUseNetworkName() {
+      return canUseNetworkName;
    }
    
    @Override
@@ -86,6 +91,11 @@ public enum VBoxNetMode implements _NetMode {
    @Override
    public boolean canRemoveAdaptor() {
       return canRemoveAdaptor;
+   }
+   
+   @Override
+   public boolean canRenameAdaptor() {
+      return canRenameAdaptor;
    }
    
    public static VBoxNetMode getEnum(String modeId) {

@@ -39,56 +39,57 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class HypervisorNetViewer implements _Refreshable, _NetModeListReceiver {
-
+   
    private String srvId;
-
+   
    private JLabel status;
    private JPanel dataPanel;
    private JPanel panel;
-
+   
    public HypervisorNetViewer(String srvId) {
       this.srvId = srvId;
-
+      
       status = new JLabel();
       dataPanel = new JPanel(new MigLayout("ins 0"));
       dataPanel.setVisible(false);
       panel = new JPanel(new MigLayout());
       panel.add(status, "growx, pushx, wrap, hidemode 3");
       panel.add(dataPanel, "grow, push, wrap, hidemode 3");
-
+      
       RefreshUtil.set(panel, this);
+      refresh();
       ViewEventManager.register(this);
    }
-
+   
    public JComponent getComponent() {
       return panel;
    }
-
+   
    @Override
    public void refresh() {
       NetModeListWorker.execute(this, srvId);
    }
-
+   
    @Handler
    private void putHypervisorConnectionEvent(HypervisorConnectionStateEventOut ev) {
       if (ev.getServerId().equals(srvId)) {
          refresh();
       }
    }
-
+   
    @Handler
    private void putConnectorConnectionStateEvent(ConnectorStateChangedEvent ev) {
       if (ev.getConnector().getServerId().equals(srvId)) {
          refresh();
       }
    }
-   
+
    private void clear() {
       for (Component c : dataPanel.getComponents()) {
          dataPanel.remove(c);
       }
    }
-   
+
    private void setDataVisible(boolean isVisible) {
       status.setVisible(!isVisible);
       dataPanel.setVisible(isVisible);
@@ -97,19 +98,19 @@ public class HypervisorNetViewer implements _Refreshable, _NetModeListReceiver {
          clear();
       }
    }
-
+   
    @Override
    public void loadingStarted() {
       setDataVisible(false);
       status.setText("Loading...");
    }
-
+   
    @Override
    public void loadingFinished(boolean isSuccessful, String message) {
       status.setText(message);
       setDataVisible(isSuccessful);
    }
-
+   
    @Override
    public void add(List<NetModeOut> modesOut) {
       for (NetModeOut modeOut : modesOut) {
@@ -122,5 +123,5 @@ public class HypervisorNetViewer implements _Refreshable, _NetModeListReceiver {
          }
       }
    }
-
+   
 }

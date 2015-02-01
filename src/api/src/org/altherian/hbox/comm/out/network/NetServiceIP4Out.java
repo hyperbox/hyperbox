@@ -32,7 +32,7 @@ public class NetServiceIP4Out extends NetServiceOut {
    }
    
    public NetServiceIP4Out(boolean enabled, String ip, String mask) {
-      super(NetServiceType.IPv4.getId(), enabled);
+      super(NetServiceType.IPv4_Address.getId(), enabled);
       this.ip = ip;
       this.mask = mask;
    }

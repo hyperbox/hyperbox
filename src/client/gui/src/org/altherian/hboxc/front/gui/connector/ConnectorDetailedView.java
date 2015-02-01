@@ -59,19 +59,14 @@ public class ConnectorDetailedView implements _Refreshable {
    
    public ConnectorDetailedView(ConnectorOutput conOut) {
       this.conId = conOut.getId();
-      summaryView = new ConnectorSummaryViewer();
+      summaryView = new ConnectorSummaryViewer(conOut);
       storeView = new StoreListView();
       userView = new UserListView();
       modView = new ModuleListView();
       
       tabs = new JTabbedPane();
       tabs.addTab("Summary", IconBuilder.getEntityType(EntityType.Server), summaryView.getComponent());
-      tabs.addTab("Host", IconBuilder.getEntityType(EntityType.Server), new HostViewer(conOut.getServerId()).getComponent());
-      tabs.addTab("Network", IconBuilder.getEntityType(EntityType.Network), new HypervisorNetViewer(conOut.getServerId()).getComponent());
-      tabs.addTab("Tasks", IconBuilder.getEntityType(EntityType.Task), new ServerTaskListView(conOut.getServerId()).getComponent());
-      tabs.addTab("Stores", IconBuilder.getEntityType(EntityType.Store), storeView.getComponent());
-      tabs.addTab("Users", IconBuilder.getEntityType(EntityType.User), userView.getComponent());
-      tabs.addTab("Modules", IconBuilder.getEntityType(EntityType.Module), modView.getComponent());
+      
       
       loadingLabel = new JLabel("Loading...");
       loadingLabel.setVisible(false);
@@ -86,19 +81,26 @@ public class ConnectorDetailedView implements _Refreshable {
    }
    
    private void update(ConnectorOutput conOut) {
-      summaryView.show(conOut);
-      tabs.setEnabledAt(tabs.indexOfTab("Host"), conOut.isConnected());
-      tabs.setEnabledAt(tabs.indexOfTab("Network"), conOut.isConnected());
-      tabs.setEnabledAt(tabs.indexOfTab("Tasks"), conOut.isConnected());
-      tabs.setEnabledAt(tabs.indexOfComponent(storeView.getComponent()), conOut.isConnected());
-      tabs.setEnabledAt(tabs.indexOfComponent(userView.getComponent()), conOut.isConnected());
-      tabs.setEnabledAt(tabs.indexOfComponent(modView.getComponent()), conOut.isConnected());
+      tabs.setSelectedComponent(summaryView.getComponent());
       if (conOut.isConnected()) {
+         tabs.addTab("Host", IconBuilder.getEntityType(EntityType.Server), new HostViewer(conOut.getServerId()).getComponent());
+         tabs.addTab("Network", IconBuilder.getEntityType(EntityType.Network), new HypervisorNetViewer(conOut.getServerId()).getComponent());
+         tabs.addTab("Tasks", IconBuilder.getEntityType(EntityType.Task), new ServerTaskListView(conOut.getServerId()).getComponent());
+         tabs.addTab("Stores", IconBuilder.getEntityType(EntityType.Store), storeView.getComponent());
+         tabs.addTab("Users", IconBuilder.getEntityType(EntityType.User), userView.getComponent());
+         tabs.addTab("Modules", IconBuilder.getEntityType(EntityType.Module), modView.getComponent());
          storeView.show(conOut.getServer());
          userView.show(conOut.getServer());
          modView.show(conOut.getServer());
       } else {
-         tabs.setSelectedComponent(summaryView.getComponent());
+         if (tabs.getTabCount() > 1) {
+            tabs.removeTabAt(tabs.indexOfTab("Host"));
+            tabs.removeTabAt(tabs.indexOfTab("Network"));
+            tabs.removeTabAt(tabs.indexOfTab("Tasks"));
+            tabs.removeTabAt(tabs.indexOfTab("Stores"));
+            tabs.removeTabAt(tabs.indexOfTab("Users"));
+            tabs.removeTabAt(tabs.indexOfTab("Modules"));
+         }
       }
    }
    

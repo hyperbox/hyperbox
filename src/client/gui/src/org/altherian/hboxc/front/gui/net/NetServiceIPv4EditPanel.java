@@ -87,7 +87,7 @@ public class NetServiceIPv4EditPanel implements _NetServiceEditor {
    
    @Override
    public String getServiceId() {
-      return NetServiceType.IPv4.getId();
+      return NetServiceType.IPv4_Address.getId();
    }
    
    @Override

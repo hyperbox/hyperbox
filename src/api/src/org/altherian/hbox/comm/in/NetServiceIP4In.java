@@ -28,7 +28,7 @@ public class NetServiceIP4In extends NetServiceIn {
    private String mask;
    
    public NetServiceIP4In() {
-      super(NetServiceType.IPv4.getId());
+      super(NetServiceType.IPv4_Address.getId());
    }
    
    public NetServiceIP4In(boolean isEnabled, String ip, String mask) {
