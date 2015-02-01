@@ -37,7 +37,7 @@ public class NetServiceEditFactory {
     * @return The implementation responsible for the mode or null if none exists
     */
    public static _NetServiceEditor get(String modeId, NetServiceOut netSvcOut) {
-      if (NetServiceType.IPv4.is(modeId)) {
+      if (NetServiceType.IPv4_Address.is(modeId)) {
          return new NetServiceIPv4EditPanel(netSvcOut);
       }
       return null;

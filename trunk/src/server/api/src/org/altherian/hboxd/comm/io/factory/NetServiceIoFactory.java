@@ -37,7 +37,7 @@ public class NetServiceIoFactory {
    }
    
    public static NetServiceOut get(_NetService svc) {
-      if (NetServiceType.IPv4.is(svc.getType())) {
+      if (NetServiceType.IPv4_Address.is(svc.getType())) {
          _NetServiceIP4 ip4 = (_NetServiceIP4) svc;
          return new NetServiceIP4Out(ip4.isEnabled(), ip4.getIP(), ip4.getMask());
       } else {
@@ -46,7 +46,7 @@ public class NetServiceIoFactory {
    }
    
    public static _NetService get(NetServiceIn svcIn) {
-      if (NetServiceType.IPv4.is(svcIn.getServiceTypeId())) {
+      if (NetServiceType.IPv4_Address.is(svcIn.getServiceTypeId())) {
          NetServiceIP4In ip4In = (NetServiceIP4In) svcIn;
          return new NetServiceIPv4(ip4In.isEnabled(), ip4In.getIP(), ip4In.getMask());
       } else {

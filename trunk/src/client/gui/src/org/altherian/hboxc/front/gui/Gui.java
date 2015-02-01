@@ -26,6 +26,7 @@ import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._RequestReceiver;
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.exception.HyperboxException;
+import org.altherian.hboxc.HyperboxClient;
 import org.altherian.hboxc.controller.ClientTasks;
 import org.altherian.hboxc.controller.MessageInput;
 import org.altherian.hboxc.core._CoreReader;
@@ -34,6 +35,7 @@ import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.front._Front;
 import org.altherian.hboxc.front.gui.action.CloseAction;
 import org.altherian.hboxc.front.gui.builder.JDialogBuilder;
+import org.altherian.hboxc.front.gui.hypervisor._HypervisorModel;
 import org.altherian.hboxc.front.gui.utils.JDialogUtils;
 import org.altherian.hboxc.server._ServerReader;
 import org.altherian.hboxc.state.CoreState;
@@ -44,6 +46,8 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
+import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -55,24 +59,24 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 public final class Gui implements _Front {
-   
+
    private static _RequestReceiver reqRecv;
    private static _CoreReader reader;
-   
+
    private MainView mainView;
-   
+
    @Override
    public void start() throws HyperboxException {
       EventQueueProxy proxy = new EventQueueProxy();
       EventQueue queue = Toolkit.getDefaultToolkit().getSystemEventQueue();
       queue.push(proxy);
-      
+
       ViewEventManager.get().start();
       EventManager.get().add(ViewEventManager.get());
       ViewEventManager.register(this);
-      
+
       SwingUtilities.invokeLater(new Runnable() {
-         
+
          @Override
          public void run() {
             try {
@@ -80,20 +84,20 @@ public final class Gui implements _Front {
             } catch (Exception e) {
                Logger.error("Couldn't switch to the System Look & Feel");
             }
-            
+
             mainView = new MainView();
          }
       });
-      
+
    }
-   
+
    @Override
    public void stop() {
       if (mainView != null) {
          mainView.hide();
       }
    }
-   
+
    @Override
    public void postError(Throwable t) {
       if (t.getCause() != null) {
@@ -101,22 +105,22 @@ public final class Gui implements _Front {
       } else {
          postError(t.getMessage());
       }
-      
+
    }
-   
+
    @Override
    public void postError(String s) {
       showError(s);
    }
-   
+
    public static void showError(String s) {
       JOptionPane.showMessageDialog(null, s, "Error", JOptionPane.ERROR_MESSAGE);
    }
-   
+
    public static void showError(Throwable t) {
       showError(t.getMessage());
    }
-   
+
    public static void showCopyPasteHelper(String label, String value) {
       JLabel infoLabel = new JLabel(label);
       JTextField valueField = new JTextField(value);
@@ -133,46 +137,46 @@ public final class Gui implements _Front {
       dialog.setLocationRelativeTo(dialog.getParent());
       dialog.setVisible(true);
    }
-   
+
    @Override
    public void postError(Throwable t, String s) {
       postError(s);
    }
-   
+
    @Override
    public void postError(String s, Throwable t) {
       postError(s + ": " + t.getMessage());
    }
-   
+
    @Handler
    public void getCoreState(CoreStateEvent event) {
       CoreState state = event.get(CoreState.class);
       Logger.debug("Got CoreState event : " + state);
-      
+
       if (state == CoreState.Started) {
          mainView.show();
       }
-      
+
       if (state == CoreState.Stopped) {
          stop();
       }
    }
-   
+
    private class EventQueueProxy extends EventQueue {
-      
+
       private void displayError(Throwable t) {
          JTextArea textArea = new JTextArea();
          textArea.setEditable(false);
          StringWriter writer = new StringWriter();
          t.printStackTrace(new PrintWriter(writer));
          textArea.setText(writer.toString());
-         
+
          JScrollPane scrollPane = new JScrollPane(textArea);
          scrollPane.setPreferredSize(new Dimension(750, 300));
-         
+
          JOptionPane.showMessageDialog(null, scrollPane, "An Error Has Occurred", JOptionPane.ERROR_MESSAGE);
       }
-      
+
       @Override
       protected void dispatchEvent(AWTEvent newEvent) {
          try {
@@ -181,49 +185,60 @@ public final class Gui implements _Front {
             displayError(t);
          }
       }
-      
+
    }
-   
+
    @Override
    public void setRequestReceiver(_RequestReceiver reqRecv) {
       Gui.reqRecv = reqRecv;
    }
-   
+
    @Override
    public void setCoreReader(_CoreReader reader) {
       Gui.reader = reader;
    }
-   
+
    public static void post(MessageInput msgIn) {
       getReqRecv().putRequest(msgIn.getRequest());
    }
-   
+
    public static void post(Request req) {
       getReqRecv().putRequest(req);
    }
-   
+
    public static _RequestReceiver getReqRecv() {
       return reqRecv;
    }
-   
+
    public static _CoreReader getReader() {
       return reader;
    }
-   
+
    public static _ServerReader getServer(String id) {
       return getReader().getServerReader(id);
    }
-   
+
    public static ServerOut getServerInfo(String id) {
       return reader.getServerInfo(id);
    }
-   
+
    public static _ServerReader getServer(ServerOut srvOut) {
       return getServer(srvOut.getId());
    }
-   
+
    public static void exit() {
       post(new MessageInput(new Request(Command.CUSTOM, ClientTasks.Exit)));
    }
-   
+
+   public static _HypervisorModel getHypervisorModel(String hypId) throws HyperboxException {
+      Set<_HypervisorModel> models = HyperboxClient.getAllOrFail(_HypervisorModel.class);
+      for (_HypervisorModel model : models) {
+         List<String> supported = model.getSupported();
+         if (supported.contains(hypId)) {
+            return model;
+         }
+      }
+      throw new HyperboxException("No hypervisor model for " + hypId);
+   }
+
 }

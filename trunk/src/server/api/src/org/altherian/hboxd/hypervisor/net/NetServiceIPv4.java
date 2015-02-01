@@ -29,7 +29,7 @@ public class NetServiceIPv4 extends NetService implements _NetServiceIP4 {
    private String mask;
    
    public NetServiceIPv4(boolean enabled) {
-      super(NetServiceType.IPv4.getId(), NetServiceType.IPv4.getId(), NetServiceType.IPv4.getId(), enabled);
+      super(NetServiceType.IPv4_Address.getId(), NetServiceType.IPv4_Address.getId(), NetServiceType.IPv4_Address.getId(), enabled);
    }
    
    public NetServiceIPv4(boolean enabled, String ip, String mask) {

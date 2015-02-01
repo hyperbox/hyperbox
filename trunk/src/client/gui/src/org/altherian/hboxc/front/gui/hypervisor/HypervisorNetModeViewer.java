@@ -25,12 +25,13 @@ import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.out.event.net.NetAdaptorEventOut;
 import org.altherian.hbox.comm.out.network.NetAdaptorOut;
 import org.altherian.hbox.comm.out.network.NetModeOut;
-import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.network.NetAdaptorAddAction;
 import org.altherian.hboxc.front.gui.action.network.NetAdaptorEditAction;
 import org.altherian.hboxc.front.gui.action.network.NetAdaptorRemoveAction;
+import org.altherian.hboxc.front.gui.worker.receiver._NetAdaptorListReceiver;
+import org.altherian.hboxc.front.gui.workers.NetAdaptorListWorker;
 import org.altherian.tool.logging.Logger;
 import java.awt.Component;
 import java.util.List;
@@ -39,12 +40,12 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class HypervisorNetModeViewer implements _Refreshable {
+public class HypervisorNetModeViewer implements _Refreshable, _NetAdaptorListReceiver {
 
    private String srvId;
    private NetModeOut mode;
 
-   private JPanel panel = new JPanel(new MigLayout("ins 0"));
+   private JPanel panel = new JPanel(new MigLayout());
 
    public HypervisorNetModeViewer(String srvId, NetModeOut mode) {
       this.srvId = srvId;
@@ -55,32 +56,8 @@ public class HypervisorNetModeViewer implements _Refreshable {
 
    @Override
    public void refresh() {
-      for (Component c : panel.getComponents()) {
-         panel.remove(c);
-      }
-      List<NetAdaptorOut> adaptors = Gui.getServer(srvId).getHypervisor().listAdaptors(mode.getId());
-      if (adaptors.isEmpty()) {
-         panel.add(new JLabel("No adaptors"), "growx, pushx, wrap");
-      } else {
-         for (NetAdaptorOut adapt : adaptors) {
-            panel.add(new JLabel(adapt.getLabel()), "growx, pushx");
-            if (mode.canRemoveAdaptor()) {
-               panel.add(new JButton(new NetAdaptorEditAction(srvId, mode.getId(), adapt.getId())));
-               panel.add(new JButton(new NetAdaptorRemoveAction(srvId, mode.getId(), adapt.getId())), "wrap");
-
-            } else {
-               panel.add(new JLabel(), "span 2, wrap");
-            }
-         }
-      }
-
-      Logger.debug(mode.getId() + " net mode can add adaptator? " + mode.canAddAdaptor());
-      if (mode.canAddAdaptor()) {
-         panel.add(new JButton(new NetAdaptorAddAction(srvId, mode.getId())), "wrap");
-      }
-
-      panel.repaint();
-      panel.revalidate();
+      Logger.track();
+      NetAdaptorListWorker.execute(this, srvId, mode.getId());
    }
 
    public JComponent getComponent() {
@@ -89,8 +66,47 @@ public class HypervisorNetModeViewer implements _Refreshable {
 
    @Handler
    private void putNetAdaptorEvent(NetAdaptorEventOut ev) {
+      Logger.track();
+      System.out.println("Mode ID | " + mode.getId() + " | " + ev.getNetMode());
       if (mode.getId().equals(ev.getNetMode())) {
+         Logger.track();
          refresh();
+      }
+   }
+   
+   @Override
+   public void loadingStarted() {
+      for (Component c : panel.getComponents()) {
+         panel.remove(c);
+      }
+   }
+   
+   @Override
+   public void loadingFinished(boolean isSuccessful, String message) {
+      if (!isSuccessful) {
+         panel.add(new JLabel(message), "wrap");
+      } else {
+         if (panel.getComponents().length == 0) {
+            panel.add(new JLabel("No adaptor"), "wrap");
+         }
+         if (mode.canAddAdaptor()) {
+            panel.add(new JButton(new NetAdaptorAddAction(srvId, mode.getId())), "wrap");
+         }
+      }
+      panel.revalidate();
+      panel.repaint();
+   }
+   
+   @Override
+   public void add(List<NetAdaptorOut> adaptOutList) {
+      for (NetAdaptorOut adapt : adaptOutList) {
+         panel.add(new JLabel(adapt.getLabel()), "growx, pushx");
+         if (mode.canRemoveAdaptor()) {
+            panel.add(new JButton(new NetAdaptorEditAction(srvId, mode.getId(), adapt.getId())));
+            panel.add(new JButton(new NetAdaptorRemoveAction(srvId, mode.getId(), adapt.getId())), "wrap");
+         } else {
+            panel.add(new JLabel(), "span 2, wrap");
+         }
       }
    }
 

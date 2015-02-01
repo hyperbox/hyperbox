@@ -37,7 +37,7 @@ public class VBoxHostOnlyAdaptor extends VBoxAdaptor {
    
    @Override
    protected void process(_NetService service) {
-      if (NetServiceType.IPv4.is(service.getType())) {
+      if (NetServiceType.IPv4_Address.is(service.getType())) {
          _NetServiceIP4 ip4Svc = (_NetServiceIP4) service;
          IHostNetworkInterface nic = VBox.get().getHost().findHostNetworkInterfaceById(getId());
          if (ip4Svc.isEnabled()) {
@@ -53,7 +53,7 @@ public class VBoxHostOnlyAdaptor extends VBoxAdaptor {
    @Override
    public _NetService getService(String serviceTypeId) {
       IHostNetworkInterface nic = VBox.get().getHost().findHostNetworkInterfaceById(getId());
-      if (NetServiceType.IPv4.is(serviceTypeId)) {
+      if (NetServiceType.IPv4_Address.is(serviceTypeId)) {
          return new NetServiceIPv4(true, nic.getIPAddress(), nic.getNetworkMask());
       } else {
          throw new HyperboxRuntimeException("Service type " + serviceTypeId + " is not supported on " + getMode().getId() + " adaptor");

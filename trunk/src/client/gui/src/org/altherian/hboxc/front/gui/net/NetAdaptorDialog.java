@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2015 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -39,6 +39,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class NetAdaptorDialog implements _Saveable, _Cancelable {
    
@@ -47,6 +48,9 @@ public class NetAdaptorDialog implements _Saveable, _Cancelable {
    
    private NetAdaptorIn adaptIn;
    private List<_NetServiceEditor> svcEditors = new ArrayList<_NetServiceEditor>();
+   
+   private JLabel nameLabel;
+   private JTextField nameValue;
    
    private JPanel buttonsPanel;
    private JButton saveButton;
@@ -63,12 +67,22 @@ public class NetAdaptorDialog implements _Saveable, _Cancelable {
       buttonsPanel = new JPanel(new MigLayout("ins 0"));
       buttonsPanel.add(saveButton);
       buttonsPanel.add(cancelButton);
-      
+
+      nameLabel = new JLabel("Name");
+      nameValue = new JTextField(15);
+
       dialog = JDialogBuilder.get("Add Network Adaptor", saveButton);
-      dialog.getContentPane().add(new JLabel("Mode: "));
-      dialog.getContentPane().add(new JLabel(modeId), "left, growx, pushx, span, wrap");
       
       NetModeOut modeOut = Gui.getServer(srvId).getHypervisor().getNetworkMode(modeId);
+      
+      dialog.getContentPane().add(new JLabel("Mode: "));
+      dialog.getContentPane().add(new JLabel(modeOut.getLabel()), "left, growx, pushx, span, wrap");
+
+      if (modeOut.canRenameAdaptor()) {
+         dialog.getContentPane().add(nameLabel);
+         dialog.getContentPane().add(nameValue, "growx,pushx,span,wrap");
+      }
+      
       for (String svcTypeId : modeOut.getNetServices()) {
          NetServiceOut svcOut = null;
          if (adaptId != null) {
@@ -117,6 +131,7 @@ public class NetAdaptorDialog implements _Saveable, _Cancelable {
    @Override
    public void save() {
       adaptIn = new NetAdaptorIn(modeId, adaptId);
+      adaptIn.setLabel(nameValue.getText());
       for (_NetServiceEditor svcEditor : svcEditors) {
          NetServiceIn svcIn = svcEditor.getInput();
          if (svcIn != null) {
