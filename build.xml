@@ -38,7 +38,10 @@
 
 	<property name="client.dir"										value="${hbox.dir}/client/core" />
 	<property name="client.api.dir"									value="${hbox.dir}/client/api" />
-	<property name="client.gui.dir"									value="${hbox.dir}/client/gui" />
+	<property name="client.gui.dir"									value="${hbox.dir}/client/gui/default" />
+	<property name="client.gui.vbox.dir"							value="${hbox.dir}/client/gui/virtualbox/common" />
+	<property name="client.gui.vbox.4_2.dir"						value="${hbox.dir}/client/gui/virtualbox/4.2" />
+	<property name="client.gui.vbox.4_3.dir"						value="${hbox.dir}/client/gui/virtualbox/4.3" />
 
 	<property name="client.install.dir.win"							value="C:/Program Files/Hyperbox/Client" />
 	<property name="client.install.dir.linux"						value="/opt/hboxc" />
@@ -62,13 +65,39 @@
 	<property name="api.lib.dir"									value="${api.dir}/${lib.dir}" />
 	<property name="api.classes.dir"								value="${build.class.dir}/api" />
 	
-	<property name="server.api.src.dir"								value="${server.api.dir}/${src.dir}" />
-	<property name="server.api.lib.dir"								value="${server.api.dir}/${lib.dir}" />
-	<property name="server.api.classes.dir"							value="${build.class.dir}/srv-api" />
-
 	<property name="client.api.src.dir"								value="${client.api.dir}/${src.dir}" />
 	<property name="client.api.lib.dir"								value="${client.api.dir}/${lib.dir}" />
 	<property name="client.api.classes.dir"							value="${build.class.dir}/client-api" />
+	
+	<property name="client.src.dir"									value="${client.dir}/${src.dir}" />
+	<property name="client.lib.dir"									value="${client.dir}/${lib.dir}" />
+	<property name="client.classes.dir"								value="${build.class.dir}/client" />
+	
+	<property name="client.gui.src.dir"								value="${client.gui.dir}/${src.dir}" />
+	<property name="client.gui.lib.dir"								value="${client.gui.dir}/${lib.dir}" />
+	<property name="client.gui.classes.dir"							value="${build.class.dir}/client-gui" />
+	
+	<property name="client.gui.vbox.id"								value="vbox-gui-common" />
+	<property name="client.gui.vbox.src.dir"						value="${client.gui.vbox.dir}/${src.dir}" />
+	<property name="client.gui.vbox.lib.dir"						value="${client.gui.vbox.dir}/${lib.dir}" />
+	<property name="client.gui.vbox.classes.dir"					value="${build.class.dir}/client-gui-vbox" />
+	<property name="client.gui.vbox.jar.dir"						value="${build.module.jar.dir}/${client.gui.vbox.id}" />
+	
+	<property name="client.gui.vbox.4_2.id"							value="vbox-gui-4.2" />
+	<property name="client.gui.vbox.4_2.src.dir"					value="${client.gui.vbox.4_2.dir}/${src.dir}" />
+	<property name="client.gui.vbox.4_2.lib.dir"					value="${client.gui.vbox.4_2.dir}/${lib.dir}" />
+	<property name="client.gui.vbox.4_2.classes.dir"				value="${build.class.dir}/client-gui-vbox-4.2" />
+	<property name="client.gui.vbox.4_2.jar.dir"					value="${build.module.jar.dir}/${client.gui.vbox.4_2.id}" />
+	
+	<property name="client.gui.vbox.4_3.id"							value="vbox-gui-4.3" />
+	<property name="client.gui.vbox.4_3.src.dir"					value="${client.gui.vbox.4_3.dir}/${src.dir}" />
+	<property name="client.gui.vbox.4_3.lib.dir"					value="${client.gui.vbox.4_3.dir}/${lib.dir}" />
+	<property name="client.gui.vbox.4_3.classes.dir"				value="${build.class.dir}/client-gui-vbox-4.3" />
+	<property name="client.gui.vbox.4_3.jar.dir"					value="${build.module.jar.dir}/${client.gui.vbox.4_3.id}" />
+	
+	<property name="server.api.src.dir"								value="${server.api.dir}/${src.dir}" />
+	<property name="server.api.lib.dir"								value="${server.api.dir}/${lib.dir}" />
+	<property name="server.api.classes.dir"							value="${build.class.dir}/srv-api" />
 	
 	<property name="server.hyp.vbox.dir"							value="${server.hyp.dir}/virtualbox" />
 	<property name="server.hyp.vbox.helper.dir"						value="${server.hyp.vbox.dir}/common" />
@@ -125,7 +154,6 @@
 	<property name="server.hyp.vbox.4_3.mscom.lib.dir"				value="${server.hyp.vbox.4_3.mscom.dir}/${lib.dir}" />
 	<property name="server.hyp.vbox.4_3.mscom.classes.dir"			value="${build.class.dir}/srv-vb-4.3-mscom" />
 	<property name="server.hyp.vbox.4_3.mscom.jar.dir"				value="${build.module.jar.dir}/${server.hyp.vbox.4_3.mscom.id}" />
-	
 
 	<property name="kryo.api.src.dir"								value="${kryo.api.dir}/${src.dir}" />
 	<property name="kryo.api.lib.dir"								value="${kryo.api.dir}/${lib.dir}" />
@@ -134,14 +162,6 @@
 	<property name="server.core.src.dir"							value="${server.core.dir}/${src.dir}" />
 	<property name="server.core.lib.dir"							value="${server.core.dir}/${lib.dir}" />
 	<property name="server.core.classes.dir"						value="${build.class.dir}/srv" />
-	
-	<property name="client.src.dir"									value="${client.dir}/${src.dir}" />
-	<property name="client.lib.dir"									value="${client.dir}/${lib.dir}" />
-	<property name="client.classes.dir"								value="${build.class.dir}/client" />
-	
-	<property name="client.gui.src.dir"								value="${client.gui.dir}/${src.dir}" />
-	<property name="client.gui.lib.dir"								value="${client.gui.dir}/${lib.dir}" />
-	<property name="client.gui.classes.dir"							value="${build.class.dir}/client-gui" />
 	
 	<property name="docs.out.dir"									value="${out.dir}/${docs.dir}" />
 	<property name="javadoc.out.dir"								value="${out.dir}/${docs.dir}/javadoc" />
@@ -216,9 +236,15 @@
 	
 	<path id="client.gui.classpath">
 		<path refid="client.api.classpath"/>
-		<pathelement location="${client.api.classes.dir}"/>
 		<pathelement location="${client.gui.classes.dir}"/>
 		<fileset dir="${client.gui.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="client.gui.vbox.classpath">
+		<path refid="client.api.classpath"/>
+		<path refid="client.gui.classpath"/>
+		<pathelement location="${client.gui.vbox.classes.dir}"/>
+		<fileset dir="${client.gui.vbox.lib.dir}" includes="**/*.jar"/>
 	</path>
 	
 	<condition property="isWin">
@@ -598,18 +624,35 @@
         </jar>
     </target>
 	
+	<target name="client.gui.vbox.compile" depends="client.gui.compile">
+		<mkdir dir="${client.gui.vbox.classes.dir}" />
+		<javac source="1.6" target="1.6" debug="on" includeantruntime="false" srcdir="${server.hyp.vbox.helper.src.dir}" destdir="${client.gui.vbox.classes.dir}" classpathref="client.gui.vbox.classpath" />
+		<javac source="1.6" target="1.6" debug="on" includeantruntime="false" srcdir="${client.gui.vbox.src.dir}" destdir="${client.gui.vbox.classes.dir}" classpathref="client.gui.vbox.classpath" />
+	</target>
+	
+	<target name="client.gui.vbox.jar" depends="client.gui.vbox.compile">
+        <jar destfile="${client.gui.vbox.jar.dir}/${client.gui.vbox.id}.jar">
+        	<fileset dir="${client.gui.vbox.classes.dir}" />
+        </jar>
+    </target>
+	
+	<target name="client.gui.vbox.deploy" depends="client.gui.vbox.jar, client.gui.deploy">
+		<copy todir="${client.out.dir}/lib" flatten="true">
+			<fileset dir="${client.gui.vbox.lib.dir}" includes="**/*.jar" />
+		</copy>
+		<copy file="${client.gui.vbox.jar.dir}/${client.gui.vbox.id}.jar" tofile="${client.out.dir}/modules/${client.gui.vbox.id}.jar" />
+	</target>
+	
 	<target name="client.build.win" depends="client.deploy, client.jar" if="isWin">
 		<launch4j configFile="scripts/client/launch4j/main.xml" outfile="${client.out.dir}/${client.out.exe}" />
 	</target>
 	
-	<target name="client.build.linux" depends="client.jar, client.jar" if="isLinux">
+	<target name="client.build.linux" depends="client.deploy, client.jar" if="isLinux">
 		<copy file="scripts/client/hyperbox" tofile="${client.out.dir}/hyperbox" />
 		<chmod file="${client.out.dir}/hyperbox" perm="u+rx,g+rx,o+rx"/>
 	</target>
 	
-	<target name="client.build" depends="client.build.linux, client.build.win, client.gui.jar, kryo.api.client.deploy">
-		
-	</target>
+	<extension-point name="client.build" depends="client.build.linux, client.build.win, client.gui.jar, client.gui.vbox.deploy, kryo.api.client.deploy" />
 	
 	<target name="server.build.win" depends="server.jar, server.deploy" if="isWin">
 		<launch4j configFile="scripts/server/launch4j/main.xml" outfile="${server.out.dir}/${server.out.exe}" />
@@ -637,8 +680,7 @@
 		<zip destfile="${dist.out.dir.abs}/${client.out.dist.package}.zip" basedir="${client.out.dir}" />
 	</target>
 	
-	<target name="build.zip" depends="server.build.zip, client.build.zip">
-	</target>
+	<extension-point name="build.zip" depends="server.build.zip, client.build.zip" />
 	
 	<target name="configureDist" depends="configure">
 		<property name="dist.build.out.dir" value="${build.dir}/dist" />
@@ -670,8 +712,7 @@
 		</exec>
 	</target>
 	
-	<target name="client.build.dist" depends="client.build.dist.win,client.build.dist.linux">
-	</target>
+	<extension-point name="client.build.dist" depends="client.build.dist.win,client.build.dist.linux" />
 	
 	<target name="server.build.dist.win" if="isWin" depends="configureDist">
 		<echo message="NSIS Dir:           ${tools.nsis.dir}" />
