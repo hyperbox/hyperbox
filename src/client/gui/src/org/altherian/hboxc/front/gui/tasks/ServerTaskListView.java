@@ -91,6 +91,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       actions = new JPopupMenu();
       actions.add(new JMenuItem(new TaskCancelAction(this)));
 
+      refresh();
       ViewEventManager.register(this);
    }
 
@@ -181,7 +182,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       public void add(List<TaskOut> tOutList) {
          Logger.track();
 
-         itemListModel.add(tOutList);
+         itemListModel.merge(tOutList);
       }
    }
 

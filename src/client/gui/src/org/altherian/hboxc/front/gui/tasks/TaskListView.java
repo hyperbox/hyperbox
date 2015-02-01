@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,17 +23,18 @@ package org.altherian.hboxc.front.gui.tasks;
 import net.engio.mbassy.listener.Handler;
 import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.out.TaskOut;
-import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.hboxc.event.connector.ConnectorStateChangedEvent;
 import org.altherian.hboxc.event.task.TaskAddedEvent;
 import org.altherian.hboxc.event.task.TaskRemovedEvent;
 import org.altherian.hboxc.event.task.TaskStateChangedEvent;
-import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui.Gui;
+import org.altherian.hboxc.front.gui.ViewEventManager;
 import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.action.task.TaskCancelAction;
 import org.altherian.hboxc.front.gui.utils.RefreshUtil;
+import org.altherian.hboxc.front.gui.worker.receiver._TaskListReceiver;
+import org.altherian.hboxc.front.gui.workers.TaskListWorker;
 import org.altherian.tool.logging.Logger;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -48,9 +49,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
-import javax.swing.SwingUtilities;
 
-public class TaskListView implements _TaskSelector, _Refreshable {
+public class TaskListView implements _TaskSelector, _Refreshable, _TaskListReceiver {
    
    private JPanel panel;
    private TaskListTableModel itemListModel;
@@ -58,8 +58,6 @@ public class TaskListView implements _TaskSelector, _Refreshable {
    private JPopupMenu actions;
    
    public TaskListView() {
-      Logger.track();
-      
       itemListModel = new TaskListTableModel();
       itemList = new JTable(itemListModel);
       itemList.setFillsViewportHeight(true);
@@ -93,87 +91,31 @@ public class TaskListView implements _TaskSelector, _Refreshable {
       return listSelectedItems;
    }
    
-   public void refresh(final String serverId) {
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            
-            @Override
-            public void run() {
-               refresh(serverId);
-            }
-         });
-      } else {
-         try {
-            itemListModel.merge(Gui.getReader().getServerReader(serverId).listTasks());
-         } catch (HyperboxRuntimeException e) {
-            itemListModel.removeServer(serverId);
-         }
-      }
-   }
-   
    @Override
    public void refresh() {
-      Logger.track();
-      
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            
-            @Override
-            public void run() {
-               refresh();
-            }
-         });
-      } else {
-         itemListModel.clear();
-         for (ConnectorOutput conOut : Gui.getReader().listConnectors()) {
-            if (conOut.isConnected()) {
-               refresh(conOut.getServer().getId());
-            }
+      itemListModel.clear();
+      for (ConnectorOutput conOut : Gui.getReader().listConnectors()) {
+         if (conOut.isConnected()) {
+            refresh(conOut.getServer().getId());
          }
       }
       
    }
    
-   private void add(final TaskOut tOut) {
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            
-            @Override
-            public void run() {
-               add(tOut);
-            }
-         });
-      } else {
-         itemListModel.add(tOut);
-      }
+   private void refresh(String srvId) {
+      TaskListWorker.execute(this, srvId);
    }
    
-   private void update(final TaskOut tOut) {
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            
-            @Override
-            public void run() {
-               update(tOut);
-            }
-         });
-      } else {
-         itemListModel.update(tOut);
-      }
+   private void add(TaskOut tOut) {
+      itemListModel.add(tOut);
    }
    
-   private void remove(final TaskOut tOut) {
-      if (!SwingUtilities.isEventDispatchThread()) {
-         SwingUtilities.invokeLater(new Runnable() {
-            
-            @Override
-            public void run() {
-               remove(tOut);
-            }
-         });
-      } else {
-         itemListModel.remove(tOut);
-      }
+   private void update(TaskOut tOut) {
+      itemListModel.update(tOut);
+   }
+   
+   private void remove(TaskOut tOut) {
+      itemListModel.remove(tOut);
    }
    
    @Handler
@@ -195,7 +137,7 @@ public class TaskListView implements _TaskSelector, _Refreshable {
    }
    
    @Handler
-   private void putConnectorStateEvet(ConnectorStateChangedEvent ev) {
+   private void putConnectorStateEvent(ConnectorStateChangedEvent ev) {
       Logger.track();
       
       refresh(ev.getConnector().getServerId());
@@ -235,6 +177,23 @@ public class TaskListView implements _TaskSelector, _Refreshable {
          }
       }
       
+   }
+
+   @Override
+   public void loadingStarted() {
+      // stub
+   }
+
+   @Override
+   public void loadingFinished(boolean isSuccessful, String message) {
+      // stub
+   }
+
+   @Override
+   public void add(List<TaskOut> objOutList) {
+      for (TaskOut tOut : objOutList) {
+         itemListModel.merge(tOut);
+      }
    }
    
 }
