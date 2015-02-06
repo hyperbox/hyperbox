@@ -31,11 +31,10 @@ public enum VBoxNetMode implements _NetMode {
    
    Bridged(true, false, false, false, false),
    Generic(false, true, false, false, false),
-   HostOnly(true, false, true, true, false, NetServiceType.IPv4_Address, NetServiceType.IPv4_Netmask),
+   HostOnly(true, false, true, true, false, NetServiceType.IPv4),
    Internal(false, true, false, false, false),
    NAT(false, false, false, false, false, NetServiceType.NAT_IPv4),
-   NATNetwork(true, false, true, true, true, NetServiceType.IPv4_Network, NetServiceType.DHCP_IPv4, NetServiceType.IPv6, NetServiceType.IPv6_Gateway,
-         NetServiceType.NAT_IPv4);
+   NATNetwork(true, false, true, true, true, NetServiceType.DHCP_IPv4, NetServiceType.IPv6, NetServiceType.NAT_IPv4);
    
    protected String id;
    protected String label;

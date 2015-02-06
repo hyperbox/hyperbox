@@ -6,6 +6,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/Client-API"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Kryonet-API"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/VB"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Server-VB"/>
 	<classpathentry kind="output" path="eclipse-bin"/>
 </classpath>

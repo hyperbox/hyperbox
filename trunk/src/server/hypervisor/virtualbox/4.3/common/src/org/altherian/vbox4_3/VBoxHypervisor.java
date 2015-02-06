@@ -98,12 +98,6 @@ import org.virtualbox_4_3.StorageControllerType;
 import org.virtualbox_4_3.VBoxException;
 import org.virtualbox_4_3.VirtualBoxManager;
 
-@Hypervisor(
-      id = "vbox-4.3-generic",
-      typeId = "generic",
-      vendor = "Oracle",
-      product = "Virtualbox",
-      schemes = {})
 public abstract class VBoxHypervisor implements _Hypervisor {
 
    /**
@@ -852,6 +846,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       Logger.verbose("Removing NAT Network: " + name);
       INATNetwork natNet = VBox.get().findNATNetworkByName(name);
       VBox.get().removeNATNetwork(natNet);
+      EventManager.post(new NetAdaptorRemovedEvent(this, VBoxNetMode.NATNetwork.getId(), name));
    }
 
    @Override

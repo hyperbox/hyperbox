@@ -93,12 +93,6 @@ import org.virtualbox_4_2.StorageControllerType;
 import org.virtualbox_4_2.VBoxException;
 import org.virtualbox_4_2.VirtualBoxManager;
 
-@Hypervisor(
-      id = "vbox-4.2-generic",
-      typeId = "generic",
-      vendor = "Oracle",
-      product = "Virtualbox",
-      schemes = {})
 public abstract class VBoxHypervisor implements _Hypervisor {
    
    /**
