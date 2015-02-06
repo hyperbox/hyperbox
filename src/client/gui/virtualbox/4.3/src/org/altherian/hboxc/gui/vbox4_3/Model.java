@@ -19,10 +19,9 @@
  *
  */
 
-package org.altherian.hboxc.gui.vbox;
+package org.altherian.hboxc.gui.vbox4_3;
 
-import org.altherian.hbox.exception.HyperboxRuntimeException;
-import org.altherian.hboxc.front.gui.hypervisor._HypervisorConfigureView;
+import org.altherian.hboxc.front.gui.hypervisor._GlobalConfigureView;
 import org.altherian.hboxc.front.gui.hypervisor._HypervisorModel;
 import org.altherian.vbox.VirtualBox;
 import java.util.List;
@@ -32,18 +31,12 @@ public class Model implements _HypervisorModel {
    
    @Override
    public List<String> getSupported() {
-      return VirtualBox.ID_GROUP.ALL;
+      return VirtualBox.ID_GROUP.ALL_4_3;
    }
    
    @Override
-   public _HypervisorConfigureView getConfigureView(String hypId) {
-      if (VirtualBox.ID_GROUP.ALL_4_2.contains(hypId)) {
-         return new org.altherian.hboxc.gui.vbox4_2.GlobalConfigureView();
-      }
-      if (VirtualBox.ID_GROUP.ALL_4_3.contains(hypId)) {
-         return new org.altherian.hboxc.gui.vbox4_3.GlobalConfigureView();
-      }
-      throw new HyperboxRuntimeException("No VirtualBox Configuration GUI for ID " + hypId);
+   public _GlobalConfigureView getConfigureView() {
+      return new GlobalConfigureView();
    }
-   
+
 }

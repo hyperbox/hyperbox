@@ -19,14 +19,24 @@
  *
  */
 
-package org.altherian.hboxc.front.gui.hypervisor;
+package org.altherian.hboxc.gui.vbox4_2;
 
+import org.altherian.hboxc.front.gui.hypervisor._GlobalConfigureView;
+import org.altherian.hboxc.front.gui.hypervisor._HypervisorModel;
+import org.altherian.vbox.VirtualBox;
 import java.util.List;
 
-public interface _HypervisorModel {
 
-   public List<String> getSupported();
+public class Model implements _HypervisorModel {
    
-   public _GlobalConfigureView getConfigureView();
+   @Override
+   public List<String> getSupported() {
+      return VirtualBox.ID_GROUP.ALL_4_2;
+   }
+   
+   @Override
+   public _GlobalConfigureView getConfigureView() {
+      return new GlobalConfigureView();
+   }
    
 }

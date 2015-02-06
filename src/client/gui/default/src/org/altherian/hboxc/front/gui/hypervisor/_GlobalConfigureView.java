@@ -25,7 +25,7 @@ import org.altherian.hbox.comm.in.HypervisorIn;
 import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
 import javax.swing.JComponent;
 
-public interface _HypervisorConfigureView {
+public interface _GlobalConfigureView {
 
    public JComponent getComponent();
    

@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/VB-4.2"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Server-VB-4.2"/>
 	<classpathentry kind="lib" path="lib/vboxjxpcom.jar"/>
 	<classpathentry kind="output" path="eclipse-bin"/>
 </classpath>

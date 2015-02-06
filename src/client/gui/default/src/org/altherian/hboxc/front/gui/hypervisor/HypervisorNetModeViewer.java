@@ -32,7 +32,6 @@ import org.altherian.hboxc.front.gui.action.network.NetAdaptorEditAction;
 import org.altherian.hboxc.front.gui.action.network.NetAdaptorRemoveAction;
 import org.altherian.hboxc.front.gui.worker.receiver._NetAdaptorListReceiver;
 import org.altherian.hboxc.front.gui.workers.NetAdaptorListWorker;
-import org.altherian.tool.logging.Logger;
 import java.awt.Component;
 import java.util.List;
 import javax.swing.JButton;
@@ -41,46 +40,42 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class HypervisorNetModeViewer implements _Refreshable, _NetAdaptorListReceiver {
-
+   
    private String srvId;
    private NetModeOut mode;
-
+   
    private JPanel panel = new JPanel(new MigLayout());
-
+   
    public HypervisorNetModeViewer(String srvId, NetModeOut mode) {
       this.srvId = srvId;
       this.mode = mode;
-      ViewEventManager.register(this);
       refresh();
+      ViewEventManager.register(this);
    }
-
+   
    @Override
    public void refresh() {
-      Logger.track();
       NetAdaptorListWorker.execute(this, srvId, mode.getId());
    }
-
+   
    public JComponent getComponent() {
       return panel;
    }
-
+   
    @Handler
    private void putNetAdaptorEvent(NetAdaptorEventOut ev) {
-      Logger.track();
-      System.out.println("Mode ID | " + mode.getId() + " | " + ev.getNetMode());
       if (mode.getId().equals(ev.getNetMode())) {
-         Logger.track();
          refresh();
       }
    }
-   
+
    @Override
    public void loadingStarted() {
       for (Component c : panel.getComponents()) {
          panel.remove(c);
       }
    }
-   
+
    @Override
    public void loadingFinished(boolean isSuccessful, String message) {
       if (!isSuccessful) {
@@ -93,10 +88,11 @@ public class HypervisorNetModeViewer implements _Refreshable, _NetAdaptorListRec
             panel.add(new JButton(new NetAdaptorAddAction(srvId, mode.getId())), "wrap");
          }
       }
+      // TODO find out why this is needed
       panel.revalidate();
       panel.repaint();
    }
-   
+
    @Override
    public void add(List<NetAdaptorOut> adaptOutList) {
       for (NetAdaptorOut adapt : adaptOutList) {
@@ -109,5 +105,5 @@ public class HypervisorNetModeViewer implements _Refreshable, _NetAdaptorListRec
          }
       }
    }
-
+   
 }

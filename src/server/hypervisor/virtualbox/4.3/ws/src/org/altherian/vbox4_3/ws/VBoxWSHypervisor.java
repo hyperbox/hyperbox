@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2014 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,6 +24,7 @@ import org.altherian.hbox.exception.HypervisorException;
 import org.altherian.hboxd.hypervisor.Hypervisor;
 import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
+import org.altherian.vbox.VirtualBox;
 import org.altherian.vbox4_3.VBoxHypervisor;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,11 +32,11 @@ import org.virtualbox_4_3.VBoxException;
 import org.virtualbox_4_3.VirtualBoxManager;
 
 @Hypervisor(
-      id = "vbox-4.3-ws",
-      typeId = "ws",
-      vendor = "Oracle",
-      product = "Virtualbox",
-      schemes = { "vbox-4.3-ws" })
+      id = VirtualBox.ID.WS_4_3,
+      typeId = VirtualBox.Type.WEB_SERVICES,
+      vendor = VirtualBox.VENDOR,
+      product = VirtualBox.PRODUCT,
+      schemes = { VirtualBox.ID.WS_4_3 })
 public final class VBoxWSHypervisor extends VBoxHypervisor {
    
    protected final String defaultProtocol = "http";
