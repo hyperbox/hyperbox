@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -53,8 +53,8 @@ import org.altherian.hboxc.server._Server;
 import org.altherian.hboxc.state.ConnectionState;
 import org.altherian.hboxc.state.CoreState;
 import org.altherian.hboxc.updater._Updater;
+import org.altherian.tool.ProcessRunner;
 import org.altherian.tool.logging.Logger;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -420,11 +420,11 @@ public class ClientCore implements _Core {
       Logger.info("Starting Console viewer " + cView.getViewerPath() + " for machine " + m.getUuid() + " on server " + srv.getId()
             + " with arguments: " + arg);
       try {
-         new ProcessBuilder(new String[] { cView.getViewerPath(), arg }).start();
-      } catch (IOException e) {
-         throw new HyperboxRuntimeException("Couldn't launch Console Viewer: " + e.getMessage(), e);
+         ProcessRunner.run(new ProcessBuilder(new String[] { cView.getViewerPath(), arg }).start());
+      } catch (Throwable t) {
+         throw new HyperboxRuntimeException("Couldn't launch Console Viewer", t);
       }
-      
+
    }
    
    @Override

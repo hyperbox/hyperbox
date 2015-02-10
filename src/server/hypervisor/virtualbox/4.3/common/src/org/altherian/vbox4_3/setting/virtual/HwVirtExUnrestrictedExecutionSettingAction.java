@@ -28,7 +28,7 @@ import org.virtualbox_4_3.HWVirtExPropertyType;
 import org.virtualbox_4_3.IMachine;
 import org.virtualbox_4_3.LockType;
 
-public class HwVirtExExclSettingAction implements _MachineSettingAction {
+public class HwVirtExUnrestrictedExecutionSettingAction implements _MachineSettingAction {
    
    @Override
    public LockType getLockType() {
