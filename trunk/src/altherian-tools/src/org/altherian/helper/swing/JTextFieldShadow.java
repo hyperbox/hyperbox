@@ -30,15 +30,15 @@ import javax.swing.JTextField;
 public class JTextFieldShadow extends JTextField {
    
    private static final Color SHADOW_COLOR = Color.LIGHT_GRAY;
-   private final String initialText;
+   private String shadowText;
    private Color prevForeground;
    private boolean isShadow;
    
-   public JTextFieldShadow(String initialText) {
-      super(initialText);
+   public JTextFieldShadow(String shadowText) {
+      super(shadowText);
       
       isShadow = true;
-      this.initialText = initialText;
+      setShadowText(shadowText);
       prevForeground = getForeground();
       setForeground(SHADOW_COLOR);
       
@@ -55,7 +55,7 @@ public class JTextFieldShadow extends JTextField {
          @Override
          public void focusLost(FocusEvent fe) {
             if (AxStrings.isEmpty(getText())) {
-               setText(JTextFieldShadow.this.initialText);
+               setText(JTextFieldShadow.this.shadowText);
                isShadow = true;
                prevForeground = getForeground();
                setForeground(SHADOW_COLOR);
@@ -83,4 +83,9 @@ public class JTextFieldShadow extends JTextField {
       super.setText(t);
       setLight();
    }
+   
+   public void setShadowText(String shadowText) {
+      this.shadowText = shadowText;
+   }
+   
 }

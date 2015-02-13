@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -41,23 +41,23 @@ import java.util.LinkedList;
 import java.util.List;
 
 public final class Transaction implements _AnswerReceiver, _EventReceiver {
-
+   
    private _Backend b;
-
+   
    private Long startTime;
    private Long endTime;
    private volatile Answer start;
    private Deque<Answer> mainQ;
    private volatile Answer end;
    private volatile Long lastMessageTime;
-
+   
    private final Request request;
    private volatile String taskId;
    private TaskStateEventOut evOut;
    private volatile List<String> finishedTaskId;
-
+   
    private String internalError = "";
-
+   
    public Transaction(_Backend b, Request request) {
       this.b = b;
       this.request = request;
@@ -68,7 +68,7 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
       finishedTaskId = new ArrayList<String>();
       evOut = null;
    }
-
+   
    private void init() {
       if (startTime != null) {
          throw new HyperboxRuntimeException("Transaction " + request.getExchangeId() + " has already been run");
@@ -76,19 +76,19 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
       startTime = System.currentTimeMillis();
       lastMessageTime = startTime;
    }
-
+   
    public Answer getHeader() {
       return start;
    }
-
+   
    public Answer getFooter() {
       return end;
    }
-
+   
    public Deque<Answer> getBody() {
       return new LinkedList<Answer>(mainQ);
    }
-
+   
    public String getError() {
       // TODO improve, maybe use a special Enum for "system" bindings?
       if ((end != null) && end.has(Exception.class.getName())) {
@@ -97,7 +97,7 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
          return internalError;
       }
    }
-
+   
    public <T> List<T> extractItems(Class<T> toExtract) {
       List<T> list = new ArrayList<T>();
       for (Answer ans : mainQ) {
@@ -107,14 +107,14 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
       }
       return list;
    }
-
+   
    public <T> T extractItem(Class<T> toExtract) {
       if (mainQ.size() == 0) {
          throw new HyperboxRuntimeException("No data was sent by the server");
       }
       return mainQ.getFirst().get(toExtract);
    }
-
+   
    /**
     * Will wait until the end of the transaction and return the final status. It will contain the body being all answers except for the leading &
     * trailing ones.<br/>
@@ -126,7 +126,7 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
     */
    public boolean sendAndWait() throws ServerDisconnectedException {
       Logger.track();
-
+      
       try {
          init();
          b.setAnswerReceiver(request.getExchangeId(), this);
@@ -152,10 +152,10 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
          Logger.debug("Transaction ID " + request.getName() + " took " + (endTime - startTime) + "ms");
       }
    }
-
+   
    public boolean sendAndWaitForTask() throws ServerDisconnectedException {
       Logger.track();
-
+      
       Logger.verbose("Waiting until task is finished");
       EventManager.get().register(this);
       try {
@@ -188,15 +188,15 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
          EventManager.get().unregister(this);
       }
    }
-
+   
    public boolean hasFailed() {
       return (end != null) && end.hasFailed();
    }
-
+   
    @Override
    public void putAnswer(Answer ans) {
       Logger.track();
-
+      
       if (ans.getExchangeId().contentEquals(request.getExchangeId())) {
          lastMessageTime = System.currentTimeMillis();
          if (ans.isExchangeStarted()) {
@@ -218,23 +218,23 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
          Logger.error("Received message from another request : " + request.getExchangeId() + " vs " + ans.getExchangeId());
       }
    }
-
+   
    @Handler
    public void putBackendDisconnect(BackendStateEvent ev) {
       Logger.track();
-
+      
       if (ev.getBackend().equals(b)) {
          synchronized (this) {
             notifyAll();
          }
       }
    }
-
+   
    @Handler
    @Override
    public void post(EventOut evOut) {
       Logger.track();
-
+      
       Logger.verbose(evOut.toString());
       if (evOut instanceof TaskStateEventOut) {
          TaskStateEventOut tsEvOut = (TaskStateEventOut) evOut;
@@ -250,5 +250,5 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
          }
       }
    }
-
+   
 }

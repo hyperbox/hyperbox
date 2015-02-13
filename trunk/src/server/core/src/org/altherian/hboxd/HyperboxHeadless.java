@@ -29,7 +29,7 @@ public class HyperboxHeadless {
    public static void main(String[] args) {
       Hyperbox.processArgs(new HashSet<String>(Arrays.asList(args)));
       
-      new Controller().start();
+      new Controller().start(args);
    }
    
 }

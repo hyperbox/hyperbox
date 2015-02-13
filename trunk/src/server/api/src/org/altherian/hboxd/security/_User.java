@@ -22,6 +22,8 @@ package org.altherian.hboxd.security;
 
 public interface _User {
    
+   public static final String ADMIN_ID = "0";
+   
    public String getId();
    
    public String getName();
