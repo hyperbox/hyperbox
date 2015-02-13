@@ -67,6 +67,7 @@ import org.altherian.hboxd.persistence._Persistor;
 import org.altherian.hboxd.persistence.sql.h2.H2SqlPersistor;
 import org.altherian.hboxd.security.SecurityContext;
 import org.altherian.hboxd.security._SecurityManager;
+import org.altherian.hboxd.security._User;
 import org.altherian.hboxd.server._Server;
 import org.altherian.hboxd.server._ServerManager;
 import org.altherian.hboxd.session.SessionContext;
@@ -106,7 +107,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
    private Map<String, Class<? extends _Hypervisor>> hypervisors;
    private _Hypervisor hypervisor;
    
-   private _Client system = new System();
+   private _Client system = new SystemClient();
    
    private String id;
    private String name;
@@ -180,6 +181,28 @@ public class SingleHostServer implements _Hyperbox, _Server {
       actionMgr.start();
       secMgr.start();
       SecurityContext.initSecurityManager(secMgr);
+      
+      //FIXME Changes the admin password
+      if (Arrays.asList(Hyperbox.getArgs()).contains("--reset-admin-pass")) {
+         boolean next = false;
+         for (String item : Hyperbox.getArgs()) {
+            if (next) {
+               secMgr.setUserPassword(_User.ADMIN_ID, item.toCharArray());
+               Logger.info("The password has changed");
+               break;
+            }
+            if (item.equals("--reset-admin-pass")) {
+               next = true;
+            }
+         }
+         if (!next) {
+            Logger.error("You should give the new password after the '--reset-admin-pass' parameter.");
+            System.exit(1);
+         }
+         
+         System.exit(0);
+      }
+      
       taskMgr.start(this);
       sessMgr.start(this);
       storeMgr.start();
@@ -420,7 +443,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
       return new ArrayList<Class<? extends _Hypervisor>>(hypervisors.values());
    }
    
-   private class System implements _Client {
+   private class SystemClient implements _Client {
       
       @Override
       public void putAnswer(Answer ans) {

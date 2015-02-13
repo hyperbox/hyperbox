@@ -36,7 +36,7 @@ public class HyperboxService {
       Hyperbox.processArgs(new HashSet<String>(Arrays.asList(args)));
       
       c = new Controller();
-      c.start();
+      c.start(args);
    }
    
    public static void stop(String[] args) throws Exception {

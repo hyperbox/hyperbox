@@ -31,7 +31,7 @@ public final class HyperboxInteractive {
       Hyperbox.processArgs(new HashSet<String>(Arrays.asList(args)));
       
       Configuration.setSetting("log.file", "none");
-      new Controller().start();
+      new Controller().start(args);
    }
    
 }

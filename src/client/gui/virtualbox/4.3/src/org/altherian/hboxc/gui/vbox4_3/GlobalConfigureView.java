@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2014 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -33,7 +33,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class GlobalConfigureView implements _GlobalConfigureView {
-
+   
    private JLabel machineFolderLabel;
    private JTextField machineFolderValue;
    private JLabel consoleModuleLabel;
@@ -41,16 +41,16 @@ public class GlobalConfigureView implements _GlobalConfigureView {
    private JLabel virtExLabel;
    private JCheckBox virtExValue;
    private JPanel panel;
-
+   
    public GlobalConfigureView() {
       machineFolderLabel = new JLabel("Default Machine Folder");
       consoleModuleLabel = new JLabel("Default Extention Pack");
       virtExLabel = new JLabel("Hardware Virtualization Exclusive");
-
+      
       machineFolderValue = new JTextField();
       consoleModuleValue = new JTextField();
       virtExValue = new JCheckBox();
-
+      
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(machineFolderLabel);
       panel.add(machineFolderValue, "growx, pushx, wrap");
@@ -71,7 +71,7 @@ public class GlobalConfigureView implements _GlobalConfigureView {
       consoleModuleValue.setText(hypOut.getSetting("vbox.global.consoleModule").getString());
       virtExValue.setSelected(hypOut.hasSetting("vbox.global.virtEx") ? hypOut.getSetting("vbox.global.virtEx").getBoolean() : false);
    }
-
+   
    @Override
    public HypervisorIn getUserInput() {
       HypervisorIn hypIn = new HypervisorIn();
@@ -80,5 +80,5 @@ public class GlobalConfigureView implements _GlobalConfigureView {
       hypIn.setSetting(new BooleanSettingIO("vbox.global.virtEx", virtExValue.isSelected()));
       return hypIn;
    }
-
+   
 }

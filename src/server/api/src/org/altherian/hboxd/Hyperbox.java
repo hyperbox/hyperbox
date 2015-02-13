@@ -68,6 +68,18 @@ public class Hyperbox {
       }
    }
    
+   static String[] _args;
+   
+   public static void setArgs(String[] args) {
+      if (_args == null) {
+         _args = args;
+      }
+   }
+   
+   public static String[] getArgs() {
+      return _args;
+   }
+   
    public static void processArgs(Set<String> args) {
       HyperboxAPI.processArgs(args);
       
@@ -80,6 +92,7 @@ public class Hyperbox {
          System.out.println("--netversion : Print Net protocol version");
          System.out.println("--version : Print Server version");
          System.out.println("--revision : Print Server revision");
+         System.out.println("--reset-admin-pass : Reset the admin password");
          System.exit(0);
       }
       if (args.contains("--version")) {
@@ -90,6 +103,7 @@ public class Hyperbox {
          System.out.println(getRevision());
          System.exit(0);
       }
+      
    }
    
 }

@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2015 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -67,17 +67,17 @@ public class NetAdaptorDialog implements _Saveable, _Cancelable {
       buttonsPanel = new JPanel(new MigLayout("ins 0"));
       buttonsPanel.add(saveButton);
       buttonsPanel.add(cancelButton);
-
+      
       nameLabel = new JLabel("Name");
       nameValue = new JTextField(15);
-
+      
       dialog = JDialogBuilder.get("Add Network Adaptor", saveButton);
       
       NetModeOut modeOut = Gui.getServer(srvId).getHypervisor().getNetworkMode(modeId);
       
       dialog.getContentPane().add(new JLabel("Mode: "));
       dialog.getContentPane().add(new JLabel(modeOut.getLabel()), "left, growx, pushx, span, wrap");
-
+      
       if (modeOut.canRenameAdaptor()) {
          dialog.getContentPane().add(nameLabel);
          dialog.getContentPane().add(nameValue, "growx,pushx,span,wrap");

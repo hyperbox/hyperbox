@@ -109,9 +109,9 @@ public final class Controller implements _Controller {
    }
    
    @Override
-   public void start() {
+   public void start(String[] args) {
       Logger.track();
-      
+      Hyperbox.setArgs(args);
       shutdownHook = new Thread() {
          
          @Override

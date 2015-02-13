@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2014 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -46,7 +46,7 @@ public class HypervisorConfigureDialog implements _Saveable, _Cancelable {
    
    private String srvId;
    private HypervisorIn hypIn;
-
+   
    private HypervisorConfigureDialog(String srvId) {
       this.srvId = srvId;
       
@@ -55,10 +55,10 @@ public class HypervisorConfigureDialog implements _Saveable, _Cancelable {
       buttonPanel = new JPanel(new MigLayout("ins 0"));
       buttonPanel.add(saveButton);
       buttonPanel.add(cancelButton);
-
+      
       dialog = JDialogBuilder.get("Hypervisor Configuration Editor", IconBuilder.getEntityType(EntityType.Server).getImage(), saveButton);
    }
-
+   
    private HypervisorIn getInternalInput() {
       try {
          // TODO Use Swing worker
