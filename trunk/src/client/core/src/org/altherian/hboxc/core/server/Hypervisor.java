@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2014 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,13 +27,12 @@ import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.in.NetAdaptorIn;
 import org.altherian.hbox.comm.in.NetModeIn;
-import org.altherian.hbox.comm.in.NetServiceIn;
+import org.altherian.hbox.comm.io.NetServiceIO;
 import org.altherian.hbox.comm.out.event.hypervisor.HypervisorDisconnectedEventOut;
 import org.altherian.hbox.comm.out.event.hypervisor.HypervisorEventOut;
 import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
 import org.altherian.hbox.comm.out.network.NetAdaptorOut;
 import org.altherian.hbox.comm.out.network.NetModeOut;
-import org.altherian.hbox.comm.out.network.NetServiceOut;
 import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hboxc.comm.utils.Transaction;
 import org.altherian.hboxc.event.EventManager;
@@ -170,11 +169,11 @@ public class Hypervisor implements _Hypervisor {
    }
    
    @Override
-   public NetServiceOut getNetService(String modeId, String adaptorId, String svcTypeId) throws NetworkAdaptorNotFoundException {
+   public NetServiceIO getNetService(String modeId, String adaptorId, String svcTypeId) throws NetworkAdaptorNotFoundException {
       Request req = new Request(Command.VBOX, HypervisorTasks.NetServiceGet);
       req.set(NetAdaptorIn.class, new NetAdaptorIn(modeId, adaptorId));
-      req.set(NetServiceIn.class, new NetServiceIn(svcTypeId));
-      return srv.sendRequest(req).extractItem(NetServiceOut.class);
+      req.set(NetServiceIO.class, new NetServiceIO(svcTypeId));
+      return srv.sendRequest(req).extractItem(NetServiceIO.class);
    }
    
 }

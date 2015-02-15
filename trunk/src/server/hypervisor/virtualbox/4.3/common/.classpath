@@ -4,6 +4,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Server-API"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Server-VB"/>
-	<classpathentry kind="lib" path="lib/vboxjxpcom.jar"/>
+	<classpathentry kind="lib" path="lib/vboxjws.jar" sourcepath="lib/vboxjws-src.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Server-VB-4.3/lib/vboxjws-doc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="eclipse-bin"/>
 </classpath>

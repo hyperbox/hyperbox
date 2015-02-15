@@ -1,57 +1,77 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2015 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.altherian.hboxd.comm.io.factory;
 
-import org.altherian.hbox.comm.in.NetServiceIP4In;
-import org.altherian.hbox.comm.in.NetServiceIn;
-import org.altherian.hbox.comm.out.network.NetServiceIP4Out;
-import org.altherian.hbox.comm.out.network.NetServiceOut;
+import org.altherian.hbox.comm.io.NetServiceIO;
+import org.altherian.hbox.comm.io.NetService_DHCP_IP4_IO;
+import org.altherian.hbox.comm.io.NetService_IP4_CIDR_IO;
+import org.altherian.hbox.comm.io.NetService_IP4_IO;
+import org.altherian.hbox.comm.io.NetService_IP6_Gateway_IO;
+import org.altherian.hbox.comm.io.NetService_IP6_IO;
+import org.altherian.hbox.comm.io.NetService_NAT_IP4_IO;
+import org.altherian.hbox.comm.io.NetService_NAT_IP6_IO;
 import org.altherian.hbox.constant.NetServiceType;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.hypervisor.net._NetService;
-import org.altherian.hbox.hypervisor.net._NetServiceIP4;
-import org.altherian.hboxd.hypervisor.net.NetServiceIPv4;
 
 public class NetServiceIoFactory {
-   
+
    private NetServiceIoFactory() {
       // only static
    }
-   
-   public static NetServiceOut get(_NetService svc) {
-      if (NetServiceType.IPv4.is(svc.getType())) {
-         _NetServiceIP4 ip4 = (_NetServiceIP4) svc;
-         return new NetServiceIP4Out(ip4.isEnabled(), ip4.getAddress(), ip4.getMask());
-      } else {
-         throw new HyperboxRuntimeException(svc.getType() + " is not supported");
-      }
+
+   public static NetServiceIO get(_NetService svc) {
+      return svc.getIO();
    }
-   
-   public static _NetService get(NetServiceIn svcIn) {
-      if (NetServiceType.IPv4.is(svcIn.getServiceTypeId())) {
-         NetServiceIP4In ip4In = (NetServiceIP4In) svcIn;
-         return new NetServiceIPv4(ip4In.isEnabled(), ip4In.getIP(), ip4In.getMask());
-      } else {
-         throw new HyperboxRuntimeException(svcIn.getServiceTypeId() + " is not supported");
+
+   public static _NetService get(NetServiceIO svcIn) {
+      if (NetServiceType.IPv4.is(svcIn.getType())) {
+         return new NetService_IP4_IO((NetService_IP4_IO) svcIn);
       }
+      
+      if (NetServiceType.IPv4_NetCIDR.is(svcIn.getType())) {
+         return new NetService_IP4_CIDR_IO((NetService_IP4_CIDR_IO) svcIn);
+      }
+
+      if (NetServiceType.IPv6.is(svcIn.getType())) {
+         return new NetService_IP6_IO((NetService_IP6_IO) svcIn);
+      }
+
+      if (NetServiceType.IPv6_Gateway.is(svcIn.getType())) {
+         return new NetService_IP6_Gateway_IO((NetService_IP6_Gateway_IO) svcIn);
+      }
+
+      if (NetServiceType.DHCP_IPv4.is(svcIn.getType())) {
+         return new NetService_DHCP_IP4_IO((NetService_DHCP_IP4_IO) svcIn);
+      }
+      
+      if (NetServiceType.NAT_IPv4.is(svcIn.getType())) {
+         return new NetService_NAT_IP4_IO((NetService_NAT_IP4_IO) svcIn);
+      }
+
+      if (NetServiceType.NAT_IPv6.is(svcIn.getType())) {
+         return new NetService_NAT_IP6_IO((NetService_NAT_IP6_IO) svcIn);
+      }
+      
+      throw new HyperboxRuntimeException(svcIn.getType() + " is not supported for network operations");
    }
-   
+
 }

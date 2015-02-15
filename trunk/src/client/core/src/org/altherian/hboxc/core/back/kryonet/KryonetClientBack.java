@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -39,14 +39,13 @@ import org.altherian.hboxc.state.BackendConnectionState;
 import org.altherian.hboxc.state.BackendStates;
 import org.altherian.tool.logging.Logger;
 import java.io.IOException;
-import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.HashMap;
 import java.util.Map;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
-public final class KryonetClientBack implements _Backend, UncaughtExceptionHandler {
+public final class KryonetClientBack implements _Backend {
    
    private Map<String, _AnswerReceiver> ansReceivers;
    private Client client;
@@ -193,9 +192,13 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
          throw new HyperboxRuntimeException("Client is not connected to a server");
       }
       
-      Logger.debug("Sending request");
-      client.sendTCP(req);
-      Logger.debug("Send request");
+      try {
+         Logger.debug("Sending request");
+         client.sendTCP(req);
+         Logger.debug("Send request");
+      } catch (Throwable t) {
+         Logger.exception(t);
+      }
    }
    
    private class MainListener extends Listener {
@@ -234,13 +237,6 @@ public final class KryonetClientBack implements _Backend, UncaughtExceptionHandl
          Logger.info("Disconnected from Hyperbox server");
          disconnect();
       }
-   }
-   
-   @Override
-   public void uncaughtException(Thread t, Throwable e) {
-      Logger.error("Error in protocol: " + e.getMessage());
-      stop();
-      throw new HyperboxRuntimeException("Error in protocol", e);
    }
    
 }
