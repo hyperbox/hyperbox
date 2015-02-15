@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -71,7 +71,7 @@ public abstract class HypervisorTest {
    private static boolean initialized = false;
    protected static _Hypervisor hypervisor;
    
-   protected List<MachineIn> machines = new ArrayList<MachineIn>();
+   protected static List<String> machines = new ArrayList<String>();
    
    public static void init(String options) throws HyperboxException {
       Logger.setLevel(LogLevel.Tracking);
@@ -88,7 +88,7 @@ public abstract class HypervisorTest {
    public _RawVM createVm(MachineIn mIn) {
       _RawVM rawVm = hypervisor.createMachine(mIn.getUuid(), mIn.getName(), null);
       assertNotNull(rawVm);
-      machines.add(new MachineIn(rawVm.getUuid()));
+      machines.add(rawVm.getUuid());
       
       if (mIn.getUuid() != null) {
          assertTrue(mIn.getUuid().equals(rawVm.getUuid()));
@@ -111,17 +111,17 @@ public abstract class HypervisorTest {
    
    @After
    public void after() {
-      List<MachineIn> deletedVms = new ArrayList<MachineIn>();
-      for (MachineIn mIn : machines) {
-         if (hypervisor.getMachine(mIn.getUuid()).getState().equals(MachineStates.Running)) {
-            hypervisor.getMachine(mIn.getUuid()).powerOff();
+      List<String> deletedVms = new ArrayList<String>();
+      for (String vmId : machines) {
+         if (hypervisor.getMachine(vmId).getState().equals(MachineStates.Running)) {
+            hypervisor.getMachine(vmId).powerOff();
          }
-         hypervisor.deleteMachine(mIn.getUuid());
-         deletedVms.add(mIn);
+         hypervisor.deleteMachine(vmId);
+         deletedVms.add(vmId);
       }
-      for (MachineIn mIn : deletedVms) {
-         machines.remove(mIn);
-         assertFalse(machines.contains(mIn));
+      for (String vmId : deletedVms) {
+         machines.remove(vmId);
+         assertFalse(machines.contains(vmId));
       }
       assertTrue("Not all VMs created during the tests were deleted. Cleanup manually", machines.isEmpty());
       System.out.println("--------------- END OF " + testName.getMethodName() + "-----------------------");
@@ -372,6 +372,7 @@ public abstract class HypervisorTest {
    @AfterClass
    public static void afterClass() {
       hypervisor.stop();
+      
    }
    
 }
