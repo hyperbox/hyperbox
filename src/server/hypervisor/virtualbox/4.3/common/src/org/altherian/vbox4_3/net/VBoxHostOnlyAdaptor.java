@@ -31,6 +31,7 @@ import org.altherian.hbox.hypervisor.net._NetService_IP4_DHCP;
 import org.altherian.hbox.hypervisor.net._NetService_IP6;
 import org.altherian.vbox.net.VBoxAdaptor;
 import org.altherian.vbox4_3.VBox;
+import org.virtualbox_4_3.HostNetworkInterfaceStatus;
 import org.virtualbox_4_3.IDHCPServer;
 import org.virtualbox_4_3.IHostNetworkInterface;
 import org.virtualbox_4_3.VBoxException;
@@ -38,7 +39,7 @@ import org.virtualbox_4_3.VBoxException;
 public class VBoxHostOnlyAdaptor extends VBoxAdaptor {
    
    public VBoxHostOnlyAdaptor(IHostNetworkInterface nic) {
-      super(nic.getId(), nic.getName(), VBoxNetMode.HostOnly);
+      super(nic.getId(), nic.getName(), VBoxNetMode.HostOnly, nic.getStatus().equals(HostNetworkInterfaceStatus.Up));
    }
    
    @Override

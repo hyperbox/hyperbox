@@ -25,6 +25,7 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hboxc.front.gui.hypervisor._GlobalConfigureView;
 import org.altherian.hboxc.front.gui.hypervisor._HypervisorModel;
 import org.altherian.hboxc.front.gui.hypervisor._NetAdaptorConfigureView;
+import org.altherian.vbox.VBoxNetMode;
 import java.util.Collections;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class GenericModel implements _HypervisorModel {
 
    @Override
    public _NetAdaptorConfigureView getNetAdaptorConfig(String srvId, String modeId, String adaptId) {
-      if ("HostOnly".contentEquals(modeId)) {
+      if (VBoxNetMode.HostOnly.is(modeId)) {
          return new HostOnlyNicEditor(srvId, modeId, adaptId);
       } else {
          throw new HyperboxRuntimeException(modeId + " is not supported in GUI");

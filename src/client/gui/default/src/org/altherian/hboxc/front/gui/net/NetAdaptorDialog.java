@@ -63,6 +63,7 @@ public class NetAdaptorDialog implements _Saveable, _Cancelable {
       dialog.getContentPane().add(buttonsPanel, "center");
 
       if (!AxStrings.isEmpty(adaptId)) {
+         dialog.setTitle("Modifying Network Adator - Loading...");
          new SwingWorker<NetAdaptorOut, Void>() {
 
             @Override
@@ -75,6 +76,7 @@ public class NetAdaptorDialog implements _Saveable, _Cancelable {
                try {
                   NetAdaptorOut naOut = get();
                   configView.update(naOut);
+                  dialog.setTitle("Modifying Network Adaptor - " + naOut.getLabel());
                } catch (InterruptedException e) {
                   Gui.showError(e);
                } catch (ExecutionException e) {
