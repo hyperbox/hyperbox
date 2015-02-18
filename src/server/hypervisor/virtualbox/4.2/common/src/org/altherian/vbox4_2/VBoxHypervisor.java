@@ -22,6 +22,7 @@ package org.altherian.vbox4_2;
 
 import net.engio.mbassy.listener.Handler;
 import org.altherian.hbox.Configuration;
+import org.altherian.hbox.comm.io.MachineLogFileIO;
 import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.data.Machine;
 import org.altherian.hbox.exception.FeatureNotImplementedException;
@@ -29,6 +30,7 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.exception.HypervisorException;
 import org.altherian.hbox.exception.MachineException;
 import org.altherian.hbox.exception.ServiceException;
+import org.altherian.hbox.hypervisor._MachineLogFile;
 import org.altherian.hbox.hypervisor.net._NetAdaptor;
 import org.altherian.hbox.hypervisor.net._NetMode;
 import org.altherian.hbox.states.ServiceState;
@@ -814,6 +816,34 @@ public abstract class VBoxHypervisor implements _Hypervisor {
             throw new InvalidNetworkModeException(modeId);
       }
 
+   }
+   
+   @Override
+   public List<String> getLogFileList(String vmId) {
+      List<String> ret = new ArrayList<String>();
+      long i = 0;
+      while (!vbMgr.getVBox().findMachine(vmId).queryLogFilename(i).isEmpty()) {
+         ret.add(vbMgr.getVBox().findMachine(vmId).queryLogFilename(i));
+         i++;
+      }
+      
+      return ret;
+   }
+   
+   //FIXME check with vbox devs
+   @Override
+   public _MachineLogFile getLogFile(String vmId, long logId) {
+      byte[] ret = null;
+      StringBuilder log = new StringBuilder();
+      long i = 0;
+      do {
+         ret = vbMgr.getVBox().findMachine(vmId).readLog(logId, i, 65536L);
+         log.append(new String(ret));
+         i = i + 65536;
+      } while (ret.length > 0);
+      List<String> loglist = Arrays.asList(log.toString().split(System.getProperty("line.separator")));
+      _MachineLogFile logObj = new MachineLogFileIO(vmId, vbMgr.getVBox().findMachine(vmId).queryLogFilename(logId), loglist);
+      return logObj;
    }
 
 }

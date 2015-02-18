@@ -18,23 +18,48 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.altherian.hboxc.gui.vbox4_2;
+package org.altherian.hbox.hypervisor.net;
 
-import org.altherian.hboxc.front.gui.hypervisor._GlobalConfigureView;
-import org.altherian.hboxc.gui.vbox.GenericModel;
-import org.altherian.vbox.VirtualBox;
-import java.util.List;
-
-public class Model_4_2 extends GenericModel {
+public interface _NATRule {
    
-   @Override
-   public List<String> getSupported() {
-      return VirtualBox.ID_GROUP.ALL_4_2;
-   }
+   /**
+    * @return the id
+    */
+   public String getId();
    
-   @Override
-   public _GlobalConfigureView getConfigureView() {
-      return new GlobalConfigureView();
-   }
+   /**
+    * @return the enabled
+    */
+   public boolean isEnabled();
+   
+   /**
+    * @return the name
+    */
+   public String getName();
+   
+   /**
+    * @return the comment
+    */
+   public String getComment();
+   
+   /**
+    * @return the publicIp
+    */
+   public String getPublicIp();
+   
+   /**
+    * @return the publicPort
+    */
+   public String getPublicPort();
+   
+   /**
+    * @return the privateIp
+    */
+   public String getPrivateIp();
+   
+   /**
+    * @return the privatePort
+    */
+   public String getPrivatePort();
    
 }

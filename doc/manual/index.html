@@ -385,7 +385,7 @@
 					<strong>XPCOM</strong>: Only compatible with systems supporting XPCOM, which is basically any UNIX-based system. This is a native connector that supports every feature of Virtualbox and should be preferred over WebServices.
 				</li>
 				<li>
-					<strong>MSCOM</strong>: Only compatible with Windows systems. Due to build limitation in the Virtualbox SDK, this kind of connector is not currently implemented in Hyperbox. Only WebServices can be used on Windows.
+					<strong>MSCOM</strong>: Only compatible with Windows systems. Due to build limitation in the Virtualbox SDK and a known bug (<a href="https://www.virtualbox.org/ticket/13843" target="_blank">Ticket #13483</a>), this kind of connector is not currently implemented in Hyperbox. Only WebServices can be used on Windows.
 				</li>
 			</ul>
 			
@@ -406,7 +406,7 @@
 			</ul>
 			<div class="tab warning">
 				A known bug prevents XPCOM to work on all versions. XPCOM only works from 4.2.24 and 4.3.8. Fix was not back-ported to any previous versions and therefore will never work.<br/>
-				You can find detailed info on <a href="https://www.virtualbox.org/ticket/11232" target="_blank">Ticket #11232</a> of the <a href="https://www.virtualbox.org/wiki/Bugtracker" target="_blank">Virtualbox BugTracker</a>.
+				You can find detailed info on <a href="https://www.virtualbox.org/ticket/11232" target="_blank">Ticket #11232</a> of the <a href="https://www.virtualbox.org/wiki/Bugtracker" target="_blank">VirtualBox BugTracker</a>.
 			</div>
 		</div> <!-- Virtualbox -->
 		

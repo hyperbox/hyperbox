@@ -20,9 +20,11 @@
 
 package org.altherian.hboxd.hypervisor;
 
+import java.util.List;
 import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.data.Machine;
 import org.altherian.hbox.exception.HypervisorException;
+import org.altherian.hbox.hypervisor._MachineLogFile;
 import org.altherian.hbox.hypervisor.net._NetAdaptor;
 import org.altherian.hbox.hypervisor.net._NetMode;
 import org.altherian.hboxd.event._EventManager;
@@ -34,7 +36,6 @@ import org.altherian.hboxd.hypervisor.storage._RawStorageControllerSubType;
 import org.altherian.hboxd.hypervisor.storage._RawStorageControllerType;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
 import org.altherian.setting._Setting;
-import java.util.List;
 
 public interface _Hypervisor {
    
@@ -161,5 +162,9 @@ public interface _Hypervisor {
    public void removeAdaptor(String modeId, String adaptorId) throws InvalidNetworkModeException;
    
    public _NetAdaptor getNetAdaptor(String modId, String adaptorId) throws NetworkAdaptorNotFoundException;
+   
+   public List<String> getLogFileList(String vmId);
+   
+   public _MachineLogFile getLogFile(String vmId, long logid);
    
 }
