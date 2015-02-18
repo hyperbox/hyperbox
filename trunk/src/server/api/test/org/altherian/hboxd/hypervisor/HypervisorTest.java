@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,6 +24,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import org.altherian.hbox.Configuration;
 import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.constant.EntityType;
@@ -35,6 +38,7 @@ import org.altherian.hbox.constant.StorageControllerType;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hbox.exception.HypervisorException;
 import org.altherian.hbox.exception.MachineDisplayNotAvailableException;
+import org.altherian.hbox.hypervisor._MachineLogFile;
 import org.altherian.hbox.states.MachineStates;
 import org.altherian.hboxd.hypervisor.snapshot.RawSnapshotTest;
 import org.altherian.hboxd.hypervisor.storage.RawMediumTest;
@@ -53,9 +57,6 @@ import org.altherian.setting.StringSetting;
 import org.altherian.setting._Setting;
 import org.altherian.tool.logging.LogLevel;
 import org.altherian.tool.logging.Logger;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -77,6 +78,7 @@ public abstract class HypervisorTest {
       Logger.setLevel(LogLevel.Tracking);
       
       Configuration.setSetting("core.eventmgr.class", DummyEventManager.class.getName());
+      hypervisor.setEventManager(new DummyEventManager());
       hypervisor.start(options);
       initialized = true;
    }
@@ -367,6 +369,62 @@ public abstract class HypervisorTest {
    public void takeScreenshotFail() {
       _RawVM vm = createVm();
       vm.takeScreenshot();
+   }
+   
+   @Test
+   public void getLoglist() {
+      _RawVM vm = hypervisor.getMachine("test");
+      /*
+      vm.powerOn();
+      try {
+      Thread.sleep(5000);
+      } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      }
+      vm.powerOff();
+      vm.powerOn();
+      try {
+      Thread.sleep(5000);
+      } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      }
+      vm.powerOff();
+      List<String> logs = hypervisor.getLogFileList(vm.getUuid());
+      assertTrue(logs.size() == 2 );
+       */
+      List<String> logfiles = hypervisor.getLogFileList(vm.getUuid());
+      
+      _MachineLogFile log1 = hypervisor.getLogFile(vm.getUuid(), 2);
+      _MachineLogFile log2 = hypervisor.getLogFile(vm.getUuid(), 3);
+      assertFalse(log1.getLog().isEmpty());
+      assertFalse(log2.getLog().isEmpty());
+      
+      boolean find1 = false, find2 = false;
+      for (String item : log1.getLog()) {
+         if (item.contains("Changing the VM state from 'POWERING_ON' to 'RUNNING'")) {
+            find1 = true;
+         }
+         if (item.contains("'TERMINATED'")) {
+            find2 = true;
+         }
+      }
+      assertTrue(find1);
+      assertTrue(find2);
+      
+      find1 = false;
+      find2 = false;
+      for (String item : log2.getLog()) {
+         if (item.contains("Changing the VM state from 'POWERING_ON' to 'RUNNING'")) {
+            find1 = true;
+         }
+         if (item.contains("'TERMINATED'")) {
+            find2 = true;
+         }
+      }
+      assertTrue(find1);
+      assertTrue(find2);
    }
    
    @AfterClass

@@ -5,6 +5,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/jsonbeans-0.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/objenesis-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/reflectasm-1.07.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/kryonet.jar"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/API"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="eclipse-bin"/>

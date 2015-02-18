@@ -332,7 +332,14 @@ public enum HypervisorTasks {
     * Answer Object : none<br/>
     * </p>
     */
-   DevicePropertyUnset;
+   DevicePropertyUnset,
+   /**
+    * <p>
+    * Request Object: MachineIn, MachineLogFileIO<br/>
+    * Answer Object : _MachineLogFile<br/>
+    * </p>
+    */
+   MachineLogFileGet;
    
    public String getId() {
       return toString();
