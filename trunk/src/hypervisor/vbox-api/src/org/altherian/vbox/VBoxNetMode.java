@@ -21,8 +21,8 @@
 package org.altherian.vbox;
 
 import org.altherian.hbox.constant.NetServiceType;
+import org.altherian.hbox.exception.net.InvalidNetworkModeException;
 import org.altherian.hbox.hypervisor.net._NetMode;
-import org.altherian.hboxd.exception.net.InvalidNetworkModeException;
 import java.util.HashSet;
 import java.util.Set;
 

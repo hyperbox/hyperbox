@@ -37,13 +37,13 @@ import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
 import org.altherian.hbox.comm.out.network.NetAdaptorOut;
 import org.altherian.hbox.comm.out.network.NetModeOut;
 import org.altherian.hbox.comm.out.storage.MediumOut;
+import org.altherian.hbox.exception.net.InvalidNetworkModeException;
+import org.altherian.hbox.exception.net.NetworkAdaptorNotFoundException;
 import org.altherian.hbox.hypervisor._MachineLogFile;
 import org.altherian.hboxc.comm.utils.Transaction;
 import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.server._Hypervisor;
 import org.altherian.hboxc.server._Server;
-import org.altherian.hboxd.exception.net.InvalidNetworkModeException;
-import org.altherian.hboxd.exception.net.NetworkAdaptorNotFoundException;
 import org.altherian.tool.logging.Logger;
 
 public class Hypervisor implements _Hypervisor {

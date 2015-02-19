@@ -18,19 +18,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.altherian.hboxd.exception.net;
+package org.altherian.hbox.hypervisor.net;
 
-import org.altherian.hbox.exception.HyperboxRuntimeException;
+public interface _NetService_IP4_NAT extends _NetService_NAT {
+   
+   // Place Holder
 
-@SuppressWarnings("serial")
-public class NetworkAdaptorNotFoundException extends HyperboxRuntimeException {
-   
-   public NetworkAdaptorNotFoundException(String adaptorId) {
-      this(adaptorId, "Could not find a network adaptor with ID " + adaptorId);
-   }
-   
-   public NetworkAdaptorNotFoundException(String adaptorId, String message) {
-      super(message);
-   }
-   
 }

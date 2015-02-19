@@ -26,9 +26,9 @@ import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
 import org.altherian.hbox.comm.out.network.NetAdaptorOut;
 import org.altherian.hbox.comm.out.network.NetModeOut;
 import org.altherian.hbox.comm.out.storage.MediumOut;
+import org.altherian.hbox.exception.net.InvalidNetworkModeException;
+import org.altherian.hbox.exception.net.NetworkAdaptorNotFoundException;
 import org.altherian.hbox.hypervisor._MachineLogFile;
-import org.altherian.hboxd.exception.net.InvalidNetworkModeException;
-import org.altherian.hboxd.exception.net.NetworkAdaptorNotFoundException;
 
 public interface _Hypervisor {
    

@@ -18,22 +18,25 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.altherian.hbox.comm.io;
+package org.altherian.hbox.exception;
 
-import org.altherian.hbox.constant.NetServiceType;
-
-public class NetService_NAT_IP4_IO extends NetServiceIO {
-
-   protected NetService_NAT_IP4_IO() {
-      this(false);
+@SuppressWarnings("serial")
+public class ObjectNotFoundException extends HyperboxRuntimeException {
+   
+   public ObjectNotFoundException() {
+      super("Object was not found");
+   }
+   
+   public ObjectNotFoundException(String s) {
+      super(s);
+   }
+   
+   public ObjectNotFoundException(Throwable t) {
+      super(t);
    }
 
-   public NetService_NAT_IP4_IO(NetService_NAT_IP4_IO svc) {
-      super(svc);
+   public ObjectNotFoundException(String s, Throwable t) {
+      super(s, t);
    }
-
-   public NetService_NAT_IP4_IO(boolean isEnabled) {
-      super(NetServiceType.NAT_IPv4.getId(), isEnabled);
-   }
-
+   
 }
