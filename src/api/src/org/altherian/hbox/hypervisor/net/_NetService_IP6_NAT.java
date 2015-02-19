@@ -18,22 +18,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.altherian.hbox.comm.io;
+package org.altherian.hbox.hypervisor.net;
 
-import org.altherian.hbox.constant.NetServiceType;
-
-public class NetService_NAT_IP4_IO extends NetServiceIO {
-
-   protected NetService_NAT_IP4_IO() {
-      this(false);
-   }
-
-   public NetService_NAT_IP4_IO(NetService_NAT_IP4_IO svc) {
-      super(svc);
-   }
-
-   public NetService_NAT_IP4_IO(boolean isEnabled) {
-      super(NetServiceType.NAT_IPv4.getId(), isEnabled);
-   }
-
+public interface _NetService_IP6_NAT extends _NetService_NAT {
+   
+   // Place Holder
+   
 }

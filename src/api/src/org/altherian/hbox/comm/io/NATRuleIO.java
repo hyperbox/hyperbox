@@ -22,34 +22,21 @@ package org.altherian.hbox.comm.io;
 
 import org.altherian.hbox.hypervisor.net._NATRule;
 
-public class NATRuleIO implements _NATRule {
-   
-   private String id;
+public class NATRuleIO extends ObjectIO implements _NATRule {
+
    private boolean enabled;
    private String name;
    private String comment;
+   private String protocol;
    private String publicIp;
    private String publicPort;
    private String privateIp;
    private String privatePort;
    
    /**
-    * @return the id
-    */
-   public String getId() {
-      return id;
-   }
-   
-   /**
-    * @param id the id to set
-    */
-   public void setId(String id) {
-      this.id = id;
-   }
-   
-   /**
     * @return the enabled
     */
+   @Override
    public boolean isEnabled() {
       return enabled;
    }
@@ -64,6 +51,7 @@ public class NATRuleIO implements _NATRule {
    /**
     * @return the name
     */
+   @Override
    public String getName() {
       return name;
    }
@@ -78,6 +66,7 @@ public class NATRuleIO implements _NATRule {
    /**
     * @return the comment
     */
+   @Override
    public String getComment() {
       return comment;
    }
@@ -88,10 +77,19 @@ public class NATRuleIO implements _NATRule {
    public void setComment(String comment) {
       this.comment = comment;
    }
+
+   public String getProtocol() {
+      return protocol;
+   }
+
+   public void setProtocol(String protocol) {
+      this.protocol = protocol;
+   }
    
    /**
     * @return the publicIp
     */
+   @Override
    public String getPublicIp() {
       return publicIp;
    }
@@ -106,6 +104,7 @@ public class NATRuleIO implements _NATRule {
    /**
     * @return the publicPort
     */
+   @Override
    public String getPublicPort() {
       return publicPort;
    }
@@ -120,6 +119,7 @@ public class NATRuleIO implements _NATRule {
    /**
     * @return the privateIp
     */
+   @Override
    public String getPrivateIp() {
       return privateIp;
    }
@@ -134,6 +134,7 @@ public class NATRuleIO implements _NATRule {
    /**
     * @return the privatePort
     */
+   @Override
    public String getPrivatePort() {
       return privatePort;
    }
