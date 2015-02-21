@@ -30,7 +30,10 @@ import org.altherian.hbox.comm.out.network.NetAdaptorOut;
 import org.altherian.hbox.constant.NetServiceType;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.hypervisor._NetAdaptorConfigureView;
+import org.altherian.hboxc.front.gui.net.NATNetworkNATRulesDialog;
 import org.altherian.helper.swing.JCheckBoxUtils;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -61,7 +64,7 @@ public class NATNetworkNicEditor implements _NetAdaptorConfigureView {
    private JButton natButton;
    private JPanel panel;
 
-   public NATNetworkNicEditor(String srvId, String modeId, String adaptId) {
+   public NATNetworkNicEditor(final String srvId, final String modeId, final String adaptId) {
       this.srvId = srvId;
       this.modeId = modeId;
       this.adaptId = adaptId;
@@ -81,6 +84,14 @@ public class NATNetworkNicEditor implements _NetAdaptorConfigureView {
          ip6GwLabel = new JLabel("Advertise default IPv6 Route");
          ip6GwValue = new JCheckBox();
          natButton = new JButton("Port Forwarding");
+         natButton.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               NATNetworkNATRulesDialog.getInput(srvId, modeId, adaptId);
+            }
+            
+         });
       }
 
       panel = new JPanel(new MigLayout("ins 0"));

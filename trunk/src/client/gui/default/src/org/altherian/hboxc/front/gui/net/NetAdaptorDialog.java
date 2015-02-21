@@ -87,14 +87,14 @@ public class NetAdaptorDialog implements _Saveable, _Cancelable {
       }
    }
    
-   private NetAdaptorIn getInputPrivate() {
+   private NetAdaptorIn getInput() {
       show();
       return adaptIn;
    }
    
    public static NetAdaptorIn getInput(String srvId, String modeId, String adaptId) {
       try {
-         return new NetAdaptorDialog(srvId, modeId, adaptId).getInputPrivate();
+         return new NetAdaptorDialog(srvId, modeId, adaptId).getInput();
       } catch (HyperboxRuntimeException e) {
          Gui.showError(e.getMessage());
          return null;

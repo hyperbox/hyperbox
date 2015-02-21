@@ -26,7 +26,19 @@ import org.altherian.hbox.hypervisor.net._NATRule;
 import org.altherian.hbox.hypervisor.net._NetService_NAT;
 import java.util.List;
 
-public class NetService_NAT_IO extends ObjectIO implements _NetService_NAT {
+public class NetService_NAT_IO extends NetServiceIO implements _NetService_NAT {
+   
+   protected NetService_NAT_IO() {
+      
+   }
+   
+   public NetService_NAT_IO(NetService_NAT_IO io) {
+      super(io);
+   }
+   
+   public NetService_NAT_IO(String type, boolean isEnabled) {
+      super(type, isEnabled);
+   }
 
    @Override
    public List<_NATRule> getRules() {
