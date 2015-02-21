@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2015 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,17 +32,17 @@ import org.altherian.vbox4_3.VBox;
 import org.virtualbox_4_3.INATNetwork;
 
 public class VBoxNatNetworkAdaptor extends VBoxAdaptor {
-   
+
    public VBoxNatNetworkAdaptor(INATNetwork natNet) {
       super(natNet.getNetworkName(), natNet.getNetworkName(), VBoxNetMode.NATNetwork, natNet.getEnabled());
    }
-   
+
    @Override
    public void setLabel(String label) {
       INATNetwork natNet = VBox.get().findNATNetworkByName(getId());
       natNet.setNetworkName(label);
    }
-   
+
    @Override
    protected void process(_NetService svc) {
       NetServiceType svcType = NetServiceType.valueOf(svc.getType());
@@ -70,26 +70,37 @@ public class VBoxNatNetworkAdaptor extends VBoxAdaptor {
             throw new IllegalArgumentException("Service type " + svc.getType() + " is not supported on " + getMode().getId() + " adaptor");
       }
    }
-   
+
    @Override
    public _NetService getService(String serviceTypeId) {
       INATNetwork natNet = VBox.get().findNATNetworkByName(getId());
+
       if (NetServiceType.IPv4_NetCIDR.is(serviceTypeId)) {
          return new NetService_IP4_CIDR_IO(natNet.getNetwork());
-      } else if (NetServiceType.DHCP_IPv4.is(serviceTypeId)) {
+      }
+
+      if (NetServiceType.DHCP_IPv4.is(serviceTypeId)) {
          return new NetService_DHCP_IP4_IO(natNet.getNeedDhcpServer());
-      } else if (NetServiceType.IPv6.is(serviceTypeId)) {
+      }
+
+      if (NetServiceType.IPv6.is(serviceTypeId)) {
          return new NetService_IP6_IO(natNet.getIPv6Enabled());
-      } else if (NetServiceType.IPv6_Gateway.is(serviceTypeId)) {
+      }
+
+      if (NetServiceType.IPv6_Gateway.is(serviceTypeId)) {
          return new NetService_IP6_Gateway_IO(natNet.getAdvertiseDefaultIPv6RouteEnabled());
-      } else if (NetServiceType.NAT_IPv6.is(serviceTypeId)) {
+      }
+
+      if (NetServiceType.NAT_IPv4.is(serviceTypeId)) {
          throw new IllegalArgumentException("Service type " + serviceTypeId + " is not supported on " + getMode().getId() + " adaptor");
-      } else if (NetServiceType.NAT_IPv4.is(serviceTypeId)) {
-         throw new IllegalArgumentException("Service type " + serviceTypeId + " is not supported on " + getMode().getId() + " adaptor");
-      } else {
+      }
+
+      if (NetServiceType.NAT_IPv6.is(serviceTypeId)) {
          throw new IllegalArgumentException("Service type " + serviceTypeId + " is not supported on " + getMode().getId() + " adaptor");
       }
       
+      throw new IllegalArgumentException("Service type " + serviceTypeId + " is not supported on " + getMode().getId() + " adaptor");
+
    }
-   
+
 }

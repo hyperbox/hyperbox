@@ -48,28 +48,28 @@ public class NATRuleTableModel extends AbstractIOTableModel<NATRuleIO> {
       if (columnName == NAME) {
          return obj.getName();
       }
-
+      
       if (columnName == PROTOCOL) {
          return obj.getProtocol();
       }
-
+      
       if (columnName == OUTSIDE_IP) {
          return obj.getPublicIp();
       }
-
+      
       if (columnName == OUTSIDE_PORT) {
          return obj.getPublicPort();
       }
-
+      
       if (columnName == INSIDE_IP) {
          return obj.getPrivateIp();
       }
-
+      
       if (columnName == INSIDE_PORT) {
          return obj.getPrivatePort();
       }
-
+      
       return null;
    }
-
+   
 }
