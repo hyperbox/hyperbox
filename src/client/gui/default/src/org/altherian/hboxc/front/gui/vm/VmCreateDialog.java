@@ -106,10 +106,14 @@ public class VmCreateDialog implements _Saveable, _Cancelable {
          instance.init();
       }
       
-      instance.osBox.removeAllItems();
-      instance.osBox.setEnabled(false);
-      instance.osBox.addItem("Loading...");
       new SwingWorker<List<OsTypeOut>, Void>() {
+         
+         {
+            instance.osBox.removeAllItems();
+            instance.osBox.setEnabled(false);
+            instance.saveButton.setEnabled(false);
+            instance.osBox.addItem("Loading...");
+         }
          
          @Override
          protected List<OsTypeOut> doInBackground() throws Exception {
@@ -126,6 +130,7 @@ public class VmCreateDialog implements _Saveable, _Cancelable {
                }
                instance.osBox.removeItem("Loading...");
                instance.osBox.setEnabled(true);
+               instance.saveButton.setEnabled(true);
             } catch (InterruptedException e) {
                // TODO Auto-generated catch block
                e.printStackTrace();
