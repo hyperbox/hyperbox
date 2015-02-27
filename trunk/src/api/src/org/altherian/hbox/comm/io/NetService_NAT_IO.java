@@ -20,13 +20,17 @@
 
 package org.altherian.hbox.comm.io;
 
-import org.altherian.hbox.exception.FeatureNotImplementedException;
 import org.altherian.hbox.exception.ObjectNotFoundException;
 import org.altherian.hbox.hypervisor.net._NATRule;
 import org.altherian.hbox.hypervisor.net._NetService_NAT;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NetService_NAT_IO extends NetServiceIO implements _NetService_NAT {
+   
+   private Map<String, _NATRule> rules = new HashMap<String, _NATRule>();
    
    protected NetService_NAT_IO() {
       
@@ -42,26 +46,22 @@ public class NetService_NAT_IO extends NetServiceIO implements _NetService_NAT {
 
    @Override
    public List<_NATRule> getRules() {
-      // TODO Auto-generated method stub
-      throw new FeatureNotImplementedException();
+      return new ArrayList<_NATRule>(rules.values());
    }
 
    @Override
    public void addRule(_NATRule rule) {
-      // TODO Auto-generated method stub
-      throw new FeatureNotImplementedException();
+      rules.put(rule.getId(), rule);
    }
 
    @Override
    public _NATRule getRule(String id) throws ObjectNotFoundException {
-      // TODO Auto-generated method stub
-      throw new FeatureNotImplementedException();
+      return rules.get(id);
    }
 
    @Override
    public void removeRule(String id) throws ObjectNotFoundException {
-      // TODO Auto-generated method stub
-      throw new FeatureNotImplementedException();
+      rules.remove(id);
    }
 
 }

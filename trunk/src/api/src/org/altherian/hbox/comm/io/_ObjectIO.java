@@ -18,52 +18,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.altherian.hbox.hypervisor.net;
+package org.altherian.hbox.comm.io;
 
-import org.altherian.hbox.comm.io._ObjectIO;
+public interface _ObjectIO {
 
-public interface _NATRule extends _ObjectIO {
-   
-   /**
-    * @return the id
-    */
    public String getId();
-   
-   /**
-    * @return the enabled
-    */
-   public boolean isEnabled();
-   
-   /**
-    * @return the name
-    */
-   public String getName();
-   
-   /**
-    * @return the comment
-    */
-   public String getComment();
-   
-   public String getProtocol();
-   
-   /**
-    * @return the publicIp
-    */
-   public String getPublicIp();
-   
-   /**
-    * @return the publicPort
-    */
-   public String getPublicPort();
-   
-   /**
-    * @return the privateIp
-    */
-   public String getPrivateIp();
-   
-   /**
-    * @return the privatePort
-    */
-   public String getPrivatePort();
-   
+
+   public _ObjectIO getIO();
+
 }
