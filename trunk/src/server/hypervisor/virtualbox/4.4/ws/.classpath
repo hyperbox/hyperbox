@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Server-VB-4.4"/>
+	<classpathentry kind="lib" path="lib/vboxjws.jar" sourcepath="lib/vboxjws-src.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Server-VB-4.4-WS/lib/vboxjws-doc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="output" path="eclipse-bin"/>
+</classpath>
