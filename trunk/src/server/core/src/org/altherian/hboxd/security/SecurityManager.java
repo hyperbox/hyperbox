@@ -53,10 +53,11 @@ public class SecurityManager implements _SecurityManager {
    private UserIdGenerator userIdGen;
    
    private _User superUsr;
-   private Map<String, _User> users;
-   private Map<String, _User> usernames;
+   private Map<String, _User> users = new HashMap<String, _User>();
+   private Map<String, _User> usernames = new HashMap<String, _User>();
+   private Map<String, Boolean> perms = new HashMap<String, Boolean>();
+
    private _SecurityPersistor persistor;
-   private Map<String, Boolean> perms;
    
    private String getPermissionId(_User usr, SecurityItem item, String itemId) {
       if (usr == null) {
@@ -116,9 +117,9 @@ public class SecurityManager implements _SecurityManager {
       Logger.track();
       
       userIdGen = new UserIdGenerator();
-      users = new HashMap<String, _User>();
-      usernames = new HashMap<String, _User>();
-      perms = new HashMap<String, Boolean>();
+      users.clear();
+      usernames.clear();
+      perms.clear();
       
       List<_User> userList = persistor.listUsers();
       
@@ -201,6 +202,11 @@ public class SecurityManager implements _SecurityManager {
    }
    
    private boolean isAuthorized() {
+      if (SecurityContext.isAdminThread()) {
+         Logger.debug("Thread " + Thread.currentThread().getName() + " has full admin right, granting");
+         return true;
+      }
+
       String permId = getPermissionId(SecurityContext.getUser(), SecurityItem.Any, SecurityAction.Any);
       Logger.debug("Checking for permission ID " + permId);
       Logger.debug("Possible values:");
