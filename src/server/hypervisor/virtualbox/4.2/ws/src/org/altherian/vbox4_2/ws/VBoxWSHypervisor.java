@@ -28,6 +28,7 @@ import org.altherian.vbox.VirtualBox;
 import org.altherian.vbox4_2.VBoxHypervisor;
 import java.net.URI;
 import java.net.URISyntaxException;
+import org.virtualbox_4_2.ISession;
 import org.virtualbox_4_2.VBoxException;
 import org.virtualbox_4_2.VirtualBoxManager;
 
@@ -46,6 +47,8 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
    protected final String defaultPass = "";
    protected String hostname;
    
+   private String options;
+   
    @Override
    public String getId() {
       return this.getClass().getAnnotation(Hypervisor.class).id();
@@ -56,8 +59,14 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
       return this.getClass().getAnnotation(Hypervisor.class).typeId();
    }
    
+   protected VirtualBoxManager connect() {
+      return connect(options);
+   }
+   
    @Override
    protected VirtualBoxManager connect(String options) {
+      this.options = options;
+
       String protocol = defaultProtocol;
       String host = defaultHost;
       int port = defaultPort;
@@ -114,6 +123,11 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
       } catch (Throwable t) {
          Logger.debug("Error when disconnecting : " + t.getMessage());
       }
+   }
+
+   @Override
+   protected ISession getSession() {
+      return connect().getSessionObject();
    }
    
 }

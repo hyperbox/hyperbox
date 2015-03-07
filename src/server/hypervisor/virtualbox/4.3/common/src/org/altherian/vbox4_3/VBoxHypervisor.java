@@ -89,6 +89,7 @@ import org.virtualbox_4_3.IMedium;
 import org.virtualbox_4_3.IMediumFormat;
 import org.virtualbox_4_3.INATNetwork;
 import org.virtualbox_4_3.IProgress;
+import org.virtualbox_4_3.ISession;
 import org.virtualbox_4_3.KeyboardHIDType;
 import org.virtualbox_4_3.MediumState;
 import org.virtualbox_4_3.MediumVariant;
@@ -120,8 +121,16 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    private _Service evMgrSvc;
 
    private List<_RawOsType> osTypeCache;
+   
+   public VirtualBoxManager getMgr() {
+      return vbMgr;
+   }
 
    protected abstract VirtualBoxManager connect(String options);
+
+   protected abstract void disconnect();
+
+   protected abstract ISession getSession();
 
    @Override
    public String getId() {
@@ -159,7 +168,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       long start = System.currentTimeMillis();
 
       vbMgr = connect(options);
-      VBox.set(vbMgr);
+      VBox.set(this);
 
       if (!VBox.get().getAPIVersion().contentEquals("4_3")) {
          throw new HypervisorException("Missmatch API Connector: Server is " + VBox.get().getAPIVersion() + " but the connector handles 4_3");
@@ -198,8 +207,6 @@ public abstract class VBoxHypervisor implements _Hypervisor {
 
       EventManager.post(new HypervisorConnectedEvent(this));
    }
-
-   protected abstract void disconnect();
 
    @Override
    public void stop() {
