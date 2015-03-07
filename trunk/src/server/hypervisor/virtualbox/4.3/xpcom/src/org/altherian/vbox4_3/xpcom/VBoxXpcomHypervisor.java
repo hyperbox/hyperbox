@@ -27,6 +27,7 @@ import org.altherian.tool.logging.Logger;
 import org.altherian.vbox.VirtualBox;
 import org.altherian.vbox4_3.VBoxHypervisor;
 import java.io.File;
+import org.virtualbox_4_3.ISession;
 import org.virtualbox_4_3.VirtualBoxManager;
 
 @Hypervisor(
@@ -57,7 +58,6 @@ public final class VBoxXpcomHypervisor extends VBoxHypervisor {
       
       Logger.debug("Options - " + options);
       Logger.debug("vbox.home - " + System.getProperty("vbox.home"));
-      Logger.debug("java.library.path - " + System.getProperty("java.library.path"));
       File libxpcom = new File(options + "/libvboxjxpcom.so");
       Logger.debug("Lib exists - " + libxpcom.getAbsolutePath() + " - " + libxpcom.isFile());
       
@@ -76,6 +76,11 @@ public final class VBoxXpcomHypervisor extends VBoxHypervisor {
    @Override
    protected void disconnect() {
       System.gc();
+   }
+   
+   @Override
+   protected ISession getSession() {
+      return getMgr().getSessionObject();
    }
    
 }

@@ -27,28 +27,28 @@ import org.virtualbox_4_2.VirtualBoxManager;
 
 public class VBox {
    
-   private static org.virtualbox_4_2.VirtualBoxManager mgr;
+   private static VBoxHypervisor hyp;
    
-   public static void set(VirtualBoxManager mgr) {
+   public static void set(VBoxHypervisor hyp) {
       Logger.track();
       
-      VBox.mgr = mgr;
-   }
-   
-   public static IVirtualBox get() {
-      return mgr.getVBox();
-   }
-   
-   public static ISession getSession() {
-      return mgr.getSessionObject();
-   }
-   
-   public static VirtualBoxManager getManager() {
-      return mgr;
+      VBox.hyp = hyp;
    }
    
    public static void unset() {
-      mgr = null;
+      hyp = null;
+   }
+   
+   public static VirtualBoxManager getManager() {
+      return hyp.getMgr();
+   }
+   
+   public static IVirtualBox get() {
+      return getManager().getVBox();
+   }
+   
+   public static ISession getSession() {
+      return hyp.getSession();
    }
    
 }
