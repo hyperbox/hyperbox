@@ -35,11 +35,11 @@ public class AxStrings {
     * @param failover Failover string ins case original string is null or empty
     * @return the wanted value
     */
-   public static String getNonEmpty(String before, String failover) {
-      if ((before == null) || before.isEmpty()) {
+   public static String getNonEmpty(Object before, String failover) {
+      if (isEmpty(before)) {
          return failover;
       } else {
-         return before;
+         return before.toString();
       }
    }
    
