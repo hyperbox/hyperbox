@@ -27,19 +27,28 @@ import org.altherian.hbox.comm.io.NetService_NAT_IP6_IO;
 import org.altherian.hbox.constant.NetServiceType;
 import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.hypervisor.net._NATRule;
+import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui._Cancelable;
+import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui._Saveable;
 import org.altherian.hboxc.front.gui.action.CancelAction;
 import org.altherian.hboxc.front.gui.action.SaveAction;
 import org.altherian.hboxc.front.gui.builder.JDialogBuilder;
+import org.altherian.hboxc.front.gui.utils.RefreshUtil;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingWorker;
 
-public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable {
+public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable, _Refreshable {
+   
+   private String srvId;
+   private String modeId;
+   private String adaptId;
    
    private JDialog dialog;
    private NATRulesView ip4;
@@ -58,8 +67,28 @@ public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable {
    }
 
    public NATNetworkNATRulesDialog(String srvId, String modeId, String adaptId) {
-      ip4 = new NATRulesView(srvId, modeId, adaptId, NetServiceType.NAT_IPv4.getId());
-      ip6 = new NATRulesView(srvId, modeId, adaptId, NetServiceType.NAT_IPv6.getId());
+      this.srvId = srvId;
+      this.modeId = modeId;
+      this.adaptId = adaptId;
+
+      ip4 = new NATRulesView();
+      RefreshUtil.set(ip4.getComponent(), new _Refreshable() {
+         
+         @Override
+         public void refresh() {
+            refreshIp4();
+         }
+
+      });
+      ip6 = new NATRulesView();
+      RefreshUtil.set(ip6.getComponent(), new _Refreshable() {
+         
+         @Override
+         public void refresh() {
+            refreshIp6();
+         }
+
+      });
       
       tabs = new JTabbedPane();
       tabs.addTab("IPv4", ip4.getComponent());
@@ -77,10 +106,9 @@ public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable {
    }
    
    public List<NetService_NAT_IO> getInput() {
-      ip4.refresh();
-      ip6.refresh();
+      refresh();
       
-      dialog.pack();
+      dialog.setSize(538, 278);
       dialog.setLocationRelativeTo(dialog.getParent());
       dialog.setVisible(true);
       
@@ -110,6 +138,43 @@ public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable {
       rules.add(ip4svc);
       rules.add(ip6svc);
       hide();
+   }
+   
+   private void refreshRules(final String svcId, final NATRulesView view) {
+      new SwingWorker<NetService_NAT_IO, Void>() {
+
+         @Override
+         protected NetService_NAT_IO doInBackground() throws Exception {
+            return (NetService_NAT_IO) Gui.getServer(srvId).getHypervisor().getNetService(modeId, adaptId, svcId);
+         }
+         
+         @Override
+         protected void done() {
+            try {
+               NetService_NAT_IO svc = get();
+               view.setRules(svc.getRules());
+            } catch (InterruptedException e) {
+               Gui.showError("Operation was canceled");
+            } catch (ExecutionException e) {
+               Gui.showError(e.getCause());
+            }
+         }
+
+      }.execute();
+   }
+   
+   @Override
+   public void refresh() {
+      refreshIp4();
+      refreshIp6();
+   }
+
+   private void refreshIp4() {
+      refreshRules(NetServiceType.NAT_IPv4.getId(), ip4);
+   }
+
+   private void refreshIp6() {
+      refreshRules(NetServiceType.NAT_IPv6.getId(), ip6);
    }
 
 }

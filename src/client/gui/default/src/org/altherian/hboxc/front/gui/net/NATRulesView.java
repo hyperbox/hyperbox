@@ -21,85 +21,76 @@
 package org.altherian.hboxc.front.gui.net;
 
 import net.miginfocom.swing.MigLayout;
-import org.altherian.hbox.comm.io.NetService_NAT_IO;
+import org.altherian.hbox.comm.io.NATRuleIO;
 import org.altherian.hbox.hypervisor.net._NATRule;
-import org.altherian.hboxc.front.gui.Gui;
-import org.altherian.hboxc.front.gui._Refreshable;
-import org.altherian.hboxc.front.gui.utils.RefreshUtil;
+import org.altherian.hboxc.front.gui.builder.IconBuilder;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingWorker;
 
-public class NATRulesView implements _Refreshable {
-
-   private String srvId;
-   private String modeId;
-   private String adaptId;
-   private String svcTypeId;
+public class NATRulesView {
 
    private NATRuleTableModel model;
    private JTable table;
+   private JScrollPane tablePane;
    private JButton addButton;
    private JButton remButton;
    private JPanel panel;
 
-   public static NATRulesView get(String srvId, String modeId, String adaptId, String svcTypeId) {
-      return new NATRulesView(srvId, modeId, adaptId, svcTypeId);
+   public static NATRulesView get() {
+      return new NATRulesView();
    }
 
-   public NATRulesView(String srvId, String modeId, String adaptId, String svcTypeId) {
-      this.srvId = srvId;
-      this.modeId = modeId;
-      this.adaptId = adaptId;
-      this.svcTypeId = svcTypeId;
+   public NATRulesView() {
+      JComboBox protocolEditor = new JComboBox();
+      protocolEditor.addItem("TCP");
+      protocolEditor.addItem("UDP");
       
       model = new NATRuleTableModel();
       table = new JTable(model);
       table.setFillsViewportHeight(true);
       table.setAutoCreateRowSorter(true);
-      JScrollPane scrollPane = new JScrollPane(table);
-      addButton = new JButton("Add");
-      remButton = new JButton("Rem");
-      panel = new JPanel(new MigLayout("ins 0"));
-      panel.add(scrollPane, "grow, push, spany 3");
-      panel.add(addButton, "wrap");
-      panel.add(remButton, "wrap");
-      panel.add(new JLabel());
-      RefreshUtil.set(panel, this);
-   }
+      table.getColumnModel().getColumn(model.getColumnIndex(NATRuleTableModel.PROTOCOL)).setCellEditor(new DefaultCellEditor(protocolEditor));
+      tablePane = new JScrollPane(table);
+      tablePane.setPreferredSize(table.getPreferredSize());
+      addButton = new JButton(IconBuilder.AddIcon);
+      addButton.addActionListener(new ActionListener() {
 
-   @Override
-   public void refresh() {
-      new SwingWorker<NetService_NAT_IO, Void>() {
-
-         {
-            model.clear();
+         @Override
+         public void actionPerformed(ActionEvent e) {
+            model.add(new NATRuleIO("New Rule", null, null, null, null, null));
          }
+
+      });
+      remButton = new JButton(IconBuilder.DelIcon);
+      remButton.addActionListener(new ActionListener() {
          
          @Override
-         protected NetService_NAT_IO doInBackground() throws Exception {
-            return (NetService_NAT_IO) Gui.getServer(srvId).getHypervisor().getNetService(modeId, adaptId, svcTypeId);
-         }
-
-         @Override
-         protected void done() {
-            try {
-               NetService_NAT_IO svc = get();
-               model.add(svc.getRules());
-            } catch (InterruptedException e) {
-               Gui.showError("Operation was canceled");
-            } catch (ExecutionException e) {
-               Gui.showError(e.getCause());
+         public void actionPerformed(ActionEvent e) {
+            for (int row : table.getSelectedRows()) {
+               model.remove(model.getObjectAtRow(table.convertColumnIndexToModel(row)));
             }
          }
-         
-      }.execute();
+
+      });
+      panel = new JPanel(new MigLayout("ins 0"));
+      panel.add(tablePane, "grow, push");
+      JPanel buttonPanel = new JPanel(new MigLayout("ins 0"));
+      buttonPanel.add(addButton, "wrap");
+      buttonPanel.add(remButton);
+      panel.add(buttonPanel, "top");
+   }
+
+   public void setRules(List<_NATRule> rules) {
+      model.put(rules);
    }
    
    public JComponent getComponent() {
@@ -107,6 +98,6 @@ public class NATRulesView implements _Refreshable {
    }
 
    public List<_NATRule> getRules() {
-      return model.list();
+      return new ArrayList<_NATRule>(model.list());
    }
 }

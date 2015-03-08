@@ -74,6 +74,10 @@ public abstract class AbstractIOTableModel<T extends _ObjectIO> extends Abstract
 
    @Override
    public boolean isCellEditable(int row, int col) {
+      return isCellEditable(row, getColumnName(col));
+   }
+   
+   protected boolean isCellEditable(int row, String colName) {
       return false;
    }
 
@@ -86,6 +90,10 @@ public abstract class AbstractIOTableModel<T extends _ObjectIO> extends Abstract
    public String getColumnName(int columnIndex) {
       return columns.get(columnIndex);
    }
+   
+   public int getColumnIndex(String name) {
+      return columns.indexOf(name);
+   }
 
    @Override
    public int getRowCount() {
@@ -97,7 +105,18 @@ public abstract class AbstractIOTableModel<T extends _ObjectIO> extends Abstract
       return getValueAt(data.get(rowId), getColumnName(columnId));
    }
 
-   protected abstract Object getValueAt(T obj, String columnName);
+   public Object getValueAt(T obj, String columnName) {
+      return "";
+   }
+
+   @Override
+   public void setValueAt(Object value, int rowId, int columnId) {
+      setValueAt(value, getObjectAtRow(rowId), getColumnName(columnId));
+   }
+
+   public void setValueAt(Object value, T obj, String columnName) {
+      // stub
+   }
 
    public int getRowForObj(T oOut) {
       return data.indexOf(oOut);
@@ -144,7 +163,7 @@ public abstract class AbstractIOTableModel<T extends _ObjectIO> extends Abstract
       add(oOut);
    }
 
-   public void add(List<T> list) {
+   public void add(List<? extends T> list) {
       for (T oOut : list) {
          add(oOut);
       }

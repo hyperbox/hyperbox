@@ -31,7 +31,6 @@ import org.altherian.hbox.comm.io.NetService_NAT_IP6_IO;
 import org.altherian.hbox.constant.NetServiceType;
 import org.altherian.hbox.hypervisor.net._NATRule;
 import org.altherian.hbox.hypervisor.net._NetService;
-import org.altherian.tool.logging.Logger;
 import org.altherian.vbox.net.VBoxAdaptor;
 import org.altherian.vbox4_3.VBox;
 import org.virtualbox_4_3.INATNetwork;
@@ -71,9 +70,8 @@ public class VBoxNatNetworkAdaptor extends VBoxAdaptor {
          case NAT_IPv4:
             NetService_NAT_IO svcNatIp4 = (NetService_NAT_IO) svc;
             for (String ruleRaw : natNet.getPortForwardRules4()) {
-               natNet.removePortForwardRule(false, ruleRaw.split(":")[0]);
+               natNet.removePortForwardRule(false, ruleRaw.split(natRuleSplitChar)[0]);
             }
-            Logger.debug("Applying " + svcNatIp4.getRules().size() + " IPv4 rules to NAT Network " + natNet.getNetworkName());
             for (_NATRule rule : svcNatIp4.getRules()) {
                natNet.addPortForwardRule(false, rule.getName(), NATProtocol.valueOf(rule.getProtocol().toUpperCase()), rule.getPublicIp(),
                      Integer.parseInt(rule.getPublicPort()),
@@ -82,10 +80,9 @@ public class VBoxNatNetworkAdaptor extends VBoxAdaptor {
             break;
          case NAT_IPv6:
             NetService_NAT_IO svcNatIp6 = (NetService_NAT_IO) svc;
-            for (String ruleRaw : natNet.getPortForwardRules4()) {
-               natNet.removePortForwardRule(true, ruleRaw.split(":")[0]);
+            for (String ruleRaw : natNet.getPortForwardRules6()) {
+               natNet.removePortForwardRule(true, ruleRaw.split(natRuleSplitChar)[0]);
             }
-            Logger.debug("Applying " + svcNatIp6.getRules().size() + " IPv6 rules to NAT Network " + natNet.getNetworkName());
             for (_NATRule rule : svcNatIp6.getRules()) {
                natNet.addPortForwardRule(true, rule.getName(), NATProtocol.valueOf(rule.getProtocol().toUpperCase()), rule.getPublicIp(),
                      Integer.parseInt(rule.getPublicPort()),
@@ -120,8 +117,9 @@ public class VBoxNatNetworkAdaptor extends VBoxAdaptor {
       if (NetServiceType.NAT_IPv4.is(serviceTypeId)) {
          NetService_NAT_IP4_IO svc = new NetService_NAT_IP4_IO(true);
          for (String ruleRaw : natNet.getPortForwardRules4()) {
-            String[] ruleRawSplit = ruleRaw.split(":");
-            svc.addRule(new NATRuleIO(ruleRawSplit[0], ruleRawSplit[1], ruleRawSplit[2], ruleRawSplit[3], ruleRawSplit[4], ruleRawSplit[5]));
+            String[] ruleRawSplit = ruleRaw.split(natRuleSplitChar);
+            svc.addRule(new NATRuleIO(ruleRawSplit[0], ruleRawSplit[1], ruleRawSplit[2].replace("[", "").replace("]", ""), ruleRawSplit[3], ruleRawSplit[4]
+                  .replace("[", "").replace("]", ""), ruleRawSplit[5]));
          }
          return svc;
       }
@@ -130,7 +128,8 @@ public class VBoxNatNetworkAdaptor extends VBoxAdaptor {
          NetService_NAT_IP6_IO svc = new NetService_NAT_IP6_IO(true);
          for (String ruleRaw : natNet.getPortForwardRules6()) {
             String[] ruleRawSplit = ruleRaw.split(natRuleSplitChar);
-            svc.addRule(new NATRuleIO(ruleRawSplit[0], ruleRawSplit[1], ruleRawSplit[2], ruleRawSplit[3], ruleRawSplit[4], ruleRawSplit[5]));
+            svc.addRule(new NATRuleIO(ruleRawSplit[0], ruleRawSplit[1], ruleRawSplit[2].replace("[", "").replace("]", ""), ruleRawSplit[3], ruleRawSplit[4]
+                  .replace("[", "").replace("]", ""), ruleRawSplit[5]));
          }
          return svc;
       }
