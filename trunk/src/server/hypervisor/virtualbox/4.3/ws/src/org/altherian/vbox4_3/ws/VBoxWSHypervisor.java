@@ -28,6 +28,8 @@ import org.altherian.vbox.VirtualBox;
 import org.altherian.vbox4_3.VBoxHypervisor;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Map;
+import java.util.WeakHashMap;
 import org.virtualbox_4_3.ISession;
 import org.virtualbox_4_3.VBoxException;
 import org.virtualbox_4_3.VirtualBoxManager;
@@ -47,6 +49,8 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
    protected final String defaultPass = "";
 
    private String options;
+
+   private Map<ISession, VirtualBoxManager> sessions = new WeakHashMap<ISession, VirtualBoxManager>();
    
    @Override
    public String getId() {
@@ -126,7 +130,10 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
    
    @Override
    protected ISession getSession() {
-      return connect().getSessionObject();
+      VirtualBoxManager mgr = connect();
+      ISession session = mgr.getSessionObject();
+      sessions.put(session, mgr);
+      return session;
    }
    
 }
