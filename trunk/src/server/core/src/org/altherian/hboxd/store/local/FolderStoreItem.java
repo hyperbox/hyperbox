@@ -33,18 +33,19 @@ public final class FolderStoreItem implements _StoreItem {
    private File location;
    
    public FolderStoreItem(_Store store, File path) {
-      if (!location.exists()) {
+      path = path.getAbsoluteFile();
+      if (!path.exists()) {
          throw new HyperboxRuntimeException(path + " does not exist");
       }
-      if (!location.isDirectory()) {
+      if (!path.isDirectory()) {
          throw new HyperboxRuntimeException(path + " is not a folder");
       }
-      if (!location.isAbsolute()) {
+      if (!path.isAbsolute()) {
          throw new HyperboxRuntimeException(path + " must be a full path");
       }
       
       this.store = store;
-      location = new File(path.getAbsolutePath());
+      location = path;
    }
    
    @Override
