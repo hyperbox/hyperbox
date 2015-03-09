@@ -20,21 +20,31 @@
 
 package org.altherian.vbox4_3.vm;
 
+import org.altherian.hbox.comm.io.NATRuleIO;
+import org.altherian.hbox.comm.io.NetService_NAT_IO;
+import org.altherian.hbox.comm.io.NetService_NAT_IP4_IO;
+import org.altherian.hbox.constant.NetServiceType;
 import org.altherian.hbox.constant.NetworkInterfaceAttribute;
+import org.altherian.hbox.hypervisor.net._NATRule;
+import org.altherian.hbox.hypervisor.net._NetService;
 import org.altherian.hboxd.hypervisor.vm.device._RawNetworkInterface;
 import org.altherian.setting.BooleanSetting;
 import org.altherian.setting.StringSetting;
 import org.altherian.setting._Setting;
-import org.altherian.tool.logging.Logger;
 import org.altherian.vbox.settings.network.NicAdapterTypeSetting;
 import org.altherian.vbox.settings.network.NicAttachModeSetting;
 import org.altherian.vbox.settings.network.NicAttachNameSetting;
 import org.altherian.vbox.settings.network.NicCableConnectedSetting;
 import org.altherian.vbox.settings.network.NicEnabledSetting;
 import org.altherian.vbox.settings.network.NicMacAddressSetting;
+import org.altherian.vbox4_3.VBox;
 import org.altherian.vbox4_3.manager.VBoxSettingManager;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import org.virtualbox_4_3.INetworkAdapter;
+import org.virtualbox_4_3.NATProtocol;
+import org.virtualbox_4_3.NetworkAttachmentType;
 
 public class VBoxNetworkInterface implements _RawNetworkInterface {
    
@@ -48,6 +58,10 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    public VBoxNetworkInterface(String machineUuid, long nicIndex) {
       this.machineUuid = machineUuid;
       this.nicIndex = nicIndex;
+   }
+   
+   public INetworkAdapter getRaw() {
+      return VBox.get().findMachine(machineUuid).getNetworkAdapter(nicIndex);
    }
    
    @Override
@@ -67,8 +81,6 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    
    @Override
    public void setEnabled(boolean isEnabled) {
-      Logger.track();
-      
       setSetting(new NicEnabledSetting(isEnabled));
    }
    
@@ -79,8 +91,6 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    
    @Override
    public void setMacAddress(String macAddress) {
-      Logger.track();
-      
       setSetting(new NicMacAddressSetting(macAddress));
    }
    
@@ -91,8 +101,6 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    
    @Override
    public void setCableConnected(boolean isConnected) {
-      Logger.track();
-      
       setSetting(new NicCableConnectedSetting(isConnected));
    }
    
@@ -103,8 +111,6 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    
    @Override
    public void setAttachMode(String attachMode) {
-      Logger.track();
-      
       setSetting(new NicAttachModeSetting(attachMode));
    }
    
@@ -115,8 +121,6 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    
    @Override
    public void setAttachName(String attachName) {
-      Logger.track();
-      
       setSetting(new NicAttachNameSetting(attachName));
    }
    
@@ -127,8 +131,6 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    
    @Override
    public void setAdapterType(String adapterType) {
-      Logger.track();
-      
       setSetting(new NicAdapterTypeSetting(adapterType));
    }
    
@@ -150,6 +152,49 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    @Override
    public void setSetting(List<_Setting> s) {
       VBoxSettingManager.set(this, s);
+   }
+
+   @Override
+   public List<_NetService> getServices() {
+      if (NetworkAttachmentType.NAT.equals(getRaw().getAttachmentType())) {
+         return Arrays.asList(getService(NetServiceType.NAT_IPv4.getId()));
+      } else {
+         return Collections.emptyList();
+      }
+   }
+
+   @Override
+   public void setService(_NetService svc) {
+      INetworkAdapter nicRaw = getRaw();
+      
+      if (NetServiceType.NAT_IPv4.equals(svc.getType())) {
+         NetService_NAT_IO svcNatIp4 = (NetService_NAT_IO) svc;
+         for (String ruleRaw : nicRaw.getNATEngine().getRedirects()) {
+            nicRaw.getNATEngine().removeRedirect(ruleRaw.split(",")[0]);
+         }
+         for (_NATRule rule : svcNatIp4.getRules()) {
+            nicRaw.getNATEngine().addRedirect(rule.getName(), NATProtocol.valueOf(rule.getProtocol().toUpperCase()), rule.getPublicIp(),
+                  Integer.parseInt(rule.getPublicPort()), rule.getPrivateIp(), Integer.parseInt(rule.getPrivatePort()));
+         }
+      } else {
+         throw new IllegalArgumentException("Service type " + svc.getType() + " is not supported on " + nicRaw.getAdapterType() + " adaptor type");
+      }
+   }
+
+   @Override
+   public _NetService getService(String serviceTypeId) {
+      INetworkAdapter nicRaw = getRaw();
+
+      if (NetworkAttachmentType.NAT.equals(nicRaw.getAdapterType()) && NetServiceType.NAT_IPv4.equals(serviceTypeId)) {
+         NetService_NAT_IP4_IO svc = new NetService_NAT_IP4_IO(true);
+         for (String ruleRaw : nicRaw.getNATEngine().getRedirects()) {
+            String[] ruleRawSplit = ruleRaw.split(",");
+            svc.addRule(new NATRuleIO(ruleRawSplit[0], ruleRawSplit[1], ruleRawSplit[2], ruleRawSplit[3], ruleRawSplit[4], ruleRawSplit[5]));
+         }
+         return svc;
+      } else {
+         throw new IllegalArgumentException("Service type " + serviceTypeId + " is not supported on " + nicRaw.getAdapterType() + " adaptor type");
+      }
    }
    
 }
