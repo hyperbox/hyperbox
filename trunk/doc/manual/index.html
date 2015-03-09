@@ -25,14 +25,14 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<link rel="icon" type="image/png" href="img/hyperbox.png">
 	<link rel="stylesheet" type="text/css" href="hyperbox.css">
-	<title>Hyperbox - Open-Source Enterprise Virtualization Manager</title>
+	<title>Hyperbox - User Manual</title>
 </head>
 
 <body>
 
 <div id="menu">
 	<img src="img/hyperbox.png" alt="Hyperbox Logo" height="75" width="75"/>
-	<h2>Hyperbox - Open-Source Enterprise Virtualization Manager<br>User Manual</h2>
+	<h2>Hyperbox<br>Virtual Infrastructure Manager<br>User Manual</h2>
 </div>
 
 <div>
@@ -62,7 +62,7 @@
 		<li><a href="#h">Hypervisors</a>
 			<ol>
 				<li><a href="#h-o">Overview</a></li>
-				<li><a href="#h-v">Virtualbox</a></li>
+				<li><a href="#h-v">VirtualBox</a></li>
 				<li><a href="#h-mh">Managing Hypervisors</a></li>
 			</ol>
 		</li>
@@ -109,12 +109,12 @@
 		<div class="tab">
 			<p>Many Enterprise-grade management solutions exist out there: VMware vCenter, Citrix XenServer/Center, Microsoft Hyper-V to name a few.<br/>
 			Regardless of that, none of these solutions were fitting to solve a very simple problem: manage a dedicated server for virtualization, under the OS of our choice, in a free and open way.<br/>
-			Also, being big fans of Virtualbox, we could only find products that emulated the Virtualbox behaviour/interface, but did not provide easy remote access to an admin console or any enterprise-grade features.<br/>
-			That's when Hyperbox was born: to provide a management gateway to Virtualbox with advanced features, but open to any hypervisor and extensions via modules.</p>
+			Also, being big fans of VirtualBox, we could only find products that emulated the VirtualBox behaviour/interface, but did not provide easy remote access to an admin console or any enterprise-grade features.<br/>
+			That's when Hyperbox was born: to provide a management gateway to VirtualBox with advanced features, but open to any hypervisor and extensions via modules.</p>
 			
 			<p>
-				The name "Hyperbox" is made of "hyper", denoting its "up" nature, and "box" for <a href="https://www.virtualbox.org/" target="_blank">Virtualbox</a>, its favourite hypervisor.<br/>
-				The Hyperbox logo is inspired by an <a href="http://en.wikipedia.org/wiki/Hypercube" target="_blank">Hypercube</a>, building on top of the Virtualbox logo, just like it does for the software.
+				The name "Hyperbox" is made of "hyper", denoting its "up" nature, and "box" for <a href="https://www.VirtualBox.org/" target="_blank">VirtualBox</a>, its favourite hypervisor.<br/>
+				The Hyperbox logo is inspired by an <a href="http://en.wikipedia.org/wiki/Hypercube" target="_blank">Hypercube</a>, building on top of the VirtualBox logo, just like it does for the software.
 			</p>
 		</div> <!-- Why Hyperbox -->
 		
@@ -132,9 +132,9 @@
 			Hyperbox is not:
 			<ul>
 				<li>Meant to run without an hypervisor to manage. Nothing would be achieved then...</li>
-				<li>Be another &lt;insert protocol&gt; front-end implementation of the VirtualBox user interface. Many already exist like <a href="http://sourceforge.net/projects/phpvirtualbox/" target="_blank">phpVirtualBox</a>.</li>
-				<li>Meant to run on desktops environment where user interaction is required with the Virtual Machine console. It radically changes the use cases of Virtualbox by running headless-only VMs.</li>
-				<li>An Hypervisor like Virtualbox or ESXi. Hyperbox does NOT run Virtual machines but only connects to an hypervisor that does to manage it.</li>
+				<li>Be another &lt;insert protocol&gt; front-end implementation of the VirtualBox user interface. Many already exist like <a href="http://sourceforge.net/projects/phpVirtualBox/" target="_blank">phpVirtualBox</a>.</li>
+				<li>Meant to run on desktops environment where user interaction is required with the Virtual Machine console. It radically changes the use cases of VirtualBox by running headless-only VMs.</li>
+				<li>An Hypervisor like VirtualBox or ESXi. Hyperbox does NOT run Virtual machines but only connects to an hypervisor that does to manage it.</li>
 			</ul>
 		</div> <!-- What Hyperbox -->
 		
@@ -166,15 +166,17 @@
 				<p>The Hypervisor is the 3rd party software that the Hyperbox server manages by use of a module.<br/>
 				The module is a hot-pluggable Java package that can be dynamically used to directly connect to the hypervisor.<br/>
 				The Server can only connect to a single Hypervisor at the time by design, and it is strongly discourage to change it once in use.<br/></p>
-				Modules for Virtualbox are included by default in the Hyperbox releases - see the <a href="#h">Hypervisors</a> section for requirements and limitations.
+				Modules for VirtualBox are included by default in the Hyperbox releases - see the <a href="#h">Hypervisors</a> section for requirements and limitations.
 			</div> <!-- Hypervisor -->
 		</div> <!-- Global Arch -->
 		
 		<h2><a id="gs-req">Requirements</a></h2>
 		<div class="tab">
-			To run, Hyperbox only requires at least Java 1.6 (Oracle JRE or OpenJDK alike). It also successfully run on 1.7 and 1.8.<br/>
-			To be useful, an Hypervisor is also required, with its proper connector module. More on this in the <a href="#">Hypervisors chapter</a>.<br/>
-			For the client to connect to the server, the default TCP port 45612 requires to be allowed in any firewall or forwarded in any kind of NATing.
+			<ul>
+			<li>Java 1.6 (Oracle JRE or OpenJDK alike) or newer</li>
+			<li>Hypervisor to connect to and its connector module. More on this in the <a href="#">Hypervisors chapter</a></li>
+			<li>TCP port 45612 open on the server</li>
+			</ul>
 		</div>
 		
 		<h2><a id="gs-feats">Features</a></h2>
@@ -217,10 +219,10 @@
 		<div class="tab">
 			<h3><a id="il-linux-deb">Debian</a></h3>
 			<div class="tab">
-				<h4>Virtualbox</h4>
+				<h4>VirtualBox</h4>
 				<div class="tab">
-					Install the latest Virtualbox from <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank">Virtualbox website</a> - any other version/build are not tested and might break.<br>
-				</div> <!-- Virtualbox -->
+					Install the latest VirtualBox from <a href="https://www.VirtualBox.org/wiki/Downloads" target="_blank">VirtualBox website</a> - any other version/build are not tested and might break.<br>
+				</div> <!-- VirtualBox -->
 				<h4>Java</h4>
 				<div class="tab">
 					Install : <pre>$ sudo apt-get install default-jre-headless</pre>
@@ -250,10 +252,10 @@
 			</div> <!-- Debian -->
 			<h3><a id="il-linux-rh">RedHat</a></h3>
 			<div class="tab">
-				<h4>Virtualbox</h4>
+				<h4>VirtualBox</h4>
 				<div class="tab">
-					Install the latest Virtualbox from <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank">Virtualbox website</a> - any other version/build are not tested and might break.<br>
-				</div> <!-- Virtualbox -->
+					Install the latest VirtualBox from <a href="https://www.VirtualBox.org/wiki/Downloads" target="_blank">VirtualBox website</a> - any other version/build are not tested and might break.<br>
+				</div> <!-- VirtualBox -->
 				<h4>Java</h4>
 				<div class="tab">
 					Install : <pre>$ sudo yum install java-1.6.0-openjdk.x86_64</pre>
@@ -367,25 +369,25 @@
 		<div class="tab">
 			<p>Hyperbox itself is only a manager of a virtualized infrastructure, but does not provide any virtualization features.<br/>
 			To provide these features, Hyperbox will rely on 3rd party products that will provide these features.<br/>
-			Hyperbox is mainly aimed to work with Virtualbox, an open-source product from Oracle. But given the modular structure of Hyperbox, any other hypervisor could be ported, as long as they provided a compatible API with Java.<br/>
-			One of the long-term goal is Hyperbox is also to allow management of an hybrid infrastructure (Virtualbox and VMware per example) and also allow to transfer VM between the two.
+			Hyperbox is mainly aimed to work with VirtualBox, an open-source product from Oracle. But given the modular structure of Hyperbox, any other hypervisor could be ported, as long as they provided a compatible API with Java.<br/>
+			One of the long-term goal is Hyperbox is also to allow management of an hybrid infrastructure (VirtualBox and VMware per example) and also allow to transfer VM between the two.
 			</p>
 		</div> <!-- Overview -->
 		
-		<h2><a id="h-v">Virtualbox</a></h2>
+		<h2><a id="h-v">VirtualBox</a></h2>
 		<div class="tab">
-			Currently, Hyperbox is shipped with connectors for several versions of Virtualbox, as well as different connection protocols.<br/>
-			Virtualbox supports the following kind of connectors :
+			Currently, Hyperbox is shipped with connectors for several versions of VirtualBox, as well as different connection protocols.<br/>
+			VirtualBox supports the following kind of connectors :
 			<ul>
 				<li>
-					<strong>WebServices</strong>: Compatible with all systems but may require some configuration in Virtualbox.<br/>
-					The connector is slower than XPCOM/COM and come with several limitations. It should only be used if no other is available/working.<br/>
+					<strong>WebServices</strong>: Compatible with all systems but may require some configuration in VirtualBox.<br/>
+					The connector is slower than XPCOM/COM and come with several limitations. <span style="font-weight: bold;">It is the recommended connector for all platforms due to bugs in the others.</span><br/>
 				</li>
 				<li>
-					<strong>XPCOM</strong>: Only compatible with systems supporting XPCOM, which is basically any UNIX-based system. This is a native connector that supports every feature of Virtualbox and should be preferred over WebServices.
+					<strong>XPCOM</strong>: Only compatible with systems supporting XPCOM, which is basically any UNIX-based system. This is a native connector that supports every feature of VirtualBox and should be preferred over WebServices.
 				</li>
 				<li>
-					<strong>MSCOM</strong>: Only compatible with Windows systems. Due to build limitation in the Virtualbox SDK and a known bug (<a href="https://www.virtualbox.org/ticket/13843" target="_blank">Ticket #13483</a>), this kind of connector is not currently implemented in Hyperbox. Only WebServices can be used on Windows.
+					<strong>MSCOM</strong>: Only compatible with Windows systems. Due to build limitation in the VirtualBox SDK and a known bug (<a href="https://www.VirtualBox.org/ticket/13843" target="_blank">Ticket #13483</a>), this kind of connector is not currently implemented in Hyperbox. Only WebServices can be used on Windows.
 				</li>
 			</ul>
 			
@@ -406,9 +408,13 @@
 			</ul>
 			<div class="tab warning">
 				A known bug prevents XPCOM to work on all versions. XPCOM only works from 4.2.24 and 4.3.8. Fix was not back-ported to any previous versions and therefore will never work.<br/>
-				You can find detailed info on <a href="https://www.virtualbox.org/ticket/11232" target="_blank">Ticket #11232</a> of the <a href="https://www.virtualbox.org/wiki/Bugtracker" target="_blank">VirtualBox BugTracker</a>.
+				You can find detailed info on <a href="https://www.VirtualBox.org/ticket/11232" target="_blank">Ticket #11232</a> of the <a href="https://www.VirtualBox.org/wiki/Bugtracker" target="_blank">VirtualBox BugTracker</a>.
 			</div>
-		</div> <!-- Virtualbox -->
+			<div class="tab warning">
+				XPCOM has a severe bug which produces a memory leak, preventing ressources to be released once connected to VirtualBox, including TCP sockets.<br/>
+				Is it highly recommended to use WebServices connector on all platforms and all versions of VirtualBox for the time being.</p>
+			</div>
+		</div> <!-- VirtualBox -->
 		
 		<h2><a id="h-mh">Managing Hypervisors</a></h2>
 		<div class="tab">
@@ -416,12 +422,12 @@
 			<p>Once the modules are ready, you can connect to an hypervisor by right-clicking on the server &gt; Hypervisor &gt; Connect.<br/>
 			You will be prompted by dialogue to choose which hypervisor connector you want to use, and optional options for the connector.<br/>
 			<p>The options are implementation specific, so syntax/values will normally be provided by the author of the Hypervisor connector module.<br/>
-			For the Virtualbox modules shipped with Hyperbox, the following options are available (anything in square brackets [ ] are optional) :
+			For the VirtualBox modules shipped with Hyperbox, the following options are available (anything in square brackets [ ] are optional) :
 			<ul>
 				<li>WebServices: <code>[http[s]://][user:password@]host[:port]</code><br/>
-				Default value is <code>http://localhost:18083</code> and expects Virtualbox to be configured with <code>null</code> authentication for the WebServices - See the <a href="https://www.virtualbox.org/manual/ch08.html#vboxmanage-setproperty">webservauthlibrary property</a><br/>&nbsp;</li>
-				<li>XPCOM: full base path to the Virtualbox XPCOM native code.<br/>
-				Default value is <code>/usr/lib/virtualbox</code></li>
+				Default value is <code>http://localhost:18083</code> and expects VirtualBox to be configured with <code>null</code> authentication for the WebServices - See the <a href="https://www.VirtualBox.org/manual/ch08.html#vboxmanage-setproperty">webservauthlibrary property</a><br/>&nbsp;</li>
+				<li>XPCOM: full base path to the VirtualBox XPCOM native code.<br/>
+				Default value is <code>/usr/lib/VirtualBox</code></li>
 			</ul>
 			</p>
 		</div> <!-- Managing Hypervisor -->
@@ -435,7 +441,7 @@
 			That is an essential step to perform OS installs, start rescue modes, or simply access the console for debugging purposes.<br/>
 			Hyperbox already provides the Console module and address in the VM summary panel if available, but also implements the concept of "Console Viewers".</p>
 			<p>Console Viewers are programs that can be launched to connect to and display the VM console by the simple press of a button. Console viewers are meant to map to a specific protocol.<br/>
-			Virtualbox provides a RDP implementation in the Extension pack and a non-supported VNC implementation built from SVN, both which can be used with standard programs like :
+			VirtualBox provides a RDP implementation in the Extension pack and a non-supported VNC implementation built from SVN, both which can be used with standard programs like :
 			<ul>
 				<li>Windows: Remote Desktop native Client (mstsc.exe) and UltraVNC</li>
 				<li>UNIX-Like: rdesktop and UltraVNC</li>
@@ -603,7 +609,7 @@
 				<li><a href="https://github.com/ronmamo/reflections">Reflections</a></li>
 				<li><a href="http://www.famfamfam.com/lab/icons/silk/">Silk Icon Set</a></li>
 				<li><a href="http://damieng.com/creative/icons/silk-companion-1-icons">Silk Companion Icon Set</a></li>
-				<li><a href="https://www.virtualbox.org/">Virtualbox Java Connector</a></li>
+				<li><a href="https://www.VirtualBox.org/">VirtualBox Java Connector</a></li>
 				<li><a href="http://xstream.codehaus.org/">XStream</a></li>
 			</ul>
 		</div> <!-- Credits -->
