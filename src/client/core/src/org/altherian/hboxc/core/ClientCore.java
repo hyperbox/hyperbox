@@ -88,7 +88,7 @@ public class ClientCore implements _Core {
    private _Updater updater;
    
    private void setState(CoreState state) {
-      Logger.track();
+      
       
       if (!this.state.equals(state)) {
          Logger.verbose("Changing Core State to " + state);
@@ -142,7 +142,7 @@ public class ClientCore implements _Core {
    
    @Override
    public void start() throws HyperboxException {
-      Logger.track();
+      
       
       setState(CoreState.Starting);
       
@@ -165,7 +165,7 @@ public class ClientCore implements _Core {
    
    @Override
    public void stop() {
-      Logger.track();
+      
       
       if (getCoreState().equals(CoreState.Started) || getCoreState().equals(CoreState.Starting)) {
          setState(CoreState.Stopping);
@@ -236,7 +236,7 @@ public class ClientCore implements _Core {
    
    @Override
    public _ConsoleViewer addConsoleViewer(String hypervisorId, String moduleId, String viewerPath, String viewerArgs) {
-      Logger.track();
+      
       
       String id = hypervisorId + moduleId;
       if (consoleViewers.containsKey(id)) {
@@ -256,7 +256,7 @@ public class ClientCore implements _Core {
    
    @Override
    public void removeConsoleViewer(String id) {
-      Logger.track();
+      
       
       _ConsoleViewer viewer = getConsoleViewer(id);
       viewer.remove();
@@ -309,7 +309,7 @@ public class ClientCore implements _Core {
    
    @Override
    public _Connector addConnector(ConnectorInput conIn, UserIn usrIn) {
-      Logger.track();
+      
       
       _Connector conn = ConnectorFactory.get(connectIdGen.getId(), conIn.getLabel(), conIn.getAddress(), usrIn.getUsername(), conIn.getBackendId());
       storage.storeConnectorCredentials(conn.getId(), usrIn);
@@ -321,7 +321,7 @@ public class ClientCore implements _Core {
    
    @Override
    public _Connector modifyConnector(ConnectorInput conIn, UserIn usrIn) {
-      Logger.track();
+      
       
       _Connector conn = getConnector(conIn.getId());
       ConnectorFactory.update(conn, conIn);
@@ -336,7 +336,7 @@ public class ClientCore implements _Core {
    
    @Override
    public _Connector connect(String id) {
-      Logger.track();
+      
       
       _Connector conn = getConnector(id);
       UserIn usrIn = storage.loadConnectorCredentials(conn.getId());
@@ -347,7 +347,7 @@ public class ClientCore implements _Core {
    
    @Override
    public void disconnect(String id) {
-      Logger.track();
+      
       
       _Connector conn = getConnector(id);
       conn.disconnect();
@@ -355,7 +355,7 @@ public class ClientCore implements _Core {
    
    @Override
    public void removeConnector(String id) {
-      Logger.track();
+      
       
       disconnect(id);
       
@@ -374,14 +374,14 @@ public class ClientCore implements _Core {
    
    @Handler
    protected void putServerDisconnected(ServerDisconnectedEvent ev) {
-      Logger.track();
+      
       
       servers.remove(ev.getServer().getId());
    }
    
    @Handler
    private void putStarted(CoreStateEvent ev) {
-      Logger.track();
+      
       
       if (CoreState.Started.equals(ev.getState())) {
          updater.start();

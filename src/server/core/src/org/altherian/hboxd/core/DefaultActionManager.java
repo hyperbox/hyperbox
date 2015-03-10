@@ -38,7 +38,7 @@ public class DefaultActionManager implements _ActionManager {
    
    @Override
    public void start() throws HyperboxException {
-      Logger.track();
+      
       
       Set<_HyperboxAction> subTypes = HBoxServer.getAtLeastOneOrFail(_HyperboxAction.class);
       for (_HyperboxAction action : subTypes) {
@@ -72,7 +72,7 @@ public class DefaultActionManager implements _ActionManager {
    
    @Override
    public void stop() {
-      Logger.track();
+      
       
       actions.clear();
    }

@@ -105,7 +105,7 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
    }
    
    public void start() throws HyperboxException {
-      Logger.track();
+      
       
       try {
          PreferencesManager.init();
@@ -154,7 +154,7 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
    }
    
    public void stop() {
-      Logger.track();
+      
       
       try {
          if (core != null) {
@@ -177,14 +177,14 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
    
    @Override
    public void post(MessageInput mIn) {
-      Logger.track();
+      
       
       msgWorker.post(mIn);
    }
    
    @Override
    public void putRequest(Request request) {
-      Logger.track();
+      
       
       msgWorker.post(new MessageInput(request));
    }
@@ -197,17 +197,17 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
       
       @Override
       public void post(MessageInput mIn) {
-         Logger.track();
+         
          
          if (!queue.offer(mIn)) {
             throw new HyperboxRuntimeException("Couldn't queue the request : queue is full (" + queue.size() + " messages)");
          } else {
-            Logger.track();
+            
          }
       }
       
       public void start() throws HyperboxException {
-         Logger.track();
+         
          
          running = true;
          queue = new LinkedBlockingQueue<MessageInput>();
@@ -217,7 +217,7 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
       }
       
       public void stop() {
-         Logger.track();
+         
          
          running = false;
          thread.interrupt();
@@ -234,19 +234,19 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
          while (running) {
             try {
                MessageInput mIn = queue.take();
-               Logger.track();
+               
                Request req = mIn.getRequest();
                _AnswerReceiver recv = mIn.getReceiver();
                
                try {
                   if (actionsMap.containsKey(mIn.getRequest().getName())) {
-                     Logger.track();
+                     
                      _ClientControllerAction action = actionsMap.get(mIn.getRequest().getName());
                      recv.putAnswer(new Answer(mIn.getRequest(), action.getStartReturn()));
                      action.run(core, front, req, recv);
                      recv.putAnswer(new Answer(mIn.getRequest(), action.getFinishReturn()));
                   } else {
-                     Logger.track();
+                     
                      if (req.has(ServerIn.class)) {
                         core.getServer(req.get(ServerIn.class).getId()).sendRequest(req);
                      } else if (req.has(MachineIn.class)) {
@@ -265,17 +265,17 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
                   front.postError(e);
                }
             } catch (InterruptedException e) {
-               Logger.track();
+               
                Logger.debug("Got interupted, halting");
                running = false;
             } catch (Throwable e) {
-               Logger.track();
+               
                Logger.error("Unknown error : " + e.getMessage());
                Logger.exception(e);
                front.postError(e, "Unexpected error occured: " + e.getMessage());
             }
          }
-         Logger.track();
+         
          Logger.verbose("RequestWorker Thread halted");
       }
       

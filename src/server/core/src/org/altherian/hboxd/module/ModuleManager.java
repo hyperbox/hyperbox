@@ -110,7 +110,7 @@ public class ModuleManager implements _ModuleManager {
 
    @Override
    public void unregisterModules() {
-      Logger.track();
+      
 
       // needed not to cause an Exception
       for (_Module mod : new ArrayList<_Module>(modules.values())) {
@@ -126,7 +126,7 @@ public class ModuleManager implements _ModuleManager {
 
    @Override
    public void setModuleBasedir(String... basedir) {
-      Logger.track();
+      
 
       baseDirs = basedir;
       Logger.verbose("Module Base Dirs has been set to:");
@@ -171,7 +171,7 @@ public class ModuleManager implements _ModuleManager {
 
    @Override
    public _Module registerModule(String moduleDescFile) {
-      Logger.track();
+      
 
       Logger.info("Attempting to add module with descriptor file: " + moduleDescFile);
       File xmlFile = new File(moduleDescFile);
@@ -201,7 +201,7 @@ public class ModuleManager implements _ModuleManager {
 
    @Override
    public void unregisterModule(_Module mod) {
-      Logger.track();
+      
 
       mod = getModule(mod.getId());
       mod.unload();
@@ -226,7 +226,7 @@ public class ModuleManager implements _ModuleManager {
 
    @Handler
    protected void putModuleEvent(ModuleUnloadedEvent ev) {
-      Logger.track();
+      
 
       Logger.debug("Calling GC to release any ressources of the module");
       System.gc();
@@ -234,7 +234,7 @@ public class ModuleManager implements _ModuleManager {
 
    @Handler
    protected void putModuleEvent(ModuleUnregisteredEvent ev) {
-      Logger.track();
+      
 
       Logger.debug("Calling GC to release any ressources of the module");
       System.gc();

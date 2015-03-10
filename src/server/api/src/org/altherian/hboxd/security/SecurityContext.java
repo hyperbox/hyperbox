@@ -34,7 +34,7 @@ public class SecurityContext {
    private static ThreadLocal<_User> userHolder = new ThreadLocal<_User>();
 
    public static void init() {
-      Logger.track();
+      
 
       if (adminThreads != null) {
          throw new SecurityException("SecurityContext is already initialized");
@@ -47,7 +47,7 @@ public class SecurityContext {
    }
 
    public static void addAdminThread(Thread thread) {
-      Logger.track();
+      
 
       if (isAdminThread()) {
          adminThreads.put(thread, thread);
@@ -62,7 +62,7 @@ public class SecurityContext {
    }
 
    public static void initSecurityManager(_SecurityManager secMgr) {
-      Logger.track();
+      
 
       if (SecurityContext.secMgr != null) {
          throw new HyperboxRuntimeException("Security Manager is already defined, cannot be redefined");
@@ -71,7 +71,7 @@ public class SecurityContext {
    }
 
    public static void setAdminUser(_User u) {
-      Logger.track();
+      
 
       if (!isAdminThread()) {
          throw new SecurityException("Cannot set admin user: Current thread is not admin: #" + Thread.currentThread().getId() + " - "

@@ -173,40 +173,40 @@ public class GeneralVmEdit {
       
       @Override
       public void loadingStarted() {
-         Logger.track();
+         
          
          keyboardTypeBox.setEnabled(false);
          keyboardTypeBox.removeAllItems();
          keyboardTypeBox.addItem("Loading...");
          keyboardTypeBox.setSelectedItem("Loading...");
-         Logger.track();
+         
       }
       
       @Override
       public void loadingFinished(boolean isSuccessful, String message) {
-         Logger.track();
+         
          
          keyboardTypeBox.removeItem("Loading...");
          keyboardTypeBox.setEnabled(isSuccessful);
          if (isSuccessful) {
-            Logger.track();
+            
             keyboardTypeBox.setSelectedItem(mOut.getSetting(MachineAttribute.KeyboardMode).getRawValue());
          } else {
-            Logger.track();
+            
             keyboardTypeBox.removeAllItems();
             keyboardTypeBox.addItem("Failed to load Keyboard Types list: " + message);
          }
-         Logger.track();
+         
       }
       
       @Override
       public void add(List<String> keyboardList) {
-         Logger.track();
+         
          for (String keyboard : keyboardList) {
-            Logger.track();
+            
             keyboardTypeBox.addItem(keyboard);
          }
-         Logger.track();
+         
       }
       
    }

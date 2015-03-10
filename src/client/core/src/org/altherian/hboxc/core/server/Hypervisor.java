@@ -110,14 +110,14 @@ public class Hypervisor implements _Hypervisor {
    
    @Handler
    protected void putHypervisorDisconnectedEvent(HypervisorDisconnectedEventOut ev) {
-      Logger.track();
+      
       
       hypData = null;
    }
    
    @Handler
    protected void putHypervisorEvent(HypervisorEventOut ev) {
-      Logger.track();
+      
       
       refresh();
    }

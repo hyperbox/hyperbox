@@ -115,7 +115,7 @@ public final class MainView {
       
       @Override
       public void windowClosing(WindowEvent e) {
-         Logger.track();
+         
          
          mainFrame.setExtendedState(JFrame.NORMAL);
          PreferencesManager.get().setProperty(Config.MainFrameWidth, Int.get(mainFrame.getWidth()));

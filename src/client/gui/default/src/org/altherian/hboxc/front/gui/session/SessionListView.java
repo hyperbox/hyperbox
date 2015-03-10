@@ -39,7 +39,7 @@ public final class SessionListView {
    private JTable sessionList;
    
    public void init() throws HyperboxException {
-      Logger.track();
+      
       
       sessionListModel = new SessionListTableModel();
       sessionList = new JTable(sessionListModel);

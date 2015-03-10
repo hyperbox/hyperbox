@@ -110,12 +110,12 @@ public final class VmSummaryView {
    private JTextArea descArea;
    
    public VmSummaryView() {
-      Logger.track();
+      
       init();
    }
    
    private void init() {
-      Logger.track();
+      
       
       initGeneral();
       initSystem();
@@ -138,7 +138,7 @@ public final class VmSummaryView {
    }
    
    private void initGeneral() {
-      Logger.track();
+      
       
       nameLabel = new JLabel("Name");
       nameField = JTextFieldUtils.createNonEditable();
@@ -165,7 +165,7 @@ public final class VmSummaryView {
    }
    
    private void initSystem() {
-      Logger.track();
+      
       
       cpuCountLabel = new JLabel("vCPU");
       cpuCountValue = JTextFieldUtils.createNonEditable();
@@ -185,7 +185,7 @@ public final class VmSummaryView {
    }
    
    private void initDisplay() {
-      Logger.track();
+      
       
       vramLabel = new JLabel("VRAM");
       vramValue = JTextFieldUtils.createNonEditable();
@@ -209,7 +209,7 @@ public final class VmSummaryView {
    }
    
    private void initStorage() {
-      Logger.track();
+      
       
       controllers = new HashMap<String, StorageControllerOut>();
       storagePanel = new JPanel(new MigLayout());
@@ -217,7 +217,7 @@ public final class VmSummaryView {
    }
    
    private void initAudio() {
-      Logger.track();
+      
       
       hostDriverLabel = new JLabel("Host Driver");
       hostDriverValue = JTextFieldUtils.createNonEditable();
@@ -233,14 +233,14 @@ public final class VmSummaryView {
    }
    
    private void initNetwork() {
-      Logger.track();
+      
       
       networkPanel = new JPanel(new MigLayout());
       networkPanel.setBorder(BorderUtils.createTitledBorder(Color.gray, "Network"));
    }
    
    private void initDesc() {
-      Logger.track();
+      
       
       descArea = new JTextArea();
       descArea.setEditable(false);
@@ -251,7 +251,7 @@ public final class VmSummaryView {
    }
    
    private void clearGeneral() {
-      Logger.track();
+      
       
       nameField.setText(null);
       uuidField.setText(null);
@@ -260,7 +260,7 @@ public final class VmSummaryView {
    }
    
    private void clearSystem() {
-      Logger.track();
+      
       
       cpuCountValue.setText(null);
       memoryValue.setText(null);
@@ -268,7 +268,7 @@ public final class VmSummaryView {
    }
    
    private void clearDisplay() {
-      Logger.track();
+      
       
       vramValue.setText(null);
       consoleModuleValue.setText(null);
@@ -276,32 +276,32 @@ public final class VmSummaryView {
    }
    
    private void clearStorage() {
-      Logger.track();
+      
       
       storagePanel.removeAll();
    }
    
    private void clearAudio() {
-      Logger.track();
+      
       
       hostDriverValue.setText(null);
       audioControllerValue.setText(null);
    }
    
    private void clearNetwork() {
-      Logger.track();
+      
       
       networkPanel.removeAll();
    }
    
    private void clearDesc() {
-      Logger.track();
+      
       
       descArea.setText(null);
    }
    
    public void clear() {
-      Logger.track();
+      
       
       mOut = null;
       clearGeneral();
@@ -314,7 +314,7 @@ public final class VmSummaryView {
    }
    
    public void show(MachineOut mOut, boolean forced) {
-      Logger.track();
+      
       
       if (forced || (this.mOut == null) || !this.mOut.equals(mOut)) {
          this.mOut = mOut;
@@ -323,13 +323,13 @@ public final class VmSummaryView {
    }
    
    public void show(MachineOut mOut) {
-      Logger.track();
+      
       
       show(mOut, false);
    }
    
    public void refreshGeneral() {
-      Logger.track();
+      
       
       nameField.setText(mOut.getName());
       uuidField.setText(mOut.getUuid());
@@ -338,7 +338,7 @@ public final class VmSummaryView {
    }
    
    public void refreshSystem() {
-      Logger.track();
+      
       
       cpuCountValue.setText(mOut.getSetting(MachineAttribute.CpuCount).getString());
       memoryValue.setText(mOut.getSetting(MachineAttribute.Memory).getString() + " MB");
@@ -373,7 +373,7 @@ public final class VmSummaryView {
    }
    
    public void refreshDisplay() {
-      Logger.track();
+      
       
       vramValue.setText(mOut.getSetting(MachineAttribute.VRAM).getString());
       
@@ -399,7 +399,7 @@ public final class VmSummaryView {
    }
    
    public void refreshStorage() {
-      Logger.track();
+      
       
       clearStorage();
       if (controllers.isEmpty()) {
@@ -459,7 +459,7 @@ public final class VmSummaryView {
    }
    
    public void refreshAudio() {
-      Logger.track();
+      
       
       audioPanel.removeAll();
       if (mOut.getSetting(MachineAttribute.AudioEnable).getBoolean()) {
@@ -477,7 +477,7 @@ public final class VmSummaryView {
    }
    
    public void refreshNetwork() {
-      Logger.track();
+      
       
       clearNetwork();
       for (NetworkInterfaceOut nicOut : mOut.listNetworkInterface()) {
@@ -488,13 +488,13 @@ public final class VmSummaryView {
    }
    
    public void refreshDesc() {
-      Logger.track();
+      
       
       descArea.setText(mOut.getSetting(MachineAttribute.Description).getString());
    }
    
    public void refresh() {
-      Logger.track();
+      
       
       if (mOut == null) {
          clear();
@@ -537,7 +537,7 @@ public final class VmSummaryView {
       
       @Override
       public void actionPerformed(ActionEvent ae) {
-         Logger.track();
+         
          
          Gui.post(new Request(ClientTasks.ConsoleViewerUse, new ServerIn(mOut.getServerId()), new MachineIn(mOut)));
       }

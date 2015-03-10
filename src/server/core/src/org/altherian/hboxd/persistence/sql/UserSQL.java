@@ -42,13 +42,13 @@ public class UserSQL {
    public final static String SALT = "userSalt";
    
    public static void init(SqlPersistor sql) throws SQLException {
-      Logger.track();
+      
       
       createTables(sql);
    }
    
    public static void createTables(SqlPersistor sql) throws SQLException {
-      Logger.track();
+      
       
       sql.getConn()
             .createStatement()

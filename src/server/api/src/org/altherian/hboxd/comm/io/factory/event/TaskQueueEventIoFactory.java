@@ -41,7 +41,7 @@ public final class TaskQueueEventIoFactory implements _EventIoFactory {
    
    @Override
    public EventOut get(_Hyperbox hbox, _Event ev) {
-      Logger.track();
+      
       
       switch ((HyperboxEvents) ev.getEventId()) {
          case TaskQueue:

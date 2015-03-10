@@ -51,7 +51,7 @@ public abstract class AbstractSession implements _Session {
    private _TaskManager taskMgr;
    
    public AbstractSession(String id, _Client client, _User user, _TaskManager taskMgr) {
-      Logger.track();
+      
       
       this.id = id;
       createTime = new Date();
@@ -66,7 +66,7 @@ public abstract class AbstractSession implements _Session {
    }
    
    private void init() {
-      Logger.track();
+      
       
       running = true;
       worker = new Thread(this, "SessWT - Session #" + id + " - Connection #" + client.getId());
@@ -105,7 +105,7 @@ public abstract class AbstractSession implements _Session {
    
    @Override
    public void close() {
-      Logger.track();
+      
       
       running = false;
       
@@ -124,7 +124,7 @@ public abstract class AbstractSession implements _Session {
    
    @Override
    public void putRequest(Request req) {
-      Logger.track();
+      
       
       if (!msgQueue.offer(req)) {
          throw new HyperboxRuntimeException("Message queue is full, try again later.");
@@ -137,14 +137,14 @@ public abstract class AbstractSession implements _Session {
    
    @Override
    public void post(EventOut ev) {
-      Logger.track();
+      
       
       client.post(ev);
    }
    
    @Override
    public void run() {
-      Logger.track();
+      
       
       SecurityContext.setUser(user);
       SessionContext.setClient(client);

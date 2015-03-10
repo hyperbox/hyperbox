@@ -216,7 +216,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public void startMachine(MachineIn mIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.MachinePowerOn, mIn));
       if (!trans.sendAndWait()) {
@@ -226,7 +226,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public void stopMachine(MachineIn mIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.MachinePowerOff, mIn));
       if (!trans.sendAndWait()) {
@@ -236,7 +236,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public void acpiPowerMachine(MachineIn mIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.MachineAcpiPowerButton, mIn));
       if (!trans.sendAndWait()) {
@@ -270,7 +270,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public MachineOut getMachine(MachineIn mIn) {
-      Logger.track();
+      
       
       Transaction t = getTransaction(new Request(Command.VBOX, HypervisorTasks.MachineGet, mIn));
       if (!t.sendAndWait()) {
@@ -288,7 +288,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public MediumOut getMedium(MediumIn mIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.MediumGet, mIn));
       if (!trans.sendAndWait()) {
@@ -300,7 +300,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public SessionOut getSession(SessionIn sIn) {
-      Logger.track();
+      
       
       // TODO Auto-generated method stub
       throw new HyperboxRuntimeException("Not implemented");
@@ -308,7 +308,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public StorageControllerSubTypeOut getStorageControllerSubType(StorageControllerSubTypeIn scstIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.StorageControllerSubTypeGet, scstIn));
       if (!trans.sendAndWait()) {
@@ -321,7 +321,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public StorageControllerTypeOut getStorageControllerType(StorageControllerTypeIn sctIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.StorageControllerTypeGet, sctIn));
       if (!trans.sendAndWait()) {
@@ -334,7 +334,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public StoreOut getStore(StoreIn sIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.StoreGet, sIn));
       if (!trans.sendAndWait()) {
@@ -345,7 +345,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public StoreItemOut getStoreItem(StoreItemIn siIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.StoreItemGet, siIn));
       if (!trans.sendAndWait()) {
@@ -356,7 +356,7 @@ public class Server implements _Server, _AnswerReceiver {
    }
    
    private Transaction getTransaction(Request req) {
-      Logger.track();
+      
       
       if ((backend == null) || !backend.isConnected() || (getId() == null)) {
          throw new HyperboxRuntimeException("Not connected to the server");
@@ -372,7 +372,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public UserOut getUser(UserIn uIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.UserGet, uIn));
       if (!trans.sendAndWait()) {
@@ -384,7 +384,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<StorageDeviceAttachmentOut> listAttachments(StorageControllerIn scIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.StorageControllerMediumAttachmentList, scIn));
       if (!trans.sendAndWait()) {
@@ -397,7 +397,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<String> listKeyboardMode(MachineIn mIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.KeyboardModeList));
       if (!trans.sendAndWait()) {
@@ -413,7 +413,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<MachineOut> listMachines() {
-      Logger.track();
+      
       
       Transaction t = getTransaction(new Request(Command.VBOX, HypervisorTasks.MachineList));
       if (!t.sendAndWait()) {
@@ -426,7 +426,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<MediumOut> listMediums() {
-      Logger.track();
+      
       
       Transaction t = getTransaction(new Request(Command.VBOX, HypervisorTasks.MediumList));
       if (!t.sendAndWait()) {
@@ -439,7 +439,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<String> listMouseMode(MachineIn mIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.MouseModeList));
       if (!trans.sendAndWait()) {
@@ -455,7 +455,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<OsTypeOut> listOsType() {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.OsTypeList));
       if (!trans.sendAndWait()) {
@@ -471,14 +471,14 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<OsTypeOut> listOsType(MachineIn mIn) {
-      Logger.track();
+      
       
       return listOsType();
    }
    
    @Override
    public List<SessionOut> listSessions() {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.SessionList));
       if (!trans.sendAndWait()) {
@@ -491,7 +491,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<StorageControllerSubTypeOut> listStorageControllerSubType(StorageControllerTypeIn sctIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.StorageControllerSubTypeList, sctIn));
       if (!trans.sendAndWait()) {
@@ -504,7 +504,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<StorageControllerTypeOut> listStorageControllerType() {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.StorageControllerTypeList));
       if (!trans.sendAndWait()) {
@@ -517,7 +517,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<StoreItemOut> listStoreItems(StoreIn sIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.StoreItemList, sIn));
       if (!trans.sendAndWait()) {
@@ -530,7 +530,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<StoreItemOut> listStoreItems(StoreIn sIn, StoreItemIn siIn) {
-      Logger.track();
+      
       
       Request req = new Request(Command.HBOX, HyperboxTasks.StoreItemList);
       req.set(sIn);
@@ -546,7 +546,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<StoreOut> listStores() {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.StoreList));
       if (!trans.sendAndWait()) {
@@ -559,7 +559,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<TaskOut> listTasks() {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.TaskList));
       if (!trans.sendAndWait()) {
@@ -572,7 +572,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<UserOut> listUsers() {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.UserList));
       if (!trans.sendAndWait()) {
@@ -585,7 +585,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<NetworkInterfaceOut> listNetworkInterfaces(MachineIn mIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.NetworkInterfaceList, mIn));
       if (!trans.sendAndWait()) {
@@ -598,7 +598,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<NetworkAttachModeOut> listNetworkAttachModes() {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.NetworkAttachModeList));
       if (!trans.sendAndWait()) {
@@ -611,7 +611,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<NetworkAttachNameOut> listNetworkAttachNames(NetworkAttachModeIn namIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.NetworkAttachNameList, namIn));
       if (!trans.sendAndWait()) {
@@ -624,7 +624,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<NetworkInterfaceTypeOut> listNetworkInterfaceTypes() {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.NetworkAdapterTypeList));
       if (!trans.sendAndWait()) {
@@ -637,7 +637,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public TaskOut getTask(TaskIn tIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.TaskGet, tIn));
       if (!trans.sendAndWait()) {
@@ -649,7 +649,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public SnapshotOut getRootSnapshot(String vmId) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.SnapshotGetRoot, new MachineIn(vmId)));
       if (!trans.sendAndWait()) {
@@ -662,7 +662,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public SnapshotOut getSnapshot(MachineIn mIn, SnapshotIn snapIn) {
-      Logger.track();
+      
       
       Request req = new Request(Command.VBOX, HypervisorTasks.SnapshotGet);
       req.set(mIn);
@@ -678,7 +678,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public SnapshotOut getCurrentSnapshot(MachineIn mIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.SnapshotGetCurrent, mIn));
       if (!trans.sendAndWait()) {
@@ -696,7 +696,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public ScreenshotOut getScreenshot(MachineIn mIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.MachineDisplayGetScreenshot, mIn));
       if (!trans.sendAndWait()) {
@@ -709,7 +709,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<StorageDeviceAttachmentOut> listAttachments(String machineUuid) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.VBOX, HypervisorTasks.StorageControllerMediumAttachmentList, new MachineIn(machineUuid)));
       if (!trans.sendAndWait()) {
@@ -767,7 +767,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public void connect(String address, String backendId, UserIn usrIn) {
-      Logger.track();
+      
       
       setState(ConnectionState.Connecting);
       
@@ -822,7 +822,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public void disconnect() {
-      Logger.track();
+      
       
       if (!getState().equals(ConnectionState.Disconnected)) {
          setState(ConnectionState.Disconnecting);
@@ -857,7 +857,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Handler
    protected final void putBackendConnectionStateEvent(BackendConnectionStateEvent ev) {
-      Logger.track();
+      
       
       if (ev.getBackend().equals(backend)) {
          Logger.debug("Server " + getName() + " got backend event: " + ev.getEventId());
@@ -870,7 +870,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Handler
    protected void putHypervisorEvent(HypervisorEventOut ev) {
-      Logger.track();
+      
       
       if (id.equals(ev.getServerId())) {
          refreshInfo();
@@ -879,7 +879,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Handler
    protected final void putServerShutdownEvent(ServerShutdownEventOut ev) {
-      Logger.track();
+      
       
       if (id.equals(ev.getServerId())) {
          disconnect();
@@ -888,7 +888,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Handler
    private void putServerPropertyChanged(ServerPropertyChangedEventOut ev) {
-      Logger.track();
+      
       
       if (id.equals(ev.getServerId())) {
          refreshInfo();
@@ -897,7 +897,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public _GuestReader getGuest(String machineUuid) {
-      Logger.track();
+      
       
       // TODO Add machine validation
       return new GuestReader(this, machineUuid);
@@ -905,7 +905,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<PermissionOut> listPermissions(UserIn usrIn) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.PermissionList, usrIn));
       if (!trans.sendAndWait()) {
@@ -918,7 +918,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public HostOut getHost() {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.HostGet));
       if (!trans.sendAndWait()) {
@@ -941,7 +941,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public List<ModuleOut> listModules() {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.ModuleList));
       if (!trans.sendAndWait()) {
@@ -954,7 +954,7 @@ public class Server implements _Server, _AnswerReceiver {
    
    @Override
    public ModuleOut getModule(String modId) {
-      Logger.track();
+      
       
       Transaction trans = getTransaction(new Request(Command.HBOX, HyperboxTasks.ModuleGet, new ModuleIn(modId)));
       if (!trans.sendAndWait()) {

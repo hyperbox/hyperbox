@@ -33,7 +33,7 @@ public class SecurityManagerFactory {
    }
    
    public static _SecurityManager get() {
-      Logger.track();
+      
       
       if (secMgr == null) {
          secMgr = new SecurityManager();

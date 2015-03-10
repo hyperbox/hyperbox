@@ -36,14 +36,14 @@ public class MachineSessionStateEventFactory implements _PreciseEventFactory {
    
    @Override
    public ISessionStateChangedEvent getRaw(IEvent vbEvent) {
-      Logger.track();
+      
       
       return ISessionStateChangedEvent.queryInterface(vbEvent);
    }
    
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      Logger.track();
+      
       
       return null;
    }

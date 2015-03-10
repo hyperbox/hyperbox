@@ -33,7 +33,7 @@ public class ModelFactory {
    }
    
    public static _Hyperbox get() {
-      Logger.track();
+      
       
       if (hyperbox == null) {
          hyperbox = new SingleHostServer();

@@ -57,7 +57,7 @@ public abstract class AbstractListTableModel<T extends Object> extends AbstractT
    }
    
    public void clear() {
-      Logger.track();
+      
       
       Integer maxIndex = data.size() - 1;
       reset();
@@ -146,7 +146,7 @@ public abstract class AbstractListTableModel<T extends Object> extends AbstractT
       if (oOut != null) {
          int index = getRowForObj(oOut);
          if (index > -1) {
-            Logger.track();
+            
             data.remove(index);
             fireTableRowsDeleted(index, index);
          }

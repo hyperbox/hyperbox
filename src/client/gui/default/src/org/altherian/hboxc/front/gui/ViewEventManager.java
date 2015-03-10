@@ -50,7 +50,7 @@ public final class ViewEventManager {
    }
    
    public static void post(Object o) {
-      Logger.track();
+      
       
       evMgr.post(o);
    }

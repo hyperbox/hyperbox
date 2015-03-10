@@ -51,7 +51,7 @@ public final class MediumGetAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      Logger.track();
+      
       
       MediumIn medIn = request.get(MediumIn.class);
       

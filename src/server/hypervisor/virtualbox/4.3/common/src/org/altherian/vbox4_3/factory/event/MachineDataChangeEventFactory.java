@@ -37,14 +37,14 @@ public final class MachineDataChangeEventFactory implements _PreciseEventFactory
    
    @Override
    public IMachineDataChangedEvent getRaw(IEvent vbEvent) {
-      Logger.track();
+      
       
       return IMachineDataChangedEvent.queryInterface(vbEvent);
    }
    
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      Logger.track();
+      
       
       _Event ev = new MachineDataChangeEvent(getRaw(vbEvent).getMachineId());
       return ev;

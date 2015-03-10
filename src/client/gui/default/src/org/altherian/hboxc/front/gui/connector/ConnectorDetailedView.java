@@ -105,7 +105,7 @@ public class ConnectorDetailedView implements _Refreshable {
    
    @Override
    public void refresh() {
-      Logger.track();
+      
       
       new SwingWorker<ConnectorOutput, Void>() {
          

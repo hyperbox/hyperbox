@@ -57,7 +57,7 @@ public class MediumAttachAction extends AbstractAction {
    
    @Override
    public void actionPerformed(ActionEvent ae) {
-      Logger.track();
+      
       
       MediumOut medOut = MediumBrowser.browse(new ServerOut(serverId), sdaOut.getDeviceType());
       if (medOut != null) {

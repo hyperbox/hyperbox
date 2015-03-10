@@ -42,7 +42,7 @@ public final class StoreManager implements _StoreManager {
    private Map<String, _Store> stores = new HashMap<String, _Store>();
    
    private void saveStores() {
-      Logger.track();
+      
       
       Logger.debug("Saving stores config");
       for (_Store s : stores.values()) {
@@ -57,7 +57,7 @@ public final class StoreManager implements _StoreManager {
    
    @Override
    public void start() throws HyperboxException {
-      Logger.track();
+      
       
       Logger.verbose("Filesystem Store Manager is starting...");
       List<_Store> storeList = persistor.listStores();
@@ -87,7 +87,7 @@ public final class StoreManager implements _StoreManager {
    
    @Override
    public void stop() {
-      Logger.track();
+      
       
       Logger.verbose("Filesystem Store Manager is stopping...");
       saveStores();
@@ -114,7 +114,7 @@ public final class StoreManager implements _StoreManager {
    
    @Override
    public _Store createStore(String location, String label) {
-      Logger.track();
+      
       
       SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.Create);
       
@@ -132,7 +132,7 @@ public final class StoreManager implements _StoreManager {
    
    @Override
    public _Store registerStore(String location, String label) {
-      Logger.track();
+      
       
       SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.Add);
       
@@ -159,7 +159,7 @@ public final class StoreManager implements _StoreManager {
    
    @Override
    public void unregisterStore(String id) {
-      Logger.track();
+      
       
       SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.Delete, id);
       
@@ -171,7 +171,7 @@ public final class StoreManager implements _StoreManager {
    
    @Override
    public void deleteStore(String id) {
-      Logger.track();
+      
       
       SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.Delete, id);
       
@@ -186,7 +186,7 @@ public final class StoreManager implements _StoreManager {
       private Integer nextId = 1;
       
       public String get() {
-         Logger.track();
+         
          
          while (stores.containsKey(nextId.toString())) {
             nextId++;

@@ -80,19 +80,19 @@ public class SecurityManager implements _SecurityManager {
    }
    
    private void loadPerm(_User usr, _ActionPermission acPerm) {
-      Logger.track();
+      
       
       perms.put(getPermissionId(usr, acPerm.getItemType(), acPerm.getAction()), acPerm.isAllowed());
    }
    
    private void loadPerm(_User usr, _ItemPermission itemPerm) {
-      Logger.track();
+      
       
       perms.put(getPermissionId(usr, itemPerm.getItemType(), itemPerm.getAction(), itemPerm.getItemId()), itemPerm.isAllowed());
    }
    
    private void loadPerms(_User usr) {
-      Logger.track();
+      
       
       for (_ActionPermission perm : listActionPermissions(usr)) {
          loadPerm(usr, perm);
@@ -105,7 +105,7 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public _User init(_SecurityPersistor persistor) throws HyperboxException {
-      Logger.track();
+      
       
       this.persistor = persistor;
       superUsr = new SystemUser();
@@ -114,7 +114,7 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public void start() throws HyperboxException {
-      Logger.track();
+      
       
       userIdGen = new UserIdGenerator();
       users.clear();
@@ -151,7 +151,7 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public void stop() {
-      Logger.track();
+      
       
       userIdGen = null;
       users = null;
@@ -160,7 +160,7 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public void authenticate(String login, char[] submitedPassword) {
-      Logger.track();
+      
       
       if (!usernames.containsKey(login)) {
          Logger.debug("Unknown login: " + login);
@@ -188,14 +188,14 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public void authorize(Request req) {
-      Logger.track();
+      
       
       // TODO Auto-generated method stub
    }
    
    @Override
    public boolean isAuthorized(_User u, _Event ev) {
-      Logger.track();
+      
       
       // TODO complete
       return true;
@@ -261,7 +261,7 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public void authorize(SecurityItem item, SecurityAction action) {
-      Logger.track();
+      
       
       if (!isAuthorized(item, action)) {
          throw new AccessDeniedException();
@@ -270,7 +270,7 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public void authorize(SecurityItem item, SecurityAction action, String itemId) {
-      Logger.track();
+      
       
       if (!isAuthorized(item, action, itemId)) {
          throw new AccessDeniedException();
@@ -285,7 +285,7 @@ public class SecurityManager implements _SecurityManager {
    }
    
    protected void loadUser(String id) {
-      Logger.track();
+      
       
       _User u = persistor.getUser(id);
       users.put(u.getId(), u);
@@ -293,7 +293,7 @@ public class SecurityManager implements _SecurityManager {
    }
    
    protected void unloadUser(String id) {
-      Logger.track();
+      
       
       usernames.remove(id);
       users.remove(id);
@@ -323,7 +323,7 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public _User addUser(UserIn uIn) {
-      Logger.track();
+      
       
       authorize(SecurityItem.User, SecurityAction.Add);
       
@@ -346,7 +346,7 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public void removeUser(String usrId) {
-      Logger.track();
+      
       
       authorize(SecurityItem.User, SecurityAction.Delete);
       
@@ -361,7 +361,7 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public _User modifyUser(UserIn uIn) {
-      Logger.track();
+      
       
       authorize(SecurityItem.User, SecurityAction.Modify);
       
@@ -395,7 +395,7 @@ public class SecurityManager implements _SecurityManager {
       private Integer nextId = 1;
       
       public String get() {
-         Logger.track();
+         
          
          while (users.containsKey(nextId.toString())) {
             nextId++;

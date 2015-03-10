@@ -30,7 +30,7 @@ public class VBox {
    private static VBoxHypervisor hyp;
    
    public static void set(VBoxHypervisor hyp) {
-      Logger.track();
+      
       
       VBox.hyp = hyp;
    }

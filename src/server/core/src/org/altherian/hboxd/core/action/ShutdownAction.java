@@ -35,7 +35,7 @@ public class ShutdownAction extends ASingleTaskAction {
    private static _Controller c;
    
    public static void setController(_Controller c) {
-      Logger.track();
+      
       
       if (ShutdownAction.c == null) {
          ShutdownAction.c = c;
@@ -54,7 +54,7 @@ public class ShutdownAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      Logger.track();
+      
       
       Logger.info("Server shutdown requested by " + SecurityContext.getUser().getDomainLogonName());
       c.stop();

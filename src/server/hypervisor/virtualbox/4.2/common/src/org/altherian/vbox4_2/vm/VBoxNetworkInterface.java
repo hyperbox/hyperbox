@@ -132,7 +132,7 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    
    @Override
    public void setAdapterType(String adapterType) {
-      Logger.track();
+      
       
       setSetting(new NicAdapterTypeSetting(adapterType));
    }

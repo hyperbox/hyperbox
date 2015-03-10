@@ -125,7 +125,7 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
     * @throws ServerDisconnectedException If the server disconnected during the transaction
     */
    public boolean sendAndWait() throws ServerDisconnectedException {
-      Logger.track();
+      
       
       try {
          init();
@@ -154,7 +154,7 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
    }
    
    public boolean sendAndWaitForTask() throws ServerDisconnectedException {
-      Logger.track();
+      
       
       Logger.verbose("Waiting until task is finished");
       EventManager.get().register(this);
@@ -195,7 +195,7 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
    
    @Override
    public void putAnswer(Answer ans) {
-      Logger.track();
+      
       
       if (ans.getExchangeId().contentEquals(request.getExchangeId())) {
          lastMessageTime = System.currentTimeMillis();
@@ -221,7 +221,7 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
    
    @Handler
    public void putBackendDisconnect(BackendStateEvent ev) {
-      Logger.track();
+      
       
       if (ev.getBackend().equals(b)) {
          synchronized (this) {
@@ -233,7 +233,7 @@ public final class Transaction implements _AnswerReceiver, _EventReceiver {
    @Handler
    @Override
    public void post(EventOut evOut) {
-      Logger.track();
+      
       
       Logger.verbose(evOut.toString());
       if (evOut instanceof TaskStateEventOut) {

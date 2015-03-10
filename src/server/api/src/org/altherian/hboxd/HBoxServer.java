@@ -59,7 +59,7 @@ public class HBoxServer {
    }
    
    private static void scan(Set<URL> urls, ClassLoader... loaders) {
-      Logger.track();
+      
       
       Long start = System.currentTimeMillis();
       Reflections scan = new Reflections(new ConfigurationBuilder().addClassLoaders(loaders).setUrls(urls)
@@ -73,7 +73,7 @@ public class HBoxServer {
    }
    
    public static void add(Set<URL> rawUrls, ClassLoader... loaders) {
-      Logger.track();
+      
       
       Set<URL> urls = new HashSet<URL>();
       for (URL rawUrl : rawUrls) {
@@ -86,13 +86,13 @@ public class HBoxServer {
    }
    
    public static void reload(Set<URL> rawUrls, ClassLoader... loaders) {
-      Logger.track();
+      
       
       scan(rawUrls, loaders);
    }
    
    public static void remove(Set<URL> urls) {
-      Logger.track();
+      
       
       for (URL url : urls) {
          classes.remove(url);
@@ -146,7 +146,7 @@ public class HBoxServer {
       Long start = System.currentTimeMillis();
       Set<Class<? extends T>> classList = new HashSet<Class<? extends T>>();
       for (Class<? extends T> subType : getSubTypes(type)) {
-         Logger.track();
+         
          if (Modifier.isAbstract(subType.getModifiers())) {
             Logger.debug(subType.getName() + " is abstract and was ignored");
          } else {
@@ -211,7 +211,7 @@ public class HBoxServer {
    }
    
    public static void initPersistor(_Persistor persistor) {
-      Logger.track();
+      
       
       if (HBoxServer.persistor == null) {
          HBoxServer.persistor = persistor;
@@ -219,7 +219,7 @@ public class HBoxServer {
    }
    
    public static void initServer(_Server srv) {
-      Logger.track();
+      
       
       HBoxServer.srv = srv;
    }
@@ -245,7 +245,7 @@ public class HBoxServer {
    }
    
    public static boolean hasSetting(String key) {
-      Logger.track();
+      
       try {
          Logger.debug("Checking key \"" + key + "\" in storage");
          return persistor.loadSetting(key) != null;
@@ -264,7 +264,7 @@ public class HBoxServer {
    }
    
    public static void setSetting(String key, Object value) {
-      Logger.track();
+      
       
       persistor.storeSetting(key, value.toString());
       Configuration.setSetting(key, value);

@@ -154,14 +154,14 @@ public abstract class VBoxHypervisor implements _Hypervisor {
 
    @Override
    public void setEventManager(_EventManager evMgr) {
-      Logger.track();
+      
 
       this.evMgr = evMgr;
    }
 
    @Override
    public void start(String options) throws HypervisorException {
-      Logger.track();
+      
 
       EventManager.register(this);
 
@@ -210,7 +210,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
 
    @Override
    public void stop() {
-      Logger.track();
+      
 
       host = null;
       mediumRegister = null;
@@ -244,7 +244,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    }
 
    private void updateMediumRegistry() {
-      Logger.track();
+      
 
       mediumRegister.clear();
       registerMediums(vbMgr.getVBox().getDVDImages());
@@ -253,7 +253,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    }
 
    private void registerMediums(List<IMedium> mediums) {
-      Logger.track();
+      
 
       for (IMedium medium : mediums) {
          mediumRegister.put(medium.getId(), new VBoxMedium(medium));
@@ -268,7 +268,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    }
 
    private void buildOsTypeCache() {
-      Logger.track();
+      
 
       List<_RawOsType> osTypes = new ArrayList<_RawOsType>();
       for (IGuestOSType osType : vbMgr.getVBox().getGuestOSTypes()) {
@@ -279,7 +279,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
 
    @Override
    public _RawHost getHost() {
-      Logger.track();
+      
 
       return host;
    }
@@ -291,7 +291,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
 
    @Override
    public _RawVM createMachine(String uuid, String name, String osTypeId) {
-      Logger.track();
+      
 
       if (uuid != null) {
          uuid = "UUID=" + uuid;
@@ -340,7 +340,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
 
    @Override
    public _RawMedium createHardDisk(String filePath, String format, Long logicalSize) {
-      Logger.track();
+      
 
       // TODO find a way to know the smallest size for a given format, set to 2MB for now.
       if (logicalSize < 2048000) {
@@ -570,7 +570,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
 
    @Override
    public _RawVM registerMachine(String path) {
-      Logger.track();
+      
 
       IMachine machine = vbMgr.getVBox().openMachine(path);
       vbMgr.getVBox().registerMachine(machine);
@@ -579,7 +579,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
 
    @Override
    public void unregisterMachine(String uuid) {
-      Logger.track();
+      
 
       VBoxSessionManager.get().unlock(uuid);
       IMachine machine = vbMgr.getVBox().findMachine(uuid);
@@ -617,7 +617,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
 
    @Override
    public void deleteMedium(String uuid) {
-      Logger.track();
+      
 
       try {
          IMedium medium = getRawMedium(uuid);
@@ -645,7 +645,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
 
    @Override
    public _RawVM createMachine(String uuid, String name, String osTypeId, boolean applyTemplate) {
-      Logger.track();
+      
 
       throw new FeatureNotImplementedException();
    }
@@ -719,7 +719,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
 
    @Handler
    public void putServiceStatusEvent(ServiceStateEvent ev) {
-      Logger.track();
+      
 
       if (ev.getService().equals(evMgrSvc) && ev.getState().equals(ServiceState.Stopped)) {
          stop();

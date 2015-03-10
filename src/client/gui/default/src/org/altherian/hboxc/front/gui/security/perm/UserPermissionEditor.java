@@ -136,7 +136,7 @@ public class UserPermissionEditor implements _Refreshable {
    }
    
    private void clear() {
-      Logger.track();
+      
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {
@@ -153,7 +153,7 @@ public class UserPermissionEditor implements _Refreshable {
    
    @Override
    public void refresh() {
-      Logger.track();
+      
       
       if (!SwingUtilities.isEventDispatchThread()) {
          SwingUtilities.invokeLater(new Runnable() {

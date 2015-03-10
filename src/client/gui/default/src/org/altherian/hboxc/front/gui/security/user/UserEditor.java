@@ -100,7 +100,7 @@ public class UserEditor implements _Saveable, _Cancelable {
    }
    
    public UserIn create() {
-      Logger.track();
+      
       
       dialog.setTitle("Create new User");
       permEditor.getComponent().setVisible(false);
@@ -109,7 +109,7 @@ public class UserEditor implements _Saveable, _Cancelable {
    }
    
    public UserIn edit(String serverId, UserOut usrOut) {
-      Logger.track();
+      
       
       dialog.setTitle("Editing user " + usrOut.getDomainLogonName());
       this.usrOut = usrOut;
@@ -124,19 +124,19 @@ public class UserEditor implements _Saveable, _Cancelable {
    }
    
    public static UserIn getInput() {
-      Logger.track();
+      
       
       return new UserEditor().create();
    }
    
    public static UserIn getInput(String serverId, UserOut usrOut) {
-      Logger.track();
+      
       
       return new UserEditor().edit(serverId, usrOut);
    }
    
    private void show() {
-      Logger.track();
+      
       
       dialog.pack();
       dialog.setSize(375, dialog.getHeight());
@@ -145,21 +145,21 @@ public class UserEditor implements _Saveable, _Cancelable {
    }
    
    private void hide() {
-      Logger.track();
+      
       
       dialog.setVisible(false);
    }
    
    @Override
    public void cancel() {
-      Logger.track();
+      
       
       hide();
    }
    
    @Override
    public void save() {
-      Logger.track();
+      
       
       if (usrOut != null) {
          usrIn = new UserIn(usrOut.getId());

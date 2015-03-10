@@ -100,7 +100,7 @@ public class HyperboxTask implements _Task, _Client {
    
    @Override
    public void start() {
-      Logger.track();
+      
       
       if (!state.equals(TaskState.Pending)) {
          throw new IllegalStateException("Task must be Pending to be started.");
