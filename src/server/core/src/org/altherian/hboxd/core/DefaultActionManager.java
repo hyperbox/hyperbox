@@ -39,7 +39,6 @@ public class DefaultActionManager implements _ActionManager {
    @Override
    public void start() throws HyperboxException {
       
-      
       Set<_HyperboxAction> subTypes = HBoxServer.getAtLeastOneOrFail(_HyperboxAction.class);
       for (_HyperboxAction action : subTypes) {
          List<String> mappings = action.getRegistrations();
@@ -72,7 +71,6 @@ public class DefaultActionManager implements _ActionManager {
    
    @Override
    public void stop() {
-      
       
       actions.clear();
    }

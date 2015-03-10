@@ -58,7 +58,6 @@ public class MediumAttachAction extends AbstractAction {
    @Override
    public void actionPerformed(ActionEvent ae) {
       
-      
       MediumOut medOut = MediumBrowser.browse(new ServerOut(serverId), sdaOut.getDeviceType());
       if (medOut != null) {
          Logger.debug("Medium was choosen to be mounted: " + medOut.getName() + " - " + medOut.getLocation());

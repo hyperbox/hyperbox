@@ -38,14 +38,14 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 public class MachineNATRulesDialog implements _Saveable, _Cancelable, _Refreshable {
-
+   
    private String srvId;
    private String vmId;
    private String adaptId;
-
+   
    private JDialog dialog;
    private NATRulesView ip4;
-
+   
    private JPanel buttonPanel;
    private JButton saveButton;
    private JButton cancelButton;
@@ -63,14 +63,14 @@ public class MachineNATRulesDialog implements _Saveable, _Cancelable, _Refreshab
       
       ip4 = new NATRulesView();
       RefreshUtil.set(ip4.getComponent(), new _Refreshable() {
-
+         
          @Override
          public void refresh() {
             refresh();
          }
          
       });
-
+      
       saveButton = new JButton(new SaveAction(this));
       cancelButton = new JButton(new CancelAction(this));
       buttonPanel = new JPanel(new MigLayout("ins 0"));
@@ -81,14 +81,14 @@ public class MachineNATRulesDialog implements _Saveable, _Cancelable, _Refreshab
       dialog.add(ip4.getComponent(), "grow,push,wrap");
       dialog.add(buttonPanel, "growx,pushx,center");
    }
-
+   
    public NetService_NAT_IO getInput() {
       refresh();
-
+      
       dialog.setSize(538, 278);
       dialog.setLocationRelativeTo(dialog.getParent());
       dialog.setVisible(true);
-
+      
       return rules;
    }
    
@@ -111,10 +111,10 @@ public class MachineNATRulesDialog implements _Saveable, _Cancelable, _Refreshab
       
       hide();
    }
-
+   
    @Override
    public void refresh() {
       // TODO
    }
-
+   
 }

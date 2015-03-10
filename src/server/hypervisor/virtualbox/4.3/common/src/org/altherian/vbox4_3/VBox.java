@@ -20,7 +20,6 @@
 
 package org.altherian.vbox4_3;
 
-import org.altherian.tool.logging.Logger;
 import org.virtualbox_4_3.ISession;
 import org.virtualbox_4_3.IVirtualBox;
 import org.virtualbox_4_3.VirtualBoxManager;
@@ -30,7 +29,6 @@ public class VBox {
    private static VBoxHypervisor hyp;
    
    public static void set(VBoxHypervisor hyp) {
-      
       
       VBox.hyp = hyp;
    }

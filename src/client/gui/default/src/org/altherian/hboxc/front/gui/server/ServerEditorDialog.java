@@ -31,7 +31,6 @@ import org.altherian.hboxc.front.gui.action.CancelAction;
 import org.altherian.hboxc.front.gui.action.SaveAction;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.builder.JDialogBuilder;
-import org.altherian.tool.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -55,7 +54,6 @@ public class ServerEditorDialog implements _Saveable, _Cancelable {
    private ServerOut srvOut;
    
    public static ServerIn getInput(String srvId) {
-      
       
       return new ServerEditorDialog().getUserInput(srvId);
    }
@@ -85,7 +83,6 @@ public class ServerEditorDialog implements _Saveable, _Cancelable {
    
    private ServerIn getUserInput(String srvId) {
       
-      
       srvOut = Gui.getServerInfo(srvId);
       logLevelValue.addItem("");
       for (String level : Gui.getServer(srvId).listLogLevel()) {
@@ -113,14 +110,12 @@ public class ServerEditorDialog implements _Saveable, _Cancelable {
    @Override
    public void cancel() {
       
-      
       srvIn = null;
       hide();
    }
    
    @Override
    public void save() {
-      
       
       srvIn = new ServerIn(srvOut.getId());
       srvIn.setName(nameValue.getText());

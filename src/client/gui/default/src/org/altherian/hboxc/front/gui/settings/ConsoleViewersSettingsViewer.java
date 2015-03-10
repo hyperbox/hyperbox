@@ -32,7 +32,6 @@ import org.altherian.hboxc.front.gui.action.ConsoleViewerRemoveAction;
 import org.altherian.hboxc.front.gui.vm.console.viewer.ConsoleViewerEditor;
 import org.altherian.hboxc.front.gui.vm.console.viewer.ConsoleViewerTableModel;
 import org.altherian.hboxc.front.gui.vm.console.viewer._ConsoleViewerSelector;
-import org.altherian.tool.logging.Logger;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -56,7 +55,6 @@ public class ConsoleViewersSettingsViewer implements _ConsoleViewerSelector {
    private JPanel buttonPanel;
    
    public ConsoleViewersSettingsViewer() {
-      
       
       ViewEventManager.register(this);
       
@@ -96,7 +94,6 @@ public class ConsoleViewersSettingsViewer implements _ConsoleViewerSelector {
       @Override
       public void mouseClicked(MouseEvent ev) {
          
-         
          if (ev.getClickCount() == 2) {
             ConsoleViewerOutput cvOut = getSelection();
             if (cvOut != null) {
@@ -107,7 +104,6 @@ public class ConsoleViewersSettingsViewer implements _ConsoleViewerSelector {
    }
    
    public void load() {
-      
       
       consViewerTableModel.put(Gui.getReader().listConsoleViewers());
    }

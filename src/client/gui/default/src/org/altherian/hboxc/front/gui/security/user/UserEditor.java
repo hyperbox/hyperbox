@@ -31,7 +31,6 @@ import org.altherian.hboxc.front.gui.action.CancelAction;
 import org.altherian.hboxc.front.gui.action.SaveAction;
 import org.altherian.hboxc.front.gui.builder.JDialogBuilder;
 import org.altherian.hboxc.front.gui.security.perm.UserPermissionEditor;
-import org.altherian.tool.logging.Logger;
 import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -101,7 +100,6 @@ public class UserEditor implements _Saveable, _Cancelable {
    
    public UserIn create() {
       
-      
       dialog.setTitle("Create new User");
       permEditor.getComponent().setVisible(false);
       show();
@@ -109,7 +107,6 @@ public class UserEditor implements _Saveable, _Cancelable {
    }
    
    public UserIn edit(String serverId, UserOut usrOut) {
-      
       
       dialog.setTitle("Editing user " + usrOut.getDomainLogonName());
       this.usrOut = usrOut;
@@ -125,18 +122,15 @@ public class UserEditor implements _Saveable, _Cancelable {
    
    public static UserIn getInput() {
       
-      
       return new UserEditor().create();
    }
    
    public static UserIn getInput(String serverId, UserOut usrOut) {
       
-      
       return new UserEditor().edit(serverId, usrOut);
    }
    
    private void show() {
-      
       
       dialog.pack();
       dialog.setSize(375, dialog.getHeight());
@@ -146,20 +140,17 @@ public class UserEditor implements _Saveable, _Cancelable {
    
    private void hide() {
       
-      
       dialog.setVisible(false);
    }
    
    @Override
    public void cancel() {
       
-      
       hide();
    }
    
    @Override
    public void save() {
-      
       
       if (usrOut != null) {
          usrIn = new UserIn(usrOut.getId());

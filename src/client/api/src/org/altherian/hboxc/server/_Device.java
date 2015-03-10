@@ -26,6 +26,7 @@ public interface _Device extends _Entity {
    
    public _Machine getMachine();
    
+   @Override
    public String getId();
    
    public String getType();

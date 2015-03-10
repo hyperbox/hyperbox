@@ -120,7 +120,6 @@ public final class VBoxMachine implements _RawVM {
    @Override
    public void saveChanges() {
       
-      
       try {
          getRaw().saveSettings();
       } catch (VBoxException e) {
@@ -130,7 +129,6 @@ public final class VBoxMachine implements _RawVM {
    
    @Override
    public void discardChanges() {
-      
       
       try {
          getRaw().discardSettings();
@@ -221,7 +219,6 @@ public final class VBoxMachine implements _RawVM {
    @Override
    public void powerOn() throws MachineException {
       
-      
       IMachine rawMachine = getRaw();
       session = VBox.getSession();
       try {
@@ -251,7 +248,6 @@ public final class VBoxMachine implements _RawVM {
    @Override
    public void powerOff() throws MachineException {
       
-      
       try {
          lockAuto();
          IProgress p = session.getConsole().powerDown();
@@ -273,7 +269,6 @@ public final class VBoxMachine implements _RawVM {
    @Override
    public void pause() throws MachineException {
       
-      
       try {
          lockAuto();
          session.getConsole().pause();
@@ -287,7 +282,6 @@ public final class VBoxMachine implements _RawVM {
    @Override
    public void resume() throws MachineException {
       
-      
       try {
          lockAuto();
          session.getConsole().resume();
@@ -300,7 +294,6 @@ public final class VBoxMachine implements _RawVM {
    
    @Override
    public void saveState() throws MachineException {
-      
       
       try {
          lockAuto();
@@ -335,7 +328,6 @@ public final class VBoxMachine implements _RawVM {
    @Override
    public void sendAcpi(ACPI acpi) throws MachineException {
       
-      
       try {
          lockAuto();
          if (acpi.equals(ACPI.PowerButton)) {
@@ -355,7 +347,6 @@ public final class VBoxMachine implements _RawVM {
    
    @Override
    public List<_RawMetricMachine> getMetrics() {
-      
       
       throw new FeatureNotImplementedException();
    }
@@ -418,7 +409,6 @@ public final class VBoxMachine implements _RawVM {
    @Override
    public Set<_RawNetworkInterface> listNetworkInterfaces() {
       
-      
       Set<_RawNetworkInterface> nics = new HashSet<_RawNetworkInterface>();
       // TODO do this better to avoid endless loop - Check using ISystemProperties maybe?
       long i = 0;
@@ -468,7 +458,6 @@ public final class VBoxMachine implements _RawVM {
    
    @Override
    public _RawStorageController addStorageController(String type, String name) {
-      
       
       StorageBus bus = StorageBus.valueOf(type);
       
@@ -536,7 +525,6 @@ public final class VBoxMachine implements _RawVM {
    @Override
    public _RawSnapshot takeSnapshot(String name, String description) {
       
-      
       lockAuto();
       try {
          IProgress p = session.getConsole().takeSnapshot(name, description);
@@ -563,7 +551,6 @@ public final class VBoxMachine implements _RawVM {
    @Override
    public void deleteSnapshot(String id) {
       
-      
       lockAuto();
       try {
          IProgress p = session.getConsole().deleteSnapshot(id);
@@ -587,7 +574,6 @@ public final class VBoxMachine implements _RawVM {
    
    @Override
    public void restoreSnapshot(String id) {
-      
       
       lockAuto();
       try {

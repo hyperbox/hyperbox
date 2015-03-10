@@ -70,7 +70,7 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
    @Override
    protected VirtualBoxManager connect(String options) {
       this.options = options;
-
+      
       String protocol = defaultProtocol;
       String host = defaultHost;
       int port = defaultPort;
@@ -128,7 +128,7 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
          Logger.debug("Error when disconnecting : " + t.getMessage());
       }
    }
-
+   
    @Override
    protected ISession getSession() {
       VirtualBoxManager mgr = connect();

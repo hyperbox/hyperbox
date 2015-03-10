@@ -104,7 +104,6 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    
    public ServerMachineView() {
       
-      
       entities = new HashMap<String, Map<String, DefaultMutableTreeNode>>();
       initEntities();
       vmCurrentSnaps = new HashMap<String, SnapshotOut>();
@@ -137,7 +136,6 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    
    private void addConnector(ConnectorOutput conOut) {
       
-      
       DefaultMutableTreeNode conNode = new DefaultMutableTreeNode(conOut);
       treeModel.insertNode(conNode, topNode);
       tree.scrollPathToVisible(new TreePath(conNode.getPath()));
@@ -146,7 +144,6 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    }
    
    private void addMachine(String srvId, MachineOut mOut) {
-      
       
       if (!vmNodes.get(srvId).containsKey(mOut.getId())) {
          DefaultMutableTreeNode srvNode = srvNodes.get(srvId);
@@ -186,7 +183,6 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    
    @Override
    public List<MachineOut> getMachines() {
-      
       
       List<MachineOut> selectedVms = new ArrayList<MachineOut>();
       for (TreePath path : tree.getSelectionPaths()) {
@@ -257,13 +253,11 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    @Handler
    private void putConnectorAddedEvent(ConnectorAddedEvent ev) {
       
-      
       addConnector(ev.getConnector());
    }
    
    @Handler
    private void putConnectorConnectedEvent(ConnectorConnectedEvent ev) {
-      
       
       updateConnector(ev.getConnector());
       refresh(ev.getConnector());
@@ -272,7 +266,6 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    @Handler
    private void putConnectorDisconnectedEvent(ConnectorDisconnectedEvent ev) {
       
-      
       updateConnector(ev.getConnector());
       refresh(ev.getConnector());
    }
@@ -280,13 +273,11 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    @Handler
    private void putConnectorModifiedEvent(ConnectorModifiedEvent ev) {
       
-      
       updateConnector(ev.getConnector());
    }
    
    @Handler
    private void putConnectorRemovedEvent(ConnectorRemovedEvent ev) {
-      
       
       removeConnector(ev.getConnector());
    }
@@ -294,13 +285,11 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    @Handler
    private void putConnectorStateChangedEvent(ConnectorStateChangedEvent ev) {
       
-      
       updateConnector(ev.getConnector());
    }
    
    @Handler
    public void putHypervisorConnectionStateEvent(HypervisorConnectionStateEventOut ev) {
-      
       
       updateServer(ev.getServer());
       refresh(ev.getServer());
@@ -309,13 +298,11 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    @Handler
    private void putMachineAddEvent(MachineAddedEvent ev) {
       
-      
       addMachine(ev.getServerId(), ev.getMachine());
    }
    
    @Handler
    private void putMachineRegistrationEvent(MachineRegistrationEventOut ev) {
-      
       
       if (ev.isRegistered()) {
          addMachine(ev.getServerId(), ev.getMachine());
@@ -327,13 +314,11 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    @Handler
    private void putMachineRemoveEvent(MachineRemovedEvent ev) {
       
-      
       removeMachine(ev.getServerId(), ev.getMachine().getUuid());
    }
    
    @Handler
    private void putMachineUpdateEvent(MachineStateChangedEvent ev) {
-      
       
       updateMachine(ev.getServerId(), ev.getMachine());
    }
@@ -341,13 +326,11 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    @Handler
    private void putMachineUpdateEvent(MachineUpdatedEvent ev) {
       
-      
       updateMachine(ev.getServerId(), ev.getMachine());
    }
    
    @Handler
    private void putServerConnectionStateChangeEvent(ServerConnectionStateEventOut ev) {
-      
       
       updateServer(ev.getServer());
       refresh(ev.getServer());
@@ -372,7 +355,6 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    
    private void refresh(List<ConnectorOutput> conOutList) {
       
-      
       clear();
       Collections.sort(conOutList, new Comparator<ConnectorOutput>() {
          
@@ -390,7 +372,6 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    
    private void refresh(ServerOut srvOut) {
       
-      
       DefaultMutableTreeNode srvNode = srvNodes.get(srvOut.getId());
       srvNode.removeAllChildren();
       vmNodes.get(srvOut.getId()).clear();
@@ -402,13 +383,11 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    
    private void removeConnector(ConnectorOutput conOut) {
       
-      
       topNode.remove(conNodes.remove(conOut.getId()));
       treeModel.reload(topNode);
    }
    
    private void removeMachine(String serverId, String id) {
-      
       
       if (vmNodes.get(serverId).containsKey(id)) {
          vmCurrentSnaps.remove(id);
@@ -420,14 +399,12 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    
    private void updateConnector(ConnectorOutput conOut) {
       
-      
       DefaultMutableTreeNode conNode = conNodes.get(conOut.getId());
       conNode.setUserObject(conOut);
       treeModel.reload(conNode);
    }
    
    private void updateMachine(String srvId, MachineOut mOut) {
-      
       
       if (vmNodes.get(srvId).containsKey(mOut.getId())) {
          if (mOut.hasSnapshots()) {
@@ -442,7 +419,6 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    }
    
    private void updateServer(ServerOut srvOut) {
-      
       
       DefaultMutableTreeNode conNode = srvNodes.get(srvOut.getId());
       updateConnector(Gui.getReader().getConnector(((ConnectorOutput) conNode.getUserObject()).getId()));

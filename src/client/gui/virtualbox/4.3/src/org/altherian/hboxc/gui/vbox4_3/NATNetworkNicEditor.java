@@ -92,15 +92,15 @@ public class NATNetworkNicEditor implements _NetAdaptorConfigureView {
          ip6GwValue = new JCheckBox();
          natButton = new JButton("Port Forwarding");
          natButton.addActionListener(new ActionListener() {
-
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                rules = NATNetworkNATRulesDialog.getInput(srvId, modeId, adaptId);
                Logger.debug("Were rules given? " + (rules != null));
             }
-
+            
          });
-
+         
          panel.add(enableLabel);
          panel.add(enableValue, "growx,pushx,wrap");
          panel.add(nameLabel);

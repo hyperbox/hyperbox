@@ -113,7 +113,7 @@ public class VBoxNatNetworkAdaptor extends VBoxAdaptor {
          }
          return svc;
       }
-
+      
       throw new IllegalArgumentException("Service type " + serviceTypeId + " is not supported on " + getMode().getId() + " adaptor");
       
    }

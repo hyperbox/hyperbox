@@ -30,7 +30,7 @@ import org.altherian.hboxc.front.gui.worker.receiver._MachineScreenshotReceiver;
 import org.altherian.hboxc.front.gui.workers.MachineGetScreenshotWorker;
 import org.altherian.helper.swing.AncestorAdaptor;
 import org.altherian.helper.swing.JLabelIconAutoResize;
-import org.altherian.tool.logging.Logger;
+import java.awt.Component;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -55,7 +55,7 @@ public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
    public VmConsoleView() {
       screenlabel = new JLabelIconAutoResize();
       statusLabel = new JLabel("No output available");
-      statusLabel.setAlignmentY(JLabel.CENTER_ALIGNMENT);
+      statusLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
       
       panel = new JPanel(new MigLayout("ins 0"));
       panel.addAncestorListener(new AncestorAdaptor() {
@@ -82,7 +82,6 @@ public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
    
    private void start() {
       
-      
       if (isVisible) {
          timer.start();
          refresh();
@@ -90,7 +89,6 @@ public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
    }
    
    private void stop() {
-      
       
       timer.stop();
       screenlabel.setIcon(null);

@@ -32,7 +32,6 @@ import org.altherian.hboxc.front.gui._Saveable;
 import org.altherian.hboxc.front.gui.action.CancelAction;
 import org.altherian.hboxc.front.gui.action.SaveAction;
 import org.altherian.hboxc.front.gui.builder.JDialogBuilder;
-import org.altherian.tool.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -61,7 +60,6 @@ public class ConsoleViewerEditor implements _Saveable, _Cancelable {
    private JDialog dialog;
    
    private ConsoleViewerEditor() {
-      
       
       hypervisorLabel = new JLabel("Hypervisor Type Pattern");
       moduleLabel = new JLabel("Module Pattern");
@@ -93,18 +91,15 @@ public class ConsoleViewerEditor implements _Saveable, _Cancelable {
    
    public static void create() {
       
-      
       new ConsoleViewerEditor().add();
    }
    
    public static void edit(ConsoleViewerOutput conViewOut) {
       
-      
       new ConsoleViewerEditor().modify(conViewOut);
    }
    
    private void add() {
-      
       
       saveTask = ClientTasks.ConsoleViewerAdd;
       cvIn = new ConsoleViewerInput();
@@ -113,7 +108,6 @@ public class ConsoleViewerEditor implements _Saveable, _Cancelable {
    }
    
    private void modify(ConsoleViewerOutput conViewOut) {
-      
       
       saveTask = ClientTasks.ConsoleViewerModify;
       cvIn = new ConsoleViewerInput(conViewOut.getId());
@@ -130,7 +124,6 @@ public class ConsoleViewerEditor implements _Saveable, _Cancelable {
    
    private void show() {
       
-      
       dialog.setSize(410, 170);
       dialog.setLocationRelativeTo(dialog.getParent());
       dialog.setVisible(true);
@@ -138,20 +131,17 @@ public class ConsoleViewerEditor implements _Saveable, _Cancelable {
    
    private void hide() {
       
-      
       dialog.setVisible(false);
    }
    
    @Override
    public void cancel() {
       
-      
       hide();
    }
    
    @Override
    public void save() {
-      
       
       cvIn.setHypervisorId(hypervisorData.getText());
       cvIn.setModuleId(moduleData.getText());

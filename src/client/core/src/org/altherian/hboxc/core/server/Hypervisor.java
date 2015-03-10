@@ -20,7 +20,6 @@
 
 package org.altherian.hboxc.core.server;
 
-import java.util.List;
 import net.engio.mbassy.listener.Handler;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
@@ -44,7 +43,7 @@ import org.altherian.hboxc.comm.utils.Transaction;
 import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.server._Hypervisor;
 import org.altherian.hboxc.server._Server;
-import org.altherian.tool.logging.Logger;
+import java.util.List;
 
 public class Hypervisor implements _Hypervisor {
    
@@ -111,13 +110,11 @@ public class Hypervisor implements _Hypervisor {
    @Handler
    protected void putHypervisorDisconnectedEvent(HypervisorDisconnectedEventOut ev) {
       
-      
       hypData = null;
    }
    
    @Handler
    protected void putHypervisorEvent(HypervisorEventOut ev) {
-      
       
       refresh();
    }

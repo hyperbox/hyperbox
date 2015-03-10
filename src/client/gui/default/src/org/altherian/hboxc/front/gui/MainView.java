@@ -25,8 +25,8 @@ import org.altherian.hboxc.PreferencesManager;
 import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.hboxc.front.gui.tasks.TaskListView;
 import org.altherian.tool.Int;
-import org.altherian.tool.logging.Logger;
 import java.awt.BorderLayout;
+import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
@@ -103,7 +103,7 @@ public final class MainView {
          mainFrame.setLocationRelativeTo(null);
       }
       
-      mainFrame.setExtendedState(Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFrameState, Int.get(JFrame.NORMAL))));
+      mainFrame.setExtendedState(Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFrameState, Int.get(Frame.NORMAL))));
       mainFrame.setVisible(true);
    }
    
@@ -116,8 +116,7 @@ public final class MainView {
       @Override
       public void windowClosing(WindowEvent e) {
          
-         
-         mainFrame.setExtendedState(JFrame.NORMAL);
+         mainFrame.setExtendedState(Frame.NORMAL);
          PreferencesManager.get().setProperty(Config.MainFrameWidth, Int.get(mainFrame.getWidth()));
          PreferencesManager.get().setProperty(Config.MainFrameHeight, Int.get(mainFrame.getHeight()));
          PreferencesManager.get().setProperty(Config.MainFramePosX, Int.get(mainFrame.getLocationOnScreen().x));

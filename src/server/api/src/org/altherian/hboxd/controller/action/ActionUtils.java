@@ -46,7 +46,7 @@ public class ActionUtils {
    }
    
    public static MachineIn extractMachineInput(_Hyperbox core, Request req) {
-      return (MachineIn) req.get(MachineIn.class);
+      return req.get(MachineIn.class);
    }
    
 }

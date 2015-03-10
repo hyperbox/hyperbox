@@ -28,6 +28,7 @@ import java.awt.Dialog.ModalityType;
 import java.awt.Image;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.WindowConstants;
 
 public class JDialogBuilder {
    
@@ -107,7 +108,7 @@ public class JDialogBuilder {
    public static JDialog get(String title, Image img, JButton defaultButton) {
       JDialog dialog = new JDialog(MainView.getMainFrame());
       dialog.setModalityType(ModalityType.DOCUMENT_MODAL);
-      dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+      dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
       dialog.setIconImage(img);
       dialog.setTitle(title);
       dialog.setLayout(new MigLayout());

@@ -63,7 +63,6 @@ public class VBoxSessionManager implements _RawSessionManager {
    @Handler
    public void getMachineStateEvent(IMachineStateChangedEvent ev) {
       
-      
       if (ev.getState().equals(MachineState.Stopping)) {
          unlock(ev.getMachineId(), false);
       }
@@ -71,7 +70,6 @@ public class VBoxSessionManager implements _RawSessionManager {
    
    @Handler
    public void getMachineSessionStateEvent(ISessionStateChangedEvent ev) {
-      
       
       if (ev.getState().equals(SessionState.Unlocked) || ev.getState().equals(SessionState.Unlocking)) {
          unlock(ev.getMachineId(), false);
@@ -84,7 +82,6 @@ public class VBoxSessionManager implements _RawSessionManager {
    }
    
    private ISession lock(String uuid, LockType lockType, boolean userRequest) {
-      
       
       try {
          if (sessions.get().containsKey(uuid) && (lockType.equals(LockType.Shared) ||
@@ -119,7 +116,6 @@ public class VBoxSessionManager implements _RawSessionManager {
    }
    
    private void unlock(String uuid, boolean userRequest, boolean saveSettings) {
-      
       
       if (sessions.get().containsKey(uuid) && (userRequest || (userLocking.get().containsKey(uuid) && !userLocking.get().get(uuid)))) {
          Logger.debug("Found a session for VM #" + uuid + " and the unlock is authorized.");

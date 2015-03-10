@@ -54,16 +54,16 @@ public class NetServiceGetAction extends ServerAction {
    protected void run(Request request, _Hyperbox hbox, _Server srv) {
       NetServiceIO netSvcIn = request.get(NetServiceIO.class);
       _NetService netSvc;
-
+      
       if (request.has(MachineIn.class)) { // We want a service on a VM NIC
          NetworkInterfaceIn netIn = request.get(NetworkInterfaceIn.class);
          netSvc = srv.getMachine(request.get(MachineIn.class).getId()).getNetworkInterface(netIn.getNicId()).getService(netSvcIn.getType());
       } else { // We want a service on a global NIC
          NetAdaptorIn adaptIn = request.get(NetAdaptorIn.class);
          netSvc = srv.getHypervisor().getNetAdaptor(adaptIn.getModeId(), adaptIn.getId()).getService(netSvcIn.getType());
-
+         
       }
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, NetServiceIO.class, NetServiceIoFactory.get(netSvc)));
    }
-
+   
 }

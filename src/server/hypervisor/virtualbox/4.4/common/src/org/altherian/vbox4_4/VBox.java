@@ -20,7 +20,6 @@
 
 package org.altherian.vbox4_4;
 
-import org.altherian.tool.logging.Logger;
 import org.virtualbox_4_4.ISession;
 import org.virtualbox_4_4.IVirtualBox;
 import org.virtualbox_4_4.VirtualBoxManager;
@@ -30,7 +29,6 @@ public class VBox {
    private static VirtualBoxManager mgr;
    
    public static void set(VirtualBoxManager mgr) {
-      
       
       VBox.mgr = mgr;
    }

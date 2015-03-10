@@ -43,25 +43,25 @@ public class NetService_NAT_IO extends NetServiceIO implements _NetService_NAT {
    public NetService_NAT_IO(String type, boolean isEnabled) {
       super(type, isEnabled);
    }
-
+   
    @Override
    public List<_NATRule> getRules() {
       return new ArrayList<_NATRule>(rules.values());
    }
-
+   
    @Override
    public void addRule(_NATRule rule) {
       rules.put(rule.getId(), rule);
    }
-
+   
    @Override
    public _NATRule getRule(String id) throws ObjectNotFoundException {
       return rules.get(id);
    }
-
+   
    @Override
    public void removeRule(String id) throws ObjectNotFoundException {
       rules.remove(id);
    }
-
+   
 }

@@ -37,7 +37,6 @@ import org.altherian.hboxc.front.gui.security.user.UserListView;
 import org.altherian.hboxc.front.gui.store.StoreListView;
 import org.altherian.hboxc.front.gui.tasks.ServerTaskListView;
 import org.altherian.hboxc.front.gui.utils.RefreshUtil;
-import org.altherian.tool.logging.Logger;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -105,7 +104,6 @@ public class ConnectorDetailedView implements _Refreshable {
    
    @Override
    public void refresh() {
-      
       
       new SwingWorker<ConnectorOutput, Void>() {
          

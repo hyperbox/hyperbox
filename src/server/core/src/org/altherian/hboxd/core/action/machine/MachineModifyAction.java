@@ -51,7 +51,6 @@ public final class MachineModifyAction extends ASingleTaskAction {
    
    private void createMedium(_Server srv, _Machine vm, _StorageController sc, StorageDeviceAttachmentIn sdaIn) {
       
-      
       _Medium med = srv
             .createMedium(vm.getUuid(), sdaIn.getMedium().getLocation(), sdaIn.getMedium().getFormat(), sdaIn.getMedium().getLogicalSize());
       sc.attachMedium(med, sdaIn.getPortId(), sdaIn.getDeviceId());
@@ -59,13 +58,11 @@ public final class MachineModifyAction extends ASingleTaskAction {
    
    private void replaceMedium(_Server srv, _StorageController sc, StorageDeviceAttachmentIn sdaIn) {
       
-      
       _Medium med = srv.getMedium(sdaIn.getMedium().getUuid());
       sc.attachMedium(med, sdaIn.getPortId(), sdaIn.getDeviceId());
    }
    
    private void removeMedium(_StorageController sc, StorageDeviceAttachmentIn sdaIn) {
-      
       
       sc.detachMedium(sdaIn.getPortId(), sdaIn.getDeviceId());
    }

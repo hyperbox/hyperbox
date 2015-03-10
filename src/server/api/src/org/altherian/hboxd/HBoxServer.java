@@ -60,7 +60,6 @@ public class HBoxServer {
    
    private static void scan(Set<URL> urls, ClassLoader... loaders) {
       
-      
       Long start = System.currentTimeMillis();
       Reflections scan = new Reflections(new ConfigurationBuilder().addClassLoaders(loaders).setUrls(urls)
             .setScanners(new SubTypesScanner(), new TypeAnnotationsScanner())
@@ -74,7 +73,6 @@ public class HBoxServer {
    
    public static void add(Set<URL> rawUrls, ClassLoader... loaders) {
       
-      
       Set<URL> urls = new HashSet<URL>();
       for (URL rawUrl : rawUrls) {
          if (!classes.containsKey(rawUrl)) {
@@ -87,12 +85,10 @@ public class HBoxServer {
    
    public static void reload(Set<URL> rawUrls, ClassLoader... loaders) {
       
-      
       scan(rawUrls, loaders);
    }
    
    public static void remove(Set<URL> urls) {
-      
       
       for (URL url : urls) {
          classes.remove(url);
@@ -212,14 +208,12 @@ public class HBoxServer {
    
    public static void initPersistor(_Persistor persistor) {
       
-      
       if (HBoxServer.persistor == null) {
          HBoxServer.persistor = persistor;
       }
    }
    
    public static void initServer(_Server srv) {
-      
       
       HBoxServer.srv = srv;
    }
@@ -264,7 +258,6 @@ public class HBoxServer {
    }
    
    public static void setSetting(String key, Object value) {
-      
       
       persistor.storeSetting(key, value.toString());
       Configuration.setSetting(key, value);

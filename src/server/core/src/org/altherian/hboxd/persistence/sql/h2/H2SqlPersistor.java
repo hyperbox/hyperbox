@@ -59,7 +59,6 @@ public class H2SqlPersistor extends SqlPersistor {
    @Override
    public void destroy() {
       
-      
       try {
          conn.commit();
       } catch (SQLException e) {

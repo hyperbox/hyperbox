@@ -538,7 +538,6 @@ public class StorageVmEdit {
       @Override
       public void actionPerformed(ActionEvent ae) {
          
-         
          DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
          if (node != null) {
             if (node.getUserObject() instanceof StorageControllerIn) {
@@ -579,8 +578,6 @@ public class StorageVmEdit {
       
       @Override
       public void actionPerformed(ActionEvent ae) {
-         
-         
          
          DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
          if (node != null) {

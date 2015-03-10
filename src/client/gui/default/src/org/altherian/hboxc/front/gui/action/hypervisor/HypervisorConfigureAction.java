@@ -50,7 +50,6 @@ public class HypervisorConfigureAction extends AbstractAction {
    @Override
    public void actionPerformed(ActionEvent ae) {
       
-      
       ServerOut srvOut = selector.getServer();
       if (srvOut != null) {
          HypervisorIn hypIn = HypervisorConfigureDialog.getInput(srvOut.getId());

@@ -36,6 +36,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class HostViewer implements _Refreshable, _HostReceiver {
    
@@ -66,7 +67,7 @@ public class HostViewer implements _Refreshable, _HostReceiver {
       memTotalLabel = new JLabel("Memory Total");
       
       hostnameValue = JTextFieldUtils.createNonEditable();
-      memPercValue = new JProgressBar(JProgressBar.HORIZONTAL, 0, 10000);
+      memPercValue = new JProgressBar(SwingConstants.HORIZONTAL, 0, 10000);
       memUsedValue = JTextFieldUtils.createNonEditable();
       memFreeValue = JTextFieldUtils.createNonEditable();
       memTotalValue = JTextFieldUtils.createNonEditable();

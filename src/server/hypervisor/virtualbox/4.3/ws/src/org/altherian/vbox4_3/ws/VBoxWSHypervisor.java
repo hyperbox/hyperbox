@@ -47,9 +47,9 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
    protected final int defaultPort = 18083;
    protected final String defaultUser = "";
    protected final String defaultPass = "";
-
+   
    private String options;
-
+   
    private Map<ISession, VirtualBoxManager> sessions = new WeakHashMap<ISession, VirtualBoxManager>();
    
    @Override

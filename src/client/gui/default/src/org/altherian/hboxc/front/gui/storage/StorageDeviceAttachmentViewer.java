@@ -115,7 +115,6 @@ public class StorageDeviceAttachmentViewer {
    
    public JPanel show(String srvId, String scTypeId, StorageDeviceAttachmentIn sdaIn) {
       
-      
       this.srvId = srvId;
       this.sdaIn = sdaIn;
       this.scTypeId = scTypeId;
@@ -148,7 +147,6 @@ public class StorageDeviceAttachmentViewer {
    }
    
    public JPanel show(MediumIn medIn) {
-      
       
       if (medIn.hasSetting(MediumAttribute.Type)) {
          mediumTypeValue.setText(medIn.getSetting(MediumAttribute.Type).getString());

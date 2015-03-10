@@ -20,7 +20,6 @@
 
 package org.altherian.hboxc.event;
 
-import org.altherian.tool.logging.Logger;
 
 public final class EventManager {
    
@@ -40,18 +39,15 @@ public final class EventManager {
    
    public static void register(Object o) {
       
-      
       evMgr.register(o);
    }
    
    public static void unregister(Object o) {
       
-      
       evMgr.unregister(o);
    }
    
    public static void post(Object o) {
-      
       
       evMgr.post(o);
    }

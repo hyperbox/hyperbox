@@ -66,7 +66,6 @@ public final class TaskManager implements _TaskManager {
    @Override
    public void start(_Hyperbox hbox) {
       
-      
       this.hbox = hbox;
       
       taskQueue = new LinkedBlockingQueue<_Task>();
@@ -81,7 +80,6 @@ public final class TaskManager implements _TaskManager {
    
    @Override
    public void stop() {
-      
       
       running = false;
       if ((worker != null) && !Thread.currentThread().equals(worker)) {
@@ -135,7 +133,6 @@ public final class TaskManager implements _TaskManager {
    @Override
    public void remove(String taskId) {
       
-      
       _Task task = get(taskId);
       task.cancel();
       queueWorker.remove(task);
@@ -182,7 +179,6 @@ public final class TaskManager implements _TaskManager {
       
       private boolean add(_Task t) {
          
-         
          if (!taskQueue.offer(t)) {
             return false;
          }
@@ -195,7 +191,6 @@ public final class TaskManager implements _TaskManager {
       
       // TODO use events to clean up the queues
       private void remove(_Task t) {
-         
          
          if (t != null) {
             taskQueue.remove(t);
@@ -214,7 +209,6 @@ public final class TaskManager implements _TaskManager {
       
       public void queue(Request req, _HyperboxAction ca) {
          
-         
          Logger.debug("Queueing Request #" + req.getExchangeId());
          SessionContext.getClient().putAnswer(new Answer(req, AnswerType.STARTED));
          // TODO do a better Task ID generator
@@ -230,7 +224,6 @@ public final class TaskManager implements _TaskManager {
       
       @Override
       public void run() {
-         
          
          running = true;
          Logger.verbose("Task Queue Worker started");
@@ -258,7 +251,6 @@ public final class TaskManager implements _TaskManager {
    
    @Handler
    public void putSystemEvent(SystemStateEvent ev) {
-      
       
       if (ServerState.Running.equals(ev.getState())) {
          worker.start();

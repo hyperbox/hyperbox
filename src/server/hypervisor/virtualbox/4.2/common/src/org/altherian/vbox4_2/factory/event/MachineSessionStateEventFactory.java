@@ -21,7 +21,6 @@
 package org.altherian.vbox4_2.factory.event;
 
 import org.altherian.hbox.event._Event;
-import org.altherian.tool.logging.Logger;
 import org.altherian.vbox4_2.factory._PreciseEventFactory;
 import org.virtualbox_4_2.IEvent;
 import org.virtualbox_4_2.ISessionStateChangedEvent;
@@ -37,13 +36,11 @@ public class MachineSessionStateEventFactory implements _PreciseEventFactory {
    @Override
    public ISessionStateChangedEvent getRaw(IEvent vbEvent) {
       
-      
       return ISessionStateChangedEvent.queryInterface(vbEvent);
    }
    
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      
       
       return null;
    }

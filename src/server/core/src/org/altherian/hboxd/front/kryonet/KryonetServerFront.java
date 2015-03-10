@@ -49,7 +49,6 @@ public class KryonetServerFront implements _Front {
    @Override
    public void start(_RequestReceiver r) throws HyperboxException {
       
-      
       this.r = r;
       clients = new HashMap<Integer, _Client>();
       
@@ -80,7 +79,6 @@ public class KryonetServerFront implements _Front {
    
    private void loadConfig() throws HyperboxException {
       
-      
       try {
          port = Integer.parseInt(Configuration.getSetting(KryonetDefaultSettings.CFGKEY_KRYO_NET_TCP_PORT,
                KryonetDefaultSettings.CFGVAL_KRYO_NET_TCP_PORT.toString()));
@@ -94,7 +92,6 @@ public class KryonetServerFront implements _Front {
    @Override
    public void stop() {
       
-      
       server.stop();
    }
    
@@ -106,7 +103,6 @@ public class KryonetServerFront implements _Front {
    @Override
    public void broadcast(EventOut ev) {
       
-      
       if (server != null) {
          server.sendToAllTCP(ev);
       }
@@ -116,7 +112,6 @@ public class KryonetServerFront implements _Front {
       
       @Override
       public void connected(Connection connection) {
-         
          
          Logger.info("Conn #" + connection.getID() + " " + connection.getRemoteAddressTCP().getAddress().getHostAddress() + " connected.");
          _Client client = new KryonetClient(connection);
@@ -128,7 +123,6 @@ public class KryonetServerFront implements _Front {
       public void received(Connection connection, Object object) {
          if (object.getClass().equals(Request.class)) {
             
-            
             Request req = (Request) object;
             _Client client = clients.get(connection.getID());
             Logger.debug("Received request from " + client.getId() + " (" + client.getAddress() + ") : " + req.getExchangeId() + " - " + req.getCommand()
@@ -139,7 +133,6 @@ public class KryonetServerFront implements _Front {
       
       @Override
       public void disconnected(Connection connection) {
-         
          
          Logger.info("Conn #" + connection.getID() + " has disconnected.");
          r.unregister(clients.get(connection.getID()));

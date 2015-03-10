@@ -20,7 +20,6 @@
 
 package org.altherian.setting;
 
-import org.altherian.tool.logging.Logger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

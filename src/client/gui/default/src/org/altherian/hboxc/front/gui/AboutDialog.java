@@ -33,6 +33,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 
 public class AboutDialog {
    
@@ -43,7 +44,7 @@ public class AboutDialog {
    
    private AboutDialog() {
       dialog = new JDialogImp();
-      dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+      dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
       dialog.setModalityType(ModalityType.APPLICATION_MODAL);
       dialog.setCloseOnEscapeKey(true);
       dialog.setTitle("About Hyperbox");

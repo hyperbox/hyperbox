@@ -39,7 +39,6 @@ public final class DefaultEventManager implements _EventManager, Runnable {
    @Override
    public void start() throws HyperboxException {
       
-      
       Logger.debug("Event Manager Starting");
       eventBus = new MBassador<_Event>(BusConfiguration.Default());
       eventsQueue = new LinkedBlockingQueue<_Event>();
@@ -53,7 +52,6 @@ public final class DefaultEventManager implements _EventManager, Runnable {
    
    @Override
    public void stop() {
-      
       
       Logger.debug("Event Manager Stopping");
       running = false;
@@ -72,7 +70,6 @@ public final class DefaultEventManager implements _EventManager, Runnable {
    @Override
    public void register(Object o) {
       
-      
       eventBus.subscribe(o);
       Logger.debug(o + " has registered for all events.");
    }
@@ -80,14 +77,12 @@ public final class DefaultEventManager implements _EventManager, Runnable {
    @Override
    public void unregister(Object o) {
       
-      
       eventBus.unsubscribe(o);
       Logger.debug(o + " has unregistered for all events.");
    }
    
    @Override
    public void post(_Event ev) {
-      
       
       Logger.debug("Received Event ID [" + ev.getEventId() + "] fired @ " + ev.getTime());
       if ((eventsQueue != null) && !eventsQueue.offer(ev)) {
@@ -97,7 +92,6 @@ public final class DefaultEventManager implements _EventManager, Runnable {
    
    @Override
    public void run() {
-      
       
       Logger.verbose("Event Manager Worker Started");
       running = true;

@@ -32,7 +32,6 @@ import org.altherian.hboxc.front.gui.worker.receiver._KeyboardTypeListReceiver;
 import org.altherian.hboxc.front.gui.worker.receiver._OsTypeListReceiver;
 import org.altherian.hboxc.front.gui.workers.KeyboardTypeListWorker;
 import org.altherian.hboxc.front.gui.workers.OsTypeListWorker;
-import org.altherian.tool.logging.Logger;
 import java.awt.Component;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -174,7 +173,6 @@ public class GeneralVmEdit {
       @Override
       public void loadingStarted() {
          
-         
          keyboardTypeBox.setEnabled(false);
          keyboardTypeBox.removeAllItems();
          keyboardTypeBox.addItem("Loading...");
@@ -184,7 +182,6 @@ public class GeneralVmEdit {
       
       @Override
       public void loadingFinished(boolean isSuccessful, String message) {
-         
          
          keyboardTypeBox.removeItem("Loading...");
          keyboardTypeBox.setEnabled(isSuccessful);

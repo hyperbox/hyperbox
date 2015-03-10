@@ -34,7 +34,6 @@ import org.altherian.hboxc.front.gui.action.task.TaskCancelAction;
 import org.altherian.hboxc.front.gui.worker.receiver._TaskListReceiver;
 import org.altherian.hboxc.front.gui.workers.TaskListWorker;
 import org.altherian.helper.swing.MouseWheelController;
-import org.altherian.tool.logging.Logger;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -138,7 +137,6 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
    @Override
    public List<TaskOut> getSelection() {
       
-      
       List<TaskOut> listSelectedItems = new ArrayList<TaskOut>();
       for (int row : itemList.getSelectedRows()) {
          listSelectedItems.add(itemListModel.getObjectAtRow(itemList.convertRowIndexToModel(row)));
@@ -169,7 +167,6 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       @Override
       public void loadingFinished(boolean isSuccessful, String message) {
          
-         
          finish();
          if (isSuccessful) {
             loadingLabel.setVisible(false);
@@ -180,7 +177,6 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       
       @Override
       public void add(List<TaskOut> tOutList) {
-         
          
          itemListModel.merge(tOutList);
       }

@@ -123,7 +123,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    protected abstract VirtualBoxManager connect(String options);
    
    protected abstract void disconnect();
-
+   
    protected abstract ISession getSession();
    
    @Override
@@ -149,13 +149,11 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    @Override
    public void setEventManager(_EventManager evMgr) {
       
-      
       this.evMgr = evMgr;
    }
    
    @Override
    public void start(String options) throws HypervisorException {
-      
       
       EventManager.register(this);
       
@@ -205,7 +203,6 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    @Override
    public void stop() {
       
-      
       host = null;
       mediumRegister = null;
       osTypeCache = null;
@@ -239,7 +236,6 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    
    private void updateMediumRegistry() {
       
-      
       mediumRegister.clear();
       registerMediums(vbMgr.getVBox().getDVDImages());
       registerMediums(vbMgr.getVBox().getHardDisks());
@@ -247,7 +243,6 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    }
    
    private void registerMediums(List<IMedium> mediums) {
-      
       
       for (IMedium medium : mediums) {
          mediumRegister.put(medium.getId(), new VirtualboxMedium(medium));
@@ -262,7 +257,6 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    }
    
    private void buildOsTypeCache() {
-      
       
       List<_RawOsType> osTypes = new ArrayList<_RawOsType>();
       for (IGuestOSType osType : vbMgr.getVBox().getGuestOSTypes()) {
@@ -283,7 +277,6 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    
    @Override
    public _RawVM createMachine(String uuid, String name, String osTypeId) {
-      
       
       if (uuid != null) {
          uuid = "UUID=" + uuid;
@@ -327,7 +320,6 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    
    @Override
    public _RawMedium createHardDisk(String filePath, String format, Long logicalSize) {
-      
       
       // TODO find a way to know the smallest size for a given format, set to 2MB for now.
       if (logicalSize < 2048000) {
@@ -547,7 +539,6 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    @Override
    public _RawVM registerMachine(String path) {
       
-      
       IMachine machine = vbMgr.getVBox().openMachine(path);
       vbMgr.getVBox().registerMachine(machine);
       return getMachine(machine.getId());
@@ -555,7 +546,6 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    
    @Override
    public void unregisterMachine(String uuid) {
-      
       
       VBoxSessionManager.get().unlock(uuid);
       IMachine machine = vbMgr.getVBox().findMachine(uuid);
@@ -594,7 +584,6 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    @Override
    public void deleteMedium(String uuid) {
       
-      
       try {
          IMedium medium = getRawMedium(uuid);
          IProgress p = medium.deleteStorage();
@@ -620,7 +609,6 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    
    @Override
    public _RawVM createMachine(String uuid, String name, String osTypeId, boolean applyTemplate) {
-      
       
       throw new FeatureNotImplementedException();
    }
@@ -677,7 +665,6 @@ public abstract class VBoxHypervisor implements _Hypervisor {
    
    @Handler
    public void putServiceStatusEvent(ServiceStateEvent ev) {
-      
       
       if (ev.getService().equals(evMgrSvc) && ev.getState().equals(ServiceState.Stopped)) {
          stop();
@@ -824,7 +811,7 @@ public abstract class VBoxHypervisor implements _Hypervisor {
       }
       
    }
-
+   
    @Override
    public List<String> getLogFileList(String vmId) {
       List<String> ret = new ArrayList<String>();
@@ -833,10 +820,10 @@ public abstract class VBoxHypervisor implements _Hypervisor {
          ret.add(vbMgr.getVBox().findMachine(vmId).queryLogFilename(i));
          i++;
       }
-
+      
       return ret;
    }
-
+   
    //FIXME check with vbox devs
    @Override
    public _MachineLogFile getLogFile(String vmId, long logId) {

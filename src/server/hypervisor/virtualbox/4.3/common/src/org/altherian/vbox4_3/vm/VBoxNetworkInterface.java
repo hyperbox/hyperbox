@@ -153,7 +153,7 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
    public void setSetting(List<_Setting> s) {
       VBoxSettingManager.set(this, s);
    }
-
+   
    @Override
    public List<_NetService> getServices() {
       if (NetworkAttachmentType.NAT.equals(getRaw().getAttachmentType())) {
@@ -162,7 +162,7 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
          return Collections.emptyList();
       }
    }
-
+   
    @Override
    public void setService(_NetService svc) {
       INetworkAdapter nicRaw = getRaw();
@@ -180,11 +180,11 @@ public class VBoxNetworkInterface implements _RawNetworkInterface {
          throw new IllegalArgumentException("Service type " + svc.getType() + " is not supported on " + nicRaw.getAdapterType() + " adaptor type");
       }
    }
-
+   
    @Override
    public _NetService getService(String serviceTypeId) {
       INetworkAdapter nicRaw = getRaw();
-
+      
       if (NetworkAttachmentType.NAT.equals(nicRaw.getAdapterType()) && NetServiceType.NAT_IPv4.equals(serviceTypeId)) {
          NetService_NAT_IP4_IO svc = new NetService_NAT_IP4_IO(true);
          for (String ruleRaw : nicRaw.getNATEngine().getRedirects()) {
