@@ -168,7 +168,7 @@ public class SnapshotManagementView implements _SnapshotSelector, _Refreshable {
          vmUuid = newVmOut.getUuid();
          refresh();
       } else {
-         Logger.track();
+         
       }
    }
    

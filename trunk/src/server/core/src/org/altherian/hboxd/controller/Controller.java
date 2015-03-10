@@ -73,7 +73,7 @@ public final class Controller implements _Controller {
    }
    
    private void startBack() {
-      Logger.track();
+      
       
       try {
          model = ModelFactory.get();
@@ -87,7 +87,7 @@ public final class Controller implements _Controller {
    }
    
    private void startFront() throws HyperboxException {
-      Logger.track();
+      
       
       Set<_Front> subTypes = HBoxServer.getAtLeastOneOrFail(_Front.class);
       for (_Front test : subTypes) {
@@ -110,7 +110,7 @@ public final class Controller implements _Controller {
    
    @Override
    public void start(String[] args) {
-      Logger.track();
+      
       Hyperbox.setArgs(args);
       shutdownHook = new Thread() {
          
@@ -162,7 +162,7 @@ public final class Controller implements _Controller {
    
    @Override
    public void stop() {
-      Logger.track();
+      
       
       Long startTime = System.currentTimeMillis();
       Logger.info("-------> Hyperbox is stopping <-------");
@@ -186,7 +186,7 @@ public final class Controller implements _Controller {
    }
    
    private void stopFront() {
-      Logger.track();
+      
       
       Logger.info("Stopping front-ends");
       EventOut evOut = new ServerShutdownEventOut(new Date(), ServerIoFactory.get(model.getServerManager().getServer()));
@@ -199,7 +199,7 @@ public final class Controller implements _Controller {
    }
    
    private void stopBack() {
-      Logger.track();
+      
       
       Logger.info("Stopping back-ends");
       if (model != null) {

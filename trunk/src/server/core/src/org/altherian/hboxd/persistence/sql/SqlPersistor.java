@@ -368,7 +368,7 @@ public abstract class SqlPersistor implements _Persistor {
    
    @Override
    public void insertPermission(_User usr, SecurityItem item, SecurityAction action, boolean isAllowed) {
-      Logger.track();
+      
       
       insertPermission(usr, item, action, null, isAllowed);
    }
@@ -391,7 +391,7 @@ public abstract class SqlPersistor implements _Persistor {
    
    @Override
    public List<_ActionPermission> listActionPermissions(_User usr) {
-      Logger.track();
+      
       
       try {
          EasyPreparedStatement stmt = new EasyPreparedStatement(getConn().prepareStatement(PermissionSQL.getActionListQuery()));
@@ -411,7 +411,7 @@ public abstract class SqlPersistor implements _Persistor {
    
    @Override
    public List<_ItemPermission> listItemPermissions(_User usr) {
-      Logger.track();
+      
       
       try {
          EasyPreparedStatement stmt = new EasyPreparedStatement(getConn().prepareStatement(PermissionSQL.getItemListQuery()));
@@ -480,7 +480,7 @@ public abstract class SqlPersistor implements _Persistor {
    
    @Override
    public void start() throws PersistorException {
-      Logger.track();
+      
       
       try {
          StoreSQL.init(this);
@@ -494,7 +494,7 @@ public abstract class SqlPersistor implements _Persistor {
    
    @Override
    public void stop() {
-      Logger.track();
+      
       
       // nothing to do here
    }

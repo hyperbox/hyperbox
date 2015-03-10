@@ -44,12 +44,12 @@ public class SettingManager {
    }
    
    public _Setting get(String settingName) {
-      Logger.track();
+      
       return settingMap.get(settingName);
    }
    
    public _Setting get(Enum<?> settingEnum) {
-      Logger.track();
+      
       return settingMap.get(settingEnum.toString());
    }
    
@@ -60,7 +60,7 @@ public class SettingManager {
    }
    
    public void set(_Setting setting) {
-      Logger.track();
+      
       settingMap.put(setting.getName(), setting);
    }
    

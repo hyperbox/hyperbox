@@ -48,7 +48,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    private JLabel errorLabel;
    
    public VmDetailedView(MachineOut mOut) {
-      Logger.track();
+      
       
       this.mOut = mOut;
       
@@ -73,7 +73,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    }
    
    private void update() {
-      Logger.track();
+      
       
       if (mOut.isAvailable()) {
          summaryTab.show(mOut, true);
@@ -89,26 +89,26 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    
    @Handler
    public void getMachineUpdate(MachineDataChangedEvent ev) {
-      Logger.track();
+      
       
       if ((mOut != null) && ev.getUuid().contentEquals(mOut.getUuid())) {
-         Logger.track();
+         
          put(ev.getMachine());
       }
    }
    
    @Handler
    public void getMachineRemove(MachineRemovedEvent ev) {
-      Logger.track();
+      
       
       if ((mOut != null) && ev.getUuid().contentEquals(mOut.getUuid())) {
-         Logger.track();
+         
          clear();
       }
    }
    
    private void clear() {
-      Logger.track();
+      
       
       errorLabel.setVisible(false);
       tabs.setVisible(false);
@@ -129,7 +129,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    
    @Override
    public void loadingFinished(final boolean isSuccessful, final String message) {
-      Logger.track();
+      
       
       loadingLabel.setVisible(false);
       tabs.setEnabled(isSuccessful);
@@ -143,7 +143,7 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    
    @Override
    public void put(MachineOut mOut) {
-      Logger.track();
+      
       
       this.mOut = mOut;
       update();

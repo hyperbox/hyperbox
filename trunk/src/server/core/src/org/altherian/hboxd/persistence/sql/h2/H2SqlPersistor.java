@@ -58,7 +58,7 @@ public class H2SqlPersistor extends SqlPersistor {
    
    @Override
    public void destroy() {
-      Logger.track();
+      
       
       try {
          conn.commit();

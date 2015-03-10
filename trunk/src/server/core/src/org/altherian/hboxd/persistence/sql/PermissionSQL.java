@@ -44,13 +44,13 @@ public class PermissionSQL {
    public static final String ALLOWED = "allowed";
    
    public static void init(SqlPersistor sql) throws SQLException {
-      Logger.track();
+      
       
       createTables(sql);
    }
    
    public static void createTables(SqlPersistor sql) throws SQLException {
-      Logger.track();
+      
       
       sql.getConn()
             .createStatement()

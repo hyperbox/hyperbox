@@ -106,7 +106,7 @@ public class StoreEditor implements _Saveable, _Cancelable {
    }
    
    public StoreEditor(String srvId) {
-      Logger.track();
+      
       
       this.srvId = srvId;
       
@@ -143,7 +143,7 @@ public class StoreEditor implements _Saveable, _Cancelable {
    }
    
    public StoreIn create() {
-      Logger.track();
+      
       
       dialog.setTitle("Create new Store");
       show();
@@ -151,7 +151,7 @@ public class StoreEditor implements _Saveable, _Cancelable {
    }
    
    public StoreIn register() {
-      Logger.track();
+      
       
       dialog.setTitle("Registering new Store");
       show();
@@ -159,7 +159,7 @@ public class StoreEditor implements _Saveable, _Cancelable {
    }
    
    public StoreIn edit(StoreOut stoOut) {
-      Logger.track();
+      
       
       this.stoOut = stoOut;
       dialog.setTitle("Edit store " + stoOut.getLabel());
@@ -185,7 +185,7 @@ public class StoreEditor implements _Saveable, _Cancelable {
    }
    
    private void show() {
-      Logger.track();
+      
       
       dialog.pack();
       dialog.setSize(323, dialog.getHeight());
@@ -194,21 +194,21 @@ public class StoreEditor implements _Saveable, _Cancelable {
    }
    
    private void hide() {
-      Logger.track();
+      
       
       dialog.setVisible(false);
    }
    
    @Override
    public void cancel() {
-      Logger.track();
+      
       
       hide();
    }
    
    @Override
    public void save() {
-      Logger.track();
+      
       
       if (stoOut != null) {
          stoIn = new StoreIn(stoOut.getId());

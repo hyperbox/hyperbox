@@ -50,14 +50,14 @@ public class KryonetClient implements _Client {
    
    @Override
    public void putAnswer(Answer ans) {
-      Logger.track();
+      
       
       client.sendTCP(ans);
    }
    
    @Override
    public void post(EventOut evOut) {
-      Logger.track();
+      
       
       client.sendTCP(evOut);
    }

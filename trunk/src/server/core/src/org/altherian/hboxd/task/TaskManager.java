@@ -65,7 +65,7 @@ public final class TaskManager implements _TaskManager {
    
    @Override
    public void start(_Hyperbox hbox) {
-      Logger.track();
+      
       
       this.hbox = hbox;
       
@@ -81,7 +81,7 @@ public final class TaskManager implements _TaskManager {
    
    @Override
    public void stop() {
-      Logger.track();
+      
       
       running = false;
       if ((worker != null) && !Thread.currentThread().equals(worker)) {
@@ -97,7 +97,7 @@ public final class TaskManager implements _TaskManager {
    
    @Override
    public void process(Request req) {
-      Logger.track();
+      
       try {
          Logger.debug("Received Request #" + req.getExchangeId() + " [" + req.getCommand() + ":" + req.getName() + "] "
                + "from Client #" + SessionContext.getClient().getId() + " ("
@@ -134,7 +134,7 @@ public final class TaskManager implements _TaskManager {
    
    @Override
    public void remove(String taskId) {
-      Logger.track();
+      
       
       _Task task = get(taskId);
       task.cancel();
@@ -181,7 +181,7 @@ public final class TaskManager implements _TaskManager {
    private class TaskQueueWorker implements Runnable {
       
       private boolean add(_Task t) {
-         Logger.track();
+         
          
          if (!taskQueue.offer(t)) {
             return false;
@@ -195,7 +195,7 @@ public final class TaskManager implements _TaskManager {
       
       // TODO use events to clean up the queues
       private void remove(_Task t) {
-         Logger.track();
+         
          
          if (t != null) {
             taskQueue.remove(t);
@@ -213,7 +213,7 @@ public final class TaskManager implements _TaskManager {
       }
       
       public void queue(Request req, _HyperboxAction ca) {
-         Logger.track();
+         
          
          Logger.debug("Queueing Request #" + req.getExchangeId());
          SessionContext.getClient().putAnswer(new Answer(req, AnswerType.STARTED));
@@ -230,7 +230,7 @@ public final class TaskManager implements _TaskManager {
       
       @Override
       public void run() {
-         Logger.track();
+         
          
          running = true;
          Logger.verbose("Task Queue Worker started");
@@ -258,7 +258,7 @@ public final class TaskManager implements _TaskManager {
    
    @Handler
    public void putSystemEvent(SystemStateEvent ev) {
-      Logger.track();
+      
       
       if (ServerState.Running.equals(ev.getState())) {
          worker.start();

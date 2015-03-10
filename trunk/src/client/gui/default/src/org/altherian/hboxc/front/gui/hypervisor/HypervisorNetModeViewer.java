@@ -32,7 +32,7 @@ import org.altherian.hboxc.front.gui.action.network.NetAdaptorEditAction;
 import org.altherian.hboxc.front.gui.action.network.NetAdaptorRemoveAction;
 import org.altherian.hboxc.front.gui.worker.receiver._NetAdaptorListReceiver;
 import org.altherian.hboxc.front.gui.workers.NetAdaptorListWorker;
-import java.awt.Component;
+import org.altherian.tool.logging.Logger;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -47,6 +47,7 @@ public class HypervisorNetModeViewer implements _Refreshable, _NetAdaptorListRec
    private JPanel panel = new JPanel(new MigLayout());
    
    public HypervisorNetModeViewer(String srvId, NetModeOut mode) {
+      Logger.warning("Creating new net mode viewer");
       this.srvId = srvId;
       this.mode = mode;
       refresh();
@@ -65,15 +66,18 @@ public class HypervisorNetModeViewer implements _Refreshable, _NetAdaptorListRec
    @Handler
    private void putNetAdaptorEvent(NetAdaptorEventOut ev) {
       if (mode.getId().equals(ev.getNetMode())) {
+         Logger.debug(mode.getId() + " is " + ev.getNetMode() + " - refreshing...");
          refresh();
+      } else {
+         Logger.debug(mode.getId() + " is not " + ev.getNetMode() + " - skipping refresh...");
       }
    }
    
    @Override
    public void loadingStarted() {
-      for (Component c : panel.getComponents()) {
-         panel.remove(c);
-      }
+      panel.removeAll();
+      panel.revalidate();
+      panel.repaint();
    }
    
    @Override

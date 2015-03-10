@@ -61,7 +61,7 @@ public class ConsoleViewerEditor implements _Saveable, _Cancelable {
    private JDialog dialog;
    
    private ConsoleViewerEditor() {
-      Logger.track();
+      
       
       hypervisorLabel = new JLabel("Hypervisor Type Pattern");
       moduleLabel = new JLabel("Module Pattern");
@@ -92,19 +92,19 @@ public class ConsoleViewerEditor implements _Saveable, _Cancelable {
    }
    
    public static void create() {
-      Logger.track();
+      
       
       new ConsoleViewerEditor().add();
    }
    
    public static void edit(ConsoleViewerOutput conViewOut) {
-      Logger.track();
+      
       
       new ConsoleViewerEditor().modify(conViewOut);
    }
    
    private void add() {
-      Logger.track();
+      
       
       saveTask = ClientTasks.ConsoleViewerAdd;
       cvIn = new ConsoleViewerInput();
@@ -113,7 +113,7 @@ public class ConsoleViewerEditor implements _Saveable, _Cancelable {
    }
    
    private void modify(ConsoleViewerOutput conViewOut) {
-      Logger.track();
+      
       
       saveTask = ClientTasks.ConsoleViewerModify;
       cvIn = new ConsoleViewerInput(conViewOut.getId());
@@ -129,7 +129,7 @@ public class ConsoleViewerEditor implements _Saveable, _Cancelable {
    }
    
    private void show() {
-      Logger.track();
+      
       
       dialog.setSize(410, 170);
       dialog.setLocationRelativeTo(dialog.getParent());
@@ -137,21 +137,21 @@ public class ConsoleViewerEditor implements _Saveable, _Cancelable {
    }
    
    private void hide() {
-      Logger.track();
+      
       
       dialog.setVisible(false);
    }
    
    @Override
    public void cancel() {
-      Logger.track();
+      
       
       hide();
    }
    
    @Override
    public void save() {
-      Logger.track();
+      
       
       cvIn.setHypervisorId(hypervisorData.getText());
       cvIn.setModuleId(moduleData.getText());

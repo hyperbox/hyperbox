@@ -537,7 +537,7 @@ public class StorageVmEdit {
       
       @Override
       public void actionPerformed(ActionEvent ae) {
-         Logger.track();
+         
          
          DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
          if (node != null) {
@@ -580,7 +580,7 @@ public class StorageVmEdit {
       @Override
       public void actionPerformed(ActionEvent ae) {
          
-         Logger.track();
+         
          
          DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
          if (node != null) {

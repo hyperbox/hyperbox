@@ -38,14 +38,14 @@ public class MachineStateEventFactory implements _PreciseEventFactory {
    
    @Override
    public IMachineStateChangedEvent getRaw(IEvent vbEvent) {
-      Logger.track();
+      
       
       return IMachineStateChangedEvent.queryInterface(vbEvent);
    }
    
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      Logger.track();
+      
       
       IMachineStateChangedEvent vmEvent = getRaw(vbEvent);
       _Event event = new MachineStateEvent(vmEvent.getMachineId(), Mappings.get(vmEvent.getState()));

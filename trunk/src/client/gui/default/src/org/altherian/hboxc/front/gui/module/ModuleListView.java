@@ -65,7 +65,7 @@ public class ModuleListView implements _ModuleSelector, _Refreshable, _ModuleLis
    private JPanel panel;
 
    public ModuleListView() {
-      Logger.track();
+      
 
       refreshProgress = new JProgressBar();
       refreshProgress.setVisible(false);

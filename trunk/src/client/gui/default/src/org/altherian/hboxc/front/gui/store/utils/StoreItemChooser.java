@@ -241,14 +241,14 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
    }
 
    private void select(StoreItemOut stiOut) {
-      Logger.track();
+      
 
       storeItemValue.setText(stiOut.getName());
       choosenStiOut = stiOut;
    }
 
    private void choose(StoreItemOut stiOut) {
-      Logger.track();
+      
 
       select(stiOut);
       save();
@@ -287,7 +287,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
 
    @Override
    public void save() {
-      Logger.track();
+      
 
       if (workingMode != FOLDER_NAME) {
          choosenStiIn = new StoreItemIn(addressBarValue.getText() + "/" + storeItemValue.getText());
@@ -445,7 +445,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
 
       @Override
       public void mouseClicked(MouseEvent ev) {
-         Logger.track();
+         
 
          StoreItemOut stiOut = getSelection();
          if (stiOut != null) {

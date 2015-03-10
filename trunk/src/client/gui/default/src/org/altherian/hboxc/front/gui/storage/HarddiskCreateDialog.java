@@ -134,7 +134,7 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
     * @return MediumInput object if user has entered valid data, or <code>null</code> if the user cancelled.
     */
    public static MediumIn show(ServerOut srvOut) {
-      Logger.track();
+      
       
       HarddiskCreateDialog diskCreateDialog = new HarddiskCreateDialog(srvOut);
       MediumIn medIn = diskCreateDialog.getUserInput();
@@ -142,7 +142,7 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
    }
    
    private MediumIn getUserInput() {
-      Logger.track();
+      
       
       dialog.pack();
       dialog.setLocationRelativeTo(MainView.getMainFrame());
@@ -153,7 +153,7 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
    
    @Override
    public void cancel() {
-      Logger.track();
+      
       
       medIn = null;
       dialog.setVisible(false);
@@ -162,7 +162,7 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
    
    @Override
    public void save() {
-      Logger.track();
+      
       
       String path = locationField.getText();
       Long size = Long.parseLong(sizeField.getText());

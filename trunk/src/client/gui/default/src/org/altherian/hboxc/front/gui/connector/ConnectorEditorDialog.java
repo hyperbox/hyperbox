@@ -66,7 +66,7 @@ public final class ConnectorEditorDialog implements _Saveable, _Cancelable {
    private ClientTasks task;
    
    private ConnectorEditorDialog() {
-      Logger.track();
+      
       
       hostnameLabel = new JLabel("Hostname");
       hostnameField = new JTextField(15);
@@ -112,7 +112,7 @@ public final class ConnectorEditorDialog implements _Saveable, _Cancelable {
    }
    
    public void show() {
-      Logger.track();
+      
       
       dialog.pack();
       dialog.setLocationRelativeTo(dialog.getParent());
@@ -120,13 +120,13 @@ public final class ConnectorEditorDialog implements _Saveable, _Cancelable {
    }
    
    public void hide() {
-      Logger.track();
+      
       
       dialog.setVisible(false);
    }
    
    public void create() {
-      Logger.track();
+      
       
       task = ClientTasks.ConnectorAdd;
       dialog.setTitle("Add Server Connection");
@@ -135,7 +135,7 @@ public final class ConnectorEditorDialog implements _Saveable, _Cancelable {
    }
    
    public void modify(ConnectorOutput conOut) {
-      Logger.track();
+      
       
       conId = conOut.getId();
       task = ClientTasks.ConnectorModify;

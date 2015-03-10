@@ -57,7 +57,7 @@ public abstract class AbstractOutputListTableModel<T extends ObjectOut> extends 
    }
    
    public void clear() {
-      Logger.track();
+      
       
       Integer maxIndex = data.size() - 1;
       reset();

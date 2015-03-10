@@ -39,19 +39,19 @@ public final class EventManager {
    }
    
    public static void register(Object o) {
-      Logger.track();
+      
       
       evMgr.register(o);
    }
    
    public static void unregister(Object o) {
-      Logger.track();
+      
       
       evMgr.unregister(o);
    }
    
    public static void post(Object o) {
-      Logger.track();
+      
       
       evMgr.post(o);
    }

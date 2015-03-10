@@ -134,7 +134,7 @@ public class VBoxSettingManager {
    }
    
    public static void set(VBoxSnapshot snap, List<_Setting> settings) {
-      Logger.track();
+      
       
       for (_Setting setting : settings) {
          if (!snapshotActions.containsKey(setting.getName())) {
@@ -179,7 +179,7 @@ public class VBoxSettingManager {
    }
    
    public static void apply(IMachine vm, Machine vmData) {
-      Logger.track();
+      
       
       List<_Setting> settings = SettingIoFactory.getListIo(vmData.listSettings());
       for (_Setting setting : settings) {
@@ -242,7 +242,7 @@ public class VBoxSettingManager {
    }
    
    public static void set(VBoxMachine vm, List<_Setting> settings) {
-      Logger.track();
+      
       
       for (_Setting setting : settings) {
          if (!vmActions.containsKey(setting.getName())) {
@@ -319,7 +319,7 @@ public class VBoxSettingManager {
    }
    
    public static void set(VBoxNetworkInterface nic, List<_Setting> settings) {
-      Logger.track();
+      
       
       for (_Setting setting : settings) {
          if (!nicActions.containsKey(setting.getName())) {
@@ -398,7 +398,7 @@ public class VBoxSettingManager {
    }
    
    public static void set(VirtualboxStorageController strCtl, List<_Setting> settings) {
-      Logger.track();
+      
       
       for (_Setting setting : settings) {
          if (!sctActions.containsKey(setting.getName())) {
@@ -478,7 +478,7 @@ public class VBoxSettingManager {
    }
    
    public static void set(VirtualboxMedium medium, List<_Setting> settings) {
-      Logger.track();
+      
       
       for (_Setting setting : settings) {
          if (!mediumActions.containsKey(setting.getName())) {

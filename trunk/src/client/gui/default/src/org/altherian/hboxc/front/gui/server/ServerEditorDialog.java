@@ -55,7 +55,7 @@ public class ServerEditorDialog implements _Saveable, _Cancelable {
    private ServerOut srvOut;
    
    public static ServerIn getInput(String srvId) {
-      Logger.track();
+      
       
       return new ServerEditorDialog().getUserInput(srvId);
    }
@@ -84,7 +84,7 @@ public class ServerEditorDialog implements _Saveable, _Cancelable {
    }
    
    private ServerIn getUserInput(String srvId) {
-      Logger.track();
+      
       
       srvOut = Gui.getServerInfo(srvId);
       logLevelValue.addItem("");
@@ -112,7 +112,7 @@ public class ServerEditorDialog implements _Saveable, _Cancelable {
    
    @Override
    public void cancel() {
-      Logger.track();
+      
       
       srvIn = null;
       hide();
@@ -120,7 +120,7 @@ public class ServerEditorDialog implements _Saveable, _Cancelable {
    
    @Override
    public void save() {
-      Logger.track();
+      
       
       srvIn = new ServerIn(srvOut.getId());
       srvIn.setName(nameValue.getText());

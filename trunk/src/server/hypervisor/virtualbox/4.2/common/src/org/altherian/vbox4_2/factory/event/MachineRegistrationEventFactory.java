@@ -37,14 +37,14 @@ public class MachineRegistrationEventFactory implements _PreciseEventFactory {
    
    @Override
    public IMachineRegisteredEvent getRaw(IEvent vbEvent) {
-      Logger.track();
+      
       
       return IMachineRegisteredEvent.queryInterface(vbEvent);
    }
    
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      Logger.track();
+      
       
       IMachineRegisteredEvent rawEvent = getRaw(vbEvent);
       _Event event = new MachineRegistrationEvent(rawEvent.getMachineId(), rawEvent.getRegistered());

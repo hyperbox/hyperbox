@@ -78,7 +78,7 @@ public abstract class SkeletonService implements _Service, Runnable {
    
    @Override
    public void start() throws HyperboxRuntimeException {
-      Logger.track();
+      
       
       serviceThread = new Thread(this, "Service ID " + getClass().getSimpleName());
       serviceThread.setUncaughtExceptionHandler(new ServiceExceptionHander());
@@ -101,7 +101,7 @@ public abstract class SkeletonService implements _Service, Runnable {
    
    @Override
    public void stop() {
-      Logger.track();
+      
       
       setState(ServiceState.Stopping);
       stopping();
@@ -128,7 +128,7 @@ public abstract class SkeletonService implements _Service, Runnable {
    
    @Override
    public final boolean isRunning() {
-      Logger.track();
+      
       
       if ((serviceThread != null) && serviceThread.isAlive()) {
          return true;
@@ -177,7 +177,7 @@ public abstract class SkeletonService implements _Service, Runnable {
       
       @Override
       public void uncaughtException(Thread arg0, Throwable arg1) {
-         Logger.track();
+         
          
          Logger.error("The service \"" + serviceThread.getName() + "\" has crashed.");
          Logger.error("Exception caught is : " + arg1.getClass().getSimpleName() + " - " + arg1.getMessage());

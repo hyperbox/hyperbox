@@ -56,7 +56,7 @@ public class ConsoleViewersSettingsViewer implements _ConsoleViewerSelector {
    private JPanel buttonPanel;
    
    public ConsoleViewersSettingsViewer() {
-      Logger.track();
+      
       
       ViewEventManager.register(this);
       
@@ -95,7 +95,7 @@ public class ConsoleViewersSettingsViewer implements _ConsoleViewerSelector {
       
       @Override
       public void mouseClicked(MouseEvent ev) {
-         Logger.track();
+         
          
          if (ev.getClickCount() == 2) {
             ConsoleViewerOutput cvOut = getSelection();
@@ -107,7 +107,7 @@ public class ConsoleViewersSettingsViewer implements _ConsoleViewerSelector {
    }
    
    public void load() {
-      Logger.track();
+      
       
       consViewerTableModel.put(Gui.getReader().listConsoleViewers());
    }

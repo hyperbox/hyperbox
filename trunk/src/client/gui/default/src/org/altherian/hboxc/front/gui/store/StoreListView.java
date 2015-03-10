@@ -68,7 +68,7 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
    private JPanel panel;
    
    public StoreListView() {
-      Logger.track();
+      
       
       statusLabel = new JLabel();
       statusLabel.setVisible(false);

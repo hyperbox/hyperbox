@@ -48,7 +48,7 @@ public class Connector implements _Connector {
    private ConnectionState state;
    
    public Connector(String id, String label, String address, String username, String backendId) {
-      Logger.track();
+      
       
       this.id = id;
       setLabel(label);
@@ -58,7 +58,7 @@ public class Connector implements _Connector {
    }
    
    private void setState(ConnectionState state) {
-      Logger.track();
+      
       
       if ((this.state == null) || !this.state.equals(state)) {
          this.state = state;
@@ -106,7 +106,7 @@ public class Connector implements _Connector {
    
    @Override
    public void setAddress(String address) {
-      Logger.track();
+      
       
       if (address.isEmpty()) {
          throw new HyperboxRuntimeException("Address cannot be empty");
@@ -122,14 +122,14 @@ public class Connector implements _Connector {
    
    @Override
    public void setBackendId(String backendId) {
-      Logger.track();
+      
       
       this.backendId = backendId;
    }
    
    @Override
    public _Server connect(UserIn usrIn) {
-      Logger.track();
+      
       
       setState(ConnectionState.Connecting);
       
@@ -150,7 +150,7 @@ public class Connector implements _Connector {
    
    @Override
    public void disconnect() {
-      Logger.track();
+      
       
       if (getState().equals(ConnectionState.Connected) || getState().equals(ConnectionState.Connecting)) {
          setState(ConnectionState.Disconnecting);
@@ -187,13 +187,13 @@ public class Connector implements _Connector {
    
    @Handler
    public void putServerDisconnectEvent(ServerDisconnectedEvent ev) {
-      Logger.track();
+      
       
       if (ev.getServer().getId().equals(server.getId())) {
-         Logger.track();
+         
          disconnect();
       } else {
-         Logger.track();
+         
       }
    }
    

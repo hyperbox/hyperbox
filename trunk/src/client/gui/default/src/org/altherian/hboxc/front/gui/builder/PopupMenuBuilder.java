@@ -85,7 +85,7 @@ public class PopupMenuBuilder {
    }
    
    public static JPopupMenu get(_MachineSelector select, MachineOut mOut) {
-      Logger.track();
+      
       
       JMenu machineMenu = new JMenu("Machine");
       machineMenu.setIcon(IconBuilder.getEntityType(EntityType.Machine));

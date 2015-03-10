@@ -36,14 +36,14 @@ public class EventSourceEventFactory implements _PreciseEventFactory {
    
    @Override
    public IEvent getRaw(IEvent vbEvent) {
-      Logger.track();
+      
       
       return IEventSourceChangedEvent.queryInterface(vbEvent);
    }
    
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      Logger.track();
+      
       
       // This event will not be handled
       return null;

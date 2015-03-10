@@ -39,14 +39,14 @@ public class SnapshotTakenEventFactory implements _PreciseEventFactory {
    
    @Override
    public ISnapshotTakenEvent getRaw(IEvent vbEvent) {
-      Logger.track();
+      
       
       return ISnapshotTakenEvent.queryInterface(vbEvent);
    }
    
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      Logger.track();
+      
       
       ISnapshotTakenEvent snapEv = (ISnapshotTakenEvent) vbEvent;
       

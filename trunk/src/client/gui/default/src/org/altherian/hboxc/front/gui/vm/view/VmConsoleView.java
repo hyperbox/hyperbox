@@ -81,7 +81,7 @@ public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
    }
    
    private void start() {
-      Logger.track();
+      
       
       if (isVisible) {
          timer.start();
@@ -90,7 +90,7 @@ public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
    }
    
    private void stop() {
-      Logger.track();
+      
       
       timer.stop();
       screenlabel.setIcon(null);

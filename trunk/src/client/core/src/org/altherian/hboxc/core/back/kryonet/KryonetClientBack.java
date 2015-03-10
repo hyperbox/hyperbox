@@ -58,7 +58,7 @@ public final class KryonetClientBack implements _Backend {
    }
    
    private void setState(BackendStates state) {
-      Logger.track();
+      
       
       if ((state != null) && !this.state.equals(state)) {
          this.state = state;
@@ -69,7 +69,7 @@ public final class KryonetClientBack implements _Backend {
    }
    
    private void setState(BackendConnectionState connState) {
-      Logger.track();
+      
       
       if ((connState != null) && !this.connState.equals(connState)) {
          this.connState = connState;
@@ -81,7 +81,7 @@ public final class KryonetClientBack implements _Backend {
    
    @Override
    public void start() throws HyperboxException {
-      Logger.track();
+      
       
       setState(BackendStates.Starting);
       try {
@@ -115,7 +115,7 @@ public final class KryonetClientBack implements _Backend {
    
    @Override
    public void stop() {
-      Logger.track();
+      
       
       setState(BackendStates.Stopping);
       disconnect();
@@ -132,7 +132,7 @@ public final class KryonetClientBack implements _Backend {
    
    @Override
    public void connect(String address) throws HyperboxException {
-      Logger.track();
+      
       
       if (!state.equals(BackendStates.Started)) {
          throw new HyperboxException("Backend is not initialized");
@@ -169,7 +169,7 @@ public final class KryonetClientBack implements _Backend {
    
    @Override
    public void disconnect() {
-      Logger.track();
+      
       
       if ((client != null) && client.isConnected()) {
          setState(BackendConnectionState.Disconnecting);
@@ -185,7 +185,7 @@ public final class KryonetClientBack implements _Backend {
    
    @Override
    public void putRequest(Request req) {
-      Logger.track();
+      
       
       if (!isConnected()) {
          Logger.debug("Tried to send a message but client is not connected");
@@ -205,7 +205,7 @@ public final class KryonetClientBack implements _Backend {
       
       @Override
       public void connected(Connection connection) {
-         Logger.track();
+         
          
          Logger.info(connection.getRemoteAddressTCP().getAddress() + " connected.");
          setState(BackendConnectionState.Connected);
@@ -232,7 +232,7 @@ public final class KryonetClientBack implements _Backend {
       
       @Override
       public void disconnected(Connection connection) {
-         Logger.track();
+         
          
          Logger.info("Disconnected from Hyperbox server");
          disconnect();

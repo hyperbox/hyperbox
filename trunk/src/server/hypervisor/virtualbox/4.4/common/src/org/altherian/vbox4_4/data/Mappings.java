@@ -48,7 +48,7 @@ public class Mappings {
    private static BiEnumMap<AudioController, AudioControllerType> mappingAudioController;
    
    public static void load() {
-      Logger.track();
+      
       
       Logger.debug("Loading Virtualbox Mappings");
       

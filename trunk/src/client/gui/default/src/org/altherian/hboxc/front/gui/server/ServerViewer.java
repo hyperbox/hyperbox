@@ -131,7 +131,7 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    
    @Handler
    public void putServerEvent(ServerEvent ev) {
-      Logger.track();
+      
       
       if ((srvId != null) && ev.getServer().getId().equals(srvId)) {
          refresh();
@@ -150,7 +150,7 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    
    @Override
    public void put(ServerOut srvOut) {
-      Logger.track();
+      
       
       update(srvOut);
    }

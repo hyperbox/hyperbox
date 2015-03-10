@@ -48,7 +48,7 @@ public class KryonetServerFront implements _Front {
    
    @Override
    public void start(_RequestReceiver r) throws HyperboxException {
-      Logger.track();
+      
       
       this.r = r;
       clients = new HashMap<Integer, _Client>();
@@ -79,7 +79,7 @@ public class KryonetServerFront implements _Front {
    }
    
    private void loadConfig() throws HyperboxException {
-      Logger.track();
+      
       
       try {
          port = Integer.parseInt(Configuration.getSetting(KryonetDefaultSettings.CFGKEY_KRYO_NET_TCP_PORT,
@@ -93,7 +93,7 @@ public class KryonetServerFront implements _Front {
    
    @Override
    public void stop() {
-      Logger.track();
+      
       
       server.stop();
    }
@@ -105,7 +105,7 @@ public class KryonetServerFront implements _Front {
    
    @Override
    public void broadcast(EventOut ev) {
-      Logger.track();
+      
       
       if (server != null) {
          server.sendToAllTCP(ev);
@@ -116,7 +116,7 @@ public class KryonetServerFront implements _Front {
       
       @Override
       public void connected(Connection connection) {
-         Logger.track();
+         
          
          Logger.info("Conn #" + connection.getID() + " " + connection.getRemoteAddressTCP().getAddress().getHostAddress() + " connected.");
          _Client client = new KryonetClient(connection);
@@ -127,7 +127,7 @@ public class KryonetServerFront implements _Front {
       @Override
       public void received(Connection connection, Object object) {
          if (object.getClass().equals(Request.class)) {
-            Logger.track();
+            
             
             Request req = (Request) object;
             _Client client = clients.get(connection.getID());
@@ -139,7 +139,7 @@ public class KryonetServerFront implements _Front {
       
       @Override
       public void disconnected(Connection connection) {
-         Logger.track();
+         
          
          Logger.info("Conn #" + connection.getID() + " has disconnected.");
          r.unregister(clients.get(connection.getID()));

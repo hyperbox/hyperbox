@@ -107,7 +107,7 @@ public class CoreReader implements _CoreReader {
    
    @Handler
    protected void putServerDisconnected(ServerDisconnectedEvent ev) {
-      Logger.track();
+      
       
       cachedServerReaders.remove(core.getServer(ev.getServer().getId()));
    }

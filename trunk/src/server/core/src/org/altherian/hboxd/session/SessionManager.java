@@ -42,7 +42,7 @@ public final class SessionManager implements _SessionManager {
    
    @Override
    public void start(_Hyperbox hbox) throws HyperboxException {
-      Logger.track();
+      
       
       this.hbox = hbox;
       EventManager.register(this);
@@ -50,7 +50,7 @@ public final class SessionManager implements _SessionManager {
    
    @Override
    public void stop() {
-      Logger.track();
+      
       
       for (_Session sess : sessions.values()) {
          sess.close();
@@ -65,7 +65,7 @@ public final class SessionManager implements _SessionManager {
    
    @Override
    public void closeSession(_Client c) {
-      Logger.track();
+      
       
       if (sessions.containsKey(c)) {
          _Session sess = sessions.get(c);
@@ -89,7 +89,7 @@ public final class SessionManager implements _SessionManager {
    
    @Override
    public void postRequest(_Client client, Request req) {
-      Logger.track();
+      
       
       Logger.debug("Received Request from " + client.getAddress());
       if (!hasSession(client)) {
@@ -101,7 +101,7 @@ public final class SessionManager implements _SessionManager {
    
    @Override
    public void register(_Client client) {
-      Logger.track();
+      
       
       if (!hasSession(client)) {
          Logger.debug(client.getAddress() + " connected, registering...");
@@ -114,7 +114,7 @@ public final class SessionManager implements _SessionManager {
    
    @Override
    public void unregister(_Client client) {
-      Logger.track();
+      
       
       if (hasSession(client)) {
          Logger.warning(client + " did not close its session before disconnecting, cleaning up");
@@ -124,7 +124,7 @@ public final class SessionManager implements _SessionManager {
    
    @Handler
    public void postEvent(_Event event) {
-      Logger.track();
+      
       
       EventOut evOut = EventIoFactory.get(hbox, event);
       for (_Session sess : sessions.values()) {

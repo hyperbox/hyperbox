@@ -26,7 +26,7 @@ import org.altherian.tool.logging.Logger;
 public class NotificationInfo extends Notification {
    
    public NotificationInfo() {
-      Logger.track();
+      
    }
    
 }

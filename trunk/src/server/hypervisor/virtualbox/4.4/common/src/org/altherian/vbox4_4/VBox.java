@@ -30,7 +30,7 @@ public class VBox {
    private static VirtualBoxManager mgr;
    
    public static void set(VirtualBoxManager mgr) {
-      Logger.track();
+      
       
       VBox.mgr = mgr;
    }

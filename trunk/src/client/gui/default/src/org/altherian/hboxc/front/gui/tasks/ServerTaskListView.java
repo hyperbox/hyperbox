@@ -137,7 +137,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
    
    @Override
    public List<TaskOut> getSelection() {
-      Logger.track();
+      
       
       List<TaskOut> listSelectedItems = new ArrayList<TaskOut>();
       for (int row : itemList.getSelectedRows()) {
@@ -168,7 +168,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       
       @Override
       public void loadingFinished(boolean isSuccessful, String message) {
-         Logger.track();
+         
          
          finish();
          if (isSuccessful) {
@@ -180,7 +180,7 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       
       @Override
       public void add(List<TaskOut> tOutList) {
-         Logger.track();
+         
          
          itemListModel.merge(tOutList);
       }

@@ -60,7 +60,7 @@ public final class VirtualboxMedium implements _RawMedium {
    }
    
    private void getRead() {
-      Logger.track();
+      
       
       rawMedium = VBox.get().openMedium(file, devType, AccessMode.ReadOnly, false);
    }

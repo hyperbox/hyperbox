@@ -53,7 +53,7 @@ public abstract class AbstractIOTableModel<T extends _ObjectIO> extends Abstract
    }
 
    public void clear() {
-      Logger.track();
+      
 
       Integer maxIndex = data.size() - 1;
       reset();
