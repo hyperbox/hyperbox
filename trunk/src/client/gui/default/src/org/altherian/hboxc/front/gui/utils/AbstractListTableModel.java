@@ -20,7 +20,6 @@
 
 package org.altherian.hboxc.front.gui.utils;
 
-import org.altherian.tool.logging.Logger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -57,7 +56,6 @@ public abstract class AbstractListTableModel<T extends Object> extends AbstractT
    }
    
    public void clear() {
-      
       
       Integer maxIndex = data.size() - 1;
       reset();

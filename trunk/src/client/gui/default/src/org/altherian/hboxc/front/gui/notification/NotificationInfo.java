@@ -20,7 +20,6 @@
 
 package org.altherian.hboxc.front.gui.notification;
 
-import org.altherian.tool.logging.Logger;
 
 @SuppressWarnings("serial")
 public class NotificationInfo extends Notification {

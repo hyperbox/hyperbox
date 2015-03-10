@@ -52,7 +52,6 @@ public class HypervisorConnectAction extends AbstractAction {
    @Override
    public void actionPerformed(ActionEvent ae) {
       
-      
       ServerOut srvOut = selector.getServer();
       if (srvOut != null) {
          HypervisorIn hypIn = HypervisorConnectView.getInput(srvOut);

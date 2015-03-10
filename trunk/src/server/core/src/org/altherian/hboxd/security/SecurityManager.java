@@ -56,7 +56,7 @@ public class SecurityManager implements _SecurityManager {
    private Map<String, _User> users = new HashMap<String, _User>();
    private Map<String, _User> usernames = new HashMap<String, _User>();
    private Map<String, Boolean> perms = new HashMap<String, Boolean>();
-
+   
    private _SecurityPersistor persistor;
    
    private String getPermissionId(_User usr, SecurityItem item, String itemId) {
@@ -81,18 +81,15 @@ public class SecurityManager implements _SecurityManager {
    
    private void loadPerm(_User usr, _ActionPermission acPerm) {
       
-      
       perms.put(getPermissionId(usr, acPerm.getItemType(), acPerm.getAction()), acPerm.isAllowed());
    }
    
    private void loadPerm(_User usr, _ItemPermission itemPerm) {
       
-      
       perms.put(getPermissionId(usr, itemPerm.getItemType(), itemPerm.getAction(), itemPerm.getItemId()), itemPerm.isAllowed());
    }
    
    private void loadPerms(_User usr) {
-      
       
       for (_ActionPermission perm : listActionPermissions(usr)) {
          loadPerm(usr, perm);
@@ -106,7 +103,6 @@ public class SecurityManager implements _SecurityManager {
    @Override
    public _User init(_SecurityPersistor persistor) throws HyperboxException {
       
-      
       this.persistor = persistor;
       superUsr = new SystemUser();
       return superUsr;
@@ -114,7 +110,6 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public void start() throws HyperboxException {
-      
       
       userIdGen = new UserIdGenerator();
       users.clear();
@@ -152,7 +147,6 @@ public class SecurityManager implements _SecurityManager {
    @Override
    public void stop() {
       
-      
       userIdGen = null;
       users = null;
       usernames = null;
@@ -160,7 +154,6 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public void authenticate(String login, char[] submitedPassword) {
-      
       
       if (!usernames.containsKey(login)) {
          Logger.debug("Unknown login: " + login);
@@ -189,13 +182,11 @@ public class SecurityManager implements _SecurityManager {
    @Override
    public void authorize(Request req) {
       
-      
       // TODO Auto-generated method stub
    }
    
    @Override
    public boolean isAuthorized(_User u, _Event ev) {
-      
       
       // TODO complete
       return true;
@@ -206,7 +197,7 @@ public class SecurityManager implements _SecurityManager {
          Logger.debug("Thread " + Thread.currentThread().getName() + " has full admin right, granting");
          return true;
       }
-
+      
       String permId = getPermissionId(SecurityContext.getUser(), SecurityItem.Any, SecurityAction.Any);
       Logger.debug("Checking for permission ID " + permId);
       Logger.debug("Possible values:");
@@ -262,7 +253,6 @@ public class SecurityManager implements _SecurityManager {
    @Override
    public void authorize(SecurityItem item, SecurityAction action) {
       
-      
       if (!isAuthorized(item, action)) {
          throw new AccessDeniedException();
       }
@@ -270,7 +260,6 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public void authorize(SecurityItem item, SecurityAction action, String itemId) {
-      
       
       if (!isAuthorized(item, action, itemId)) {
          throw new AccessDeniedException();
@@ -286,14 +275,12 @@ public class SecurityManager implements _SecurityManager {
    
    protected void loadUser(String id) {
       
-      
       _User u = persistor.getUser(id);
       users.put(u.getId(), u);
       usernames.put(u.getDomainLogonName(), u);
    }
    
    protected void unloadUser(String id) {
-      
       
       usernames.remove(id);
       users.remove(id);
@@ -324,7 +311,6 @@ public class SecurityManager implements _SecurityManager {
    @Override
    public _User addUser(UserIn uIn) {
       
-      
       authorize(SecurityItem.User, SecurityAction.Add);
       
       String id = userIdGen.get();
@@ -347,7 +333,6 @@ public class SecurityManager implements _SecurityManager {
    @Override
    public void removeUser(String usrId) {
       
-      
       authorize(SecurityItem.User, SecurityAction.Delete);
       
       _User user = getUser(usrId);
@@ -361,7 +346,6 @@ public class SecurityManager implements _SecurityManager {
    
    @Override
    public _User modifyUser(UserIn uIn) {
-      
       
       authorize(SecurityItem.User, SecurityAction.Modify);
       
@@ -395,7 +379,6 @@ public class SecurityManager implements _SecurityManager {
       private Integer nextId = 1;
       
       public String get() {
-         
          
          while (users.containsKey(nextId.toString())) {
             nextId++;

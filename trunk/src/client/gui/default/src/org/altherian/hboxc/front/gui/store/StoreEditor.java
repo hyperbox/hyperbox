@@ -33,7 +33,6 @@ import org.altherian.hboxc.front.gui.builder.JDialogBuilder;
 import org.altherian.hboxc.front.gui.store.utils.StoreItemChooser;
 import org.altherian.hboxc.front.gui.utils.CancelableUtils;
 import org.altherian.tool.AxStrings;
-import org.altherian.tool.logging.Logger;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -107,7 +106,6 @@ public class StoreEditor implements _Saveable, _Cancelable {
    
    public StoreEditor(String srvId) {
       
-      
       this.srvId = srvId;
       
       saveButton = new JButton(new SaveAction(this));
@@ -144,7 +142,6 @@ public class StoreEditor implements _Saveable, _Cancelable {
    
    public StoreIn create() {
       
-      
       dialog.setTitle("Create new Store");
       show();
       return stoIn;
@@ -152,14 +149,12 @@ public class StoreEditor implements _Saveable, _Cancelable {
    
    public StoreIn register() {
       
-      
       dialog.setTitle("Registering new Store");
       show();
       return stoIn;
    }
    
    public StoreIn edit(StoreOut stoOut) {
-      
       
       this.stoOut = stoOut;
       dialog.setTitle("Edit store " + stoOut.getLabel());
@@ -186,7 +181,6 @@ public class StoreEditor implements _Saveable, _Cancelable {
    
    private void show() {
       
-      
       dialog.pack();
       dialog.setSize(323, dialog.getHeight());
       dialog.setLocationRelativeTo(dialog.getParent());
@@ -195,20 +189,17 @@ public class StoreEditor implements _Saveable, _Cancelable {
    
    private void hide() {
       
-      
       dialog.setVisible(false);
    }
    
    @Override
    public void cancel() {
       
-      
       hide();
    }
    
    @Override
    public void save() {
-      
       
       if (stoOut != null) {
          stoIn = new StoreIn(stoOut.getId());

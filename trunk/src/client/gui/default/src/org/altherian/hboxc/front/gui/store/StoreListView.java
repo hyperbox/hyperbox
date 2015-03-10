@@ -35,7 +35,6 @@ import org.altherian.hboxc.front.gui.store.utils.StoreItemChooser;
 import org.altherian.hboxc.front.gui.worker.receiver._StoreListReceiver;
 import org.altherian.hboxc.front.gui.workers.StoreListWorker;
 import org.altherian.helper.swing.MouseWheelController;
-import org.altherian.tool.logging.Logger;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -68,7 +67,6 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
    private JPanel panel;
    
    public StoreListView() {
-      
       
       statusLabel = new JLabel();
       statusLabel.setVisible(false);

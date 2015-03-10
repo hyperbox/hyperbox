@@ -21,7 +21,6 @@
 package org.altherian.hboxc.front.gui.utils;
 
 import org.altherian.hbox.comm.out.ObjectOut;
-import org.altherian.tool.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -57,7 +56,6 @@ public abstract class AbstractOutputListTableModel<T extends ObjectOut> extends 
    }
    
    public void clear() {
-      
       
       Integer maxIndex = data.size() - 1;
       reset();

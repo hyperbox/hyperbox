@@ -22,7 +22,6 @@ package org.altherian.vbox4_2.factory.event;
 
 import org.altherian.hbox.event._Event;
 import org.altherian.hboxd.event.machine.MachineStateEvent;
-import org.altherian.tool.logging.Logger;
 import org.altherian.vbox4_2.data.Mappings;
 import org.altherian.vbox4_2.factory._PreciseEventFactory;
 import org.virtualbox_4_2.IEvent;
@@ -39,13 +38,11 @@ public class MachineStateEventFactory implements _PreciseEventFactory {
    @Override
    public IMachineStateChangedEvent getRaw(IEvent vbEvent) {
       
-      
       return IMachineStateChangedEvent.queryInterface(vbEvent);
    }
    
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      
       
       IMachineStateChangedEvent vmEvent = getRaw(vbEvent);
       _Event event = new MachineStateEvent(vmEvent.getMachineId(), Mappings.get(vmEvent.getState()));

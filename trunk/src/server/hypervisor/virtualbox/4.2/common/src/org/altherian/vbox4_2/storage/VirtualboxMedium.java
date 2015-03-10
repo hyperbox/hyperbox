@@ -28,7 +28,6 @@ import org.altherian.hboxd.task._ProgressTracker;
 import org.altherian.setting.BooleanSetting;
 import org.altherian.setting.PositiveNumberSetting;
 import org.altherian.setting._Setting;
-import org.altherian.tool.logging.Logger;
 import org.altherian.vbox.settings.medium.MediumDescriptionSetting;
 import org.altherian.vbox.settings.medium.MediumLocationSetting;
 import org.altherian.vbox.settings.medium.MediumTypeSetting;
@@ -60,7 +59,6 @@ public final class VirtualboxMedium implements _RawMedium {
    }
    
    private void getRead() {
-      
       
       rawMedium = VBox.get().openMedium(file, devType, AccessMode.ReadOnly, false);
    }

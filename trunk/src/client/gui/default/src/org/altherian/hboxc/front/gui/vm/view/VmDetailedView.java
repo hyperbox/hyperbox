@@ -30,7 +30,6 @@ import org.altherian.hboxc.front.gui._Refreshable;
 import org.altherian.hboxc.front.gui.snapshot.SnapshotManagementView;
 import org.altherian.hboxc.front.gui.worker.receiver._MachineReceiver;
 import org.altherian.hboxc.front.gui.workers.MachineGetWorker;
-import org.altherian.tool.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -48,7 +47,6 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    private JLabel errorLabel;
    
    public VmDetailedView(MachineOut mOut) {
-      
       
       this.mOut = mOut;
       
@@ -74,7 +72,6 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    
    private void update() {
       
-      
       if (mOut.isAvailable()) {
          summaryTab.show(mOut, true);
          tabs.setEnabledAt(tabs.indexOfComponent(summaryTab.getComponent()), true);
@@ -90,7 +87,6 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    @Handler
    public void getMachineUpdate(MachineDataChangedEvent ev) {
       
-      
       if ((mOut != null) && ev.getUuid().contentEquals(mOut.getUuid())) {
          
          put(ev.getMachine());
@@ -100,7 +96,6 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    @Handler
    public void getMachineRemove(MachineRemovedEvent ev) {
       
-      
       if ((mOut != null) && ev.getUuid().contentEquals(mOut.getUuid())) {
          
          clear();
@@ -108,7 +103,6 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    }
    
    private void clear() {
-      
       
       errorLabel.setVisible(false);
       tabs.setVisible(false);
@@ -130,7 +124,6 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    @Override
    public void loadingFinished(final boolean isSuccessful, final String message) {
       
-      
       loadingLabel.setVisible(false);
       tabs.setEnabled(isSuccessful);
       if (!isSuccessful) {
@@ -143,7 +136,6 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
    
    @Override
    public void put(MachineOut mOut) {
-      
       
       this.mOut = mOut;
       update();

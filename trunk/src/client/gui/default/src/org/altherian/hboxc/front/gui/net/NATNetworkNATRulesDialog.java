@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2015 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -59,18 +59,18 @@ public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable, _Refres
    private JPanel buttonPanel;
    private JButton saveButton;
    private JButton cancelButton;
-
+   
    private List<NetService_NAT_IO> rules = new ArrayList<NetService_NAT_IO>();
-
+   
    public static List<NetService_NAT_IO> getInput(String srvId, String modeId, String adaptId) {
       return (new NATNetworkNATRulesDialog(srvId, modeId, adaptId)).getInput();
    }
-
+   
    public NATNetworkNATRulesDialog(String srvId, String modeId, String adaptId) {
       this.srvId = srvId;
       this.modeId = modeId;
       this.adaptId = adaptId;
-
+      
       ip4 = new NATRulesView();
       RefreshUtil.set(ip4.getComponent(), new _Refreshable() {
          
@@ -78,7 +78,7 @@ public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable, _Refres
          public void refresh() {
             refreshIp4();
          }
-
+         
       });
       ip6 = new NATRulesView();
       RefreshUtil.set(ip6.getComponent(), new _Refreshable() {
@@ -87,7 +87,7 @@ public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable, _Refres
          public void refresh() {
             refreshIp6();
          }
-
+         
       });
       
       tabs = new JTabbedPane();
@@ -99,7 +99,7 @@ public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable, _Refres
       buttonPanel = new JPanel(new MigLayout("ins 0"));
       buttonPanel.add(saveButton);
       buttonPanel.add(cancelButton);
-
+      
       dialog = JDialogBuilder.get("NAT Rules", saveButton);
       dialog.add(tabs, "grow,push,wrap");
       dialog.add(buttonPanel, "growx,pushx,center");
@@ -114,17 +114,17 @@ public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable, _Refres
       
       return rules;
    }
-
+   
    public void hide() {
       dialog.setVisible(false);
    }
-
+   
    @Override
    public void cancel() {
       rules = null;
       hide();
    }
-
+   
    @Override
    public void save() throws HyperboxRuntimeException {
       NetService_NAT_IP4_IO ip4svc = new NetService_NAT_IP4_IO(true);
@@ -142,7 +142,7 @@ public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable, _Refres
    
    private void refreshRules(final String svcId, final NATRulesView view) {
       new SwingWorker<NetService_NAT_IO, Void>() {
-
+         
          @Override
          protected NetService_NAT_IO doInBackground() throws Exception {
             return (NetService_NAT_IO) Gui.getServer(srvId).getHypervisor().getNetService(modeId, adaptId, svcId);
@@ -159,7 +159,7 @@ public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable, _Refres
                Gui.showError(e.getCause());
             }
          }
-
+         
       }.execute();
    }
    
@@ -168,13 +168,13 @@ public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable, _Refres
       refreshIp4();
       refreshIp6();
    }
-
+   
    private void refreshIp4() {
       refreshRules(NetServiceType.NAT_IPv4.getId(), ip4);
    }
-
+   
    private void refreshIp6() {
       refreshRules(NetServiceType.NAT_IPv6.getId(), ip6);
    }
-
+   
 }

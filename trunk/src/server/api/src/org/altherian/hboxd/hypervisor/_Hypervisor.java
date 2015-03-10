@@ -20,7 +20,6 @@
 
 package org.altherian.hboxd.hypervisor;
 
-import java.util.List;
 import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.data.Machine;
 import org.altherian.hbox.exception.HypervisorException;
@@ -36,6 +35,7 @@ import org.altherian.hboxd.hypervisor.storage._RawStorageControllerSubType;
 import org.altherian.hboxd.hypervisor.storage._RawStorageControllerType;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
 import org.altherian.setting._Setting;
+import java.util.List;
 
 public interface _Hypervisor {
    

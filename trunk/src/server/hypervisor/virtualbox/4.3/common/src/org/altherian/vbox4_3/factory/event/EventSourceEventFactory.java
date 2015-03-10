@@ -21,7 +21,6 @@
 package org.altherian.vbox4_3.factory.event;
 
 import org.altherian.hbox.event._Event;
-import org.altherian.tool.logging.Logger;
 import org.altherian.vbox4_3.factory._PreciseEventFactory;
 import org.virtualbox_4_3.IEvent;
 import org.virtualbox_4_3.IEventSourceChangedEvent;
@@ -37,13 +36,11 @@ public class EventSourceEventFactory implements _PreciseEventFactory {
    @Override
    public IEvent getRaw(IEvent vbEvent) {
       
-      
       return IEventSourceChangedEvent.queryInterface(vbEvent);
    }
    
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      
       
       // This event will not be handled
       return null;

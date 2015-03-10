@@ -33,7 +33,6 @@ import org.altherian.hboxc.front.gui._Saveable;
 import org.altherian.hboxc.front.gui.action.CancelAction;
 import org.altherian.hboxc.front.gui.action.SaveAction;
 import org.altherian.hboxc.front.gui.builder.JDialogBuilder;
-import org.altherian.tool.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -66,7 +65,6 @@ public final class ConnectorEditorDialog implements _Saveable, _Cancelable {
    private ClientTasks task;
    
    private ConnectorEditorDialog() {
-      
       
       hostnameLabel = new JLabel("Hostname");
       hostnameField = new JTextField(15);
@@ -113,7 +111,6 @@ public final class ConnectorEditorDialog implements _Saveable, _Cancelable {
    
    public void show() {
       
-      
       dialog.pack();
       dialog.setLocationRelativeTo(dialog.getParent());
       dialog.setVisible(true);
@@ -121,12 +118,10 @@ public final class ConnectorEditorDialog implements _Saveable, _Cancelable {
    
    public void hide() {
       
-      
       dialog.setVisible(false);
    }
    
    public void create() {
-      
       
       task = ClientTasks.ConnectorAdd;
       dialog.setTitle("Add Server Connection");
@@ -135,7 +130,6 @@ public final class ConnectorEditorDialog implements _Saveable, _Cancelable {
    }
    
    public void modify(ConnectorOutput conOut) {
-      
       
       conId = conOut.getId();
       task = ClientTasks.ConnectorModify;

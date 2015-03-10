@@ -34,7 +34,6 @@ import org.altherian.hboxd.security._User;
 import org.altherian.hboxd.security._UserGroup;
 import org.altherian.hboxd.store._Store;
 import org.altherian.helper.sql.EasyPreparedStatement;
-import org.altherian.tool.logging.Logger;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -369,7 +368,6 @@ public abstract class SqlPersistor implements _Persistor {
    @Override
    public void insertPermission(_User usr, SecurityItem item, SecurityAction action, boolean isAllowed) {
       
-      
       insertPermission(usr, item, action, null, isAllowed);
    }
    
@@ -392,7 +390,6 @@ public abstract class SqlPersistor implements _Persistor {
    @Override
    public List<_ActionPermission> listActionPermissions(_User usr) {
       
-      
       try {
          EasyPreparedStatement stmt = new EasyPreparedStatement(getConn().prepareStatement(PermissionSQL.getActionListQuery()));
          PermissionSQL.populateActionListQuery(stmt, usr);
@@ -411,7 +408,6 @@ public abstract class SqlPersistor implements _Persistor {
    
    @Override
    public List<_ItemPermission> listItemPermissions(_User usr) {
-      
       
       try {
          EasyPreparedStatement stmt = new EasyPreparedStatement(getConn().prepareStatement(PermissionSQL.getItemListQuery()));
@@ -481,7 +477,6 @@ public abstract class SqlPersistor implements _Persistor {
    @Override
    public void start() throws PersistorException {
       
-      
       try {
          StoreSQL.init(this);
          UserSQL.init(this);
@@ -494,7 +489,6 @@ public abstract class SqlPersistor implements _Persistor {
    
    @Override
    public void stop() {
-      
       
       // nothing to do here
    }

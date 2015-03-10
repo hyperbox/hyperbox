@@ -44,6 +44,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -84,7 +85,7 @@ public class SettingsManager implements _Saveable, _Cancelable {
       
       mainDialog = new JDialog(MainView.getMainFrame());
       mainDialog.setIconImage(IconBuilder.getTask(HypervisorTasks.MachineModify).getImage());
-      mainDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+      mainDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
       mainDialog.setModalityType(ModalityType.DOCUMENT_MODAL);
       mainDialog.setSize(1000, 600);
       

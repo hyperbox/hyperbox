@@ -135,14 +135,12 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
     */
    public static MediumIn show(ServerOut srvOut) {
       
-      
       HarddiskCreateDialog diskCreateDialog = new HarddiskCreateDialog(srvOut);
       MediumIn medIn = diskCreateDialog.getUserInput();
       return medIn;
    }
    
    private MediumIn getUserInput() {
-      
       
       dialog.pack();
       dialog.setLocationRelativeTo(MainView.getMainFrame());
@@ -154,7 +152,6 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
    @Override
    public void cancel() {
       
-      
       medIn = null;
       dialog.setVisible(false);
       dialog.dispose();
@@ -162,7 +159,6 @@ public class HarddiskCreateDialog implements _Saveable, _Cancelable {
    
    @Override
    public void save() {
-      
       
       String path = locationField.getText();
       Long size = Long.parseLong(sizeField.getText());

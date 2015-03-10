@@ -23,7 +23,6 @@ package org.altherian.vbox4_2.factory.event;
 import org.altherian.hbox.event._Event;
 import org.altherian.hboxd.event.machine.MachineSnapshotDataChangedEvent;
 import org.altherian.hboxd.event.snapshot.SnapshotDeletedEvent;
-import org.altherian.tool.logging.Logger;
 import org.altherian.vbox4_2.VBox;
 import org.altherian.vbox4_2.factory._PreciseEventFactory;
 import org.virtualbox_4_2.IEvent;
@@ -40,13 +39,11 @@ public class SnapshotDeletedEventFactory implements _PreciseEventFactory {
    @Override
    public ISnapshotDeletedEvent getRaw(IEvent vbEvent) {
       
-      
       return ISnapshotDeletedEvent.queryInterface(vbEvent);
    }
    
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      
       
       ISnapshotDeletedEvent snapEv = (ISnapshotDeletedEvent) vbEvent;
       

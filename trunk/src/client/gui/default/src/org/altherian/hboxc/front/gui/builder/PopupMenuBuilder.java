@@ -67,12 +67,12 @@ import org.altherian.hboxc.front.gui.module._ModuleSelector;
 import org.altherian.hboxc.front.gui.server._ServerSelector;
 import org.altherian.hboxc.front.gui.store._StoreSelector;
 import org.altherian.hboxc.front.gui.vm._MachineSelector;
-import org.altherian.tool.logging.Logger;
 import javax.swing.Action;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 public class PopupMenuBuilder {
    
@@ -85,7 +85,6 @@ public class PopupMenuBuilder {
    }
    
    public static JPopupMenu get(_MachineSelector select, MachineOut mOut) {
-      
       
       JMenu machineMenu = new JMenu("Machine");
       machineMenu.setIcon(IconBuilder.getEntityType(EntityType.Machine));
@@ -165,7 +164,7 @@ public class PopupMenuBuilder {
       
       JPopupMenu actions = new JPopupMenu();
       actions.add(new JMenuItem(browse));
-      actions.add(new JSeparator(JSeparator.HORIZONTAL));
+      actions.add(new JSeparator(SwingConstants.HORIZONTAL));
       actions.add(new JMenuItem(unregister));
       actions.add(new JMenuItem(delete));
       return actions;
@@ -185,10 +184,10 @@ public class PopupMenuBuilder {
       JPopupMenu actions = new JPopupMenu();
       actions.add(new JMenuItem(enable));
       actions.add(new JMenuItem(disable));
-      actions.add(new JSeparator(JSeparator.HORIZONTAL));
+      actions.add(new JSeparator(SwingConstants.HORIZONTAL));
       actions.add(new JMenuItem(load));
       actions.add(new JMenuItem(unload));
-      actions.add(new JSeparator(JSeparator.HORIZONTAL));
+      actions.add(new JSeparator(SwingConstants.HORIZONTAL));
       actions.add(new JMenuItem(unregister));
       return actions;
    }

@@ -22,7 +22,6 @@ package org.altherian.hboxd.factory;
 
 import org.altherian.hboxd.security.SecurityManager;
 import org.altherian.hboxd.security._SecurityManager;
-import org.altherian.tool.logging.Logger;
 
 public class SecurityManagerFactory {
    
@@ -33,7 +32,6 @@ public class SecurityManagerFactory {
    }
    
    public static _SecurityManager get() {
-      
       
       if (secMgr == null) {
          secMgr = new SecurityManager();

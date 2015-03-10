@@ -26,70 +26,70 @@ import java.util.Collections;
 import java.util.List;
 
 public final class VirtualBox {
-
+   
    public static final String VENDOR = "Oracle";
    public static final String PRODUCT = "VirtualBox";
-
+   
    private static final String VBOX_ID = "vbox";
-
+   
    public static final class Version {
-
+      
       public static final String v4_2 = "4.2";
       public static final String v4_3 = "4.3";
       public static final String v4_4 = "4.4";
-
+      
    }
-
+   
    public static final class Type {
-
+      
       public static final String XPCOM = "xpcom";
       public static final String MSCOM = "mscom";
       public static final String WEB_SERVICES = "ws";
-
+      
    }
-
+   
    public static final class ID {
-
+      
       public static final String XPCOM_4_2 = VBOX_ID + "-" + Version.v4_2 + "-" + Type.XPCOM;
       public static final String MSCOM_4_2 = VBOX_ID + "-" + Version.v4_2 + "-" + Type.MSCOM;
       public static final String WS_4_2 = VBOX_ID + "-" + Version.v4_2 + "-" + Type.WEB_SERVICES;
-
+      
       public static final String XPCOM_4_3 = VBOX_ID + "-" + Version.v4_3 + "-" + Type.XPCOM;
       public static final String MSCOM_4_3 = VBOX_ID + "-" + Version.v4_3 + "-" + Type.MSCOM;
       public static final String WS_4_3 = VBOX_ID + "-" + Version.v4_3 + "-" + Type.WEB_SERVICES;
-
+      
       public static final String XPCOM_4_4 = VBOX_ID + "-" + Version.v4_4 + "-" + Type.XPCOM;
       public static final String MSCOM_4_4 = VBOX_ID + "-" + Version.v4_4 + "-" + Type.MSCOM;
       public static final String WS_4_4 = VBOX_ID + "-" + Version.v4_4 + "-" + Type.WEB_SERVICES;
-
+      
    }
-
+   
    public static final class ID_GROUP {
-
+      
       public static final List<String> ALL_4_2 = Collections.unmodifiableList(
             Arrays.asList(
                   ID.XPCOM_4_2,
                   ID.MSCOM_4_2,
                   ID.WS_4_2
                   ));
-
+      
       public static final List<String> ALL_4_3 = Collections.unmodifiableList(
             Arrays.asList(
                   ID.XPCOM_4_3,
                   ID.MSCOM_4_3,
                   ID.WS_4_3
                   ));
-
+      
       public static final List<String> ALL_4_4 = Collections.unmodifiableList(
             Arrays.asList(
                   ID.XPCOM_4_4,
                   ID.MSCOM_4_4,
                   ID.WS_4_4
                   ));
-
+      
       @SuppressWarnings("serial")
       public static final List<String> ALL = Collections.unmodifiableList(new ArrayList<String>() {
-
+         
          {
             addAll(ALL_4_2);
             addAll(ALL_4_3);
@@ -97,5 +97,5 @@ public final class VirtualBox {
          }
       });
    }
-
+   
 }

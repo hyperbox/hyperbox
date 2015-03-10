@@ -43,7 +43,6 @@ public final class StoreManager implements _StoreManager {
    
    private void saveStores() {
       
-      
       Logger.debug("Saving stores config");
       for (_Store s : stores.values()) {
          persistor.updateStore(s);
@@ -57,7 +56,6 @@ public final class StoreManager implements _StoreManager {
    
    @Override
    public void start() throws HyperboxException {
-      
       
       Logger.verbose("Filesystem Store Manager is starting...");
       List<_Store> storeList = persistor.listStores();
@@ -88,7 +86,6 @@ public final class StoreManager implements _StoreManager {
    @Override
    public void stop() {
       
-      
       Logger.verbose("Filesystem Store Manager is stopping...");
       saveStores();
       Logger.verbose("Filesystem Store Manager stopped");
@@ -115,7 +112,6 @@ public final class StoreManager implements _StoreManager {
    @Override
    public _Store createStore(String location, String label) {
       
-      
       SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.Create);
       
       File path = new File(location);
@@ -132,7 +128,6 @@ public final class StoreManager implements _StoreManager {
    
    @Override
    public _Store registerStore(String location, String label) {
-      
       
       SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.Add);
       
@@ -160,7 +155,6 @@ public final class StoreManager implements _StoreManager {
    @Override
    public void unregisterStore(String id) {
       
-      
       SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.Delete, id);
       
       _Store s = getStore(id);
@@ -171,7 +165,6 @@ public final class StoreManager implements _StoreManager {
    
    @Override
    public void deleteStore(String id) {
-      
       
       SecurityContext.get().authorize(SecurityItem.Store, SecurityAction.Delete, id);
       
@@ -186,7 +179,6 @@ public final class StoreManager implements _StoreManager {
       private Integer nextId = 1;
       
       public String get() {
-         
          
          while (stores.containsKey(nextId.toString())) {
             nextId++;

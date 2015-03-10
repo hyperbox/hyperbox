@@ -38,7 +38,6 @@ import org.altherian.hboxc.factory.BackendFactory;
 import org.altherian.hboxc.server._ServerReader;
 import org.altherian.hboxc.state.CoreState;
 import org.altherian.hboxc.updater._Updater;
-import org.altherian.tool.logging.Logger;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -107,7 +106,6 @@ public class CoreReader implements _CoreReader {
    
    @Handler
    protected void putServerDisconnected(ServerDisconnectedEvent ev) {
-      
       
       cachedServerReaders.remove(core.getServer(ev.getServer().getId()));
    }

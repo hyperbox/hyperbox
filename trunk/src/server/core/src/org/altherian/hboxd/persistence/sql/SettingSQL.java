@@ -35,12 +35,10 @@ public class SettingSQL {
    
    public static void init(SqlPersistor sql) throws SQLException {
       
-      
       createTables(sql);
    }
    
    public static void createTables(SqlPersistor sql) throws SQLException {
-      
       
       sql.getConn()
             .createStatement()

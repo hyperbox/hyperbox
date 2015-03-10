@@ -21,7 +21,6 @@
 
 package org.altherian.hboxd.persistence.sql;
 
-import org.altherian.tool.logging.Logger;
 import java.sql.SQLException;
 
 public class StoreSQL {
@@ -35,12 +34,10 @@ public class StoreSQL {
    
    public static void init(SqlPersistor sql) throws SQLException {
       
-      
       createTables(sql);
    }
    
    public static void createTables(SqlPersistor sql) throws SQLException {
-      
       
       sql.getConn()
             .createStatement()

@@ -22,7 +22,6 @@ package org.altherian.vbox4_3.factory.event;
 
 import org.altherian.hbox.event._Event;
 import org.altherian.hboxd.event.machine.MachineRegistrationEvent;
-import org.altherian.tool.logging.Logger;
 import org.altherian.vbox4_3.factory._PreciseEventFactory;
 import org.virtualbox_4_3.IEvent;
 import org.virtualbox_4_3.IMachineRegisteredEvent;
@@ -38,13 +37,11 @@ public class MachineRegistrationEventFactory implements _PreciseEventFactory {
    @Override
    public IMachineRegisteredEvent getRaw(IEvent vbEvent) {
       
-      
       return IMachineRegisteredEvent.queryInterface(vbEvent);
    }
    
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      
       
       IMachineRegisteredEvent rawEvent = getRaw(vbEvent);
       _Event event = new MachineRegistrationEvent(rawEvent.getMachineId(), rawEvent.getRegistered());

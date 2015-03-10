@@ -47,7 +47,6 @@ public abstract class SkeletonFront implements _Front, Runnable {
    @Override
    public void start(_RequestReceiver receiver) throws HyperboxException {
       
-      
       r = receiver;
       thread = new Thread(this, "Front ID " + getClass().getSimpleName());
       thread.setUncaughtExceptionHandler(new FrontExceptionHander());
@@ -71,7 +70,6 @@ public abstract class SkeletonFront implements _Front, Runnable {
    @Override
    public void stop() {
       
-      
       if (status == STARTED) {
          status = STOPPING;
          stopping();
@@ -87,7 +85,6 @@ public abstract class SkeletonFront implements _Front, Runnable {
    }
    
    protected void setStatus(int status) {
-      
       
       this.status = status;
       synchronized (this) {
@@ -112,7 +109,6 @@ public abstract class SkeletonFront implements _Front, Runnable {
       
       @Override
       public void uncaughtException(Thread arg0, Throwable arg1) {
-         
          
          Logger.debug("The Front-end \"" + getClass().getSimpleName() + " has crashed.");
          Logger.debug("Exception caught is : " + arg1.getClass().getSimpleName() + " - " + arg1.getMessage());

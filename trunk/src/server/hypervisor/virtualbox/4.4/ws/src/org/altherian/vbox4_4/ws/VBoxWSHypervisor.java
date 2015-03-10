@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2015 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -38,24 +38,24 @@ import org.virtualbox_4_4.VirtualBoxManager;
       product = VirtualBox.PRODUCT,
       schemes = { VirtualBox.ID.WS_4_4 })
 public final class VBoxWSHypervisor extends VBoxHypervisor {
-
+   
    protected final String defaultProtocol = "http";
    protected final String defaultHost = "localhost";
    protected final int defaultPort = 18083;
    protected final String defaultUser = "";
    protected final String defaultPass = "";
    protected String hostname;
-
+   
    @Override
    public String getId() {
       return this.getClass().getAnnotation(Hypervisor.class).id();
    }
-
+   
    @Override
    public String getTypeId() {
       return this.getClass().getAnnotation(Hypervisor.class).typeId();
    }
-
+   
    @Override
    protected VirtualBoxManager connect(String options) {
       String protocol = defaultProtocol;
@@ -63,7 +63,7 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
       int port = defaultPort;
       String username = defaultUser;
       String password = defaultPass;
-
+      
       if ((options != null) && !options.isEmpty()) {
          try {
             Logger.debug("Given connect options: " + options);
@@ -72,7 +72,7 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
             }
             Logger.debug("Adapted raw connect options: " + options);
             URI uri = new URI(options);
-
+            
             protocol = uri.getScheme();
             host = uri.getHost();
             if (uri.getPort() > 0) {
@@ -89,25 +89,25 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
             throw new HypervisorException("Invalid options syntax: " + e.getMessage(), e);
          }
       }
-
+      
       try {
          hostname = host;
          Logger.debug("Using Web Services");
-
+         
          VirtualBoxManager mgr = VirtualBoxManager.createInstance(null);
-
+         
          String connInfo = protocol + "://" + host + ":" + port;
          Logger.debug("Connection info: " + connInfo);
          Logger.debug("User: " + username);
          Logger.debug("Password given: " + (AxStrings.isEmpty(password)));
          mgr.connect(connInfo, username, password);
-
+         
          return mgr;
       } catch (VBoxException e) {
          throw new HypervisorException("Unable to connect to the Virtualbox WebServices : " + e.getMessage(), e);
       }
    }
-
+   
    @Override
    protected void disconnect() {
       try {
@@ -116,5 +116,5 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
          Logger.warning("Error when disconnecting : " + t.getMessage());
       }
    }
-
+   
 }

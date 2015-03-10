@@ -125,14 +125,12 @@ public class SingleHostServer implements _Hyperbox, _Server {
    
    private void loadPersistors() throws HyperboxException {
       
-      
       persistor = HBoxServer.loadClass(_Persistor.class, Configuration.getSetting(CFGKEY_CORE_PERSISTOR_CLASS, H2SqlPersistor.class.getName()));
       persistor.init();
    }
    
    @Override
    public void init() throws HyperboxException {
-      
       
       SessionContext.setClient(system);
       
@@ -159,7 +157,6 @@ public class SingleHostServer implements _Hyperbox, _Server {
    
    @Override
    public void start() throws HyperboxException {
-      
       
       setState(ServerState.Starting);
       
@@ -233,7 +230,6 @@ public class SingleHostServer implements _Hyperbox, _Server {
    
    @Override
    public void stop() {
-      
       
       secMgr.authorize(SecurityItem.Server, SecurityAction.Stop);
       
@@ -329,7 +325,6 @@ public class SingleHostServer implements _Hyperbox, _Server {
    @Override
    public void setName(String name) {
       
-      
       HBoxServer.setSetting(CFGKEY_SRV_NAME, name);
       this.name = name;
       EventManager.post(new ServerPropertyChangedEvent(this, ServerAttribute.Name, name));
@@ -346,7 +341,6 @@ public class SingleHostServer implements _Hyperbox, _Server {
    }
    
    private void loadHypervisors() throws HyperboxException {
-      
       
       Map<String, Class<? extends _Hypervisor>> hyps = new HashMap<String, Class<? extends _Hypervisor>>();
       Set<Class<? extends _Hypervisor>> subTypes = HBoxServer.getAnnotatedSubTypes(_Hypervisor.class, Hypervisor.class);
@@ -545,7 +539,6 @@ public class SingleHostServer implements _Hyperbox, _Server {
    @Handler
    protected void putHypervisorDisconnectEvent(HypervisorDisconnectedEvent ev) {
       
-      
       if (ev.getHypervisor().equals(hypervisor) && isConnected()) {
          Logger.debug("Hypervisor disconnected, cleaning up");
          disconnect();
@@ -554,7 +547,6 @@ public class SingleHostServer implements _Hyperbox, _Server {
    
    @Handler
    protected void putModuleEvent(ModuleEvent ev) {
-      
       
       try {
          loadHypervisors();

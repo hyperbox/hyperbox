@@ -33,7 +33,6 @@ import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ASingleTaskAction;
 import org.altherian.hboxd.session.SessionContext;
 import org.altherian.tool.AxStrings;
-import org.altherian.tool.logging.Logger;
 import java.util.Arrays;
 import java.util.List;
 
@@ -51,7 +50,6 @@ public final class MediumGetAction extends ASingleTaskAction {
    
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      
       
       MediumIn medIn = request.get(MediumIn.class);
       

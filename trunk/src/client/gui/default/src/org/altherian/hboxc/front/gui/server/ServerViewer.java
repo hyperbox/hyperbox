@@ -32,7 +32,6 @@ import org.altherian.hboxc.front.gui.hypervisor.HypervisorViewer;
 import org.altherian.hboxc.front.gui.worker.receiver._ServerReceiver;
 import org.altherian.hboxc.front.gui.workers.ServerGetWorker;
 import org.altherian.helper.swing.JTextFieldUtils;
-import org.altherian.tool.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -132,7 +131,6 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    @Handler
    public void putServerEvent(ServerEvent ev) {
       
-      
       if ((srvId != null) && ev.getServer().getId().equals(srvId)) {
          refresh();
       }
@@ -150,7 +148,6 @@ public class ServerViewer implements _Refreshable, _ServerReceiver {
    
    @Override
    public void put(ServerOut srvOut) {
-      
       
       update(srvOut);
    }

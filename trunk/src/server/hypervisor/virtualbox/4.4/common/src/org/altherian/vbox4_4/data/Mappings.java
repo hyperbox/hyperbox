@@ -49,7 +49,6 @@ public class Mappings {
    
    public static void load() {
       
-      
       Logger.debug("Loading Virtualbox Mappings");
       
       mappingMouse = new BiEnumMap<MouseMode, PointingHIDType>(MouseMode.class, PointingHIDType.class);

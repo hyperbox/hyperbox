@@ -25,7 +25,6 @@ import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.ViewEventManager;
-import org.altherian.tool.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -39,7 +38,6 @@ public final class SessionListView {
    private JTable sessionList;
    
    public void init() throws HyperboxException {
-      
       
       sessionListModel = new SessionListTableModel();
       sessionList = new JTable(sessionListModel);
