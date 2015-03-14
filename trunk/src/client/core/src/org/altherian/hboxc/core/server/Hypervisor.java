@@ -20,6 +20,7 @@
 
 package org.altherian.hboxc.core.server;
 
+import java.util.List;
 import net.engio.mbassy.listener.Handler;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HyperboxTasks;
@@ -43,7 +44,6 @@ import org.altherian.hboxc.comm.utils.Transaction;
 import org.altherian.hboxc.event.EventManager;
 import org.altherian.hboxc.server._Hypervisor;
 import org.altherian.hboxc.server._Server;
-import java.util.List;
 
 public class Hypervisor implements _Hypervisor {
    
@@ -183,7 +183,7 @@ public class Hypervisor implements _Hypervisor {
    }
    
    @Override
-   public _MachineLogFile getLogFile(String vmId, long logid) {
+   public _MachineLogFile getLogFile(String vmId, String logid) {
       Request req = new Request(Command.VBOX, HypervisorTasks.MachineLogFileGet);
       req.set(MachineLogFileIO.class, new MachineLogFileIO(String.valueOf(logid)));
       req.set(MachineIn.class, new MachineIn(vmId));

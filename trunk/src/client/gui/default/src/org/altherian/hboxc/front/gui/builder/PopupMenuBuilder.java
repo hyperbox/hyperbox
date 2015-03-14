@@ -21,6 +21,12 @@
 
 package org.altherian.hboxc.front.gui.builder;
 
+import javax.swing.Action;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 import org.altherian.hbox.comm.out.ModuleOut;
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.StoreOut;
@@ -40,6 +46,7 @@ import org.altherian.hboxc.front.gui.action.machine.MachineCreateAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineDeleteAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineEditAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineLockAction;
+import org.altherian.hboxc.front.gui.action.machine.MachineLogGetAction;
 import org.altherian.hboxc.front.gui.action.machine.MachinePauseAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineRegisterAction;
 import org.altherian.hboxc.front.gui.action.machine.MachineResetAction;
@@ -67,12 +74,6 @@ import org.altherian.hboxc.front.gui.module._ModuleSelector;
 import org.altherian.hboxc.front.gui.server._ServerSelector;
 import org.altherian.hboxc.front.gui.store._StoreSelector;
 import org.altherian.hboxc.front.gui.vm._MachineSelector;
-import javax.swing.Action;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
 
 public class PopupMenuBuilder {
    
@@ -92,6 +93,7 @@ public class PopupMenuBuilder {
       machineMenu.add(new JMenuItem(new MachineStopAction(select)));
       machineMenu.add(new JMenuItem(new MachineResetAction(select)));
       machineMenu.add(new JMenuItem(new MachineAcpiPowerAction(select)));
+      machineMenu.add(new JMenuItem(new MachineLogGetAction(mOut.getServerId(), mOut.getId(), "")));
       machineMenu.add(new JSeparator());
       machineMenu.add(new JMenuItem(new MachineSaveStateAction(select)));
       machineMenu.add(new JMenuItem(new MachinePauseAction(select)));

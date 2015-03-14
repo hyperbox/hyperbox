@@ -336,7 +336,7 @@ public enum HypervisorTasks {
    /**
     * <p>
     * Request Object: MachineIn, MachineLogFileIO<br/>
-    * Answer Object : _MachineLogFile<br/>
+    * Answer Object : MachineLogFileIO<br/>
     * </p>
     */
    MachineLogFileGet;

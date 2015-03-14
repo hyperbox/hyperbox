@@ -20,6 +20,7 @@
 
 package org.altherian.hboxc.server;
 
+import java.util.List;
 import org.altherian.hbox.comm.io.NetServiceIO;
 import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
 import org.altherian.hbox.comm.out.network.NetAdaptorOut;
@@ -28,7 +29,6 @@ import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hbox.exception.net.InvalidNetworkModeException;
 import org.altherian.hbox.exception.net.NetworkAdaptorNotFoundException;
 import org.altherian.hbox.hypervisor._MachineLogFile;
-import java.util.List;
 
 public interface _Hypervisor {
    
@@ -85,6 +85,6 @@ public interface _Hypervisor {
    
    public List<String> getLogFileList(String vmId);
    
-   public _MachineLogFile getLogFile(String vmId, long logid);
+   public _MachineLogFile getLogFile(String vmId, String logid);
    
 }
