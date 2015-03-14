@@ -20,16 +20,21 @@
  */
 package org.altherian.hboxd.core.action.machine;
 
+import java.util.Arrays;
+import java.util.List;
+import org.altherian.hbox.comm.Answer;
+import org.altherian.hbox.comm.AnswerType;
 import org.altherian.hbox.comm.Command;
 import org.altherian.hbox.comm.HypervisorTasks;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.in.MachineIn;
 import org.altherian.hbox.comm.io.MachineLogFileIO;
+import org.altherian.hbox.comm.io.factory.MachineLogFileIoFactory;
+import org.altherian.hbox.hypervisor._MachineLogFile;
 import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.core.action.ServerAction;
 import org.altherian.hboxd.server._Server;
-import java.util.Arrays;
-import java.util.List;
+import org.altherian.hboxd.session.SessionContext;
 
 public class MachineLogFileGetAction extends ServerAction {
    
@@ -47,7 +52,12 @@ public class MachineLogFileGetAction extends ServerAction {
    protected void run(Request request, _Hyperbox hbox, _Server srv) {
       MachineLogFileIO logfile = request.get(MachineLogFileIO.class);
       MachineIn machine = request.get(MachineIn.class);
-      srv.getHypervisor().getLogFile(machine.getId(), Long.parseLong(logfile.getId()));
+      
+      _MachineLogFile log = srv.getHypervisor().getLogFile(machine.getId(), Long.parseLong(logfile.getId()));
+      MachineLogFileIO logIo = MachineLogFileIoFactory.get(log);
+      
+      // FIXME send(MachineLogFileIO.class, logIo);
+      SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, MachineLogFileIO.class, logIo));
    }
    
 }
