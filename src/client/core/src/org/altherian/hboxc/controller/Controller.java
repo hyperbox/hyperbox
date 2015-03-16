@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -51,13 +51,13 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public final class Controller implements _ClientMessageReceiver, _RequestReceiver {
-
+   
    private ClientCore core;
    private _Front front = new MiniUI();
-
+   
    private RequestWorker msgWorker;
    private Map<String, _ClientControllerAction> actionsMap;
-
+   
    static {
       Logger.raw(getHeader());
       try {
@@ -71,24 +71,24 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
          System.exit(1);
       }
    }
-
+   
    private void loadActions() throws HyperboxException {
       actionsMap = new HashMap<String, _ClientControllerAction>();
-
+      
       ShutdownAction.c = this;
-
+      
       for (_ClientControllerAction ac : HyperboxClient.getAllOrFail(_ClientControllerAction.class)) {
          actionsMap.put(ac.getRegistration().toString(), ac);
       }
    }
-
+   
    public static String getHeader() {
-      return HyperboxAPI.getLogHeader(Hyperbox.getFullVersion());
+      return HyperboxAPI.getLogHeader(Hyperbox.getVersion().toString());
    }
-
+   
    private void loadFront() throws HyperboxException {
       String classToLoad = MiniUI.class.getName();
-
+      
       if (Configuration.hasSetting("view.class")) {
          classToLoad = Configuration.getSetting("view.class");
       } else if (!GraphicsEnvironment.isHeadless()) {
@@ -96,24 +96,24 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
       } else {
          // TODO create Console view
       }
-
+      
       try {
          front = HyperboxClient.loadClass(_Front.class, classToLoad);
       } catch (HyperboxRuntimeException e) {
          throw new HyperboxException(e);
       }
    }
-
+   
    public void start() throws HyperboxException {
-
+      
       try {
          PreferencesManager.init();
-
+         
          loadFront();
-
+         
          String logLevel = Configuration.getSetting("log.level", LogLevel.Info.toString());
          Logger.setLevel(LogLevel.valueOf(logLevel));
-
+         
          String defaultLogFilePath = PreferencesManager.getUserPrefPath() + File.separator + "log" + File.separator + "hbox.log";
          try {
             String logFile = Configuration.getSetting("log.file", defaultLogFilePath);
@@ -124,26 +124,26 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
             front.postError(e, "Launch error: " + e.getMessage());
             System.exit(1);
          }
-
+         
          for (String name : System.getenv().keySet()) {
             Logger.debug(name + ": " + System.getenv(name));
          }
-
+         
          EventManager.get().start();
-
+         
          loadActions();
-
+         
          msgWorker = new RequestWorker();
          msgWorker.start();
-
+         
          front.start();
          front.setRequestReceiver(this);
-
+         
          core = new ClientCore();
          core.init();
          front.setCoreReader(new CoreReader(core));
          core.start();
-
+         
          HyperboxClient.initView(front);
       } catch (Throwable t) {
          Logger.exception(t);
@@ -151,9 +151,9 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
          stop();
       }
    }
-
+   
    public void stop() {
-
+      
       try {
          if (core != null) {
             core.stop();
@@ -165,51 +165,51 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
          if (msgWorker != null) {
             msgWorker.stop();
          }
-
+         
          EventManager.get().stop();
          System.exit(0);
       } catch (Throwable t) {
          System.exit(1);
       }
    }
-
+   
    @Override
    public void post(MessageInput mIn) {
-
+      
       msgWorker.post(mIn);
    }
-
+   
    @Override
    public void putRequest(Request request) {
-
+      
       msgWorker.post(new MessageInput(request));
    }
-
+   
    private class RequestWorker implements _ClientMessageReceiver, Runnable {
-
+      
       private boolean running;
       private Thread thread;
       private BlockingQueue<MessageInput> queue;
-
+      
       @Override
       public void post(MessageInput mIn) {
-
+         
          if (!queue.offer(mIn)) {
             throw new HyperboxRuntimeException("Couldn't queue the request : queue is full (" + queue.size() + " messages)");
          }
       }
-
+      
       public void start() throws HyperboxException {
-
+         
          running = true;
          queue = new LinkedBlockingQueue<MessageInput>();
          thread = new Thread(this, "FRQMGR");
          thread.setDaemon(true);
          thread.start();
       }
-
+      
       public void stop() {
-
+         
          running = false;
          thread.interrupt();
          try {
@@ -218,26 +218,26 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
             Logger.debug("Worker thread didn't stop on request after 5 sec");
          }
       }
-
+      
       @Override
       public void run() {
          Logger.verbose("RequestWorker Thread started");
          while (running) {
             try {
                MessageInput mIn = queue.take();
-
+               
                Request req = mIn.getRequest();
                _AnswerReceiver recv = mIn.getReceiver();
-
+               
                try {
                   if (actionsMap.containsKey(mIn.getRequest().getName())) {
-
+                     
                      _ClientControllerAction action = actionsMap.get(mIn.getRequest().getName());
                      recv.putAnswer(new Answer(mIn.getRequest(), action.getStartReturn()));
                      action.run(core, front, req, recv);
                      recv.putAnswer(new Answer(mIn.getRequest(), action.getFinishReturn()));
                   } else {
-
+                     
                      if (req.has(ServerIn.class)) {
                         core.getServer(req.get(ServerIn.class).getId()).sendRequest(req);
                      } else if (req.has(MachineIn.class)) {
@@ -256,20 +256,20 @@ public final class Controller implements _ClientMessageReceiver, _RequestReceive
                   front.postError(e);
                }
             } catch (InterruptedException e) {
-
+               
                Logger.debug("Got interupted, halting");
                running = false;
             } catch (Throwable e) {
-
+               
                Logger.error("Unknown error : " + e.getMessage());
                Logger.exception(e);
                front.postError(e, "Unexpected error occured: " + e.getMessage());
             }
          }
-
+         
          Logger.verbose("RequestWorker Thread halted");
       }
-
+      
    }
-
+   
 }

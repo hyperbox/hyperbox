@@ -47,7 +47,7 @@ public final class HelloAction extends ASingleTaskAction {
    @Override
    public void run(Request request, _Hyperbox hbox) {
       // TODO give more info
-      SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, new HelloOut(HyperboxAPI.getProtocolVersion())));
+      SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, new HelloOut(HyperboxAPI.getProtocolVersion().toString())));
    }
    
 }

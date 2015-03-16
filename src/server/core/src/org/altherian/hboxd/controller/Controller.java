@@ -69,7 +69,7 @@ public final class Controller implements _Controller {
    }
    
    public static String getHeader() {
-      return HyperboxAPI.getLogHeader(Hyperbox.getVersionFull());
+      return HyperboxAPI.getLogHeader(Hyperbox.getVersion().toString());
    }
    
    private void startBack() {

@@ -31,6 +31,7 @@ import org.altherian.hboxc.exception.UpdaterRepositoryInvalidFormatException;
 import org.altherian.hboxc.exception.UpdaterScheduleException;
 import org.altherian.tool.AxBooleans;
 import org.altherian.tool.AxStrings;
+import org.altherian.tool.Version;
 import org.altherian.tool.logging.Logger;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -142,7 +143,7 @@ public class Updater implements _Updater {
    
    @Override
    public boolean hasUpdate() {
-      return (update != null) && (update.getRevision().compareToIgnoreCase(Hyperbox.getRevision()) > 0);
+      return (Hyperbox.getVersion() != Version.UNKNOWN) && (update != null) && !Hyperbox.getVersion().equals(new Version(update.getVersion()));
    }
    
    @Override

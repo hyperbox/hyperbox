@@ -337,7 +337,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
    
    @Override
    public String getVersion() {
-      return Hyperbox.getVersionFull();
+      return Hyperbox.getVersion().toString();
    }
    
    private void loadHypervisors() throws HyperboxException {

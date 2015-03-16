@@ -21,6 +21,7 @@
 package org.altherian.hboxd;
 
 import org.altherian.hbox.HyperboxAPI;
+import org.altherian.tool.Version;
 import org.altherian.tool.logging.Logger;
 import java.io.IOException;
 import java.util.Properties;
@@ -29,8 +30,7 @@ import java.util.Set;
 public class Hyperbox {
    
    private static Properties buildProperties;
-   private static String version;
-   private static String revision;
+   private static Version version;
    private static String cfgFile = "conf/main.cfg";
    
    private static void failedToLoad(Exception e) {
@@ -38,16 +38,8 @@ public class Hyperbox {
       Logger.error("Version and revision will not be accurate");
    }
    
-   public static String getVersion() {
+   public static Version getVersion() {
       return version;
-   }
-   
-   public static String getRevision() {
-      return revision;
-   }
-   
-   public static String getVersionFull() {
-      return HyperboxAPI.getFullVersion(getVersion(), getRevision());
    }
    
    public static String getConfigFilePath() {
@@ -63,8 +55,7 @@ public class Hyperbox {
       } catch (NullPointerException e) {
          failedToLoad(e);
       } finally {
-         version = buildProperties.getProperty("version", HyperboxAPI.VERSION_UNKNOWN);
-         revision = buildProperties.getProperty("revision", HyperboxAPI.REVISION_UNKNOWN);
+         version = new Version(buildProperties.getProperty("version", Version.UNKNOWN.toString()));
       }
    }
    
@@ -96,11 +87,7 @@ public class Hyperbox {
          System.exit(0);
       }
       if (args.contains("--version")) {
-         System.out.println(getVersionFull());
-         System.exit(0);
-      }
-      if (args.contains("--revision")) {
-         System.out.println(getRevision());
+         System.out.println(getVersion());
          System.exit(0);
       }
       

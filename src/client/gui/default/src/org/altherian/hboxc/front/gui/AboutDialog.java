@@ -28,7 +28,6 @@ import org.altherian.hboxc.front.gui.builder.IconBuilder;
 import org.altherian.helper.swing.JDialogImp;
 import java.awt.Dialog.ModalityType;
 import javax.swing.BorderFactory;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -64,8 +63,8 @@ public class AboutDialog {
       text.append("Copyright 2013 Maxime Dor & Katalin Dor. All rights reserved.\n");
       text.append("This product is released under the GPL v3.\n");
       text.append("\n\n");
-      text.append("API Version " + HyperboxAPI.getFullVersion() + ")\n");
-      text.append("Client Version " + Hyperbox.getFullVersion() + ")\n");
+      text.append("API Version " + HyperboxAPI.getVersion() + ")\n");
+      text.append("Client Version " + Hyperbox.getVersion() + ")\n");
       text.append("Network Protocol Version " + HyperboxAPI.getProtocolVersion() + "\n");
       text.append("\n\n");
       text.append("Hyperbox is an Enterprise Virtualization Manager.\n");

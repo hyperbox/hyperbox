@@ -20,6 +20,7 @@
 
 package org.altherian.hbox;
 
+import org.altherian.tool.Version;
 import org.altherian.tool.logging.Logger;
 import java.io.IOException;
 import java.util.Properties;
@@ -27,13 +28,9 @@ import java.util.Set;
 
 public class HyperboxAPI {
    
-   public static final String VERSION_UNKNOWN = "0.0";
-   public static final String REVISION_UNKNOWN = "0";
-   public static final String NET_PROTOCOL_VERSION_UNKNOWN = "0";
    private static Properties buildProperties;
-   private static String version;
-   private static String revision;
-   private static long protocolVersion;
+   private static Version version;
+   private static Version protocolVersion;
    
    private static void failedToLoad(Exception e) {
       Logger.error("Unable to access or read the api.build.properties ressource: " + e.getMessage());
@@ -44,9 +41,15 @@ public class HyperboxAPI {
       buildProperties = new Properties();
       try {
          buildProperties.load(HyperboxAPI.class.getResourceAsStream("/api.build.properties"));
-         version = buildProperties.getProperty("version", VERSION_UNKNOWN);
-         revision = buildProperties.getProperty("revision", REVISION_UNKNOWN);
-         protocolVersion = Long.parseLong(buildProperties.getProperty("protocol", NET_PROTOCOL_VERSION_UNKNOWN));
+         version = new Version(buildProperties.getProperty("version", Version.UNKNOWN.toString()));
+         if (!version.isValid()) {
+            version = Version.UNKNOWN;
+         }
+         
+         protocolVersion = new Version(buildProperties.getProperty("protocol", Version.UNKNOWN.toString()));
+         if (!protocolVersion.isValid()) {
+            protocolVersion = Version.UNKNOWN;
+         }
       } catch (IOException e) {
          failedToLoad(e);
       } catch (NullPointerException e) {
@@ -56,33 +59,17 @@ public class HyperboxAPI {
       }
    }
    
-   public static String getVersion() {
+   public static Version getVersion() {
       return version;
    }
    
-   public static String getRevision() {
-      return revision;
-   }
-   
-   public static String getFullVersion() {
-      return getFullVersion(getVersion(), getRevision());
-   }
-   
-   public static String getFullVersion(String version, String revision) {
-      return version + "." + revision;
-   }
-   
-   public static long getProtocolVersion() {
+   public static Version getProtocolVersion() {
       return protocolVersion;
    }
    
    public static void processArgs(Set<String> args) {
       if (args.contains("--apiversion")) {
          System.out.println(getVersion());
-         System.exit(0);
-      }
-      if (args.contains("--apirevision")) {
-         System.out.println(getRevision());
          System.exit(0);
       }
       if (args.contains("--netversion")) {

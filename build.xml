@@ -315,33 +315,18 @@
 		<property name="client.src.dir.abs"				location="${client.src.dir}" />
 		
 		<property name="os.type" 						value="${os.family}" />
-		<exec executable="svn" outputProperty="svn.raw.info">
-			<arg line="info --xml ."/>
+		<exec executable="git" outputProperty="hbox.version">
+			<arg line="describe --always"/>
 		</exec>
-		<echo message="${svn.raw.info}" file="${out.dir}/svn.info"/>
 		
-		<exec executable="svn" outputProperty="svn.raw.api.info">
-			<arg line="info --xml ${api.src.dir.abs}"/>
+		<exec executable="git" outputProperty="hbox.api.revision">
+			<arg line="describe --always"/>
 		</exec>
-		<echo message="${svn.raw.api.info}" file="${out.dir}/svn.api.info"/>
 		
-		<exec executable="svn" outputProperty="svn.raw.api.protocol.info">
-			<arg line="info --xml ${api.protocol.src.dir.abs}"/>
+		<exec executable="git" outputProperty="hbox.protocol.version">
+			<arg line="describe --always"/>
 		</exec>
-		<echo message="${svn.raw.api.protocol.info}" file="${out.dir}/svn.api.protocol.info"/>
-		
-		<xmlproperty file="${out.dir}/svn.info" keeproot="no" prefix="svn.global" />
-		<xmlproperty file="${out.dir}/svn.api.info" keeproot="no" prefix="svn.api" />
-		<xmlproperty file="${out.dir}/svn.api.protocol.info" keeproot="no" prefix="svn.api.protocol" />
-		<xmlproperty file="${out.dir}/svn.server.info" keeproot="no" prefix="svn.server" />
-		<xmlproperty file="${out.dir}/svn.client.info" keeproot="no" prefix="svn.client" />
 
-		<property name="hbox.revision"						value="${svn.global.entry.commit(revision)}" />
-		<property name="hbox.api.revision"					value="${svn.api.entry.commit(revision)}" />
-		<property name="hbox.protocol.version"				value="${svn.api.protocol.entry.commit(revision)}" />
-		
-		<loadfile srcfile="VERSION"							property="hbox.version" />
-		
 		<property name="server.out.dir"						value="${out.dir}/bin/${platform}/server" />
 		<property name="server.out.module.dir"				value="${server.out.dir}/modules" />
 		<property name="client.out.dir"						value="${out.dir}/bin/${platform}/client" />
@@ -352,8 +337,8 @@
 		<property name="client.out.dir.abs"					location="${client.out.dir}" />
 		<property name="dist.out.dir.abs"					location="${dist.out.dir}" />
 		
-		<property name="client.out.dist.package"			value="hbox-${hbox.version}.${hbox.revision}-${os.type}_${os.arch}-client" />
-		<property name="server.out.dist.package"			value="hbox-${hbox.version}.${hbox.revision}-${os.type}_${os.arch}-server" />
+		<property name="client.out.dist.package"			value="hbox-${hbox.version}-${os.type}_${os.arch}-client" />
+		<property name="server.out.dist.package"			value="hbox-${hbox.version}-${os.type}_${os.arch}-server" />
 		
 		<echo message="OS Architecture:              ${os.arch}" />
 		<echo message="OS Type:                      ${os.type}" />
@@ -362,7 +347,6 @@
 		<echo message="System platform:              ${platform}" />
 		
 		<echo message="Hyperbox Version:             ${hbox.version}" />
-		<echo message="Hyperbox Revision:            ${hbox.revision}" />
 		<echo message="API Revision:                 ${hbox.api.revision}" />
 		<echo message="Network Protocol Revision:    ${hbox.protocol.version}" />
 	</target>
@@ -371,7 +355,6 @@
 		<mkdir dir="${api.classes.dir}" />
 		<javac source="1.6" target="1.6" debug="on" includeantruntime="false" srcdir="${tools.src.dir}" destdir="${api.classes.dir}" classpathref="api.classpath" />
 		<javac source="1.6" target="1.6" debug="on" includeantruntime="false" srcdir="${api.src.dir}" destdir="${api.classes.dir}" classpathref="api.classpath" />
-		<echo file="${api.classes.dir}/api.build.properties" append="false">revision=${hbox.api.revision}${line.separator}</echo>
 		<echo file="${api.classes.dir}/api.build.properties" append="true">version=${hbox.version}${line.separator}</echo>
 		<echo file="${api.classes.dir}/api.build.properties" append="true">protocol=${hbox.protocol.version}${line.separator}</echo>
 	</target>
@@ -585,7 +568,6 @@
     	<mkdir dir="${server.core.classes.dir}" />
     	<javac source="1.6" target="1.6" debug="on" includeantruntime="false" srcdir="${server.core.src.dir}" destdir="${server.core.classes.dir}" classpathref="server.classpath" />
 		<echo file="${server.core.classes.dir}/server.build.properties" append="true">version=${hbox.version}${line.separator}</echo>
-		<echo file="${server.core.classes.dir}/server.build.properties" append="false">revision=${hbox.revision}${line.separator}</echo>
     </target>
 
 	<target name="server.deploy" depends="server.api.deploy">
@@ -607,7 +589,6 @@
     	<mkdir dir="${client.classes.dir}" />
     	<javac source="1.6" target="1.6" debug="on" includeantruntime="false" srcdir="${client.src.dir}" destdir="${client.classes.dir}" classpathref="client.classpath" />
 		<echo file="${client.classes.dir}/client.build.properties" append="true">version=${hbox.version}${line.separator}</echo>
-		<echo file="${client.classes.dir}/client.build.properties" append="false">revision=${hbox.revision}${line.separator}</echo>
     </target>
 	
 	<target name="client.deploy" depends="client.api.deploy">
