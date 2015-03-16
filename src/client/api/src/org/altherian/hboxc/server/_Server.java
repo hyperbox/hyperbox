@@ -25,18 +25,18 @@ import org.altherian.hbox.comm.in.UserIn;
 import org.altherian.hboxc.state.ConnectionState;
 
 public interface _Server extends _ServerReader, _ServerWriter {
-   
+
    String CFGKEY_SERVER_VALIDATE = "server.validate";
    String CFGVAL_SERVER_VALIDATE = "1";
    String CFGKEY_SERVER_VALIDATE_VERSION = "server.validate.version";
    String CFGVAL_SERVER_VALIDATE_VERSION = "1";
-   
+
    public ConnectionState getState();
-   
+
    public void connect(String address, String backendId, UserIn usrIn);
-   
+
    public void disconnect();
-   
+
    public boolean isConnected();
-   
+
 }

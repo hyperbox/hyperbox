@@ -21,8 +21,8 @@
 package org.altherian.hbox.constant;
 
 public enum StorageDeviceAttribute {
-   
+
    PortID,
    DeviceID,
-   
+
 }

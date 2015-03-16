@@ -21,9 +21,9 @@
 package org.altherian.hbox.states;
 
 public enum SessionStates {
-   
+
    Created,
    Authenticated,
    Destroyed,
-   
+
 }

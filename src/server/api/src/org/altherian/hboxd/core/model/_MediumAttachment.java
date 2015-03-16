@@ -21,21 +21,21 @@
 package org.altherian.hboxd.core.model;
 
 public interface _MediumAttachment {
-   
+
    public String getMachineId();
-   
+
    public String getMediumId();
-   
+
    public String getControllerId();
-   
+
    public long getPortId();
-   
+
    public long getDeviceId();
-   
+
    public String getDeviceType();
-   
+
    public boolean isPassThrough();
-   
+
    public boolean hasMedium();
-   
+
 }

@@ -28,19 +28,19 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class DummyAction extends AbstractHyperboxMultiTaskAction {
-   
+
    private Thread runningThread;
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + "dummy");
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       runningThread = Thread.currentThread();
@@ -52,12 +52,12 @@ public final class DummyAction extends AbstractHyperboxMultiTaskAction {
          }
       }
    }
-   
+
    @Override
    public void cancel() {
       if (runningThread != null) {
          runningThread.interrupt();
       }
    }
-   
+
 }

@@ -27,16 +27,16 @@ import static org.junit.Assert.assertTrue;
 import org.altherian.hboxd.hypervisor.vm.snapshot._RawSnapshot;
 
 public class RawSnapshotTest {
-   
+
    private RawSnapshotTest() {
       // not in use
    }
-   
+
    public static void validateSimple(_RawSnapshot snap) {
       assertFalse(snap.getUuid().isEmpty());
       assertFalse(snap.getMachineId().isEmpty());
    }
-   
+
    public static void validateFull(_RawSnapshot snap) {
       validateSimple(snap);
       assertFalse(snap.getName().isEmpty());
@@ -54,5 +54,5 @@ public class RawSnapshotTest {
       }
       assertNotNull(snap.isOnline());
    }
-   
+
 }

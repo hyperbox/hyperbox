@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.StringSetting;
 
 public final class NameSetting extends StringSetting {
-   
+
    public NameSetting(String value) {
       super(MachineAttribute.Name, value);
    }
-   
+
 }

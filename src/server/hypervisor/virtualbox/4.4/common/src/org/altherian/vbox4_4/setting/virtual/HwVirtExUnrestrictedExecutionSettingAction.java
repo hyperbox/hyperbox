@@ -29,25 +29,25 @@ import org.virtualbox_4_4.IMachine;
 import org.virtualbox_4_4.LockType;
 
 public class HwVirtExUnrestrictedExecutionSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.HwVirtExExcl.toString();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       machine.setHWVirtExProperty(HWVirtExPropertyType.UnrestrictedExecution, setting.getBoolean());
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new HwVirtExExclSetting(machine.getHWVirtExProperty(HWVirtExPropertyType.UnrestrictedExecution));
    }
-   
+
 }

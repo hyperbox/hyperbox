@@ -24,14 +24,14 @@ import org.altherian.hbox.comm.out.ObjectOut;
 import org.altherian.hbox.constant.EntityType;
 
 public class NetworkAttachModeOut extends ObjectOut {
-   
+
    @SuppressWarnings("unused")
    private NetworkAttachModeOut() {
       // Used for serialization
    }
-   
+
    public NetworkAttachModeOut(String id) {
       super(EntityType.NetworkAttachMode, id);
    }
-   
+
 }

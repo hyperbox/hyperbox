@@ -22,11 +22,11 @@
 package org.altherian.tool;
 
 public class AxStrings {
-   
+
    protected AxStrings() {
       // we don't plan on instance this
    }
-   
+
    /**
     * Detects if a String is NULL or empty and return the failover value in case of.<br/>
     * Else, the String is returned untouched.
@@ -42,7 +42,7 @@ public class AxStrings {
          return before.toString();
       }
    }
-   
+
    /**
     * Return true if a String is null or empty
     *
@@ -52,7 +52,7 @@ public class AxStrings {
    public static boolean isEmpty(String s) {
       return ((s == null) || s.isEmpty());
    }
-   
+
    public static boolean isEmpty(String... sAll) {
       for (String s : sAll) {
          if (!isEmpty(s)) {
@@ -61,7 +61,7 @@ public class AxStrings {
       }
       return true;
    }
-   
+
    /**
     * Return true if an Object is null or its .toString() method returns null or an empty string
     *
@@ -71,7 +71,7 @@ public class AxStrings {
    public static boolean isEmpty(Object o) {
       return ((o == null) || isEmpty(o.toString()));
    }
-   
+
    public static boolean isEmpty(Object... sAll) {
       for (Object s : sAll) {
          if (!isEmpty(s)) {
@@ -80,5 +80,5 @@ public class AxStrings {
       }
       return true;
    }
-   
+
 }

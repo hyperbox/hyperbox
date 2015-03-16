@@ -22,15 +22,15 @@
 package org.altherian.hboxc.core;
 
 public interface _ConsoleViewerReader {
-   
+
    public String getId();
-   
+
    public String getHypervisorId();
-   
+
    public String getModuleId();
-   
+
    public String getViewerPath();
-   
+
    public String getArgs();
-   
+
 }

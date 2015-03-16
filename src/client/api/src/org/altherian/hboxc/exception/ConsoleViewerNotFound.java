@@ -25,13 +25,13 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 
 @SuppressWarnings("serial")
 public class ConsoleViewerNotFound extends HyperboxRuntimeException {
-   
+
    public ConsoleViewerNotFound() {
       super("No console viewer was found");
    }
-   
+
    public ConsoleViewerNotFound(String s) {
       super(s);
    }
-   
+
 }

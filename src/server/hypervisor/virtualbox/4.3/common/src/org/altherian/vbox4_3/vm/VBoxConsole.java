@@ -42,13 +42,13 @@ import org.virtualbox_4_3.ISession;
 import org.virtualbox_4_3.VBoxException;
 
 public class VBoxConsole implements _RawConsole {
-   
+
    private VBoxMachine machine;
-   
+
    public VBoxConsole(VBoxMachine machine) {
       this.machine = machine;
    }
-   
+
    @Override
    public List<_Setting> listSettings() {
       Set<_Setting> settings = new HashSet<_Setting>();
@@ -62,17 +62,17 @@ public class VBoxConsole implements _RawConsole {
       }
       return new ArrayList<_Setting>(settings);
    }
-   
+
    @Override
    public _Setting getSetting(Object getName) {
       return VBoxSettingManager.get(machine, getName);
    }
-   
+
    @Override
    public void setSetting(_Setting s) {
       machine.setSetting(Arrays.asList(s));
    }
-   
+
    @Override
    public void setSetting(List<_Setting> s) {
       try {
@@ -81,82 +81,82 @@ public class VBoxConsole implements _RawConsole {
          setProperty(s);
       }
    }
-   
+
    @Override
    public Boolean isEnabled() {
       return getSetting(MachineAttribute.VrdeEnabled).getBoolean();
    }
-   
+
    @Override
    public void setEnabled(Boolean enable) {
       setSetting(new BooleanSetting(MachineAttribute.VrdeEnabled, enable));
    }
-   
+
    @Override
    public String getAuthType() {
       return getSetting(MachineAttribute.VrdeAuthType).getString();
    }
-   
+
    @Override
    public void setAuthType(String authType) {
       setSetting(new StringSetting(MachineAttribute.VrdeAuthType, authType));
    }
-   
+
    @Override
    public String getAuthLibrary() {
       return getSetting(MachineAttribute.VrdeAuthLibrary).getString();
    }
-   
+
    @Override
    public void setAuthLibrary(String library) {
       setSetting(new StringSetting(MachineAttribute.VrdeAuthLibrary, library));
    }
-   
+
    @Override
    public Long getAuthTimeout() {
       return getSetting(MachineAttribute.VrdeAuthTimeout).getNumber();
    }
-   
+
    @Override
    public void setAuthTimeout(Long timeout) {
       setSetting(new PositiveNumberSetting(MachineAttribute.VrdeAuthTimeout, timeout));
    }
-   
+
    @Override
    public Boolean getAllowMultiConnection() {
       return getSetting(MachineAttribute.VrdeMultiConnection).getBoolean();
    }
-   
+
    @Override
    public void setAllowMultiConnection(Boolean allow) {
       setSetting(new BooleanSetting(MachineAttribute.VrdeMultiConnection, allow));
    }
-   
+
    @Override
    public Set<String> listProperties() {
       return new HashSet<String>(VBoxSessionManager.get().getCurrent(machine.getUuid()).getVRDEServer().getVRDEProperties());
    }
-   
+
    @Override
    public boolean hasProperty(String key) {
       return listProperties().contains(key);
    }
-   
+
    @Override
    public String getProperty(String key) {
       return VBoxSessionManager.get().getCurrent(machine.getUuid()).getVRDEServer().getVRDEProperty(key);
    }
-   
+
    public void setProperty(_Setting s) {
       setProperty(s.getName(), s.getString());
    }
-   
+
    public void setProperty(List<_Setting> sList) {
       for (_Setting s : sList) {
          setProperty(s);
       }
    }
-   
+
    @Override
    public void setProperty(String key, String value) {
       ISession session = VBoxSessionManager.get().lockAuto(machine.getUuid());
@@ -169,33 +169,33 @@ public class VBoxConsole implements _RawConsole {
          VBoxSessionManager.get().unlockAuto(machine.getUuid(), true);
       }
    }
-   
+
    @Override
    public void unsetProperty(String key) {
       setProperty(key, null);
    }
-   
+
    @Override
    public Boolean isActive() {
       // TODO Detect if console is active or not
       return false;
    }
-   
+
    @Override
    public String getAddress() {
       return getSetting(MachineAttribute.VrdeAddress).getString();
    }
-   
+
    @Override
    public Long getPort() {
       return getSetting(MachineAttribute.VrdePort).getNumber();
    }
-   
+
    @Override
    public String getProtocol() {
       return getSetting(MachineAttribute.VrdeModule).getString();
    }
-   
+
    /*
    @Override
    public Boolean getReuseSingleConnection() {
@@ -217,5 +217,5 @@ public class VBoxConsole implements _RawConsole {
       setSetting(new StringSetting(MachineAttributes.VrdeExtPack, module));
    }
     */
-   
+
 }

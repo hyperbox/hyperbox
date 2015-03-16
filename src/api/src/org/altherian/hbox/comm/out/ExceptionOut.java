@@ -21,39 +21,39 @@
 package org.altherian.hbox.comm.out;
 
 public class ExceptionOut extends ObjectOut {
-   
+
    // TODO create error code
    private String errno;
    private String error;
    private String stackTrace;
-   
+
    @SuppressWarnings("unused")
    private ExceptionOut() {
       // used for (de)serialisation
    }
-   
+
    public ExceptionOut(String errno, String error, String stackTrace) {
       this.errno = errno;
       this.error = error;
       this.stackTrace = stackTrace;
    }
-   
+
    /**
     * @return the errno
     */
    public String getErrno() {
       return errno;
    }
-   
+
    /**
     * @return the error
     */
    public String getError() {
       return error;
    }
-   
+
    public String getStakTrace() {
       return stackTrace;
    }
-   
+
 }

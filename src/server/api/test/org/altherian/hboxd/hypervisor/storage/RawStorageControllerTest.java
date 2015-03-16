@@ -26,12 +26,12 @@ import static org.junit.Assert.assertTrue;
 import org.altherian.hbox.constant.StorageControllerAttribute;
 
 public class RawStorageControllerTest {
-   
+
    public static void validateSimple(_RawStorageController rawSc) {
       assertFalse(rawSc.getMachineUuid().isEmpty());
       assertFalse(rawSc.getName().isEmpty());
    }
-   
+
    public static void validateFull(_RawStorageController rawSc) {
       validateSimple(rawSc);
       assertNotNull(rawSc.getSetting(StorageControllerAttribute.MinPortCount).getValue());
@@ -42,5 +42,5 @@ public class RawStorageControllerTest {
       assertTrue(rawSc.getMaxPortCount() >= rawSc.getMinPortCount());
       assertTrue(rawSc.getMaxDeviceCount() >= 0);
    }
-   
+
 }

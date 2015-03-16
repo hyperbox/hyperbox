@@ -37,19 +37,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class StorageDeviceAttachmentViewer {
-   
+
    private String srvId;
    private StorageDeviceAttachmentIn sdaIn;
    private String scTypeId;
-   
+
    private JPanel mainPanel;
-   
+
    private JPanel attachPanel;
    private JLabel portCountLabel;
    private JComboBox portCountBox;
    private JLabel attachTypeLabel;
    private JLabel attachTypeValue;
-   
+
    private JPanel mediumPanel;
    private JLabel mediumTypeLabel;
    private JLabel mediumTypeValue;
@@ -63,20 +63,20 @@ public class StorageDeviceAttachmentViewer {
    private JLabel locationValue;
    private JLabel baseLocationLabel;
    private JLabel baseLocationValue;
-   
+
    public StorageDeviceAttachmentViewer() {
       portCountLabel = new JLabel("Port");
       portCountBox = new JComboBox();
       attachTypeLabel = new JLabel("Type");
       attachTypeValue = new JLabel();
-      
+
       attachPanel = new JPanel(new MigLayout());
       attachPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY), "Attachment"));
       attachPanel.add(portCountLabel);
       attachPanel.add(portCountBox, "growx, pushx, wrap");
       attachPanel.add(attachTypeLabel);
       attachPanel.add(attachTypeValue, "growx, pushx, wrap");
-      
+
       mediumTypeLabel = new JLabel("Type");
       mediumTypeValue = new JLabel();
       formatLabel = new JLabel("Format");
@@ -91,10 +91,10 @@ public class StorageDeviceAttachmentViewer {
       baseLocationLabel.setVisible(false);
       baseLocationValue = new JLabel();
       baseLocationValue.setVisible(false);
-      
+
       mediumPanel = new JPanel(new MigLayout());
       mediumPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY), "Medium"));
-      
+
       mediumPanel.add(mediumTypeLabel);
       mediumPanel.add(mediumTypeValue, "growx, pushx, wrap");
       mediumPanel.add(formatLabel);
@@ -107,23 +107,23 @@ public class StorageDeviceAttachmentViewer {
       mediumPanel.add(baseLocationValue, "growx, wrap, hidemode 3");
       mediumPanel.add(locationLabel);
       mediumPanel.add(locationValue, "growx, pushx, wrap");
-      
+
       mainPanel = new JPanel(new MigLayout("ins 0"));
       mainPanel.add(attachPanel, "wrap, growx, pushx");
       mainPanel.add(mediumPanel, "wrap, growx, pushx");
    }
-   
+
    public JPanel show(String srvId, String scTypeId, StorageDeviceAttachmentIn sdaIn) {
-      
+
       this.srvId = srvId;
       this.sdaIn = sdaIn;
       this.scTypeId = scTypeId;
-      
+
       refresh();
-      
+
       return getPanel();
    }
-   
+
    public void refresh() {
       Logger.debug(sdaIn);
       attachTypeValue.setText(sdaIn.getDeviceType());
@@ -137,17 +137,17 @@ public class StorageDeviceAttachmentViewer {
             }
          }
       }
-      
+
       portCountBox.setSelectedItem(sdaIn.getPortId() + ":" + sdaIn.getDeviceId());
-      
+
       mediumPanel.setVisible(sdaIn.hasMedium());
       if (sdaIn.hasMedium()) {
          show(sdaIn.getMedium());
       }
    }
-   
+
    public JPanel show(MediumIn medIn) {
-      
+
       if (medIn.hasSetting(MediumAttribute.Type)) {
          mediumTypeValue.setText(medIn.getSetting(MediumAttribute.Type).getString());
       }
@@ -180,13 +180,13 @@ public class StorageDeviceAttachmentViewer {
             MediumOut baseMedOut = Gui.getServer(srvId).getMedium(new MediumIn(medOut.getBaseUuid()));
             baseLocationValue.setText(baseMedOut.getLocation());
          }
-         
+
       }
       return getPanel();
    }
-   
+
    public JPanel getPanel() {
       return mainPanel;
    }
-   
+
 }

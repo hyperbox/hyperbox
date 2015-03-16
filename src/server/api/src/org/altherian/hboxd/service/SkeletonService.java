@@ -55,37 +55,37 @@ import java.lang.Thread.UncaughtExceptionHandler;
  * @see SimpleLoopService
  */
 public abstract class SkeletonService implements _Service, Runnable {
-   
+
    protected Thread serviceThread;
    private ServiceState state;
-   
+
    protected final void setState(ServiceState state) {
       this.state = state;
       publishState();
    }
-   
+
    @Override
    public final ServiceState getState() {
       return state;
    }
-   
+
    /**
     * Called by {@link #setState(ServiceState)} to send events about the new state
     */
    protected void publishState() {
       EventManager.post(new ServiceStateEvent(this, state));
    }
-   
+
    @Override
    public void start() throws HyperboxRuntimeException {
-      
+
       serviceThread = new Thread(this, "Service ID " + getClass().getSimpleName());
       serviceThread.setUncaughtExceptionHandler(new ServiceExceptionHander());
       starting();
       setState(ServiceState.Starting);
       serviceThread.start();
    }
-   
+
    @Override
    public void startAndRun() throws ServiceException {
       start();
@@ -97,17 +97,17 @@ public abstract class SkeletonService implements _Service, Runnable {
          }
       }
    }
-   
+
    @Override
    public void stop() {
-      
+
       setState(ServiceState.Stopping);
       stopping();
       if ((serviceThread != null) && serviceThread.isAlive()) {
          serviceThread.interrupt();
       }
    }
-   
+
    @Override
    public boolean stopAndDie(int timeout) {
       if (isRunning()) {
@@ -123,19 +123,19 @@ public abstract class SkeletonService implements _Service, Runnable {
          return true;
       }
    }
-   
+
    @Override
    public final boolean isRunning() {
-      
+
       if ((serviceThread != null) && serviceThread.isAlive()) {
          return true;
       }
-      
+
       serviceThread = null;
       return false;
-      
+
    }
-   
+
    /**
     * Override if you want to implement this
     */
@@ -143,7 +143,7 @@ public abstract class SkeletonService implements _Service, Runnable {
    public void pause() throws UnsupportedOperationException {
       throw new UnsupportedOperationException("This action is not supported by " + getClass().getSimpleName());
    }
-   
+
    /**
     * Override if you want to implement this
     */
@@ -151,7 +151,7 @@ public abstract class SkeletonService implements _Service, Runnable {
    public void unpause() throws UnsupportedOperationException {
       throw new UnsupportedOperationException("This action is not supported by " + getClass().getSimpleName());
    }
-   
+
    /**
     * Override if you want to implement this
     */
@@ -159,22 +159,22 @@ public abstract class SkeletonService implements _Service, Runnable {
    public void reload() throws UnsupportedOperationException {
       throw new UnsupportedOperationException("This action is not supported by " + getClass().getSimpleName());
    }
-   
+
    /**
     * Must be used to set the start condition
     */
    protected abstract void starting();
-   
+
    /**
     * Must be used to set the stop condition
     */
    protected abstract void stopping();
-   
+
    private class ServiceExceptionHander implements UncaughtExceptionHandler {
-      
+
       @Override
       public void uncaughtException(Thread arg0, Throwable arg1) {
-         
+
          Logger.error("The service \"" + serviceThread.getName() + "\" has crashed.");
          Logger.error("Exception caught is : " + arg1.getClass().getSimpleName() + " - " + arg1.getMessage());
          Logger.exception(arg1);
@@ -182,5 +182,5 @@ public abstract class SkeletonService implements _Service, Runnable {
          setState(ServiceState.Stopped);
       }
    }
-   
+
 }

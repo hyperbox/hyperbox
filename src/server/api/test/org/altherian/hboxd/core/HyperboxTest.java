@@ -40,33 +40,33 @@ import org.junit.Before;
 import org.junit.Test;
 
 public abstract class HyperboxTest {
-   
+
    protected static _Hyperbox core;
    protected static _Server server;
-   
+
    private static boolean initialized = false;
    protected List<_RawVM> machines = new ArrayList<_RawVM>();
-   
+
    public static void init() throws HyperboxException {
       Logger.setLevel(LogLevel.Tracking);
-      
+
       core.init();
       core.start();
-      
+
       server = core.getServerManager().getServer();
       server.connect(System.getProperty("hypervisor.id"), System.getProperty("hypervisor.options"));
-      
+
       initialized = true;
    }
-   
+
    @Before
    public void before() {
       assertTrue("HypervisorTest is not initiazlied, call init() in @BeforeClass", initialized);
-      
+
       _RawVM vm = server.getHypervisor().createMachine(UUID.randomUUID().toString(), "" + System.currentTimeMillis(), "Other");
       machines.add(vm);
    }
-   
+
    @After
    public void after() {
       List<_RawVM> deletedVms = new ArrayList<_RawVM>();
@@ -80,12 +80,12 @@ public abstract class HyperboxTest {
       }
       assertTrue("Not all VMs created during the tests were deleted. Cleanup manually", machines.isEmpty());
    }
-   
+
    @Test
    public void vmListTest() {
       List<_Machine> vmList = server.listMachines();
       assertFalse(vmList.isEmpty());
-      
+
       for (_Machine vmSimple : vmList) {
          MachineTest.validateSimple(vmSimple);
          _Machine vm = server.getMachine(vmSimple.getUuid());
@@ -93,17 +93,17 @@ public abstract class HyperboxTest {
          MachineTest.compareSimple(vm, vmSimple);
       }
    }
-   
+
    @Handler
    public void post(EventOut eOut) {
       Logger.verbose(eOut.toString());
    }
-   
+
    @AfterClass
    public static void afterClass() {
       core.stop();
    }
-   
+
    /*
    private MachineOutput getVm(String uuid) {
       boolean answerType = trans.sendAndWait(new Request(Command.VBOX, HypervisorTasks.MachineGet, new MachineInput(uuid)));
@@ -664,5 +664,5 @@ public abstract class HyperboxTest {
    }
 
     */
-   
+
 }

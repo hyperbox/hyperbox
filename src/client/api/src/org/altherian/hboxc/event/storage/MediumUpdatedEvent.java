@@ -24,9 +24,9 @@ import org.altherian.hbox.comm.out.storage.MediumOut;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class MediumUpdatedEvent extends MediumEvent {
-   
+
    public MediumUpdatedEvent(MediumOut medOut) {
       super(ClientEvents.MediumUpdate, medOut);
    }
-   
+
 }

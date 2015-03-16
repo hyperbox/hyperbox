@@ -26,25 +26,25 @@ import org.altherian.hbox.constant.StoreAttribute;
 
 // TODO add getters/setters
 public final class StoreIn extends ObjectIn<EntityType> {
-   
+
    public StoreIn() {
       super(EntityType.Store, "-1");
    }
-   
+
    public StoreIn(String id) {
       super(EntityType.Store, id);
    }
-   
+
    public void setLabel(String label) {
       setSetting(new StringSettingIO(StoreAttribute.Label, label));
    }
-   
+
    public void setType(String storeType) {
       setSetting(new StringSettingIO(StoreAttribute.Type, storeType));
    }
-   
+
    public void setLocation(String location) {
       setSetting(new StringSettingIO(StoreAttribute.Location, location));
    }
-   
+
 }

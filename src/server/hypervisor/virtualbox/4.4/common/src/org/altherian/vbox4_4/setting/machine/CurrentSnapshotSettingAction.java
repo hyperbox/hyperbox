@@ -29,22 +29,22 @@ import org.virtualbox_4_4.IMachine;
 import org.virtualbox_4_4.LockType;
 
 public class CurrentSnapshotSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Shared;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.CurrentSnapshotUuid.getId();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       throw new ConfigurationException("Read-only attribute: " + setting.getName());
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       if (machine.getSnapshotCount() != 0) {
@@ -53,5 +53,5 @@ public class CurrentSnapshotSettingAction implements _MachineSettingAction {
          return new CurrentSnapshotSetting("");
       }
    }
-   
+
 }

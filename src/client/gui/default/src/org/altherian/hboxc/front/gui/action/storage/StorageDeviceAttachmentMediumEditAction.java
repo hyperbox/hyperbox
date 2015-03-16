@@ -31,16 +31,16 @@ import javax.swing.JPopupMenu;
 
 @SuppressWarnings("serial")
 public class StorageDeviceAttachmentMediumEditAction extends AbstractAction {
-   
+
    private String serverId;
    private StorageDeviceAttachmentOut sdaOut;
-   
+
    public StorageDeviceAttachmentMediumEditAction(String serverId, StorageDeviceAttachmentOut sdaOut) {
       super("", IconBuilder.getTask(HypervisorTasks.MediumModify));
       this.serverId = serverId;
       this.sdaOut = sdaOut;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       JPopupMenu menuActions = PopupMenuBuilder.get(serverId, sdaOut);
@@ -49,5 +49,5 @@ public class StorageDeviceAttachmentMediumEditAction extends AbstractAction {
          menuActions.show(component, 0, component.getHeight());
       }
    }
-   
+
 }

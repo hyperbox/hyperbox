@@ -36,24 +36,24 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HostGetAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.HostGet.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       ServerIn srvIn = request.get(ServerIn.class);
       _Host host = hbox.getServer(srvIn.getId()).getHost();
       HostOut hostOut = HostIoFactory.get(host);
-      
+
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, hostOut));
    }
-   
+
 }

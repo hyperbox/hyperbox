@@ -26,22 +26,22 @@ package org.altherian.hbox.constant;
  * @author noteirak
  */
 public enum KeyboardMode {
-   
+
    None,
    /**
     * Normal PS/2
     */
    Ps2,
-   
+
    /**
     * USB
     */
    Usb,
-   
+
    Combo;
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

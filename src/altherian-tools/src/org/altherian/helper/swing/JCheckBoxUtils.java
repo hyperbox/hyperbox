@@ -26,23 +26,23 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 
 public class JCheckBoxUtils {
-   
+
    public static void link(final JCheckBox box, final JComponent... comps) {
       update(box, comps);
       box.addActionListener(new ActionListener() {
-         
+
          @Override
          public void actionPerformed(ActionEvent e) {
             update(box, comps);
          }
-         
+
       });
    }
-   
+
    private static void update(JCheckBox box, JComponent... comps) {
       for (JComponent comp : comps) {
          comp.setEnabled(box.isSelected());
       }
    }
-   
+
 }

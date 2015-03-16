@@ -21,11 +21,11 @@
 package org.altherian.hboxd.security;
 
 public class SessionLocal {
-   
+
    private String sessionId;
-   
+
    public String getSessionId() {
       return sessionId;
    }
-   
+
 }

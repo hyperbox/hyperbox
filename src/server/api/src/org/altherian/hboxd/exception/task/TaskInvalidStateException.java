@@ -24,17 +24,17 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 
 @SuppressWarnings("serial")
 public class TaskInvalidStateException extends HyperboxRuntimeException {
-   
+
    public TaskInvalidStateException() {
       super("Task state is invalid for the requested operation");
    }
-   
+
    public TaskInvalidStateException(String message) {
       super(message);
    }
-   
+
    public TaskInvalidStateException(String message, Throwable cause) {
       super(message, cause);
    }
-   
+
 }

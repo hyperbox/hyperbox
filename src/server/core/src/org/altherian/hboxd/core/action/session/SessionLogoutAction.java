@@ -30,20 +30,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SessionLogoutAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.Logout.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       hbox.getSessionManager().closeSession(SessionContext.getClient());
    }
-   
+
 }

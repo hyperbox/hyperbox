@@ -33,7 +33,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class GlobalConfigureView implements _GlobalConfigureView {
-   
+
    private JLabel machineFolderLabel;
    private JTextField machineFolderValue;
    private JLabel consoleModuleLabel;
@@ -41,16 +41,16 @@ public class GlobalConfigureView implements _GlobalConfigureView {
    private JLabel virtExLabel;
    private JCheckBox virtExValue;
    private JPanel panel;
-   
+
    public GlobalConfigureView() {
       machineFolderLabel = new JLabel("Default Machine Folder");
       consoleModuleLabel = new JLabel("Default Extention Pack");
       virtExLabel = new JLabel("Hardware Virtualization Exclusive");
-      
+
       machineFolderValue = new JTextField();
       consoleModuleValue = new JTextField();
       virtExValue = new JCheckBox();
-      
+
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(machineFolderLabel);
       panel.add(machineFolderValue, "growx, pushx, wrap");
@@ -59,19 +59,19 @@ public class GlobalConfigureView implements _GlobalConfigureView {
       panel.add(virtExLabel);
       panel.add(virtExValue, "growx, pushx, wrap");
    }
-   
+
    @Override
    public JComponent getComponent() {
       return panel;
    }
-   
+
    @Override
    public void update(HypervisorOut hypOut) {
       machineFolderValue.setText(hypOut.getSetting("vbox.global.machineFolder").getString());
       consoleModuleValue.setText(hypOut.getSetting("vbox.global.consoleModule").getString());
       virtExValue.setSelected(hypOut.hasSetting("vbox.global.virtEx") ? hypOut.getSetting("vbox.global.virtEx").getBoolean() : false);
    }
-   
+
    @Override
    public HypervisorIn getUserInput() {
       HypervisorIn hypIn = new HypervisorIn();
@@ -80,5 +80,5 @@ public class GlobalConfigureView implements _GlobalConfigureView {
       hypIn.setSetting(new BooleanSettingIO("vbox.global.virtEx", virtExValue.isSelected()));
       return hypIn;
    }
-   
+
 }

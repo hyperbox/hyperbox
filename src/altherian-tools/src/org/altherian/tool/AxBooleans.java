@@ -22,13 +22,13 @@
 package org.altherian.tool;
 
 public class AxBooleans {
-   
+
    public static boolean get(Object o) {
       return get(o.toString());
    }
-   
+
    public static boolean get(String o) {
       return ((o != null) && (o.equalsIgnoreCase("true") || o.equalsIgnoreCase("yes") || o.equalsIgnoreCase("1")));
    }
-   
+
 }

@@ -26,14 +26,14 @@ import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
 import org.altherian.hboxc.event.machine.MachineEvent;
 
 public class SnapshotEvent extends MachineEvent {
-   
+
    public SnapshotEvent(Enum<?> eventId, ServerOut srvOut, MachineOut mOut, SnapshotOut snapOut) {
       super(eventId, srvOut.getId(), mOut);
       set(SnapshotOut.class, snapOut);
    }
-   
+
    public SnapshotOut getSnapshot() {
       return get(SnapshotOut.class);
    }
-   
+
 }

@@ -37,21 +37,21 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class HypervisorConnectAction extends AbstractAction {
-   
+
    private _SingleServerSelector selector;
-   
+
    public HypervisorConnectAction(_SingleServerSelector selector) {
       this(selector, "Connect");
    }
-   
+
    public HypervisorConnectAction(_SingleServerSelector selector, String label) {
       super(label);
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
-      
+
       ServerOut srvOut = selector.getServer();
       if (srvOut != null) {
          HypervisorIn hypIn = HypervisorConnectView.getInput(srvOut);
@@ -66,5 +66,5 @@ public class HypervisorConnectAction extends AbstractAction {
          Logger.debug("No server was selected");
       }
    }
-   
+
 }

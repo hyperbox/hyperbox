@@ -24,20 +24,20 @@ import org.altherian.hboxd.core.SingleHostServer;
 import org.altherian.hboxd.core._Hyperbox;
 
 public class ModelFactory {
-   
+
    private static _Hyperbox hyperbox;
-   
+
    private ModelFactory() {
       throw new RuntimeException("Not allowed");
    }
-   
+
    public static _Hyperbox get() {
-      
+
       if (hyperbox == null) {
          hyperbox = new SingleHostServer();
       }
-      
+
       return hyperbox;
    }
-   
+
 }

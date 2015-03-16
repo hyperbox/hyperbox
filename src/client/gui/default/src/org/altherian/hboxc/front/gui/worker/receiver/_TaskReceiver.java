@@ -23,7 +23,7 @@ package org.altherian.hboxc.front.gui.worker.receiver;
 import org.altherian.hbox.comm.out.TaskOut;
 
 public interface _TaskReceiver extends _WorkerDataReceiver {
-   
+
    public void put(TaskOut tskOut);
-   
+
 }

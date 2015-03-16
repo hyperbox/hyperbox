@@ -23,9 +23,9 @@ package org.altherian.hboxd.event.snapshot;
 import org.altherian.hbox.event.HyperboxEvents;
 
 public class SnapshotTakenEvent extends SnapshotEvent {
-   
+
    public SnapshotTakenEvent(String machineUuid, String snapUuid) {
       super(HyperboxEvents.SnapshotTaken, machineUuid, snapUuid);
    }
-   
+
 }

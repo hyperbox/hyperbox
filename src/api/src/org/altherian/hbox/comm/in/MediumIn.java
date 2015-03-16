@@ -33,43 +33,43 @@ import java.util.List;
 import java.util.Set;
 
 public class MediumIn extends ObjectIn<EntityType> implements _Actionnable {
-   
+
    private Action action = Action.Create;
    private String parentUuid = null;
    private Set<String> childUuid = new HashSet<String>();
-   
+
    public MediumIn() {
       super(EntityType.Medium);
    }
-   
+
    public MediumIn(String uuid) {
       super(EntityType.Medium, uuid);
       setUuid(uuid);
       setAction(Action.Modify);
    }
-   
+
    public MediumIn(String path, String type) {
       super(EntityType.Medium, path);
       setLocation(path);
       setType(type);
    }
-   
+
    public MediumIn(StoreItemIn siIn, String type) {
       this(siIn.getPath(), type);
    }
-   
+
    public MediumIn(String uuid, List<SettingIO> settings) {
       super(EntityType.Medium, uuid, settings);
       setUuid(uuid);
       setAction(Action.Modify);
    }
-   
+
    public MediumIn(String uuid, String location, String type) {
       this(uuid);
       setLocation(location);
       setType(type);
    }
-   
+
    public MediumIn(String uuid, String location, String type, String parentUuid, Set<String> childUuid) {
       this(uuid, location, type);
       if (parentUuid != null) {
@@ -79,7 +79,7 @@ public class MediumIn extends ObjectIn<EntityType> implements _Actionnable {
          this.childUuid.addAll(childUuid);
       }
    }
-   
+
    /**
     * Will return in preference of order : UUID, Location then an empty string if none of the previous are set
     */
@@ -93,87 +93,87 @@ public class MediumIn extends ObjectIn<EntityType> implements _Actionnable {
          return "";
       }
    }
-   
+
    public String getUuid() {
       return getSetting(MediumAttribute.UUID).getString();
    }
-   
+
    public void setUuid(String uuid) {
       setSetting(new StringSettingIO(MediumAttribute.UUID, uuid));
    }
-   
+
    public String getName() {
       return getSetting(MediumAttribute.Name).getString();
    }
-   
+
    public void setName(String name) {
       setSetting(new StringSettingIO(MediumAttribute.Name, name));
    }
-   
+
    public void setFormat(String format) {
       setSetting(new StringSettingIO(MediumAttribute.Format, format));
    }
-   
+
    public String getFormat() {
       return getSetting(MediumAttribute.Format).getString();
    }
-   
+
    public boolean hasParent() {
       return !AxStrings.isEmpty(getSetting(MediumAttribute.ParentUUID).getString()) || (parentUuid != null);
    }
-   
+
    public String getLocation() {
       return getSetting(MediumAttribute.Location).getString();
    }
-   
+
    public void setLocation(String path) {
       setSetting(new StringSettingIO(MediumAttribute.Location, path));
    }
-   
+
    public String getDeviceType() {
       return getSetting(MediumAttribute.DeviceType).getString();
    }
-   
+
    public void setDeviceType(String id) {
       setSetting(new StringSettingIO(MediumAttribute.DeviceType, id));
    }
-   
+
    public String getType() {
       return getSetting(MediumAttribute.Type).getString();
    }
-   
+
    public void setType(String devType) {
       setSetting(new StringSettingIO(MediumAttribute.Type, devType));
    }
-   
+
    public String getParentUuid() {
       return parentUuid;
    }
-   
+
    public boolean hasChild() {
       return ((childUuid != null) && childUuid.isEmpty());
    }
-   
+
    public Set<String> getChildUuid() {
       return childUuid;
    }
-   
+
    public String getBaseUuid() {
       return getSetting(MediumAttribute.BaseUUID).getString();
    }
-   
+
    public boolean isReadOnly() {
       return getSetting(MediumAttribute.ReadOnly).getBoolean();
    }
-   
+
    public Long getLogicalSize() {
       return getSetting(MediumAttribute.LogicalSize).getNumber();
    }
-   
+
    public void setLogicalSize(Long logicalSize) {
       setSetting(new PositiveNumberSettingIO(MediumAttribute.LogicalSize, logicalSize));
    }
-   
+
    @Override
    public String toString() {
       if (hasSetting(MediumAttribute.Name)) {
@@ -186,15 +186,15 @@ public class MediumIn extends ObjectIn<EntityType> implements _Actionnable {
          return getId();
       }
    }
-   
+
    @Override
    public Action getAction() {
       return action;
    }
-   
+
    @Override
    public void setAction(Action action) {
       this.action = action;
    }
-   
+
 }

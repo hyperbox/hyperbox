@@ -30,22 +30,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class MediumDeleteAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.MediumDelete.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       MediumIn medIn = request.get(MediumIn.class);
-      
+
       hbox.getHypervisor().deleteMedium(medIn.getUuid());
    }
-   
+
 }

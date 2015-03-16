@@ -26,46 +26,46 @@ import org.altherian.hbox.constant.ServerAttribute;
 import java.util.Collection;
 
 public class ServerOut extends ObjectOut {
-   
+
    protected ServerOut() {
       // used for (de)serialisation
    }
-   
+
    public ServerOut(String id) {
       super(EntityType.Server, id);
    }
-   
+
    public ServerOut(String id, Collection<SettingIO> settings) {
       super(EntityType.Server, id, settings);
    }
-   
+
    public String getName() {
       return getSetting(ServerAttribute.Name).getString();
    }
-   
+
    public String getType() {
       return getSetting(ServerAttribute.Type).getString();
    }
-   
+
    public String getVersion() {
       return getSetting(ServerAttribute.Version).getString();
    }
-   
+
    public String getNetworkProtocolVersion() {
       return getSetting(ServerAttribute.NetProtocolVersion).getString();
    }
-   
+
    public Boolean isHypervisorConnected() {
       return getSetting(ServerAttribute.IsHypervisorConnected).getBoolean();
    }
-   
+
    public String getLogLevel() {
       return getSetting(ServerAttribute.LogLevel).getString();
    }
-   
+
    @Override
    public String toString() {
       return "Server ID #" + getId() + " (" + getName() + ")";
    }
-   
+
 }

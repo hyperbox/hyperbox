@@ -21,10 +21,10 @@
 package org.altherian.hboxc.state;
 
 public enum BackendStates {
-   
+
    Starting,
    Started,
    Stopping,
    Stopped
-   
+
 }

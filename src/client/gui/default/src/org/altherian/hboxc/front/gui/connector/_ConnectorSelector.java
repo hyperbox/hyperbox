@@ -25,7 +25,7 @@ import org.altherian.hboxc.comm.output.ConnectorOutput;
 import java.util.List;
 
 public interface _ConnectorSelector extends _SingleConnectorSelector {
-   
+
    public List<ConnectorOutput> listConnectors();
-   
+
 }

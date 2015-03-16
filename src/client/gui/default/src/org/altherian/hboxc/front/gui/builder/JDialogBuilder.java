@@ -31,11 +31,11 @@ import javax.swing.JDialog;
 import javax.swing.WindowConstants;
 
 public class JDialogBuilder {
-   
+
    private JDialogBuilder() {
       // only static
    }
-   
+
    /**
     * Build a JDialog with no title name, the default Hyperbox icon and no default button
     *
@@ -44,7 +44,7 @@ public class JDialogBuilder {
    public static JDialog get() {
       return get(null, IconBuilder.getHyperbox().getImage(), null);
    }
-   
+
    /**
     * Build a JDialog with no title name, the given icon and no default button
     *
@@ -54,7 +54,7 @@ public class JDialogBuilder {
    public static JDialog get(Image icon) {
       return get(null, icon, null);
    }
-   
+
    /**
     * Build a JDialog with no title name, the default Hyperbox icon and then given default button
     *
@@ -64,7 +64,7 @@ public class JDialogBuilder {
    public static JDialog get(JButton defaultButton) {
       return get(null, IconBuilder.getHyperbox().getImage(), defaultButton);
    }
-   
+
    /**
     * Build a JDialog with the given title name, the default Hyperbox icon and no default button
     *
@@ -74,7 +74,7 @@ public class JDialogBuilder {
    public static JDialog get(String title) {
       return get(title, IconBuilder.getHyperbox().getImage(), null);
    }
-   
+
    /**
     * Build a JDialog with the given title name, the default Hyperbox icon and then given default button
     *
@@ -85,7 +85,7 @@ public class JDialogBuilder {
    public static JDialog get(String title, JButton defaultButton) {
       return get(title, IconBuilder.getHyperbox().getImage(), defaultButton);
    }
-   
+
    /**
     * Build a JDialog with the given title name, the given icon and no default button
     *
@@ -96,7 +96,7 @@ public class JDialogBuilder {
    public static JDialog get(String title, Image icon) {
       return get(title, icon, null);
    }
-   
+
    /**
     * Build a JDialog with the given title name, the given icon and the given default button
     *
@@ -114,8 +114,8 @@ public class JDialogBuilder {
       dialog.setLayout(new MigLayout());
       dialog.getRootPane().setDefaultButton(defaultButton);
       JDialogUtils.setCloseOnEscapeKey(dialog, true);
-      
+
       return dialog;
    }
-   
+
 }

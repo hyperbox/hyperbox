@@ -26,15 +26,15 @@ import org.altherian.hboxc.core.connector.Connector;
 import org.altherian.hboxc.core.connector._Connector;
 
 public class ConnectorFactory {
-   
+
    private ConnectorFactory() {
       // only static
    }
-   
+
    public static _Connector get(String id, String label, String address, String username, String backendId) {
       return new Connector(id, label, address, username, backendId);
    }
-   
+
    public static void update(_Connector conn, ConnectorInput conIn) {
       conn.setLabel(conIn.getLabel());
       conn.setAddress(conIn.getAddress());

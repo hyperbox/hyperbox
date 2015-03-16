@@ -24,20 +24,20 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 
 @SuppressWarnings("serial")
 public class InvalidNetworkModeException extends HyperboxRuntimeException {
-   
+
    private String mode;
-   
+
    public InvalidNetworkModeException(String mode) {
       this(mode, mode + " is not a valid network mode");
    }
-   
+
    public InvalidNetworkModeException(String mode, String message) {
       super(message);
       this.mode = mode;
    }
-   
+
    public String getMode() {
       return mode;
    }
-   
+
 }

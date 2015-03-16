@@ -30,14 +30,14 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE })
 public @interface Hypervisor {
-   
+
    String id();
-   
+
    String typeId();
-   
+
    String vendor();
-   
+
    String product();
-   
+
    String[] schemes();
 }

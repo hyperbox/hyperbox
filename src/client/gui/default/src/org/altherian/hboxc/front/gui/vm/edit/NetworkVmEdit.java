@@ -33,28 +33,28 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 public final class NetworkVmEdit {
-   
+
    private String srvId;
    private MachineIn mIn;
    private JTabbedPane nicTabs;
    private List<NetworkInterfaceViewer> viewers;
    private JPanel panel;
-   
+
    public NetworkVmEdit() {
       viewers = new ArrayList<NetworkInterfaceViewer>();
       nicTabs = new JTabbedPane();
       panel = new JPanel(new MigLayout());
       panel.add(nicTabs, "grow,push");
    }
-   
+
    public Component getComp() {
       return panel;
    }
-   
+
    public void update(MachineOut mOut, MachineIn mIn) {
       this.srvId = mOut.getServerId();
       this.mIn = mIn;
-      
+
       nicTabs.removeAll();
       viewers.clear();
       for (NetworkInterfaceOut nicOut : mOut.listNetworkInterface()) {
@@ -63,7 +63,7 @@ public final class NetworkVmEdit {
          nicTabs.addTab("NIC " + (nicOut.getNicId() + 1), viewer.getPanel());
       }
    }
-   
+
    public void save() {
       if (mIn != null) {
          for (NetworkInterfaceViewer viewer : viewers) {
@@ -74,5 +74,5 @@ public final class NetworkVmEdit {
          }
       }
    }
-   
+
 }

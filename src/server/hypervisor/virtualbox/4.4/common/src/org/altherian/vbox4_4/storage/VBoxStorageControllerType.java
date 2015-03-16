@@ -23,41 +23,41 @@ package org.altherian.vbox4_4.storage;
 import org.altherian.hboxd.hypervisor.storage._RawStorageControllerType;
 
 public enum VBoxStorageControllerType implements _RawStorageControllerType {
-   
+
    Floppy(1, 1, 2),
    IDE(1, 2, 2),
    SATA(1, 30, 1),
    SCSI(1, 16, 1),
    SAS(1, 8, 1);
-   
+
    private long minPort;
    private long maxPort;
    private long maxDev;
-   
+
    private VBoxStorageControllerType(long minPort, long maxPort, long maxDev) {
       this.minPort = minPort;
       this.maxPort = maxPort;
       this.maxDev = maxDev;
    }
-   
+
    @Override
    public String getId() {
       return toString();
    }
-   
+
    @Override
    public long getMinPort() {
       return minPort;
    }
-   
+
    @Override
    public long getMaxPort() {
       return maxPort;
    }
-   
+
    @Override
    public long getMaxDevPerPort() {
       return maxDev;
    }
-   
+
 }

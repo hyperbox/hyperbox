@@ -36,17 +36,17 @@ import javax.swing.UIManager;
  * 
  */
 public final class MiniUI implements _Front {
-   
+
    @Override
    public void start() throws HyperboxException {
       // stub
    }
-   
+
    @Override
    public void stop() {
       // stub
    }
-   
+
    @Override
    public void postError(String description, Throwable t) {
       if (GraphicsEnvironment.isHeadless()) {
@@ -60,30 +60,30 @@ public final class MiniUI implements _Front {
          JOptionPane.showMessageDialog(null, "Fatal error occured during startup: " + t.getMessage(), "Fatal error", JOptionPane.ERROR_MESSAGE);
       }
    }
-   
+
    @Override
    public void postError(Throwable t) {
       // stub
    }
-   
+
    @Override
    public void postError(String s) {
       // stub
    }
-   
+
    @Override
    public void postError(Throwable t, String s) {
       // stub
    }
-   
+
    @Override
    public void setRequestReceiver(_RequestReceiver reqRec) {
       // stub
    }
-   
+
    @Override
    public void setCoreReader(_CoreReader reader) {
       // stub
    }
-   
+
 }

@@ -36,17 +36,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NetModeListAction extends AbstractHyperboxMultiTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.NetModeList.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       ServerIn srvIn = request.get(ServerIn.class);
@@ -54,5 +54,5 @@ public class NetModeListAction extends AbstractHyperboxMultiTaskAction {
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, NetModeOut.class, NetModeIoFactory.get(netMode)));
       }
    }
-   
+
 }

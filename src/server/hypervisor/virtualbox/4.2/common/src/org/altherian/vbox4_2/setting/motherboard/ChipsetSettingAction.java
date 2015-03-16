@@ -30,25 +30,25 @@ import org.virtualbox_4_2.IMachine;
 import org.virtualbox_4_2.LockType;
 
 public class ChipsetSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.Chipset.toString();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       machine.setChipsetType(ChipsetType.valueOf(((StringSetting) setting).getValue()));
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new ChipsetSetting(machine.getChipsetType().toString());
    }
-   
+
 }

@@ -24,7 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ResultSetImp {
-   
+
    public static Boolean columnExists(ResultSet rSet, String columnLabel) {
       try {
          rSet.findColumn(columnLabel);
@@ -33,5 +33,5 @@ public class ResultSetImp {
          return false;
       }
    }
-   
+
 }

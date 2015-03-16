@@ -24,14 +24,14 @@ import org.altherian.hbox.comm.out.storage.StorageControllerTypeOut;
 import org.altherian.hboxd.hypervisor.storage._RawStorageControllerType;
 
 public final class StorageControllerTypeIoFactory {
-   
+
    private StorageControllerTypeIoFactory() {
       // static class
    }
-   
+
    public static StorageControllerTypeOut get(_RawStorageControllerType type) {
       StorageControllerTypeOut sctOut = new StorageControllerTypeOut(type.getId(), type.getMinPort(), type.getMaxPort(), type.getMaxDevPerPort());
       return sctOut;
    }
-   
+
 }

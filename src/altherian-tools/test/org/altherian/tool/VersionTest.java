@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2015 Maxime Dor
- *
+ * 
  * http://hyperbox.altherian.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -39,7 +39,7 @@ public class VersionTest {
       Version unknown = new Version(Version.UNKNOWN.toString());
       assertTrue(Version.UNKNOWN.equals(unknown));
    }
-   
+
    @Test
    public void valid() {
       assertTrue(Version.UNKNOWN.isValid());
@@ -52,7 +52,7 @@ public class VersionTest {
       assertFalse(new Version(invalid3).isValid());
       assertFalse(new Version(invalid4).isValid());
    }
-   
+
    @Test
    public void equal() {
       assertTrue(Version.UNKNOWN.equals(Version.UNKNOWN));
@@ -60,5 +60,5 @@ public class VersionTest {
       assertTrue((new Version(v2_3_4)).equals(new Version(v2_3_4)));
       assertTrue((new Version(v3_4_5r67)).equals(new Version(v3_4_5r67)));
    }
-   
+
 }

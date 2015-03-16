@@ -27,27 +27,27 @@ import org.altherian.hbox.comm.out.StoreOut;
 import org.altherian.hbox.constant.StoreAttribute;
 
 public final class StoreOutputTest {
-   
+
    public static void validateFull(StoreOut sOut) {
       validateSimple(sOut);
-      
+
       assertTrue(sOut.hasSetting(StoreAttribute.Location));
       assertNotNull(sOut.getSetting(StoreAttribute.Location).getString());
       assertFalse(sOut.getSetting(StoreAttribute.Location).getString().isEmpty());
    }
-   
+
    public static void validateSimple(StoreOut sOut) {
       assertNotNull(sOut);
       assertNotNull(sOut.getId());
       assertFalse(sOut.getId().isEmpty());
-      
+
       assertTrue(sOut.hasSetting(StoreAttribute.Label));
       assertNotNull(sOut.getSetting(StoreAttribute.Label).getString());
       assertFalse(sOut.getSetting(StoreAttribute.Label).getString().isEmpty());
-      
+
       assertTrue(sOut.hasSetting(StoreAttribute.State));
       assertNotNull(sOut.getSetting(StoreAttribute.State).getString());
       assertFalse(sOut.getSetting(StoreAttribute.State).getString().isEmpty());
    }
-   
+
 }

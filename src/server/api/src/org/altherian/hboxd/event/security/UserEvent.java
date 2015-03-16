@@ -27,14 +27,14 @@ import org.altherian.hboxd.comm.io.factory.UserIoFactory;
 import org.altherian.hboxd.security._User;
 
 public abstract class UserEvent extends Event {
-   
+
    public UserEvent(Enum<?> s, _User usr) {
       super(s);
       set(UserIoFactory.get(usr));
    }
-   
+
    public UserOut getUser() {
       return get(UserOut.class);
    }
-   
+
 }

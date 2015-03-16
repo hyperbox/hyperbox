@@ -28,21 +28,21 @@ import org.altherian.vbox4_3.setting._MediumSettingAction;
 import org.virtualbox_4_3.IMedium;
 
 public class MediumStateSettingAction implements _MediumSettingAction {
-   
+
    @Override
    public String getSettingName() {
       return MediumAttribute.State.toString();
    }
-   
+
    @Override
    public void set(IMedium medium, _Setting setting) {
       throw new HyperboxRuntimeException("Read-only setting");
    }
-   
+
    @Override
    public _Setting get(IMedium medium) {
       medium.refreshState();
       return new StringSetting(MediumAttribute.State, medium.getState().toString());
    }
-   
+
 }

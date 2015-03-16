@@ -34,12 +34,12 @@ import org.altherian.hboxc.front._Front;
 import java.util.List;
 
 public class BackendListAction extends AbstractClientControllerSingleAction {
-   
+
    @Override
    public Enum<?> getRegistration() {
       return ClientTasks.BackendList;
    }
-   
+
    @Override
    public void run(_Core core, _Front view, Request req, _AnswerReceiver recv) throws HyperboxException {
       List<String> bcks = core.listBackends();
@@ -47,5 +47,5 @@ public class BackendListAction extends AbstractClientControllerSingleAction {
          recv.putAnswer(new Answer(req, AnswerType.DATA, BackendIoFactory.get(bck)));
       }
    }
-   
+
 }

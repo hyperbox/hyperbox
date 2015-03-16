@@ -34,22 +34,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SessionListAction extends AbstractHyperboxMultiTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.SessionList.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       for (_Session sess : hbox.getSessionManager().list()) {
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, SessionIoFactory.get(sess)));
       }
    }
-   
+
 }

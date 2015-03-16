@@ -32,21 +32,21 @@ import java.lang.Thread.UncaughtExceptionHandler;
  */
 // TODO implement events
 public abstract class SkeletonFront implements _Front, Runnable {
-   
+
    protected static final int STOPPED = 0;
    protected static final int STARTING = 1;
    protected static final int STARTED = 2;
    protected static final int STOPPING = 3;
    protected static final int CRASHED = 4;
-   
+
    private _RequestReceiver r;
-   
+
    private volatile int status = STOPPED;
    private Thread thread;
-   
+
    @Override
    public void start(_RequestReceiver receiver) throws HyperboxException {
-      
+
       r = receiver;
       thread = new Thread(this, "Front ID " + getClass().getSimpleName());
       thread.setUncaughtExceptionHandler(new FrontExceptionHander());
@@ -66,10 +66,10 @@ public abstract class SkeletonFront implements _Front, Runnable {
          throw new HyperboxRuntimeException("An error occured while trying to start " + getClass().getSimpleName());
       }
    }
-   
+
    @Override
    public void stop() {
-      
+
       if (status == STARTED) {
          status = STOPPING;
          stopping();
@@ -83,38 +83,38 @@ public abstract class SkeletonFront implements _Front, Runnable {
       thread = null;
       status = STOPPED;
    }
-   
+
    protected void setStatus(int status) {
-      
+
       this.status = status;
       synchronized (this) {
          this.notifyAll();
       }
-      
+
    }
-   
+
    protected void starting() {
       // stub - to be implemented if needed
    }
-   
+
    protected void stopping() {
       // stub - to be implemented if needed
    }
-   
+
    protected _RequestReceiver getReceiver() {
       return r;
    }
-   
+
    private class FrontExceptionHander implements UncaughtExceptionHandler {
-      
+
       @Override
       public void uncaughtException(Thread arg0, Throwable arg1) {
-         
+
          Logger.debug("The Front-end \"" + getClass().getSimpleName() + " has crashed.");
          Logger.debug("Exception caught is : " + arg1.getClass().getSimpleName() + " - " + arg1.getMessage());
          Logger.debug("The Front-end will not be restarted.");
          status = CRASHED;
       }
    }
-   
+
 }

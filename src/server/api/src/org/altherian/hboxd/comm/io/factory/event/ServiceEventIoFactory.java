@@ -32,14 +32,14 @@ import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.event.service.ServiceEvent;
 
 public class ServiceEventIoFactory implements _EventIoFactory {
-   
+
    @Override
    public Enum<?>[] getHandles() {
       return new Enum<?>[] {
             HyperboxEvents.ServiceState
       };
    }
-   
+
    @Override
    public EventOut get(_Hyperbox hbox, _Event ev) {
       if (ev instanceof ServiceEvent) {
@@ -56,5 +56,5 @@ public class ServiceEventIoFactory implements _EventIoFactory {
          return null;
       }
    }
-   
+
 }

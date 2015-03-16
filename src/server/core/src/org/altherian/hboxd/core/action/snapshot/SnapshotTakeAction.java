@@ -37,17 +37,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SnapshotTakeAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.SnapshotTake.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       MachineIn mIn = request.get(MachineIn.class);
@@ -56,5 +56,5 @@ public class SnapshotTakeAction extends ASingleTaskAction {
       SnapshotOut snapOut = SnapshotIoFactory.get(rawSnap);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, snapOut));
    }
-   
+
 }

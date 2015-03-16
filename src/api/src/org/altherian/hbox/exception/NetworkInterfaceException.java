@@ -22,9 +22,9 @@ package org.altherian.hbox.exception;
 
 @SuppressWarnings("serial")
 public class NetworkInterfaceException extends HyperboxRuntimeException {
-   
+
    public NetworkInterfaceException(String s) {
       super(s);
    }
-   
+
 }

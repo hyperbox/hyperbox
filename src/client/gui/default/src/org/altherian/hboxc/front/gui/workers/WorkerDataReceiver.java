@@ -23,15 +23,15 @@ package org.altherian.hboxc.front.gui.workers;
 import org.altherian.hboxc.front.gui.worker.receiver._WorkerDataReceiver;
 
 public abstract class WorkerDataReceiver implements _WorkerDataReceiver {
-   
+
    @Override
    public void loadingStarted() {
       // stub
    }
-   
+
    @Override
    public void loadingFinished(boolean isSuccessful, String message) {
       // stub
    }
-   
+
 }

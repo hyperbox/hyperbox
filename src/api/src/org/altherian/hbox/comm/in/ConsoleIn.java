@@ -23,15 +23,15 @@ package org.altherian.hbox.comm.in;
 import org.altherian.hbox.constant.EntityType;
 
 public class ConsoleIn extends DeviceIn {
-   
+
    public ConsoleIn() {
       super(EntityType.Console.getId());
    }
-   
+
    public ConsoleIn(String id) {
       super(id);
    }
-   
+
    // TODO
-   
+
 }

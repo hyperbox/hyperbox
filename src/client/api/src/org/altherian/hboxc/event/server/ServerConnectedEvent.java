@@ -25,14 +25,14 @@ import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.states.ServerConnectionState;
 
 public class ServerConnectedEvent extends ServerConnectionStateEvent {
-   
+
    public ServerConnectedEvent(ServerOut srv) {
       super(srv, ServerConnectionState.Connected);
    }
-   
+
    @Override
    public String toString() {
       return "Server ID " + getServer().getId() + " connected @ " + getTime();
    }
-   
+
 }

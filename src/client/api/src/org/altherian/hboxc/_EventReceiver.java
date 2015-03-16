@@ -23,7 +23,7 @@ package org.altherian.hboxc;
 import org.altherian.hbox.comm.out.event.EventOut;
 
 public interface _EventReceiver {
-   
+
    public void post(EventOut evOut);
-   
+
 }

@@ -28,22 +28,22 @@ import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class JTextFieldShadow extends JTextField {
-   
+
    private static final Color SHADOW_COLOR = Color.LIGHT_GRAY;
    private String shadowText;
    private Color prevForeground;
    private boolean isShadow;
-   
+
    public JTextFieldShadow(String shadowText) {
       super(shadowText);
-      
+
       isShadow = true;
       setShadowText(shadowText);
       prevForeground = getForeground();
       setForeground(SHADOW_COLOR);
-      
+
       this.addFocusListener(new FocusListener() {
-         
+
          @Override
          public void focusGained(FocusEvent fe) {
             if (isShadow) {
@@ -51,7 +51,7 @@ public class JTextFieldShadow extends JTextField {
                setLight();
             }
          }
-         
+
          @Override
          public void focusLost(FocusEvent fe) {
             if (AxStrings.isEmpty(getText())) {
@@ -63,12 +63,12 @@ public class JTextFieldShadow extends JTextField {
          }
       });
    }
-   
+
    private void setLight() {
       isShadow = false;
       setForeground(prevForeground);
    }
-   
+
    @Override
    public String getText() {
       if (isShadow) {
@@ -77,15 +77,15 @@ public class JTextFieldShadow extends JTextField {
          return super.getText();
       }
    }
-   
+
    @Override
    public void setText(String t) {
       super.setText(t);
       setLight();
    }
-   
+
    public void setShadowText(String shadowText) {
       this.shadowText = shadowText;
    }
-   
+
 }

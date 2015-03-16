@@ -30,25 +30,25 @@ import org.virtualbox_4_2.IMachine;
 import org.virtualbox_4_2.LockType;
 
 public final class KeyboardModeSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.KeyboardMode.toString();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       machine.setKeyboardHIDType(Mappings.get(KeyboardMode.valueOf(setting.getString())));
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new KeyboardModeSetting(Mappings.get(machine.getKeyboardHIDType()));
    }
-   
+
 }

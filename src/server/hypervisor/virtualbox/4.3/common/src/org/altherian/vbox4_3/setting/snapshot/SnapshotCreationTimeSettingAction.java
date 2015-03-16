@@ -29,25 +29,25 @@ import org.virtualbox_4_3.ISnapshot;
 import org.virtualbox_4_3.LockType;
 
 public class SnapshotCreationTimeSettingAction implements _SnapshotSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Shared;
    }
-   
+
    @Override
    public String getSettingName() {
       return SnapshotAttribute.CreationTime.getId();
    }
-   
+
    @Override
    public void set(ISnapshot snap, _Setting setting) {
       throw new ConfigurationException("Read-only attribute: " + setting.getName());
    }
-   
+
    @Override
    public _Setting get(ISnapshot snap) {
       return new PositiveNumberSetting(SnapshotAttribute.CreationTime, snap.getTimeStamp());
    }
-   
+
 }

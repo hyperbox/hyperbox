@@ -25,19 +25,19 @@ import org.altherian.hboxc.event.ClientEventTypes;
 import org.altherian.hboxc.state.BackendConnectionState;
 
 public final class BackendConnectionStateEvent extends BackendEvent {
-   
+
    public BackendConnectionStateEvent(_Backend backend, BackendConnectionState state) {
       super(ClientEventTypes.BackendConnState, backend);
       set(state);
    }
-   
+
    public BackendConnectionState getState() {
       return get(BackendConnectionState.class);
    }
-   
+
    @Override
    public String toString() {
       return "Backend ID " + getBackend().getId() + " changed connection state to " + getState() + " @ " + getTime();
    }
-   
+
 }

@@ -30,26 +30,26 @@ import org.virtualbox_4_3.IMachine;
 import org.virtualbox_4_3.LockType;
 
 public class SyntheticCPUSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.SyntheticCPU.toString();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       // TODO maybe a CPU object to support more CPU properties in the future?
       machine.setCPUProperty(CPUPropertyType.Synthetic, ((BooleanSetting) setting).getValue());
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new SyntheticCPUSetting(machine.getCPUProperty(CPUPropertyType.Synthetic));
    }
-   
+
 }

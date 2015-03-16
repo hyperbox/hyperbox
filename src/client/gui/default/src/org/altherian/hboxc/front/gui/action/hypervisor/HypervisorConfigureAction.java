@@ -35,21 +35,21 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class HypervisorConfigureAction extends AbstractAction {
-   
+
    private _SingleServerSelector selector;
-   
+
    public HypervisorConfigureAction(_SingleServerSelector selector) {
       this(selector, "Configure");
    }
-   
+
    public HypervisorConfigureAction(_SingleServerSelector selector, String label) {
       super(label);
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
-      
+
       ServerOut srvOut = selector.getServer();
       if (srvOut != null) {
          HypervisorIn hypIn = HypervisorConfigureDialog.getInput(srvOut.getId());
@@ -64,5 +64,5 @@ public class HypervisorConfigureAction extends AbstractAction {
          Logger.debug("No server was selected");
       }
    }
-   
+
 }

@@ -25,45 +25,45 @@ import org.altherian.hboxd.hypervisor._RawItem;
 import java.util.Set;
 
 public interface _RawConsole extends _RawItem {
-   
+
    public Boolean isEnabled();
-   
+
    public void setEnabled(Boolean enable);
-   
+
    public Boolean isActive();
-   
+
    public String getAddress();
-   
+
    public Long getPort();
-   
+
    public String getProtocol();
-   
+
    public String getAuthType();
-   
+
    public void setAuthType(String authType);
-   
+
    public String getAuthLibrary();
-   
+
    public void setAuthLibrary(String library);
-   
+
    public Long getAuthTimeout();
-   
+
    public void setAuthTimeout(Long timeout);
-   
+
    public Boolean getAllowMultiConnection();
-   
+
    public void setAllowMultiConnection(Boolean allow);
-   
+
    public Set<String> listProperties();
-   
+
    public boolean hasProperty(String key);
-   
+
    public String getProperty(String key);
-   
+
    public void setProperty(String key, String value);
-   
+
    public void unsetProperty(String key);
-   
+
    /*
    public Boolean getReuseSingleConnection();
    
@@ -73,5 +73,5 @@ public interface _RawConsole extends _RawItem {
    
    public void setModule(String module);
     */
-   
+
 }

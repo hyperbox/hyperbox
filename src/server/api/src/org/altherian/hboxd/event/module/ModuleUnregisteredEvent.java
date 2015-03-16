@@ -24,14 +24,14 @@ import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hboxd.module._Module;
 
 public class ModuleUnregisteredEvent extends ModuleEvent {
-   
+
    public ModuleUnregisteredEvent(String modId) {
       super(HyperboxEvents.ModuleUnregistered, null);
       set(_Module.class, modId);
    }
-   
+
    public String getModuleId() {
       return get(_Module.class, String.class);
    }
-   
+
 }

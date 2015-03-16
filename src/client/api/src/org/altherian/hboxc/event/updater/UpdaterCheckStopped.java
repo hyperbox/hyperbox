@@ -23,9 +23,9 @@ package org.altherian.hboxc.event.updater;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class UpdaterCheckStopped extends UpdaterEvent {
-   
+
    public UpdaterCheckStopped() {
       super(ClientEvents.UpdaterCheckStopped);
    }
-   
+
 }

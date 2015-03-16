@@ -22,13 +22,13 @@ package org.altherian.hbox.exception;
 
 @SuppressWarnings("serial")
 public class MachineException extends HyperboxRuntimeException {
-   
+
    public MachineException(String s) {
       super(s);
    }
-   
+
    public MachineException(String s, Exception e) {
       super(s, e);
    }
-   
+
 }

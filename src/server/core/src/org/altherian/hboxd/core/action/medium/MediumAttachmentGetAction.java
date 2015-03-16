@@ -38,27 +38,27 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class MediumAttachmentGetAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.StorageControllerMediumAttachmentGet.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       MachineIn mIn = request.get(MachineIn.class);
       StorageControllerIn scIn = request.get(StorageControllerIn.class);
       StorageDeviceAttachmentIn sdaIn = request.get(StorageDeviceAttachmentIn.class);
-      
+
       _RawMediumAttachment rawMat = hbox.getHypervisor().getMachine(mIn.getUuid()).getStorageController(scIn.getId())
             .getMediumAttachment(sdaIn.getPortId(), sdaIn.getDeviceId());
       StorageDeviceAttachmentOut sdaOut = MediumAttachmentIoFactory.get(rawMat);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, sdaOut));
    }
-   
+
 }

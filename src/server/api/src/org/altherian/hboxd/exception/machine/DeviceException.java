@@ -22,17 +22,17 @@ package org.altherian.hboxd.exception.machine;
 
 @SuppressWarnings("serial")
 public class DeviceException extends MachineException {
-   
+
    public DeviceException(String s, Throwable t) {
       super(s, t);
    }
-   
+
    public DeviceException(Throwable t) {
       super(t);
    }
-   
+
    public DeviceException(String s) {
       super(s);
    }
-   
+
 }

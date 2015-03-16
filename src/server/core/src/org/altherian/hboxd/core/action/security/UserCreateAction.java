@@ -37,24 +37,24 @@ import java.util.Arrays;
 import java.util.List;
 
 public class UserCreateAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.UserCreate.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       UserIn usrIn = request.get(UserIn.class);
       _User user = hbox.getSecurityManager().addUser(usrIn);
-      
+
       UserOut usrOut = UserIoFactory.get(user);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, usrOut));
    }
-   
+
 }

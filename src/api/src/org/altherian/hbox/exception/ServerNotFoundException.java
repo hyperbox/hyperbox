@@ -22,9 +22,9 @@ package org.altherian.hbox.exception;
 
 @SuppressWarnings("serial")
 public final class ServerNotFoundException extends ServerException {
-   
+
    public ServerNotFoundException(String srvId) {
       super("Server was not found: " + srvId);
    }
-   
+
 }

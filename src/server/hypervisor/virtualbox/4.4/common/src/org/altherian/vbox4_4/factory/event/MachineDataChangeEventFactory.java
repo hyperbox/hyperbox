@@ -28,23 +28,23 @@ import org.virtualbox_4_4.IMachineDataChangedEvent;
 import org.virtualbox_4_4.VBoxEventType;
 
 public final class MachineDataChangeEventFactory implements _PreciseEventFactory {
-   
+
    @Override
    public VBoxEventType getType() {
       return VBoxEventType.OnMachineDataChanged;
    }
-   
+
    @Override
    public IMachineDataChangedEvent getRaw(IEvent vbEvent) {
-      
+
       return IMachineDataChangedEvent.queryInterface(vbEvent);
    }
-   
+
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      
+
       _Event ev = new MachineDataChangeEvent(getRaw(vbEvent).getMachineId());
       return ev;
    }
-   
+
 }

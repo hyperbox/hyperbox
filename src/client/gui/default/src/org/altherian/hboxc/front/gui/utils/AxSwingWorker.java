@@ -34,22 +34,22 @@ import javax.swing.SwingWorker;
  * @param <V> Progress return value
  */
 public abstract class AxSwingWorker<K extends _WorkerDataReceiver, T, V> extends SwingWorker<T, V> {
-   
+
    private K recv;
-   
+
    public AxSwingWorker(K recv) {
       setReceiver(recv);
    }
-   
+
    protected K getReceiver() {
       return recv;
    }
-   
+
    protected void setReceiver(final K recv) {
       this.recv = recv;
-      
+
       addPropertyChangeListener(new PropertyChangeListener() {
-         
+
          @Override
          public void propertyChange(PropertyChangeEvent ev) {
             if ("state".equals(ev.getPropertyName()) && (SwingWorker.StateValue.STARTED == ev.getNewValue())) {
@@ -58,7 +58,7 @@ public abstract class AxSwingWorker<K extends _WorkerDataReceiver, T, V> extends
          }
       });
    }
-   
+
    @Override
    protected final void done() {
       try {
@@ -70,9 +70,9 @@ public abstract class AxSwingWorker<K extends _WorkerDataReceiver, T, V> extends
          recv.loadingFinished(false, t.getMessage());
       }
    }
-   
+
    protected void innerDone() throws InterruptedException, ExecutionException {
       get();
    }
-   
+
 }

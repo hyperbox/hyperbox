@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public class Accelerate2dVideoSetting extends BooleanSetting {
-   
+
    public Accelerate2dVideoSetting(boolean isEnabled) {
       super(MachineAttribute.Accelerate2dVideo, isEnabled);
    }
-   
+
 }

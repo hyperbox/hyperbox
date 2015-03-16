@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public final class PagefusionSetting extends BooleanSetting {
-   
+
    public PagefusionSetting(boolean isEnabled) {
       super(MachineAttribute.PageFusion, isEnabled);
    }
-   
+
 }

@@ -21,9 +21,9 @@
 package org.altherian.hboxc.front.gui.action.hypervisor;
 
 public interface _SingleHypervisorSelector {
-   
+
    public String getConnectorId();
-   
+
    public String getServerId();
-   
+
 }

@@ -25,9 +25,9 @@ import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
 import java.util.List;
 
 public interface _SnapshotSelector {
-   
+
    public List<SnapshotOut> getSelection();
-   
+
    public MachineOut getMachine();
-   
+
 }

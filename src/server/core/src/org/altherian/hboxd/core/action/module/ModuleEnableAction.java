@@ -30,21 +30,21 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ModuleEnableAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.ModuleEnable.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       ModuleIn modIn = request.get(ModuleIn.class);
       hbox.getModuleManager().getModule(modIn.getId()).enable();
    }
-   
+
 }

@@ -25,7 +25,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class AxSystems {
-   
+
    public static String getHostname() {
       try {
          return InetAddress.getLocalHost().getHostName();
@@ -33,5 +33,5 @@ public class AxSystems {
          return "Unknown Host";
       }
    }
-   
+
 }

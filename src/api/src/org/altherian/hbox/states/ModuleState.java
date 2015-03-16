@@ -26,12 +26,12 @@ package org.altherian.hbox.states;
  * @author noteirak
  */
 public enum ModuleState {
-   
+
    /**
     * The module is currently being loaded by the Hyperbox Server.
     */
    Loading,
-   
+
    /**
     * The module has been loaded by the Hyperbox Server, but not yet ready for use.<br/>
     */
@@ -44,10 +44,10 @@ public enum ModuleState {
     * the module is currently being unloaded by the Hyperbox Server.
     */
    Unloading,
-   
+
    /**
     * The module is not loaded in the Hyperbox Server, but can be requested.<br/>
     */
    Unloaded
-   
+
 }

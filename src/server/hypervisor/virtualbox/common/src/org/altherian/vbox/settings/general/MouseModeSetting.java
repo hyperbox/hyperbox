@@ -25,13 +25,13 @@ import org.altherian.hbox.constant.MouseMode;
 import org.altherian.setting.StringSetting;
 
 public class MouseModeSetting extends StringSetting {
-   
+
    public MouseModeSetting(String mode) {
       super(MachineAttribute.MouseMode, mode);
    }
-   
+
    public MouseModeSetting(MouseMode mode) {
       this(mode.toString());
    }
-   
+
 }

@@ -28,29 +28,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConsoleViewerFactory {
-   
+
    public static final String WINDOWS_REMOTE_DESKTOP = "C:/Windows/system32/mstsc.exe";
    public static final String LINUX_RDESKTOP = "/usr/bin/rdesktop";
-   
+
    private ConsoleViewerFactory() {
    }
-   
+
    public static _ConsoleViewer get(String hypervisorId, String moduleId, String viewerPath, String args) {
       String id = hypervisorId + moduleId;
       return new ConsoleViewer(id, hypervisorId, moduleId, viewerPath, args);
    }
-   
+
    public static List<_ConsoleViewer> getDefaults() {
       List<_ConsoleViewer> viewers = new ArrayList<_ConsoleViewer>();
-      
+
       if ((new File(WINDOWS_REMOTE_DESKTOP)).isFile()) {
          viewers.add(get(".*", "Oracle VM VirtualBox Extension Pack", WINDOWS_REMOTE_DESKTOP, "/v:%SA%:%SP%"));
       }
       if ((new File(LINUX_RDESKTOP)).isFile()) {
          viewers.add(get(".*", "Oracle VM VirtualBox Extension Pack", LINUX_RDESKTOP, "%SA%:%SP%"));
       }
-      
+
       return viewers;
    }
-   
+
 }

@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.StringSetting;
 
 public class HardwareUuidSetting extends StringSetting {
-   
+
    public HardwareUuidSetting(String uuid) {
       super(MachineAttribute.HardwareUuid, uuid);
    }
-   
+
 }

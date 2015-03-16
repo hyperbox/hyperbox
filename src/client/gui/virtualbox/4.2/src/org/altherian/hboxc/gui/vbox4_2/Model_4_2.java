@@ -26,15 +26,15 @@ import org.altherian.vbox.VirtualBox;
 import java.util.List;
 
 public class Model_4_2 extends GenericModel {
-   
+
    @Override
    public List<String> getSupported() {
       return VirtualBox.ID_GROUP.ALL_4_2;
    }
-   
+
    @Override
    public _GlobalConfigureView getConfigureView() {
       return new GlobalConfigureView();
    }
-   
+
 }

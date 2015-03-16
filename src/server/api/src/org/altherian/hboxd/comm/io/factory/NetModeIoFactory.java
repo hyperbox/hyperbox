@@ -26,11 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NetModeIoFactory {
-   
+
    private NetModeIoFactory() {
       // only static
    }
-   
+
    public static NetModeOut get(_NetMode netMode) {
       List<String> svcs = new ArrayList<String>();
       for (String svcType : netMode.getSupportedServices()) {
@@ -39,5 +39,5 @@ public class NetModeIoFactory {
       return new NetModeOut(netMode.getId(), netMode.getLabel(), svcs, netMode.canUseAdaptor(), netMode.canAddAdaptor(), netMode.canRemoveAdaptor(),
             netMode.canUseNetworkName(), netMode.canRenameAdaptor());
    }
-   
+
 }

@@ -37,27 +37,27 @@ import org.altherian.hboxd.server._Server;
 import org.altherian.hboxd.session.SessionContext;
 
 public class MachineLogFileGetAction extends ServerAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.MachineLogFileGet.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    protected void run(Request request, _Hyperbox hbox, _Server srv) {
       MachineLogFileIO logfile = request.get(MachineLogFileIO.class);
       MachineIn machine = request.get(MachineIn.class);
-      
+
       _MachineLogFile log = srv.getHypervisor().getLogFile(machine.getId(), Long.parseLong(logfile.getId()));
       MachineLogFileIO logIo = MachineLogFileIoFactory.get(log);
-      
+
       // FIXME send(MachineLogFileIO.class, logIo);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, MachineLogFileIO.class, logIo));
    }
-   
+
 }

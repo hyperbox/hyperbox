@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public final class ControllerIoCacheSetting extends BooleanSetting {
-   
+
    public ControllerIoCacheSetting(Boolean isEnabled) {
       super(StorageControllerAttribute.IoCache, isEnabled);
    }
-   
+
 }

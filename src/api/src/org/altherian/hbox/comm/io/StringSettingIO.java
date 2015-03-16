@@ -28,7 +28,7 @@ import org.altherian.hbox.utils.Settings;
  * @author noteirak
  */
 public final class StringSettingIO extends SettingIO {
-   
+
    /**
     * Empty constructor for serialisation classes.<br/>
     * <ul>
@@ -38,7 +38,7 @@ public final class StringSettingIO extends SettingIO {
    @SuppressWarnings("unused")
    private StringSettingIO() {
    }
-   
+
    /**
     * Constructor for a new String setting, with the given name and value.<br/>
     * {@link Settings#getUniqueId(Object)} will be used on the Object name to get a unique ID.
@@ -49,7 +49,7 @@ public final class StringSettingIO extends SettingIO {
    public StringSettingIO(Object name, String value) {
       super(name, value);
    }
-   
+
    /**
     * Get the value of this setting as String
     * 
@@ -58,5 +58,5 @@ public final class StringSettingIO extends SettingIO {
    public String getValue() {
       return (String) getRawValue();
    }
-   
+
 }

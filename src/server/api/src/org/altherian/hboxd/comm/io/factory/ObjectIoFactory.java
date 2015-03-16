@@ -25,9 +25,9 @@ import org.altherian.hbox.comm.io.factory.SettingIoFactory;
 import org.altherian.setting._Settable;
 
 public class ObjectIoFactory {
-   
+
    public static void update(_Settable o, ObjectIn<?> oIo) {
       oIo.setSetting(SettingIoFactory.getList(o.getSettings()));
    }
-   
+
 }

@@ -21,10 +21,10 @@
 package org.altherian.hboxc.state;
 
 public enum ConnectionState {
-   
+
    Connecting,
    Connected,
    Disconnecting,
    Disconnected,
-   
+
 }

@@ -35,11 +35,11 @@ package org.altherian.hbox.comm;
  * @author noteirak
  */
 public final class Request extends Message {
-   
+
    private Command command;
    private String exchangeId = String.valueOf(System.currentTimeMillis() + hashCode());
    private boolean isQueueable = true;
-   
+
    /**
     * Empty constructor<br/>
     * <b>DO NOT USE - TO BE USED BY SERELIAZERS ONLY</b>
@@ -48,7 +48,7 @@ public final class Request extends Message {
    private Request() {
       // do not use!
    }
-   
+
    /**
     * Build a new Request message object with the given CoreTask.
     * 
@@ -57,7 +57,7 @@ public final class Request extends Message {
    public Request(Enum<?> task) {
       this(Command.VBOX, task);
    }
-   
+
    /**
     * Build a new Request message with the given task and include the given object to this message.
     * 
@@ -70,19 +70,19 @@ public final class Request extends Message {
    public Request(Enum<?> task, Object o) {
       this(Command.VBOX, task, o);
    }
-   
+
    public Request(Enum<?> task, Object... objs) {
       this(Command.VBOX, task);
       for (Object obj : objs) {
          set(obj);
       }
    }
-   
+
    public Request(Enum<?> task, Enum<?> label, Object o) {
       this(Command.VBOX, task);
       set(label, o);
    }
-   
+
    /**
     * Build a new Request message with the given command.
     * 
@@ -94,7 +94,7 @@ public final class Request extends Message {
    public Request(Command command) {
       this.command = command;
    }
-   
+
    /**
     * Build a new Request message with the given command and task.
     * 
@@ -108,7 +108,7 @@ public final class Request extends Message {
       super(task);
       this.command = command;
    }
-   
+
    /**
     * Build a new Request message with the given command and CoreTask ID.
     * 
@@ -122,7 +122,7 @@ public final class Request extends Message {
    public Request(Command command, Enum<?> task) {
       this(command, task.toString());
    }
-   
+
    /**
     * Build a new Request message with the given command, CoreTask ID and object.
     * 
@@ -138,23 +138,23 @@ public final class Request extends Message {
       this(command, task.toString());
       set(obj);
    }
-   
+
    public Request(Command command, Enum<?> task, Object... objs) {
       this(command, task.toString());
       for (Object obj : objs) {
          set(obj);
       }
    }
-   
+
    public Request setQueueable(boolean isQueueable) {
       this.isQueueable = isQueueable;
       return this;
    }
-   
+
    public boolean isQueueable() {
       return isQueueable;
    }
-   
+
    /**
     * Get the unique identifier for this Request and the following Answer(s).
     * 
@@ -163,7 +163,7 @@ public final class Request extends Message {
    public String getExchangeId() {
       return exchangeId;
    }
-   
+
    /**
     * Get the command associated with this request.
     * 
@@ -172,5 +172,5 @@ public final class Request extends Message {
    public Command getCommand() {
       return command;
    }
-   
+
 }

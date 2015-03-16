@@ -32,11 +32,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServerIoFactory {
-   
+
    private ServerIoFactory() {
       // static-only class
    }
-   
+
    public static ServerOut get(_Server srv) {
       List<SettingIO> settings = new ArrayList<SettingIO>();
       settings.add(new StringSettingIO(ServerAttribute.Name, srv.getName()));
@@ -48,9 +48,9 @@ public class ServerIoFactory {
       ServerOut srvOut = new ServerOut(srv.getId(), settings);
       return srvOut;
    }
-   
+
    public static ServerOut get() {
       return get(HBoxServer.get());
    }
-   
+
 }

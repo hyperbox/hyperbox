@@ -21,7 +21,7 @@
 package org.altherian.hbox.constant;
 
 public enum StorageControllerAttribute {
-   
+
    Name,
    Type,
    SubType,
@@ -30,9 +30,9 @@ public enum StorageControllerAttribute {
    MinPortCount,
    MaxDeviceCount,
    IoCache;
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

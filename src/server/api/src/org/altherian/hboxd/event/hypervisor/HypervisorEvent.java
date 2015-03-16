@@ -25,14 +25,14 @@ import org.altherian.hbox.event.Event;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 
 public abstract class HypervisorEvent extends Event {
-   
+
    public HypervisorEvent(Enum<?> eventId, _Hypervisor hyp) {
       super(eventId);
       set(_Hypervisor.class, hyp);
    }
-   
+
    public _Hypervisor getHypervisor() {
       return get(_Hypervisor.class);
    }
-   
+
 }

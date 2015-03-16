@@ -30,18 +30,18 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public final class StoreBrowseAction extends AbstractAction {
-   
+
    private _StoreSelector selector;
-   
+
    public StoreBrowseAction(_StoreSelector selector) {
       this(selector, "Browse");
    }
-   
+
    public StoreBrowseAction(_StoreSelector selector, String label) {
       super(label, IconBuilder.getTask(HyperboxTasks.StoreGet));
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ev) {
       List<String> selection = selector.getSelection();
@@ -49,5 +49,5 @@ public final class StoreBrowseAction extends AbstractAction {
          StoreItemChooser.browse(selector.getServer().getId());
       }
    }
-   
+
 }

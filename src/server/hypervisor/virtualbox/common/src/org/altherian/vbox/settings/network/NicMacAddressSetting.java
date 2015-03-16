@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.setting.StringSetting;
 
 public class NicMacAddressSetting extends StringSetting {
-   
+
    public NicMacAddressSetting(String macAddress) {
       super(NetworkInterfaceAttribute.MacAddress, macAddress);
    }
-   
+
 }

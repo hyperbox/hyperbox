@@ -31,21 +31,21 @@ import java.util.Arrays;
 import java.util.List;
 
 public class UserRemoveAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.UserDelete.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       UserIn usrIn = request.get(UserIn.class);
       hbox.getSecurityManager().removeUser(usrIn.getId());
    }
-   
+
 }

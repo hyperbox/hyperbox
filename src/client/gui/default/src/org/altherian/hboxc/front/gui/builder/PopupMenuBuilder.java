@@ -76,7 +76,7 @@ import org.altherian.hboxc.front.gui.store._StoreSelector;
 import org.altherian.hboxc.front.gui.vm._MachineSelector;
 
 public class PopupMenuBuilder {
-   
+
    public static JPopupMenu get(String serverId, StorageDeviceAttachmentOut sdaOut) {
       JPopupMenu stoMenuActions = new JPopupMenu();
       stoMenuActions.add(new JMenuItem(new HypervisorToolsMediumAttachAction(serverId, sdaOut)));
@@ -84,9 +84,9 @@ public class PopupMenuBuilder {
       stoMenuActions.add(new JMenuItem(new MediumDettachAction(serverId, sdaOut, sdaOut.hasMediumInserted())));
       return stoMenuActions;
    }
-   
+
    public static JPopupMenu get(_MachineSelector select, MachineOut mOut) {
-      
+
       JMenu machineMenu = new JMenu("Machine");
       machineMenu.setIcon(IconBuilder.getEntityType(EntityType.Machine));
       machineMenu.add(new JMenuItem(new MachineStartAction(select)));
@@ -104,28 +104,28 @@ public class PopupMenuBuilder {
       machineMenu.add(new JSeparator());
       machineMenu.add(new JMenuItem(new MachineLockAction(select)));
       machineMenu.add(new JMenuItem(new MachineUnlockAction(select)));
-      
+
       /*
       JMenu guestMenu = new JMenu("Guest");
       machineMenu.setIcon(IconBuilder.getEntityType(EntityTypes.Guest));
       guestMenu.add(new JMenuItem(new GuestRestartAction(select)));
       guestMenu.add(new JMenuItem(new GuestShutdownAction(select)));
        */
-      
+
       JPopupMenu vmPopupMenu = new JPopupMenu();
       vmPopupMenu.add(machineMenu);
       //vmPopupMenu.add(guestMenu);
       vmPopupMenu.add(new JMenuItem(new MachineEditAction(select)));
-      
+
       return vmPopupMenu;
    }
-   
+
    public static JPopupMenu get(ServerOut srvOut) {
       JPopupMenu menu = new JPopupMenu();
       menu.add(new JMenuItem("Not implemented"));
       return menu;
    }
-   
+
    public static JPopupMenu get(_ConnectorSelector conSelect, _ServerSelector srvSelect, ConnectorOutput conOut) {
       JPopupMenu conPopupMenu = new JPopupMenu();
       if (conOut.isConnected()) {
@@ -143,12 +143,12 @@ public class PopupMenuBuilder {
             hypActions.add(new JMenuItem(new HypervisorConnectAction(srvSelect)));
          }
          conPopupMenu.add(hypActions);
-         
+
          JMenu srvMenu = new JMenu("Server");
          srvMenu.add(new JMenuItem(new ServerConfigureAction(srvSelect)));
          srvMenu.add(new JMenuItem(new ServerShutdownAction(srvSelect)));
          conPopupMenu.add(srvMenu);
-         
+
          conPopupMenu.add(new JSeparator());
          conPopupMenu.add(new JMenuItem(new ConnectorDisconnectAction(conSelect)));
       } else {
@@ -158,12 +158,12 @@ public class PopupMenuBuilder {
       }
       return conPopupMenu;
    }
-   
+
    public static JPopupMenu get(_StoreSelector stoSelect, StoreOut stoOut) {
       Action browse = new StoreBrowseAction(stoSelect);
       Action unregister = new StoreUnregisterAction(stoSelect);
       Action delete = new StoreDeleteAction(stoSelect);
-      
+
       JPopupMenu actions = new JPopupMenu();
       actions.add(new JMenuItem(browse));
       actions.add(new JSeparator(SwingConstants.HORIZONTAL));
@@ -171,7 +171,7 @@ public class PopupMenuBuilder {
       actions.add(new JMenuItem(delete));
       return actions;
    }
-   
+
    public static JPopupMenu get(_ModuleSelector modSelect, ModuleOut modOut) {
       Action disable = new ModuleDisableAction(modSelect);
       disable.setEnabled(modOut.isEnabled());
@@ -182,7 +182,7 @@ public class PopupMenuBuilder {
       Action unload = new ModuleUnloadAction(modSelect);
       unload.setEnabled(modOut.isLoaded());
       Action unregister = new ModuleUnregisterAction(modSelect);
-      
+
       JPopupMenu actions = new JPopupMenu();
       actions.add(new JMenuItem(enable));
       actions.add(new JMenuItem(disable));
@@ -193,5 +193,5 @@ public class PopupMenuBuilder {
       actions.add(new JMenuItem(unregister));
       return actions;
    }
-   
+
 }

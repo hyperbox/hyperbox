@@ -30,27 +30,27 @@ import org.altherian.hboxc.front.gui.worker.receiver._MachineScreenshotReceiver;
 import java.util.concurrent.ExecutionException;
 
 public class MachineGetScreenshotWorker extends AxSwingWorker<_MachineScreenshotReceiver, ScreenshotOut, Void> {
-   
+
    private MachineOut mOut;
-   
+
    public MachineGetScreenshotWorker(_MachineScreenshotReceiver recv, MachineOut mOut) {
       super(recv);
       this.mOut = mOut;
    }
-   
+
    @Override
    protected ScreenshotOut doInBackground() throws Exception {
       return Gui.getServer(mOut.getServerId()).getScreenshot(new MachineIn(mOut));
    }
-   
+
    @Override
    protected void innerDone() throws InterruptedException, ExecutionException {
       ScreenshotOut scrOut = get();
       getReceiver().put(scrOut);
    }
-   
+
    public static void execute(_MachineScreenshotReceiver recv, MachineOut mOut) {
       (new MachineGetScreenshotWorker(recv, mOut)).execute();
    }
-   
+
 }

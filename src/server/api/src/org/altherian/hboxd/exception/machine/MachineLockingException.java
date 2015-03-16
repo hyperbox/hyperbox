@@ -22,21 +22,21 @@ package org.altherian.hboxd.exception.machine;
 
 @SuppressWarnings("serial")
 public class MachineLockingException extends MachineException {
-   
+
    public MachineLockingException() {
       this("Unable to lock machine");
    }
-   
+
    public MachineLockingException(String s) {
       super(s);
    }
-   
+
    public MachineLockingException(Throwable t) {
       super(t);
    }
-   
+
    public MachineLockingException(String s, Throwable t) {
       super(s, t);
    }
-   
+
 }

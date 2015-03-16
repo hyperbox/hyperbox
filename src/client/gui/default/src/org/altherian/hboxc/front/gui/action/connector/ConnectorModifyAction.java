@@ -28,26 +28,26 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class ConnectorModifyAction extends AbstractAction {
-   
+
    private _SingleConnectorSelector select;
-   
+
    public ConnectorModifyAction(_SingleConnectorSelector select) {
       this(select, "Edit", true);
    }
-   
+
    public ConnectorModifyAction(_SingleConnectorSelector select, boolean isEnabled) {
       this(select, "Edit", isEnabled);
    }
-   
+
    public ConnectorModifyAction(_SingleConnectorSelector select, String label, boolean isEnabled) {
       super(label);
       this.select = select;
       setEnabled(isEnabled);
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       ConnectorEditorDialog.edit(select.getConnector());
    }
-   
+
 }

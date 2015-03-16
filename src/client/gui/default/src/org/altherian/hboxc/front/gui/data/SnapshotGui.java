@@ -24,31 +24,31 @@ import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
 import org.altherian.tool.AxStrings;
 
 public class SnapshotGui extends EntityGui {
-   
+
    private String name;
-   
+
    public SnapshotGui(SnapshotOut snapOut) {
       super(snapOut.getEntityTypeId(), snapOut.getId());
       name = snapOut.getName();
    }
-   
+
    @Override
    public String toString() {
       return AxStrings.isEmpty(name) ? super.toString() : name;
    }
-   
+
    /**
     * @return the name
     */
    public String getName() {
       return name;
    }
-   
+
    /**
     * @param name the name to set
     */
    public void setName(String name) {
       this.name = name;
    }
-   
+
 }

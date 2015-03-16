@@ -21,7 +21,7 @@
 package org.altherian.hboxd.core.model;
 
 public interface _Snapshot {
-   
+
    public String getId();
-   
+
 }

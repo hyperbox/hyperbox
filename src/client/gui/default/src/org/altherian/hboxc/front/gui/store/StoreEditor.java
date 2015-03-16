@@ -45,7 +45,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class StoreEditor implements _Saveable, _Cancelable {
-   
+
    private JLabel storeLabel;
    private JTextField storeLabelValue;
    private JLabel storeLocLabel;
@@ -53,23 +53,23 @@ public class StoreEditor implements _Saveable, _Cancelable {
    private JButton browseButton;
    private JLabel storeTypeLabel;
    private JComboBox storeTypeBox;
-   
+
    private JButton saveButton;
    private JButton cancelButton;
-   
+
    private JDialog dialog;
-   
+
    private String srvId;
    private StoreIn stoIn;
    private StoreOut stoOut;
-   
+
    @SuppressWarnings("serial")
    private class BrowseAction extends AbstractAction {
-      
+
       public BrowseAction() {
          super("Browse");
       }
-      
+
       @Override
       public void actionPerformed(ActionEvent e) {
          StoreItemOut stiOut = StoreItemChooser.getExisitingFolder(srvId);
@@ -78,46 +78,46 @@ public class StoreEditor implements _Saveable, _Cancelable {
             storeLocValue.requestFocus();
          }
       }
-      
+
    }
-   
+
    private class EmptyValueListener implements DocumentListener {
-      
+
       private void validate() {
          saveButton.setEnabled(!AxStrings.isEmpty(storeLabelValue.getText()) && !AxStrings.isEmpty(storeLocValue.getText()));
       }
-      
+
       @Override
       public void insertUpdate(DocumentEvent e) {
          validate();
       }
-      
+
       @Override
       public void removeUpdate(DocumentEvent e) {
          validate();
       }
-      
+
       @Override
       public void changedUpdate(DocumentEvent e) {
          validate();
       }
-      
+
    }
-   
+
    public StoreEditor(String srvId) {
-      
+
       this.srvId = srvId;
-      
+
       saveButton = new JButton(new SaveAction(this));
       saveButton.setEnabled(false);
       cancelButton = new JButton(new CancelAction(this));
       JPanel buttonPanel = new JPanel(new MigLayout("ins 0"));
       buttonPanel.add(saveButton);
       buttonPanel.add(cancelButton);
-      
+
       storeLabel = new JLabel("Label");
       storeLocLabel = new JLabel("Location");
-      
+
       storeLabelValue = new JTextField();
       storeLabelValue.getDocument().addDocumentListener(new EmptyValueListener());
       storeLocValue = new JTextField();
@@ -127,7 +127,7 @@ public class StoreEditor implements _Saveable, _Cancelable {
       storeTypeBox = new JComboBox();
       // TODO retrieve full list of supported store types.
       storeTypeBox.addItem("Native Folder");
-      
+
       dialog = JDialogBuilder.get(saveButton);
       dialog.add(storeLabel);
       dialog.add(storeLabelValue, "growx, pushx, span 2, wrap");
@@ -139,68 +139,68 @@ public class StoreEditor implements _Saveable, _Cancelable {
       dialog.add(buttonPanel, "center, span 3");
       CancelableUtils.set(this, dialog.getRootPane());
    }
-   
+
    public StoreIn create() {
-      
+
       dialog.setTitle("Create new Store");
       show();
       return stoIn;
    }
-   
+
    public StoreIn register() {
-      
+
       dialog.setTitle("Registering new Store");
       show();
       return stoIn;
    }
-   
+
    public StoreIn edit(StoreOut stoOut) {
-      
+
       this.stoOut = stoOut;
       dialog.setTitle("Edit store " + stoOut.getLabel());
-      
+
       storeLabelValue.setText(stoOut.getLabel());
       storeLocValue.setText(stoOut.getLocation());
-      
+
       show();
       return stoIn;
    }
-   
+
    public static StoreIn getInputCreate(String srvId) {
       return new StoreEditor(srvId).create();
    }
-   
+
    public static StoreIn getInputRegister(String srvId) {
       return new StoreEditor(srvId).register();
    }
-   
+
    public static StoreIn getInputEdit(String srvId, StoreOut stoOut) {
       return new StoreEditor(srvId).edit(stoOut);
-      
+
    }
-   
+
    private void show() {
-      
+
       dialog.pack();
       dialog.setSize(323, dialog.getHeight());
       dialog.setLocationRelativeTo(dialog.getParent());
       dialog.setVisible(true);
    }
-   
+
    private void hide() {
-      
+
       dialog.setVisible(false);
    }
-   
+
    @Override
    public void cancel() {
-      
+
       hide();
    }
-   
+
    @Override
    public void save() {
-      
+
       if (stoOut != null) {
          stoIn = new StoreIn(stoOut.getId());
       } else {
@@ -210,5 +210,5 @@ public class StoreEditor implements _Saveable, _Cancelable {
       stoIn.setLocation(storeLocValue.getText());
       hide();
    }
-   
+
 }

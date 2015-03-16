@@ -24,19 +24,19 @@ import org.altherian.hbox.comm.out.ServerOut;
 import java.util.Date;
 
 public final class UnknownEventOut extends EventOut {
-   
+
    @SuppressWarnings("unused")
    private UnknownEventOut() {
       // Used for serialization
    }
-   
+
    public UnknownEventOut(Date time, Enum<?> id, ServerOut srvOut) {
       super(time, id, srvOut);
    }
-   
+
    @Override
    public String toString() {
       return "Unknown Event ID #" + getId() + " occured at " + getTime() + "on Server ID " + getServerId();
    }
-   
+
 }

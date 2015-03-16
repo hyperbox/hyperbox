@@ -41,14 +41,14 @@ import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
 public class HBoxServer {
-   
+
    private static Map<URL, Reflections> classes;
    private static _Persistor persistor;
    private static _Server srv;
-   
+
    static {
       classes = new HashMap<URL, Reflections>();
-      
+
       Set<URL> urls = new HashSet<URL>();
       for (URL url : ClasspathHelper.forJavaClassPath()) {
          if (url.getFile().endsWith(".jar") || url.getFile().endsWith(".class") || url.getFile().endsWith("/")) {
@@ -57,9 +57,9 @@ public class HBoxServer {
       }
       scan(urls);
    }
-   
+
    private static void scan(Set<URL> urls, ClassLoader... loaders) {
-      
+
       Long start = System.currentTimeMillis();
       Reflections scan = new Reflections(new ConfigurationBuilder().addClassLoaders(loaders).setUrls(urls)
             .setScanners(new SubTypesScanner(), new TypeAnnotationsScanner())
@@ -67,12 +67,12 @@ public class HBoxServer {
       for (URL url : urls) {
          classes.put(url, scan);
       }
-      
+
       Logger.debug("Scanning urls took " + (System.currentTimeMillis() - start) + " ms");
    }
-   
+
    public static void add(Set<URL> rawUrls, ClassLoader... loaders) {
-      
+
       Set<URL> urls = new HashSet<URL>();
       for (URL rawUrl : rawUrls) {
          if (!classes.containsKey(rawUrl)) {
@@ -82,14 +82,14 @@ public class HBoxServer {
       }
       scan(urls, loaders);
    }
-   
+
    public static void reload(Set<URL> rawUrls, ClassLoader... loaders) {
-      
+
       scan(rawUrls, loaders);
    }
-   
+
    public static void remove(Set<URL> urls) {
-      
+
       for (URL url : urls) {
          classes.remove(url);
          Logger.debug("URL removed: " + url);
@@ -99,7 +99,7 @@ public class HBoxServer {
          Logger.debug("\t" + url);
       }
    }
-   
+
    @SuppressWarnings("unchecked")
    public static <T> T loadClass(Class<T> itWannabeClass, String it) {
       try {
@@ -112,13 +112,13 @@ public class HBoxServer {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    public static <T> Set<Class<? extends T>> getSubTypes(Class<T> type) {
       Long start = System.currentTimeMillis();
       Set<Class<? extends T>> classList = new HashSet<Class<? extends T>>();
       for (Reflections data : classes.values()) {
          for (Class<? extends T> rawClass : data.getSubTypesOf(type)) {
-            
+
             /*
              * Since we have modules, it is possible that several classes have the same name.
              * To avoid any conflict, we want to make sure only the good classes are returned.
@@ -137,12 +137,12 @@ public class HBoxServer {
       Logger.debug(type.getSimpleName() + " providers took " + (System.currentTimeMillis() - start) + " ms to find");
       return classList;
    }
-   
+
    public static <T> Set<Class<? extends T>> getAnnotatedSubTypes(Class<T> type, Class<? extends Annotation> note) {
       Long start = System.currentTimeMillis();
       Set<Class<? extends T>> classList = new HashSet<Class<? extends T>>();
       for (Class<? extends T> subType : getSubTypes(type)) {
-         
+
          if (Modifier.isAbstract(subType.getModifiers())) {
             Logger.debug(subType.getName() + " is abstract and was ignored");
          } else {
@@ -154,16 +154,16 @@ public class HBoxServer {
                   classList.add(subType);
                }
             }
-            
+
          }
       }
       Logger.debug(type.getSimpleName() + " providers took " + (System.currentTimeMillis() - start) + " ms to find");
       return classList;
    }
-   
+
    public static <T> Set<T> getQuiet(Class<T> type) {
       Set<T> loadedClasses = new HashSet<T>();
-      
+
       Set<Class<? extends T>> classes = getSubTypes(type);
       for (Class<? extends T> rawObject : classes) {
          try {
@@ -175,20 +175,20 @@ public class HBoxServer {
             Logger.debug("Failed to load " + rawObject.getSimpleName() + " : " + e.getLocalizedMessage());
          }
       }
-      
+
       return loadedClasses;
    }
-   
+
    public static <T> Set<T> getAtLeastOneOrFail(Class<T> type) throws HyperboxException {
       Set<T> objects = getQuiet(type);
-      
+
       if (objects.isEmpty()) {
          throw new HyperboxException("Unable to find any match for " + type.getSimpleName());
       }
-      
+
       return objects;
    }
-   
+
    public static <T> Set<T> getAllOrFail(Class<T> type) throws HyperboxException {
       try {
          Set<Class<? extends T>> classes = getSubTypes(type);
@@ -205,23 +205,23 @@ public class HBoxServer {
          throw new HyperboxException("Failed to load " + type.getSimpleName(), e);
       }
    }
-   
+
    public static void initPersistor(_Persistor persistor) {
-      
+
       if (HBoxServer.persistor == null) {
          HBoxServer.persistor = persistor;
       }
    }
-   
+
    public static void initServer(_Server srv) {
-      
+
       HBoxServer.srv = srv;
    }
-   
+
    public static _Server get() {
       return srv;
    }
-   
+
    public static String getSetting(String key, String defaultValue) {
       try {
          if (Configuration.hasSetting(key)) {
@@ -233,13 +233,13 @@ public class HBoxServer {
          return defaultValue;
       }
    }
-   
+
    public static String getSetting(String key) {
       return getSetting(key, null);
    }
-   
+
    public static boolean hasSetting(String key) {
-      
+
       try {
          Logger.debug("Checking key \"" + key + "\" in storage");
          return persistor.loadSetting(key) != null;
@@ -248,7 +248,7 @@ public class HBoxServer {
          return Configuration.hasSetting(key);
       }
    }
-   
+
    public static String getSettingOrFail(String key) {
       if (!hasSetting(key)) {
          throw new HyperboxRuntimeException("Setting key not found: " + key);
@@ -256,9 +256,9 @@ public class HBoxServer {
          return getSetting(key);
       }
    }
-   
+
    public static void setSetting(String key, Object value) {
-      
+
       persistor.storeSetting(key, value.toString());
       Configuration.setSetting(key, value);
    }

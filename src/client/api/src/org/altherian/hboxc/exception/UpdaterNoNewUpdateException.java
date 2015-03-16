@@ -22,13 +22,13 @@ package org.altherian.hboxc.exception;
 
 @SuppressWarnings("serial")
 public class UpdaterNoNewUpdateException extends UpdaterException {
-   
+
    public UpdaterNoNewUpdateException() {
       super("No new updates were found");
    }
-   
+
    public UpdaterNoNewUpdateException(String s) {
       super(s);
    }
-   
+
 }

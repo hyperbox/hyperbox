@@ -25,9 +25,9 @@ import org.altherian.hbox.event._Event;
 import org.altherian.hboxd.core._Hyperbox;
 
 public interface _EventIoFactory {
-   
+
    public Enum<?>[] getHandles();
-   
+
    public EventOut get(_Hyperbox hbox, _Event ev);
-   
+
 }

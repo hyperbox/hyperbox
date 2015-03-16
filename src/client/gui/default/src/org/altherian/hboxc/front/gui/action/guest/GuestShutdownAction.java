@@ -32,20 +32,20 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class GuestShutdownAction extends AbstractAction {
-   
+
    private _MachineSelector selector;
-   
+
    public GuestShutdownAction(_MachineSelector selector) {
       super("Shutdown");
       setEnabled(true);
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ev) {
       for (MachineOut mOut : selector.getMachines()) {
          Gui.post(new Request(Command.HBOX, HyperboxTasks.GuestShutdown, new MachineIn(mOut)));
       }
    }
-   
+
 }

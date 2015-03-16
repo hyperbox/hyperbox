@@ -21,10 +21,10 @@
 package org.altherian.hbox.states;
 
 public enum MachineSessionStates {
-   
+
    Locking,
    Locked,
    Unlocking,
    Unlocked,
-   
+
 }

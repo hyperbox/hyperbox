@@ -27,23 +27,23 @@ import org.altherian.hbox.comm.out.security.UserOut;
 import java.util.Date;
 
 public abstract class UserEventOut extends EventOut {
-   
+
    protected UserEventOut() {
       // Used for serialization
    }
-   
+
    public UserEventOut(Date time, Enum<?> id, ServerOut srvOut, UserOut user) {
       super(time, id.toString(), srvOut);
       set(UserOut.class, user);
    }
-   
+
    public UserOut getUser() {
       return get(UserOut.class);
    }
-   
+
    @Override
    public String toString() {
       return "User event occured at " + getTime() + " for user " + getUser().getDomainLogonName();
    }
-   
+
 }

@@ -39,21 +39,21 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
 public class KryonetServerFront implements _Front {
-   
+
    private _RequestReceiver r;
    private Server server;
    private Integer port;
-   
+
    private Map<Integer, _Client> clients;
-   
+
    @Override
    public void start(_RequestReceiver r) throws HyperboxException {
-      
+
       this.r = r;
       clients = new HashMap<Integer, _Client>();
-      
+
       loadConfig();
-      
+
       try {
          int netBufferWriteSize = Integer.parseInt(Configuration.getSetting(KryonetDefaultSettings.CFGKEY_KRYO_NET_WRITE_BUFFER_SIZE,
                KryonetDefaultSettings.CFGVAL_KRYO_NET_WRITE_BUFFER_SIZE));
@@ -62,7 +62,7 @@ public class KryonetServerFront implements _Front {
          server = new Server(netBufferWriteSize, netBufferObjectSize);
          server.start();
          KryoRegister.register(server.getKryo());
-         
+
          server.bind(port);
          server.addListener(new MainListener());
          server.getUpdateThread().setUncaughtExceptionHandler(new KryoUncaughtExceptionHandler());
@@ -76,9 +76,9 @@ public class KryonetServerFront implements _Front {
          throw new HyperboxException("Unable to start the Kryonet server : " + e.getLocalizedMessage());
       }
    }
-   
+
    private void loadConfig() throws HyperboxException {
-      
+
       try {
          port = Integer.parseInt(Configuration.getSetting(KryonetDefaultSettings.CFGKEY_KRYO_NET_TCP_PORT,
                KryonetDefaultSettings.CFGVAL_KRYO_NET_TCP_PORT.toString()));
@@ -88,41 +88,41 @@ public class KryonetServerFront implements _Front {
                + Configuration.getSetting(KryonetDefaultSettings.CFGKEY_KRYO_NET_TCP_PORT));
       }
    }
-   
+
    @Override
    public void stop() {
-      
+
       server.stop();
    }
-   
+
    public void stop(EventOut ev) {
       broadcast(ev);
       stop();
    }
-   
+
    @Override
    public void broadcast(EventOut ev) {
-      
+
       if (server != null) {
          server.sendToAllTCP(ev);
       }
    }
-   
+
    private class MainListener extends Listener {
-      
+
       @Override
       public void connected(Connection connection) {
-         
+
          Logger.info("Conn #" + connection.getID() + " " + connection.getRemoteAddressTCP().getAddress().getHostAddress() + " connected.");
          _Client client = new KryonetClient(connection);
          r.register(client);
          clients.put(connection.getID(), client);
       }
-      
+
       @Override
       public void received(Connection connection, Object object) {
          if (object.getClass().equals(Request.class)) {
-            
+
             Request req = (Request) object;
             _Client client = clients.get(connection.getID());
             Logger.debug("Received request from " + client.getId() + " (" + client.getAddress() + ") : " + req.getExchangeId() + " - " + req.getCommand()
@@ -130,14 +130,14 @@ public class KryonetServerFront implements _Front {
             r.postRequest(client, req);
          }
       }
-      
+
       @Override
       public void disconnected(Connection connection) {
-         
+
          Logger.info("Conn #" + connection.getID() + " has disconnected.");
          r.unregister(clients.get(connection.getID()));
          clients.remove(connection.getID());
       }
    }
-   
+
 }

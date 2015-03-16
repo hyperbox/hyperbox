@@ -36,63 +36,63 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 public final class MainView {
-   
+
    public static final String FRAME_NAME = "Hyperbox Client";
    public static final String CFGKEY_VSPLIT_POSITION = "gui.main.vsplit.pos";
    public static final String CFGVAL_VSPLIT_POSITION = "581";
-   
+
    private static MainView instance;
    private JFrame mainFrame;
    private MainMenu mainMenu;
-   
+
    private ServerMachineView vmListView;
    private JSplitPane vSplit;
    private JPanel notificationPanel;
-   
+
    public static JFrame getMainFrame() {
       return instance.mainFrame;
    }
-   
+
    {
       instance = this;
    }
-   
+
    public MainView() {
       vmListView = new ServerMachineView();
       mainMenu = new MainMenu();
-      
+
       mainFrame = new JFrame(FRAME_NAME);
       mainFrame.setIconImage(IconBuilder.getHyperbox().getImage());
       mainFrame.setJMenuBar(mainMenu.getComponent());
       mainFrame.addWindowListener(new WindowLManager());
-      
+
       notificationPanel = new NotificationPanel();
-      
+
       TaskListView taskList = new TaskListView();
-      
+
       JPanel listView = new JPanel(new MigLayout("ins 0"));
       listView.add(vmListView.getComponent(), "grow, push, wrap");
       vSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, listView, taskList.getComponent());
       vSplit.setResizeWeight(1);
       vSplit.setDividerLocation(Integer.parseInt(PreferencesManager.get().getProperty(Config.MAIN_VIEW_VSPLIT_POS, CFGVAL_VSPLIT_POSITION)));
       vSplit.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY, new PropertyChangeListener() {
-         
+
          @Override
          public void propertyChange(PropertyChangeEvent evt) {
             PreferencesManager.get().setProperty(Config.MAIN_VIEW_VSPLIT_POS, evt.getNewValue().toString());
          }
       });
-      
+
       mainFrame.add(notificationPanel, BorderLayout.NORTH);
       mainFrame.add(vSplit);
       ViewEventManager.register(this);
    }
-   
+
    public void show() {
       int width = Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFrameWidth, "990"));
       int height = Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFrameHeight, "772"));
       mainFrame.setSize(width, height);
-      
+
       // FIXME make sure the position still exists, in case we go from two screens to one screen.
       if (PreferencesManager.get().containsKey(Config.MainFramePosX)
             && PreferencesManager.get().containsKey(Config.MainFramePosY)) {
@@ -102,29 +102,29 @@ public final class MainView {
       } else {
          mainFrame.setLocationRelativeTo(null);
       }
-      
+
       mainFrame.setExtendedState(Integer.parseInt(PreferencesManager.get().getProperty(Config.MainFrameState, Int.get(Frame.NORMAL))));
       mainFrame.setVisible(true);
    }
-   
+
    public void hide() {
       mainFrame.setVisible(false);
    }
-   
+
    private class WindowLManager extends WindowAdapter {
-      
+
       @Override
       public void windowClosing(WindowEvent e) {
-         
+
          mainFrame.setExtendedState(Frame.NORMAL);
          PreferencesManager.get().setProperty(Config.MainFrameWidth, Int.get(mainFrame.getWidth()));
          PreferencesManager.get().setProperty(Config.MainFrameHeight, Int.get(mainFrame.getHeight()));
          PreferencesManager.get().setProperty(Config.MainFramePosX, Int.get(mainFrame.getLocationOnScreen().x));
          PreferencesManager.get().setProperty(Config.MainFramePosY, Int.get(mainFrame.getLocationOnScreen().y));
          PreferencesManager.get().setProperty(Config.MainFrameState, Int.get(mainFrame.getExtendedState()));
-         
+
          Gui.exit();
       }
    }
-   
+
 }

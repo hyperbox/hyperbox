@@ -28,18 +28,18 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class SaveAction extends AbstractAction {
-   
+
    private _Saveable obj;
-   
+
    public SaveAction(_Saveable obj) {
       this(obj, "Save");
    }
-   
+
    public SaveAction(_Saveable obj, String label) {
       super(label);
       this.obj = obj;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       try {
@@ -49,5 +49,5 @@ public class SaveAction extends AbstractAction {
          HyperboxClient.getView().postError(t, "Cannot save: " + t.getMessage());
       }
    }
-   
+
 }

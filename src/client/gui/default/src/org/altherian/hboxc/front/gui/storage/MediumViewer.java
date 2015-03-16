@@ -30,9 +30,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public final class MediumViewer {
-   
+
    private JPanel panel;
-   
+
    private JLabel typeLabel;
    private JLabel typeValue;
    private JLabel formatLabel;
@@ -45,7 +45,7 @@ public final class MediumViewer {
    private JLabel locationValue;
    private JLabel baseLocationLabel;
    private JLabel baseLocationValue;
-   
+
    public MediumViewer(ServerOut srvOut) {
       typeLabel = new JLabel("Type");
       typeValue = new JLabel();
@@ -61,7 +61,7 @@ public final class MediumViewer {
       baseLocationLabel.setVisible(false);
       baseLocationValue = new JLabel();
       baseLocationValue.setVisible(false);
-      
+
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(typeLabel);
       panel.add(typeValue, "growx, wrap");
@@ -76,16 +76,16 @@ public final class MediumViewer {
       panel.add(locationLabel);
       panel.add(locationValue, "growx, wrap");
    }
-   
+
    public JPanel getPanel() {
       return panel;
    }
-   
+
    public JPanel show(ServerOut srvOut, String mediumId) {
       MediumOut medOut = Gui.getServer(srvOut).getMedium(new MediumIn(mediumId));
       return show(srvOut, medOut);
    }
-   
+
    public JPanel show(ServerOut srvOut, MediumOut medOut) {
       if (medOut.hasSetting(MediumAttribute.Type)) {
          typeValue.setText(medOut.getSetting(MediumAttribute.Type).getString());
@@ -107,11 +107,11 @@ public final class MediumViewer {
             MediumOut baseMedOut = Gui.getServer(srvOut).getMedium(new MediumIn(medOut.getBaseUuid()));
             baseLocationValue.setText(baseMedOut.getLocation());
          }
-         
+
       }
       return getPanel();
    }
-   
+
    public JPanel show(ServerOut srvOut, MediumIn medIn) {
       if (medIn.hasSetting(MediumAttribute.Type)) {
          typeValue.setText(medIn.getSetting(MediumAttribute.Type).getString());
@@ -130,5 +130,5 @@ public final class MediumViewer {
       }
       return getPanel();
    }
-   
+
 }

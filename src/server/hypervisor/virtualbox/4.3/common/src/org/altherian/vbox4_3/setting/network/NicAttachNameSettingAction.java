@@ -28,17 +28,17 @@ import org.virtualbox_4_3.INetworkAdapter;
 import org.virtualbox_4_3.LockType;
 
 public class NicAttachNameSettingAction implements _NetworkInterfaceSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Shared;
    }
-   
+
    @Override
    public String getSettingName() {
       return NetworkInterfaceAttribute.AttachName.toString();
    }
-   
+
    @Override
    public void set(INetworkAdapter nic, _Setting setting) {
       switch (nic.getAttachmentType()) {
@@ -58,7 +58,7 @@ public class NicAttachNameSettingAction implements _NetworkInterfaceSettingActio
             break;
       }
    }
-   
+
    @Override
    public _Setting get(INetworkAdapter nic) {
       String value = "";
@@ -80,5 +80,5 @@ public class NicAttachNameSettingAction implements _NetworkInterfaceSettingActio
       }
       return new NicAttachNameSetting(value);
    }
-   
+
 }

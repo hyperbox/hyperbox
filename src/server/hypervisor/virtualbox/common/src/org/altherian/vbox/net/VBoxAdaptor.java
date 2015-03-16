@@ -31,17 +31,17 @@ import java.util.List;
 import java.util.Map;
 
 public class VBoxAdaptor implements _NetAdaptor {
-   
+
    private String id;
    private String label;
    private _NetMode mode;
    private boolean isEnabled;
    private Map<String, _NetService> services = new HashMap<String, _NetService>();
-   
+
    public VBoxAdaptor(String id, String label, _NetMode mode, boolean isEnabled) {
       this(id, label, mode, isEnabled, new ArrayList<_NetService>());
    }
-   
+
    public VBoxAdaptor(String id, String label, _NetMode mode, boolean isEnabled, List<_NetService> services) {
       this.id = id;
       this.label = label;
@@ -51,41 +51,41 @@ public class VBoxAdaptor implements _NetAdaptor {
          setService(service);
       }
    }
-   
+
    @Override
    public String getId() {
       return id;
    }
-   
+
    @Override
    public String getLabel() {
       return label;
    }
-   
+
    @Override
    public void setLabel(String label) {
       if (!mode.canRenameAdaptor()) {
          throw new HyperboxRuntimeException("Cannot set label on interface type " + mode.getLabel());
       }
-      
+
       Logger.warning("Renaming " + mode.getLabel() + " interface is not implemented");
    }
-   
+
    @Override
    public _NetMode getMode() {
       return mode;
    }
-   
+
    @Override
    public boolean isEnabled() {
       return isEnabled;
    }
-   
+
    @Override
    public List<_NetService> getServices() {
       return new ArrayList<_NetService>(services.values());
    }
-   
+
    @Override
    public void setService(_NetService service) {
       if (mode.getSupportedServices().contains(service.getType())) {
@@ -93,18 +93,18 @@ public class VBoxAdaptor implements _NetAdaptor {
          services.put(service.getType(), service);
       }
    }
-   
+
    protected void process(_NetService service) {
       throw new HyperboxRuntimeException("Service type " + service.getType() + " is not supported on " + getMode().getId() + " adaptor");
    }
-   
+
    @Override
    public _NetService getService(String serviceTypeId) {
       throw new HyperboxRuntimeException("Service type " + serviceTypeId + " is not supported on " + getMode().getId() + " adaptor");
    }
-   
+
    protected void throwUnsupportedServiceType(String serviceTypeId) {
       throw new HyperboxRuntimeException("Service type " + serviceTypeId + " is not supported on " + getMode().getId() + " adaptor");
    }
-   
+
 }

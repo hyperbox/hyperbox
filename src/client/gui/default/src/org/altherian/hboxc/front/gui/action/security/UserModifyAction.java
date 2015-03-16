@@ -38,18 +38,18 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class UserModifyAction extends AbstractAction {
-   
+
    private _UserSelector selector;
-   
+
    public UserModifyAction(_UserSelector selector) {
       this(selector, "Edit");
    }
-   
+
    public UserModifyAction(_UserSelector selector, String label) {
       super(label, IconBuilder.getTask(HyperboxTasks.UserModify));
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       List<String> selection = selector.getSelection();
@@ -60,8 +60,8 @@ public class UserModifyAction extends AbstractAction {
             Logger.debug("Got user input");
             Gui.post(new Request(Command.HBOX, HyperboxTasks.UserModify, new ServerIn(selector.getServerId()), usrIn));
          }
-         
+
       }
    }
-   
+
 }

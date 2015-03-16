@@ -21,7 +21,7 @@
 package org.altherian.hboxc.server.task;
 
 public interface _Task {
-   
+
    public void cancel();
-   
+
 }

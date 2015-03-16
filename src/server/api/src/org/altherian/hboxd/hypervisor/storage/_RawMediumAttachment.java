@@ -23,21 +23,21 @@ package org.altherian.hboxd.hypervisor.storage;
 import org.altherian.hboxd.hypervisor.vm._RawVM;
 
 public interface _RawMediumAttachment {
-   
+
    public _RawVM getMachine();
-   
+
    public boolean hasMedium();
-   
+
    public _RawMedium getMedium();
-   
+
    public _RawStorageController getController();
-   
+
    public long getPortId();
-   
+
    public long getDeviceId();
-   
+
    public String getDeviceType();
-   
+
    public boolean isPassThrough();
-   
+
 }

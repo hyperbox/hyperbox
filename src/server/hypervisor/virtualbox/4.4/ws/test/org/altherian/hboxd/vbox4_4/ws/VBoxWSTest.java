@@ -27,13 +27,13 @@ import org.altherian.vbox4_4.ws.VBoxWSHypervisor;
 import org.junit.BeforeClass;
 
 public class VBoxWSTest extends HypervisorTest {
-   
+
    @BeforeClass
    public static void beforeClass() throws HyperboxException {
       hypervisor = new VBoxWSHypervisor();
       hypervisor.setEventManager(new DummyEventManager());
-      
+
       HypervisorTest.init();
    }
-   
+
 }

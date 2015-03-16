@@ -23,18 +23,18 @@ package org.altherian.hbox.kryonet;
 import com.esotericsoftware.minlog.Log;
 
 public class KryonetDefaultSettings {
-   
+
    static {
       Log.ERROR();
    }
-   
+
    public static final String CFGKEY_KRYO_NET_TCP_PORT = "kryonet.net.tcp.port";
    public static final String CFGVAL_KRYO_NET_TCP_PORT = "45612";
-   
+
    public static final String CFGKEY_KRYO_NET_WRITE_BUFFER_SIZE = "kryonet.net.buffer.write";
    public static final String CFGVAL_KRYO_NET_WRITE_BUFFER_SIZE = "1838400";
-   
+
    public static final String CFGKEY_KRYO_NET_OBJECT_BUFFER_SIZE = "kryonet.net.buffer.object";
    public static final String CFGVAL_KRYO_NET_OBJECT_BUFFER_SIZE = "1638400";
-   
+
 }

@@ -33,11 +33,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HypervisorIoFactory {
-   
+
    private HypervisorIoFactory() {
       // static only
    }
-   
+
    public static HypervisorOut getOut(_Hypervisor hyp) {
       List<SettingIO> settings = new ArrayList<SettingIO>();
       if (hyp.isRunning()) {
@@ -52,7 +52,7 @@ public class HypervisorIoFactory {
       }
       return new HypervisorOut(hyp.getId(), settings);
    }
-   
+
    public static List<HypervisorLoaderOut> getOut(Class<? extends _Hypervisor> loader) {
       List<HypervisorLoaderOut> listOut = new ArrayList<HypervisorLoaderOut>();
       Hypervisor metadata = loader.getAnnotation(Hypervisor.class);
@@ -63,5 +63,5 @@ public class HypervisorIoFactory {
       }
       return listOut;
    }
-   
+
 }

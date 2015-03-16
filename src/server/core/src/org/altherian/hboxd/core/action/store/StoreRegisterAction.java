@@ -38,27 +38,27 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StoreRegisterAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.StoreRegister.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       StoreIn stoIn = request.get(StoreIn.class);
-      
+
       String location = stoIn.getSetting(StoreAttribute.Location).getString();
       String label = stoIn.getSetting(StoreAttribute.Label).getString();
-      
+
       _Store store = hbox.getStoreManager().registerStore(location, label);
       StoreOut stoOut = StoreIoFactory.get(store);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, stoOut));
    }
-   
+
 }

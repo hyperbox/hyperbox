@@ -24,9 +24,9 @@ import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class MachineSnapshotDataChangedEvent extends MachineEvent {
-   
+
    public MachineSnapshotDataChangedEvent(String srvId, MachineOut mOut) {
       super(ClientEvents.MachineSnapshotDataChanged, srvId, mOut);
    }
-   
+
 }

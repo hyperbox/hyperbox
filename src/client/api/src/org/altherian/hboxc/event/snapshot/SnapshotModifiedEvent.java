@@ -26,9 +26,9 @@ import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class SnapshotModifiedEvent extends SnapshotEvent {
-   
+
    public SnapshotModifiedEvent(ServerOut srvOut, MachineOut mOut, SnapshotOut snapOut) {
       super(ClientEvents.SnapshotModified, srvOut, mOut, snapOut);
    }
-   
+
 }

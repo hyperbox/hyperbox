@@ -33,44 +33,44 @@ import javax.swing.border.Border;
 
 @SuppressWarnings("serial")
 public class Notification extends JPanel {
-   
+
    private JLabel textLabel = new JLabel();
    private JLabel closeIcon = new JLabel(IconBuilder.getTask(ClientTasks.NotificationClose));
-   
+
    protected JLabel getLabel() {
       return textLabel;
    }
-   
+
    protected void setText(String text) {
       textLabel.setText(text);
    }
-   
+
    public Notification() {
       super(new MigLayout("ins 0"));
-      
+
       Border insets = BorderFactory.createEmptyBorder(5, 5, 5, 5);
       Border line = BorderFactory.createLineBorder(new Color(0x00529B), 1);
       Border border = BorderFactory.createCompoundBorder(line, insets);
       setBorder(border);
-      
+
       setOpaque(true);
       setBackground(new Color(0xBDE5F8));
-      
+
       add(textLabel, "growx, pushx");
       add(closeIcon);
-      
+
       closeIcon.addMouseListener(new MouseListener());
    }
-   
+
    private class MouseListener extends MouseAdapter {
-      
+
       @Override
       public void mouseClicked(MouseEvent ev) {
          if ((ev.getButton() == MouseEvent.BUTTON1) && (ev.getClickCount() == 1)) {
             setVisible(false);
          }
       }
-      
+
    }
-   
+
 }

@@ -31,54 +31,54 @@ import org.altherian.tool.AxStrings;
 import java.util.Collection;
 
 public class ConnectorOutput extends ObjectOut {
-   
+
    protected ConnectorOutput() {
       // do not use
    }
-   
+
    public ConnectorOutput(String id) {
       super(ClientEntity.Connector, id);
    }
-   
+
    public ConnectorOutput(String id, Collection<SettingIO> settings) {
       super(ClientEntity.Connector, id, settings);
    }
-   
+
    public String getLabel() {
       return getSetting(ConnectorAttributes.Label).getString();
    }
-   
+
    public ConnectionState getState() {
       return (ConnectionState) getSetting(ConnectorAttributes.ConnectionState).getRawValue();
    }
-   
+
    public boolean isConnected() {
       return getSetting(ConnectorAttributes.isConnected).getBoolean();
    }
-   
+
    public String getBackendId() {
       return getSetting(ConnectorAttributes.BackendId).getString();
    }
-   
+
    public String getAddress() {
       return getSetting(ConnectorAttributes.Address).getString();
    }
-   
+
    public String getUsername() {
       return getSetting(ConnectorAttributes.Username).getString();
    }
-   
+
    public ServerOut getServer() {
       return (ServerOut) getSetting(ConnectorAttributes.Server).getRawValue();
    }
-   
+
    public String getServerId() {
       return getSetting(ConnectorAttributes.ServerId).getString();
    }
-   
+
    @Override
    public String toString() {
       return AxStrings.isEmpty(getLabel()) ? getId() : getLabel();
    }
-   
+
 }

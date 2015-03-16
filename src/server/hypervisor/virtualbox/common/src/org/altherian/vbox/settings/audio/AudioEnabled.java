@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public final class AudioEnabled extends BooleanSetting {
-   
+
    public AudioEnabled(boolean isEnabled) {
       super(MachineAttribute.AudioEnable, isEnabled);
    }
-   
+
 }

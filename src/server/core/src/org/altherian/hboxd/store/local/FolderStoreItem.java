@@ -28,10 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class FolderStoreItem implements _StoreItem {
-   
+
    private _Store store;
    private File location;
-   
+
    public FolderStoreItem(_Store store, File path) {
       path = path.getAbsoluteFile();
       if (!path.exists()) {
@@ -43,31 +43,31 @@ public final class FolderStoreItem implements _StoreItem {
       if (!path.isAbsolute()) {
          throw new HyperboxRuntimeException(path + " must be a full path");
       }
-      
+
       this.store = store;
       location = path;
    }
-   
+
    @Override
    public String getName() {
       return location.getName();
    }
-   
+
    @Override
    public boolean isContainer() {
       return true;
    }
-   
+
    @Override
    public String getPath() {
       return location.getAbsolutePath();
    }
-   
+
    @Override
    public long getSize() {
       return 0;
    }
-   
+
    @Override
    public List<_StoreItem> listItems() {
       List<_StoreItem> list = new ArrayList<_StoreItem>();
@@ -84,10 +84,10 @@ public final class FolderStoreItem implements _StoreItem {
       }
       return list;
    }
-   
+
    @Override
    public _Store getStore() {
       return store;
    }
-   
+
 }

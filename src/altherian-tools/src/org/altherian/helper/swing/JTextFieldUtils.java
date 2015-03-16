@@ -25,20 +25,20 @@ import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 
 public class JTextFieldUtils {
-   
+
    public static JTextField createNonEditable() {
       JTextField field = new JTextField();
       field.setEditable(false);
       return field;
    }
-   
+
    public static JTextField createAsLabel(String initialText) {
       JTextField field = new JTextField(initialText);
       field.setEditable(false);
       field.setBorder(BorderFactory.createEmptyBorder());
       return field;
    }
-   
+
    public static boolean hasValue(JTextField... fields) {
       for (JTextField field : fields) {
          if (field.isEnabled() && !field.getText().isEmpty()) {
@@ -47,5 +47,5 @@ public class JTextFieldUtils {
       }
       return false;
    }
-   
+
 }

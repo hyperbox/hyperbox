@@ -22,7 +22,7 @@
 package org.altherian.hboxc.constant;
 
 public enum ConnectorAttributes {
-   
+
    Id,
    Label,
    Address,
@@ -34,5 +34,5 @@ public enum ConnectorAttributes {
    ServerId,
    Server,
    Username,
-   
+
 }

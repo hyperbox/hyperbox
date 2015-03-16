@@ -34,19 +34,19 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class ModuleUnregisterAction extends AbstractAction {
-   
+
    private _ModuleSelector selector;
-   
+
    public ModuleUnregisterAction(_ModuleSelector selector) {
       super("Unregister", IconBuilder.getTask(HyperboxTasks.ModuleUnregister));
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       for (ModuleOut mod : selector.getModuleSelection()) {
          Gui.post(new Request(Command.HBOX, HyperboxTasks.ModuleUnregister, new ServerIn(selector.getServerId()), new ModuleIn(mod.getId())));
       }
    }
-   
+
 }

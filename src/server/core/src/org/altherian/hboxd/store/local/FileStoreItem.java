@@ -28,10 +28,10 @@ import java.io.File;
 import java.util.List;
 
 public final class FileStoreItem implements _StoreItem {
-   
+
    private _Store store;
    private File location;
-   
+
    public FileStoreItem(_Store store, File path) {
       if (!path.exists()) {
          throw new HyperboxRuntimeException(path + " does not exist");
@@ -42,40 +42,40 @@ public final class FileStoreItem implements _StoreItem {
       if (!path.isAbsolute()) {
          throw new HyperboxRuntimeException(path + " must be a full path");
       }
-      
+
       this.store = store;
       location = new File(path.getAbsolutePath());
-      
+
    }
-   
+
    @Override
    public String getName() {
       return location.getName();
    }
-   
+
    @Override
    public boolean isContainer() {
       return false;
    }
-   
+
    @Override
    public String getPath() {
       return location.getAbsolutePath();
    }
-   
+
    @Override
    public long getSize() {
       return location.length();
    }
-   
+
    @Override
    public List<_StoreItem> listItems() {
       throw new StoreItemIsNotContainerException(location);
    }
-   
+
    @Override
    public _Store getStore() {
       return store;
    }
-   
+
 }

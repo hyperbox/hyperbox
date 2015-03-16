@@ -25,9 +25,9 @@ import org.altherian.hboxc.core.server.Server;
 import org.altherian.hboxc.server._Server;
 
 public class ServerFactory {
-   
+
    public static _Server get() {
       return new Server();
    }
-   
+
 }

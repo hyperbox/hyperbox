@@ -21,7 +21,7 @@
 package org.altherian.hbox.constant;
 
 public enum EntityType {
-   
+
    Attribute,
    Audio,
    Backend,
@@ -76,15 +76,15 @@ public enum EntityType {
    Task,
    USB,
    User,
-   
+
    Unknown;
-   
+
    public String getId() {
       return toString();
    }
-   
+
    public boolean match(String id) {
       return getId().contentEquals(id);
    }
-   
+
 }

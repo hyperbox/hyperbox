@@ -27,50 +27,50 @@ import java.util.List;
 import java.util.Map;
 
 public class SettingManager {
-   
+
    private Map<String, _Setting> settingMap = new HashMap<String, _Setting>();
-   
+
    public List<_Setting> list() {
       return new ArrayList<_Setting>(settingMap.values());
    }
-   
+
    public boolean has(String settingName) {
       return settingMap.containsKey(settingName);
    }
-   
+
    public boolean has(Enum<?> settingEnum) {
       return settingMap.containsKey(settingEnum.toString());
    }
-   
+
    public _Setting get(String settingName) {
-      
+
       return settingMap.get(settingName);
    }
-   
+
    public _Setting get(Enum<?> settingEnum) {
-      
+
       return settingMap.get(settingEnum.toString());
    }
-   
+
    public void set(List<_Setting> settings) {
       for (_Setting setting : settings) {
          set(setting);
       }
    }
-   
+
    public void set(_Setting setting) {
-      
+
       settingMap.put(setting.getName(), setting);
    }
-   
+
    public void unset(String id) {
       unset(Arrays.asList(id));
    }
-   
+
    public void unset(List<String> ids) {
       for (String id : ids) {
          settingMap.remove(id);
       }
    }
-   
+
 }

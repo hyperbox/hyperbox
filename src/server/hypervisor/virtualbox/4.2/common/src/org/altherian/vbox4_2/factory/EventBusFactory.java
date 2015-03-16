@@ -24,15 +24,15 @@ import net.engio.mbassy.bus.MBassador;
 import net.engio.mbassy.bus.config.BusConfiguration;
 
 public class EventBusFactory {
-   
+
    private static MBassador<Object> evBus = new MBassador<Object>(BusConfiguration.Default());;
-   
+
    public static void subscribe(Object o) {
       evBus.subscribe(o);
    }
-   
+
    public static void post(Object o) {
       evBus.publish(o);
    }
-   
+
 }

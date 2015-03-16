@@ -21,10 +21,10 @@
 package org.altherian.tool;
 
 public class ProcessRunner {
-   
+
    public static void run(Process p) {
       new StreamDumper(p.getInputStream()).start();
       new StreamDumper(p.getErrorStream()).start();
    }
-   
+
 }

@@ -25,12 +25,12 @@ import org.altherian.hboxc.front.gui.utils.AbstractListTableModel;
 
 @SuppressWarnings("serial")
 public class PermissionTableModel extends AbstractListTableModel<PermissionIn> {
-   
+
    private final String itemTypeCol = "Item Type";
    private final String itemCol = "Item";
    private final String actionCol = "Action";
    private final String accessCol = "Access";
-   
+
    @Override
    protected void addColumns() {
       addColumn(itemTypeCol);
@@ -38,7 +38,7 @@ public class PermissionTableModel extends AbstractListTableModel<PermissionIn> {
       addColumn(actionCol);
       addColumn(accessCol);
    }
-   
+
    @Override
    protected Object getValueAt(PermissionIn obj, String columnName) {
       if (columnName.contentEquals(itemTypeCol)) {
@@ -53,5 +53,5 @@ public class PermissionTableModel extends AbstractListTableModel<PermissionIn> {
          return "";
       }
    }
-   
+
 }

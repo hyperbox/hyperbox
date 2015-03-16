@@ -22,9 +22,9 @@
 package org.altherian.hboxc.front.gui.worker.receiver;
 
 public interface _WorkerDataReceiver {
-   
+
    public void loadingStarted();
-   
+
    public void loadingFinished(boolean isSuccessful, String message);
-   
+
 }

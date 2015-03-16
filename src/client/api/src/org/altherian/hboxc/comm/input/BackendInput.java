@@ -25,9 +25,9 @@ import org.altherian.hbox.comm.in.ObjectIn;
 import org.altherian.hbox.constant.EntityType;
 
 public class BackendInput extends ObjectIn<EntityType> {
-   
+
    public BackendInput() {
       super(EntityType.Backend);
    }
-   
+
 }

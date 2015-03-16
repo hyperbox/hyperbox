@@ -24,57 +24,57 @@ import org.altherian.hbox.constant.NetServiceType;
 import org.altherian.hbox.hypervisor.net._NetService_IP6;
 
 public class NetService_IP6_IO extends NetServiceIO implements _NetService_IP6 {
-   
+
    private String ip;
    private long mask;
    private String gw;
-   
+
    protected NetService_IP6_IO() {
       // serial
    }
-   
+
    public NetService_IP6_IO(NetService_IP6_IO svc) {
       this(svc.isEnabled(), svc.getAddress(), svc.getMask());
    }
-   
+
    public NetService_IP6_IO(boolean enabled) {
       super(NetServiceType.IPv6.getId(), enabled);
    }
-   
+
    public NetService_IP6_IO(boolean enabled, String ip, long mask) {
       this(enabled);
       setIP(ip);
       setMask(mask);
    }
-   
+
    @Override
    public String getAddress() {
       return ip;
    }
-   
+
    @Override
    public long getMask() {
       return mask;
    }
-   
+
    @Override
    public String getGateway() {
       return gw;
    }
-   
+
    @Override
    public void setIP(String ip) {
       this.ip = ip;
    }
-   
+
    @Override
    public void setMask(long mask) {
       this.mask = mask;
    }
-   
+
    @Override
    public void setGateway(String gw) {
       this.gw = gw;
    }
-   
+
 }

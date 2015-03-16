@@ -25,13 +25,13 @@ import org.virtualbox_4_2.IMachine;
 import org.virtualbox_4_2.LockType;
 
 public interface _MachineSettingAction {
-   
+
    public LockType getLockType();
-   
+
    public String getSettingName();
-   
+
    public void set(IMachine machine, _Setting setting);
-   
+
    public _Setting get(IMachine machine);
-   
+
 }

@@ -24,13 +24,13 @@ import org.altherian.hbox.comm.in.StoreItemIn;
 import org.altherian.hbox.comm.out.StoreItemOut;
 
 public class StoreItemIoFactory {
-   
+
    private StoreItemIoFactory() {
       // static class
    }
-   
+
    public static StoreItemIn get(StoreItemOut siOut) {
       return new StoreItemIn(siOut.getPath());
    }
-   
+
 }

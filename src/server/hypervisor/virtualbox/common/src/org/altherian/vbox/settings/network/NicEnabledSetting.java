@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public class NicEnabledSetting extends BooleanSetting {
-   
+
    public NicEnabledSetting(boolean isEnabled) {
       super(NetworkInterfaceAttribute.Enabled, isEnabled);
    }
-   
+
 }

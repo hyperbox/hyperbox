@@ -27,28 +27,28 @@ import org.altherian.hboxc.front.gui.worker.receiver._ServerReceiver;
 import java.util.concurrent.ExecutionException;
 
 public class ServerGetWorker extends AxSwingWorker<_ServerReceiver, ServerOut, Void> {
-   
+
    private String srvId;
-   
+
    public ServerGetWorker(_ServerReceiver recv, String srvId) {
       super(recv);
       this.srvId = srvId;
    }
-   
+
    @Override
    protected ServerOut doInBackground() throws Exception {
       ServerOut newSrvOut = Gui.getServerInfo(srvId);
       return newSrvOut;
    }
-   
+
    @Override
    protected void innerDone() throws InterruptedException, ExecutionException {
       ServerOut srvOut = get();
       getReceiver().put(srvOut);
    }
-   
+
    public static void execute(_ServerReceiver recv, String srvId) {
       new ServerGetWorker(recv, srvId).execute();
    }
-   
+
 }

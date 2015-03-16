@@ -26,7 +26,7 @@ import org.virtualbox_4_4.ISession;
 import org.virtualbox_4_4.LockType;
 
 public interface _RawSessionManager {
-   
+
    /**
     * Get the current lock on the VM, or return null if no lock exists
     * 
@@ -34,7 +34,7 @@ public interface _RawSessionManager {
     * @return a ISession object with the current VM lock, or null if no lock exists
     */
    public ISession getLock(String uuid);
-   
+
    /**
     * Get a lock of a given type for a VM, assuming that this lock is coming from a user command.<br/>
     * If a lock of at least equivalent level already exist, it will be returned.
@@ -45,7 +45,7 @@ public interface _RawSessionManager {
     * @throws MachineLockingException If an error occurred when trying to lock the machine
     */
    public ISession lock(String uuid, LockType lockType) throws MachineLockingException;
-   
+
    /**
     * Get a lock of a given type for a VM, assuming that this lock is NOT coming from a user command.<br/>
     * If a lock of at least equivalent level already exist, it will be returned.
@@ -56,7 +56,7 @@ public interface _RawSessionManager {
     * @throws MachineLockingException If an error occurred when trying to lock the machine
     */
    public ISession lockAuto(String uuid, LockType lockType) throws MachineLockingException;
-   
+
    /**
     * Get the most powerful lock possible for a VM, assuming that this lock is NOT coming from a user command.<br/>
     * This call will try every possible lock, from most powerful to least powerful until one succeed, and that one will be returned.<br/>
@@ -67,7 +67,7 @@ public interface _RawSessionManager {
     * @throws MachineLockingException If an error occurred when trying to lock the machine
     */
    public ISession lockAuto(String uuid) throws MachineLockingException;
-   
+
    /**
     * Save the settings and release a lock on the given VM, assuming that this lock release is coming from a user command.<br/>
     * If no lock exists, this will do nothing.
@@ -75,9 +75,9 @@ public interface _RawSessionManager {
     * @param uuid UUID of the VM to unlock
     */
    public void unlock(String uuid);
-   
+
    public void unlock(String uuid, boolean saveSettings);
-   
+
    /**
     * Release a lock on the given VM, assuming that this lock release is *NOT* coming from a user command.<br/>
     * If no lock exists, or that the current lock has been from a user command, this will do nothing.<br/>
@@ -86,7 +86,7 @@ public interface _RawSessionManager {
     * @param uuid UUID of the VM to unlock
     */
    public void unlockAuto(String uuid);
-   
+
    /**
     * Release a lock on the given VM, assuming that this lock release is *NOT* coming from a user command.<br/>
     * If no lock exists, or that the current lock has been from a user command, this will do nothing.<br/>
@@ -96,7 +96,7 @@ public interface _RawSessionManager {
     * @param saveSettings if the settings should be saved or not
     */
    public void unlockAuto(String uuid, boolean saveSettings);
-   
+
    /**
     * The "most" representative machine object currently in the system will be return by this method.
     * If a lock already exists for the given VM, the machine object coming for the session object will be returned.
@@ -106,5 +106,5 @@ public interface _RawSessionManager {
     * @return the "most" representative machine object known to this session manager
     */
    public IMachine getCurrent(String uuid);
-   
+
 }

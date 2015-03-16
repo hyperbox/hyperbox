@@ -34,19 +34,19 @@ import java.util.List;
 import java.util.Map;
 
 public class MachineOut extends ObjectOut {
-   
+
    private String serverId;
    private String uuid;
    private boolean isAvailable = true;
    private String state;
    private Map<Long, NetworkInterfaceOut> nics = new HashMap<Long, NetworkInterfaceOut>();
    private Map<String, StorageControllerOut> strCtrs = new HashMap<String, StorageControllerOut>();
-   
+
    @SuppressWarnings("unused")
    private MachineOut() {
       // Used for serialization
    }
-   
+
    public MachineOut(String serverId, String uuid, MachineStates state, List<SettingIO> settings, List<StorageControllerOut> scList,
          List<NetworkInterfaceOut> nicList) {
       this(serverId, uuid, settings);
@@ -61,7 +61,7 @@ public class MachineOut extends ObjectOut {
          nics.put(nicOut.getNicId(), nicOut);
       }
    }
-   
+
    public MachineOut(String serverId, String uuid, String state, List<SettingIO> settings) {
       this(serverId, uuid, settings);
       if (state == null) {
@@ -69,18 +69,18 @@ public class MachineOut extends ObjectOut {
       }
       this.state = state;
    }
-   
+
    private MachineOut(String serverId, String uuid, List<SettingIO> settings) {
       super(EntityType.Machine, uuid, settings);
       this.uuid = uuid;
       this.serverId = serverId;
    }
-   
+
    public MachineOut(String serverId, String uuid, String state, boolean isAvailable) {
       this(serverId, uuid);
       this.isAvailable = isAvailable;
    }
-   
+
    /**
     * Build a machine message with the given UUID.
     * 
@@ -92,11 +92,11 @@ public class MachineOut extends ObjectOut {
       this.uuid = uuid;
       this.serverId = serverId;
    }
-   
+
    public String getServerId() {
       return serverId;
    }
-   
+
    /**
     * Get the UUID for this machine
     * 
@@ -105,11 +105,11 @@ public class MachineOut extends ObjectOut {
    public String getUuid() {
       return uuid;
    }
-   
+
    public boolean isAvailable() {
       return isAvailable;
    }
-   
+
    /**
     * Get the machine state
     * 
@@ -119,7 +119,7 @@ public class MachineOut extends ObjectOut {
    public String getState() {
       return state;
    }
-   
+
    /**
     * Get the machine name.<br/>
     * Helper method that gets the setting name and return its value.
@@ -133,31 +133,31 @@ public class MachineOut extends ObjectOut {
          return uuid;
       }
    }
-   
+
    public Boolean hasSnapshots() {
       return hasSetting(MachineAttribute.HasSnapshot) && getSetting(MachineAttribute.HasSnapshot).getBoolean();
    }
-   
+
    public String getCurrentSnapshot() {
       return getSetting(MachineAttribute.CurrentSnapshotUuid).getString();
    }
-   
+
    public List<StorageControllerOut> listStorageController() {
       List<StorageControllerOut> scList = new ArrayList<StorageControllerOut>(strCtrs.values());
       return scList;
    }
-   
+
    public StorageControllerOut getStorageController(String id) {
       return strCtrs.get(id);
    }
-   
+
    public List<NetworkInterfaceOut> listNetworkInterface() {
       return new ArrayList<NetworkInterfaceOut>(nics.values());
    }
-   
+
    @Override
    public String toString() {
       return getName();
    }
-   
+
 }

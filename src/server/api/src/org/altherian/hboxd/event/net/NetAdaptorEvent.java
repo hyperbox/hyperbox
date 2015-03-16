@@ -24,28 +24,28 @@ import org.altherian.hbox.event.Event;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 
 public abstract class NetAdaptorEvent extends Event {
-   
+
    private _Hypervisor hyp;
    private String modeId;
    private String adaptorId;
-   
+
    public NetAdaptorEvent(Enum<?> eventId, _Hypervisor hyp, String modeId, String adaptorId) {
       super(eventId);
       this.hyp = hyp;
       this.modeId = modeId;
       this.adaptorId = adaptorId;
    }
-   
+
    public _Hypervisor getHypervisor() {
       return hyp;
    }
-   
+
    public String getMode() {
       return modeId;
    }
-   
+
    public String getAdaptor() {
       return adaptorId;
    }
-   
+
 }

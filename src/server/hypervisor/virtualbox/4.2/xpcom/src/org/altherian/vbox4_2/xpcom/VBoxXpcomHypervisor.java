@@ -37,31 +37,31 @@ import org.virtualbox_4_2.VirtualBoxManager;
       product = VirtualBox.PRODUCT,
       schemes = { VirtualBox.ID.XPCOM_4_2 })
 public final class VBoxXpcomHypervisor extends VBoxHypervisor {
-   
+
    private final String defaultHome = "/usr/lib/virtualbox";
-   
+
    @Override
    public String getId() {
       return this.getClass().getAnnotation(Hypervisor.class).id();
    }
-   
+
    @Override
    public String getTypeId() {
       return this.getClass().getAnnotation(Hypervisor.class).typeId();
    }
-   
+
    @Override
    protected VirtualBoxManager connect(String options) {
       if (AxStrings.isEmpty(options)) {
          options = defaultHome;
       }
-      
+
       Logger.debug("Options - " + options);
       Logger.debug("vbox.home - " + System.getProperty("vbox.home"));
       Logger.debug("java.library.path - " + System.getProperty("java.library.path"));
       File libxpcom = new File(options + "/libvboxjxpcom.so");
       Logger.debug("Lib exists - " + libxpcom.getAbsolutePath() + " - " + libxpcom.isFile());
-      
+
       VirtualBoxManager mgr = VirtualBoxManager.createInstance(options);
       if (mgr.getVBox().getVersion().contains("OSE") && (mgr.getVBox().getRevision() < 50393)) {
          throw new HypervisorException(
@@ -73,15 +73,15 @@ public final class VBoxXpcomHypervisor extends VBoxHypervisor {
          return mgr;
       }
    }
-   
+
    @Override
    protected void disconnect() {
       System.gc();
    }
-   
+
    @Override
    protected ISession getSession() {
       return getMgr().getSessionObject();
    }
-   
+
 }

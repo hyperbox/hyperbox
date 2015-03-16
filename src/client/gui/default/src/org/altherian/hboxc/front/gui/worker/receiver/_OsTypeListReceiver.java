@@ -25,7 +25,7 @@ import org.altherian.hbox.comm.out.hypervisor.OsTypeOut;
 import java.util.List;
 
 public interface _OsTypeListReceiver extends _WorkerDataReceiver {
-   
+
    public void add(List<OsTypeOut> objOutList);
-   
+
 }

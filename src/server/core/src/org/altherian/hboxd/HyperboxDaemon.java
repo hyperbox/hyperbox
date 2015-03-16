@@ -26,29 +26,29 @@ import org.apache.commons.daemon.DaemonContext;
 import org.apache.commons.daemon.DaemonInitException;
 
 public final class HyperboxDaemon implements Daemon {
-   
+
    private static Controller c;
    private static DaemonContext _dc;
-   
+
    @Override
    public void destroy() {
       // nothing to do here
    }
-   
+
    @Override
    public void init(DaemonContext dc) throws DaemonInitException, Exception {
       _dc = dc;
       c = new Controller();
    }
-   
+
    @Override
    public void start() throws Exception {
       c.start(_dc.getArguments());
    }
-   
+
    @Override
    public void stop() throws Exception {
       c.stop();
    }
-   
+
 }

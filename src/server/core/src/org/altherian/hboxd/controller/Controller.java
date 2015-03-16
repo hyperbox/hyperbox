@@ -47,13 +47,13 @@ import java.util.List;
 import java.util.Set;
 
 public final class Controller implements _Controller {
-   
+
    private int exitCode = 0;
    private _Hyperbox model;
    private List<_Front> fronts = new ArrayList<_Front>();
-   
+
    private Thread shutdownHook;
-   
+
    static {
       Logger.raw(getHeader());
       try {
@@ -67,13 +67,13 @@ public final class Controller implements _Controller {
          System.exit(1);
       }
    }
-   
+
    public static String getHeader() {
       return HyperboxAPI.getLogHeader(Hyperbox.getVersion().toString());
    }
-   
+
    private void startBack() {
-      
+
       try {
          model = ModelFactory.get();
          model.init();
@@ -84,14 +84,14 @@ public final class Controller implements _Controller {
          stop();
       }
    }
-   
+
    private void startFront() throws HyperboxException {
-      
+
       Set<_Front> subTypes = HBoxServer.getAtLeastOneOrFail(_Front.class);
       for (_Front test : subTypes) {
          fronts.add(test);
       }
-      
+
       Logger.info("Starting Front-ends");
       for (final _Front f : fronts) {
          try {
@@ -103,15 +103,15 @@ public final class Controller implements _Controller {
          }
       }
       Logger.info("Done starting Front-ends");
-      
+
    }
-   
+
    @Override
    public void start(String[] args) {
-      
+
       Hyperbox.setArgs(args);
       shutdownHook = new Thread() {
-         
+
          @Override
          public void run() {
             SecurityContext.setUser(new SystemUser());
@@ -120,30 +120,30 @@ public final class Controller implements _Controller {
          }
       };
       Runtime.getRuntime().addShutdownHook(shutdownHook);
-      
+
       try {
          Long startTime = System.currentTimeMillis();
-         
+
          Logger.setLevel(LogLevel.valueOf(Configuration.getSetting("log.level", LogLevel.Info.toString())));
-         
+
          String logFilename = Configuration.getSetting("log.file", "log/hboxd.log");
          if (!logFilename.contentEquals("none")) {
             Logger.log(logFilename, 4);
          }
-         
+
          Logger.info("Hyperbox Init Sequence started");
-         
+
          SecurityContext.init();
          SecurityContext.addAdminThread(shutdownHook);
-         
+
          ShutdownAction.setController(this);
-         
+
          for (String name : System.getenv().keySet()) {
             if (name.startsWith(Configuration.CFG_ENV_PREFIX + Configuration.CFG_ENV_SEPERATOR)) {
                Logger.info("Environment Variable: " + name + " | " + System.getenv(name));
             }
          }
-         
+
          startBack();
          startFront();
          Long endTime = System.currentTimeMillis();
@@ -155,12 +155,12 @@ public final class Controller implements _Controller {
          Logger.exception(e);
          stop();
       }
-      
+
    }
-   
+
    @Override
    public void stop() {
-      
+
       Long startTime = System.currentTimeMillis();
       Logger.info("-------> Hyperbox is stopping <-------");
       try {
@@ -173,17 +173,17 @@ public final class Controller implements _Controller {
          Long endTime = System.currentTimeMillis();
          Logger.verbose("Hyperbox Stop Sequence finished in " + (endTime - startTime) + "ms");
          Logger.info("-------> Hyperbox halt <-------");
-         
+
          if (!Thread.currentThread().equals(shutdownHook)) {
             Runtime.getRuntime().removeShutdownHook(shutdownHook);
             System.exit(exitCode);
          }
       }
-      
+
    }
-   
+
    private void stopFront() {
-      
+
       Logger.info("Stopping front-ends");
       EventOut evOut = new ServerShutdownEventOut(new Date(), ServerIoFactory.get(model.getServerManager().getServer()));
       for (_Front f : fronts) {
@@ -193,38 +193,38 @@ public final class Controller implements _Controller {
       }
       Logger.info("Finished stopping front-ends");
    }
-   
+
    private void stopBack() {
-      
+
       Logger.info("Stopping back-ends");
       if (model != null) {
          model.stop();
       }
       Logger.info("Finished stopping back-ends");
    }
-   
+
    private class Client implements _Client {
-      
+
       @Override
       public void putAnswer(Answer ans) {
          // stub
       }
-      
+
       @Override
       public String getId() {
          return "System";
       }
-      
+
       @Override
       public String getAddress() {
          return "System";
       }
-      
+
       @Override
       public void post(EventOut evOut) {
          // stub
       }
-      
+
    }
-   
+
 }

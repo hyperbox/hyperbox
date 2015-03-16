@@ -25,15 +25,15 @@ import org.altherian.hbox.comm.in.StorageDeviceAttachmentIn;
 import org.altherian.hbox.comm.out.storage.StorageDeviceAttachmentOut;
 
 public final class StorageDeviceAttachmentIoFactory {
-   
+
    private StorageDeviceAttachmentIoFactory() {
       // Factory class
    }
-   
+
    public static String getId(String machineId, String controllerId, Long portId, Long deviceId) {
       return machineId + "|" + controllerId + "|" + portId.toString() + "|" + deviceId.toString();
    }
-   
+
    public static StorageDeviceAttachmentIn get(StorageDeviceAttachmentOut maOut) {
       if (maOut.hasMediumInserted()) {
          return new StorageDeviceAttachmentIn(maOut.getControllerName(), maOut.getPortId(), maOut.getDeviceId(), maOut.getDeviceType(), new MediumIn(
@@ -41,7 +41,7 @@ public final class StorageDeviceAttachmentIoFactory {
       } else {
          return new StorageDeviceAttachmentIn(maOut.getControllerName(), maOut.getPortId(), maOut.getDeviceId(), maOut.getDeviceType());
       }
-      
+
    }
-   
+
 }

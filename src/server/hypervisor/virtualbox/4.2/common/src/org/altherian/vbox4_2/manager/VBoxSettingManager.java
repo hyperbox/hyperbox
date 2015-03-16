@@ -64,35 +64,35 @@ import org.virtualbox_4_2.StorageControllerType;
 import org.virtualbox_4_2.VBoxException;
 
 public class VBoxSettingManager {
-   
+
    // private static boolean loaded = false;
    private static Map<String, _MachineSettingAction> vmActions;
    private static Map<String, _NetworkInterfaceSettingAction> nicActions;
    private static Map<String, _StorageControllerSettingAction> sctActions;
    private static Map<String, _MediumSettingAction> mediumActions;
    private static Map<String, _SnapshotSettingAction> snapshotActions;
-   
+
    private static ISession session = null;
-   
+
    /*
    private static void lockAuto(String uuid, LockType lockType) {
       session = VbSessionManager.get().lockAuto(uuid, lockType);
    }
     */
-   
+
    private static void lockAuto(String uuid) {
       session = VBoxSessionManager.get().lockAuto(uuid);
    }
-   
+
    private static void unlockAuto(String uuid) {
       VBoxSessionManager.get().unlockAuto(uuid, true);
       session = null;
    }
-   
+
    private static IMachine getVm(String uuid) {
       return VBoxSessionManager.get().getCurrent(uuid);
    }
-   
+
    static {
       try {
          loadMachineActions();
@@ -104,20 +104,20 @@ public class VBoxSettingManager {
          Logger.exception(e);
       }
    }
-   
+
    // //////////////////////////////////////////////////////////
    // Snapshot code
    // //////////////////////////////////////////////////////////
    private static void loadSnapshotActions() throws HyperboxException {
       snapshotActions = new HashMap<String, _SnapshotSettingAction>();
-      
+
       Set<_SnapshotSettingAction> subTypes = HBoxServer.getAllOrFail(_SnapshotSettingAction.class);
       for (_SnapshotSettingAction item : subTypes) {
          snapshotActions.put(item.getSettingName(), item);
          Logger.debug("Linking " + item.getSettingName() + " to " + item.getClass().getSimpleName());
       }
    }
-   
+
    public static List<_Setting> list(VBoxSnapshot snap) {
       List<_Setting> settings = new ArrayList<_Setting>();
       ISnapshot rawSnap = getVm(snap.getMachineId()).findSnapshot(snap.getUuid());
@@ -132,15 +132,15 @@ public class VBoxSettingManager {
       }
       return settings;
    }
-   
+
    public static void set(VBoxSnapshot snap, List<_Setting> settings) {
-      
+
       for (_Setting setting : settings) {
          if (!snapshotActions.containsKey(setting.getName())) {
             throw new ConfigurationException("No action defined for setting [" + setting.getName() + "]");
          }
       }
-      
+
       lockAuto(snap.getMachineId());
       try {
          for (_Setting setting : settings) {
@@ -153,37 +153,37 @@ public class VBoxSettingManager {
          unlockAuto(snap.getMachineId());
       }
    }
-   
+
    public static _Setting get(VBoxSnapshot snap, Object name) {
       String uniqueId = Settings.getUniqueId(name);
       if (!snapshotActions.containsKey(uniqueId)) {
          throw new ConfigurationException("No action defined for setting [" + uniqueId + "]");
       }
-      
+
       ISnapshot snapshot = getVm(snap.getMachineId()).findSnapshot(snap.getUuid());
       _Setting s = snapshotActions.get(uniqueId).get(snapshot);
       return s;
    }
-   
+
    // //////////////////////////////////////////////////////////
    // Machine code
    // //////////////////////////////////////////////////////////
    private static void loadMachineActions() throws HyperboxException {
       vmActions = new HashMap<String, _MachineSettingAction>();
-      
+
       Set<_MachineSettingAction> subTypes = HBoxServer.getAllOrFail(_MachineSettingAction.class);
       for (_MachineSettingAction item : subTypes) {
          vmActions.put(item.getSettingName(), item);
       }
    }
-   
+
    public static void apply(IMachine vm, Machine vmData) {
-      
+
       List<_Setting> settings = SettingIoFactory.getListIo(vmData.listSettings());
       for (_Setting setting : settings) {
          vmActions.get(setting.getName()).set(vm, setting);
       }
-      
+
       for (Device dev : vmData.listDevices(EntityType.DvdDrive.getId())) {
          String controllerType = dev.getSetting(StorageControllerAttribute.Type).getString();
          String controllerSubType = dev.getSetting(StorageControllerAttribute.SubType).getString();
@@ -199,7 +199,7 @@ public class VBoxSettingManager {
          vm.getStorageControllerByName(controllerType).setControllerType(StorageControllerType.valueOf(controllerSubType));
          vm.attachDeviceWithoutMedium(controllerType, 0, 0, DeviceType.DVD);
       }
-      
+
       for (Device dev : vmData.listDevices(EntityType.DiskDrive.getId())) {
          String controllerType = dev.getSetting(StorageControllerAttribute.Type).getString();
          String controllerSubType = dev.getSetting(StorageControllerAttribute.SubType).getString();
@@ -214,7 +214,7 @@ public class VBoxSettingManager {
          }
          vm.getStorageControllerByName(controllerType).setControllerType(StorageControllerType.valueOf(controllerSubType));
       }
-      
+
       for (Device dev : vmData.listDevices(EntityType.Network.getId())) {
          Long maxNic = VBox.get().getSystemProperties().getMaxNetworkAdapters(vm.getChipsetType());
          NetworkAdapterType adapterType = NetworkAdapterType.valueOf(dev.getSetting(NetworkInterfaceAttribute.AdapterType).getString());
@@ -223,7 +223,7 @@ public class VBoxSettingManager {
          }
       }
    }
-   
+
    public static List<_Setting> list(VBoxMachine vm) {
       List<_Setting> settings = new ArrayList<_Setting>();
       IMachine machine = getVm(vm.getUuid());
@@ -238,15 +238,15 @@ public class VBoxSettingManager {
       }
       return settings;
    }
-   
+
    public static void set(VBoxMachine vm, List<_Setting> settings) {
-      
+
       for (_Setting setting : settings) {
          if (!vmActions.containsKey(setting.getName())) {
             throw new ConfigurationException("No action defined for setting [" + setting.getName() + "]");
          }
       }
-      
+
       /*
       LockType lockType = LockType.Shared;
       for (_Setting setting : settings) {
@@ -270,36 +270,36 @@ public class VBoxSettingManager {
          unlockAuto(vm.getUuid());
       }
    }
-   
+
    public static _Setting get(VBoxMachine vm, Object name) {
       String uniqueId = Settings.getUniqueId(name);
       if (!VBoxSettingManager.vmActions.containsKey(uniqueId)) {
          throw new ConfigurationException("No action defined for setting [" + uniqueId + "]");
       }
-      
+
       IMachine machine = getVm(vm.getUuid());
       _Setting s = VBoxSettingManager.vmActions.get(uniqueId).get(machine);
-      
+
       return s;
    }
-   
+
    public static _Setting get(VBoxMachine vm, MachineAttribute setting) {
       return get(vm, setting.toString());
    }
-   
+
    // ////////////////////////////////////////////
    // Network Interface code
    // ////////////////////////////////////////////
    private static void loadNicActions() throws HyperboxException {
       nicActions = new HashMap<String, _NetworkInterfaceSettingAction>();
-      
+
       // TODO replace with .getAtLeastOneOrFail()
       Set<_NetworkInterfaceSettingAction> subTypes = HBoxServer.getAllOrFail(_NetworkInterfaceSettingAction.class);
       for (_NetworkInterfaceSettingAction item : subTypes) {
          nicActions.put(item.getSettingName(), item);
       }
    }
-   
+
    public static List<_Setting> list(VBoxNetworkInterface nic) {
       List<_Setting> settings = new ArrayList<_Setting>();
       INetworkAdapter nicAdaptor = getVm(nic.getMachineUuid()).getNetworkAdapter(nic.getNicId());
@@ -314,15 +314,15 @@ public class VBoxSettingManager {
       }
       return settings;
    }
-   
+
    public static void set(VBoxNetworkInterface nic, List<_Setting> settings) {
-      
+
       for (_Setting setting : settings) {
          if (!nicActions.containsKey(setting.getName())) {
             throw new ConfigurationException("No action defined for setting [" + setting.getName() + "]");
          }
       }
-      
+
       /*
       LockType lockType = LockType.Shared;
       for (_Setting setting : settings) {
@@ -334,7 +334,7 @@ public class VBoxSettingManager {
       
       lockAuto(nic.getMachineUuid(), lockType);
        */
-      
+
       lockAuto(nic.getMachineUuid());
       try {
          for (_Setting setting : settings) {
@@ -348,7 +348,7 @@ public class VBoxSettingManager {
          unlockAuto(nic.getMachineUuid());
       }
    }
-   
+
    public static _Setting get(VBoxNetworkInterface nic, Object name) {
       String uniqueId = Settings.getUniqueId(name);
       if (!nicActions.containsKey(uniqueId)) {
@@ -358,26 +358,26 @@ public class VBoxSettingManager {
          }
          throw new ConfigurationException("No action defined for setting [" + uniqueId + "]");
       }
-      
+
       return nicActions.get(uniqueId).get(getVm(nic.getMachineUuid()).getNetworkAdapter(nic.getNicId()));
    }
-   
+
    public static _Setting get(VBoxNetworkInterface nic, NetworkInterfaceAttribute setting) {
       return get(nic, setting.toString());
    }
-   
+
    // ///////////////////////////////////////////////
    // Storage Controller
    // ///////////////////////////////////////////////
    private static void loadStrCtrlActions() throws HyperboxException {
       sctActions = new HashMap<String, _StorageControllerSettingAction>();
-      
+
       Set<_StorageControllerSettingAction> subTypes = HBoxServer.getAllOrFail(_StorageControllerSettingAction.class);
       for (_StorageControllerSettingAction item : subTypes) {
          sctActions.put(item.getSettingName(), item);
       }
    }
-   
+
    public static List<_Setting> list(VirtualboxStorageController sct) {
       List<_Setting> settings = new ArrayList<_Setting>();
       IStorageController storageCtrl = getVm(sct.getMachineUuid()).getStorageControllerByName(sct.getName());
@@ -392,15 +392,15 @@ public class VBoxSettingManager {
       }
       return settings;
    }
-   
+
    public static void set(VirtualboxStorageController strCtl, List<_Setting> settings) {
-      
+
       for (_Setting setting : settings) {
          if (!sctActions.containsKey(setting.getName())) {
             throw new ConfigurationException("No action defined for setting [" + setting.getName() + "]");
          }
       }
-      
+
       /*
       LockType lockType = LockType.Shared;
       for (_Setting setting : settings) {
@@ -412,7 +412,7 @@ public class VBoxSettingManager {
       
       lockAuto(strCtl.getMachineUuid(), lockType);
        */
-      
+
       lockAuto(strCtl.getMachineUuid());
       try {
          for (_Setting setting : settings) {
@@ -427,7 +427,7 @@ public class VBoxSettingManager {
          unlockAuto(strCtl.getMachineUuid());
       }
    }
-   
+
    public static _Setting get(VirtualboxStorageController sct, Object name) {
       String uniqueId = Settings.getUniqueId(name);
       if (!sctActions.containsKey(uniqueId)) {
@@ -437,26 +437,26 @@ public class VBoxSettingManager {
          }
          throw new ConfigurationException("No action defined for setting [" + uniqueId + "]");
       }
-      
+
       return sctActions.get(uniqueId).get(getVm(sct.getMachineUuid()).getStorageControllerByName(sct.getName()));
    }
-   
+
    public static _Setting get(VirtualboxStorageController sct, StorageControllerAttribute setting) {
       return get(sct, setting.toString());
    }
-   
+
    // //////////////////////////////////////////////////////
    // Medium Settings
    // //////////////////////////////////////////////////////
    private static void loadMediumActions() throws HyperboxException {
       mediumActions = new HashMap<String, _MediumSettingAction>();
-      
+
       Set<_MediumSettingAction> subTypes = HBoxServer.getAllOrFail(_MediumSettingAction.class);
       for (_MediumSettingAction item : subTypes) {
          mediumActions.put(item.getSettingName(), item);
       }
    }
-   
+
    public static List<_Setting> list(VirtualboxMedium medium) {
       List<_Setting> settings = new ArrayList<_Setting>();
       IMedium rawMedium = VBox.get().openMedium(medium.getUuid(), DeviceType.valueOf(medium.getDeviceType()), AccessMode.ReadOnly, false);
@@ -471,15 +471,15 @@ public class VBoxSettingManager {
       }
       return settings;
    }
-   
+
    public static void set(VirtualboxMedium medium, List<_Setting> settings) {
-      
+
       for (_Setting setting : settings) {
          if (!mediumActions.containsKey(setting.getName())) {
             throw new ConfigurationException("No action defined for setting [" + setting.getName() + "]");
          }
       }
-      
+
       IMedium rawMedium = VBox.get().openMedium(medium.getLocation(), DeviceType.valueOf(medium.getDeviceType()), AccessMode.ReadWrite, false);
       try {
          for (_Setting setting : settings) {
@@ -490,7 +490,7 @@ public class VBoxSettingManager {
          throw new HyperboxRuntimeException(e.getMessage());
       }
    }
-   
+
    public static _Setting get(VirtualboxMedium medium, Object name) {
       String uniqueId = Settings.getUniqueId(name);
       if (!mediumActions.containsKey(uniqueId)) {
@@ -500,7 +500,7 @@ public class VBoxSettingManager {
          }
          throw new ConfigurationException("No action defined for setting [" + uniqueId + "]");
       }
-      
+
       IMedium rawMedium = VBox.get().openMedium(medium.getLocation(), DeviceType.valueOf(medium.getDeviceType()), AccessMode.ReadOnly, false);
       try {
          return mediumActions.get(uniqueId).get(rawMedium);
@@ -508,7 +508,7 @@ public class VBoxSettingManager {
          throw new HyperboxRuntimeException(e.getMessage());
       }
    }
-   
+
    public static _Setting get(VirtualboxMedium medium, Enum<?> setting) {
       return get(medium, setting.toString());
    }

@@ -30,14 +30,14 @@ import org.altherian.hboxd.comm.io.factory.ServerIoFactory;
 import org.altherian.hboxd.core._Hyperbox;
 
 public final class SessionEventIoFactory implements _EventIoFactory {
-   
+
    @Override
    public Enum<?>[] getHandles() {
       return new Enum<?>[] {
             HyperboxEvents.SessionState
       };
    }
-   
+
    @Override
    public EventOut get(_Hyperbox hbox, _Event ev) {
       switch ((HyperboxEvents) ev.getEventId()) {
@@ -47,5 +47,5 @@ public final class SessionEventIoFactory implements _EventIoFactory {
             return null;
       }
    }
-   
+
 }

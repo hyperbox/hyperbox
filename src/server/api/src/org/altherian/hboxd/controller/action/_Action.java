@@ -45,46 +45,46 @@ import java.util.List;
 // TODO create a skeleton action for custom modules that can handle single object return or list returns
 // TODO somehow, check that the required module is loaded.
 public interface _Action {
-   
+
    /**
     * To which task should this action answer to
     * 
     * @return a list of task as String
     */
    public List<String> getRegistrations();
-   
+
    public AnswerType getStartReturn();
-   
+
    /**
     * null if none is required
     * 
     * @return AnswerType for the return
     */
    public AnswerType getFinishReturn();
-   
+
    public AnswerType getFailReturn();
-   
+
    /**
     * Not implemented
     * 
     * @return Not implemented
     */
    public Class<?>[] getRequiredClasses();
-   
+
    /**
     * Not implemented
     * 
     * @return Not implemented
     */
    public Enum<?>[] getRequiredEnums();
-   
+
    /**
     * Not implemented
     * 
     * @return Not implemented
     */
    public String[] getRequiredData();
-   
+
    public void run(_Hyperbox core, Request req, _Client client);
-   
+
 }

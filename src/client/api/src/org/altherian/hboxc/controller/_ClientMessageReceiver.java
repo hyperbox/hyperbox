@@ -21,7 +21,7 @@
 package org.altherian.hboxc.controller;
 
 public interface _ClientMessageReceiver {
-   
+
    public void post(MessageInput mIn);
-   
+
 }

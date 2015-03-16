@@ -32,7 +32,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class ServerIoFactory {
-   
+
    public static ServerOut get(_Server srv) {
       List<SettingIO> settings = new ArrayList<SettingIO>();
       settings.add(new StringSettingIO(ServerAttribute.Name, srv.getName()));
@@ -44,7 +44,7 @@ public class ServerIoFactory {
       ServerOut srvOut = new ServerOut(srv.getId(), settings);
       return srvOut;
    }
-   
+
    public static List<ServerOut> getList(Collection<_Server> objList) {
       List<ServerOut> listOut = new ArrayList<ServerOut>();
       for (_Server obj : objList) {
@@ -52,5 +52,5 @@ public class ServerIoFactory {
       }
       return listOut;
    }
-   
+
 }

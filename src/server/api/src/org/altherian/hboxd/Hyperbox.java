@@ -28,24 +28,24 @@ import java.util.Properties;
 import java.util.Set;
 
 public class Hyperbox {
-   
+
    private static Properties buildProperties;
    private static Version version;
    private static String cfgFile = "conf/main.cfg";
-   
+
    private static void failedToLoad(Exception e) {
       Logger.error("Unable to access the build.properties file: " + e.getMessage());
       Logger.error("Version and revision will not be accurate");
    }
-   
+
    public static Version getVersion() {
       return version;
    }
-   
+
    public static String getConfigFilePath() {
       return cfgFile;
    }
-   
+
    static {
       buildProperties = new Properties();
       try {
@@ -58,22 +58,22 @@ public class Hyperbox {
          version = new Version(buildProperties.getProperty("version", Version.UNKNOWN.toString()));
       }
    }
-   
+
    static String[] _args;
-   
+
    public static void setArgs(String[] args) {
       if (_args == null) {
          _args = args;
       }
    }
-   
+
    public static String[] getArgs() {
       return _args;
    }
-   
+
    public static void processArgs(Set<String> args) {
       HyperboxAPI.processArgs(args);
-      
+
       if (args.contains("-?") || args.contains("--help")) {
          System.out.println("Hyperbox available executable switches:\n");
          System.out.println("--help or -? : Print this help");
@@ -90,7 +90,7 @@ public class Hyperbox {
          System.out.println(getVersion());
          System.exit(0);
       }
-      
+
    }
-   
+
 }

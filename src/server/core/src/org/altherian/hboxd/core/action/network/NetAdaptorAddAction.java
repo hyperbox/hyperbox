@@ -40,17 +40,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NetAdaptorAddAction extends ServerAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.NetAdaptorAdd.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    protected void run(Request request, _Hyperbox hbox, _Server srv) {
       NetAdaptorIn adaptIn = request.get(NetAdaptorIn.class);
@@ -63,5 +63,5 @@ public class NetAdaptorAddAction extends ServerAction {
          }
       }
    }
-   
+
 }

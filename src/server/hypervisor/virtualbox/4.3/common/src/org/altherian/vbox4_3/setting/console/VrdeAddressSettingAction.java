@@ -28,25 +28,25 @@ import org.virtualbox_4_3.IMachine;
 import org.virtualbox_4_3.LockType;
 
 public class VrdeAddressSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Shared;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.VrdeAddress.getId();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       machine.getVRDEServer().setVRDEProperty("TCP/Address", setting.getString());
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new StringSetting(MachineAttribute.VrdeAddress, machine.getVRDEServer().getVRDEProperty("TCP/Address"));
    }
-   
+
 }

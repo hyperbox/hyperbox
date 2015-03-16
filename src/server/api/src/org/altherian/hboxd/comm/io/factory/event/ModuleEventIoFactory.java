@@ -39,7 +39,7 @@ import org.altherian.hboxd.event.module.ModuleUnregisteredEvent;
 import java.util.Date;
 
 public class ModuleEventIoFactory implements _EventIoFactory {
-   
+
    @Override
    public Enum<?>[] getHandles() {
       return new Enum<?>[] {
@@ -51,17 +51,17 @@ public class ModuleEventIoFactory implements _EventIoFactory {
             HyperboxEvents.ModuleUnregistered
       };
    }
-   
+
    @Override
    public EventOut get(_Hyperbox hbox, _Event ev) {
       if (!(ev instanceof ModuleEvent)) {
          return null;
       }
-      
+
       ModuleEvent modEv = (ModuleEvent) ev;
       Date time = modEv.getTime();
       ServerOut srvOut = ServerIoFactory.get();
-      
+
       switch ((HyperboxEvents) ev.getEventId()) {
          case ModuleDisabled:
             return new ModuleDisabledEventOut(time, srvOut, ModuleIoFactory.get(modEv.getModule()));
@@ -79,5 +79,5 @@ public class ModuleEventIoFactory implements _EventIoFactory {
             return null;
       }
    }
-   
+
 }

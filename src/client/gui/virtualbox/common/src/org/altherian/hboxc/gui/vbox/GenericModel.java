@@ -29,17 +29,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class GenericModel implements _HypervisorModel {
-   
+
    @Override
    public List<String> getSupported() {
       return Collections.emptyList();
    }
-   
+
    @Override
    public _GlobalConfigureView getConfigureView() {
       return new GlobalConfigureView();
    }
-   
+
    @Override
    public _NetAdaptorConfigureView getNetAdaptorConfig(String srvId, String modeId, String adaptId) {
       if (VBoxNetMode.HostOnly.is(modeId)) {
@@ -48,5 +48,5 @@ public class GenericModel implements _HypervisorModel {
          throw new HyperboxRuntimeException(modeId + " is not supported in GUI");
       }
    }
-   
+
 }

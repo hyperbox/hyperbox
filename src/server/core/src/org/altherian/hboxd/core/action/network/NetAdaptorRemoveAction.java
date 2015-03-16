@@ -31,21 +31,21 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NetAdaptorRemoveAction extends ServerAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.NetAdaptorRemove.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    protected void run(Request request, _Hyperbox hbox, _Server srv) {
       NetAdaptorIn adaptIn = request.get(NetAdaptorIn.class);
       srv.getHypervisor().removeAdaptor(adaptIn.getModeId(), adaptIn.getId());
    }
-   
+
 }

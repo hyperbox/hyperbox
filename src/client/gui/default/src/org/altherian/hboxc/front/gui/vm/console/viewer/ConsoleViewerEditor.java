@@ -39,44 +39,44 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class ConsoleViewerEditor implements _Saveable, _Cancelable {
-   
+
    private ClientTasks saveTask;
    private ConsoleViewerInput cvIn;
-   
+
    private JLabel hypervisorLabel;
    private JLabel moduleLabel;
    private JLabel pathLabel;
    private JLabel argsLabel;
-   
+
    private JTextField hypervisorData;
    private JTextField moduleData;
    private JTextField pathData;
    private JTextField argsData;
-   
+
    private JPanel buttonPanel;
    private JButton saveButton;
    private JButton cancelButton;
-   
+
    private JDialog dialog;
-   
+
    private ConsoleViewerEditor() {
-      
+
       hypervisorLabel = new JLabel("Hypervisor Type Pattern");
       moduleLabel = new JLabel("Module Pattern");
       pathLabel = new JLabel("Viewer Path");
       argsLabel = new JLabel("Arguments");
-      
+
       hypervisorData = new JTextField();
       moduleData = new JTextField();
       pathData = new JTextField();
       argsData = new JTextField();
-      
+
       saveButton = new JButton(new SaveAction(this));
       cancelButton = new JButton(new CancelAction(this));
       buttonPanel = new JPanel(new MigLayout("ins 0"));
       buttonPanel.add(saveButton);
       buttonPanel.add(cancelButton);
-      
+
       dialog = JDialogBuilder.get("Console Viewer - Edition", saveButton);
       dialog.add(hypervisorLabel);
       dialog.add(hypervisorData, "growx, pushx, wrap");
@@ -88,69 +88,69 @@ public class ConsoleViewerEditor implements _Saveable, _Cancelable {
       dialog.add(argsData, "growx, pushx, wrap");
       dialog.add(buttonPanel, "center, bottom, span 2");
    }
-   
+
    public static void create() {
-      
+
       new ConsoleViewerEditor().add();
    }
-   
+
    public static void edit(ConsoleViewerOutput conViewOut) {
-      
+
       new ConsoleViewerEditor().modify(conViewOut);
    }
-   
+
    private void add() {
-      
+
       saveTask = ClientTasks.ConsoleViewerAdd;
       cvIn = new ConsoleViewerInput();
-      
+
       show();
    }
-   
+
    private void modify(ConsoleViewerOutput conViewOut) {
-      
+
       saveTask = ClientTasks.ConsoleViewerModify;
       cvIn = new ConsoleViewerInput(conViewOut.getId());
-      
+
       hypervisorData.setText(conViewOut.getHypervisorId());
       hypervisorData.setEditable(false);
       moduleData.setText(conViewOut.getModuleId());
       moduleData.setEditable(false);
       pathData.setText(conViewOut.getViewerPath());
       argsData.setText(conViewOut.getArgs().toString());
-      
+
       show();
    }
-   
+
    private void show() {
-      
+
       dialog.setSize(410, 170);
       dialog.setLocationRelativeTo(dialog.getParent());
       dialog.setVisible(true);
    }
-   
+
    private void hide() {
-      
+
       dialog.setVisible(false);
    }
-   
+
    @Override
    public void cancel() {
-      
+
       hide();
    }
-   
+
    @Override
    public void save() {
-      
+
       cvIn.setHypervisorId(hypervisorData.getText());
       cvIn.setModuleId(moduleData.getText());
       cvIn.setViewer(pathData.getText());
       cvIn.setArgs(argsData.getText());
-      
+
       Gui.post(new Request(saveTask, cvIn));
-      
+
       hide();
    }
-   
+
 }

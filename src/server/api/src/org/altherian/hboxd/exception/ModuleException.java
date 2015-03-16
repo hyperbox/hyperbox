@@ -24,17 +24,17 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 
 @SuppressWarnings("serial")
 public class ModuleException extends HyperboxRuntimeException {
-   
+
    public ModuleException(String s) {
       super(s);
    }
-   
+
    public ModuleException(String s, Throwable t) {
       super(s, t);
    }
-   
+
    public ModuleException(Throwable t) {
       super(t);
    }
-   
+
 }

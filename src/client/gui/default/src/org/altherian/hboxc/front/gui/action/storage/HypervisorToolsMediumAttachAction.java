@@ -38,21 +38,21 @@ import javax.swing.ImageIcon;
 
 @SuppressWarnings("serial")
 public class HypervisorToolsMediumAttachAction extends AbstractAction {
-   
+
    private String serverId;
    private StorageDeviceAttachmentOut sdaOut;
-   
+
    public HypervisorToolsMediumAttachAction(String serverId, StorageDeviceAttachmentOut sdaOut) {
       this(serverId, sdaOut, "Attach Hypervisor Tools", IconBuilder.getTask(HypervisorTasks.MediumMount), true);
    }
-   
+
    public HypervisorToolsMediumAttachAction(String serverId, StorageDeviceAttachmentOut sdaOut, String label, ImageIcon icon, boolean isEnabled) {
       super(label, icon);
       setEnabled(isEnabled);
       this.serverId = serverId;
       this.sdaOut = sdaOut;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       MediumOut medOut = Gui.getReader().getServerReader(serverId).getHypervisor().getToolsMedium();
@@ -67,5 +67,5 @@ public class HypervisorToolsMediumAttachAction extends AbstractAction {
          HyperboxClient.getView().postError("Cannot attach - No Hypervisor Tools available");
       }
    }
-   
+
 }

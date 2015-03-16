@@ -45,86 +45,86 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingWorker;
 
 public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable, _Refreshable {
-   
+
    private String srvId;
    private String modeId;
    private String adaptId;
-   
+
    private JDialog dialog;
    private NATRulesView ip4;
    private NATRulesView ip6;
-   
+
    private JTabbedPane tabs;
-   
+
    private JPanel buttonPanel;
    private JButton saveButton;
    private JButton cancelButton;
-   
+
    private List<NetService_NAT_IO> rules = new ArrayList<NetService_NAT_IO>();
-   
+
    public static List<NetService_NAT_IO> getInput(String srvId, String modeId, String adaptId) {
       return (new NATNetworkNATRulesDialog(srvId, modeId, adaptId)).getInput();
    }
-   
+
    public NATNetworkNATRulesDialog(String srvId, String modeId, String adaptId) {
       this.srvId = srvId;
       this.modeId = modeId;
       this.adaptId = adaptId;
-      
+
       ip4 = new NATRulesView();
       RefreshUtil.set(ip4.getComponent(), new _Refreshable() {
-         
+
          @Override
          public void refresh() {
             refreshIp4();
          }
-         
+
       });
       ip6 = new NATRulesView();
       RefreshUtil.set(ip6.getComponent(), new _Refreshable() {
-         
+
          @Override
          public void refresh() {
             refreshIp6();
          }
-         
+
       });
-      
+
       tabs = new JTabbedPane();
       tabs.addTab("IPv4", ip4.getComponent());
       tabs.addTab("IPv6", ip6.getComponent());
-      
+
       saveButton = new JButton(new SaveAction(this));
       cancelButton = new JButton(new CancelAction(this));
       buttonPanel = new JPanel(new MigLayout("ins 0"));
       buttonPanel.add(saveButton);
       buttonPanel.add(cancelButton);
-      
+
       dialog = JDialogBuilder.get("NAT Rules", saveButton);
       dialog.add(tabs, "grow,push,wrap");
       dialog.add(buttonPanel, "growx,pushx,center");
    }
-   
+
    public List<NetService_NAT_IO> getInput() {
       refresh();
-      
+
       dialog.setSize(538, 278);
       dialog.setLocationRelativeTo(dialog.getParent());
       dialog.setVisible(true);
-      
+
       return rules;
    }
-   
+
    public void hide() {
       dialog.setVisible(false);
    }
-   
+
    @Override
    public void cancel() {
       rules = null;
       hide();
    }
-   
+
    @Override
    public void save() throws HyperboxRuntimeException {
       NetService_NAT_IP4_IO ip4svc = new NetService_NAT_IP4_IO(true);
@@ -139,15 +139,15 @@ public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable, _Refres
       rules.add(ip6svc);
       hide();
    }
-   
+
    private void refreshRules(final String svcId, final NATRulesView view) {
       new SwingWorker<NetService_NAT_IO, Void>() {
-         
+
          @Override
          protected NetService_NAT_IO doInBackground() throws Exception {
             return (NetService_NAT_IO) Gui.getServer(srvId).getHypervisor().getNetService(modeId, adaptId, svcId);
          }
-         
+
          @Override
          protected void done() {
             try {
@@ -159,22 +159,22 @@ public class NATNetworkNATRulesDialog implements _Saveable, _Cancelable, _Refres
                Gui.showError(e.getCause());
             }
          }
-         
+
       }.execute();
    }
-   
+
    @Override
    public void refresh() {
       refreshIp4();
       refreshIp6();
    }
-   
+
    private void refreshIp4() {
       refreshRules(NetServiceType.NAT_IPv4.getId(), ip4);
    }
-   
+
    private void refreshIp6() {
       refreshRules(NetServiceType.NAT_IPv6.getId(), ip6);
    }
-   
+
 }

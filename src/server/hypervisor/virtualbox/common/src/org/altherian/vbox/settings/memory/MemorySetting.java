@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.PositiveNumberSetting;
 
 public final class MemorySetting extends PositiveNumberSetting {
-   
+
    public MemorySetting(long value) {
       super(MachineAttribute.Memory, value);
    }
-   
+
 }

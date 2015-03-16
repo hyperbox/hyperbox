@@ -34,22 +34,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class ServerListAction extends AbstractHyperboxMultiTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.ServerList.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       for (_Server srv : hbox.getServerManager().listServer()) {
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, ServerIoFactory.get(srv)));
       }
    }
-   
+
 }

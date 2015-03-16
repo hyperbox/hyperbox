@@ -48,11 +48,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
 public class NATNetworkNicEditor implements _NetAdaptorConfigureView {
-   
+
    private String srvId;
    private String modeId;
    private String adaptId;
-   
+
    private JLabel enableLabel;
    private JCheckBox enableValue;
    private JLabel nameLabel;
@@ -67,17 +67,17 @@ public class NATNetworkNicEditor implements _NetAdaptorConfigureView {
    private JCheckBox ip6GwValue;
    private JButton natButton;
    private JPanel panel;
-   
+
    private List<NetService_NAT_IO> rules;
-   
+
    public NATNetworkNicEditor(final String srvId, final String modeId, final String adaptId) {
       this.srvId = srvId;
       this.modeId = modeId;
       this.adaptId = adaptId;
-      
+
       nameLabel = new JLabel("Network Name:");
       nameValue = new JTextField(16);
-      
+
       panel = new JPanel(new MigLayout("ins 0"));
       if (adaptId != null) {
          enableLabel = new JLabel("Enable Network:");
@@ -92,15 +92,15 @@ public class NATNetworkNicEditor implements _NetAdaptorConfigureView {
          ip6GwValue = new JCheckBox();
          natButton = new JButton("Port Forwarding");
          natButton.addActionListener(new ActionListener() {
-            
+
             @Override
             public void actionPerformed(ActionEvent e) {
                rules = NATNetworkNATRulesDialog.getInput(srvId, modeId, adaptId);
                Logger.debug("Were rules given? " + (rules != null));
             }
-            
+
          });
-         
+
          panel.add(enableLabel);
          panel.add(enableValue, "growx,pushx,wrap");
          panel.add(nameLabel);
@@ -114,7 +114,7 @@ public class NATNetworkNicEditor implements _NetAdaptorConfigureView {
          panel.add(ip6GwLabel);
          panel.add(ip6GwValue, "growx,pushx,wrap");
          panel.add(natButton, "center,span");
-         
+
          JCheckBoxUtils.link(enableValue, nameValue, cidrValue, dhcpEnableValue, ip6EnableValue, ip6GwValue, natButton);
          JCheckBoxUtils.link(ip6EnableValue, ip6GwValue);
       } else {
@@ -122,26 +122,26 @@ public class NATNetworkNicEditor implements _NetAdaptorConfigureView {
          panel.add(nameValue, "growx,pushx,wrap");
       }
    }
-   
+
    @Override
    public JComponent getComponent() {
       return panel;
    }
-   
+
    @Override
    public void update(NetAdaptorOut nicOut) {
       enableValue.setSelected(false);
       if (nicOut.isEnabled()) {
          enableValue.doClick();
          nameValue.setText(nicOut.getLabel());
-         
+
          new SwingWorker<NetService_IP4_CIDR_IO, Void>() {
-            
+
             @Override
             protected NetService_IP4_CIDR_IO doInBackground() throws Exception {
                return (NetService_IP4_CIDR_IO) Gui.getServer(srvId).getHypervisor().getNetService(modeId, adaptId, NetServiceType.IPv4_NetCIDR.getId());
             }
-            
+
             @Override
             protected void done() {
                try {
@@ -153,16 +153,16 @@ public class NATNetworkNicEditor implements _NetAdaptorConfigureView {
                   Gui.showError(e.getCause());
                }
             }
-            
+
          }.execute();
-         
+
          new SwingWorker<NetService_DHCP_IP4_IO, Void>() {
-            
+
             @Override
             protected NetService_DHCP_IP4_IO doInBackground() throws Exception {
                return (NetService_DHCP_IP4_IO) Gui.getServer(srvId).getHypervisor().getNetService(modeId, adaptId, NetServiceType.DHCP_IPv4.getId());
             }
-            
+
             @Override
             protected void done() {
                try {
@@ -174,16 +174,16 @@ public class NATNetworkNicEditor implements _NetAdaptorConfigureView {
                   Gui.showError(e.getCause());
                }
             }
-            
+
          }.execute();
-         
+
          new SwingWorker<NetService_IP6_IO, Void>() {
-            
+
             @Override
             protected NetService_IP6_IO doInBackground() throws Exception {
                return (NetService_IP6_IO) Gui.getServer(srvId).getHypervisor().getNetService(modeId, adaptId, NetServiceType.IPv6.getId());
             }
-            
+
             @Override
             protected void done() {
                try {
@@ -195,16 +195,16 @@ public class NATNetworkNicEditor implements _NetAdaptorConfigureView {
                   Gui.showError(e.getCause());
                }
             }
-            
+
          }.execute();
-         
+
          new SwingWorker<NetService_IP6_Gateway_IO, Void>() {
-            
+
             @Override
             protected NetService_IP6_Gateway_IO doInBackground() throws Exception {
                return (NetService_IP6_Gateway_IO) Gui.getServer(srvId).getHypervisor().getNetService(modeId, adaptId, NetServiceType.IPv6_Gateway.getId());
             }
-            
+
             @Override
             protected void done() {
                try {
@@ -216,12 +216,12 @@ public class NATNetworkNicEditor implements _NetAdaptorConfigureView {
                   Gui.showError(e.getCause());
                }
             }
-            
+
          }.execute();
-         
+
       }
    }
-   
+
    @Override
    public NetAdaptorIn getInput() {
       NetAdaptorIn naIn = new NetAdaptorIn(modeId, adaptId);
@@ -239,5 +239,5 @@ public class NATNetworkNicEditor implements _NetAdaptorConfigureView {
       }
       return naIn;
    }
-   
+
 }

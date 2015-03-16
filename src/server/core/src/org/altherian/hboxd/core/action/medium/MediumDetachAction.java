@@ -33,28 +33,28 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MediumDetachAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.MediumUnmount.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       ServerIn srvIn = request.get(ServerIn.class);
       _Server srv = hbox.getServer(srvIn.getId());
-      
+
       String mId = request.get(MachineIn.class).getId();
       String ctrlId = request.get(StorageDeviceAttachmentIn.class).getControllerId();
       Long portId = request.get(StorageDeviceAttachmentIn.class).getPortId();
       Long deviceId = request.get(StorageDeviceAttachmentIn.class).getDeviceId();
-      
+
       srv.getMachine(mId).getStorageController(ctrlId).detachMedium(portId, deviceId);
    }
-   
+
 }

@@ -21,10 +21,10 @@
 package org.altherian.hbox.constant;
 
 public enum PermissionAttribute {
-   
+
    ItemType,
    Item,
    Action,
    IsGranted
-   
+
 }

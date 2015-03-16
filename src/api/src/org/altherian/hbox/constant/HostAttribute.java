@@ -21,11 +21,11 @@
 package org.altherian.hbox.constant;
 
 public enum HostAttribute {
-   
+
    Hostname,
    OperatingSystemName,
    OperatingSystemVersion,
    MemoryTotal,
    MemoryAvailable
-   
+
 }

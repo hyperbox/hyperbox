@@ -24,17 +24,17 @@ import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hbox.constant.EntityType;
 
 public class TaskIn extends ObjectIn<EntityType> {
-   
+
    private TaskIn() {
       super(EntityType.Task);
    }
-   
+
    public TaskIn(TaskOut tskOut) {
       this(tskOut.getId());
    }
-   
+
    public TaskIn(String taskId) {
       super(EntityType.Task, taskId);
    }
-   
+
 }

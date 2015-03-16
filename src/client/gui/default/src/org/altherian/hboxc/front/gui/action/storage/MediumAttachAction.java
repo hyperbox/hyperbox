@@ -40,24 +40,24 @@ import javax.swing.ImageIcon;
 
 @SuppressWarnings("serial")
 public class MediumAttachAction extends AbstractAction {
-   
+
    private String serverId;
    private StorageDeviceAttachmentOut sdaOut;
-   
+
    public MediumAttachAction(String serverId, StorageDeviceAttachmentOut sdaOut) {
       this(serverId, sdaOut, "Attach Medium...", IconBuilder.getTask(HypervisorTasks.MediumMount), true);
    }
-   
+
    public MediumAttachAction(String serverId, StorageDeviceAttachmentOut sdaOut, String label, ImageIcon icon, boolean isEnabled) {
       super(label, icon);
       setEnabled(isEnabled);
       this.serverId = serverId;
       this.sdaOut = sdaOut;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
-      
+
       MediumOut medOut = MediumBrowser.browse(new ServerOut(serverId), sdaOut.getDeviceType());
       if (medOut != null) {
          Logger.debug("Medium was choosen to be mounted: " + medOut.getName() + " - " + medOut.getLocation());
@@ -71,5 +71,5 @@ public class MediumAttachAction extends AbstractAction {
          Logger.debug("No medium was choosen to be mounted");
       }
    }
-   
+
 }

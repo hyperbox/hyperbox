@@ -33,15 +33,15 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class VBoxWSTest extends HypervisorTest {
-   
+
    @BeforeClass
    public static void beforeClass() throws HyperboxException {
       hypervisor = new VBoxWSHypervisor();
       hypervisor.setEventManager(new DummyEventManager());
-      
+
       HypervisorTest.init();
    }
-   
+
    @Test
    public void configureHostOnly() {
       _NetAdaptor adapt = hypervisor.createAdaptor("HostOnly", "");
@@ -58,5 +58,5 @@ public class VBoxWSTest extends HypervisorTest {
          //hypervisor.removeAdaptor(adapt.getMode().getId(), adapt.getId());
       }
    }
-   
+
 }

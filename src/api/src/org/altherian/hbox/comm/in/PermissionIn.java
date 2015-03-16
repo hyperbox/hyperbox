@@ -24,17 +24,17 @@ import org.altherian.hbox.comm.out.security.PermissionOut;
 import org.altherian.hbox.constant.EntityType;
 
 public class PermissionIn extends ObjectIn<EntityType> {
-   
+
    private String userId;
    private String itemTypeId;
    private String actionId;
    private String itemId;
    private boolean isAllowed;
-   
+
    public PermissionIn() {
       super(EntityType.Permission);
    }
-   
+
    public PermissionIn(String userId, String itemTypeId, String actionId, boolean isAllowed) {
       this();
       this.userId = userId;
@@ -42,86 +42,86 @@ public class PermissionIn extends ObjectIn<EntityType> {
       this.actionId = actionId;
       this.isAllowed = isAllowed;
    }
-   
+
    public PermissionIn(String userId, String itemTypeId, String actionId, String itemId, boolean isAllowed) {
       this(userId, itemTypeId, actionId, isAllowed);
       this.itemId = itemId;
    }
-   
+
    public PermissionIn(PermissionOut permOut) {
       this(permOut.getUserId(), permOut.getItemTypeId(), permOut.getActionId(), permOut.getItemId(), permOut.isAllowed());
    }
-   
+
    /**
     * @return the usrId
     */
    public String getUserId() {
       return userId;
    }
-   
+
    /**
     * @param usrId the usrId to set
     */
    public void setUserId(String usrId) {
       this.userId = usrId;
    }
-   
+
    /**
     * @return the itemTypeId
     */
    public String getItemTypeId() {
       return itemTypeId;
    }
-   
+
    /**
     * @param itemTypeId the itemTypeId to set
     */
    public void setItemTypeId(String itemTypeId) {
       this.itemTypeId = itemTypeId;
    }
-   
+
    /**
     * @return the actionId
     */
    public String getActionId() {
       return actionId;
    }
-   
+
    /**
     * @param actionId the actionId to set
     */
    public void setActionId(String actionId) {
       this.actionId = actionId;
    }
-   
+
    /**
     * @return the itemId
     */
    public String getItemId() {
       return itemId;
    }
-   
+
    /**
     * @param itemId the itemId to set
     */
    public void setItemId(String itemId) {
       this.itemId = itemId;
    }
-   
+
    /**
     * @return the isAllowed
     */
    public boolean isAllowed() {
       return isAllowed;
    }
-   
+
    /**
     * @param isAllowed the isAllowed to set
     */
    public void setAllowed(boolean isAllowed) {
       this.isAllowed = isAllowed;
    }
-   
+
    @Override
    public int hashCode() {
       final int prime = 31;
@@ -133,7 +133,7 @@ public class PermissionIn extends ObjectIn<EntityType> {
       result = (prime * result) + ((userId == null) ? 0 : userId.hashCode());
       return result;
    }
-   
+
    @Override
    public boolean equals(Object obj) {
       if (this == obj) {
@@ -179,5 +179,5 @@ public class PermissionIn extends ObjectIn<EntityType> {
       }
       return true;
    }
-   
+
 }

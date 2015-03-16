@@ -38,16 +38,16 @@ import java.util.Set;
  * @author noteirak
  */
 public final class MachineIn extends ObjectIn<EntityType> {
-   
+
    private String uuid;
    private Map<Long, NetworkInterfaceIn> nics = new HashMap<Long, NetworkInterfaceIn>();
    private Map<String, StorageControllerIn> strCtrs = new HashMap<String, StorageControllerIn>();
    private Map<String, DeviceIn> devs = new HashMap<String, DeviceIn>();
-   
+
    public MachineIn() {
       super(EntityType.Machine);
    }
-   
+
    /**
     * Build a machine message with the given ID.
     * 
@@ -57,21 +57,21 @@ public final class MachineIn extends ObjectIn<EntityType> {
       super(EntityType.Machine, id);
       setUuid(id);
    }
-   
+
    public MachineIn(MachineOut mOut) {
       this(mOut.getServerId(), mOut.getUuid());
    }
-   
+
    public MachineIn(String srvId, String vmId) {
       super(EntityType.Machine, vmId);
       setServerId(srvId);
       setUuid(vmId);
    }
-   
+
    protected void setUuid(String uuid) {
       this.uuid = uuid;
    }
-   
+
    /**
     * Get the UUID for this machine
     * 
@@ -80,7 +80,7 @@ public final class MachineIn extends ObjectIn<EntityType> {
    public String getUuid() {
       return uuid;
    }
-   
+
    /**
     * Get the machine name.<br/>
     * Helper method that gets the setting name and return its value.
@@ -90,7 +90,7 @@ public final class MachineIn extends ObjectIn<EntityType> {
    public String getName() {
       return getSetting(MachineAttribute.Name).getString();
    }
-   
+
    /**
     * Set the machine name.<br/>
     * Helper method that created a new StringSettingIO with <code>MachineSettings.Name</code> and set the value to <i>name</i>
@@ -100,15 +100,15 @@ public final class MachineIn extends ObjectIn<EntityType> {
    public void setName(String name) {
       setSetting(new StringSettingIO(MachineAttribute.Name, name));
    }
-   
+
    public String getServerId() {
       return getSetting(MachineAttribute.ServerId).getString();
    }
-   
+
    public void setServerId(String id) {
       setSetting(new StringSettingIO(MachineAttribute.ServerId, id));
    }
-   
+
    public void addStorageController(StorageControllerIn strCtrIo) {
       if (strCtrs.containsKey(strCtrIo.getId())) {
          if (strCtrs.get(strCtrIo.getId()).getAction().equals(Action.Delete)) {
@@ -117,16 +117,16 @@ public final class MachineIn extends ObjectIn<EntityType> {
       }
       strCtrs.put(strCtrIo.getId(), strCtrIo);
    }
-   
+
    public void modifyStorageController(StorageControllerIn strCtrIo) {
       if (strCtrs.containsKey(strCtrIo.getId()) && !getStorageController(strCtrIo.getId()).getAction().equals(Action.Modify)) {
          throw new HyperboxRuntimeException("Cannot mofidy a Storage Controller [" + strCtrIo.getId() + "]");
       }
-      
+
       strCtrIo.setAction(Action.Modify);
       strCtrs.put(strCtrIo.getId(), strCtrIo);
    }
-   
+
    public void removeStorageController(String name) {
       if (strCtrs.containsKey(name)) {
          StorageControllerIn scIn = strCtrs.get(name);
@@ -141,46 +141,46 @@ public final class MachineIn extends ObjectIn<EntityType> {
          strCtrs.put(name, scIn);
       }
    }
-   
+
    public List<StorageControllerIn> listStorageController() {
       return new ArrayList<StorageControllerIn>(strCtrs.values());
    }
-   
+
    public StorageControllerIn getStorageController(String id) {
       return strCtrs.get(id);
    }
-   
+
    public void addNetworkInterface(NetworkInterfaceIn nicIo) {
       nics.put(nicIo.getNicId(), nicIo);
    }
-   
+
    public void removeNetworkInterface(long nicId) {
       nics.remove(nicId);
    }
-   
+
    public void addDevice(DeviceIn dev) {
       devs.put(dev.getId(), dev);
    }
-   
+
    public DeviceIn getDevice(String id) {
       return devs.get(id);
    }
-   
+
    public Set<DeviceIn> listDevice() {
       return new HashSet<DeviceIn>(devs.values());
    }
-   
+
    public List<NetworkInterfaceIn> listNetworkInterface() {
       return new ArrayList<NetworkInterfaceIn>(nics.values());
    }
-   
+
    public NetworkInterfaceIn getNetworkInterface(Long id) {
       return nics.get(id);
    }
-   
+
    @Override
    public String toString() {
       return getName();
    }
-   
+
 }

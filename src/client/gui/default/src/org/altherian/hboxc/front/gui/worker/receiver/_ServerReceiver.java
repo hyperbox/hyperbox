@@ -23,7 +23,7 @@ package org.altherian.hboxc.front.gui.worker.receiver;
 import org.altherian.hbox.comm.out.ServerOut;
 
 public interface _ServerReceiver extends _WorkerDataReceiver {
-   
+
    public void put(ServerOut srvOut);
-   
+
 }

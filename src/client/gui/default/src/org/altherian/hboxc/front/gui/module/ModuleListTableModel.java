@@ -25,13 +25,13 @@ import org.altherian.hboxc.front.gui.utils.AbstractOutputListTableModel;
 
 @SuppressWarnings("serial")
 public class ModuleListTableModel extends AbstractOutputListTableModel<ModuleOut> {
-   
+
    private final String ID = "ID";
    private final String NAME = "Name";
    private final String IS_ENABLED = "Enabled";
    private final String IS_LOADED = "Loaded";
    private final String DESCRIPTOR = "Descriptor";
-   
+
    @Override
    protected void addColumns() {
       addColumn(ID);
@@ -40,7 +40,7 @@ public class ModuleListTableModel extends AbstractOutputListTableModel<ModuleOut
       addColumn(IS_LOADED);
       addColumn(DESCRIPTOR);
    }
-   
+
    @Override
    protected Object getValueAt(ModuleOut obj, String columnName) {
       if (ID.equalsIgnoreCase(columnName)) {
@@ -60,5 +60,5 @@ public class ModuleListTableModel extends AbstractOutputListTableModel<ModuleOut
       }
       return null;
    }
-   
+
 }

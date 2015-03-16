@@ -27,19 +27,19 @@ import org.altherian.hbox.event.HyperboxEvents;
 import java.util.Date;
 
 public class UserAddedEventOut extends UserEventOut {
-   
+
    @SuppressWarnings("unused")
    private UserAddedEventOut() {
       // Used for serialization
    }
-   
+
    public UserAddedEventOut(Date time, ServerOut srvOut, UserOut user) {
       super(time, HyperboxEvents.UserAdded, srvOut, user);
    }
-   
+
    @Override
    public String toString() {
       return "User " + getUser().getDomainLogonName() + " was added at " + getTime();
    }
-   
+
 }

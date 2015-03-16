@@ -24,43 +24,43 @@ import org.altherian.hbox.hypervisor.net._NetService;
 import java.util.List;
 
 public interface _NetworkInterface extends _Device {
-   
+
    @Override
    public String getId();
-   
+
    @Override
    public _Machine getMachine();
-   
+
    public long getNicId();
-   
+
    public boolean isEnabled();
-   
+
    public void setEnabled(boolean isEnabled);
-   
+
    public String getMacAddress();
-   
+
    public void setMacAddress(String macAddress);
-   
+
    public boolean isCableConnected();
-   
+
    public void setCableConnected(boolean isConnected);
-   
+
    public String getAttachMode();
-   
+
    public void setAttachMode(String attachMode);
-   
+
    public String getAttachName();
-   
+
    public void setAttachName(String attachName);
-   
+
    public String getAdapterType();
-   
+
    public void setAdapterType(String adapterType);
-   
+
    public List<_NetService> getServices();
-   
+
    public void setService(_NetService svc);
-   
+
    public _NetService getService(String serviceTypeId);
-   
+
 }

@@ -50,58 +50,58 @@ import java.util.concurrent.TimeUnit;
  * http://stackoverflow.com/questions/18365795/best-way-to-create-a-background-thread-in-java
  */
 public class Updater implements _Updater {
-   
+
    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
    private boolean isRunning = false;
    private boolean isLastScheduleSuccessful = false;
    private Date scheduleLastDate;
    private _Release update;
    private List<String> errors = new ArrayList<String>();
-   
+
    @Override
    public void start() {
       startSchedule();
    }
-   
+
    @Override
    public void stop() {
       stopSchedule();
    }
-   
+
    private void startSchedule() {
       errors.clear();
       scheduler.scheduleAtFixedRate(new Worker(), 0, Long.parseLong(Configuration.getSetting(CFGKEY_UPDATER_INTERVAL, CFGVAL_UPDATER_INTERVAL)),
             TimeUnit.MINUTES);
    }
-   
+
    private void stopSchedule() {
       scheduler.shutdownNow();
    }
-   
+
    @Override
    public String getChannel() {
       return Configuration.getSetting(CFGKEY_UPDATER_CHANNEL, CFGVAL_UPDATER_CHANNEL);
    }
-   
+
    @Override
    public void setChannel(String channel) {
       if (AxStrings.isEmpty(channel)) {
          setChannel(CFGVAL_UPDATER_CHANNEL);
       }
-      
+
       Configuration.setSetting(CFGKEY_UPDATER_CHANNEL, channel);
    }
-   
+
    @Override
    public void setChannel(Enum<?> channel) {
       setChannel(channel.toString().toLowerCase());
    }
-   
+
    @Override
    public boolean isScheduleEnable() {
       return AxBooleans.get(Configuration.getSetting(CFGKEY_UPDATER_ENABLE, CFGVAL_UPDATER_ENABLE));
    }
-   
+
    @Override
    public void setScheduleEnable(boolean isEnable) {
       Configuration.setSetting(CFGKEY_UPDATER_ENABLE, isEnable);
@@ -111,41 +111,41 @@ public class Updater implements _Updater {
          stopSchedule();
       }
    }
-   
+
    @Override
    public long getScheduleInterval() {
       return Long.parseLong(Configuration.getSetting(CFGKEY_UPDATER_INTERVAL, CFGVAL_UPDATER_INTERVAL));
    }
-   
+
    @Override
    public void setScheduleInterval(long interval) throws IllegalArgumentException, UpdaterScheduleException {
       if (interval <= 1) {
          throw new IllegalArgumentException("Interval must be equal or greater to 1");
       }
-      
+
       Configuration.setSetting(CFGKEY_UPDATER_INTERVAL, interval);
    }
-   
+
    @Override
    public boolean isLastScheduleSuccessful() {
       return isLastScheduleSuccessful;
    }
-   
+
    @Override
    public Date getLastScheduleDate() {
       return scheduleLastDate;
    }
-   
+
    @Override
    public List<String> getLastScheduleErrors() {
       return new ArrayList<String>(errors);
    }
-   
+
    @Override
    public boolean hasUpdate() {
       return (Hyperbox.getVersion() != Version.UNKNOWN) && (update != null) && !Hyperbox.getVersion().equals(new Version(update.getVersion()));
    }
-   
+
    @Override
    public _Release getUpdate() throws UpdaterNoNewUpdateException {
       if (!hasUpdate()) {
@@ -153,15 +153,15 @@ public class Updater implements _Updater {
       }
       return update;
    }
-   
+
    @Override
    public _Release checkForUpdate() throws UpdaterNoNewUpdateException {
       new Worker().run();
       return getUpdate();
    }
-   
+
    private class Worker implements Runnable {
-      
+
       @Override
       public void run() {
          if (!isRunning) {
@@ -178,37 +178,37 @@ public class Updater implements _Updater {
                String line = in.readLine();
                if (line == null) {
                   throw new UpdaterRepositoryInvalidFormatException("Update data is empty");
-                  
+
                }
                String releaseRaw[] = line.split(" ");
                if (releaseRaw.length < 4) {
                   throw new UpdaterRepositoryInvalidFormatException("Invalid update data - expected at least 4 values, got " + releaseRaw.length);
                }
-               
+
                String version = releaseRaw[0];
                String revision = releaseRaw[1];
                Date releaseDate;
                URL downloadUrl;
                URL changeLogUrl;
-               
+
                try {
                   releaseDate = new Date(Long.parseLong(releaseRaw[2]) * 1000l);
                } catch (NumberFormatException e) {
                   throw new UpdaterRepositoryInvalidFormatException("Invalid timestamp");
                }
-               
+
                try {
                   downloadUrl = new URL(releaseRaw[3]);
                } catch (MalformedURLException e) {
                   throw new UpdaterRepositoryInvalidFormatException("Invalid download URL");
                }
-               
+
                try {
                   changeLogUrl = new URL(releaseRaw[4]);
                } catch (MalformedURLException e) {
                   throw new UpdaterRepositoryInvalidFormatException("Invalid changelog URL");
                }
-               
+
                update = new Release(getChannel(), version, revision, releaseDate, downloadUrl, changeLogUrl);
                isLastScheduleSuccessful = true;
                Logger.verbose("Advertised version: " + update.getVersion() + "r" + update.getRevision());
@@ -234,7 +234,7 @@ public class Updater implements _Updater {
             Logger.debug("Updater working is already running, skipping");
          }
       }
-      
+
    }
-   
+
 }

@@ -25,13 +25,13 @@ import org.virtualbox_4_3.IStorageController;
 import org.virtualbox_4_3.LockType;
 
 public interface _StorageControllerSettingAction {
-   
+
    public LockType getLockType();
-   
+
    public String getSettingName();
-   
+
    public void set(IStorageController sct, _Setting setting);
-   
+
    public _Setting get(IStorageController sct);
-   
+
 }

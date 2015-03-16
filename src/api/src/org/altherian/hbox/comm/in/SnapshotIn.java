@@ -26,11 +26,11 @@ import org.altherian.hbox.constant.SnapshotAttribute;
 import java.util.UUID;
 
 public class SnapshotIn extends ObjectIn<EntityType> {
-   
+
    public SnapshotIn() {
       super(EntityType.Snapshot);
    }
-   
+
    public SnapshotIn(String id) {
       this();
       try {
@@ -40,29 +40,29 @@ public class SnapshotIn extends ObjectIn<EntityType> {
          setName(id);
       }
    }
-   
+
    public String getUuid() {
       return getSetting(SnapshotAttribute.Uuid).getString();
    }
-   
+
    public void setUuid(String uuid) {
       setSetting(new StringSettingIO(SnapshotAttribute.Uuid, uuid));
    }
-   
+
    public String getName() {
       return getSetting(SnapshotAttribute.Name).getString();
    }
-   
+
    public void setName(String name) {
       setSetting(new StringSettingIO(SnapshotAttribute.Name, name));
    }
-   
+
    public String getDescription() {
       return getSetting(SnapshotAttribute.Description).getString();
    }
-   
+
    public void setDescription(String desc) {
       setSetting(new StringSettingIO(SnapshotAttribute.Description, desc));
    }
-   
+
 }

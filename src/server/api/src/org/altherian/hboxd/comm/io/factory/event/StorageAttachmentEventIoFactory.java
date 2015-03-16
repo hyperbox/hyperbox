@@ -35,7 +35,7 @@ import org.altherian.hboxd.core.model._Machine;
 import org.altherian.hboxd.event.storage.StorageAttachmentEvent;
 
 public class StorageAttachmentEventIoFactory implements _EventIoFactory {
-   
+
    @Override
    public Enum<?>[] getHandles() {
       return new Enum<?>[] {
@@ -44,17 +44,17 @@ public class StorageAttachmentEventIoFactory implements _EventIoFactory {
             HyperboxEvents.StorageAttachmentRemoved
       };
    }
-   
+
    @Override
    public EventOut get(_Hyperbox hbox, _Event ev) {
       StorageAttachmentEvent event = (StorageAttachmentEvent) ev;
-      
+
       _Machine vm = hbox.getServer().getMachine(event.getMachineId());
-      
+
       ServerOut srvOut = ServerIoFactory.get();
       MachineOut vmOut = MachineIoFactory.getSimple(vm);
       StorageControllerOut stoOut = StorageControllerIoFactory.get(vm.getStorageController(event.getControllerId()));
-      
+
       switch ((HyperboxEvents) event.getEventId()) {
          case StorageAttachmentAdded:
             return new StorageControllerAttachmentDataModifiedEventOut(ev.getTime(), srvOut, vmOut, stoOut);
@@ -66,5 +66,5 @@ public class StorageAttachmentEventIoFactory implements _EventIoFactory {
             return null;
       }
    }
-   
+
 }

@@ -36,27 +36,27 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class MachineIoFactory {
-   
+
    private MachineIoFactory() {
       // static class, cannot be instantiated
    }
-   
+
    public static MachineOut get(String uuid, String state) {
       return get(uuid, state, true);
    }
-   
+
    public static MachineOut get(String uuid, String state, boolean isAvailable) {
       return new MachineOut(HBoxServer.get().getId(), uuid, state, isAvailable);
    }
-   
+
    public static MachineOut getSimple(String id) {
       return new MachineOut(HBoxServer.get().getId(), id);
    }
-   
+
    public static MachineOut getSimple(String uuid, String state, List<_Setting> settings) {
       return new MachineOut(HBoxServer.get().getId(), uuid, state, SettingIoFactory.getList(settings));
    }
-   
+
    public static MachineOut getSimple(_Machine m) {
       List<_Setting> settings = new ArrayList<_Setting>();
       if (m.isAccessible()) {
@@ -69,9 +69,9 @@ public final class MachineIoFactory {
       } else {
          return get(m.getUuid(), MachineStates.Inaccessible.getId(), false);
       }
-      
+
    }
-   
+
    public static MachineOut get(_Machine m) {
       if (m.isAccessible()) {
          String serverId = HBoxServer.get().getId();
@@ -79,17 +79,17 @@ public final class MachineIoFactory {
          for (_StorageController sc : m.listStorageControllers()) {
             scOutList.add(StorageControllerIoFactory.get(sc));
          }
-         
+
          List<NetworkInterfaceOut> nicOutList = new ArrayList<NetworkInterfaceOut>();
          for (_NetworkInterface nic : m.listNetworkInterfaces()) {
             nicOutList.add(NetworkInterfaceIoFactory.get(nic));
          }
-         
+
          MachineOut mOut = new MachineOut(serverId, m.getUuid(), m.getState(), SettingIoFactory.getList(m.getSettings()), scOutList, nicOutList);
          return mOut;
       } else {
          return get(m.getUuid(), MachineStates.Inaccessible.getId(), false);
       }
    }
-   
+
 }

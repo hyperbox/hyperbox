@@ -24,13 +24,13 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 
 @SuppressWarnings("serial")
 public class SecurityException extends HyperboxRuntimeException {
-   
+
    public SecurityException() {
       super("Not Authorized");
    }
-   
+
    public SecurityException(String s) {
       super(s);
    }
-   
+
 }

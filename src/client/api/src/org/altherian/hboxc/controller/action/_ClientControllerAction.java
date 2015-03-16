@@ -28,21 +28,21 @@ import org.altherian.hboxc.core._Core;
 import org.altherian.hboxc.front._Front;
 
 public interface _ClientControllerAction {
-   
+
    public Enum<?> getRegistration();
-   
+
    public AnswerType getStartReturn();
-   
+
    public AnswerType getFinishReturn();
-   
+
    public AnswerType getFailReturn();
-   
+
    public Class<?>[] getRequiredClasses();
-   
+
    public Enum<?>[] getRequiredEnums();
-   
+
    public String[] getRequiredData();
-   
+
    public void run(_Core core, _Front view, Request req, _AnswerReceiver recv) throws HyperboxException;
-   
+
 }

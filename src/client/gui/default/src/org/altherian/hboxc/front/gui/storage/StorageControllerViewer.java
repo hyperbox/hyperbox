@@ -35,37 +35,37 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public final class StorageControllerViewer {
-   
+
    private StorageControllerIn scIn;
-   
+
    private JLabel nameLabel;
    private JTextField nameField;
    private JLabel typeLabel;
    private JLabel typeValue;
    private JLabel subTypeLabel;
    private JComboBox subTypeBox;
-   
+
    private JLabel ioCacheLabel;
    private JCheckBox ioCacheBox;
    private JPanel panel;
-   
+
    public StorageControllerViewer() {
       init();
    }
-   
+
    private void init() {
       nameLabel = new JLabel("Name");
       nameField = new JTextField();
-      
+
       typeLabel = new JLabel("Type");
       typeValue = new JLabel();
-      
+
       subTypeLabel = new JLabel("Sub Type");
       subTypeBox = new JComboBox();
-      
+
       ioCacheLabel = new JLabel("Host I/O Cache");
       ioCacheBox = new JCheckBox();
-      
+
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(nameLabel);
       panel.add(nameField, "growx,pushx,wrap");
@@ -76,52 +76,52 @@ public final class StorageControllerViewer {
       panel.add(ioCacheLabel);
       panel.add(ioCacheBox, "growx,pushx,wrap");
    }
-   
+
    public JPanel getPanel() {
       return panel;
    }
-   
+
    public void display(String srvId, StorageControllerIn scIn) {
       this.scIn = scIn;
-      
+
       nameField.setEditable(true);
-      
+
       String name = "";
       String scTypeId = "";
       String scSubTypeId = "";
       boolean ioCache = false;
-      
+
       name = scIn.getName();
       scTypeId = scIn.getSetting(StorageControllerAttribute.Type).getString();
-      
+
       if (scIn.hasSetting(StorageControllerAttribute.SubType)) {
          scSubTypeId = scIn.getSetting(StorageControllerAttribute.SubType).getString();
          Logger.debug("Selecting " + scSubTypeId + " subType");
       } else {
          Logger.debug("No SubType in the object");
       }
-      
+
       if (scIn.hasSetting(StorageControllerAttribute.IoCache)) {
          ioCache = scIn.getSetting(StorageControllerAttribute.IoCache).getBoolean();
       } else {
          Logger.debug("No IoCache in the object");
       }
-      
+
       subTypeBox.removeAllItems();
       for (StorageControllerSubTypeOut scstOut : Gui.getServer(srvId).listStorageControllerSubType(
             new StorageControllerTypeIn(scTypeId))) {
          subTypeBox.addItem(scstOut.getId());
       }
-      
+
       nameField.setText(name);
       typeValue.setText(scTypeId);
       subTypeBox.setSelectedItem(scSubTypeId);
       ioCacheBox.setSelected(ioCache);
    }
-   
+
    public void save() {
       scIn.setSubType(subTypeBox.getSelectedItem().toString());
       scIn.setSetting(new BooleanSettingIO(StorageControllerAttribute.IoCache, ioCacheBox.isSelected()));
    }
-   
+
 }

@@ -21,7 +21,7 @@
 package org.altherian.hbox.constant;
 
 public enum NetworkInterfaceAttribute {
-   
+
    Enabled,
    MacAddress,
    CableConnected,
@@ -29,9 +29,9 @@ public enum NetworkInterfaceAttribute {
    AttachMode,
    AttachName,
    PromiscuousMode;
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

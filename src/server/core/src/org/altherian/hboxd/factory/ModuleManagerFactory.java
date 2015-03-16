@@ -24,13 +24,13 @@ import org.altherian.hboxd.module.ModuleManager;
 import org.altherian.hboxd.module._ModuleManager;
 
 public class ModuleManagerFactory {
-   
+
    private ModuleManagerFactory() {
       throw new RuntimeException("Not allowed");
    }
-   
+
    public static _ModuleManager get() {
       return new ModuleManager();
    }
-   
+
 }

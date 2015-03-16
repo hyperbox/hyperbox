@@ -25,11 +25,11 @@ import org.altherian.hbox.comm.in.StorageControllerIn;
 import org.altherian.hbox.comm.out.storage.StorageControllerOut;
 
 public final class StorageControllerIoFactory {
-   
+
    public static String getId(String machineUuid, String name) {
       return machineUuid + "|" + name;
    }
-   
+
    /**
     * Create the equivalent in an Input object of this Storage Controller output object. The input object will have its {@link Action} set to
     * {@link Action#Modify}
@@ -45,5 +45,5 @@ public final class StorageControllerIoFactory {
       scIn.setAction(Action.Modify);
       return scIn;
    }
-   
+
 }

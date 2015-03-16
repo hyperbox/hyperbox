@@ -21,9 +21,9 @@
 package org.altherian.hboxd.security;
 
 public interface _UserGroup {
-   
+
    public String getId();
-   
+
    public String getName();
-   
+
 }

@@ -38,51 +38,51 @@ import org.virtualbox_4_3.SessionType;
 import org.virtualbox_4_3.VBoxException;
 
 public class VBoxSessionManager implements _RawSessionManager {
-   
+
    private static ThreadLocal<VBoxSessionManager> instance = new ThreadLocal<VBoxSessionManager>();
    private ThreadLocal<Map<String, ISession>> sessions;
    private ThreadLocal<Map<String, Boolean>> userLocking;
-   
+
    public static _RawSessionManager get() {
       if (instance.get() == null) {
          instance.set(new VBoxSessionManager());
       }
       return instance.get();
    }
-   
+
    public VBoxSessionManager() {
       sessions = new ThreadLocal<Map<String, ISession>>();
       sessions.set(new HashMap<String, ISession>());
-      
+
       userLocking = new ThreadLocal<Map<String, Boolean>>();
       userLocking.set(new HashMap<String, Boolean>());
-      
+
       EventBusFactory.subscribe(this);
    }
-   
+
    @Handler
    public void getMachineStateEvent(IMachineStateChangedEvent ev) {
-      
+
       if (ev.getState().equals(MachineState.Stopping)) {
          unlock(ev.getMachineId(), false);
       }
    }
-   
+
    @Handler
    public void getMachineSessionStateEvent(ISessionStateChangedEvent ev) {
-      
+
       if (ev.getState().equals(SessionState.Unlocked) || ev.getState().equals(SessionState.Unlocking)) {
          unlock(ev.getMachineId(), false);
       }
    }
-   
+
    @Override
    public ISession lock(String uuid, LockType lockType) throws MachineLockingException {
       return lock(uuid, lockType, true);
    }
-   
+
    private ISession lock(String uuid, LockType lockType, boolean userRequest) throws MachineLockingException {
-      
+
       try {
          if (sessions.get().containsKey(uuid) && (lockType.equals(LockType.Shared) ||
                (sessions.get().get(uuid).getState().equals(SessionState.Locked) && sessions.get().get(uuid).getType().equals(SessionType.WriteLock)))) {
@@ -94,29 +94,29 @@ public class VBoxSessionManager implements _RawSessionManager {
             roMachine.lockMachine(session, lockType);
             sessions.get().put(uuid, session);
          }
-         
+
          if (!userLocking.get().containsKey(uuid) || !userLocking.get().get(uuid)) {
             userLocking.get().put(uuid, userRequest);
          }
-         
+
          return sessions.get().get(uuid);
       } catch (VBoxException e) {
          throw new MachineLockingException(e.getMessage(), e);
       }
    }
-   
+
    @Override
    public void unlock(String uuid, boolean saveSettings) {
       unlock(uuid, true, saveSettings);
    }
-   
+
    @Override
    public void unlock(String uuid) {
       unlock(uuid, true);
    }
-   
+
    private void unlock(String uuid, boolean userRequest, boolean saveSettings) {
-      
+
       if (sessions.get().containsKey(uuid) && (userRequest || (userLocking.get().containsKey(uuid) && !userLocking.get().get(uuid)))) {
          Logger.debug("Found a session for VM #" + uuid + " and the unlock is authorized.");
          try {
@@ -157,23 +157,23 @@ public class VBoxSessionManager implements _RawSessionManager {
          Logger.debug("Not unlocking " + uuid + ".");
       }
    }
-   
+
    @Override
    public void unlockAuto(String uuid) {
       unlock(uuid, false, false);
    }
-   
+
    @Override
    public void unlockAuto(String uuid, boolean saveSettings) {
       unlock(uuid, false, saveSettings);
    }
-   
+
    @Override
    public ISession getLock(String uuid) {
-      
+
       return sessions.get().get(uuid);
    }
-   
+
    @Override
    public IMachine getCurrent(String uuid) {
       if (sessions.get().containsKey(uuid)) {
@@ -186,7 +186,7 @@ public class VBoxSessionManager implements _RawSessionManager {
       }
       return VBox.get().findMachine(uuid);
    }
-   
+
    @Override
    public ISession lockAuto(String uuid) throws MachineLockingException {
       try {
@@ -197,10 +197,10 @@ public class VBoxSessionManager implements _RawSessionManager {
          return lockAuto(uuid, LockType.Shared);
       }
    }
-   
+
    @Override
    public ISession lockAuto(String uuid, LockType lockType) throws MachineLockingException {
       return lock(uuid, lockType, false);
    }
-   
+
 }

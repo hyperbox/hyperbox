@@ -35,24 +35,24 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MachineDisplayTakeScreenshotAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.MachineDisplayGetScreenshot.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       MachineIn mIn = request.get(MachineIn.class);
-      
+
       byte[] screenData = hbox.getHypervisor().getMachine(mIn.getUuid()).takeScreenshot();
       ScreenshotOut scrOut = new ScreenshotOut(screenData);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, scrOut));
    }
-   
+
 }

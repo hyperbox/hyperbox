@@ -25,12 +25,12 @@ import static org.junit.Assert.assertNotNull;
 import org.altherian.hbox.comm.out.storage.MediumOut;
 
 public final class MediumOutputTest {
-   
+
    public static void validateSimple(MediumOut medOut) {
       assertFalse(medOut.getId().isEmpty());
       assertFalse(medOut.getUuid().isEmpty());
    }
-   
+
    public static void validateFull(MediumOut medOut) {
       validateSimple(medOut);
       assertFalse(medOut.getLocation().isEmpty());
@@ -43,5 +43,5 @@ public final class MediumOutputTest {
          // assertTrue(medOut.getParentUuid().isEmpty());
       }
    }
-   
+
 }

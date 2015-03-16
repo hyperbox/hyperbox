@@ -29,17 +29,17 @@ import org.virtualbox_4_3.LockType;
 import org.virtualbox_4_3.USBControllerType;
 
 public class UsbOhciSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.UsbOhci.toString();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       if (!setting.getBoolean() && (machine.getUSBControllerCountByType(USBControllerType.OHCI) > 0)) {
@@ -48,10 +48,10 @@ public class UsbOhciSettingAction implements _MachineSettingAction {
          machine.addUSBController(USBControllerType.OHCI.toString(), USBControllerType.OHCI);
       }
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new UsbOhciSetting(machine.getUSBControllerCountByType(USBControllerType.OHCI));
    }
-   
+
 }

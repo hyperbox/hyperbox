@@ -39,7 +39,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class SystemVmEdit {
-   
+
    private JPanel panel;
    private JLabel cpuNbLabel;
    private JTextField cpuNbField;
@@ -67,10 +67,10 @@ public class SystemVmEdit {
    private JCheckBox nestedPageBox;
    private JLabel vpidLabel;
    private JCheckBox vpidBox;
-   
+
    private MachineIn mIn;
    private MachineOut mOut;
-   
+
    public SystemVmEdit() {
       cpuNbField = new JTextField(5);
       cpuExecCapField = new JTextField(10);
@@ -91,7 +91,7 @@ public class SystemVmEdit {
       largePageBox = new JCheckBox();
       nestedPageBox = new JCheckBox();
       vpidBox = new JCheckBox();
-      
+
       cpuNbLabel = new JLabel("CPU");
       cpuNbLabel.setLabelFor(cpuNbField);
       cpuExecCapLabel = new JLabel("CPU Exec Cap");
@@ -106,14 +106,14 @@ public class SystemVmEdit {
       largePageLabel = new JLabel("Large Pages");
       nestedPageLabel = new JLabel("Nested Pages");
       vpidLabel = new JLabel("VPID (VT-x Only)");
-      
+
       JPanel mbPanel = new JPanel(new MigLayout());
       mbPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray), "Motherboard"));
       JPanel cpuPanel = new JPanel(new MigLayout());
       cpuPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray), "Processor"));
       JPanel accelPanel = new JPanel(new MigLayout());
       accelPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray), "Acceleration"));
-      
+
       cpuPanel.add(cpuNbLabel);
       cpuPanel.add(cpuNbField, "growx,pushx,wrap");
       cpuPanel.add(cpuExecCapLabel);
@@ -140,21 +140,21 @@ public class SystemVmEdit {
       accelPanel.add(nestedPageBox, "growx,pushx,wrap");
       accelPanel.add(vpidLabel);
       accelPanel.add(vpidBox, "growx,pushx,wrap");
-      
+
       panel = new JPanel(new MigLayout());
       panel.add(mbPanel, "growx,pushx,wrap");
       panel.add(cpuPanel, "growx,pushx,wrap");
       panel.add(accelPanel, "growx,pushx,wrap");
    }
-   
+
    public Component getComp() {
       return panel;
    }
-   
+
    public void update(MachineOut mOut, MachineIn mIn) {
       this.mIn = mIn;
       this.mOut = mOut;
-      
+
       cpuNbField.setText(mOut.getSetting(MachineAttribute.CpuCount).getString());
       cpuExecCapField.setText(mOut.getSetting(MachineAttribute.CpuExecCap).getString());
       ramField.setText(mOut.getSetting(MachineAttribute.Memory).getString());
@@ -171,7 +171,7 @@ public class SystemVmEdit {
       nestedPageBox.setSelected(mOut.getSetting(MachineAttribute.NestedPaging).getBoolean());
       vpidBox.setSelected(mOut.getSetting(MachineAttribute.Vtxvpid).getBoolean());
    }
-   
+
    public void save() {
       if (!mOut.getSetting(MachineAttribute.CpuCount).getString().contentEquals(cpuNbField.getText())) {
          mIn.setSetting(new PositiveNumberSettingIO(MachineAttribute.CpuCount, Long.parseLong(cpuNbField.getText())));
@@ -209,5 +209,5 @@ public class SystemVmEdit {
          mIn.setSetting(new BooleanSettingIO(MachineAttribute.Vtxvpid, vpidBox.isSelected()));
       }
    }
-   
+
 }

@@ -25,13 +25,13 @@ import org.virtualbox_4_4.ISnapshot;
 import org.virtualbox_4_4.LockType;
 
 public interface _SnapshotSettingAction {
-   
+
    public LockType getLockType();
-   
+
    public String getSettingName();
-   
+
    public void set(ISnapshot snap, _Setting setting);
-   
+
    public _Setting get(ISnapshot snap);
-   
+
 }

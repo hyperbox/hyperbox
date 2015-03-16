@@ -27,14 +27,14 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class ConsoleViewerCreateAction extends AbstractAction {
-   
+
    public ConsoleViewerCreateAction() {
       super("+");
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       ConsoleViewerEditor.create();
    }
-   
+
 }

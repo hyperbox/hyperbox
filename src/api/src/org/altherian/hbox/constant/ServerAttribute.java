@@ -21,7 +21,7 @@
 package org.altherian.hbox.constant;
 
 public enum ServerAttribute {
-   
+
    Id,
    Name,
    Type,
@@ -31,5 +31,5 @@ public enum ServerAttribute {
    FullVersion,
    IsHypervisorConnected,
    LogLevel,
-   
+
 }

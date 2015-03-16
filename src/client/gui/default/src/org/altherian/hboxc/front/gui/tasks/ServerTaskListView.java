@@ -52,21 +52,21 @@ import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 
 public class ServerTaskListView implements _TaskSelector, _Refreshable {
-   
+
    private final String srvId;
-   
+
    private JLabel loadingLabel = new JLabel("Loading...");
    private ServerTaskListTableModel itemListModel;
    private JTable itemList;
    private JScrollPane scrollPane;
    private JPanel panel;
    private JScrollPane pane;
-   
+
    private JPopupMenu actions;
-   
+
    public ServerTaskListView(String srvId) {
       this.srvId = srvId;
-      
+
       itemListModel = new ServerTaskListTableModel();
       itemList = new JTable(itemListModel);
       itemList.setFillsViewportHeight(true);
@@ -74,49 +74,49 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
       // Sort by ID descending, so the newest queued task is always on top
       itemList.getRowSorter().setSortKeys(Arrays.asList(new RowSorter.SortKey(4, SortOrder.DESCENDING)));
       itemList.addMouseListener(new ItemListMouseListener());
-      
+
       loadingLabel.setVisible(false);
-      
+
       scrollPane = new JScrollPane(itemList);
-      
+
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(loadingLabel, "hidemode 3, growx, pushx, wrap");
       panel.add(scrollPane, "hidemode 3, grow, push, wrap");
-      
+
       pane = new JScrollPane(panel);
       pane.setBorder(BorderFactory.createEmptyBorder());
       MouseWheelController.install(pane);
-      
+
       actions = new JPopupMenu();
       actions.add(new JMenuItem(new TaskCancelAction(this)));
-      
+
       refresh();
       ViewEventManager.register(this);
    }
-   
+
    public JComponent getComponent() {
       return pane;
    }
-   
+
    private class ItemListMouseListener extends MouseAdapter {
-      
+
       private void popupHandle(MouseEvent ev) {
          if (ev.isPopupTrigger()) {
             // TODO enable when cancel task is possible
             //actions.show(ev.getComponent(), ev.getX(), ev.getY());
          }
       }
-      
+
       @Override
       public void mouseReleased(MouseEvent ev) {
          popupHandle(ev);
       }
-      
+
       @Override
       public void mousePressed(MouseEvent ev) {
          popupHandle(ev);
       }
-      
+
       @Override
       public void mouseClicked(MouseEvent ev) {
          if (ev.getButton() == MouseEvent.BUTTON1) {
@@ -131,26 +131,26 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
             popupHandle(ev);
          }
       }
-      
+
    }
-   
+
    @Override
    public List<TaskOut> getSelection() {
-      
+
       List<TaskOut> listSelectedItems = new ArrayList<TaskOut>();
       for (int row : itemList.getSelectedRows()) {
          listSelectedItems.add(itemListModel.getObjectAtRow(itemList.convertRowIndexToModel(row)));
       }
       return listSelectedItems;
    }
-   
+
    @Override
    public void refresh() {
       TaskListWorker.execute(new TaskListReceiver(), srvId);
    }
-   
+
    private class TaskListReceiver implements _TaskListReceiver {
-      
+
       @Override
       public void loadingStarted() {
          loadingLabel.setVisible(true);
@@ -158,15 +158,15 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
          panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
          itemListModel.clear();
       }
-      
+
       private void finish() {
          panel.setEnabled(false);
          panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
       }
-      
+
       @Override
       public void loadingFinished(boolean isSuccessful, String message) {
-         
+
          finish();
          if (isSuccessful) {
             loadingLabel.setVisible(false);
@@ -174,52 +174,52 @@ public class ServerTaskListView implements _TaskSelector, _Refreshable {
             loadingLabel.setText("Error when loading tasks: " + message);
          }
       }
-      
+
       @Override
       public void add(List<TaskOut> tOutList) {
-         
+
          itemListModel.merge(tOutList);
       }
    }
-   
+
    @Handler
    private void putConnectorStateEvent(ConnectorStateChangedEvent ev) {
       if (srvId.equals(ev.getConnector().getServerId())) {
          refresh();
       }
    }
-   
+
    @Handler
    private void putTaskAddedEvent(TaskAddedEvent ev) {
       if (ev.getServer().getId().equals(srvId)) {
          add(ev.getTask());
       }
    }
-   
+
    @Handler
    private void putTaskRemovedEvent(TaskRemovedEvent ev) {
       if (ev.getServer().getId().equals(srvId)) {
          remove(ev.getTask());
       }
    }
-   
+
    @Handler
    private void putTaskStateEvent(TaskStateChangedEvent ev) {
       if (ev.getServer().getId().equals(srvId)) {
          update(ev.getTask());
       }
    }
-   
+
    private void add(TaskOut tOut) {
       itemListModel.add(tOut);
    }
-   
+
    private void update(TaskOut tOut) {
       itemListModel.update(tOut);
    }
-   
+
    private void remove(TaskOut tOut) {
       itemListModel.remove(tOut);
    }
-   
+
 }

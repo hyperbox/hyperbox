@@ -36,10 +36,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public final class AudioVmEdit {
-   
+
    private MachineIn mIn;
    private MachineOut mOut;
-   
+
    private JPanel panel;
    private JLabel audioEnableLabel;
    private JLabel driverLabel;
@@ -47,17 +47,17 @@ public final class AudioVmEdit {
    private JCheckBox audioEnableBox;
    private JComboBox driverBox;
    private JComboBox controllerBox;
-   
+
    public AudioVmEdit() {
       audioEnableLabel = new JLabel("Audio Enabled");
       audioEnableBox = new JCheckBox();
-      
+
       driverLabel = new JLabel("Host Driver");
       driverBox = new JComboBox();
-      
+
       controllerLabel = new JLabel("Guest Controller");
       controllerBox = new JComboBox();
-      
+
       panel = new JPanel(new MigLayout());
       panel.add(audioEnableLabel);
       panel.add(audioEnableBox, "growx, pushx, wrap");
@@ -66,21 +66,21 @@ public final class AudioVmEdit {
       panel.add(controllerLabel);
       panel.add(controllerBox, "growx, pushx, wrap");
    }
-   
+
    public Component getComp() {
       return panel;
    }
-   
+
    public void update(MachineOut mOut, MachineIn mIn) {
       this.mIn = mIn;
       this.mOut = mOut;
-      
+
       if (mOut.hasSetting(MachineAttribute.AudioEnable)) {
          audioEnableBox.setSelected(mOut.getSetting(MachineAttribute.AudioEnable).getBoolean());
       } else {
          Logger.debug("Setting " + MachineAttribute.AudioEnable + " was not found for " + mOut.toString());
       }
-      
+
       driverBox.removeAllItems();
       // TODO request specific values for the machine
       for (AudioDriver driver : AudioDriver.values()) {
@@ -91,7 +91,7 @@ public final class AudioVmEdit {
       } else {
          Logger.debug("Setting " + MachineAttribute.AudioDriver + " was not found for " + mOut.toString());
       }
-      
+
       controllerBox.removeAllItems();
       // TODO request specific values for the machine
       for (AudioController controller : AudioController.values()) {
@@ -103,7 +103,7 @@ public final class AudioVmEdit {
          Logger.debug("Setting " + MachineAttribute.AudioController + " was not found for " + mOut.toString());
       }
    }
-   
+
    public void save() {
       if (!mOut.getSetting(MachineAttribute.AudioEnable).getBoolean().equals(audioEnableBox.isSelected())) {
          mIn.setSetting(new BooleanSettingIO(MachineAttribute.AudioEnable, audioEnableBox.isSelected()));
@@ -115,5 +115,5 @@ public final class AudioVmEdit {
          mIn.setSetting(new StringSettingIO(MachineAttribute.AudioController, controllerBox.getSelectedItem().toString()));
       }
    }
-   
+
 }

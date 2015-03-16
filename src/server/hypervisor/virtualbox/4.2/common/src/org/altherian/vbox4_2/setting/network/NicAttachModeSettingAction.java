@@ -31,17 +31,17 @@ import org.virtualbox_4_2.NetworkAttachmentType;
 import org.virtualbox_4_2.VBoxException;
 
 public class NicAttachModeSettingAction implements _NetworkInterfaceSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Shared;
    }
-   
+
    @Override
    public String getSettingName() {
       return NetworkInterfaceAttribute.AttachMode.getId();
    }
-   
+
    @Override
    public void set(INetworkAdapter nic, _Setting setting) {
       try {
@@ -52,10 +52,10 @@ public class NicAttachModeSettingAction implements _NetworkInterfaceSettingActio
          throw new ConfigurationException("Unkown attach mode [" + setting.getString() + "]");
       }
    }
-   
+
    @Override
    public _Setting get(INetworkAdapter nic) {
       return new NicAttachModeSetting(nic.getAttachmentType().toString());
    }
-   
+
 }

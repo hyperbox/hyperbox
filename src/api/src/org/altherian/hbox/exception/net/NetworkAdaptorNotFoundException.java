@@ -24,13 +24,13 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 
 @SuppressWarnings("serial")
 public class NetworkAdaptorNotFoundException extends HyperboxRuntimeException {
-   
+
    public NetworkAdaptorNotFoundException(String adaptorId) {
       this(adaptorId, "Could not find a network adaptor with ID " + adaptorId);
    }
-   
+
    public NetworkAdaptorNotFoundException(String adaptorId, String message) {
       super(message);
    }
-   
+
 }

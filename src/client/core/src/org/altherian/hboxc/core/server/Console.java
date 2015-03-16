@@ -33,17 +33,17 @@ import org.altherian.hboxc.server._Console;
 import org.altherian.hboxc.server._Machine;
 
 public class Console extends Device implements _Console {
-   
+
    public Console(_Machine machine) {
       super(machine, EntityType.Console.getId());
       refresh();
    }
-   
+
    @Override
    public String getType() {
       return EntityType.Console.getId();
    }
-   
+
    @Override
    public void refresh() {
       Request req = new Request(Command.VBOX, HypervisorTasks.DevicePropertyList);
@@ -52,5 +52,5 @@ public class Console extends Device implements _Console {
       Transaction t = getMachine().getServer().sendRequest(req);
       setSetting(SettingIoFactory.getListIo(t.extractItems(SettingIO.class)));
    }
-   
+
 }

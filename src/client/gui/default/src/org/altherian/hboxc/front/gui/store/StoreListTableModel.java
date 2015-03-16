@@ -25,18 +25,18 @@ import org.altherian.hboxc.front.gui.utils.AbstractOutputListTableModel;
 
 @SuppressWarnings("serial")
 public final class StoreListTableModel extends AbstractOutputListTableModel<StoreOut> {
-   
+
    private final String ID = "ID";
    private final String LABEL = "Label";
    private final String LOC = "Location";
-   
+
    @Override
    protected void addColumns() {
       addColumn(ID);
       addColumn(LABEL);
       addColumn(LOC);
    }
-   
+
    @Override
    protected Object getValueAt(StoreOut obj, String columnName) {
       if (ID.equalsIgnoreCase(columnName)) {
@@ -50,5 +50,5 @@ public final class StoreListTableModel extends AbstractOutputListTableModel<Stor
       }
       return null;
    }
-   
+
 }

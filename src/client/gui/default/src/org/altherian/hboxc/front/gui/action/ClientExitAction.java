@@ -28,14 +28,14 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class ClientExitAction extends AbstractAction {
-   
+
    public ClientExitAction() {
       super("Exit", IconBuilder.getTask(ClientTasks.Exit));
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       Gui.exit();
    }
-   
+
 }

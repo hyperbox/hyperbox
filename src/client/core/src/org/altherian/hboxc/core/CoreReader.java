@@ -43,31 +43,31 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 public class CoreReader implements _CoreReader {
-   
+
    private _Core core;
-   
+
    private Map<_ServerReader, _ServerReader> cachedServerReaders = new WeakHashMap<_ServerReader, _ServerReader>();
-   
+
    public CoreReader(_Core core) {
       this.core = core;
       EventManager.get().register(this);
    }
-   
+
    @Override
    public CoreState getCoreState() {
       return core.getCoreState();
    }
-   
+
    @Override
    public List<ConnectorOutput> listConnectors() {
       return ConnectorIoFactory.getList(core.listConnector());
    }
-   
+
    @Override
    public ConnectorOutput getConnector(ConnectorInput conIn) {
       return getConnector(conIn.getId());
    }
-   
+
    @Override
    public _ServerReader getServerReader(String id) {
       _ServerReader cachedReader = cachedServerReaders.get(core.getServer(id));
@@ -75,49 +75,49 @@ public class CoreReader implements _CoreReader {
          cachedReader = new CachedServerReader(core.getServer(id));
          cachedServerReaders.put(core.getServer(id), cachedReader);
       }
-      
+
       return cachedReader;
    }
-   
+
    @Override
    public List<ConsoleViewerOutput> listConsoleViewers() {
       return ConsoleViewerIoFactory.getOutList(core.listConsoleViewer());
    }
-   
+
    @Override
    public List<BackendOutput> listBackends() {
       return BackendIoFactory.getListId(BackendFactory.list());
    }
-   
+
    @Override
    public ServerOut getServer(ConnectorInput conIn) {
       return ServerIoFactory.get(core.getConnector(conIn.getId()).getServer());
    }
-   
+
    @Override
    public ConnectorOutput getConnector(String id) {
       return ConnectorIoFactory.get(core.getConnector(id));
    }
-   
+
    @Override
    public ServerOut getServerInfo(String id) {
       return ServerIoFactory.get(core.getServer(id));
    }
-   
+
    @Handler
    protected void putServerDisconnected(ServerDisconnectedEvent ev) {
-      
+
       cachedServerReaders.remove(core.getServer(ev.getServer().getId()));
    }
-   
+
    @Override
    public ConnectorOutput getConnectorForServer(String srvId) {
       return ConnectorIoFactory.get(core.getConnectorForServer(srvId));
    }
-   
+
    @Override
    public _Updater getUpdater() {
       return core.getUpdater();
    }
-   
+
 }

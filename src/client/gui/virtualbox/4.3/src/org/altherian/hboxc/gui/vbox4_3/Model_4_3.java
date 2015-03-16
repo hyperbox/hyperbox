@@ -28,17 +28,17 @@ import org.altherian.vbox.VirtualBox;
 import java.util.List;
 
 public class Model_4_3 extends GenericModel {
-   
+
    @Override
    public List<String> getSupported() {
       return VirtualBox.ID_GROUP.ALL_4_3;
    }
-   
+
    @Override
    public _GlobalConfigureView getConfigureView() {
       return new GlobalConfigureView();
    }
-   
+
    @Override
    public _NetAdaptorConfigureView getNetAdaptorConfig(String srvId, String modeId, String adaptId) {
       if (VBoxNetMode.NATNetwork.is(modeId)) {
@@ -47,5 +47,5 @@ public class Model_4_3 extends GenericModel {
          return super.getNetAdaptorConfig(srvId, modeId, adaptId);
       }
    }
-   
+
 }

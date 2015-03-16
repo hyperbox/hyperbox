@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.PositiveNumberSetting;
 
 public class GuestMemoryBalloonSetting extends PositiveNumberSetting {
-   
+
    public GuestMemoryBalloonSetting(long memoryMb) {
       super(MachineAttribute.GuestMemoryBalloon, memoryMb);
    }
-   
+
 }

@@ -37,17 +37,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class UserModifyAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.UserModify.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       UserIn usrIn = request.get(UserIn.class);
@@ -55,5 +55,5 @@ public class UserModifyAction extends ASingleTaskAction {
       UserOut usrOut = UserIoFactory.get(usr);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, usrOut));
    }
-   
+
 }

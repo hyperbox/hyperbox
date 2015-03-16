@@ -26,45 +26,45 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.hbox.hypervisor.net._NetService;
 
 public class NetServiceIoFactory {
-   
+
    private NetServiceIoFactory() {
       // only static
    }
-   
+
    public static NetServiceIO get(_NetService svc) {
       return svc.getIO();
    }
-   
+
    public static _NetService get(NetServiceIO svcIn) {
       if (NetServiceType.IPv4.is(svcIn.getType())) {
          return svcIn;
       }
-      
+
       if (NetServiceType.IPv4_NetCIDR.is(svcIn.getType())) {
          return svcIn;
       }
-      
+
       if (NetServiceType.IPv6.is(svcIn.getType())) {
          return svcIn;
       }
-      
+
       if (NetServiceType.IPv6_Gateway.is(svcIn.getType())) {
          return svcIn;
       }
-      
+
       if (NetServiceType.DHCP_IPv4.is(svcIn.getType())) {
          return svcIn;
       }
-      
+
       if (NetServiceType.NAT_IPv4.is(svcIn.getType())) {
          return svcIn;
       }
-      
+
       if (NetServiceType.NAT_IPv6.is(svcIn.getType())) {
          return svcIn;
       }
-      
+
       throw new HyperboxRuntimeException(svcIn.getType() + " is not supported for network operations");
    }
-   
+
 }

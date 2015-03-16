@@ -46,10 +46,10 @@ import org.altherian.hboxc.server._Hypervisor;
 import org.altherian.hboxc.server._Server;
 
 public class Hypervisor implements _Hypervisor {
-   
+
    private _Server srv;
    private HypervisorOut hypData;
-   
+
    private void refresh() {
       if (srv.isHypervisorConnected()) {
          Transaction t = srv.sendRequest(new Request(Command.HBOX, HyperboxTasks.HypervisorGet));
@@ -57,92 +57,92 @@ public class Hypervisor implements _Hypervisor {
       } else {
          hypData = null;
       }
-      
+
    }
-   
+
    public Hypervisor(_Server srv) {
       this.srv = srv;
       EventManager.register(this);
       refresh();
    }
-   
+
    @Override
    public HypervisorOut getInfo() {
       return hypData;
    }
-   
+
    @Override
    public String getType() {
       return hypData.getType();
    }
-   
+
    @Override
    public String getVendor() {
       return hypData.getVendor();
    }
-   
+
    @Override
    public String getProduct() {
       return hypData.getProduct();
    }
-   
+
    @Override
    public String getVersion() {
       return hypData.getVersion();
    }
-   
+
    @Override
    public String getRevision() {
       return hypData.getRevision();
    }
-   
+
    @Override
    public boolean hasToolsMedium() {
       return getToolsMedium() != null;
    }
-   
+
    @Override
    public MediumOut getToolsMedium() {
       Transaction t = srv.sendRequest(new Request(Command.VBOX, HypervisorTasks.ToolsMediumGet));
       return t.extractItem(MediumOut.class);
    }
-   
+
    @Handler
    protected void putHypervisorDisconnectedEvent(HypervisorDisconnectedEventOut ev) {
-      
+
       hypData = null;
    }
-   
+
    @Handler
    protected void putHypervisorEvent(HypervisorEventOut ev) {
-      
+
       refresh();
    }
-   
+
    @Override
    public List<NetModeOut> listNetworkModes() {
       Transaction t = srv.sendRequest(new Request(Command.VBOX, HypervisorTasks.NetModeList));
       return t.extractItems(NetModeOut.class);
    }
-   
+
    @Override
    public NetModeOut getNetworkMode(String id) {
       Transaction t = srv.sendRequest(new Request(Command.VBOX, HypervisorTasks.NetModeGet, new NetModeIn(id)));
       return t.extractItem(NetModeOut.class);
    }
-   
+
    @Override
    public List<NetAdaptorOut> listAdaptors() {
       Transaction t = srv.sendRequest(new Request(Command.VBOX, HypervisorTasks.NetAdaptorList));
       return t.extractItems(NetAdaptorOut.class);
    }
-   
+
    @Override
    public List<NetAdaptorOut> listAdaptors(String modeId) throws InvalidNetworkModeException {
       Transaction t = srv.sendRequest(new Request(Command.VBOX, HypervisorTasks.NetAdaptorList, new NetModeIn(modeId)));
       return t.extractItems(NetAdaptorOut.class);
    }
-   
+
    @Override
    public NetAdaptorOut createAdaptor(String modeId, String name) throws InvalidNetworkModeException {
       NetAdaptorIn adaptIn = new NetAdaptorIn();
@@ -151,23 +151,23 @@ public class Hypervisor implements _Hypervisor {
       Transaction t = srv.sendRequest(new Request(Command.VBOX, HypervisorTasks.NetAdaptorAdd, adaptIn));
       return t.extractItem(NetAdaptorOut.class);
    }
-   
+
    @Override
    public void removeAdaptor(String modeId, String adaptorId) throws InvalidNetworkModeException {
       srv.sendRequest(new Request(Command.VBOX, HypervisorTasks.NetAdaptorRemove, new NetAdaptorIn(modeId, adaptorId)));
    }
-   
+
    @Override
    public NetAdaptorOut getNetAdaptor(String modeId, String adaptorId) throws NetworkAdaptorNotFoundException {
       Transaction t = srv.sendRequest(new Request(Command.VBOX, HypervisorTasks.NetAdaptorGet, new NetAdaptorIn(modeId, adaptorId)));
       return t.extractItem(NetAdaptorOut.class);
    }
-   
+
    @Override
    public String getServerId() {
       return srv.getId();
    }
-   
+
    @Override
    public NetServiceIO getNetService(String modeId, String adaptorId, String svcTypeId) throws NetworkAdaptorNotFoundException {
       Request req = new Request(Command.VBOX, HypervisorTasks.NetServiceGet);
@@ -175,13 +175,13 @@ public class Hypervisor implements _Hypervisor {
       req.set(NetServiceIO.class, new NetServiceIO(svcTypeId));
       return srv.sendRequest(req).extractItem(NetServiceIO.class);
    }
-   
+
    @Override
    public List<String> getLogFileList(String vmId) {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
    @Override
    public _MachineLogFile getLogFile(String vmId, String logid) {
       Request req = new Request(Command.VBOX, HypervisorTasks.MachineLogFileGet);
@@ -189,5 +189,5 @@ public class Hypervisor implements _Hypervisor {
       req.set(MachineIn.class, new MachineIn(vmId));
       return srv.sendRequest(req).extractItem(MachineLogFileIO.class);
    }
-   
+
 }

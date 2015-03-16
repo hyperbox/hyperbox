@@ -24,88 +24,88 @@ import org.altherian.hbox.comm._Actionnable;
 import org.altherian.hbox.constant.EntityType;
 
 public final class StorageDeviceAttachmentIn extends ObjectIn<EntityType> implements _Actionnable {
-   
+
    private String controllerId;
    private String deviceType;
    private Long portId;
    private Long deviceId;
-   
+
    private MediumIn medIn;
-   
+
    private Action action = Action.Create;
-   
+
    private StorageDeviceAttachmentIn() {
       super(EntityType.StorageAttachment);
    }
-   
+
    public StorageDeviceAttachmentIn(Long portId, Long deviceId) {
       this();
       this.portId = portId;
       this.deviceId = deviceId;
    }
-   
+
    public StorageDeviceAttachmentIn(String storageControllerId, Long portId, Long deviceId) {
       super(EntityType.StorageAttachment, storageControllerId + portId.toString() + deviceId.toString());
       this.controllerId = storageControllerId;
       this.portId = portId;
       this.deviceId = deviceId;
    }
-   
+
    public StorageDeviceAttachmentIn(String storageControllerId, Long portId, Long deviceId, String deviceType) {
       this(storageControllerId, portId, deviceId);
       this.deviceType = deviceType;
    }
-   
+
    public StorageDeviceAttachmentIn(String storageControllerId, Long portId, Long deviceId, String deviceType, MediumIn medIn) {
       this(storageControllerId, portId, deviceId, deviceType);
       this.medIn = medIn;
    }
-   
+
    @Override
    public void setAction(Action action) {
       this.action = action;
    }
-   
+
    @Override
    public Action getAction() {
       return action;
    }
-   
+
    public String getControllerId() {
       return controllerId;
    }
-   
+
    public String getDeviceType() {
       return deviceType;
    }
-   
+
    public Long getPortId() {
       return portId;
    }
-   
+
    public Long getDeviceId() {
       return deviceId;
    }
-   
+
    public boolean hasMedium() {
       return medIn != null;
    }
-   
+
    public MediumIn getMedium() {
       return medIn;
    }
-   
+
    public void attachMedium(MediumIn medIn) {
       this.medIn = medIn;
    }
-   
+
    public void detachMedium() {
       medIn = null;
    }
-   
+
    @Override
    public String toString() {
       return getDeviceType() + " Drive";
    }
-   
+
 }

@@ -34,17 +34,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class TaskListAction extends AbstractHyperboxMultiTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.TaskList.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       for (_Task t : hbox.getTaskManager().list()) {
@@ -52,5 +52,5 @@ public final class TaskListAction extends AbstractHyperboxMultiTaskAction {
                .putAnswer(new Answer(request, AnswerType.DATA, TaskIoFactory.get(t)));
       }
    }
-   
+
 }

@@ -47,7 +47,7 @@ import java.util.Set;
  * 
  */
 public interface _ModuleManager {
-   
+
    /**
     * Configuration Key for Module Auto-loading.
     */
@@ -56,7 +56,7 @@ public interface _ModuleManager {
     * Default value for {@value #CFGKEY_MODULE_AUTOLOAD}
     */
    String CFGVAL_MODULE_AUTOLOAD = "1";
-   
+
    /**
     * Configuration Key for Module Descriptor file extension
     */
@@ -65,7 +65,7 @@ public interface _ModuleManager {
     * Default value for {@value #CFGKEY_MODULE_EXTENSION}
     */
    String CFGVAL_MODULE_EXTENSION = "xml";
-   
+
    /**
     * <p>
     * Configuration Key for Module search directory.
@@ -77,7 +77,7 @@ public interface _ModuleManager {
     * Default value for {@value #CFGKEY_MODULE_BASEPATH}
     */
    String CFGVAL_MODULE_BASEPATH = "modules";
-   
+
    /**
     * Start the module manager.
     * <p>
@@ -86,7 +86,7 @@ public interface _ModuleManager {
     * </p>
     */
    public void start();
-   
+
    /**
     * Stop the module manager.
     * <p>
@@ -94,17 +94,17 @@ public interface _ModuleManager {
     * </p>
     */
    public void stop();
-   
+
    /**
     * Scan the base directories for new modules. Does not affected already loaded modules.
     */
    public void refreshModules();
-   
+
    /**
     * Unload all the loaded modules.
     */
    public void unregisterModules();
-   
+
    /**
     * Change the base directories for modules.
     * <p>
@@ -115,14 +115,14 @@ public interface _ModuleManager {
     * @param basedir The new base directories for module search
     */
    public void setModuleBasedir(String... basedir);
-   
+
    /**
     * List all loaded modules.
     * 
     * @return a Set of loaded modules
     */
    public Set<_Module> listModules();
-   
+
    /**
     * List all loaded modules being of a specific kind.
     * 
@@ -130,7 +130,7 @@ public interface _ModuleManager {
     * @return the matching list of loaded modules
     */
    public Set<_Module> listModules(Class<?> type);
-   
+
    /**
     * Get the module information given its ID.
     * 
@@ -138,7 +138,7 @@ public interface _ModuleManager {
     * @return the Module object or null if no such module is loaded
     */
    public _Module getModule(String moduleId);
-   
+
    /**
     * Load a module given its descriptor file path.
     * 
@@ -146,7 +146,7 @@ public interface _ModuleManager {
     * @return The loaded module or null if no module was found at the given path.
     */
    public _Module registerModule(String path);
-   
+
    /**
     * Unregister a module.
     * <p>
@@ -156,7 +156,7 @@ public interface _ModuleManager {
     * @param mod The module to unload.
     */
    public void unregisterModule(_Module mod);
-   
+
    /**
     * Checks if the module ID or Descriptor File path is already registered.
     * 
@@ -164,7 +164,7 @@ public interface _ModuleManager {
     * @return true if this ID/path represents a registered module, false if not.
     */
    public boolean isRegistered(String idOrDescriptorPath);
-   
+
    /**
     * Register again an existing module.
     * <p>
@@ -176,5 +176,5 @@ public interface _ModuleManager {
     * @return The newly loaded module
     */
    public _Module reloadModule(_Module mod);
-   
+
 }

@@ -32,25 +32,25 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class MachinePowerOffAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.MachinePowerOff.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       ServerIn srvIn = request.get(ServerIn.class);
       MachineIn mIn = request.get(MachineIn.class);
-      
+
       _Machine vm = hbox.getServer(srvIn.getId()).getMachine(mIn.getUuid());
-      
+
       vm.powerOff();
    }
-   
+
 }

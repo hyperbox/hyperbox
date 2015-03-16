@@ -26,9 +26,9 @@ import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class SnapshotDeletedEvent extends SnapshotEvent {
-   
+
    public SnapshotDeletedEvent(ServerOut srvOut, MachineOut mOut, SnapshotOut snapOut) {
       super(ClientEvents.SnapshotDeleted, srvOut, mOut, snapOut);
    }
-   
+
 }

@@ -21,21 +21,21 @@
 package org.altherian.hbox.data;
 
 public class Snapshot {
-   
+
    private String uuid;
    private Machine vm;
-   
+
    public Snapshot(String uuid, Machine vm) {
       this.uuid = uuid;
       this.vm = vm;
    }
-   
+
    public String getUuid() {
       return uuid;
    }
-   
+
    public Machine getMachine() {
       return vm;
    }
-   
+
 }

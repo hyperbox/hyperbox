@@ -32,23 +32,23 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class ConnectorRemoveAction extends AbstractAction {
-   
+
    private _ConnectorSelector select;
-   
+
    public ConnectorRemoveAction(_ConnectorSelector select) {
       this(select, "Remove");
    }
-   
+
    public ConnectorRemoveAction(_ConnectorSelector select, String label) {
       super(label);
       this.select = select;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       for (ConnectorOutput conOut : select.listConnectors()) {
          Gui.post(new Request(ClientTasks.ConnectorRemove, new ConnectorInput(conOut.getId())));
       }
    }
-   
+
 }

@@ -27,9 +27,9 @@ import javax.swing.JDialog;
 import javax.swing.KeyStroke;
 
 public class JDialogUtils {
-   
+
    private static KeyStroke escapeKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
-   
+
    public static void setCloseOnEscapeKey(JDialog comp, boolean close) {
       if (close) {
          comp.getRootPane().registerKeyboardAction(new CloseAction(comp), escapeKeyStroke, JComponent.WHEN_IN_FOCUSED_WINDOW);
@@ -37,5 +37,5 @@ public class JDialogUtils {
          comp.getRootPane().getInputMap().remove(escapeKeyStroke);
       }
    }
-   
+
 }

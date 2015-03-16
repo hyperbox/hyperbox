@@ -21,9 +21,9 @@
 package org.altherian.hbox.hypervisor.net;
 
 public interface _NetService_IP4_CIDR extends _NetService {
-   
+
    public String getCIDR();
-   
+
    public void setCIDR(String cidr);
-   
+
 }

@@ -25,13 +25,13 @@ import org.altherian.hbox.event.Event;
 import org.altherian.hboxc.comm.output.ConsoleViewerOutput;
 
 public class ConsoleViewerEvent extends Event {
-   
+
    public ConsoleViewerEvent(Enum<?> s, ConsoleViewerOutput data) {
       super(s, data);
    }
-   
+
    public ConsoleViewerOutput getViewer() {
       return get(ConsoleViewerOutput.class);
    }
-   
+
 }

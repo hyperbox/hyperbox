@@ -21,8 +21,8 @@
 package org.altherian.hbox.security;
 
 public enum ServerPerm {
-   
+
    Get,
    Stop
-   
+
 }

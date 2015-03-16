@@ -22,21 +22,21 @@ package org.altherian.hbox.exception;
 
 @SuppressWarnings("serial")
 public class HypervisorNotConnectedException extends HypervisorException {
-   
+
    public HypervisorNotConnectedException() {
       super("Hypervisor is not connected");
    }
-   
+
    public HypervisorNotConnectedException(String s) {
       super(s);
    }
-   
+
    public HypervisorNotConnectedException(Throwable t) {
       super(t);
    }
-   
+
    public HypervisorNotConnectedException(String s, Throwable t) {
       super(s, t);
    }
-   
+
 }

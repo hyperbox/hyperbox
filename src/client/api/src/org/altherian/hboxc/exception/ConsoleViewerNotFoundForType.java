@@ -23,9 +23,9 @@ package org.altherian.hboxc.exception;
 
 @SuppressWarnings("serial")
 public class ConsoleViewerNotFoundForType extends ConsoleViewerNotFound {
-   
+
    public ConsoleViewerNotFoundForType(String hypervisorTypeId, String moduleId) {
       super("No console viewer was found for: " + hypervisorTypeId + ":" + moduleId);
    }
-   
+
 }

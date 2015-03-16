@@ -41,42 +41,42 @@ import org.virtualbox_4_2.VirtualBoxManager;
       product = VirtualBox.PRODUCT,
       schemes = { VirtualBox.ID.WS_4_2 })
 public final class VBoxWSHypervisor extends VBoxHypervisor {
-   
+
    protected final String defaultProtocol = "http";
    protected final String defaultHost = "localhost";
    protected final int defaultPort = 18083;
    protected final String defaultUser = "";
    protected final String defaultPass = "";
    protected String hostname;
-   
+
    private String options;
-   
+
    private Map<ISession, VirtualBoxManager> sessions = new WeakHashMap<ISession, VirtualBoxManager>();
-   
+
    @Override
    public String getId() {
       return this.getClass().getAnnotation(Hypervisor.class).id();
    }
-   
+
    @Override
    public String getTypeId() {
       return this.getClass().getAnnotation(Hypervisor.class).typeId();
    }
-   
+
    protected VirtualBoxManager connect() {
       return connect(options);
    }
-   
+
    @Override
    protected VirtualBoxManager connect(String options) {
       this.options = options;
-      
+
       String protocol = defaultProtocol;
       String host = defaultHost;
       int port = defaultPort;
       String username = defaultUser;
       String password = defaultPass;
-      
+
       if ((options != null) && !options.isEmpty()) {
          try {
             Logger.debug("Given connect options: " + options);
@@ -101,25 +101,25 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
             throw new HypervisorException("Invalid options syntax: " + e.getMessage(), e);
          }
       }
-      
+
       try {
          hostname = host;
          Logger.debug("Using Web Services");
-         
+
          VirtualBoxManager mgr = VirtualBoxManager.createInstance(null);
-         
+
          String connInfo = protocol + "://" + host + ":" + port;
          Logger.debug("Connection info: " + connInfo);
          Logger.debug("User: " + username);
          Logger.debug("Password given: " + (AxStrings.isEmpty(password)));
          mgr.connect(connInfo, username, password);
-         
+
          return mgr;
       } catch (VBoxException e) {
          throw new HypervisorException("Unable to connect to the Virtualbox WebServices : " + e.getMessage(), e);
       }
    }
-   
+
    @Override
    protected void disconnect() {
       try {
@@ -128,7 +128,7 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
          Logger.debug("Error when disconnecting : " + t.getMessage());
       }
    }
-   
+
    @Override
    protected ISession getSession() {
       VirtualBoxManager mgr = connect();
@@ -136,5 +136,5 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
       sessions.put(session, mgr);
       return session;
    }
-   
+
 }

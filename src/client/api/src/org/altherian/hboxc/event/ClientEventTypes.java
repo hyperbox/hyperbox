@@ -21,9 +21,9 @@
 package org.altherian.hboxc.event;
 
 public enum ClientEventTypes {
-   
+
    BackendState,
    BackendConnState,
    CoreState,
-   
+
 }

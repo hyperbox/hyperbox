@@ -24,9 +24,9 @@ import org.altherian.hbox.comm._Container;
 import java.util.Date;
 
 public interface _Event extends _Container {
-   
+
    public Enum<?> getEventId();
-   
+
    public Date getTime();
-   
+
 }

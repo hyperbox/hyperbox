@@ -23,7 +23,7 @@ package org.altherian.hboxd.hypervisor.perf;
 import org.altherian.hboxd.hypervisor.host._RawHost;
 
 public interface _RawMetricHost extends _RawMetricData {
-   
+
    public _RawHost getHost();
-   
+
 }

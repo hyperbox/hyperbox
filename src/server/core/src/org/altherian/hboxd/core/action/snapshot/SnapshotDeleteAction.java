@@ -31,22 +31,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SnapshotDeleteAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.SnapshotDelete.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       MachineIn mIn = request.get(MachineIn.class);
       SnapshotIn snapIn = request.get(SnapshotIn.class);
       hbox.getHypervisor().getMachine(mIn.getUuid()).deleteSnapshot(snapIn.getUuid());
    }
-   
+
 }

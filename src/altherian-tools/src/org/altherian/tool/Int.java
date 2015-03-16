@@ -21,13 +21,13 @@
 package org.altherian.tool;
 
 public class Int {
-   
+
    public static String get(int i) {
       return Integer.toString(i);
    }
-   
+
    public static int get(String s) {
       return Integer.parseInt(s);
    }
-   
+
 }

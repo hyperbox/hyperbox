@@ -27,26 +27,26 @@ import org.altherian.hboxc.front.gui.worker.receiver._ConnectorReceiver;
 import java.util.concurrent.ExecutionException;
 
 public class ConnectorGetWorker extends AxSwingWorker<_ConnectorReceiver, ConnectorOutput, Void> {
-   
+
    private String conId;
-   
+
    public ConnectorGetWorker(_ConnectorReceiver recv, String conId) {
       super(recv);
       this.conId = conId;
    }
-   
+
    @Override
    protected ConnectorOutput doInBackground() throws Exception {
       return Gui.getReader().getConnector(conId);
    }
-   
+
    @Override
    protected void innerDone() throws InterruptedException, ExecutionException {
       getReceiver().put(get());
    }
-   
+
    public static void execute(_ConnectorReceiver recv, String conId) {
       (new ConnectorGetWorker(recv, conId)).execute();
    }
-   
+
 }

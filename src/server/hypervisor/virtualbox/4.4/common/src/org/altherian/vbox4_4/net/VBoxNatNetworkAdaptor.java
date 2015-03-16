@@ -35,17 +35,17 @@ import org.altherian.vbox4_4.VBox;
 import org.virtualbox_4_4.INATNetwork;
 
 public class VBoxNatNetworkAdaptor extends VBoxAdaptor {
-   
+
    public VBoxNatNetworkAdaptor(INATNetwork natNet) {
       super(natNet.getNetworkName(), natNet.getNetworkName(), VBoxNetMode.NATNetwork, natNet.getEnabled());
    }
-   
+
    @Override
    public void setLabel(String label) {
       INATNetwork natNet = VBox.get().findNATNetworkByName(getId());
       natNet.setNetworkName(label);
    }
-   
+
    @Override
    protected void process(_NetService svc) {
       NetServiceType svcType = NetServiceType.valueOf(svc.getType());
@@ -73,27 +73,27 @@ public class VBoxNatNetworkAdaptor extends VBoxAdaptor {
             throw new IllegalArgumentException("Service type " + svc.getType() + " is not supported on " + getMode().getId() + " adaptor");
       }
    }
-   
+
    @Override
    public _NetService getService(String serviceTypeId) {
       INATNetwork natNet = VBox.get().findNATNetworkByName(getId());
-      
+
       if (NetServiceType.IPv4_NetCIDR.is(serviceTypeId)) {
          return new NetService_IP4_CIDR_IO(natNet.getNetwork());
       }
-      
+
       if (NetServiceType.DHCP_IPv4.is(serviceTypeId)) {
          return new NetService_DHCP_IP4_IO(natNet.getNeedDhcpServer());
       }
-      
+
       if (NetServiceType.IPv6.is(serviceTypeId)) {
          return new NetService_IP6_IO(natNet.getIPv6Enabled());
       }
-      
+
       if (NetServiceType.IPv6_Gateway.is(serviceTypeId)) {
          return new NetService_IP6_Gateway_IO(natNet.getAdvertiseDefaultIPv6RouteEnabled());
       }
-      
+
       if (NetServiceType.NAT_IPv4.is(serviceTypeId)) {
          NetService_NAT_IP4_IO svc = new NetService_NAT_IP4_IO(true);
          for (String ruleRaw : natNet.getPortForwardRules4()) {
@@ -103,7 +103,7 @@ public class VBoxNatNetworkAdaptor extends VBoxAdaptor {
          }
          return svc;
       }
-      
+
       if (NetServiceType.NAT_IPv6.is(serviceTypeId)) {
          NetService_NAT_IP6_IO svc = new NetService_NAT_IP6_IO(true);
          for (String ruleRaw : natNet.getPortForwardRules6()) {
@@ -113,9 +113,9 @@ public class VBoxNatNetworkAdaptor extends VBoxAdaptor {
          }
          return svc;
       }
-      
+
       throw new IllegalArgumentException("Service type " + serviceTypeId + " is not supported on " + getMode().getId() + " adaptor");
-      
+
    }
-   
+
 }

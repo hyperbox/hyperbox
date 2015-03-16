@@ -28,24 +28,24 @@ import org.virtualbox_4_3.IMachineRegisteredEvent;
 import org.virtualbox_4_3.VBoxEventType;
 
 public class MachineRegistrationEventFactory implements _PreciseEventFactory {
-   
+
    @Override
    public VBoxEventType getType() {
       return VBoxEventType.OnMachineRegistered;
    }
-   
+
    @Override
    public IMachineRegisteredEvent getRaw(IEvent vbEvent) {
-      
+
       return IMachineRegisteredEvent.queryInterface(vbEvent);
    }
-   
+
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      
+
       IMachineRegisteredEvent rawEvent = getRaw(vbEvent);
       _Event event = new MachineRegistrationEvent(rawEvent.getMachineId(), rawEvent.getRegistered());
       return event;
    }
-   
+
 }

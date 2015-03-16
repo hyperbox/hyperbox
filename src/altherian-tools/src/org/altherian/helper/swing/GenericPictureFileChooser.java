@@ -26,26 +26,26 @@ import java.awt.event.MouseEvent;
 import javax.swing.Action;
 
 public class GenericPictureFileChooser {
-   
+
    private MouseWorker mouseWorker;
    private Action a;
-   
+
    public GenericPictureFileChooser(Component c) {
       mouseWorker = new MouseWorker();
       c.addMouseListener(mouseWorker);
    }
-   
+
    public void setAction(Action a) {
       this.a = a;
    }
-   
+
    private class MouseWorker extends MouseAdapter {
-      
+
       @Override
       public void mouseClicked(MouseEvent e) {
          a.actionPerformed(null);
       }
-      
+
    }
-   
+
 }

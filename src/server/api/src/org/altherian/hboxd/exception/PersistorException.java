@@ -25,9 +25,9 @@ import org.altherian.hbox.exception.HyperboxException;
 
 @SuppressWarnings("serial")
 public class PersistorException extends HyperboxException {
-   
+
    public PersistorException(String s, Throwable e) {
       super(s, e);
    }
-   
+
 }

@@ -36,42 +36,42 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 public final class VmDetailedView implements _MachineReceiver, _Refreshable {
-   
+
    private MachineOut mOut;
-   
+
    private VmSummaryView summaryTab;
    private SnapshotManagementView snapTab;
    private JTabbedPane tabs;
    private JLabel loadingLabel;
    private JPanel panel;
    private JLabel errorLabel;
-   
+
    public VmDetailedView(MachineOut mOut) {
-      
+
       this.mOut = mOut;
-      
+
       summaryTab = new VmSummaryView();
       snapTab = new SnapshotManagementView();
-      
+
       tabs = new JTabbedPane();
       tabs.addTab("Summary", summaryTab.getComponent());
       tabs.addTab("Snapshots", snapTab.getComponent());
-      
+
       loadingLabel = new JLabel("Loading...");
       errorLabel = new JLabel();
-      
+
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(loadingLabel, "growx, pushx, wrap, hidemode 3");
       panel.add(errorLabel, "growx, pushx, wrap, hidemode 3");
       panel.add(tabs, "grow, push, wrap, hidemode 3");
-      
+
       ViewEventManager.register(this);
-      
+
       refresh();
    }
-   
+
    private void update() {
-      
+
       if (mOut.isAvailable()) {
          summaryTab.show(mOut, true);
          tabs.setEnabledAt(tabs.indexOfComponent(summaryTab.getComponent()), true);
@@ -79,36 +79,36 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
          tabs.setEnabledAt(tabs.indexOfComponent(snapTab.getComponent()), true);
       }
    }
-   
+
    public JComponent getComponent() {
       return panel;
    }
-   
+
    @Handler
    public void getMachineUpdate(MachineDataChangedEvent ev) {
-      
+
       if ((mOut != null) && ev.getUuid().contentEquals(mOut.getUuid())) {
-         
+
          put(ev.getMachine());
       }
    }
-   
+
    @Handler
    public void getMachineRemove(MachineRemovedEvent ev) {
-      
+
       if ((mOut != null) && ev.getUuid().contentEquals(mOut.getUuid())) {
-         
+
          clear();
       }
    }
-   
+
    private void clear() {
-      
+
       errorLabel.setVisible(false);
       tabs.setVisible(false);
       summaryTab.clear();
    }
-   
+
    @Override
    public void loadingStarted() {
       clear();
@@ -120,10 +120,10 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
          tabs.setEnabledAt(tabs.indexOfComponent(snapTab.getComponent()), false);
       }
    }
-   
+
    @Override
    public void loadingFinished(final boolean isSuccessful, final String message) {
-      
+
       loadingLabel.setVisible(false);
       tabs.setEnabled(isSuccessful);
       if (!isSuccessful) {
@@ -133,17 +133,17 @@ public final class VmDetailedView implements _MachineReceiver, _Refreshable {
          tabs.setVisible(mOut.isAvailable());
       }
    }
-   
+
    @Override
    public void put(MachineOut mOut) {
-      
+
       this.mOut = mOut;
       update();
    }
-   
+
    @Override
    public void refresh() {
       MachineGetWorker.execute(this, mOut);
    }
-   
+
 }

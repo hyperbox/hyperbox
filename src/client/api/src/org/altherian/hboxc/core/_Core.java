@@ -32,55 +32,55 @@ import org.altherian.hboxc.updater._Updater;
 import java.util.List;
 
 public interface _Core {
-   
+
    public void init() throws HyperboxException;
-   
+
    public void start() throws HyperboxException;
-   
+
    public void stop();
-   
+
    public void destroy();
-   
+
    public CoreState getCoreState();
-   
+
    public _Backend getBackend(String id);
-   
+
    public List<String> listBackends();
-   
+
    public List<_Connector> listConnector();
-   
+
    public _Connector getConnector(String id);
-   
+
    public _Connector addConnector(ConnectorInput conIn, UserIn usrIn);
-   
+
    public _Connector modifyConnector(ConnectorInput conIn, UserIn usrIn);
-   
+
    public _Connector connect(String id);
-   
+
    public void disconnect(String id);
-   
+
    public void removeConnector(String id);
-   
+
    public _ConsoleViewer addConsoleViewer(String hypervisorId, String moduleId, String viewerPath, String args);
-   
+
    public void removeConsoleViewer(String id);
-   
+
    public _ConsoleViewer getConsoleViewer(String id);
-   
+
    public _ConsoleViewer findConsoleViewer(String hypervisorId, String moduleId);
-   
+
    public List<_ConsoleViewer> listConsoleViewer();
-   
+
    public List<_ConsoleViewer> listConsoleViewer(String hypervisorTypeId);
-   
+
    public void launchConsoleViewer(String serverId, String machineId);
-   
+
    public void launchConsoleViewer(_Machine machine);
-   
+
    public _Server getServer(String serverId);
-   
+
    public _Connector getConnectorForServer(String serverId);
-   
+
    public _Updater getUpdater();
-   
+
 }

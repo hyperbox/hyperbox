@@ -32,12 +32,12 @@ import org.virtualbox_4_2.IEvent;
 import org.virtualbox_4_2.VBoxEventType;
 
 public class EventFactory {
-   
+
    private static Map<VBoxEventType, _PreciseEventFactory> factories;
-   
+
    static {
       factories = new HashMap<VBoxEventType, _PreciseEventFactory>();
-      
+
       try {
          Set<_PreciseEventFactory> factoriesSet = HBoxServer.getAllOrFail(_PreciseEventFactory.class);
          for (_PreciseEventFactory factory : factoriesSet) {
@@ -47,7 +47,7 @@ public class EventFactory {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    public static IEvent getRaw(IEvent rawEvent) {
       if (factories.containsKey(rawEvent.getType())) {
          try {
@@ -61,7 +61,7 @@ public class EventFactory {
          return null;
       }
    }
-   
+
    public static _Event get(IEvent rawEvent) {
       if (factories.containsKey(rawEvent.getType())) {
          try {
@@ -75,5 +75,5 @@ public class EventFactory {
          return null;
       }
    }
-   
+
 }

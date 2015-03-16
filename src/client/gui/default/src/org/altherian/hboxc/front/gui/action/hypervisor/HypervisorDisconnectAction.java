@@ -35,18 +35,18 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class HypervisorDisconnectAction extends AbstractAction {
-   
+
    private _SingleServerSelector selector;
-   
+
    public HypervisorDisconnectAction(_SingleServerSelector selector) {
       this(selector, "Disconnect");
    }
-   
+
    public HypervisorDisconnectAction(_SingleServerSelector selector, String label) {
       super(label);
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       ServerOut srvOut = selector.getServer();
@@ -56,7 +56,7 @@ public class HypervisorDisconnectAction extends AbstractAction {
       } else {
          Logger.debug("No server was selected");
       }
-      
+
    }
-   
+
 }

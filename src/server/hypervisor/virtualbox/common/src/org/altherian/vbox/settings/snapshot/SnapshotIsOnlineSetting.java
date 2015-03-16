@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public class SnapshotIsOnlineSetting extends BooleanSetting {
-   
+
    public SnapshotIsOnlineSetting(boolean value) {
       super(SnapshotAttribute.IsOnline, value);
    }
-   
+
 }

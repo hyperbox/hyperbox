@@ -29,22 +29,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class GuestRestart extends AbstractHyperboxMultiTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.GuestRestart.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       throw new UnsupportedOperationException();
       // modules.getActionManager().get(Command.HBOX.toString() + HyperboxTasks.GuestShutdown.toString()).run(request, modules);
       // modules.getActionManager().get(Command.VBOX.toString() + VirtualboxTasks.MachinePowerOn.toString()).run(request, modules);
    }
-   
+
 }

@@ -24,16 +24,16 @@ import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.front.gui.data.EntityGui;
 
 public class SnapshotsGui extends EntityGui {
-   
+
    public final static String id = "Snapshots";
-   
+
    public SnapshotsGui() {
       super(EntityType.Snapshot.getId(), id, true);
    }
-   
+
    @Override
    public String toString() {
       return id;
    }
-   
+
 }

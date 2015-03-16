@@ -25,10 +25,10 @@ import org.altherian.hbox.comm.Answer;
 import org.altherian.hbox.comm._AnswerReceiver;
 
 public class OrphanAnswerReceiver implements _AnswerReceiver {
-   
+
    @Override
    public void putAnswer(Answer ans) {
       assertFalse("Answer for ExchangeID #" + ans.getExchangeId() + " is orphan", true);
    }
-   
+
 }

@@ -21,13 +21,13 @@
 package org.altherian.setting;
 
 public class StringSetting extends BasicSetting<String> {
-   
+
    public StringSetting(String name, String value) {
       super(name, value);
    }
-   
+
    public StringSetting(Enum<?> setting, String value) {
       super(setting, value);
    }
-   
+
 }

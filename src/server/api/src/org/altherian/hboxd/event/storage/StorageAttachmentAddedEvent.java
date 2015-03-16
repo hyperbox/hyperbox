@@ -23,9 +23,9 @@ package org.altherian.hboxd.event.storage;
 import org.altherian.hbox.event.HyperboxEvents;
 
 public class StorageAttachmentAddedEvent extends StorageAttachmentEvent {
-   
+
    public StorageAttachmentAddedEvent(String vmId, String controllerId, Long portId, Long deviceId) {
       super(HyperboxEvents.StorageAttachmentAdded, vmId, controllerId, portId, deviceId);
    }
-   
+
 }

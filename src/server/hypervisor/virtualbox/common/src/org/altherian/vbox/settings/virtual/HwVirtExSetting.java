@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public class HwVirtExSetting extends BooleanSetting {
-   
+
    public HwVirtExSetting(boolean isEnabled) {
       super(MachineAttribute.HwVirtEx, isEnabled);
    }
-   
+
 }

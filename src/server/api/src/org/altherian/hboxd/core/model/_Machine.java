@@ -30,69 +30,69 @@ import java.util.List;
 import java.util.Set;
 
 public interface _Machine extends _Settable {
-   
+
    public _Server getServer();
-   
+
    public String getUuid();
-   
+
    public boolean isAccessible();
-   
+
    public String getName();
-   
+
    public MachineStates getState();
-   
+
    public String getLocation();
-   
+
    public void lock();
-   
+
    public void unlock(boolean success);
-   
+
    public void powerOn();
-   
+
    public void powerOff();
-   
+
    public void pause();
-   
+
    public void resume();
-   
+
    public void saveState();
-   
+
    public void reset();
-   
+
    public void sendAcpi(ACPI acpi);
-   
+
    public List<_MachineMetric> getMetrics();
-   
+
    public _CPU getCpu();
-   
+
    public _Display getDisplay();
-   
+
    public _Keyboard getKeyboard();
-   
+
    public _Memory getMemory();
-   
+
    public _Motherboard getMotherboard();
-   
+
    public _Mouse getMouse();
-   
+
    public Set<_NetworkInterface> listNetworkInterfaces();
-   
+
    public _NetworkInterface getNetworkInterface(long nicId);
-   
+
    public Set<_StorageController> listStorageControllers();
-   
+
    public _StorageController getStorageController(String name);
-   
+
    public _StorageController addStorageController(String type, String name);
-   
+
    public _StorageController addStorageController(StorageControllerType type, String name);
-   
+
    public void removeStorageController(String name);
-   
+
    public _USB getUsb();
-   
+
    public _RawSnapshot getSnapshot(String snapshotId);
-   
+
    public _Device getDevice(String deviceId);
-   
+
 }

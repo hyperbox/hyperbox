@@ -27,16 +27,16 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class RefreshAction extends AbstractAction {
-   
+
    private _Refreshable refreshable;
-   
+
    public RefreshAction(_Refreshable r) {
       refreshable = r;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       refreshable.refresh();
    }
-   
+
 }

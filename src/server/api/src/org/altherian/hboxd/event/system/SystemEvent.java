@@ -23,9 +23,9 @@ package org.altherian.hboxd.event.system;
 import org.altherian.hbox.event.Event;
 
 public abstract class SystemEvent extends Event {
-   
+
    public SystemEvent(Enum<?> eventId) {
       super(eventId);
    }
-   
+
 }

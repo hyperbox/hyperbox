@@ -24,9 +24,9 @@ import org.altherian.hbox.comm.out.ServerOut;
 import java.util.List;
 
 public interface _StoreSelector {
-   
+
    public ServerOut getServer();
-   
+
    public List<String> getSelection();
-   
+
 }

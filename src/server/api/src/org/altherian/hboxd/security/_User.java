@@ -21,29 +21,29 @@
 package org.altherian.hboxd.security;
 
 public interface _User {
-   
+
    public static final String ADMIN_ID = "0";
-   
+
    public String getId();
-   
+
    public String getName();
-   
+
    public void setName(String name);
-   
+
    public String getDomain();
-   
+
    public void setDomain(String domain);
-   
+
    public String getDomainLogonName();
-   
+
    public String getSalt();
-   
+
    public void setSalt(String salt);
-   
+
    public boolean isAnnonyomous();
-   
+
    public void save();
-   
+
    public void delete();
-   
+
 }

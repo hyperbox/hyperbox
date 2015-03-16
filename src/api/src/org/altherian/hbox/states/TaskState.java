@@ -21,7 +21,7 @@
 package org.altherian.hbox.states;
 
 public enum TaskState {
-   
+
    Created(false, false),
    Pending(false, false),
    Running(false, false),
@@ -30,25 +30,25 @@ public enum TaskState {
    Canceled(true, true),
    Failed(true, true),
    CriticalFailure(true, true);
-   
+
    private boolean isFinishing;
    private boolean isFailing;
-   
+
    private TaskState(boolean isFinishing, boolean isFailing) {
       this.isFinishing = isFinishing;
       this.isFailing = isFailing;
    }
-   
+
    public boolean isFinishing() {
       return isFinishing;
    }
-   
+
    public boolean isFailing() {
       return isFailing;
    }
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

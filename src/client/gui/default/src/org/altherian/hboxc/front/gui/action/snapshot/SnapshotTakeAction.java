@@ -27,17 +27,17 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class SnapshotTakeAction extends AbstractAction {
-   
+
    private _SnapshotSelector selector;
-   
+
    public SnapshotTakeAction(_SnapshotSelector selector) {
       this.selector = selector;
       putValue(SHORT_DESCRIPTION, "Take a snapshot of the machine state");
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       SnapshotCreateDialog.show(selector.getMachine());
    }
-   
+
 }

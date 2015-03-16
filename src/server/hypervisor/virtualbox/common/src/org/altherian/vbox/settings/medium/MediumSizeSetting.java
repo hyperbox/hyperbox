@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MediumAttribute;
 import org.altherian.setting.PositiveNumberSetting;
 
 public class MediumSizeSetting extends PositiveNumberSetting {
-   
+
    public MediumSizeSetting(long size) {
       super(MediumAttribute.Size, size);
    }
-   
+
 }

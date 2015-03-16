@@ -26,7 +26,7 @@ import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.server._Server;
 
 public abstract class ServerAction extends ASingleTaskAction {
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       _Server srv = null;
@@ -35,10 +35,10 @@ public abstract class ServerAction extends ASingleTaskAction {
       } else {
          srv = hbox.getServer();
       }
-      
+
       run(request, hbox, srv);
    }
-   
+
    protected abstract void run(Request request, _Hyperbox hbox, _Server srv);
-   
+
 }

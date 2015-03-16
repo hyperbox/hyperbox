@@ -24,19 +24,19 @@ import org.altherian.hboxd.hypervisor._RawOsType;
 import org.virtualbox_4_2.IGuestOSType;
 
 public class VBoxOsType implements _RawOsType {
-   
+
    private String id;
    private String name;
    private String familyName;
    private long bitness;
-   
+
    public VBoxOsType(IGuestOSType vboxGuestOs) {
       id = vboxGuestOs.getId();
       name = vboxGuestOs.getDescription();
       familyName = vboxGuestOs.getFamilyDescription();
       bitness = vboxGuestOs.getIs64Bit() ? 64L : 32L;
    }
-   
+
    /**
     * @return the id
     */
@@ -44,7 +44,7 @@ public class VBoxOsType implements _RawOsType {
    public String getId() {
       return id;
    }
-   
+
    /**
     * @return the name
     */
@@ -52,14 +52,14 @@ public class VBoxOsType implements _RawOsType {
    public String getName() {
       return name;
    }
-   
+
    /**
     * @return the familyName
     */
    public String getFamilyName() {
       return familyName;
    }
-   
+
    /**
     * @return the bitness
     */
@@ -67,5 +67,5 @@ public class VBoxOsType implements _RawOsType {
    public long getBitness() {
       return bitness;
    }
-   
+
 }

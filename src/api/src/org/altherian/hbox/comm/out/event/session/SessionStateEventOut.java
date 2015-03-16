@@ -28,35 +28,35 @@ import org.altherian.hbox.states.SessionStates;
 import java.util.Date;
 
 public final class SessionStateEventOut extends EventOut {
-   
+
    private SessionStates state;
-   
+
    @SuppressWarnings("unused")
    private SessionStateEventOut() {
       // Used for serialization
    }
-   
+
    public SessionStateEventOut(Date time, ServerOut srvOut, SessionOut sOut, SessionStates state) {
       super(time, HyperboxEvents.SessionState, srvOut);
       set(SessionOut.class, sOut);
       this.state = state;
    }
-   
+
    public SessionStates getState() {
       return state;
    }
-   
+
    public SessionOut getSession() {
       return get(SessionOut.class);
    }
-   
+
    public String getSesionId() {
       return getSession().getId();
    }
-   
+
    @Override
    public String toString() {
       return "Session ID #" + getSesionId() + " | State changed to " + getState() + " @ " + getTime();
    }
-   
+
 }

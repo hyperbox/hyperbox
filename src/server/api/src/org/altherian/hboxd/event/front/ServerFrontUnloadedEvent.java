@@ -25,9 +25,9 @@ import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hboxd.front._Front;
 
 public class ServerFrontUnloadedEvent extends ServerFrontEvent {
-   
+
    public ServerFrontUnloadedEvent(_Front front) {
       super(HyperboxEvents.ServerFrontUnloaded, front);
    }
-   
+
 }

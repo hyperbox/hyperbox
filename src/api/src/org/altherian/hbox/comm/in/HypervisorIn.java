@@ -27,29 +27,29 @@ import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.HypervisorAttribute;
 
 public class HypervisorIn extends ObjectIn<EntityType> {
-   
+
    public HypervisorIn() {
       super(EntityType.Hypervisor);
    }
-   
+
    public HypervisorIn(String id) {
       super(EntityType.Hypervisor, id);
    }
-   
+
    public String getConnectOptions() {
       return getSetting(HypervisorAttribute.ConnectorOptions).getString();
    }
-   
+
    public void setConnectionOptions(String options) {
       setSetting(new StringSettingIO(HypervisorAttribute.ConnectorOptions, options));
    }
-   
+
    public Boolean getAutoConnect() {
       return getSetting(HypervisorAttribute.ConnectorAuto).getBoolean();
    }
-   
+
    public void setAutoConnect(Boolean auto) {
       setSetting(new BooleanSettingIO(HypervisorAttribute.ConnectorAuto, auto));
    }
-   
+
 }

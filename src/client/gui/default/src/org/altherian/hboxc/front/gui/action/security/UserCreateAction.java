@@ -35,18 +35,18 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class UserCreateAction extends AbstractAction {
-   
+
    private _SingleServerSelector select;
-   
+
    public UserCreateAction(_SingleServerSelector select) {
       this(select, "Create");
    }
-   
+
    public UserCreateAction(_SingleServerSelector select, String label) {
       super(label, IconBuilder.getTask(HyperboxTasks.UserCreate));
       this.select = select;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       UserIn usrIn = UserEditor.getInput();
@@ -54,5 +54,5 @@ public class UserCreateAction extends AbstractAction {
          Gui.post(new Request(Command.HBOX, HyperboxTasks.UserCreate, new ServerIn(select.getServer()), usrIn));
       }
    }
-   
+
 }

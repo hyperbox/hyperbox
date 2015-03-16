@@ -37,10 +37,10 @@ import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
 public class HyperboxClient {
-   
+
    private static Reflections classes;
    private static _Front view;
-   
+
    static {
       Set<URL> rawURls = ClasspathHelper.forJavaClassPath();
       Set<URL> urls = new HashSet<URL>();
@@ -52,7 +52,7 @@ public class HyperboxClient {
       classes = new Reflections(new ConfigurationBuilder().setUrls(urls).setScanners(new SubTypesScanner(), new TypeAnnotationsScanner())
             .setExecutorService(Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())));
    }
-   
+
    @SuppressWarnings("unchecked")
    public static <T> T loadClass(Class<T> itWannabeClass, String it) {
       try {
@@ -66,18 +66,18 @@ public class HyperboxClient {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    public static <T> Set<Class<? extends T>> getSubTypes(final Class<T> type) {
       return classes.getSubTypesOf(type);
    }
-   
+
    @SuppressWarnings("unchecked")
    public static <T> Set<T> getQuiet(Class<T> type) {
       Set<T> loadedClasses = new HashSet<T>();
-      
+
       Set<Class<? extends T>> classes = getSubTypes(type);
       for (Class<? extends T> rawObject : classes) {
-         
+
          try {
             if (!Modifier.isAbstract(rawObject.getModifiers())) {
                T view = (T) rawObject.getConstructors()[0].newInstance();
@@ -100,22 +100,22 @@ public class HyperboxClient {
             Logger.error("Failed to load " + rawObject.getSimpleName() + " : " + e.getLocalizedMessage());
             Logger.exception(e);
          }
-         
+
       }
       return loadedClasses;
-      
+
    }
-   
+
    public static <T> Set<T> getAtLeastOneOrFail(Class<T> type) throws HyperboxException {
       Set<T> objects = getQuiet(type);
-      
+
       if (objects.isEmpty()) {
          throw new HyperboxException("Unable to find any match for " + type.getSimpleName());
       }
-      
+
       return objects;
    }
-   
+
    // TODO re-evalute the pertinence of using HyperboxException for this
    @SuppressWarnings("unchecked")
    public static <T> Set<T> getAllOrFail(Class<T> type) throws HyperboxException {
@@ -147,15 +147,15 @@ public class HyperboxClient {
          throw new HyperboxException("Failed to load " + type.getSimpleName(), e);
       }
    }
-   
+
    public static void initView(_Front view) {
       if (HyperboxClient.view == null) {
          HyperboxClient.view = view;
       }
    }
-   
+
    public static _Front getView() {
       return view;
    }
-   
+
 }

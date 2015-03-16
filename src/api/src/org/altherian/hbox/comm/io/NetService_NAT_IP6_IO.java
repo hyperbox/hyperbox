@@ -23,17 +23,17 @@ package org.altherian.hbox.comm.io;
 import org.altherian.hbox.constant.NetServiceType;
 
 public class NetService_NAT_IP6_IO extends NetService_NAT_IO {
-   
+
    protected NetService_NAT_IP6_IO() {
       this(false);
    }
-   
+
    public NetService_NAT_IP6_IO(NetService_NAT_IP6_IO svc) {
       super(svc);
    }
-   
+
    public NetService_NAT_IP6_IO(boolean isEnabled) {
       super(NetServiceType.NAT_IPv6.getId(), isEnabled);
    }
-   
+
 }

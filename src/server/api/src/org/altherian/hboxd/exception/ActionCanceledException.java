@@ -24,9 +24,9 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 
 @SuppressWarnings("serial")
 public final class ActionCanceledException extends HyperboxRuntimeException {
-   
+
    public ActionCanceledException() {
       super("Action was canceled");
    }
-   
+
 }

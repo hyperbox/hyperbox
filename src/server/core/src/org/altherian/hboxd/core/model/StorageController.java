@@ -36,47 +36,47 @@ import java.util.List;
 import java.util.Set;
 
 public class StorageController implements _StorageController {
-   
+
    private _Machine vm;
    private _Hypervisor hypervisor;
    private _RawStorageController rawSto;
-   
+
    public StorageController(_Machine vm, _Hypervisor hypervisor, _RawStorageController rawSto) {
       this.vm = vm;
       this.hypervisor = hypervisor;
       this.rawSto = rawSto;
    }
-   
+
    @Override
    public _Machine getMachine() {
       return vm;
    }
-   
+
    @Override
    public EntityType getType() {
       return EntityType.StorageController;
    }
-   
+
    @Override
    public List<_Setting> getSettings() {
       return rawSto.listSettings();
    }
-   
+
    @Override
    public _Setting getSetting(String settingId) {
       return rawSto.getSetting(settingId);
    }
-   
+
    @Override
    public void setSetting(_Setting setting) {
       rawSto.setSetting(setting);
    }
-   
+
    @Override
    public void setSetting(List<_Setting> settings) {
       rawSto.setSetting(settings);
    }
-   
+
    @Override
    public boolean hasSetting(String settingId) {
       try {
@@ -87,62 +87,62 @@ public class StorageController implements _StorageController {
          return false;
       }
    }
-   
+
    @Override
    public String getId() {
       return rawSto.getName();
    }
-   
+
    @Override
    public String getMachineUuid() {
       return vm.getUuid();
    }
-   
+
    @Override
    public String getName() {
       return rawSto.getName();
    }
-   
+
    @Override
    public void setName(String name) {
       rawSto.setName(name);
    }
-   
+
    @Override
    public String getControllerType() {
       return rawSto.getType();
    }
-   
+
    @Override
    public String getControllerSubType() {
       return rawSto.getSubType();
    }
-   
+
    @Override
    public void setSubType(String subType) {
       rawSto.setSubType(subType);
    }
-   
+
    @Override
    public long getPortCount() {
       return rawSto.getPortCount();
    }
-   
+
    @Override
    public void setPortCount(long portCount) {
       rawSto.setPortCount(portCount);
    }
-   
+
    @Override
    public long getMaxPortCount() {
       return rawSto.getMaxPortCount();
    }
-   
+
    @Override
    public long getMaxDeviceCount() {
       return rawSto.getMaxDeviceCount();
    }
-   
+
    @Override
    public void attachDevice(String deviceId, long portNb, long deviceNb) {
       boolean slotTaken = isSlotTaken(portNb, deviceNb);
@@ -153,13 +153,13 @@ public class StorageController implements _StorageController {
          EventManager.post(new StorageAttachmentAddedEvent(getMachineUuid(), getId(), portNb, deviceNb));
       }
    }
-   
+
    @Override
    public void detachDevice(long portNb, long deviceNb) {
       rawSto.detachDevice(portNb, deviceNb);
       EventManager.post(new StorageAttachmentRemovedEvent(getMachineUuid(), getId(), portNb, deviceNb));
    }
-   
+
    @Override
    public Set<_Medium> listMedium() {
       Set<_Medium> mediumList = new HashSet<_Medium>();
@@ -168,7 +168,7 @@ public class StorageController implements _StorageController {
       }
       return mediumList;
    }
-   
+
    @Override
    public Set<_MediumAttachment> listMediumAttachment() {
       Set<_MediumAttachment> maSet = new HashSet<_MediumAttachment>();
@@ -177,13 +177,13 @@ public class StorageController implements _StorageController {
       }
       return maSet;
    }
-   
+
    @Override
    public void attachMedium(_Medium medium) {
       rawSto.attachMedium(hypervisor.getMedium(medium.getUuid()));
       EventManager.post(new StorageControllerAttachmentDataModifiedEvent(getMachineUuid(), getId()));
    }
-   
+
    @Override
    public void attachMedium(_Medium medium, long portNb, long deviceNb) {
       boolean slotTaken = isSlotTaken(portNb, deviceNb);
@@ -194,24 +194,24 @@ public class StorageController implements _StorageController {
          EventManager.post(new StorageAttachmentAddedEvent(getMachineUuid(), getId(), portNb, deviceNb));
       }
    }
-   
+
    @Override
    public void detachMedium(_Medium medium) {
       rawSto.detachMedium(hypervisor.getMedium(medium.getUuid()));
       EventManager.post(new StorageControllerAttachmentDataModifiedEvent(getMachineUuid(), getId()));
    }
-   
+
    @Override
    public void detachMedium(long portNb, long deviceNb) {
       rawSto.detachMedium(portNb, deviceNb);
       EventManager.post(new StorageAttachmentRemovedEvent(vm.getUuid(), rawSto.getName(), portNb, deviceNb));
    }
-   
+
    @Override
    public boolean isSlotTaken(long portNb, long deviceNb) {
       return rawSto.isSlotTaken(portNb, deviceNb);
    }
-   
+
    @Override
    public _MediumAttachment getMediumAttachment(long portNb, long deviceNb) {
       _RawMediumAttachment rawMedAtt = rawSto.getMediumAttachment(portNb, deviceNb);
@@ -221,8 +221,8 @@ public class StorageController implements _StorageController {
             rawSto.getName(),
             rawMedAtt.getPortId(),
             rawMedAtt.getDeviceId(), rawMedAtt.getDeviceType(), rawMedAtt.isPassThrough());
-      
+
       return medAtt;
    }
-   
+
 }

@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.setting.PositiveNumberSetting;
 
 public final class ControllerMaxDeviceCountSetting extends PositiveNumberSetting {
-   
+
    public ControllerMaxDeviceCountSetting(Long maxCount) {
       super(StorageControllerAttribute.MaxDeviceCount, maxCount);
    }
-   
+
 }

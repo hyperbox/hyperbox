@@ -29,45 +29,45 @@ import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.constant.ConnectorAttributes;
 
 public class ConnectorInput extends ObjectIn<EntityType> {
-   
+
    public ConnectorInput() {
       super(EntityType.Connector);
    }
-   
+
    public ConnectorInput(String id) {
       super(EntityType.Connector, id);
    }
-   
+
    public String getAddress() {
       return getSetting(ConnectorAttributes.Address).getString();
    }
-   
+
    public void setAddress(String address) {
       setSetting(new StringSettingIO(ConnectorAttributes.Address, address));
    }
-   
+
    public String getLabel() {
       return getSetting(ConnectorAttributes.Label).getString();
    }
-   
+
    public void setLabel(String label) {
       setSetting(new StringSettingIO(ConnectorAttributes.Label, label));
    }
-   
+
    public String getBackendId() {
       return getSetting(ConnectorAttributes.BackendId).getString();
    }
-   
+
    public void setBackendId(String backendId) {
       setSetting(new StringSettingIO(ConnectorAttributes.BackendId, backendId));
    }
-   
+
    public UserIn getCredentials() {
       return (UserIn) getSetting(ConnectorAttributes.Credentials).getRawValue();
    }
-   
+
    public void setCredentials(UserIn usrIn) {
       setSetting(new SettingIO(ConnectorAttributes.Credentials, usrIn));
    }
-   
+
 }

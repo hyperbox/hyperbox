@@ -27,11 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SnapshotIoFactory {
-   
+
    private SnapshotIoFactory() {
       // Static class, not allowed
    }
-   
+
    public static SnapshotOut get(_RawSnapshot rawSnap) {
       if (rawSnap == null) {
          return null;
@@ -40,14 +40,14 @@ public class SnapshotIoFactory {
       if (rawSnap.hasParent()) {
          parentUuid = rawSnap.getParent().getUuid();
       }
-      
+
       List<String> childrenUuid = new ArrayList<String>();
       for (_RawSnapshot child : rawSnap.getChildren()) {
          childrenUuid.add(child.getUuid());
       }
-      
+
       SnapshotOut snapOut = new SnapshotOut(rawSnap.getUuid(), SettingIoFactory.getList(rawSnap.listSettings()), parentUuid, childrenUuid);
       return snapOut;
    }
-   
+
 }

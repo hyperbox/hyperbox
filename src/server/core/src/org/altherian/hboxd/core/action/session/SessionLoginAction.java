@@ -31,23 +31,23 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class SessionLoginAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.Login.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       UserIn uIn = request.get(UserIn.class);
-      
+
       hbox.getSecurityManager().authenticate(uIn.getUsername(), uIn.getPassword());
       hbox.getSessionManager().getSession(SessionContext.getClient()).login();
    }
-   
+
 }

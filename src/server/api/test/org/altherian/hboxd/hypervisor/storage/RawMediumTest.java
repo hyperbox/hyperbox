@@ -24,7 +24,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 public final class RawMediumTest {
-   
+
    public static void validate(_RawMedium rawMed) {
       assertFalse(rawMed.getUuid().isEmpty());
       assertFalse(rawMed.getLocation().isEmpty());
@@ -34,5 +34,5 @@ public final class RawMediumTest {
       assertFalse(rawMed.getMediumFormat().isEmpty());
       assertFalse(rawMed.getName().isEmpty());
    }
-   
+
 }

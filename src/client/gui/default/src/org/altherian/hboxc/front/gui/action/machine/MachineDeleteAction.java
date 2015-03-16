@@ -35,15 +35,15 @@ import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public final class MachineDeleteAction extends AbstractAction {
-   
+
    private _MachineSelector selector;
-   
+
    public MachineDeleteAction(_MachineSelector selector) {
       super("Delete", IconBuilder.getTask(HypervisorTasks.MachineDelete));
       setEnabled(true);
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ev) {
       int info = JOptionPane.showConfirmDialog(
@@ -58,5 +58,5 @@ public final class MachineDeleteAction extends AbstractAction {
          }
       }
    }
-   
+
 }

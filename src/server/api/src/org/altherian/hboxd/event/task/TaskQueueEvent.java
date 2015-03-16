@@ -25,10 +25,10 @@ import org.altherian.hbox.states.TaskQueueEvents;
 import org.altherian.hboxd.task._Task;
 
 public class TaskQueueEvent extends TaskEvent {
-   
+
    public TaskQueueEvent(TaskQueueEvents ev, _Task t) {
       super(HyperboxEvents.TaskQueue, t);
       set(ev);
    }
-   
+
 }

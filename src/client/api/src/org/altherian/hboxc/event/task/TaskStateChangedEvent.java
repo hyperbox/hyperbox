@@ -25,14 +25,14 @@ import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class TaskStateChangedEvent extends TaskEvent {
-   
+
    public TaskStateChangedEvent(ServerOut srvOut, TaskOut taskOut) {
       super(ClientEvents.TaskStateChanged, srvOut, taskOut);
    }
-   
+
    @Override
    public String toString() {
       return "Task #" + getTask().getId() + " changed to " + getTask().getState() + " on Server " + getServer().getId() + " @ " + getTime();
    }
-   
+
 }

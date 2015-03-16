@@ -37,31 +37,31 @@ import org.virtualbox_4_2.LockType;
 import org.virtualbox_4_2.VBoxException;
 
 public class VBoxGuest implements _RawGuest {
-   
+
    private String machineUuid;
    private ISession session;
-   
+
    public VBoxGuest(VBoxMachine vm) {
       machineUuid = vm.getUuid();
    }
-   
+
    private IMachine getVm() {
       return VBox.get().findMachine(machineUuid);
    }
-   
+
    private void lockAuto() {
       session = VBoxSessionManager.get().lockAuto(machineUuid, LockType.Shared);
    }
-   
+
    private void unlockAuto() {
       unlockAuto(false);
    }
-   
+
    private void unlockAuto(boolean saveSettings) {
       VBoxSessionManager.get().unlockAuto(machineUuid, saveSettings);
       session = null;
    }
-   
+
    @Override
    public boolean hasHypervisorTools() {
       lockAuto();
@@ -73,7 +73,7 @@ public class VBoxGuest implements _RawGuest {
          unlockAuto();
       }
    }
-   
+
    @Override
    public _RawHypervisorTools getHypervisorTools() {
       // TODO Auto-generated method stub
@@ -86,11 +86,11 @@ public class VBoxGuest implements _RawGuest {
          unlockAuto();
       }
    }
-   
+
    private int getNicCount() {
       return Integer.parseInt(AxStrings.getNonEmpty(getVm().getGuestPropertyValue("/VirtualBox/GuestInfo/Net/Count"), "0"));
    }
-   
+
    @Override
    public List<_RawGuestNetworkInterface> listNetworkInterfaces() {
       List<_RawGuestNetworkInterface> list = new ArrayList<_RawGuestNetworkInterface>();
@@ -99,7 +99,7 @@ public class VBoxGuest implements _RawGuest {
       }
       return list;
    }
-   
+
    @Override
    public _RawGuestNetworkInterface getNetworkInterfaceByMac(String macAddress) {
       macAddress = macAddress.replace(":", "").toUpperCase();
@@ -110,5 +110,5 @@ public class VBoxGuest implements _RawGuest {
       }
       return null;
    }
-   
+
 }

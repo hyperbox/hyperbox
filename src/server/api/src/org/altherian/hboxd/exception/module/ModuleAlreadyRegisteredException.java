@@ -24,9 +24,9 @@ import org.altherian.hboxd.exception.ModuleException;
 
 @SuppressWarnings("serial")
 public class ModuleAlreadyRegisteredException extends ModuleException {
-   
+
    public ModuleAlreadyRegisteredException(String moduleId) {
       super("A module is already registered under ID/Descriptor: " + moduleId);
    }
-   
+
 }

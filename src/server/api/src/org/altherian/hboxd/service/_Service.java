@@ -53,30 +53,30 @@ import org.altherian.hbox.states.ServiceState;
  */
 // TODO review some service framework instead of using custom impl
 public interface _Service {
-   
+
    /**
     * Returns the service ID. This ID must be unique in a server
     * 
     * @return String of the service ID
     */
    public String getId();
-   
+
    /**
     * Returns the current service state
     * 
     * @return the current service state
     */
    public ServiceState getState();
-   
+
    /**
     * Requests the service to start. _Core expects the service to return directly after the service thread has been started.
     * 
     * @throws ServiceException If anything prevented the service to start
     */
    public void start() throws ServiceException;
-   
+
    public void startAndRun() throws ServiceException;
-   
+
    /**
     * Requests the service to stop. this method should ensure the service thread will stop (by setting a stop variable or sending an interprocess
     * message per example) and then return.<br/>
@@ -86,7 +86,7 @@ public interface _Service {
     * @throws ServiceException If anything prevented the service to stop
     */
    public void stop() throws ServiceException;
-   
+
    /**
     * Requests the service to stop by calling {@link _Service#stop()} then waits for the service thread to stop for the given milliseconds<br/>
     * The wait is perform using @link {@link Thread#join(long)}.
@@ -95,33 +95,33 @@ public interface _Service {
     * @return true if the service stopped within the timeframe given, or false if not
     */
    public boolean stopAndDie(int timeout);
-   
+
    /**
     * Requests the service to pause until further call is made.
     * 
     * @throws UnsupportedOperationException If this operation is not supported by the service
     */
    public void pause() throws UnsupportedOperationException;
-   
+
    /**
     * Requests the service to pause until further call is made.
     * 
     * @throws UnsupportedOperationException If this operation is not supported by the service
     */
    public void unpause() throws UnsupportedOperationException;
-   
+
    /**
     * Requests the service to reload its config
     * 
     * @throws UnsupportedOperationException If this operation is not supported by the service
     */
    public void reload() throws UnsupportedOperationException;
-   
+
    /**
     * Checks if the service is running
     * 
     * @return true if the service is running, false if not
     */
    public boolean isRunning();
-   
+
 }

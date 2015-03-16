@@ -29,7 +29,7 @@ import org.altherian.hboxc.front.gui.Gui;
 import org.altherian.hboxc.front.gui.store.utils.StoreItemChooser;
 
 public class MediumBrowser {
-   
+
    private static MediumOut getMedium(ServerOut srvOut, StoreItemOut siOut, String deviceType) {
       MediumIn medIn = new MediumIn();
       medIn.setLocation(siOut.getPath());
@@ -37,7 +37,7 @@ public class MediumBrowser {
       MediumOut medOut = Gui.getServer(srvOut).getMedium(medIn);
       return medOut;
    }
-   
+
    public static MediumOut browse(ServerOut srvOut, String deviceType) {
       StoreItemOut siOut = StoreItemChooser.getExisitingFile(srvOut.getId());
       if ((siOut == null) || siOut.isContainer()) {
@@ -45,9 +45,9 @@ public class MediumBrowser {
       }
       return getMedium(srvOut, siOut, deviceType);
    }
-   
+
    public static MediumOut browse(ServerOut srvOut, String storeId, String deviceType) {
       return browse(srvOut, deviceType);
    }
-   
+
 }

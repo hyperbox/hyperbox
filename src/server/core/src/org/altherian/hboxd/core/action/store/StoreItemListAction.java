@@ -37,17 +37,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class StoreItemListAction extends AbstractHyperboxMultiTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.StoreItemList.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       StoreIn sIn = request.get(StoreIn.class);
@@ -63,5 +63,5 @@ public final class StoreItemListAction extends AbstractHyperboxMultiTaskAction {
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, siOut));
       }
    }
-   
+
 }

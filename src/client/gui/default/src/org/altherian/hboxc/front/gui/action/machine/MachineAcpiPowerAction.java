@@ -33,19 +33,19 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class MachineAcpiPowerAction extends AbstractAction {
-   
+
    private _MachineSelector selector;
-   
+
    public MachineAcpiPowerAction(_MachineSelector selector) {
       super("Power Button", IconBuilder.getTask(HypervisorTasks.MachineAcpiPowerButton));
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ev) {
       for (MachineOut mOut : selector.getMachines()) {
          Gui.post(new Request(Command.VBOX, HypervisorTasks.MachineAcpiPowerButton, new MachineIn(mOut)));
       }
    }
-   
+
 }

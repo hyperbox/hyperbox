@@ -21,7 +21,7 @@
 package org.altherian.hboxc.front.gui;
 
 public interface _Cancelable {
-   
+
    public void cancel();
-   
+
 }

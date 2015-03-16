@@ -26,17 +26,17 @@ import org.altherian.hboxd.security._ItemPermission;
 import org.altherian.hboxd.security._User;
 
 public class PermissionIoFactory {
-   
+
    private PermissionIoFactory() {
       // static only
    }
-   
+
    public static PermissionOut get(_User usr, _ActionPermission perm) {
       return new PermissionOut(usr.getId(), perm.getItemType().toString(), perm.getAction().toString(), perm.isAllowed());
    }
-   
+
    public static PermissionOut get(_User usr, _ItemPermission perm) {
       return new PermissionOut(usr.getId(), perm.getItemType().toString(), perm.getAction().toString(), perm.getItemId(), perm.isAllowed());
    }
-   
+
 }

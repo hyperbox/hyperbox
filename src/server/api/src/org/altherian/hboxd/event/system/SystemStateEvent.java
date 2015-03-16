@@ -25,19 +25,19 @@ import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.states.ServerState;
 
 public final class SystemStateEvent extends Event {
-   
+
    public SystemStateEvent(ServerState state) {
       super(HyperboxEvents.SystemState);
       set(ServerState.class, state);
    }
-   
+
    public ServerState getState() {
       return get(ServerState.class);
    }
-   
+
    @Override
    public String toString() {
       return "System state changed to " + getState() + " @ " + getTime();
    }
-   
+
 }

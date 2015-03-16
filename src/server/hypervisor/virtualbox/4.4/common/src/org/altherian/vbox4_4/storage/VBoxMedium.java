@@ -44,105 +44,105 @@ import org.virtualbox_4_4.IMedium;
 import org.virtualbox_4_4.VBoxException;
 
 public final class VBoxMedium implements _RawMedium {
-   
+
    private String uuid;
    private String file;
    private DeviceType devType;
-   
+
    private IMedium rawMedium;
-   
+
    public VBoxMedium(IMedium medium) {
       medium.refreshState();
       uuid = medium.getId();
       file = medium.getLocation();
       devType = medium.getDeviceType();
    }
-   
+
    private void getRead() {
-      
+
       rawMedium = VBox.get().openMedium(file, devType, AccessMode.ReadOnly, false);
    }
-   
+
    @Override
    public String getUuid() {
       return uuid;
    }
-   
+
    @Override
    public void setUuid(String newUuid) {
       throw new UnsupportedOperationException("This is not a supported operation.");
    }
-   
+
    @Override
    public void generateUuid() {
       throw new UnsupportedOperationException("This is not a supported operation.");
    }
-   
+
    @Override
    public String getDescription() {
       return VBoxSettingManager.get(this, MediumAttribute.Description).getString();
    }
-   
+
    @Override
    public void setDescription(String desc) {
       setSetting(new MediumDescriptionSetting(desc));
    }
-   
+
    @Override
    public String getState() {
       return VBoxSettingManager.get(this, MediumAttribute.State).getValue().toString();
    }
-   
+
    @Override
    public String getVariant() {
       return VBoxSettingManager.get(this, MediumAttribute.Variant).getValue().toString();
    }
-   
+
    @Override
    public String getLocation() {
       return file;
    }
-   
+
    @Override
    public void setLocation(String path) {
       setSetting(new MediumLocationSetting(path));
    }
-   
+
    @Override
    public String getName() {
       return VBoxSettingManager.get(this, MediumAttribute.Name).getValue().toString();
    }
-   
+
    @Override
    public String getDeviceType() {
       return devType.toString();
    }
-   
+
    @Override
    public long getSize() {
       return ((PositiveNumberSetting) VBoxSettingManager.get(this, MediumAttribute.Size)).getValue();
    }
-   
+
    @Override
    public String getFormat() {
       return VBoxSettingManager.get(this, MediumAttribute.Format).getValue().toString();
    }
-   
+
    @Override
    public String getMediumFormat() {
       return VBoxSettingManager.get(this, MediumAttribute.MediumFormat).getValue().toString();
    }
-   
+
    @Override
    public String getType() {
       return VBoxSettingManager.get(this, MediumAttribute.Type).getValue().toString();
    }
-   
+
    @Override
    public void setType(String type) {
       setSetting(new MediumTypeSetting(type));
    }
-   
+
    @Override
    public boolean hasParent() {
       getRead();
@@ -156,7 +156,7 @@ public final class VBoxMedium implements _RawMedium {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    @Override
    public _RawMedium getParent() {
       getRead();
@@ -170,7 +170,7 @@ public final class VBoxMedium implements _RawMedium {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    @Override
    public boolean hasChild() {
       getRead();
@@ -184,7 +184,7 @@ public final class VBoxMedium implements _RawMedium {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    @Override
    public Set<_RawMedium> getChild() {
       Set<_RawMedium> childs = new HashSet<_RawMedium>();
@@ -198,7 +198,7 @@ public final class VBoxMedium implements _RawMedium {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    @Override
    public _RawMedium getBase() {
       getRead();
@@ -212,22 +212,22 @@ public final class VBoxMedium implements _RawMedium {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    @Override
    public boolean isReadOnly() {
       return ((BooleanSetting) VBoxSettingManager.get(this, MediumAttribute.ReadOnly)).getValue();
    }
-   
+
    @Override
    public long getLogicalSize() {
       return ((PositiveNumberSetting) VBoxSettingManager.get(this, MediumAttribute.LogicalSize)).getValue();
    }
-   
+
    @Override
    public boolean isAutoReset() {
       return ((BooleanSetting) VBoxSettingManager.get(this, MediumAttribute.AutoReset)).getValue();
    }
-   
+
    @Override
    public String lastAccessError() {
       getRead();
@@ -237,7 +237,7 @@ public final class VBoxMedium implements _RawMedium {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    @Override
    public Set<_RawVM> getLinkedMachines() {
       getRead();
@@ -251,90 +251,90 @@ public final class VBoxMedium implements _RawMedium {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    @Override
    public void close() {
       // TODO Auto-generated method stub
-      
+
    }
-   
+
    @Override
    public void refresh() {
       rawMedium.refreshState();
    }
-   
+
    @Override
    public _ProgressTracker clone(String path) {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
    @Override
    public _ProgressTracker clone(_RawMedium toMedium) {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
    @Override
    public _ProgressTracker clone(String path, String variantType) {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
    @Override
    public _ProgressTracker clone(_RawMedium toMedium, String variantType) {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
    @Override
    public _ProgressTracker compact() {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
    @Override
    public _ProgressTracker create(long size) {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
    @Override
    public _ProgressTracker create(long size, String variantType) {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
    @Override
    public _ProgressTracker resize(long size) {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
    @Override
    public void reset() {
       // TODO Auto-generated method stub
-      
+
    }
-   
+
    @Override
    public List<_Setting> listSettings() {
       return VBoxSettingManager.list(this);
    }
-   
+
    @Override
    public _Setting getSetting(Object getName) {
       return VBoxSettingManager.get(this, getName);
    }
-   
+
    @Override
    public void setSetting(_Setting s) {
       VBoxSettingManager.set(this, Arrays.asList(s));
    }
-   
+
    @Override
    public void setSetting(List<_Setting> s) {
       VBoxSettingManager.set(this, s);
    }
-   
+
 }

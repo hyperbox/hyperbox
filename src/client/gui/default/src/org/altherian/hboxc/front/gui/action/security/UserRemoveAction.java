@@ -34,23 +34,23 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class UserRemoveAction extends AbstractAction {
-   
+
    private _UserSelector selector;
-   
+
    public UserRemoveAction(_UserSelector selector) {
       this(selector, "Delete");
    }
-   
+
    public UserRemoveAction(_UserSelector selector, String label) {
       super(label, IconBuilder.getTask(HyperboxTasks.UserDelete));
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       for (String userId : selector.getSelection()) {
          Gui.post(new Request(Command.HBOX, HyperboxTasks.UserDelete, new ServerIn(selector.getServerId()), new UserIn(userId)));
       }
    }
-   
+
 }

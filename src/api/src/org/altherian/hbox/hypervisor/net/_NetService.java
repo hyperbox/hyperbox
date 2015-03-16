@@ -24,7 +24,7 @@ import org.altherian.hbox.comm.io.NetServiceIO;
 import org.altherian.hbox.constant.NetServiceType;
 
 public interface _NetService {
-   
+
    /**
     * Get the type ID for the net service
     *
@@ -32,11 +32,11 @@ public interface _NetService {
     * @see NetServiceType Default supported options
     */
    public String getType();
-   
+
    public boolean isEnabled();
-   
+
    public void setEnabled(boolean isEnabled);
-   
+
    public NetServiceIO getIO();
-   
+
 }

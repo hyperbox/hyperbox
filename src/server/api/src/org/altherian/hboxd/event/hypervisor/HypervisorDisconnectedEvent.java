@@ -25,9 +25,9 @@ import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 
 public class HypervisorDisconnectedEvent extends HypervisorEvent {
-   
+
    public HypervisorDisconnectedEvent(_Hypervisor hyp) {
       super(HyperboxEvents.HypervisorDisconnected, hyp);
    }
-   
+
 }

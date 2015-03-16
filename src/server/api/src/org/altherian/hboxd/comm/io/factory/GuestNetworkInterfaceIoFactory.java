@@ -24,16 +24,16 @@ import org.altherian.hbox.comm.out.hypervisor.GuestNetworkInterfaceOut;
 import org.altherian.hboxd.hypervisor.vm.guest._RawGuestNetworkInterface;
 
 public class GuestNetworkInterfaceIoFactory {
-   
+
    private GuestNetworkInterfaceIoFactory() {
-      
+
    }
-   
+
    public static GuestNetworkInterfaceOut get(_RawGuestNetworkInterface rawGnic) {
       if (rawGnic == null) {
          return null;
       }
-      
+
       return new GuestNetworkInterfaceOut(
             Integer.toString(rawGnic.getId()),
             rawGnic.isUp(),
@@ -43,5 +43,5 @@ public class GuestNetworkInterfaceIoFactory {
             rawGnic.getIp6Address(),
             rawGnic.getIp6Subnet());
    }
-   
+
 }

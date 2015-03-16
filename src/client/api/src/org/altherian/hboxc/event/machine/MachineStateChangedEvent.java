@@ -24,14 +24,14 @@ import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hbox.event.HyperboxEvents;
 
 public class MachineStateChangedEvent extends MachineUpdatedEvent {
-   
+
    public MachineStateChangedEvent(String srvId, MachineOut mOut) {
       super(HyperboxEvents.MachineState, srvId, mOut);
    }
-   
+
    @Override
    public String toString() {
       return "Machine " + getUuid() + " | State changed to " + getMachine().getState() + " @ " + getTime();
    }
-   
+
 }

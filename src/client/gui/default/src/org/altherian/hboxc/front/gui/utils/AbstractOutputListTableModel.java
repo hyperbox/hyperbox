@@ -27,36 +27,36 @@ import javax.swing.table.AbstractTableModel;
 
 @SuppressWarnings("serial")
 public abstract class AbstractOutputListTableModel<T extends ObjectOut> extends AbstractTableModel {
-   
+
    private List<T> data;
    private List<String> columns;
-   
+
    public AbstractOutputListTableModel() {
       init();
       addColumns();
    }
-   
+
    public AbstractOutputListTableModel(List<T> list) {
       this();
       add(list);
    }
-   
+
    private void init() {
       columns = new ArrayList<String>();
       reset();
    }
-   
+
    private void reset() {
       data = new ArrayList<T>();
    }
-   
+
    public void addColumn(String s) {
       columns.add(s);
       fireTableStructureChanged();
    }
-   
+
    public void clear() {
-      
+
       Integer maxIndex = data.size() - 1;
       reset();
       if (maxIndex > -1) {
@@ -65,50 +65,50 @@ public abstract class AbstractOutputListTableModel<T extends ObjectOut> extends 
          fireTableDataChanged();
       }
    }
-   
+
    public List<T> list() {
       return new ArrayList<T>(data);
    }
-   
+
    public T getObjectAtRow(int rowId) {
       return data.get(rowId);
    }
-   
+
    @Override
    public boolean isCellEditable(int row, int col) {
       return false;
    }
-   
+
    @Override
    public int getColumnCount() {
       return columns.size();
    }
-   
+
    @Override
    public String getColumnName(int columnIndex) {
       return columns.get(columnIndex);
    }
-   
+
    @Override
    public int getRowCount() {
       return data.size();
    }
-   
+
    @Override
    public Object getValueAt(int rowId, int columnId) {
       return getValueAt(data.get(rowId), getColumnName(columnId));
    }
-   
+
    protected abstract Object getValueAt(T obj, String columnName);
-   
+
    public int getRowForObj(T oOut) {
       return data.indexOf(oOut);
    }
-   
+
    public boolean has(T oOut) {
       return data.contains(oOut);
    }
-   
+
    public void add(T oOut) {
       if ((oOut != null) && !has(oOut)) {
          int index = data.size();
@@ -116,7 +116,7 @@ public abstract class AbstractOutputListTableModel<T extends ObjectOut> extends 
          fireTableRowsInserted(index, index);
       }
    }
-   
+
    public void update(T oOut) {
       if ((oOut != null) && has(oOut)) {
          int index = getRowForObj(oOut);
@@ -124,7 +124,7 @@ public abstract class AbstractOutputListTableModel<T extends ObjectOut> extends 
          fireTableRowsUpdated(index, index);
       }
    }
-   
+
    public void remove(T oOut) {
       if ((oOut != null) && has(oOut)) {
          int index = getRowForObj(oOut);
@@ -132,7 +132,7 @@ public abstract class AbstractOutputListTableModel<T extends ObjectOut> extends 
          fireTableRowsDeleted(index, index);
       }
    }
-   
+
    public void merge(T oOut) {
       if (has(oOut)) {
          update(oOut);
@@ -140,35 +140,35 @@ public abstract class AbstractOutputListTableModel<T extends ObjectOut> extends 
          add(oOut);
       }
    }
-   
+
    public void put(T oOut) {
       clear();
       add(oOut);
    }
-   
+
    public void add(List<T> list) {
       for (T oOut : list) {
          add(oOut);
       }
    }
-   
+
    public void update(List<T> list) {
       for (T oOut : list) {
          update(oOut);
       }
    }
-   
+
    public void merge(List<T> list) {
       for (T oOut : list) {
          merge(oOut);
       }
    }
-   
+
    public void put(List<T> list) {
       clear();
       add(list);
    }
-   
+
    protected abstract void addColumns();
-   
+
 }

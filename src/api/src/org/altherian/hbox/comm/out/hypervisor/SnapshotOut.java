@@ -29,89 +29,89 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SnapshotOut extends ObjectOut {
-   
+
    private String parentUuid;
    private List<String> childrenUuid;
-   
+
    @SuppressWarnings("unused")
    private SnapshotOut() {
       // Used for serialization
    }
-   
+
    public SnapshotOut(String uuid) {
       super(EntityType.Snapshot, uuid);
       setSetting(new StringSettingIO(SnapshotAttribute.Uuid, uuid));
    }
-   
+
    public SnapshotOut(String uuid, String name, String desc) {
       this(uuid);
       setSetting(new StringSettingIO(SnapshotAttribute.Name, name));
       setSetting(new StringSettingIO(SnapshotAttribute.Description, desc));
    }
-   
+
    public SnapshotOut(String uuid, String name, String desc, String parent) {
       this(uuid, name, desc);
       setParent(parent);
    }
-   
+
    public SnapshotOut(String uuid, String name, String desc, List<String> children) {
       this(uuid, name, desc);
       setChildren(children);
    }
-   
+
    public SnapshotOut(String uuid, String name, String desc, String parent, List<String> children) {
       this(uuid, name, desc);
       setParent(parent);
       setChildren(children);
    }
-   
+
    public SnapshotOut(String uuid, List<SettingIO> settings, String parent, List<String> children) {
       super(EntityType.Snapshot, uuid);
       setSetting(settings);
       setParent(parent);
       setChildren(children);
    }
-   
+
    private void setParent(String parentUuid) {
       this.parentUuid = parentUuid;
    }
-   
+
    private void setChildren(List<String> children) {
       this.childrenUuid = new ArrayList<String>(children);
    }
-   
+
    public String getUuid() {
       return getSetting(SnapshotAttribute.Uuid).getString();
    }
-   
+
    public String getName() {
       return getSetting(SnapshotAttribute.Name).getString();
    }
-   
+
    public String getDescription() {
       return getSetting(SnapshotAttribute.Description).getString();
    }
-   
+
    public boolean hasParent() {
       return parentUuid != null;
    }
-   
+
    public boolean hasChildren() {
       return (childrenUuid != null) && !childrenUuid.isEmpty();
    }
-   
+
    public String getParentUuid() {
       return parentUuid;
    }
-   
+
    public List<String> getChildrenUuid() {
       return new ArrayList<String>(childrenUuid);
    }
-   
+
    public Boolean isOnline() {
       return getSetting(SnapshotAttribute.IsOnline).getBoolean();
    }
-   
+
    /* (non-Javadoc)
     * @see java.lang.Object#hashCode()
     */
@@ -123,7 +123,7 @@ public class SnapshotOut extends ObjectOut {
       result = (prime * result) + ((parentUuid == null) ? 0 : parentUuid.hashCode());
       return result;
    }
-   
+
    /* (non-Javadoc)
     * @see java.lang.Object#equals(java.lang.Object)
     */
@@ -155,5 +155,5 @@ public class SnapshotOut extends ObjectOut {
       }
       return true;
    }
-   
+
 }

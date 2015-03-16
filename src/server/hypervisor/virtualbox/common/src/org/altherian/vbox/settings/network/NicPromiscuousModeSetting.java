@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.setting.StringSetting;
 
 public class NicPromiscuousModeSetting extends StringSetting {
-   
+
    public NicPromiscuousModeSetting(String mode) {
       super(NetworkInterfaceAttribute.PromiscuousMode, mode);
    }
-   
+
 }

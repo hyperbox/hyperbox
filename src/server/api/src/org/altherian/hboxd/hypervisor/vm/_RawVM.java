@@ -42,110 +42,110 @@ import java.util.List;
 import java.util.Set;
 
 public interface _RawVM extends _RawItem {
-   
+
    public String getUuid();
-   
+
    public boolean isAccessible();
-   
+
    public String getLocation();
-   
+
    public MachineStates getState();
-   
+
    public String getName();
-   
+
    /**
     * Action must be completed when this call returns
     */
    public void powerOn();
-   
+
    /**
     * Action must be completed when this call returns
     */
    public void powerOff();
-   
+
    /**
     * Action must be completed when this call returns
     */
    public void pause();
-   
+
    /**
     * Action must be completed when this call returns
     */
    public void resume();
-   
+
    /**
     * Action must be completed when this call returns
     */
    public void saveState();
-   
+
    /**
     * Action must be completed when this call returns
     */
    public void reset();
-   
+
    // TODO move to _Motherboard
    public void sendAcpi(ACPI acpi);
-   
+
    public List<_RawMetricMachine> getMetrics();
-   
+
    public _RawConsole getConsole();
-   
+
    public _RawCPU getCpu();
-   
+
    public _RawDisplay getDisplay();
-   
+
    public _RawKeyboard getKeyboard();
-   
+
    public _RawMemory getMemory();
-   
+
    public _RawMotherboard getMotherboard();
-   
+
    public _RawMouse getMouse();
-   
+
    public Set<_RawNetworkInterface> listNetworkInterfaces();
-   
+
    public _RawNetworkInterface getNetworkInterface(long nicId);
-   
+
    public Set<_RawStorageController> listStoroageControllers();
-   
+
    public _RawStorageController getStorageController(String name);
-   
+
    public _RawStorageController addStorageController(String type, String name);
-   
+
    public _RawStorageController addStorageController(StorageControllerType type, String name);
-   
+
    public void removeStorageController(String name);
-   
+
    public _RawUSB getUsb();
-   
+
    public boolean hasSnapshot();
-   
+
    public _RawSnapshot getRootSnapshot();
-   
+
    public _RawSnapshot getCurrentSnapshot();
-   
+
    public _RawSnapshot getSnapshot(String id);
-   
+
    public _RawSnapshot takeSnapshot(String name, String description);
-   
+
    public void deleteSnapshot(String id);
-   
+
    public void restoreSnapshot(String id);
-   
+
    public void lock();
-   
+
    public void applyConfiguration(Machine rawData);
-   
+
    public void saveChanges();
-   
+
    public void discardChanges();
-   
+
    public void unlock();
-   
+
    public void unlock(boolean saveChanges);
-   
+
    public byte[] takeScreenshot();
-   
+
    public _RawGuest getGuest();
-   
+
 }

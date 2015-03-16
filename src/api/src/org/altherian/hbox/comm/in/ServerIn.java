@@ -26,25 +26,25 @@ import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.ServerAttribute;
 
 public class ServerIn extends ObjectIn<EntityType> {
-   
+
    public ServerIn() {
       super(EntityType.Server);
    }
-   
+
    public ServerIn(String id) {
       super(EntityType.Server, id);
    }
-   
+
    public ServerIn(ServerOut srvOut) {
       this(srvOut.getId());
    }
-   
+
    public void setName(String name) {
       setSetting(new StringSettingIO(ServerAttribute.Name, name));
    }
-   
+
    public void setLogLevel(String logLevel) {
       setSetting(new StringSettingIO(ServerAttribute.LogLevel, logLevel));
    }
-   
+
 }

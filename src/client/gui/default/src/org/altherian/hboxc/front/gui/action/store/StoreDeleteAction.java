@@ -35,18 +35,18 @@ import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public class StoreDeleteAction extends AbstractAction {
-   
+
    private _StoreSelector selector;
-   
+
    public StoreDeleteAction(_StoreSelector selector) {
       this(selector, "Delete");
    }
-   
+
    public StoreDeleteAction(_StoreSelector selector, String label) {
       super(label, IconBuilder.getTask(HyperboxTasks.StoreDelete));
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       int info = JOptionPane.showConfirmDialog(
@@ -61,5 +61,5 @@ public class StoreDeleteAction extends AbstractAction {
          }
       }
    }
-   
+
 }

@@ -65,62 +65,62 @@ import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.TreePath;
 
 public class StoreItemChooser implements _Saveable, _Cancelable {
-   
+
    private static final int FILE_NEW = 1;
    private static final int FILE_EXIST = 2;
    private static final int FILE_NAME = 4;
    private static final int FOLDER_NAME = 8;
    private static final int BROWSE = 16;
-   
+
    private String srvId;
-   
+
    private int workingMode;
    private JDialog dialog;
-   
+
    private JLabel addressBarName;
    private JTextField addressBarValue;
    private JPanel addressPanel;
-   
+
    private JLabel storeItemFilterName;
    private JComboBox storeItemFilterValue;
-   
+
    private JLabel storeItemName;
    private JTextField storeItemValue;
-   
+
    private DefaultMutableTreeNode topNode;
    private DefaultTreeModel treeModel;
    private JTree tree;
    private JScrollPane treePane;
-   
+
    private StoreItemBrowserTableModel storeItemTableModel;
    private JTable storeItemTable;
    private JScrollPane storeItemTablePane;
-   
+
    private JButton acceptButton;
    private JButton cancelButton;
-   
+
    private static StoreItemIn choosenStiIn;
    private StoreItemOut choosenStiOut;
-   
+
    protected StoreItemChooser(String srvId, int workingMode) {
       this.srvId = srvId;
       this.workingMode = workingMode;
       initDialog();
       initAddressPanel();
       initTree();
-      
+
       if (this.workingMode == FOLDER_NAME) {
          dialog.add(treePane, "grow,push,wrap");
       } else {
          initTable();
          JSplitPane vSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePane, storeItemTablePane);
          vSplit.setResizeWeight(0.2d);
-         
+
          storeItemFilterName = new JLabel("Type");
          storeItemFilterValue = new JComboBox();
          storeItemName = new JLabel("Name");
          storeItemValue = new JTextField();
-         
+
          dialog.add(addressPanel, "growx, pushx, wrap");
          dialog.add(vSplit, "grow, push, wrap");
       }
@@ -134,14 +134,14 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       } else {
          dialog.setTitle("Store Browser");
       }
-      
+
       initButtons();
       JPanel buttonPanel = new JPanel(new MigLayout("ins 0"));
       buttonPanel.add(acceptButton);
       buttonPanel.add(cancelButton);
       dialog.add(buttonPanel, "growx, pushx, wrap");
    }
-   
+
    private void initDialog() {
       dialog = new JDialog(MainView.getMainFrame());
       dialog.setIconImage(IconBuilder.getHyperbox().getImage());
@@ -151,7 +151,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       dialog.setLayout(new MigLayout());
       CancelableUtils.set(this, dialog.getRootPane());
    }
-   
+
    private void initAddressPanel() {
       addressBarName = new JLabel("Location");
       addressBarValue = new JTextField();
@@ -159,7 +159,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       addressPanel.add(addressBarName);
       addressPanel.add(addressBarValue, "growx, pushx, wrap");
    }
-   
+
    private void initTree() {
       topNode = new DefaultMutableTreeNode("Stores");
       treeModel = new DefaultTreeModel(topNode);
@@ -171,7 +171,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       tree.setShowsRootHandles(true);
       treePane = new JScrollPane(tree);
    }
-   
+
    private void initTable() {
       storeItemTableModel = new StoreItemBrowserTableModel();
       storeItemTable = new JTable(storeItemTableModel);
@@ -181,7 +181,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       storeItemTable.setAutoCreateRowSorter(true);
       storeItemTablePane = new JScrollPane(storeItemTable);
    }
-   
+
    private void initButtons() {
       acceptButton = new JButton(new SaveAction(this));
       if (workingMode == FOLDER_NAME) {
@@ -189,14 +189,14 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       }
       cancelButton = new JButton(new CancelAction(this));
    }
-   
+
    private void insertInTree(StoreOut stoOut) {
       DefaultMutableTreeNode storeNode = new StoreOutputTreeNode(stoOut);
       topNode.insert(storeNode, topNode.getChildCount());
       tree.scrollPathToVisible(new TreePath(storeNode.getPath()));
       treeModel.reload(topNode);
    }
-   
+
    private void insertInTree(List<StoreItemOut> stiOutList, DefaultMutableTreeNode parentNode) {
       Collections.sort(stiOutList, new StoreItemOutputComparator());
       for (StoreItemOut stiOut : stiOutList) {
@@ -205,12 +205,12 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
          }
       }
    }
-   
+
    private void insertInTree(StoreItemOut stiOut, DefaultMutableTreeNode parentNode) {
       DefaultMutableTreeNode storeItemNode = new StoreItemOutputTreeNode(stiOut);
       parentNode.insert(storeItemNode, parentNode.getChildCount());
    }
-   
+
    private void showInTable(StoreOut stoOut) {
       if (workingMode != FOLDER_NAME) {
          List<StoreItemOut> stiOutList = Gui.getServer(srvId).listStoreItems(new StoreIn(stoOut.getId()));
@@ -220,7 +220,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
          acceptButton.setEnabled(false);
       }
    }
-   
+
    private void showInTable(StoreItemOut stiOut) {
       choosenStiOut = stiOut;
       if (workingMode != FOLDER_NAME) {
@@ -232,7 +232,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
          acceptButton.setEnabled(true);
       }
    }
-   
+
    private void showInTable(List<StoreItemOut> stiOutList) {
       // We are not in a folder-only mode
       if (workingMode != FOLDER_NAME) {
@@ -240,28 +240,28 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
          storeItemTableModel.put(stiOutList);
       }
    }
-   
+
    private void select(StoreItemOut stiOut) {
-      
+
       storeItemValue.setText(stiOut.getName());
       choosenStiOut = stiOut;
    }
-   
+
    private void choose(StoreItemOut stiOut) {
-      
+
       select(stiOut);
       save();
    }
-   
+
    private void loadStores() {
       topNode.removeAllChildren();
       treeModel.reload();
-      
+
       for (StoreOut stoOut : Gui.getServer(srvId).listStores()) {
          insertInTree(stoOut);
       }
    }
-   
+
    private StoreItemOut getUserInput() {
       choosenStiIn = null;
       loadStores();
@@ -274,19 +274,19 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       dialog.setVisible(true);
       return choosenStiOut;
    }
-   
+
    private void hide() {
       dialog.setVisible(false);
    }
-   
+
    @Override
    public void cancel() {
       hide();
    }
-   
+
    @Override
    public void save() {
-      
+
       if (workingMode != FOLDER_NAME) {
          choosenStiIn = new StoreItemIn(addressBarValue.getText() + "/" + storeItemValue.getText());
       }
@@ -298,12 +298,12 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       }
       hide();
    }
-   
+
    // TODO implement selective store browsing, selected when dialog is showing
    public static void browse(String srvId) {
       new StoreItemChooser(srvId, BROWSE).getUserInput();
    }
-   
+
    /**
     * Get a Store Item path from the user. Only guarantees that the Store Item object would be a file, but does not guarantee its (non)existence.
     *
@@ -314,7 +314,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       new StoreItemChooser(srvId, FILE_NAME).getUserInput();
       return choosenStiIn;
    }
-   
+
    /**
     * Not Fully Implement - Does not give any guarantee.
     *
@@ -326,7 +326,7 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
       new StoreItemChooser(srvId, FILE_NEW).getUserInput();
       return choosenStiIn;
    }
-   
+
    /**
     * Get a Store Item path from the user and guarantees that the given file exist, or null if the user cancel or no existing file was chosen.
     *
@@ -336,62 +336,62 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
    public static StoreItemOut getExisitingFile(String srvId) {
       return new StoreItemChooser(srvId, FILE_EXIST).getUserInput();
    }
-   
+
    public static StoreItemOut getExisitingFolder(String srvId) {
       return new StoreItemChooser(srvId, FOLDER_NAME).getUserInput();
    }
-   
+
    private class StoreOutputTreeNode extends DefaultMutableTreeNode {
-      
+
       private static final long serialVersionUID = 1L;
-      
+
       public StoreOutputTreeNode(StoreOut node) {
          super(node);
       }
-      
+
       @Override
       public boolean isLeaf() {
          return false;
       }
    }
-   
+
    private class StoreItemOutputTreeNode extends DefaultMutableTreeNode {
-      
+
       private static final long serialVersionUID = 1L;
       private StoreItemOut siOut;
-      
+
       public StoreItemOutputTreeNode(StoreItemOut node) {
          super(node);
          siOut = node;
       }
-      
+
       @Override
       public boolean isLeaf() {
          return !siOut.isContainer();
       }
    }
-   
+
    private class TreeCellRenderer extends DefaultTreeCellRenderer {
-      
+
       private static final long serialVersionUID = 1L;
-      
+
       @Override
       public Component getTreeCellRendererComponent(JTree rawTree, Object value, boolean isSelected, boolean isExpanded, boolean isLeaf, int row,
             boolean hasFocus) {
          super.getTreeCellRendererComponent(rawTree, value, isSelected, isExpanded, isLeaf, row, hasFocus);
-         
+
          return this;
       }
-      
+
    }
-   
+
    private class TreeSelectListener implements TreeSelectionListener {
-      
+
       @Override
       public void valueChanged(TreeSelectionEvent ev) {
          if ((ev.getNewLeadSelectionPath() != null) && (ev.getNewLeadSelectionPath().getLastPathComponent() != null)) {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) ev.getNewLeadSelectionPath().getLastPathComponent();
-            
+
             if (node.getUserObject() instanceof StoreOut) {
                showInTable((StoreOut) node.getUserObject());
             }
@@ -400,16 +400,16 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
             }
          }
       }
-      
+
    }
-   
+
    private class StorageTreeWillExpandListener implements TreeWillExpandListener {
-      
+
       @Override
       public void treeWillCollapse(TreeExpansionEvent ev) throws ExpandVetoException {
          // nothing to do here
       }
-      
+
       @Override
       public void treeWillExpand(TreeExpansionEvent ev) throws ExpandVetoException {
          DefaultMutableTreeNode dmtn = (DefaultMutableTreeNode) ev.getPath().getLastPathComponent();
@@ -425,25 +425,25 @@ public class StoreItemChooser implements _Saveable, _Cancelable {
             insertInTree(stiOutList, dmtn);
          }
       }
-      
+
    }
-   
+
    private class BrowseMouseListener extends MouseAdapter {
-      
+
       private StoreItemOut getSelection() {
          int selectedRow = storeItemTable.getSelectedRow();
          Logger.debug("Selected row: " + selectedRow);
-         
+
          if (selectedRow == -1) {
             return null;
          } else {
             return storeItemTableModel.getObjectAtRowId(storeItemTable.convertRowIndexToModel(selectedRow));
          }
       }
-      
+
       @Override
       public void mouseClicked(MouseEvent ev) {
-         
+
          StoreItemOut stiOut = getSelection();
          if (stiOut != null) {
             if ((ev.getClickCount() == 1) && !stiOut.isContainer()) {

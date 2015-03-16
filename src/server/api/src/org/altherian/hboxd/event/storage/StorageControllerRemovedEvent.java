@@ -23,9 +23,9 @@ package org.altherian.hboxd.event.storage;
 import org.altherian.hbox.event.HyperboxEvents;
 
 public class StorageControllerRemovedEvent extends StorageControllerEvent {
-   
+
    public StorageControllerRemovedEvent(String vmId, String controllerId) {
       super(HyperboxEvents.StorageControllerRemoved, vmId, controllerId);
    }
-   
+
 }

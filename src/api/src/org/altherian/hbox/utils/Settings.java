@@ -22,7 +22,7 @@
 package org.altherian.hbox.utils;
 
 public class Settings {
-   
+
    /**
     * This will give a unique name for a given object.<br/>
     * This method is guarantee to always return the same unique ID for a setting for the class this object is made of.
@@ -37,5 +37,5 @@ public class Settings {
          return name.toString();
       }
    }
-   
+
 }

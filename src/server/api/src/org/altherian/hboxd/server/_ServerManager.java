@@ -23,11 +23,11 @@ package org.altherian.hboxd.server;
 import java.util.List;
 
 public interface _ServerManager {
-   
+
    public _Server getServer();
-   
+
    public _Server getServer(String uuid);
-   
+
    public List<_Server> listServer();
-   
+
 }

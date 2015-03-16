@@ -29,26 +29,26 @@ import org.virtualbox_4_3.IMachine;
 import org.virtualbox_4_3.LockType;
 
 public class MemorySettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.Memory.toString();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       machine.setMemorySize(setting.getNumber());
       Logger.debug(machine.getId() + " changed RAM to " + setting.getValue().toString());
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new MemorySetting(machine.getMemorySize());
    }
-   
+
 }

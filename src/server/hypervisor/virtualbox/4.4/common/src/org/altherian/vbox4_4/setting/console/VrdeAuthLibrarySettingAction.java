@@ -29,25 +29,25 @@ import org.virtualbox_4_4.IMachine;
 import org.virtualbox_4_4.LockType;
 
 public class VrdeAuthLibrarySettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.VrdeAuthLibrary.getId();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       machine.getVRDEServer().setAuthLibrary(setting.getString());
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new StringSetting(MachineAttribute.VrdeAuthLibrary, machine.getVRDEServer().getAuthLibrary());
    }
-   
+
 }

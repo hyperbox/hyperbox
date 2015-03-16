@@ -24,17 +24,17 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 
 @SuppressWarnings("serial")
 public abstract class UpdaterException extends HyperboxRuntimeException {
-   
+
    public UpdaterException(String s) {
       super(s);
    }
-   
+
    public UpdaterException(Throwable t) {
       super(t.getMessage(), t);
    }
-   
+
    public UpdaterException(String s, Throwable t) {
       super(s, t);
    }
-   
+
 }

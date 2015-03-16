@@ -37,23 +37,23 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class NATRulesView {
-   
+
    private NATRuleTableModel model;
    private JTable table;
    private JScrollPane tablePane;
    private JButton addButton;
    private JButton remButton;
    private JPanel panel;
-   
+
    public static NATRulesView get() {
       return new NATRulesView();
    }
-   
+
    public NATRulesView() {
       JComboBox protocolEditor = new JComboBox();
       protocolEditor.addItem("TCP");
       protocolEditor.addItem("UDP");
-      
+
       model = new NATRuleTableModel();
       table = new JTable(model);
       table.setFillsViewportHeight(true);
@@ -63,23 +63,23 @@ public class NATRulesView {
       tablePane.setPreferredSize(table.getPreferredSize());
       addButton = new JButton(IconBuilder.AddIcon);
       addButton.addActionListener(new ActionListener() {
-         
+
          @Override
          public void actionPerformed(ActionEvent e) {
             model.add(new NATRuleIO("New Rule", null, null, null, null, null));
          }
-         
+
       });
       remButton = new JButton(IconBuilder.DelIcon);
       remButton.addActionListener(new ActionListener() {
-         
+
          @Override
          public void actionPerformed(ActionEvent e) {
             for (int row : table.getSelectedRows()) {
                model.remove(model.getObjectAtRow(table.convertColumnIndexToModel(row)));
             }
          }
-         
+
       });
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(tablePane, "grow, push");
@@ -88,15 +88,15 @@ public class NATRulesView {
       buttonPanel.add(remButton);
       panel.add(buttonPanel, "top");
    }
-   
+
    public void setRules(List<_NATRule> rules) {
       model.put(rules);
    }
-   
+
    public JComponent getComponent() {
       return panel;
    }
-   
+
    public List<_NATRule> getRules() {
       return new ArrayList<_NATRule>(model.list());
    }

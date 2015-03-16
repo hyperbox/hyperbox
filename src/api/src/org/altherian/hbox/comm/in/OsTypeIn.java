@@ -21,57 +21,57 @@
 package org.altherian.hbox.comm.in;
 
 public class OsTypeIn {
-   
+
    private String id;
    private String name;
    private long bitness;
-   
+
    public OsTypeIn(String id, String name, Long bitness) {
       setId(id);
       setName(name);
       setBitness(bitness);
    }
-   
+
    /**
     * @return the id
     */
    public String getId() {
       return id;
    }
-   
+
    /**
     * @param id the id to set
     */
    public void setId(String id) {
       this.id = id;
    }
-   
+
    /**
     * @return the name
     */
    public String getName() {
       return name;
    }
-   
+
    /**
     * @param name the name to set
     */
    public void setName(String name) {
       this.name = name;
    }
-   
+
    /**
     * @return the bitness
     */
    public long getBitness() {
       return bitness;
    }
-   
+
    /**
     * @param bitness the bitness to set
     */
    public void setBitness(long bitness) {
       this.bitness = bitness;
    }
-   
+
 }

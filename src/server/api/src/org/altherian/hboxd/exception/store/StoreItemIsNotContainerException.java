@@ -25,9 +25,9 @@ import java.io.File;
 
 @SuppressWarnings("serial")
 public class StoreItemIsNotContainerException extends StoreException {
-   
+
    public StoreItemIsNotContainerException(File path) {
       super(path.getAbsolutePath() + " is not a container");
    }
-   
+
 }

@@ -28,22 +28,22 @@ import org.altherian.vbox4_2.setting._MediumSettingAction;
 import org.virtualbox_4_2.IMedium;
 
 public final class MediumLocationSettingAction implements _MediumSettingAction {
-   
+
    @Override
    public String getSettingName() {
       return MediumAttribute.Location.toString();
    }
-   
+
    @Override
    public void set(IMedium medium, _Setting setting) {
       if (!get(medium).getString().contentEquals(setting.getString())) {
          throw new HyperboxRuntimeException("Read-only setting");
       }
    }
-   
+
    @Override
    public _Setting get(IMedium medium) {
       return new MediumLocationSetting(medium.getLocation());
    }
-   
+
 }

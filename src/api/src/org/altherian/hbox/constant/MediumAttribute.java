@@ -38,23 +38,23 @@ public enum MediumAttribute {
    MediumFormat(true),
    AutoReset,
    LastAccessError(true);
-   
+
    private boolean isReadOnly;
-   
+
    public boolean isReadOnly() {
       return isReadOnly;
    }
-   
+
    private MediumAttribute() {
       this(false);
    }
-   
+
    private MediumAttribute(boolean isReadOnly) {
       this.isReadOnly = isReadOnly;
    }
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

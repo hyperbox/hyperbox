@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MediumAttribute;
 import org.altherian.setting.StringSetting;
 
 public class MediumNameSetting extends StringSetting {
-   
+
    public MediumNameSetting(String name) {
       super(MediumAttribute.Name, name);
    }
-   
+
 }

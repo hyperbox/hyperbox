@@ -27,30 +27,30 @@ import org.altherian.hboxc.front.gui.worker.receiver._NetworkInterfaceTypeReceiv
 import java.util.List;
 
 public class NetworkInterfaceTypeListWorker extends AxSwingWorker<_NetworkInterfaceTypeReceiver, Void, NetworkInterfaceTypeOut> {
-   
+
    private String srvId;
-   
+
    public NetworkInterfaceTypeListWorker(_NetworkInterfaceTypeReceiver recv, String srvId) {
       super(recv);
       this.srvId = srvId;
    }
-   
+
    @Override
    protected Void doInBackground() throws Exception {
       for (NetworkInterfaceTypeOut nicTypeOut : Gui.getServer(srvId).listNetworkInterfaceTypes()) {
          publish(nicTypeOut);
       }
-      
+
       return null;
    }
-   
+
    @Override
    protected void process(List<NetworkInterfaceTypeOut> nicTypeOut) {
       getReceiver().add(nicTypeOut);
    }
-   
+
    public static void execute(_NetworkInterfaceTypeReceiver recv, String srvId) {
       (new NetworkInterfaceTypeListWorker(recv, srvId)).execute();
    }
-   
+
 }

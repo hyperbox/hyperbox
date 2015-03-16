@@ -24,9 +24,9 @@ import org.altherian.hboxd.exception.ModuleException;
 
 @SuppressWarnings("serial")
 public class ModuleAlreadyLoadedException extends ModuleException {
-   
+
    public ModuleAlreadyLoadedException(String s) {
       super("Module ID " + s + " is already loaded");
    }
-   
+
 }

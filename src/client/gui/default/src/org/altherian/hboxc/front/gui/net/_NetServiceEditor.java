@@ -24,11 +24,11 @@ import org.altherian.hbox.comm.io.NetServiceIO;
 import javax.swing.JComponent;
 
 public interface _NetServiceEditor {
-   
+
    public String getServiceId();
-   
+
    public JComponent getComponent();
-   
+
    public NetServiceIO getInput();
-   
+
 }

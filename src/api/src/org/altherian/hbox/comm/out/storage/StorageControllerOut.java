@@ -29,76 +29,76 @@ import java.util.Collections;
 import java.util.List;
 
 public class StorageControllerOut extends ObjectOut {
-   
+
    private String vmId;
    private List<StorageDeviceAttachmentOut> attachments;
-   
+
    @SuppressWarnings("unused")
    private StorageControllerOut() {
       // stub
    }
-   
+
    public StorageControllerOut(String vmId, String name, List<SettingIO> settings) {
       this(vmId, name, settings, Collections.<StorageDeviceAttachmentOut> emptyList());
    }
-   
+
    public StorageControllerOut(String vmId, String name, List<SettingIO> settings, List<StorageDeviceAttachmentOut> attachments) {
       super(EntityType.StorageController, name, settings);
       this.vmId = vmId;
       this.attachments = attachments;
    }
-   
+
    public String getMachineUuid() {
       return vmId;
    }
-   
+
    public String getName() {
       return getSetting(StorageControllerAttribute.Name).getString();
    }
-   
+
    /**
     * @return the type
     */
    public String getType() {
       return getSetting(StorageControllerAttribute.Type).getString();
    }
-   
+
    /**
     * @return the subType
     */
    public String getSubType() {
       return getSetting(StorageControllerAttribute.SubType).getString();
    }
-   
+
    public Long getMinPortCount() {
       return getSetting(StorageControllerAttribute.MinPortCount).getNumber();
    }
-   
+
    /**
     * @return the maxPortCount
     */
    public Long getMaxPortCount() {
       return getSetting(StorageControllerAttribute.MaxPortCount).getNumber();
    }
-   
+
    /**
     * @return the maxDeviceCount
     */
    public Long getMaxDeviceCount() {
       return getSetting(StorageControllerAttribute.MaxDeviceCount).getNumber();
    }
-   
+
    public boolean hasAttachments() {
       return !attachments.isEmpty();
    }
-   
+
    public List<StorageDeviceAttachmentOut> getAttachments() {
       return new ArrayList<StorageDeviceAttachmentOut>(attachments);
    }
-   
+
    @Override
    public String toString() {
       return getName();
    }
-   
+
 }

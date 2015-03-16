@@ -25,7 +25,7 @@ import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import java.util.List;
 
 public interface _MachineListReceiver extends _WorkerDataReceiver {
-   
+
    public void add(List<MachineOut> objOutList);
-   
+
 }

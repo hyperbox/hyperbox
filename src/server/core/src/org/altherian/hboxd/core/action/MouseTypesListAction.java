@@ -32,22 +32,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MouseTypesListAction extends AbstractHyperboxMultiTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.MouseModeList.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       for (String mouse : hbox.getHypervisor().listMouseModes()) {
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, CommObjets.MouseMode, mouse));
       }
    }
-   
+
 }

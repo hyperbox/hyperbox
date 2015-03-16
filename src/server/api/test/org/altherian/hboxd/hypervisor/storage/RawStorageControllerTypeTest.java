@@ -24,7 +24,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class RawStorageControllerTypeTest {
-   
+
    public static void validate(_RawStorageControllerType rawType) {
       assertFalse(rawType.getId().isEmpty());
       assertFalse(rawType.getMinPort() <= 0);
@@ -32,12 +32,12 @@ public class RawStorageControllerTypeTest {
       assertFalse(rawType.getMinPort() > rawType.getMaxPort());
       assertFalse(rawType.getMaxDevPerPort() <= 0);
    }
-   
+
    public static void compare(_RawStorageControllerType rawType1, _RawStorageControllerType rawType2) {
       assertTrue(rawType1.getId().contentEquals(rawType2.getId()));
       assertTrue(rawType1.getMinPort() == rawType2.getMinPort());
       assertTrue(rawType1.getMaxPort() == rawType2.getMaxPort());
       assertTrue(rawType1.getMaxDevPerPort() == rawType2.getMaxDevPerPort());
    }
-   
+
 }

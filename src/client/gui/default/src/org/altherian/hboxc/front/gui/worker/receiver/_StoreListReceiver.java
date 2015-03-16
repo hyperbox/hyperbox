@@ -24,7 +24,7 @@ import org.altherian.hbox.comm.out.StoreOut;
 import java.util.List;
 
 public interface _StoreListReceiver extends _WorkerDataReceiver {
-   
+
    public void add(List<StoreOut> stoOutList);
-   
+
 }

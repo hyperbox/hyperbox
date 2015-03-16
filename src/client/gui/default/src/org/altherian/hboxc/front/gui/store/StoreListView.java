@@ -51,26 +51,26 @@ import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 
 public final class StoreListView implements _StoreSelector, _Refreshable, _SingleServerSelector, _StoreListReceiver {
-   
+
    private ServerOut srvOut;
-   
+
    private JLabel statusLabel;
-   
+
    private StoreListTableModel itemListModel;
    private JTable itemList;
    private JScrollPane scrollPane;
-   
+
    private JButton addButton;
    private JButton registerButton;
    private JPanel buttonPanel;
-   
+
    private JPanel panel;
-   
+
    public StoreListView() {
-      
+
       statusLabel = new JLabel();
       statusLabel.setVisible(false);
-      
+
       itemListModel = new StoreListTableModel();
       itemList = new JTable(itemListModel);
       itemList.setAutoCreateRowSorter(true);
@@ -79,25 +79,25 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
       itemList.addMouseListener(new ItemListMouseListener());
       scrollPane = new JScrollPane(itemList);
       MouseWheelController.install(scrollPane);
-      
+
       addButton = new JButton(new StoreCreateAction(this));
       registerButton = new JButton(new StoreRegisterAction(this));
       buttonPanel = new JPanel(new MigLayout("ins 0"));
       buttonPanel.add(addButton);
       buttonPanel.add(registerButton);
-      
+
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(statusLabel, "hidemode 3, growx, pushx, wrap");
       panel.add(buttonPanel, "hidemode 3, growx, pushx, wrap");
       panel.add(scrollPane, "hidemode 3, grow, push, wrap");
-      
+
       ViewEventManager.register(this);
    }
-   
+
    public JComponent getComponent() {
       return panel;
    }
-   
+
    @Override
    public List<String> getSelection() {
       List<String> listSelectedItems = new ArrayList<String>();
@@ -106,14 +106,14 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
       }
       return listSelectedItems;
    }
-   
+
    @Handler
    public void postStoreState(StoreEventOut event) {
       refresh();
    }
-   
+
    private class ItemListMouseListener extends MouseAdapter {
-      
+
       private void showPopup(MouseEvent ev) {
          if (ev.isPopupTrigger() && (itemList.getSelectedRow() > -1)) {
             JPopupMenu actions = PopupMenuBuilder.get(StoreListView.this,
@@ -121,17 +121,17 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
             actions.show(ev.getComponent(), ev.getX(), ev.getY());
          }
       }
-      
+
       @Override
       public void mouseReleased(MouseEvent ev) {
          showPopup(ev);
       }
-      
+
       @Override
       public void mousePressed(MouseEvent ev) {
          showPopup(ev);
       }
-      
+
       @Override
       public void mouseClicked(MouseEvent ev) {
          if ((ev.getButton() == MouseEvent.BUTTON1) && (itemList.rowAtPoint(ev.getPoint()) == -1)) {
@@ -143,9 +143,9 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
             showPopup(ev);
          }
       }
-      
+
    }
-   
+
    public void show(ServerOut srvOut) {
       if (srvOut == null) {
          itemListModel.clear();
@@ -154,17 +154,17 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
          refresh();
       }
    }
-   
+
    @Override
    public ServerOut getServer() {
       return srvOut;
    }
-   
+
    @Override
    public void refresh() {
       StoreListWorker.execute(this, srvOut.getId());
    }
-   
+
    @Override
    public void loadingStarted() {
       itemListModel.clear();
@@ -173,7 +173,7 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
       buttonPanel.setEnabled(false);
       scrollPane.setEnabled(false);
    }
-   
+
    @Override
    public void loadingFinished(boolean isSuccessful, String message) {
       statusLabel.setText(message);
@@ -181,10 +181,10 @@ public final class StoreListView implements _StoreSelector, _Refreshable, _Singl
       buttonPanel.setEnabled(isSuccessful);
       scrollPane.setEnabled(isSuccessful);
    }
-   
+
    @Override
    public void add(List<StoreOut> stoOutList) {
       itemListModel.merge(stoOutList);
    }
-   
+
 }

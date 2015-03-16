@@ -24,11 +24,11 @@ import org.altherian.hbox.comm.in.SnapshotIn;
 import org.altherian.hboxc.core._Entity;
 
 public interface _Machine extends _Entity {
-   
+
    public _Server getServer();
-   
+
    public _Console getConsole();
-   
+
    public void takeSnapshot(SnapshotIn snapshotIn);
-   
+
 }

@@ -24,13 +24,13 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public class UsbOhciSetting extends BooleanSetting {
-   
+
    public UsbOhciSetting(boolean isEnabled) {
       super(MachineAttribute.UsbOhci, isEnabled);
    }
-   
+
    public UsbOhciSetting(Long amount) {
       super(MachineAttribute.UsbOhci, (amount > 0));
    }
-   
+
 }

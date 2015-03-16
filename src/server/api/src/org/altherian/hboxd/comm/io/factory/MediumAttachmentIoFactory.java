@@ -25,13 +25,13 @@ import org.altherian.hboxd.core.model._MediumAttachment;
 import org.altherian.hboxd.hypervisor.storage._RawMediumAttachment;
 
 public class MediumAttachmentIoFactory {
-   
+
    private MediumAttachmentIoFactory() {
       // static class
    }
-   
+
    public static StorageDeviceAttachmentOut get(_MediumAttachment ma) {
-      
+
       return new StorageDeviceAttachmentOut(
             ma.getMachineId(),
             ma.getControllerId(),
@@ -40,14 +40,14 @@ public class MediumAttachmentIoFactory {
             ma.getDeviceId(),
             ma.getDeviceType());
    }
-   
+
    public static StorageDeviceAttachmentOut get(_RawMediumAttachment ma) {
-      
+
       String mediumId = null;
       if (ma.getMedium() != null) {
          mediumId = ma.getMedium().getUuid();
       }
-      
+
       return new StorageDeviceAttachmentOut(
             ma.getMachine().getUuid(),
             ma.getController().getName(),
@@ -56,5 +56,5 @@ public class MediumAttachmentIoFactory {
             ma.getDeviceId(),
             ma.getDeviceType());
    }
-   
+
 }

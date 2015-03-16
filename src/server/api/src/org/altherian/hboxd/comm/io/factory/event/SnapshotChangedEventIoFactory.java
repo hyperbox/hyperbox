@@ -37,7 +37,7 @@ import org.altherian.hboxd.core.model._Machine;
 import org.altherian.hboxd.event.snapshot.SnapshotEvent;
 
 public class SnapshotChangedEventIoFactory implements _EventIoFactory {
-   
+
    @Override
    public Enum<?>[] getHandles() {
       return new Enum<?>[] {
@@ -46,17 +46,17 @@ public class SnapshotChangedEventIoFactory implements _EventIoFactory {
             HyperboxEvents.SnapshotTaken,
       };
    }
-   
+
    @Override
    public EventOut get(_Hyperbox hbox, _Event ev) {
       SnapshotEvent sEv = (SnapshotEvent) ev;
-      
+
       _Machine vm = HBoxServer.get().getMachine(sEv.getMachineId());
       MachineOut mOut = MachineIoFactory.get(vm);
       SnapshotOut snapOut = SnapshotIoFactory.get(vm.getSnapshot(sEv.getSnapshotUuid()));
-      
+
       switch ((HyperboxEvents) sEv.getEventId()) {
-      
+
          case SnapshotModified:
             return new SnapshotModifiedEventOut(sEv.getTime(), ServerIoFactory.get(), mOut, snapOut);
          case SnapshotRestored:
@@ -67,5 +67,5 @@ public class SnapshotChangedEventIoFactory implements _EventIoFactory {
             return null;
       }
    }
-   
+
 }

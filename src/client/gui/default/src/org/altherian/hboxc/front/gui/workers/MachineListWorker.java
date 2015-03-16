@@ -29,34 +29,34 @@ import org.altherian.hboxc.front.gui.worker.receiver._MachineListReceiver;
 import java.util.List;
 
 public class MachineListWorker extends AxSwingWorker<_MachineListReceiver, Void, MachineOut> {
-   
+
    private String serverId;
-   
+
    public MachineListWorker(_MachineListReceiver recv, String serverId) {
       super(recv);
       this.serverId = serverId;
    }
-   
+
    @Override
    protected Void doInBackground() throws Exception {
       for (MachineOut mOut : Gui.getServer(serverId).listMachines()) {
          publish(mOut);
       }
-      
+
       return null;
    }
-   
+
    @Override
    protected void process(List<MachineOut> mOutList) {
       getReceiver().add(mOutList);
    }
-   
+
    public static void execute(_MachineListReceiver recv, ServerOut srvOut) {
       execute(recv, srvOut.getId());
    }
-   
+
    public static void execute(_MachineListReceiver recv, String serverId) {
       (new MachineListWorker(recv, serverId)).execute();
    }
-   
+
 }

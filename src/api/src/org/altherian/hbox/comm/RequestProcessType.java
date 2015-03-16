@@ -21,9 +21,9 @@
 package org.altherian.hbox.comm;
 
 public enum RequestProcessType {
-   
+
    NoWait,
    WaitForRequest,
    WaitForTask
-   
+
 }

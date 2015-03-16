@@ -25,14 +25,14 @@ import org.altherian.hbox.event.Event;
 import org.altherian.hboxd.front._Front;
 
 public abstract class ServerFrontEvent extends Event {
-   
+
    public ServerFrontEvent(Enum<?> eventId, _Front front) {
       super(eventId);
       set(_Front.class, front);
    }
-   
+
    public _Front getFront() {
       return get(_Front.class);
    }
-   
+
 }

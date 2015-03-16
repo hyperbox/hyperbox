@@ -39,21 +39,21 @@ import java.util.Collection;
 import com.thoughtworks.xstream.XStream;
 
 public class UserProfileCoreStorage implements _CoreStorage {
-   
+
    private static final String CONSOLE_VIEWER_ID = "consoleViewer";
    private static final String CONSOLE_VIEWERS_FILE = "consoleViewers.xml";
-   
+
    private static final String CONNECTOR_ID = "connector";
    private static final String CONNECTORS_FILE = "connectors.xml";
    private static final String CONNECTORS_CRED_FOLDER = "connectors" + File.separator + "cred";
-   
+
    private XStream storage;
-   
+
    private File userDataFolder;
    private File consoleViewersFile;
    private File connectorFile;
    private File connectorCredFolder;
-   
+
    private void initFolder(File target) throws HyperboxException {
       if (!target.exists() && !target.mkdirs()) {
          throw new HyperboxException("Unable to create data storage directory: " + userDataFolder.getAbsolutePath());
@@ -62,11 +62,11 @@ public class UserProfileCoreStorage implements _CoreStorage {
          throw new HyperboxException("Data directory is not readable or writable, check permissions: " + userDataFolder.getAbsolutePath());
       }
    }
-   
+
    @Override
    public void init() throws HyperboxException {
       Logger.debug("Initializing Data Manager");
-      
+
       try {
          storage = new XStream();
          storage.alias(CONSOLE_VIEWER_ID, _ConsoleViewer.class, ConsoleViewer.class);
@@ -79,42 +79,42 @@ public class UserProfileCoreStorage implements _CoreStorage {
          storage.alias("entity", EntityType.class);
          storage.omitField(Connector.class, "server");
          storage.omitField(Connector.class, "state");
-         
+
          Logger.verbose("Initiated storage serializer");
       } catch (Throwable t) {
          throw new HyperboxException("Unable to storage serializer: " + t.getMessage());
       }
-      
+
       userDataFolder = new File(Configuration.getUserDataPath() + File.separator + "data");
       initFolder(userDataFolder);
-      
+
       connectorCredFolder = new File(userDataFolder.getAbsoluteFile() + File.separator + CONNECTORS_CRED_FOLDER);
       initFolder(connectorCredFolder);
-      
+
       consoleViewersFile = new File(userDataFolder.getAbsolutePath() + File.separator + CONSOLE_VIEWERS_FILE);
       connectorFile = new File(userDataFolder.getAbsolutePath() + File.separator + CONNECTORS_FILE);
-      
+
       Logger.info("Initiated data directory: " + userDataFolder.getAbsolutePath());
    }
-   
+
    @Override
    public void start() {
       // nothing to do
    }
-   
+
    @Override
    public void stop() {
       // nothing to do
    }
-   
+
    @Override
    public void destroy() {
       // nothing to do
    }
-   
+
    @Override
    public void storeViewers(Collection<_ConsoleViewer> viewers) {
-      
+
       if (viewers.isEmpty() && !hasConsoleViewers()) {
          Logger.debug("Nothing was created, skipping");
       } else {
@@ -131,10 +131,10 @@ public class UserProfileCoreStorage implements _CoreStorage {
          }
       }
    }
-   
+
    @Override
    public void storeConnectors(Collection<_Connector> conns) {
-      
+
       if (conns.isEmpty() && !hasConnectors()) {
          Logger.debug("Nothing was created, skipping");
       } else {
@@ -151,38 +151,38 @@ public class UserProfileCoreStorage implements _CoreStorage {
          }
       }
    }
-   
+
    @Override
    public boolean hasConsoleViewers() {
-      
+
       return consoleViewersFile.exists() && consoleViewersFile.isFile() && consoleViewersFile.canRead();
    }
-   
+
    @Override
    public boolean hasConnectors() {
-      
+
       return connectorFile.exists() && connectorFile.isFile() && connectorFile.canRead();
    }
-   
+
    @SuppressWarnings("unchecked")
    @Override
    public Collection<_ConsoleViewer> loadViewers() {
-      
+
       Logger.debug("Loading console viewers from " + consoleViewersFile.getAbsolutePath());
       return (Collection<_ConsoleViewer>) storage.fromXML(consoleViewersFile);
    }
-   
+
    @SuppressWarnings("unchecked")
    @Override
    public Collection<_Connector> loadConnectors() {
-      
+
       Logger.debug("Loading connectors from " + connectorFile.getAbsolutePath());
       return (Collection<_Connector>) storage.fromXML(connectorFile);
    }
-   
+
    @Override
    public void storeConnectorCredentials(String id, UserIn usrIn) {
-      
+
       try {
          OutputStream fileStream = new FileOutputStream(connectorCredFolder.getAbsolutePath() + File.separator + id + ".xml");
          Logger.debug("Saving Connector ID " + id + " credentials to " + connectorCredFolder.getAbsolutePath() + File.separator + id + ".xml");
@@ -195,14 +195,14 @@ public class UserProfileCoreStorage implements _CoreStorage {
          throw new HyperboxRuntimeException("Unable to store Connector credentials: " + t.getMessage());
       }
    }
-   
+
    @Override
    public UserIn loadConnectorCredentials(String id) {
-      
+
       Logger.debug("Loading Connector ID " + id + " credentials from " + connectorCredFolder.getAbsolutePath() + File.separator + id + ".xml");
       return (UserIn) storage.fromXML(new File(connectorCredFolder.getAbsolutePath() + File.separator + id + ".xml"));
    }
-   
+
    @Override
    public void removeConnectorCredentials(String id) {
       File credFile = new File(connectorCredFolder.getAbsolutePath() + File.separator + id + ".xml");
@@ -210,5 +210,5 @@ public class UserProfileCoreStorage implements _CoreStorage {
          throw new HyperboxRuntimeException("Unable to delete credentials file, remove manually");
       }
    }
-   
+
 }

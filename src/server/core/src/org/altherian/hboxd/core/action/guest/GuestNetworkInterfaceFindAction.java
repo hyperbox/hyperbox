@@ -37,26 +37,26 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GuestNetworkInterfaceFindAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.GuestNetworkInterfaceFind.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       MachineIn mIn = request.get(MachineIn.class);
       GuestNetworkInterfaceIn gNicIn = request.get(GuestNetworkInterfaceIn.class);
-      
+
       _RawGuestNetworkInterface rawGNic = hbox.getHypervisor().getMachine(mIn.getUuid()).getGuest().getNetworkInterfaceByMac(gNicIn.getMacAddress());
       GuestNetworkInterfaceOut gNicOut = GuestNetworkInterfaceIoFactory.get(rawGNic);
-      
+
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, GuestNetworkInterfaceOut.class, gNicOut));
    }
-   
+
 }

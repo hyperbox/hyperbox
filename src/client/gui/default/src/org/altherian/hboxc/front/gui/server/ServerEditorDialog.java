@@ -39,40 +39,40 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class ServerEditorDialog implements _Saveable, _Cancelable {
-   
+
    private JLabel nameLabel;
    private JTextField nameValue;
    private JLabel logLevelLabel;
    private JComboBox logLevelValue;
-   
+
    private JButton saveButton;
    private JButton cancelButton;
-   
+
    private JDialog dialog;
-   
+
    private ServerIn srvIn;
    private ServerOut srvOut;
-   
+
    public static ServerIn getInput(String srvId) {
-      
+
       return new ServerEditorDialog().getUserInput(srvId);
    }
-   
+
    public ServerEditorDialog() {
       nameValue = new JTextField();
       nameLabel = new JLabel("Name");
       nameLabel.setLabelFor(nameValue);
-      
+
       logLevelValue = new JComboBox();
       logLevelLabel = new JLabel("Log level");
       logLevelLabel.setLabelFor(logLevelValue);
-      
+
       saveButton = new JButton(new SaveAction(this));
       cancelButton = new JButton(new CancelAction(this));
       JPanel buttonPanel = new JPanel(new MigLayout("ins 0"));
       buttonPanel.add(saveButton);
       buttonPanel.add(cancelButton);
-      
+
       dialog = JDialogBuilder.get("Server Configuration", IconBuilder.getEntityType(EntityType.Server).getImage(), saveButton);
       dialog.add(nameLabel);
       dialog.add(nameValue, "growx, pushx, wrap");
@@ -80,47 +80,47 @@ public class ServerEditorDialog implements _Saveable, _Cancelable {
       dialog.add(logLevelValue, "growx, pushx, wrap");
       dialog.add(buttonPanel, "center, span 2");
    }
-   
+
    private ServerIn getUserInput(String srvId) {
-      
+
       srvOut = Gui.getServerInfo(srvId);
       logLevelValue.addItem("");
       for (String level : Gui.getServer(srvId).listLogLevel()) {
          logLevelValue.addItem(level);
       }
-      
+
       nameValue.setText(srvOut.getName());
       logLevelValue.setSelectedItem(srvOut.getLogLevel());
-      
+
       show();
       return srvIn;
    }
-   
+
    private void show() {
       dialog.pack();
       dialog.setSize(650, dialog.getHeight());
       dialog.setLocationRelativeTo(dialog.getParent());
       dialog.setVisible(true);
    }
-   
+
    private void hide() {
       dialog.setVisible(false);
    }
-   
+
    @Override
    public void cancel() {
-      
+
       srvIn = null;
       hide();
    }
-   
+
    @Override
    public void save() {
-      
+
       srvIn = new ServerIn(srvOut.getId());
       srvIn.setName(nameValue.getText());
       srvIn.setLogLevel(logLevelValue.getSelectedItem().toString());
       hide();
    }
-   
+
 }

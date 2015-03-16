@@ -25,26 +25,26 @@ import org.altherian.hbox.event.HyperboxEvents;
 import java.util.Date;
 
 public class ServerPropertyChangedEventOut extends ServerEventOut {
-   
+
    private Object property;
    private String newValue;
-   
+
    protected ServerPropertyChangedEventOut() {
       // Used for (de)serialization
    }
-   
+
    public ServerPropertyChangedEventOut(Date time, ServerOut srvOut, Object property, String newValue) {
       super(time, HyperboxEvents.ServerPropertyChanged, srvOut);
       this.property = property;
       this.newValue = newValue;
    }
-   
+
    public Object getProperty() {
       return property;
    }
-   
+
    public String getValue() {
       return newValue;
    }
-   
+
 }

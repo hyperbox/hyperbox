@@ -21,13 +21,13 @@
 package org.altherian.setting;
 
 public class PositiveNumberSetting extends BasicSetting<Long> {
-   
+
    public PositiveNumberSetting(String name, long value) {
       super(name, value);
    }
-   
+
    public PositiveNumberSetting(Enum<?> setting, long value) {
       super(setting, value);
    }
-   
+
 }

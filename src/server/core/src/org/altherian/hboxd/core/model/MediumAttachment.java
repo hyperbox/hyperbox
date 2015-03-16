@@ -24,7 +24,7 @@ import org.altherian.hboxd.hypervisor.storage._RawMediumAttachment;
 import org.altherian.tool.AxStrings;
 
 public class MediumAttachment implements _MediumAttachment {
-   
+
    private String machineId;
    private String mediumId;
    private String controllerId;
@@ -32,13 +32,13 @@ public class MediumAttachment implements _MediumAttachment {
    private long deviceId;
    private String deviceType;
    private boolean isPassThrough;
-   
+
    public MediumAttachment(_RawMediumAttachment raw) {
       this(raw.getMachine().getUuid(), raw.hasMedium() ? raw.getMedium().getUuid() : null, raw.getController().getName(), raw.getPortId(), raw
             .getDeviceId(), raw
             .getDeviceType(), raw.isPassThrough());
    }
-   
+
    public MediumAttachment(String machineId, String mediumId, String controllerId, long portId, long deviceId, String deviceType,
          boolean isPassThrough) {
       this.machineId = machineId;
@@ -49,45 +49,45 @@ public class MediumAttachment implements _MediumAttachment {
       this.deviceType = deviceType;
       this.isPassThrough = isPassThrough;
    }
-   
+
    @Override
    public String getMachineId() {
       return machineId;
    }
-   
+
    @Override
    public String getMediumId() {
       return mediumId;
    }
-   
+
    @Override
    public String getControllerId() {
       return controllerId;
    }
-   
+
    @Override
    public long getPortId() {
       return portId;
    }
-   
+
    @Override
    public long getDeviceId() {
       return deviceId;
    }
-   
+
    @Override
    public String getDeviceType() {
       return deviceType;
    }
-   
+
    @Override
    public boolean isPassThrough() {
       return isPassThrough;
    }
-   
+
    @Override
    public boolean hasMedium() {
       return !AxStrings.isEmpty(mediumId);
    }
-   
+
 }

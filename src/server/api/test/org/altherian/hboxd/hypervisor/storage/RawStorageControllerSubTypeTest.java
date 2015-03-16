@@ -24,15 +24,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class RawStorageControllerSubTypeTest {
-   
+
    public static void validate(_RawStorageControllerSubType rawSubtype) {
       assertFalse(rawSubtype.getId().isEmpty());
       assertFalse(rawSubtype.getParentType().isEmpty());
    }
-   
+
    public static void compare(_RawStorageControllerSubType rawSubtype1, _RawStorageControllerSubType rawSubtype2) {
       assertTrue(rawSubtype1.getId().contentEquals(rawSubtype2.getId()));
       assertTrue(rawSubtype1.getParentType().contentEquals(rawSubtype2.getParentType()));
    }
-   
+
 }

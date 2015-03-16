@@ -51,20 +51,20 @@ import org.virtualbox_4_3.IStorageController;
 import org.virtualbox_4_3.VBoxException;
 
 public class VBoxStorageController implements _RawStorageController {
-   
+
    private String machineUuid;
    private String strCtrName;
    private ISession session;
-   
+
    private void lockAuto() {
       session = VBoxSessionManager.get().lockAuto(machineUuid);
    }
-   
+
    private void unlockAuto() {
       VBoxSessionManager.get().unlockAuto(machineUuid);
       session = null;
    }
-   
+
    private IMachine getVm() {
       session = VBoxSessionManager.get().getLock(machineUuid);
       if (session != null) {
@@ -73,85 +73,85 @@ public class VBoxStorageController implements _RawStorageController {
          return VBox.get().findMachine(machineUuid);
       }
    }
-   
+
    public VBoxStorageController(String machineUuid, String controllerName) {
       this.machineUuid = machineUuid;
       strCtrName = controllerName;
    }
-   
+
    public VBoxStorageController(String machineUuid, IStorageController vStorageController) {
       this(machineUuid, vStorageController.getName());
    }
-   
+
    public VBoxStorageController(_RawVM machine, IStorageController vStorageController) {
       this(machine.getUuid(), vStorageController.getName());
    }
-   
+
    public VBoxStorageController(_RawVM machine, String strCtrName) {
       this(machine.getUuid(), strCtrName);
    }
-   
+
    @Override
    public String getMachineUuid() {
       return machineUuid;
    }
-   
+
    @Override
    public String getName() {
       return strCtrName;
    }
-   
+
    @Override
    public void setName(String name) {
       setSetting(new ControllerNameSetting(name));
       strCtrName = name;
    }
-   
+
    @Override
    public String getType() {
       return getVm().getStorageControllerByName(strCtrName).getBus().toString();
    }
-   
+
    @Override
    public String getSubType() {
       return ((StringSetting) VBoxSettingManager.get(this, StorageControllerAttribute.SubType)).getValue();
    }
-   
+
    @Override
    public void setSubType(String subType) {
       setSetting(new ControllerSubTypeSetting(subType));
    }
-   
+
    @Override
    public long getPortCount() {
       return ((PositiveNumberSetting) VBoxSettingManager.get(this, StorageControllerAttribute.PortCount)).getValue();
    }
-   
+
    @Override
    public void setPortCount(long portCount) {
       setSetting(new ControllerPortCountSetting(portCount));
    }
-   
+
    @Override
    public long getMaxPortCount() {
       return getVm().getStorageControllerByName(strCtrName).getMaxPortCount();
    }
-   
+
    @Override
    public long getMinPortCount() {
       return getVm().getStorageControllerByName(strCtrName).getMinPortCount();
    }
-   
+
    @Override
    public long getMaxDeviceCount() {
       return getVm().getStorageControllerByName(strCtrName).getMaxDevicesPerPortCount();
    }
-   
+
    @Override
    public void attachDevice(String devType, long portNb, long deviceNb) {
       // TODO use DeviceTypeMapping
       DeviceType dt = DeviceType.valueOf(devType);
-      
+
       if (!dt.equals(DeviceType.HardDisk)) {
          lockAuto();
          try {
@@ -163,7 +163,7 @@ public class VBoxStorageController implements _RawStorageController {
          Logger.debug("Not possible to attach an empty HDD drive in Virtualbox, silently ignoring");
       }
    }
-   
+
    @Override
    public void detachDevice(long portNb, long deviceNb) {
       lockAuto();
@@ -176,7 +176,7 @@ public class VBoxStorageController implements _RawStorageController {
          unlockAuto();
       }
    }
-   
+
    @Override
    public Set<_RawMedium> listMedium() {
       Set<_RawMedium> setMedium = new HashSet<_RawMedium>();
@@ -185,7 +185,7 @@ public class VBoxStorageController implements _RawStorageController {
       }
       return setMedium;
    }
-   
+
    @Override
    public Set<_RawMediumAttachment> listMediumAttachment() {
       Set<_RawMediumAttachment> setMedium = new HashSet<_RawMediumAttachment>();
@@ -194,7 +194,7 @@ public class VBoxStorageController implements _RawStorageController {
       }
       return setMedium;
    }
-   
+
    // TODO fully implement
    @Override
    public void attachMedium(_RawMedium medium) {
@@ -202,7 +202,7 @@ public class VBoxStorageController implements _RawStorageController {
       IMedium vbMedium = VBox.get().openMedium(medium.getLocation(), dt, AccessMode.ReadOnly, false);
       long maxPortCount = getMaxPortCount();
       long maxDeviceCount = getMaxDeviceCount();
-      
+
       lockAuto();
       try {
          boolean hasBeenAttached = false;
@@ -221,9 +221,9 @@ public class VBoxStorageController implements _RawStorageController {
       } finally {
          unlockAuto();
       }
-      
+
    }
-   
+
    @Override
    public void attachMedium(_RawMedium medium, long portNb, long deviceNb) {
       // TODO use DeviceTypeMapping
@@ -231,7 +231,7 @@ public class VBoxStorageController implements _RawStorageController {
       IMedium vbMedium = VBox.get().openMedium(medium.getLocation(), dt, AccessMode.ReadOnly, false);
       Integer portNbInt = InconsistencyUtils.getAndTruncate(portNb);
       Integer deviceNbInt = InconsistencyUtils.getAndTruncate(deviceNb);
-      
+
       try {
          lockAuto();
          if (isSlotTaken(portNb, deviceNb)) {
@@ -249,11 +249,11 @@ public class VBoxStorageController implements _RawStorageController {
          unlockAuto();
       }
    }
-   
+
    @Override
    public void detachMedium(_RawMedium medium) {
       boolean hasBeenFound = false;
-      
+
       lockAuto();
       try {
          for (IMediumAttachment medAttach : getVm().getMediumAttachmentsOfController(strCtrName)) {
@@ -270,14 +270,14 @@ public class VBoxStorageController implements _RawStorageController {
          unlockAuto();
       }
    }
-   
+
    @Override
    public void detachMedium(long portNb, long deviceNb) {
       if (!isSlotTaken(portNb, deviceNb)) {
          throw new HyperboxRuntimeException("No media attached to " + portNb + ":" + deviceNb + " on " + getName());
       }
       // TODO handle locked and unlocked media - ask confirmation from the user
-      
+
       try {
          lockAuto();
          getVm().unmountMedium(getName(), InconsistencyUtils.getAndTruncate(portNb), InconsistencyUtils.getAndTruncate(deviceNb), true);
@@ -286,7 +286,7 @@ public class VBoxStorageController implements _RawStorageController {
          unlockAuto();
       }
    }
-   
+
    @Override
    public boolean isSlotTaken(long portNb, long deviceNb) {
       try {
@@ -300,40 +300,40 @@ public class VBoxStorageController implements _RawStorageController {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    @Override
    public List<_Setting> listSettings() {
       return VBoxSettingManager.list(this);
    }
-   
+
    @Override
    public _Setting getSetting(Object getName) {
       return VBoxSettingManager.get(this, getName);
    }
-   
+
    @Override
    public void setSetting(_Setting s) {
       VBoxSettingManager.set(this, Arrays.asList(s));
    }
-   
+
    @Override
    public void setSetting(List<_Setting> s) {
       VBoxSettingManager.set(this, s);
    }
-   
+
    @Override
    public _RawMediumAttachment getMediumAttachment(long portNb, long deviceNb) {
       if (!isSlotTaken(portNb, deviceNb)) {
          return null;
       }
-      
+
       for (IMediumAttachment medAttach : getVm().getMediumAttachmentsOfController(strCtrName)) {
          if ((medAttach.getPort() == portNb) && (medAttach.getDevice() == deviceNb)) {
             return new VBoxMediumAttachment(machineUuid, medAttach);
          }
       }
-      
+
       return null;
    }
-   
+
 }

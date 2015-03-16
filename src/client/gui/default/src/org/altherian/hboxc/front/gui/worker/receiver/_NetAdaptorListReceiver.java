@@ -24,7 +24,7 @@ import org.altherian.hbox.comm.out.network.NetAdaptorOut;
 import java.util.List;
 
 public interface _NetAdaptorListReceiver extends _WorkerDataReceiver {
-   
+
    public void add(List<NetAdaptorOut> adaptOutList);
-   
+
 }

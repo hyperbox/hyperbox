@@ -33,20 +33,20 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class MachineUnlockAction extends AbstractAction {
-   
+
    private _MachineSelector selector;
-   
+
    public MachineUnlockAction(_MachineSelector selector) {
       super("Unlock", IconBuilder.getTask(HypervisorTasks.MachineUnlock));
       setEnabled(true);
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ev) {
       for (MachineOut mOut : selector.getMachines()) {
          Gui.post(new Request(Command.VBOX, HypervisorTasks.MachineUnlock, new MachineIn(mOut)));
       }
    }
-   
+
 }

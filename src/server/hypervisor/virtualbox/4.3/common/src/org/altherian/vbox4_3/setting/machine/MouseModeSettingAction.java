@@ -32,26 +32,26 @@ import org.virtualbox_4_3.LockType;
 import org.virtualbox_4_3.PointingHIDType;
 
 public class MouseModeSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.MouseMode.toString();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       PointingHIDType mouseMode = Mappings.get(MouseMode.valueOf(((StringSetting) setting).getValue()));
       machine.setPointingHIDType(mouseMode);
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new MouseModeSetting(Mappings.get(machine.getPointingHIDType()));
    }
-   
+
 }

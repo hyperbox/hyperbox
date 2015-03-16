@@ -31,11 +31,11 @@ import java.util.Collection;
 import java.util.List;
 
 public class ModuleIoFactory {
-   
+
    private ModuleIoFactory() {
       // static class, cannot be instantiated
    }
-   
+
    public static ModuleOut get(_Module mod) {
       List<SettingIO> settings = new ArrayList<SettingIO>();
       settings.add(new StringSettingIO(ModuleAttribute.DescriptorFile, mod.getDescriptor()));
@@ -45,7 +45,7 @@ public class ModuleIoFactory {
       settings.add(new BooleanSettingIO(ModuleAttribute.isLoaded, mod.isLoaded()));
       return new ModuleOut(mod.getId(), settings);
    }
-   
+
    public static List<ModuleOut> get(Collection<_Module> mods) {
       List<ModuleOut> modsOut = new ArrayList<ModuleOut>();
       for (_Module mod : mods) {
@@ -53,5 +53,5 @@ public class ModuleIoFactory {
       }
       return modsOut;
    }
-   
+
 }

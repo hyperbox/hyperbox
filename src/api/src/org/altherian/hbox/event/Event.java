@@ -23,27 +23,27 @@ package org.altherian.hbox.event;
 import org.altherian.hbox.comm.Message;
 
 public class Event extends Message implements _Event {
-   
+
    private Enum<?> id;
-   
+
    public Event(Enum<?> eventId) {
       super("Event");
       id = eventId;
    }
-   
+
    public Event(Enum<?> eventId, Object data) {
       this(eventId);
       set(data);
    }
-   
+
    @Override
    public Enum<?> getEventId() {
       return id;
    }
-   
+
    @Override
    public String toString() {
       return "Event ID " + getEventId() + " occured @ " + getTime();
    }
-   
+
 }

@@ -31,13 +31,13 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
  */
 @SuppressWarnings("serial")
 public class ServerDisconnectedException extends HyperboxRuntimeException {
-   
+
    public ServerDisconnectedException() {
       this("Server disconnected during the transaction");
    }
-   
+
    public ServerDisconnectedException(String s) {
       super(s);
    }
-   
+
 }

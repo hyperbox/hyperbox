@@ -25,13 +25,13 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.StringSetting;
 
 public class FirmwareSetting extends StringSetting {
-   
+
    public FirmwareSetting(String firmware) {
       super(MachineAttribute.Firmware, firmware);
    }
-   
+
    public FirmwareSetting(Firmware firmware) {
       this(firmware.toString());
    }
-   
+
 }

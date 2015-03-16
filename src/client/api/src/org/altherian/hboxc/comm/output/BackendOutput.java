@@ -25,14 +25,14 @@ import org.altherian.hbox.comm.out.ObjectOut;
 import org.altherian.hboxc.constant.ClientEntity;
 
 public class BackendOutput extends ObjectOut {
-   
+
    public BackendOutput(String id) {
       super(ClientEntity.Backend, id);
    }
-   
+
    @Override
    public String toString() {
       return getId();
    }
-   
+
 }

@@ -25,7 +25,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class NetworkInterfaceTest {
-   
+
    public static void validateFull(_NetworkInterface nic) {
       assertNotNull(nic);
       assertFalse(nic.getId().isEmpty());
@@ -37,5 +37,5 @@ public class NetworkInterfaceTest {
       assertFalse(nic.getAttachMode().isEmpty());
       assertNotNull(nic.getAttachName());
    }
-   
+
 }

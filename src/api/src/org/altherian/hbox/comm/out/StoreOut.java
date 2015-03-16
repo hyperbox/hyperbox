@@ -26,29 +26,29 @@ import org.altherian.hbox.constant.StoreAttribute;
 
 // TODO add getters/setters
 public final class StoreOut extends ObjectOut {
-   
+
    @SuppressWarnings("unused")
    private StoreOut() {
       // used for (de)serialisation
    }
-   
+
    public StoreOut(String id, String label, String location) {
       super(EntityType.Store, id);
       setSetting(new StringSettingIO(StoreAttribute.Label, label));
       setSetting(new StringSettingIO(StoreAttribute.Location, location));
    }
-   
+
    public String getLabel() {
       return getSetting(StoreAttribute.Label).getString();
    }
-   
+
    public String getLocation() {
       return getSetting(StoreAttribute.Location).getString();
    }
-   
+
    @Override
    public String toString() {
       return getLabel();
    }
-   
+
 }

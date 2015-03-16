@@ -29,11 +29,11 @@ import org.altherian.hbox.comm.out.storage.StorageControllerOut;
 import java.util.Collection;
 
 public class MachineOutputTest {
-   
+
    private MachineOutputTest() {
       // not used
    }
-   
+
    public static void validateFull(MachineOut mOut) {
       validateSimple(mOut);
       for (String settingName : mOut.listSettingsId()) {
@@ -47,7 +47,7 @@ public class MachineOutputTest {
          StorageControllerOutputTest.validateSimple(scOut);
       }
    }
-   
+
    public static void validateSimple(MachineOut mOut) {
       assertNotNull(mOut);
       assertNotNull(mOut.getUuid());
@@ -57,31 +57,31 @@ public class MachineOutputTest {
       assertNotNull(mOut.getState());
       assertFalse(mOut.getState().isEmpty());
    }
-   
+
    public static void validateList(Collection<MachineOut> mOutList) {
       for (MachineOut mOut : mOutList) {
          validateSimple(mOut);
       }
    }
-   
+
    public static void compareSimple(MachineOut mOut1, MachineOut mOut2) {
       assertTrue(mOut1.getUuid().contentEquals(mOut2.getUuid()));
       assertTrue(mOut1.getName().contentEquals(mOut2.getName()));
       assertTrue(mOut1.getState().contentEquals(mOut2.getState()));
    }
-   
+
    public static void compareFull(MachineOut mOut1, MachineOut mOut2) {
       compareSimple(mOut1, mOut2);
-      
+
       assertTrue(mOut1.listSettingsId().size() == mOut2.listSettingsId().size());
-      
+
       for (String settingName : mOut1.listSettingsId()) {
          mOut2.getSetting(settingName).getName().contentEquals(mOut1.getSetting(settingName).getName());
       }
-      
+
       for (String settingName : mOut2.listSettingsId()) {
          mOut1.getSetting(settingName).getName().contentEquals(mOut2.getSetting(settingName).getName());
       }
    }
-   
+
 }

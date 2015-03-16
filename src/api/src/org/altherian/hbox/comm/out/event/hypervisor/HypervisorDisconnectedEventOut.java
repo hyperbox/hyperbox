@@ -27,18 +27,18 @@ import org.altherian.hbox.event.HyperboxEvents;
 import java.util.Date;
 
 public class HypervisorDisconnectedEventOut extends HypervisorConnectionStateEventOut {
-   
+
    protected HypervisorDisconnectedEventOut() {
       // Used for serialization
    }
-   
+
    public HypervisorDisconnectedEventOut(Date time, ServerOut srvOut, HypervisorOut hypOut) {
       super(time, HyperboxEvents.HypervisorDisconnected, srvOut, hypOut);
    }
-   
+
    @Override
    public String toString() {
       return "Server " + getServer().getId() + " disconnected from hypervisor @ " + getTime();
    }
-   
+
 }

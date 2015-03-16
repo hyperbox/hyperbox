@@ -26,21 +26,21 @@ import org.altherian.hboxd.core._Hyperbox;
 import java.util.List;
 
 public interface _TaskManager {
-   
+
    public void start(_Hyperbox hbox) throws HyperboxException;
-   
+
    public void stop();
-   
+
    public void process(Request req);
-   
+
    public List<_Task> list();
-   
+
    public _Task get(String taskId);
-   
+
    public void remove(String taskId);
-   
+
    public long getHistorySize();
-   
+
    public void setHistorySize(long size);
-   
+
 }

@@ -24,9 +24,9 @@ import org.altherian.hbox.comm.in.MediumIn;
 import org.altherian.hbox.comm.out.storage.MediumOut;
 
 public final class MediumIoFactory {
-   
+
    public static MediumIn get(MediumOut medOut) {
       return new MediumIn(medOut.getId(), medOut.listSettings());
    }
-   
+
 }

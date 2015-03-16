@@ -26,18 +26,18 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class CloseAction extends AbstractAction {
-   
+
    private Component obj;
-   
+
    public CloseAction(Component obj) {
       super("Close");
       this.obj = obj;
       setEnabled(true);
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       obj.setVisible(false);
    }
-   
+
 }

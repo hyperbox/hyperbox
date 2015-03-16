@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.setting.StringSetting;
 
 public class SnapshotDescriptionSetting extends StringSetting {
-   
+
    public SnapshotDescriptionSetting(String desc) {
       super(SnapshotAttribute.Description, desc);
    }
-   
+
 }

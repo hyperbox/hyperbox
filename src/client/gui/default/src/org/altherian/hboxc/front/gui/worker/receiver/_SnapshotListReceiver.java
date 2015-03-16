@@ -24,7 +24,7 @@ import org.altherian.hbox.comm.out.hypervisor.SnapshotOut;
 import java.util.List;
 
 public interface _SnapshotListReceiver extends _WorkerDataReceiver {
-   
+
    public void add(List<SnapshotOut> objOutList);
-   
+
 }

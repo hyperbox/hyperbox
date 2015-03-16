@@ -21,7 +21,7 @@
 package org.altherian.hbox.constant;
 
 public enum GuestNetworkInterfaceAttribute {
-   
+
    ID,
    IsUp,
    MacAddress,
@@ -29,5 +29,5 @@ public enum GuestNetworkInterfaceAttribute {
    IP4Subnet,
    IP6Address,
    IP6Subnet
-   
+
 }

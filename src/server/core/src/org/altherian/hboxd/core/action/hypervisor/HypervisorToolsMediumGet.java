@@ -36,21 +36,21 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HypervisorToolsMediumGet extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.ToolsMediumGet.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       MediumOut medOut = null;
-      
+
       if (hbox.getHypervisor().hasToolsMedium()) {
          _RawMedium med = hbox.getHypervisor().getToolsMedium();
          Logger.debug("Hypervisor has tools medium - Location: " + med.getLocation());
@@ -58,8 +58,8 @@ public class HypervisorToolsMediumGet extends ASingleTaskAction {
       } else {
          Logger.debug("Hypervisor does not have tools medium");
       }
-      
+
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, MediumOut.class, medOut));
    }
-   
+
 }

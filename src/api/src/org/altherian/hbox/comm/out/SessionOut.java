@@ -25,33 +25,33 @@ import org.altherian.hbox.constant.EntityType;
 import java.util.Date;
 
 public class SessionOut extends ObjectOut {
-   
+
    private UserOut user;
    private String state;
    private Date createTime;
-   
+
    @SuppressWarnings("unused")
    private SessionOut() {
       // used for (de)serialisation
    }
-   
+
    public SessionOut(String id, UserOut user, String state, Date createTime) {
       super(EntityType.Session, id);
       this.user = user;
       this.state = state;
       this.createTime = createTime;
    }
-   
+
    public UserOut getUser() {
       return user;
    }
-   
+
    public String getState() {
       return state;
    }
-   
+
    public Date getCreateTime() {
       return createTime;
    }
-   
+
 }

@@ -25,14 +25,14 @@ import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.states.ServerConnectionState;
 
 public class ServerDisconnectedEvent extends ServerConnectionStateEvent {
-   
+
    public ServerDisconnectedEvent(ServerOut srv) {
       super(srv, ServerConnectionState.Disconnected);
    }
-   
+
    @Override
    public String toString() {
       return "Server ID " + getServer().getId() + " disconnected @ " + getTime();
    }
-   
+
 }

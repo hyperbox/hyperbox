@@ -24,36 +24,36 @@ import org.altherian.hboxd.hypervisor.host._RawHost;
 import org.virtualbox_4_4.IHost;
 
 public class VBoxHost implements _RawHost {
-   
+
    private IHost host;
-   
+
    public VBoxHost(IHost host) {
       this.host = host;
    }
-   
+
    @Override
    public String getHostname() {
       return host.getDomainName();
    }
-   
+
    @Override
    public String getOSName() {
       return host.getOperatingSystem();
    }
-   
+
    @Override
    public String getOSVersion() {
       return host.getOSVersion();
    }
-   
+
    @Override
    public long getMemorySize() {
       return host.getMemorySize();
    }
-   
+
    @Override
    public long getMemoryAvailable() {
       return host.getMemoryAvailable();
    }
-   
+
 }

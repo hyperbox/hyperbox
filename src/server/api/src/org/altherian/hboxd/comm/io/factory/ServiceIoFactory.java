@@ -24,13 +24,13 @@ import org.altherian.hbox.comm.out.ServiceOut;
 import org.altherian.hboxd.service._Service;
 
 public class ServiceIoFactory {
-   
+
    private ServiceIoFactory() {
       // static only
    }
-   
+
    public static ServiceOut get(_Service svc) {
       return new ServiceOut(svc.getId(), svc.getState());
    }
-   
+
 }

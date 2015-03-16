@@ -26,14 +26,14 @@ import org.altherian.hboxd.comm.io.factory.StoreIoFactory;
 import org.altherian.hboxd.store._Store;
 
 public abstract class StoreEvent extends Event {
-   
+
    public StoreEvent(Enum<?> eventId, _Store s) {
       super(eventId);
       set(StoreIoFactory.get(s));
    }
-   
+
    public String getStoreId() {
       return get(StoreOut.class).getId();
    }
-   
+
 }

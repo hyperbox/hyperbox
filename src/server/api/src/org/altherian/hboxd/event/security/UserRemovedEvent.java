@@ -25,9 +25,9 @@ import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hboxd.security._User;
 
 public class UserRemovedEvent extends UserEvent {
-   
+
    public UserRemovedEvent(_User usr) {
       super(HyperboxEvents.UserRemoved, usr);
    }
-   
+
 }

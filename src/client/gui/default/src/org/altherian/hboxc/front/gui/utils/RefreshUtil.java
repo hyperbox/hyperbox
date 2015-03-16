@@ -28,21 +28,21 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 public class RefreshUtil {
-   
+
    protected RefreshUtil() {
       // static only
    }
-   
+
    private static KeyStroke refreshKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0);
-   
+
    public static void set(JComponent comp, _Refreshable r) {
       comp.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(refreshKeyStroke, "refresh");
       comp.getActionMap().put("refresh", new RefreshAction(r));
    }
-   
+
    public static void unset(JComponent comp) {
       comp.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).remove(refreshKeyStroke);
       comp.getActionMap().remove("refresh");
    }
-   
+
 }

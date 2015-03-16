@@ -28,17 +28,17 @@ import org.altherian.vbox4_4.setting._MediumSettingAction;
 import org.virtualbox_4_4.IMedium;
 
 public class MediumBaseUuidSettingAction implements _MediumSettingAction {
-   
+
    @Override
    public String getSettingName() {
       return MediumAttribute.BaseUUID.toString();
    }
-   
+
    @Override
    public void set(IMedium medium, _Setting setting) {
       throw new HyperboxRuntimeException("Read-only setting");
    }
-   
+
    @Override
    public _Setting get(IMedium medium) {
       if (medium.getParent() != null) {
@@ -47,5 +47,5 @@ public class MediumBaseUuidSettingAction implements _MediumSettingAction {
          return new StringSetting(MediumAttribute.BaseUUID, "");
       }
    }
-   
+
 }

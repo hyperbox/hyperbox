@@ -24,7 +24,7 @@ package org.altherian.hboxc.front.gui.worker.receiver;
 import org.altherian.hbox.comm.out.hypervisor.ScreenshotOut;
 
 public interface _MachineScreenshotReceiver extends _WorkerDataReceiver {
-   
+
    public void put(ScreenshotOut scrOut);
-   
+
 }

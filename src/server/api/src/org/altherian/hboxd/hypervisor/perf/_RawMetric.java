@@ -21,15 +21,15 @@
 package org.altherian.hboxd.hypervisor.perf;
 
 public interface _RawMetric {
-   
+
    public String getId();
-   
+
    public String getMetricName();
-   
+
    public String getUnit();
-   
+
    public String getMinValue();
-   
+
    public String getMaxValue();
-   
+
 }

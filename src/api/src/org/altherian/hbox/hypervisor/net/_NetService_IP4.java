@@ -21,17 +21,17 @@
 package org.altherian.hbox.hypervisor.net;
 
 public interface _NetService_IP4 extends _NetService {
-   
+
    public String getAddress();
-   
+
    public String getMask();
-   
+
    public String getGateway();
-   
+
    public void setIP(String ip);
-   
+
    public void setMask(String mask);
-   
+
    public void setGateway(String gw);
-   
+
 }

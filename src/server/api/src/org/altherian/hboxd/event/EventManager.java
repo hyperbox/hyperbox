@@ -27,41 +27,41 @@ import org.altherian.hboxd.HBoxServer;
 import org.altherian.tool.logging.Logger;
 
 public final class EventManager {
-   
+
    private static _EventManager evMgr;
-   
+
    static {
       String className = Configuration.getSetting("core.eventmgr.class", DefaultEventManager.class.getName());
       Logger.debug("Creating Event manager using : " + className);
       evMgr = HBoxServer.loadClass(_EventManager.class, className);
    }
-   
+
    private EventManager() {
       // not to be used
    }
-   
+
    public static _EventManager get() {
       return evMgr;
    }
-   
+
    public static void start() throws HyperboxException {
       get().start();
    }
-   
+
    public static void stop() {
       get().stop();
    }
-   
+
    public static void register(Object o) {
       get().register(o);
    }
-   
+
    public static void unregister(Object o) {
       get().unregister(o);
    }
-   
+
    public static void post(_Event ev) {
       get().post(ev);
    }
-   
+
 }

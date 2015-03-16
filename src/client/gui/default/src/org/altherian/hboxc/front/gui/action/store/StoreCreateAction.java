@@ -35,19 +35,19 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class StoreCreateAction extends AbstractAction {
-   
+
    private _SingleServerSelector select;
-   
+
    public StoreCreateAction(_SingleServerSelector select) {
       this(select, "Create");
    }
-   
+
    public StoreCreateAction(_SingleServerSelector select, String label) {
       super(label, IconBuilder.getTask(HyperboxTasks.StoreCreate));
       putValue(SHORT_DESCRIPTION, "Create and register the target as a new Store.\nThe target must NOT exist.");
       this.select = select;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       StoreIn stoIn = StoreEditor.getInputCreate(select.getServer().getId());
@@ -55,5 +55,5 @@ public class StoreCreateAction extends AbstractAction {
          Gui.post(new Request(Command.HBOX, HyperboxTasks.StoreCreate, new ServerIn(select.getServer()), stoIn));
       }
    }
-   
+
 }

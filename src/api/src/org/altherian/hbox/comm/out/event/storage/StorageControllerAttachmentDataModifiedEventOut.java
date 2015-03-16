@@ -27,19 +27,19 @@ import org.altherian.hbox.event.HyperboxEvents;
 import java.util.Date;
 
 public class StorageControllerAttachmentDataModifiedEventOut extends StorageControllerEventOut {
-   
+
    protected StorageControllerAttachmentDataModifiedEventOut() {
       // Used for serialization
    }
-   
+
    public StorageControllerAttachmentDataModifiedEventOut(Date time, ServerOut srvOut, MachineOut vmOut,
          StorageControllerOut stoOut) {
       super(time, HyperboxEvents.StorageControllerAttachmentDataModified, srvOut, vmOut, stoOut);
    }
-   
+
    public StorageControllerAttachmentDataModifiedEventOut(Date time, Enum<?> id, ServerOut srvOut, MachineOut vmOut,
          StorageControllerOut stoOut) {
       super(time, id, srvOut, vmOut, stoOut);
    }
-   
+
 }

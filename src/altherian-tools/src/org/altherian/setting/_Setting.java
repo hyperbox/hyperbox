@@ -21,15 +21,15 @@
 package org.altherian.setting;
 
 public interface _Setting {
-   
+
    public String getName();
-   
+
    public Object getValue();
-   
+
    public Boolean getBoolean();
-   
+
    public Long getNumber();
-   
+
    public String getString();
-   
+
 }

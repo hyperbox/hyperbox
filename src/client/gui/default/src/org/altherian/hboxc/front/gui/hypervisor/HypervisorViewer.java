@@ -36,29 +36,29 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class HypervisorViewer implements _Refreshable {
-   
+
    private String srvId;
-   
+
    private JLabel stateLabel;
    private JTextField stateData;
-   
+
    private JLabel typeLabel;
    private JTextField typeData;
-   
+
    private JLabel vendorLabel;
    private JTextField vendorData;
-   
+
    private JLabel productLabel;
    private JTextField productData;
-   
+
    private JLabel versionLabel;
    private JTextField versionData;
-   
+
    private JLabel revisionLabel;
    private JTextField revisionData;
-   
+
    private JPanel panel;
-   
+
    public HypervisorViewer() {
       stateLabel = new JLabel("State");
       typeLabel = new JLabel("Type");
@@ -66,7 +66,7 @@ public class HypervisorViewer implements _Refreshable {
       productLabel = new JLabel("Product");
       versionLabel = new JLabel("Version");
       revisionLabel = new JLabel("Revision");
-      
+
       stateData = new JTextField();
       stateData.setEditable(false);
       typeData = new JTextField();
@@ -79,7 +79,7 @@ public class HypervisorViewer implements _Refreshable {
       versionData.setEditable(false);
       revisionData = new JTextField();
       revisionData.setEditable(false);
-      
+
       panel = new JPanel(new MigLayout());
       panel.setBorder(BorderFactory.createTitledBorder("Hypervisor"));
       panel.add(stateLabel, "hidemode 3");
@@ -94,10 +94,10 @@ public class HypervisorViewer implements _Refreshable {
       panel.add(versionData, "growx,pushx,wrap,hidemode 3");
       panel.add(revisionLabel, "hidemode 3");
       panel.add(revisionData, "growx,pushx,wrap,hidemode 3");
-      
+
       ViewEventManager.register(this);
    }
-   
+
    private void toogleConnected(final boolean isConnected) {
       stateData.setText(isConnected ? "Connected" : "Disconnected");
       typeLabel.setVisible(isConnected);
@@ -111,7 +111,7 @@ public class HypervisorViewer implements _Refreshable {
       revisionLabel.setVisible(isConnected);
       revisionData.setVisible(isConnected);
    }
-   
+
    public void show(HypervisorOut srvOut) {
       typeData.setText(srvOut.getType());
       vendorData.setText(srvOut.getVendor());
@@ -120,7 +120,7 @@ public class HypervisorViewer implements _Refreshable {
       revisionData.setText(srvOut.getRevision());
       toogleConnected(true);
    }
-   
+
    public void setDisconnected() {
       typeData.setText(null);
       vendorData.setText(null);
@@ -129,33 +129,33 @@ public class HypervisorViewer implements _Refreshable {
       revisionData.setText(null);
       toogleConnected(false);
    }
-   
+
    public JComponent getComponent() {
       return panel;
    }
-   
+
    public void setSrvId(String srvId) {
       this.srvId = srvId;
    }
-   
+
    @Handler
    private void putHypervisorConnectEvent(HypervisorConnectedEventOut ev) {
       if ((srvId != null) && ev.getServerId().equals(srvId)) {
          toogleConnected(true);
       }
-      
+
    }
-   
+
    @Handler
    private void putHypervisorConnectEvent(HypervisorDisconnectedEventOut ev) {
       if ((srvId != null) && ev.getServerId().equals(srvId)) {
          toogleConnected(false);
       }
    }
-   
+
    @Override
    public void refresh() {
       show(Gui.getServer(srvId).getHypervisor().getInfo());
    }
-   
+
 }

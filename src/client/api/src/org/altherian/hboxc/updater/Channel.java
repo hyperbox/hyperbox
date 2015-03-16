@@ -21,15 +21,15 @@
 package org.altherian.hboxc.updater;
 
 public enum Channel {
-   
+
    /**
     * Stable build following roadmap
     */
    Stable,
-   
+
    /**
     * Builds from repository, not stable
     */
    Fresh
-   
+
 }

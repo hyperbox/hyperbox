@@ -26,42 +26,42 @@ import org.altherian.hbox.constant.ModuleAttribute;
 import java.util.Collection;
 
 public class ModuleOut extends ObjectOut {
-   
+
    protected ModuleOut() {
       // used for (de)serialisation
    }
-   
+
    public ModuleOut(String id) {
       super(EntityType.Module, id);
    }
-   
+
    public ModuleOut(String id, Collection<SettingIO> settings) {
       super(EntityType.Module, id, settings);
    }
-   
+
    public String getDescriptorFile() {
       return getSetting(ModuleAttribute.DescriptorFile).getString();
    }
-   
+
    public String getName() {
       return getSetting(ModuleAttribute.Name).getString();
    }
-   
+
    public String getVersion() {
       return getSetting(ModuleAttribute.Version).getString();
    }
-   
+
    public boolean isEnabled() {
       return getSetting(ModuleAttribute.isEnabled).getBoolean();
    }
-   
+
    public boolean isLoaded() {
       return getSetting(ModuleAttribute.isLoaded).getBoolean();
    }
-   
+
    @Override
    public String toString() {
       return "Module ID " + getId() + " (" + getName() + ")";
    }
-   
+
 }

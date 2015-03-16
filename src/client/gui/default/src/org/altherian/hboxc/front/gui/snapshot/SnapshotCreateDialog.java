@@ -38,85 +38,85 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class SnapshotCreateDialog implements _Saveable, _Cancelable {
-   
+
    private static SnapshotCreateDialog instance;
    private JDialog mainDialog;
-   
+
    private JPanel mainPanel;
    private JLabel nameLabel;
    private JTextField nameField;
    private JLabel descLabel;
    private JTextArea descArea;
-   
+
    private JPanel buttonsPanel;
    private JButton saveButton;
    private JButton cancelButton;
-   
+
    private MachineOut mOut;
    private SnapshotIn snapIn;
-   
+
    private void init(MachineOut mOut) {
       this.mOut = mOut;
-      
+
       mainDialog = new JDialog(MainView.getMainFrame());
       mainDialog.setModalityType(ModalityType.APPLICATION_MODAL);
       mainDialog.setTitle("Take new Snapshot");
-      
+
       nameLabel = new JLabel("Name");
       nameField = new JTextField(40);
       descLabel = new JLabel("Description");
       descArea = new JTextArea();
       descArea.setLineWrap(true);
       descArea.setRows(10);
-      
+
       mainPanel = new JPanel(new MigLayout());
       mainPanel.add(nameLabel);
       mainPanel.add(nameField, "growx,pushx,wrap");
       mainPanel.add(descLabel);
       mainPanel.add(descArea, "growx,pushx,wrap");
-      
+
       saveButton = new JButton(new SaveAction(this));
       cancelButton = new JButton(new CancelAction(this));
-      
+
       buttonsPanel = new JPanel(new MigLayout());
       buttonsPanel.add(saveButton);
       buttonsPanel.add(cancelButton);
-      
+
       mainDialog.getContentPane().setLayout(new MigLayout());
       mainDialog.getContentPane().add(mainPanel, "grow,push,wrap");
       mainDialog.getContentPane().add(buttonsPanel, "center, growx");
       mainDialog.getRootPane().setDefaultButton(saveButton);
    }
-   
+
    public static void show(MachineOut mOut) {
       instance = new SnapshotCreateDialog();
       instance.init(mOut);
-      
+
       instance.mainDialog.pack();
       instance.mainDialog.setLocationRelativeTo(instance.mainDialog.getParent());
       instance.mainDialog.setVisible(true);
    }
-   
+
    private void hide() {
       mainDialog.setVisible(false);
       mainDialog.dispose();
       instance = null;
    }
-   
+
    @Override
    public void save() {
       snapIn = new SnapshotIn();
       snapIn.setName(nameField.getText());
       snapIn.setDescription(descArea.getText());
-      
+
       Gui.getServer(mOut.getServerId()).getMachineReader(mOut.getUuid()).takeSnapshot(snapIn);
-      
+
       hide();
    }
-   
+
    @Override
    public void cancel() {
       hide();
    }
-   
+
 }

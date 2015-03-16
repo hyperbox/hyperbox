@@ -31,22 +31,22 @@ import org.virtualbox_4_4.ISession;
 import org.virtualbox_4_4.LockType;
 
 public class VrdePortSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Shared;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.VrdePort.getId();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       machine.getVRDEServer().setVRDEProperty("TCP/Ports", setting.getString());
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       // TODO improve by having a getConsole() in SessionManager and throw the appropriate exception
@@ -65,5 +65,5 @@ public class VrdePortSettingAction implements _MachineSettingAction {
          return new StringSetting(MachineAttribute.VrdePort, machine.getVRDEServer().getVRDEProperty("TCP/Ports"));
       }
    }
-   
+
 }

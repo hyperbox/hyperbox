@@ -26,16 +26,16 @@ import org.altherian.hboxc.front.gui.utils.AbstractOutputListTableModel;
 
 @SuppressWarnings("serial")
 public class UserTableModel extends AbstractOutputListTableModel<UserOut> {
-   
+
    private final String ID = "ID";
    private final String USERNAME = "Username";
-   
+
    @Override
    protected void addColumns() {
       addColumn(ID);
       addColumn(USERNAME);
    }
-   
+
    @Override
    protected Object getValueAt(UserOut obj, String columnName) {
       if (ID.equalsIgnoreCase(columnName)) {
@@ -46,5 +46,5 @@ public class UserTableModel extends AbstractOutputListTableModel<UserOut> {
       }
       return null;
    }
-   
+
 }

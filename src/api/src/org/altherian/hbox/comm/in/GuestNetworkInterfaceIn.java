@@ -26,62 +26,62 @@ import org.altherian.hbox.constant.EntityType;
 import org.altherian.hbox.constant.GuestNetworkInterfaceAttribute;
 
 public class GuestNetworkInterfaceIn extends ObjectIn<EntityType> {
-   
+
    public GuestNetworkInterfaceIn() {
       super(EntityType.GuestNetworkInterface);
    }
-   
+
    public GuestNetworkInterfaceIn(String id) {
       super(EntityType.GuestNetworkInterface, id);
    }
-   
+
    public boolean isUp() {
       return getSetting(GuestNetworkInterfaceAttribute.IsUp).getBoolean();
    }
-   
+
    public void setUp(boolean isUp) {
       setSetting(new BooleanSettingIO(GuestNetworkInterfaceAttribute.IsUp, isUp));
    }
-   
+
    public String getMacAddress() {
       return getSetting(GuestNetworkInterfaceAttribute.MacAddress).getString();
    }
-   
+
    public GuestNetworkInterfaceIn setMacAddress(String macAddress) {
       setSetting(new StringSettingIO(GuestNetworkInterfaceAttribute.MacAddress, macAddress));
       return this;
    }
-   
+
    public String getIp4Address() {
       return getSetting(GuestNetworkInterfaceAttribute.IP4Address).getString();
    }
-   
+
    public void setIp4Address(String ip4Address) {
       setSetting(new StringSettingIO(GuestNetworkInterfaceAttribute.IP4Address, ip4Address));
    }
-   
+
    public String getIp4Subnet() {
       return getSetting(GuestNetworkInterfaceAttribute.IP4Subnet).getString();
    }
-   
+
    public void setIp4Subnet(String ip4Subnet) {
       setSetting(new StringSettingIO(GuestNetworkInterfaceAttribute.IP4Subnet, ip4Subnet));
    }
-   
+
    public String getIp6Address() {
       return getSetting(GuestNetworkInterfaceAttribute.IP6Address).getString();
    }
-   
+
    public void setIp6Address(String ip6Address) {
       setSetting(new StringSettingIO(GuestNetworkInterfaceAttribute.IP6Address, ip6Address));
    }
-   
+
    public String getIp6Subnet() {
       return getSetting(GuestNetworkInterfaceAttribute.IP6Subnet).getString();
    }
-   
+
    public void setIp6Subnet(String ip6Subnet) {
       setSetting(new StringSettingIO(GuestNetworkInterfaceAttribute.IP6Subnet, ip6Subnet));
    }
-   
+
 }

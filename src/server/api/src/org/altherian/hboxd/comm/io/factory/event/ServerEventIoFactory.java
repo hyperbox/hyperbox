@@ -34,7 +34,7 @@ import org.altherian.hboxd.event.server.ServerEvent;
 import org.altherian.hboxd.event.server.ServerPropertyChangedEvent;
 
 public class ServerEventIoFactory implements _EventIoFactory {
-   
+
    @Override
    public Enum<?>[] getHandles() {
       return new Enum<?>[] {
@@ -42,13 +42,13 @@ public class ServerEventIoFactory implements _EventIoFactory {
             HyperboxEvents.ServerPropertyChanged
       };
    }
-   
+
    @Override
    public EventOut get(_Hyperbox hbox, _Event ev) {
       if (!(ev instanceof ServerEvent)) {
          return null;
       }
-      
+
       ServerOut srvOut = ServerIoFactory.get();
       switch ((HyperboxEvents) ev.getEventId()) {
          case ServerConnectionState:
@@ -62,5 +62,5 @@ public class ServerEventIoFactory implements _EventIoFactory {
             return null;
       }
    }
-   
+
 }

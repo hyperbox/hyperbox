@@ -35,14 +35,14 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class ModuleRegisterAction extends AbstractAction {
-   
+
    private _ModuleSelector selector;
-   
+
    public ModuleRegisterAction(_ModuleSelector selector) {
       super("Register", IconBuilder.getTask(HyperboxTasks.ModuleRegister));
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       StoreItemOut stoOut = StoreItemChooser.getExisitingFile(selector.getServerId());
@@ -52,5 +52,5 @@ public class ModuleRegisterAction extends AbstractAction {
          Gui.post(new Request(Command.HBOX, HyperboxTasks.ModuleRegister, new ServerIn(selector.getServerId()), modIn));
       }
    }
-   
+
 }

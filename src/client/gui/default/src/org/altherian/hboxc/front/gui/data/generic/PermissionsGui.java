@@ -24,16 +24,16 @@ import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.front.gui.data.EntityGui;
 
 public class PermissionsGui extends EntityGui {
-   
+
    public final static String id = "Permissions";
-   
+
    public PermissionsGui() {
       super(EntityType.Permission.getId(), id, true);
    }
-   
+
    @Override
    public String toString() {
       return id;
    }
-   
+
 }

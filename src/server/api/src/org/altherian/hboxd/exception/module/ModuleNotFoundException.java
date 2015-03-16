@@ -24,9 +24,9 @@ import org.altherian.hboxd.exception.ModuleException;
 
 @SuppressWarnings("serial")
 public class ModuleNotFoundException extends ModuleException {
-   
+
    public ModuleNotFoundException(String moduleId) {
       super("Module was not found for: " + moduleId);
    }
-   
+
 }

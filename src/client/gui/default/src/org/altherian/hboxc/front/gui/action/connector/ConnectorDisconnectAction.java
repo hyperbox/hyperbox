@@ -33,18 +33,18 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class ConnectorDisconnectAction extends AbstractAction {
-   
+
    private _ConnectorSelector select;
-   
+
    public ConnectorDisconnectAction(_ConnectorSelector select) {
       this(select, "Disconnect");
    }
-   
+
    public ConnectorDisconnectAction(_ConnectorSelector select, String label) {
       super(label);
       this.select = select;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       List<ConnectorOutput> cons = select.listConnectors();
@@ -52,5 +52,5 @@ public class ConnectorDisconnectAction extends AbstractAction {
          Gui.post(new Request(ClientTasks.ConnectorDisconnect, new ConnectorInput(conOut.getId())));
       }
    }
-   
+
 }

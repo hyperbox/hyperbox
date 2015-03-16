@@ -25,13 +25,13 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.StringSetting;
 
 public class KeyboardModeSetting extends StringSetting {
-   
+
    public KeyboardModeSetting(String mode) {
       super(MachineAttribute.KeyboardMode, mode);
    }
-   
+
    public KeyboardModeSetting(KeyboardMode mode) {
       this(mode.toString());
    }
-   
+
 }

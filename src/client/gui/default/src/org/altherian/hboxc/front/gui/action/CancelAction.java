@@ -26,18 +26,18 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class CancelAction extends AbstractAction {
-   
+
    private _Cancelable obj;
-   
+
    public CancelAction(_Cancelable obj) {
       super("Cancel");
       this.obj = obj;
       setEnabled(true);
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       obj.cancel();
    }
-   
+
 }

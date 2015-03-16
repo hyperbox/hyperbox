@@ -27,17 +27,17 @@ import org.altherian.hboxc.core._Core;
 import org.altherian.hboxc.front._Front;
 
 public final class ShutdownAction extends AbstractClientControllerSingleAction {
-   
+
    static Controller c;
-   
+
    @Override
    public Enum<?> getRegistration() {
       return ClientTasks.Exit;
    }
-   
+
    @Override
    public void run(_Core core, _Front view, Request req, _AnswerReceiver recv) {
       c.stop();
    }
-   
+
 }

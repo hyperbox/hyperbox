@@ -21,25 +21,25 @@
 package org.altherian.hboxc.front.gui.data;
 
 public class LoadingGui extends EntityGui {
-   
+
    private static String id = "Loading...";
    private static LoadingGui me;
-   
+
    static {
       me = new LoadingGui();
    }
-   
+
    public static LoadingGui get() {
       return me;
    }
-   
+
    public LoadingGui() {
       super(id, id);
    }
-   
+
    @Override
    public String toString() {
       return id;
    }
-   
+
 }

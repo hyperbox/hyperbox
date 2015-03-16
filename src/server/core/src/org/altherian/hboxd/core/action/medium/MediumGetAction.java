@@ -37,22 +37,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class MediumGetAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.MediumGet.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
-      
+
       MediumIn medIn = request.get(MediumIn.class);
-      
+
       MediumOut medOut = null;
       if (!AxStrings.isEmpty(medIn.getUuid())) {
          medOut = MediumIoFactory.get(hbox.getHypervisor().getMedium(medIn.getUuid()));
@@ -61,5 +61,5 @@ public final class MediumGetAction extends ASingleTaskAction {
       }
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, medOut));
    }
-   
+
 }

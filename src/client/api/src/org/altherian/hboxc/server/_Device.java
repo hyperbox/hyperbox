@@ -23,12 +23,12 @@ package org.altherian.hboxc.server;
 import org.altherian.hboxc.core._Entity;
 
 public interface _Device extends _Entity {
-   
+
    public _Machine getMachine();
-   
+
    @Override
    public String getId();
-   
+
    public String getType();
-   
+
 }

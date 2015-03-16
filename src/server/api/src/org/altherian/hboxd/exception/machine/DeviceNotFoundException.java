@@ -22,17 +22,17 @@ package org.altherian.hboxd.exception.machine;
 
 @SuppressWarnings("serial")
 public class DeviceNotFoundException extends DeviceException {
-   
+
    public DeviceNotFoundException(String s, Throwable t) {
       super(s, t);
    }
-   
+
    public DeviceNotFoundException(Throwable t) {
       super(t);
    }
-   
+
    public DeviceNotFoundException(String s) {
       super(s);
    }
-   
+
 }

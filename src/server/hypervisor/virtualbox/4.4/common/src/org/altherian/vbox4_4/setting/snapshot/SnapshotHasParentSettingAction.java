@@ -29,25 +29,25 @@ import org.virtualbox_4_4.ISnapshot;
 import org.virtualbox_4_4.LockType;
 
 public class SnapshotHasParentSettingAction implements _SnapshotSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Shared;
    }
-   
+
    @Override
    public String getSettingName() {
       return SnapshotAttribute.HasParent.getId();
    }
-   
+
    @Override
    public void set(ISnapshot snap, _Setting setting) {
       throw new ConfigurationException("Read-only setting [" + setting.getName() + "]");
    }
-   
+
    @Override
    public _Setting get(ISnapshot snap) {
       return new SnapshotHasParent(snap.getParent() != null);
    }
-   
+
 }

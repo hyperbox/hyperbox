@@ -24,35 +24,35 @@ import org.altherian.hbox.constant.NetServiceType;
 import org.altherian.hbox.hypervisor.net._NetService_IP4_CIDR;
 
 public class NetService_IP4_CIDR_IO extends NetServiceIO implements _NetService_IP4_CIDR {
-   
+
    private String cidr;
-   
+
    protected NetService_IP4_CIDR_IO() {
       // serial
    }
-   
+
    public NetService_IP4_CIDR_IO(NetService_IP4_CIDR_IO svc) {
       this(svc.isEnabled());
       setCIDR(svc.getCIDR());
    }
-   
+
    public NetService_IP4_CIDR_IO(boolean isEnabled) {
       super(NetServiceType.IPv4_NetCIDR.getId(), isEnabled);
    }
-   
+
    public NetService_IP4_CIDR_IO(String cidr) {
       this(true);
       setCIDR(cidr);
    }
-   
+
    @Override
    public String getCIDR() {
       return cidr;
    }
-   
+
    @Override
    public void setCIDR(String cidr) {
       this.cidr = cidr;
    }
-   
+
 }

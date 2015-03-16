@@ -36,12 +36,12 @@ import org.altherian.hboxc.core._Core;
 import org.altherian.hboxc.front._Front;
 
 public class BackendGetAction extends AbstractClientControllerSingleAction {
-   
+
    @Override
    public Enum<?> getRegistration() {
       return ClientTasks.BackendGet;
    }
-   
+
    @Override
    public void run(_Core core, _Front view, Request req, _AnswerReceiver recv) throws HyperboxException {
       BackendInput bckIn = req.get(BackendInput.class);
@@ -49,5 +49,5 @@ public class BackendGetAction extends AbstractClientControllerSingleAction {
       BackendOutput bckOut = BackendIoFactory.get(bck);
       recv.putAnswer(new Answer(req, AnswerType.DATA, bckOut));
    }
-   
+
 }

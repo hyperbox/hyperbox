@@ -26,7 +26,7 @@ package org.altherian.hbox.comm.io;
  * @author noteirak
  */
 public final class PositiveNumberSettingIO extends SettingIO {
-   
+
    /**
     * Empty constructor for serialisation classes.<br/>
     * <ul>
@@ -36,7 +36,7 @@ public final class PositiveNumberSettingIO extends SettingIO {
    @SuppressWarnings("unused")
    private PositiveNumberSettingIO() {
    }
-   
+
    /**
     * Constructor for a new boolean setting, with the given name and value
     * 
@@ -46,7 +46,7 @@ public final class PositiveNumberSettingIO extends SettingIO {
    public PositiveNumberSettingIO(Object name, long value) {
       super(name, value);
    }
-   
+
    /**
     * Get the value of this setting as long
     * 
@@ -55,5 +55,5 @@ public final class PositiveNumberSettingIO extends SettingIO {
    public Long getValue() {
       return (Long) getRawValue();
    }
-   
+
 }

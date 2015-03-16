@@ -21,9 +21,9 @@
 package org.altherian.hboxd.security;
 
 public class SystemUser extends User {
-   
+
    public SystemUser() {
       super("0", "System");
    }
-   
+
 }

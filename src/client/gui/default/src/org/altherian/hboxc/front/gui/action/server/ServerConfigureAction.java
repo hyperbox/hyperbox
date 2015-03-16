@@ -33,14 +33,14 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class ServerConfigureAction extends AbstractAction {
-   
+
    private _ServerSelector selector;
-   
+
    public ServerConfigureAction(_ServerSelector selector) {
       super("Configure");
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       Logger.info("Action: Server Configure for Server #" + selector.getServer().getId());
@@ -52,5 +52,5 @@ public class ServerConfigureAction extends AbstractAction {
          Gui.post(new Request(Command.HBOX, HyperboxTasks.ServerConfigure, srvIn));
       }
    }
-   
+
 }

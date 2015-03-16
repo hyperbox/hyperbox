@@ -35,18 +35,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Machine extends Entity implements _Machine {
-   
+
    private _Server srv;
    //private String id;
    //private MachineOut mOut;
    private Map<String, _Device> devices = new HashMap<String, _Device>();
-   
+
    public Machine(_Server srv, String id) {
       super(id);
       this.srv = srv;
       refresh();
    }
-   
+
    public void refresh() {
       /*
       Request req = new Request(Command.VBOX, HypervisorTasks.MachineGet);
@@ -55,21 +55,21 @@ public class Machine extends Entity implements _Machine {
       mOut = t.extractItem(MachineOut.class);
        */
    }
-   
+
    @Override
    public _Console getConsole() {
       if (!devices.containsKey(EntityType.Console.getId())) {
          devices.put(EntityType.Console.getId(), new Console(this));
       }
-      
+
       return (_Console) devices.get(EntityType.Console.getId());
    }
-   
+
    @Override
    public _Server getServer() {
       return srv;
    }
-   
+
    @Override
    public void takeSnapshot(SnapshotIn snapshotIn) {
       Request req = new Request(Command.VBOX, HypervisorTasks.SnapshotTake);
@@ -77,5 +77,5 @@ public class Machine extends Entity implements _Machine {
       req.set(SnapshotIn.class, snapshotIn);
       srv.sendRequest(req);
    }
-   
+
 }

@@ -30,15 +30,15 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public final class TaskCancelAction extends AbstractAction {
-   
+
    private _TaskSelector selector;
-   
+
    public TaskCancelAction(_TaskSelector selector) {
       super("Cancel");
       setEnabled(true);
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       for (TaskOut tOut : selector.getSelection()) {
@@ -47,5 +47,5 @@ public final class TaskCancelAction extends AbstractAction {
          Gui.getServer(tOut.getServerId()).getTask(tOut.getId()).cancel();
       }
    }
-   
+
 }

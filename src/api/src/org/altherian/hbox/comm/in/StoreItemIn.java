@@ -26,25 +26,25 @@ import org.altherian.hbox.constant.StoreItemAttribute;
 
 // TODO add getters/setters
 public final class StoreItemIn extends ObjectIn<EntityType> {
-   
+
    public StoreItemIn() {
       super(EntityType.StoreItem, "-1");
    }
-   
+
    public StoreItemIn(String path) {
       this();
       setSetting(new StringSettingIO(StoreItemAttribute.Path, path));
    }
-   
+
    public StoreItemIn(String name, String path) {
       this(path);
       setSetting(new StringSettingIO(StoreItemAttribute.Name, name));
    }
-   
+
    public String getName() {
       return getSetting(StoreItemAttribute.Name).getString();
    }
-   
+
    public String getPath() {
       if (hasSetting(StoreItemAttribute.Path)) {
          return getSetting(StoreItemAttribute.Path).getString();
@@ -52,5 +52,5 @@ public final class StoreItemIn extends ObjectIn<EntityType> {
          return "";
       }
    }
-   
+
 }

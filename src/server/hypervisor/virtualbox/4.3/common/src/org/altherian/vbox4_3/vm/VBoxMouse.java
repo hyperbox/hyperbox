@@ -32,23 +32,23 @@ import java.util.Arrays;
 import java.util.List;
 
 public class VBoxMouse implements _RawMouse {
-   
+
    private VBoxMachine machine;
-   
+
    public VBoxMouse(VBoxMachine machine) {
       this.machine = machine;
    }
-   
+
    @Override
    public String getMouseMode() {
       return ((StringSetting) machine.getSetting(MachineAttribute.MouseMode)).getValue();
    }
-   
+
    @Override
    public void setMouseMode(String modeId) {
       setSetting(new MouseModeSetting(modeId));
    }
-   
+
    @Override
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
@@ -59,20 +59,20 @@ public class VBoxMouse implements _RawMouse {
       }
       return settings;
    }
-   
+
    @Override
    public _Setting getSetting(Object getName) {
       return VBoxSettingManager.get(machine, getName);
    }
-   
+
    @Override
    public void setSetting(_Setting s) {
       machine.setSetting(Arrays.asList(s));
    }
-   
+
    @Override
    public void setSetting(List<_Setting> s) {
       machine.setSetting(s);
    }
-   
+
 }

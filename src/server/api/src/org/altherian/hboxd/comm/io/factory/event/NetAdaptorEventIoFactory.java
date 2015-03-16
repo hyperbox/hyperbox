@@ -32,7 +32,7 @@ import org.altherian.hboxd.event.net.NetAdaptorEvent;
 import org.altherian.tool.logging.Logger;
 
 public class NetAdaptorEventIoFactory implements _EventIoFactory {
-   
+
    @Override
    public Enum<?>[] getHandles() {
       return new Enum<?>[] {
@@ -40,14 +40,14 @@ public class NetAdaptorEventIoFactory implements _EventIoFactory {
             HyperboxEvents.NetAdaptorRemoved
       };
    }
-   
+
    @Override
    public EventOut get(_Hyperbox hbox, _Event ev) {
       if (!(ev instanceof NetAdaptorEvent)) {
          Logger.warning("Was given event of type " + ev.getClass().getName());
          return null;
       }
-      
+
       NetAdaptorEvent adaptEv = (NetAdaptorEvent) ev;
       ServerOut srvOut = ServerIoFactory.get();
       switch ((HyperboxEvents) ev.getEventId()) {
@@ -59,5 +59,5 @@ public class NetAdaptorEventIoFactory implements _EventIoFactory {
             return null;
       }
    }
-   
+
 }

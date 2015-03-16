@@ -23,17 +23,17 @@ package org.altherian.hboxd.store;
 import java.util.List;
 
 public interface _StoreItem {
-   
+
    public _Store getStore();
-   
+
    public String getName();
-   
+
    public boolean isContainer();
-   
+
    public String getPath();
-   
+
    public long getSize();
-   
+
    public List<_StoreItem> listItems();
-   
+
 }

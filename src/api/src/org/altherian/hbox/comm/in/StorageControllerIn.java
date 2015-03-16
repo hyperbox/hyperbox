@@ -30,81 +30,81 @@ import java.util.List;
 import java.util.Map;
 
 public class StorageControllerIn extends DeviceIn {
-   
+
    private Map<String, StorageDeviceAttachmentIn> attachments = new HashMap<String, StorageDeviceAttachmentIn>();
-   
+
    @SuppressWarnings("unused")
    private StorageControllerIn() {
       // used only for (de)serialisation
    }
-   
+
    public StorageControllerIn(String machineUuid, String name) {
       super(name);
       setName(name);
       setMachineUuid(machineUuid);
    }
-   
+
    public StorageControllerIn(String machineUuid, String name, String type) {
       this(machineUuid, name);
       setType(type);
    }
-   
+
    public StorageControllerIn(String machineUuid, String name, String type, List<SettingIO> settings) {
       super(name, EntityType.StorageController.getId(), settings);
       setName(name);
       setMachineUuid(machineUuid);
    }
-   
+
    public String getName() {
       return getSetting(StorageControllerAttribute.Name).getString();
    }
-   
+
    public void setName(String name) {
       setSetting(new StringSettingIO(StorageControllerAttribute.Name, name));
    }
-   
+
    public String getType() {
       return getSetting(StorageControllerAttribute.Type).getString();
    }
-   
+
    public String getSubType() {
       return getSetting(StorageControllerAttribute.SubType).getString();
    }
-   
+
    public void setType(String type) {
       setSetting(new StringSettingIO(StorageControllerAttribute.Type, type));
    }
-   
+
    public void setSubType(String subType) {
       setSetting(new StringSettingIO(StorageControllerAttribute.SubType, subType));
    }
-   
+
    public List<StorageDeviceAttachmentIn> listAttachments() {
       return new ArrayList<StorageDeviceAttachmentIn>(attachments.values());
    }
-   
+
    public boolean addMediumAttachment(StorageDeviceAttachmentIn matIn) {
       if (attachments.containsKey(matIn.getId())) {
          return false;
       }
-      
+
       attachments.put(matIn.getId(), matIn);
       return true;
    }
-   
+
    public boolean removeAttachment(StorageDeviceAttachmentIn sadIn) {
       if (!attachments.containsKey(sadIn.getId())) {
          return false;
       }
-      
+
       StorageDeviceAttachmentIn properSadIn = attachments.get(sadIn.getId());
       if (properSadIn.getAction().equals(Action.Create)) {
          attachments.remove(sadIn.getId());
       } else {
          properSadIn.setAction(Action.Delete);
       }
-      
+
       return true;
    }
-   
+
 }

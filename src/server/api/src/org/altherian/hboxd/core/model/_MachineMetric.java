@@ -23,11 +23,11 @@ package org.altherian.hboxd.core.model;
 import java.util.Date;
 
 public interface _MachineMetric {
-   
+
    public String getMachineUuid();
-   
+
    public Date getTime();
-   
+
    public double getValue();
-   
+
 }

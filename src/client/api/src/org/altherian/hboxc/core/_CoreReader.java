@@ -31,27 +31,27 @@ import org.altherian.hboxc.updater._Updater;
 import java.util.List;
 
 public interface _CoreReader {
-   
+
    public CoreState getCoreState();
-   
+
    public List<ConnectorOutput> listConnectors();
-   
+
    public ConnectorOutput getConnector(ConnectorInput srvIn);
-   
+
    public ConnectorOutput getConnector(String id);
-   
+
    public ConnectorOutput getConnectorForServer(String srvId);
-   
+
    public ServerOut getServer(ConnectorInput conIn);
-   
+
    public ServerOut getServerInfo(String id);
-   
+
    public _ServerReader getServerReader(String id);
-   
+
    public List<ConsoleViewerOutput> listConsoleViewers();
-   
+
    public List<BackendOutput> listBackends();
-   
+
    public _Updater getUpdater();
-   
+
 }

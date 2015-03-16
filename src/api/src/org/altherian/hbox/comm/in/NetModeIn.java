@@ -23,14 +23,14 @@ package org.altherian.hbox.comm.in;
 import org.altherian.hbox.constant.EntityType;
 
 public class NetModeIn extends ObjectIn<EntityType> {
-   
+
    public NetModeIn() {
       super(EntityType.NetMode);
    }
-   
+
    public NetModeIn(String id) {
       this();
       setId(id);
    }
-   
+
 }

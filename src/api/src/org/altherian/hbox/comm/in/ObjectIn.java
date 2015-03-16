@@ -34,56 +34,56 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class ObjectIn<T extends Enum<?>> implements _Actionnable {
-   
+
    private T entityTypeId;
    private String id = "";
    private Action action = Action.Create;
    private boolean changed = false;
    private Map<String, SettingIO> settings = new HashMap<String, SettingIO>(5);
-   
+
    private void setEntityTypeId(T entityTypeId) {
       this.entityTypeId = entityTypeId;
    }
-   
+
    private void setInitSetting(List<SettingIO> settings) {
       setSetting(settings);
       changed = false;
    }
-   
+
    public ObjectIn(T entityTypeId) {
       if (entityTypeId == null) {
          throw new IllegalArgumentException("Entity Type cannot be null");
       }
-      
+
       setEntityTypeId(entityTypeId);
       setAction(Action.Create);
    }
-   
+
    public ObjectIn(T entityTypeId, String id) {
       this(entityTypeId);
-      
+
       if (AxStrings.isEmpty(id)) {
          throw new IllegalArgumentException("ID must have a value - Current value: " + id);
       }
-      
+
       setId(id);
    }
-   
+
    public ObjectIn(T entityTypeId, List<SettingIO> settings) {
       this(entityTypeId);
       setInitSetting(settings);
    }
-   
+
    public ObjectIn(T entityTypeId, String id, List<SettingIO> settings) {
       this(entityTypeId, id);
       setInitSetting(settings);
    }
-   
+
    @Override
    public String toString() {
       return getId();
    }
-   
+
    /**
     * See {@link EntityType} for natives values
     *
@@ -92,7 +92,7 @@ public abstract class ObjectIn<T extends Enum<?>> implements _Actionnable {
    public T getEntityTypeId() {
       return entityTypeId;
    }
-   
+
    /**
     * Get the most significant ID value for this object. The significance can change depending on the state of the object.<br/>
     * The default behaviour returns the id value given in the constructors, or an empty string if none was given
@@ -102,7 +102,7 @@ public abstract class ObjectIn<T extends Enum<?>> implements _Actionnable {
    public String getId() {
       return id;
    }
-   
+
    protected void setId(String id) {
       if (AxStrings.isEmpty(id)) {
          this.id = null;
@@ -112,13 +112,13 @@ public abstract class ObjectIn<T extends Enum<?>> implements _Actionnable {
          setAction(Action.Modify);
       }
    }
-   
+
    public void setSetting(List<SettingIO> settings) {
       for (SettingIO setting : settings) {
          setSetting(setting);
       }
    }
-   
+
    /**
     * Change this object config data according to the setting given.
     *
@@ -129,7 +129,7 @@ public abstract class ObjectIn<T extends Enum<?>> implements _Actionnable {
       settings.put(sIo.getName(), sIo);
       changed = true;
    }
-   
+
    /**
     * Retrieve the setting linked to the given name.
     *
@@ -148,7 +148,7 @@ public abstract class ObjectIn<T extends Enum<?>> implements _Actionnable {
       }
       return settings.get(name);
    }
-   
+
    /**
     * Retrieve the setting for the given machine settings name.
     *
@@ -160,28 +160,28 @@ public abstract class ObjectIn<T extends Enum<?>> implements _Actionnable {
    public SettingIO getSetting(Enum<?> name) {
       return getSetting(name.toString());
    }
-   
+
    public boolean hasSetting(String name) {
       return settings.containsKey(name);
    }
-   
+
    public boolean hasSetting(Enum<?> name) {
       return hasSetting(name.toString());
    }
-   
+
    public void removeSetting(String name) {
       settings.remove(name);
       changed = true;
    }
-   
+
    public void removeSetting(Enum<?> name) {
       removeSetting(name.toString());
    }
-   
+
    public List<SettingIO> listSettings() {
       return new ArrayList<SettingIO>(settings.values());
    }
-   
+
    /**
     * Check if this object settings changed from the last time they were set
     *
@@ -191,15 +191,15 @@ public abstract class ObjectIn<T extends Enum<?>> implements _Actionnable {
    public boolean hasNewData() {
       return changed;
    }
-   
+
    @Override
    public Action getAction() {
       return action;
    }
-   
+
    @Override
    public void setAction(Action action) {
       this.action = action;
    }
-   
+
 }

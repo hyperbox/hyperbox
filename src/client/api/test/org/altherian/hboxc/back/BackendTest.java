@@ -53,14 +53,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 public abstract class BackendTest {
-   
+
    private static _Backend backend;
-   
+
    public static void init(_Backend b, ServerIn srvIn) throws HyperboxException {
       Logger.setLevel(LogLevel.Tracking);
-      
+
       BackendTest.backend = b;
-      
+
       EventManager.get().start();
       b.start();
       assertFalse(b.isConnected());
@@ -68,24 +68,24 @@ public abstract class BackendTest {
       b.disconnect();
       assertFalse(b.isConnected());
    }
-   
+
    @Before
    public void before() throws HyperboxException {
       assertFalse(backend.isConnected());
       assertTrue(backend.isConnected());
    }
-   
+
    @After
    public void after() {
       backend.disconnect();
       assertFalse(backend.isConnected());
    }
-   
+
    @AfterClass
    public static void afterClass() {
       EventManager.get().stop();
    }
-   
+
    @Test
    public void helloTest() {
       Transaction t = new Transaction(backend, new Request(Command.HBOX, HyperboxTasks.Hello));
@@ -97,30 +97,30 @@ public abstract class BackendTest {
       assertNotNull("The Hello data must be a String", ans.get("Hello").toString());
       System.out.println("Server banner : " + ans.get("Hello"));
    }
-   
+
    @Test
    public void listVmTest() {
       String newUuid = UUID.randomUUID().toString();
       MachineIn mIn = new MachineIn(newUuid);
       mIn.setName(Long.toString(System.currentTimeMillis()));
-      
+
       Transaction t = new Transaction(backend, new Request(Command.VBOX, HypervisorTasks.MachineCreate, mIn));
       t.sendAndWaitForTask();
       assertFalse(t.getError(), t.hasFailed());
-      
+
       t = new Transaction(backend, new Request(Command.VBOX, HypervisorTasks.MachineList));
       t.sendAndWait();
       assertFalse(t.getError(), t.hasFailed());
       assertFalse(t.getBody().isEmpty());
       Queue<Answer> answers = t.getBody();
-      
+
       for (Answer ans : answers) {
          assertTrue(ans.has(MachineOut.class));
          MachineOut mOut = ans.get(MachineOut.class);
          MachineOutputTest.validateSimple(mOut);
       }
    }
-   
+
    @Test
    public void listUsers() {
       Transaction t = new Transaction(backend, new Request(Command.HBOX, HyperboxTasks.UserList));
@@ -134,35 +134,35 @@ public abstract class BackendTest {
          assertFalse(objOut.getUsername().isEmpty());
       }
    }
-   
+
    @Test
    public void listTasks() {
       Transaction t = null;
-      
+
       String newUuid = UUID.randomUUID().toString();
       MachineIn mIn = new MachineIn(newUuid);
       mIn.setName(Long.toString(System.currentTimeMillis()));
-      
+
       t = new Transaction(backend, new Request(Command.VBOX, HypervisorTasks.MachineCreate, mIn));
       t.sendAndWaitForTask();
       assertFalse(t.getError(), t.hasFailed());
-      
+
       t = new Transaction(backend, new Request(Command.VBOX, HypervisorTasks.MachinePowerOn, mIn));
       t.sendAndWaitForTask();
       assertFalse(t.getError(), t.hasFailed());
-      
+
       t = new Transaction(backend, new Request(Command.HBOX, HyperboxTasks.GuestShutdown, mIn));
       t.sendAndWait();
       assertFalse(t.getError(), t.hasFailed());
       TaskOut tOutFinal = t.extractItem(TaskOut.class);
       assertNotNull(tOutFinal);
-      
+
       try {
          t = new Transaction(backend, new Request(Command.HBOX, HyperboxTasks.TaskList));
          t.sendAndWait();
          assertFalse(t.getError(), t.hasFailed());
          assertFalse(t.getBody().isEmpty());
-         
+
          Queue<Answer> answers = t.getBody();
          assertTrue(answers.size() >= 1);
          for (Answer ans : answers) {
@@ -178,13 +178,13 @@ public abstract class BackendTest {
          assertFalse(t.getError(), t.hasFailed());
       }
    }
-   
+
    @Test
    public void listMediums() {
       Transaction t = new Transaction(backend, new Request(Command.VBOX, HypervisorTasks.MediumList));
       t.sendAndWait();
       assertFalse(t.getError(), t.hasFailed());
-      
+
       List<MediumOut> medOutList = t.extractItems(MediumOut.class);
       if (medOutList.isEmpty()) {
          t = new Transaction(backend, new Request(Command.VBOX, HypervisorTasks.MediumGet, new MediumIn("/usr/share/VBoxGuestAdditions")));
@@ -203,11 +203,11 @@ public abstract class BackendTest {
          }
       }
    }
-   
+
    @Test(expected = HyperboxRuntimeException.class)
    public void sendDisconnectedFail() {
       backend.disconnect();
       backend.putRequest(new Request(Command.HBOX, HyperboxTasks.Hello));
    }
-   
+
 }

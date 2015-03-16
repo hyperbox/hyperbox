@@ -24,20 +24,20 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 
 @SuppressWarnings("serial")
 public abstract class MachineException extends HyperboxRuntimeException {
-   
+
    public MachineException(String s) {
       super(s);
       // TODO Auto-generated constructor stub
    }
-   
+
    public MachineException(Throwable t) {
       super(t);
       // TODO Auto-generated constructor stub
    }
-   
+
    public MachineException(String s, Throwable t) {
       super(s, t);
       // TODO Auto-generated constructor stub
    }
-   
+
 }

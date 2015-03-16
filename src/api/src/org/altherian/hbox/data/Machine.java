@@ -26,39 +26,39 @@ import java.util.List;
 import java.util.Map;
 
 public class Machine extends Entity {
-   
+
    private Map<String, Device> devices = new HashMap<String, Device>();
    private Map<String, Snapshot> snapshots = new HashMap<String, Snapshot>();
    private Snapshot currentSnapshot;
-   
+
    public Machine() {
-      
+
    }
-   
+
    public Machine(String uuid) {
       super(uuid);
    }
-   
+
    public String getUuid() {
       return getId();
    }
-   
+
    public void addDevice(Device dev) {
       devices.put(dev.getId(), dev);
    }
-   
+
    public void updateDevice(Device dev) {
       devices.put(dev.getId(), dev);
    }
-   
+
    public void removeDevice(Device dev) {
       devices.remove(dev.getId());
    }
-   
+
    public List<Device> listDevices() {
       return new ArrayList<Device>(devices.values());
    }
-   
+
    public List<Device> listDevices(String typeId) {
       List<Device> devicesList = new ArrayList<Device>();
       for (Device dev : devices.values()) {
@@ -68,33 +68,33 @@ public class Machine extends Entity {
       }
       return devicesList;
    }
-   
+
    public boolean hasSnapshot() {
       return !snapshots.isEmpty();
    }
-   
+
    public Snapshot getSnapshot(String uuid) {
       return snapshots.get(uuid);
    }
-   
+
    public Snapshot getCurrentSnapshot() {
       return currentSnapshot;
    }
-   
+
    public void addSnapshot(Snapshot snap) {
       snapshots.put(snap.getUuid(), snap);
    }
-   
+
    public void setCurrentSnapshot(String uuid) {
       currentSnapshot = getSnapshot(uuid);
    }
-   
+
    public void deleteSnapshot(String uuid) {
       snapshots.remove(uuid);
    }
-   
+
    public List<Snapshot> listSnapshots() {
       return new ArrayList<Snapshot>(snapshots.values());
    }
-   
+
 }

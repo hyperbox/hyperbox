@@ -36,12 +36,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class ConsoleVmEdit {
-   
+
    private MachineIn mIn;
    private MachineOut mOut;
-   
+
    private JPanel panel;
-   
+
    private JLabel enableLabel;
    private JLabel portLabel;
    private JLabel addressLabel;
@@ -49,7 +49,7 @@ public class ConsoleVmEdit {
    private JLabel authTimeoutLabel;
    private JLabel allowMultiConnLabel;
    private JLabel vncPassLabel;
-   
+
    private JCheckBox enableValue;
    private JTextField portValue;
    private JTextField addressValue;
@@ -57,7 +57,7 @@ public class ConsoleVmEdit {
    private JTextField authTimeoutValue;
    private JCheckBox allowMultiConnValue;
    private JTextField vncPassField;
-   
+
    public ConsoleVmEdit() {
       enableLabel = new JLabel("Enabled");
       portLabel = new JLabel("Port");
@@ -66,7 +66,7 @@ public class ConsoleVmEdit {
       authTimeoutLabel = new JLabel("Authentication Timeout");
       allowMultiConnLabel = new JLabel("Allow Multi Connections");
       vncPassLabel = new JLabel("VNC Password");
-      
+
       enableValue = new JCheckBox();
       portValue = new JTextField();
       addressValue = new JTextField();
@@ -74,7 +74,7 @@ public class ConsoleVmEdit {
       authTimeoutValue = new JTextField();
       allowMultiConnValue = new JCheckBox();
       vncPassField = new JTextField();
-      
+
       panel = new JPanel(new MigLayout());
       panel.add(enableLabel);
       panel.add(enableValue, "growx, pushx, wrap");
@@ -89,22 +89,22 @@ public class ConsoleVmEdit {
       panel.add(allowMultiConnLabel);
       panel.add(allowMultiConnValue, "growx, pushx, wrap");
    }
-   
+
    public Component getComp() {
       return panel;
    }
-   
+
    public void update(MachineOut mOut, MachineIn mIn) {
       this.mIn = mIn;
       this.mOut = mOut;
-      
+
       enableValue.setSelected(mOut.getSetting(MachineAttribute.VrdeEnabled).getBoolean());
       portValue.setText(mOut.getSetting(MachineAttribute.VrdePort).getString());
       addressValue.setText(mOut.getSetting(MachineAttribute.VrdeAddress).getString());
       authTypeValue.setText(mOut.getSetting(MachineAttribute.VrdeAuthType).getString());
       authTimeoutValue.setText(mOut.getSetting(MachineAttribute.VrdeAuthTimeout).getString());
       allowMultiConnValue.setSelected(mOut.getSetting(MachineAttribute.VrdeMultiConnection).getBoolean());
-      
+
       if ("VNC".equals(mOut.getSetting(MachineAttribute.VrdeModule).getString())) {
          panel.add(vncPassLabel);
          panel.add(vncPassField, "growx, pushx, wrap");
@@ -114,7 +114,7 @@ public class ConsoleVmEdit {
          }
       }
    }
-   
+
    public void save() {
       if (!mOut.getSetting(MachineAttribute.VrdeEnabled).getBoolean().equals(enableValue.isSelected())) {
          mIn.setSetting(new BooleanSettingIO(MachineAttribute.VrdeEnabled, enableValue.isSelected()));
@@ -140,5 +140,5 @@ public class ConsoleVmEdit {
          mIn.addDevice(conIn);
       }
    }
-   
+
 }

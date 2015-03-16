@@ -25,22 +25,22 @@ import org.altherian.hboxc.server._Device;
 import org.altherian.hboxc.server._Machine;
 
 public abstract class Device extends Entity implements _Device {
-   
+
    private _Machine machine;
-   
+
    public Device(_Machine machine, String id) {
       super(id);
       this.machine = machine;
    }
-   
+
    public abstract void refresh();
-   
+
    @Override
    public _Machine getMachine() {
       return machine;
    }
-   
+
    @Override
    public abstract String getType();
-   
+
 }

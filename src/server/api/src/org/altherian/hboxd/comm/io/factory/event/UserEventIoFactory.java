@@ -32,7 +32,7 @@ import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.event.security.UserEvent;
 
 public class UserEventIoFactory implements _EventIoFactory {
-   
+
    @Override
    public Enum<?>[] getHandles() {
       return new Enum<?>[] {
@@ -41,7 +41,7 @@ public class UserEventIoFactory implements _EventIoFactory {
             HyperboxEvents.UserRemoved
       };
    }
-   
+
    @Override
    public EventOut get(_Hyperbox hbox, _Event ev) {
       UserEvent usrEv = (UserEvent) ev;
@@ -56,5 +56,5 @@ public class UserEventIoFactory implements _EventIoFactory {
             return null;
       }
    }
-   
+
 }

@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public final class LargePagesSetting extends BooleanSetting {
-   
+
    public LargePagesSetting(boolean isEnabled) {
       super(MachineAttribute.LargePages, isEnabled);
    }
-   
+
 }

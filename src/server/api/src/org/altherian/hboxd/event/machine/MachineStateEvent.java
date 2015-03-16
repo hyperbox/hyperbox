@@ -24,14 +24,14 @@ import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hbox.states.MachineStates;
 
 public class MachineStateEvent extends MachineEvent {
-   
+
    public MachineStateEvent(String uuid, MachineStates state) {
       super(HyperboxEvents.MachineState, uuid);
       set(state);
    }
-   
+
    public MachineStates getState() {
       return get(MachineStates.class);
    }
-   
+
 }

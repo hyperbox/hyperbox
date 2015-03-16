@@ -35,11 +35,11 @@ import java.util.Map;
  */
 // TODO need to make abstract
 public abstract class EventOut {
-   
+
    private String eventId;
    private Date time;
    private Map<String, ObjectOut> mapping = new HashMap<String, ObjectOut>();
-   
+
    /**
     * Empty constructor for serialisation classes.<br/>
     * <ul>
@@ -49,7 +49,7 @@ public abstract class EventOut {
    protected EventOut() {
       // Used for (de)serialization
    }
-   
+
    /**
     * Build a new Event Comm object with the given String ID
     * 
@@ -62,7 +62,7 @@ public abstract class EventOut {
       eventId = id;
       set(ServerOut.class, srvOut);
    }
-   
+
    /**
     * Build a new Event Comm object with the given SystemEvent ID
     * 
@@ -73,7 +73,7 @@ public abstract class EventOut {
    public EventOut(Date time, Enum<?> id, ServerOut srvOut) {
       this(time, id.toString(), srvOut);
    }
-   
+
    /**
     * Build a new Event Comm object with the given ID and include the given data.
     * 
@@ -88,7 +88,7 @@ public abstract class EventOut {
       this(time, id, srvOut);
       set(data);
    }
-   
+
    /**
     * Get this event ID
     * 
@@ -97,19 +97,19 @@ public abstract class EventOut {
    public String getId() {
       return eventId;
    }
-   
+
    public Date getTime() {
       return time;
    }
-   
+
    public ServerOut getServer() {
       return get(ServerOut.class);
    }
-   
+
    public String getServerId() {
       return getServer().getId();
    }
-   
+
    /**
     * Set the given data under the given label
     * 
@@ -120,11 +120,11 @@ public abstract class EventOut {
    protected void set(String label, ObjectOut data) {
       mapping.put(label, data);
    }
-   
+
    protected void set(Class<?> label, ObjectOut data) {
       set(label.getName(), data);
    }
-   
+
    /**
     * Include a Comm object to this event using its class name as label.
     * 
@@ -135,7 +135,7 @@ public abstract class EventOut {
    protected void set(ObjectOut object) {
       set(object.getClass().getName(), object);
    }
-   
+
    /**
     * Get the object that was stored under this label, or null if none is mapped.
     * 
@@ -146,7 +146,7 @@ public abstract class EventOut {
    protected Object get(String s) {
       return mapping.get(s);
    }
-   
+
    /**
     * Get the object that was stored using its class name as label
     * 
@@ -159,5 +159,5 @@ public abstract class EventOut {
    protected <T extends ObjectOut> T get(Class<T> c) {
       return (T) get(c.getName());
    }
-   
+
 }

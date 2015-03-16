@@ -22,13 +22,13 @@ package org.altherian.hbox.exception;
 
 @SuppressWarnings("serial")
 public class FeatureNotImplementedException extends HyperboxRuntimeException {
-   
+
    public FeatureNotImplementedException() {
       super("This feature has not been implemented yet");
    }
-   
+
    public FeatureNotImplementedException(String s) {
       super(s);
    }
-   
+
 }

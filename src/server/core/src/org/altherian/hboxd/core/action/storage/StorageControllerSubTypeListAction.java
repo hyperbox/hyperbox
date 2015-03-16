@@ -36,17 +36,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StorageControllerSubTypeListAction extends AbstractHyperboxMultiTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.StorageControllerSubTypeList.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       StorageControllerTypeIn sctIn = request.get(StorageControllerTypeIn.class);
@@ -56,5 +56,5 @@ public class StorageControllerSubTypeListAction extends AbstractHyperboxMultiTas
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, scstOut));
       }
    }
-   
+
 }

@@ -28,31 +28,31 @@ import org.altherian.hboxc.core.connector._Connector;
 import java.util.Collection;
 
 public interface _CoreStorage {
-   
+
    public void init() throws HyperboxException;
-   
+
    public void start() throws HyperboxException;
-   
+
    public void stop();
-   
+
    public void destroy();
-   
+
    public boolean hasConsoleViewers();
-   
+
    public void storeViewers(Collection<_ConsoleViewer> viewers);
-   
+
    public Collection<_ConsoleViewer> loadViewers();
-   
+
    public boolean hasConnectors();
-   
+
    public void storeConnectors(Collection<_Connector> servers);
-   
+
    public Collection<_Connector> loadConnectors();
-   
+
    public void storeConnectorCredentials(String id, UserIn usrIn);
-   
+
    public UserIn loadConnectorCredentials(String id);
-   
+
    public void removeConnectorCredentials(String id);
-   
+
 }

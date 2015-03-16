@@ -31,12 +31,12 @@ import java.util.Map;
 import java.util.Set;
 
 public class BackendFactory {
-   
+
    private static Map<String, String> backends;
-   
+
    static {
       backends = new HashMap<String, String>();
-      
+
       try {
          Set<_Backend> backs = HyperboxClient.getAllOrFail(_Backend.class);
          for (_Backend backend : backs) {
@@ -46,14 +46,14 @@ public class BackendFactory {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    public static _Backend get(String id) {
       // TODO throw exception if not found
       return HyperboxClient.loadClass(_Backend.class, backends.get(id));
    }
-   
+
    public static List<String> list() {
       return new ArrayList<String>(backends.keySet());
    }
-   
+
 }

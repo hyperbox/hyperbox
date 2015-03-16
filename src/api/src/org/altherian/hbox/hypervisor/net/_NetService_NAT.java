@@ -24,13 +24,13 @@ import org.altherian.hbox.exception.ObjectNotFoundException;
 import java.util.List;
 
 public interface _NetService_NAT {
-   
+
    public List<_NATRule> getRules();
-   
+
    public void addRule(_NATRule rule);
-   
+
    public _NATRule getRule(String id) throws ObjectNotFoundException;
-   
+
    public void removeRule(String id) throws ObjectNotFoundException;
-   
+
 }

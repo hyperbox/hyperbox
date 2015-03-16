@@ -23,9 +23,9 @@ package org.altherian.hboxc.event.updater;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class UpdaterUpdateAvailableEvent extends UpdaterEvent {
-   
+
    public UpdaterUpdateAvailableEvent() {
       super(ClientEvents.UpdaterUpdateAvailable);
    }
-   
+
 }

@@ -25,9 +25,9 @@ import org.altherian.hbox.comm.out.TaskOut;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class TaskRemovedEvent extends TaskEvent {
-   
+
    public TaskRemovedEvent(ServerOut srvOut, TaskOut taskOut) {
       super(ClientEvents.TaskRemoved, srvOut, taskOut);
    }
-   
+
 }

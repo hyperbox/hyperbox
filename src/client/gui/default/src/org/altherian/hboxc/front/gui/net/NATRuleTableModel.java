@@ -26,14 +26,14 @@ import org.altherian.tool.AxStrings;
 
 @SuppressWarnings("serial")
 public class NATRuleTableModel extends AbstractIOTableModel<_NATRule> {
-   
+
    public static String NAME = "Name";
    public static String PROTOCOL = "Protocol";
    public static String OUTSIDE_IP = "Outside IP";
    public static String OUTSIDE_PORT = "Outside Port";
    public static String INSIDE_IP = "Inside IP";
    public static String INSIDE_PORT = "Inside Port";
-   
+
    @Override
    protected void addColumns() {
       addColumn(NAME);
@@ -43,66 +43,66 @@ public class NATRuleTableModel extends AbstractIOTableModel<_NATRule> {
       addColumn(INSIDE_IP);
       addColumn(INSIDE_PORT);
    }
-   
+
    @Override
    protected boolean isCellEditable(int row, String colName) {
       return true;
    }
-   
+
    @Override
    public Object getValueAt(_NATRule obj, String columnName) {
       if (columnName == NAME) {
          return obj.getName();
       }
-      
+
       if (columnName == PROTOCOL) {
          return obj.getProtocol();
       }
-      
+
       if (columnName == OUTSIDE_IP) {
          return obj.getPublicIp();
       }
-      
+
       if (columnName == OUTSIDE_PORT) {
          return obj.getPublicPort();
       }
-      
+
       if (columnName == INSIDE_IP) {
          return obj.getPrivateIp();
       }
-      
+
       if (columnName == INSIDE_PORT) {
          return obj.getPrivatePort();
       }
-      
+
       return null;
    }
-   
+
    @Override
    public void setValueAt(Object value, _NATRule obj, String columnName) {
       if (columnName == NAME) {
          obj.setName(value.toString());
       }
-      
+
       if (columnName == PROTOCOL) {
          obj.setProtocol(AxStrings.getNonEmpty(value, ""));
       }
-      
+
       if (columnName == OUTSIDE_IP) {
          obj.setPublicIp(value.toString());
       }
-      
+
       if (columnName == OUTSIDE_PORT) {
          obj.setPublicPort(value.toString());
       }
-      
+
       if (columnName == INSIDE_IP) {
          obj.setPrivateIp(value.toString());
       }
-      
+
       if (columnName == INSIDE_PORT) {
          obj.setPrivatePort(value.toString());
       }
    }
-   
+
 }

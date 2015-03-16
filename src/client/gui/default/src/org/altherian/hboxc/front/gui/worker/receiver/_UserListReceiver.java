@@ -24,7 +24,7 @@ import org.altherian.hbox.comm.out.security.UserOut;
 import java.util.List;
 
 public interface _UserListReceiver extends _WorkerDataReceiver {
-   
+
    public void add(List<UserOut> usrOutList);
-   
+
 }

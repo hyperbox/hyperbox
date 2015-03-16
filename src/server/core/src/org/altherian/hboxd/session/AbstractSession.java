@@ -36,76 +36,76 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public abstract class AbstractSession implements _Session {
-   
+
    private final String id;
    private Date createTime;
    private SessionStates state;
-   
+
    private _Client client;
    protected _User user;
-   
+
    private Thread worker;
    private volatile boolean running;
    private BlockingQueue<Request> msgQueue;
-   
+
    private _TaskManager taskMgr;
-   
+
    public AbstractSession(String id, _Client client, _User user, _TaskManager taskMgr) {
-      
+
       this.id = id;
       createTime = new Date();
-      
+
       msgQueue = new LinkedBlockingQueue<Request>();
       this.client = client;
       this.user = user;
       this.taskMgr = taskMgr;
-      
+
       init();
       setState(SessionStates.Created);
    }
-   
+
    private void init() {
-      
+
       running = true;
       worker = new Thread(this, "SessWT - Session #" + id + " - Connection #" + client.getId());
       worker.start();
    }
-   
+
    protected void setState(SessionStates state) {
       this.state = state;
       EventManager.post(new SessionStateEvent(this));
    }
-   
+
    @Override
    public String getId() {
       return id;
    }
-   
+
    @Override
    public SessionStates getState() {
       return state;
    }
-   
+
    @Override
    public _User getUser() {
       return user;
    }
-   
+
    @Override
    public void login() {
       user = SecurityContext.getUser();
    }
-   
+
    @Override
    public void logout() {
       close();
    }
-   
+
    @Override
    public void close() {
-      
+
       running = false;
-      
+
       if (!Thread.currentThread().equals(worker)) {
          worker.interrupt();
          try {
@@ -116,36 +116,36 @@ public abstract class AbstractSession implements _Session {
                   + getId());
          }
       }
-      
+
    }
-   
+
    @Override
    public void putRequest(Request req) {
-      
+
       if (!msgQueue.offer(req)) {
          throw new HyperboxRuntimeException("Message queue is full, try again later.");
       }
    }
-   
+
    protected void process(Request req) {
       taskMgr.process(req);
    }
-   
+
    @Override
    public void post(EventOut ev) {
-      
+
       client.post(ev);
    }
-   
+
    @Override
    public void run() {
-      
+
       SecurityContext.setUser(user);
       SessionContext.setClient(client);
       running = true;
-      
+
       Logger.debug("Session ID #" + getId() + " | " + getUser().getDomainLogonName() + " | Message Queue Runner started");
-      
+
       while (running) {
          try {
             Request r = msgQueue.take();
@@ -161,14 +161,14 @@ public abstract class AbstractSession implements _Session {
       Logger.debug("Session ID #" + getId() + " | " + getUser().getDomainLogonName() + " | Message Queue Runner halted");
       setState(SessionStates.Destroyed);
    }
-   
+
    @Override
    public Date getCreateTime() {
       return createTime;
    }
-   
+
    protected _Client getClient() {
       return client;
    }
-   
+
 }

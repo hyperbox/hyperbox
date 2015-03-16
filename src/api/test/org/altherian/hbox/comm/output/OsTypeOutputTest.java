@@ -26,25 +26,25 @@ import static org.junit.Assert.assertTrue;
 import org.altherian.hbox.comm.out.hypervisor.OsTypeOut;
 
 public final class OsTypeOutputTest {
-   
+
    public static void validateSimple(OsTypeOut osOut) {
       assertFalse(osOut.getId().isEmpty());
       assertFalse(osOut.getName().isEmpty());
       assertNotNull(osOut.getBitness());
    }
-   
+
    public static void validateFull(OsTypeOut osOut) {
       validateSimple(osOut);
    }
-   
+
    public static void compareSimple(OsTypeOut osOut01, OsTypeOut osOut02) {
       assertTrue(osOut01.getId().contentEquals(osOut02.getId()));
       assertTrue(osOut01.getName().contentEquals(osOut02.getName()));
       assertTrue(osOut01.getBitness() == osOut02.getBitness());
    }
-   
+
    public static void compareFull(OsTypeOut osOut01, OsTypeOut osOut02) {
       compareSimple(osOut01, osOut02);
    }
-   
+
 }

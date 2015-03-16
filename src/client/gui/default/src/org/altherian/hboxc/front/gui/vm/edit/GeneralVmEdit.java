@@ -41,7 +41,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class GeneralVmEdit {
-   
+
    private JPanel panel;
    private JLabel nameLabel;
    private JTextField nameField;
@@ -55,29 +55,29 @@ public class GeneralVmEdit {
    private JComboBox mouseTypeBox;
    private JLabel descLabel;
    private JTextArea descArea;
-   
+
    private MachineOut mOut;
    private MachineIn mIn;
-   
+
    public GeneralVmEdit() {
       nameLabel = new JLabel("Name");
       nameField = new JTextField();
-      
+
       osTypeLabel = new JLabel("OS Type");
       osTypeField = new JComboBox();
-      
+
       snapshotFolderLabel = new JLabel("Snapshot Folder");
       snapshotFolderField = new JTextField();
-      
+
       keyboardTypeLabel = new JLabel("Keyboard Type");
       keyboardTypeBox = new JComboBox();
-      
+
       mouseTypeLabel = new JLabel("Mouse Type");
       mouseTypeBox = new JComboBox();
-      
+
       descLabel = new JLabel("Description");
       descArea = new JTextArea();
-      
+
       panel = new JPanel(new MigLayout());
       panel.add(nameLabel);
       panel.add(nameField, "growx,pushx,wrap");
@@ -92,20 +92,20 @@ public class GeneralVmEdit {
       panel.add(descLabel);
       panel.add(descArea, "growx,pushx,wrap");
    }
-   
+
    public Component getComp() {
       return panel;
    }
-   
+
    public void update(MachineOut mOut, MachineIn mIn) {
       this.mIn = mIn;
       this.mOut = mOut;
-      
+
       nameField.setText(mOut.getName());
       descArea.setText(mOut.getSetting(MachineAttribute.Description).getString());
-      
+
       KeyboardTypeListWorker.execute(new KeyboardListReceiver(), mOut.getServerId(), mOut.getUuid());
-      
+
       try {
          mouseTypeBox.removeAllItems();
          for (String mouse : Gui.getServer(mOut.getServerId()).listMouseMode(new MachineIn(mOut))) {
@@ -117,7 +117,7 @@ public class GeneralVmEdit {
       }
       OsTypeListWorker.execute(new OsTypeLoader(), mOut);
    }
-   
+
    public void save() {
       if (!nameField.getText().contentEquals(mOut.getName())) {
          mIn.setName(nameField.getText());
@@ -135,9 +135,9 @@ public class GeneralVmEdit {
          mIn.setSetting(new StringSettingIO(MachineAttribute.Description, descArea.getText()));
       }
    }
-   
+
    private class OsTypeLoader implements _OsTypeListReceiver {
-      
+
       @Override
       public void loadingStarted() {
          osTypeField.removeAllItems();
@@ -145,11 +145,11 @@ public class GeneralVmEdit {
          osTypeField.setSelectedItem("Loading...");
          osTypeField.setEnabled(false);
       }
-      
+
       @Override
       public void loadingFinished(boolean isSuccess, String message) {
          osTypeField.setEnabled(true);
-         
+
          if (isSuccess) {
             osTypeField.setSelectedItem(mOut.getSetting(MachineAttribute.OsType).getRawValue());
             osTypeField.removeItem("Loading...");
@@ -158,54 +158,54 @@ public class GeneralVmEdit {
             osTypeField.addItem("Failed to load: " + message);
          }
       }
-      
+
       @Override
       public void add(List<OsTypeOut> ostOuttList) {
          for (OsTypeOut osOut : ostOuttList) {
             osTypeField.addItem(osOut.getId());
          }
       }
-      
+
    }
-   
+
    private class KeyboardListReceiver implements _KeyboardTypeListReceiver {
-      
+
       @Override
       public void loadingStarted() {
-         
+
          keyboardTypeBox.setEnabled(false);
          keyboardTypeBox.removeAllItems();
          keyboardTypeBox.addItem("Loading...");
          keyboardTypeBox.setSelectedItem("Loading...");
-         
+
       }
-      
+
       @Override
       public void loadingFinished(boolean isSuccessful, String message) {
-         
+
          keyboardTypeBox.removeItem("Loading...");
          keyboardTypeBox.setEnabled(isSuccessful);
          if (isSuccessful) {
-            
+
             keyboardTypeBox.setSelectedItem(mOut.getSetting(MachineAttribute.KeyboardMode).getRawValue());
          } else {
-            
+
             keyboardTypeBox.removeAllItems();
             keyboardTypeBox.addItem("Failed to load Keyboard Types list: " + message);
          }
-         
+
       }
-      
+
       @Override
       public void add(List<String> keyboardList) {
-         
+
          for (String keyboard : keyboardList) {
-            
+
             keyboardTypeBox.addItem(keyboard);
          }
-         
+
       }
-      
+
    }
-   
+
 }

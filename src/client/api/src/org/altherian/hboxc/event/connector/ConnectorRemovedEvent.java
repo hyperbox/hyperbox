@@ -25,9 +25,9 @@ import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class ConnectorRemovedEvent extends ConnectorEvent {
-   
+
    public ConnectorRemovedEvent(ConnectorOutput conOut) {
       super(ClientEvents.ConnectorModified, conOut);
    }
-   
+
 }

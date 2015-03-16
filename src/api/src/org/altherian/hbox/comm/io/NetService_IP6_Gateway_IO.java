@@ -23,17 +23,17 @@ package org.altherian.hbox.comm.io;
 import org.altherian.hbox.constant.NetServiceType;
 
 public class NetService_IP6_Gateway_IO extends NetServiceIO {
-   
+
    protected NetService_IP6_Gateway_IO() {
       super(NetServiceType.IPv6_Gateway.getId());
    }
-   
+
    public NetService_IP6_Gateway_IO(NetService_IP6_Gateway_IO svc) {
       super(svc);
    }
-   
+
    public NetService_IP6_Gateway_IO(boolean isEnabled) {
       super(NetServiceType.IPv6_Gateway.getId(), isEnabled);
    }
-   
+
 }

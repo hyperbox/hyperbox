@@ -33,18 +33,18 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class HarddiskCreateAction extends AbstractAction {
-   
+
    private _SingleServerSelector select;
-   
+
    public HarddiskCreateAction(_SingleServerSelector select, String label) {
       super(label);
       this.select = select;
    }
-   
+
    public HarddiskCreateAction(_SingleServerSelector select) {
       this(select, "Create");
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       MediumIn medIn = HarddiskCreateDialog.show(select.getServer());
@@ -52,5 +52,5 @@ public class HarddiskCreateAction extends AbstractAction {
          Gui.post(new Request(Command.VBOX, HypervisorTasks.MediumCreate, new ServerIn(select.getServer().getId()), medIn));
       }
    }
-   
+
 }

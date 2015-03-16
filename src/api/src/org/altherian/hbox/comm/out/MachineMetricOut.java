@@ -23,41 +23,41 @@ package org.altherian.hbox.comm.out;
 import java.util.Date;
 
 public class MachineMetricOut extends ObjectOut {
-   
+
    private String machineUuid;
    private Date time;
    private double value;
-   
+
    @SuppressWarnings("unused")
    private MachineMetricOut() {
       // used for (de)serialisation
    }
-   
+
    public MachineMetricOut(String machineUuid, Date time, double value) {
       this.machineUuid = machineUuid;
       this.time = time;
       this.value = value;
    }
-   
+
    /**
     * @return the machineUuid
     */
    public String getMachineUuid() {
       return machineUuid;
    }
-   
+
    /**
     * @return the time
     */
    public Date getTime() {
       return time;
    }
-   
+
    /**
     * @return the value
     */
    public double getValue() {
       return value;
    }
-   
+
 }

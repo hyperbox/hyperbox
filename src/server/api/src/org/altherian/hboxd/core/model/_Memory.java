@@ -23,25 +23,25 @@ package org.altherian.hboxd.core.model;
 import org.altherian.hboxd.hypervisor._RawItem;
 
 public interface _Memory extends _RawItem {
-   
+
    public long getAmount();
-   
+
    public void setAmount(long amount);
-   
+
    public boolean isLargePageEnabled();
-   
+
    public void setLargePage(boolean isEnabled);
-   
+
    public boolean isPageFusionEnabled();
-   
+
    public void setPageFusion(boolean isEnabled);
-   
+
    public boolean isNestedPagingEnabled();
-   
+
    public void setNestedPaging(boolean isEnabled);
-   
+
    public boolean isVTxvpidEnabled();
-   
+
    public void setVtxvpid(boolean isEnabled);
-   
+
 }

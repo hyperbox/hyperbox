@@ -23,11 +23,11 @@ package org.altherian.hboxc.front.gui.hypervisor;
 import java.util.List;
 
 public interface _HypervisorModel {
-   
+
    public List<String> getSupported();
-   
+
    public _GlobalConfigureView getConfigureView();
-   
+
    public _NetAdaptorConfigureView getNetAdaptorConfig(String srvId, String modeId, String adaptId);
-   
+
 }

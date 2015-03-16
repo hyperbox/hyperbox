@@ -34,22 +34,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class StoreListAction extends AbstractHyperboxMultiTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.StoreList.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       for (_Store store : hbox.getStoreManager().listStores()) {
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, StoreIoFactory.get(store)));
       }
    }
-   
+
 }

@@ -29,7 +29,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 public class PasswordEncryptionServiceTest {
-   
+
    @Test
    public void test() throws NoSuchAlgorithmException, InvalidKeySpecException {
       byte[] firstPass = PasswordEncryptionService.getEncryptedPassword("test".toCharArray(), "AhahahEREZRRZ".getBytes());
@@ -38,5 +38,5 @@ public class PasswordEncryptionServiceTest {
       System.out.println(secondPass.length);
       assertTrue(Arrays.equals(firstPass, secondPass));
    }
-   
+
 }

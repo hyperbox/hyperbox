@@ -23,11 +23,11 @@ package org.altherian.hboxd.hypervisor.perf;
 import java.util.Date;
 
 public interface _RawMetricData {
-   
+
    public _RawMetric getMetric();
-   
+
    public String getValue();
-   
+
    public Date getTime();
-   
+
 }

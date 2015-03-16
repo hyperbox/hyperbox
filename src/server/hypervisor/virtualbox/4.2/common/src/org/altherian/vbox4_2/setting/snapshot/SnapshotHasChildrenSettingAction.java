@@ -29,25 +29,25 @@ import org.virtualbox_4_2.ISnapshot;
 import org.virtualbox_4_2.LockType;
 
 public class SnapshotHasChildrenSettingAction implements _SnapshotSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Shared;
    }
-   
+
    @Override
    public String getSettingName() {
       return SnapshotAttribute.HasChildren.getId();
    }
-   
+
    @Override
    public void set(ISnapshot snap, _Setting setting) {
       throw new ConfigurationException("Read-only setting [" + setting.getName() + "]");
    }
-   
+
    @Override
    public _Setting get(ISnapshot snap) {
       return new SnapshotHasChildren(!snap.getChildren().isEmpty());
    }
-   
+
 }

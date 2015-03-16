@@ -26,24 +26,24 @@ import org.altherian.hboxc.event.ClientEvents;
 import org.altherian.hboxc.state.ConnectionState;
 
 public class ConnectorStateChangedEvent extends ConnectorEvent {
-   
+
    public ConnectorStateChangedEvent(ConnectorOutput conOut, ConnectionState state) {
       super(ClientEvents.ConnectorStateChanged, conOut);
       set(state);
    }
-   
+
    public ConnectorStateChangedEvent(Enum<?> id, ConnectorOutput conOut, ConnectionState state) {
       super(id, conOut);
       set(state);
    }
-   
+
    public ConnectionState getState() {
       return get(ConnectionState.class);
    }
-   
+
    @Override
    public String toString() {
       return "Connector " + getConnector().getLabel() + " state changed to " + getState() + " @ " + getTime();
    }
-   
+
 }

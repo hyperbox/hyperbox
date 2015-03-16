@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public class ACPISetting extends BooleanSetting {
-   
+
    public ACPISetting(boolean isEnabled) {
       super(MachineAttribute.ACPI, isEnabled);
    }
-   
+
 }

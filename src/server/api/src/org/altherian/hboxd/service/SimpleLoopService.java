@@ -36,10 +36,10 @@ import org.altherian.tool.logging.Logger;
  * @author noteirak
  */
 public abstract class SimpleLoopService extends SkeletonService {
-   
+
    private volatile boolean running;
    private volatile long sleepingTime = 1000;
-   
+
    @Override
    public final void run() {
       try {
@@ -57,19 +57,19 @@ public abstract class SimpleLoopService extends SkeletonService {
          setState(ServiceState.Stopped);
       }
    }
-   
+
    @Override
    protected final void starting() {
       running = true;
       beforeRunning();
    }
-   
+
    @Override
    protected final void stopping() {
       afterRunning();
       running = false;
    }
-   
+
    /**
     * Set the sleep time for the next before the next iteration. Any negative value will set a sleep time of 0.
     * 
@@ -81,7 +81,7 @@ public abstract class SimpleLoopService extends SkeletonService {
       }
       this.sleepingTime = sleepingTime;
    }
-   
+
    /**
     * If initialisation is required OUTSIDE the service thread.<br>
     * This code will run on the main thread.
@@ -89,7 +89,7 @@ public abstract class SimpleLoopService extends SkeletonService {
    protected void beforeRunning() {
       // stub method - left to be implemented if required by subclasses
    }
-   
+
    /**
     * If destruction is required OUTSIDE the service thread.<br>
     * This code will run on the main thread.
@@ -97,7 +97,7 @@ public abstract class SimpleLoopService extends SkeletonService {
    protected void afterRunning() {
       // stub method - left to be implemented if required by subclasses
    }
-   
+
    /**
     * If initialisation is required INSIDE the service thread.<br>
     * This code will run on the service thread.
@@ -105,7 +105,7 @@ public abstract class SimpleLoopService extends SkeletonService {
    protected void beforeLooping() {
       // stub method - left to be implemented if required by subclasses
    }
-   
+
    /**
     * If destruction is required INSIDE the service thread.<br>
     * This code will run on the service thread.
@@ -113,7 +113,7 @@ public abstract class SimpleLoopService extends SkeletonService {
    protected void afterLooping() {
       // stub method - left to be implemented if required by subclasses
    }
-   
+
    /**
     * The main looping code.
     * 
@@ -121,5 +121,5 @@ public abstract class SimpleLoopService extends SkeletonService {
     *            This is handled by SimpleLoopService.
     */
    protected abstract void doLoop() throws InterruptedException;
-   
+
 }

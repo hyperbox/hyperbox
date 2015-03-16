@@ -35,22 +35,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class StoreGetAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.StoreGet.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       StoreIn sIn = request.get(StoreIn.class);
       _Store s = hbox.getStoreManager().getStore(sIn.getId());
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, StoreIoFactory.get(s)));
    }
-   
+
 }

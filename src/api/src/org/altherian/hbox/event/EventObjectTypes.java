@@ -21,12 +21,12 @@
 package org.altherian.hbox.event;
 
 public enum EventObjectTypes {
-   
+
    Machine,
    Server,
    ServerCore,
    Task,
    Session,
    Medium
-   
+
 }

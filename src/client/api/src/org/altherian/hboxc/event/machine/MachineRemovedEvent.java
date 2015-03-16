@@ -24,9 +24,9 @@ import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import org.altherian.hboxc.event.ClientEvents;
 
 public final class MachineRemovedEvent extends MachineEvent {
-   
+
    public MachineRemovedEvent(String srvId, MachineOut mOut) {
       super(ClientEvents.MachineRemoved, srvId, mOut);
    }
-   
+
 }

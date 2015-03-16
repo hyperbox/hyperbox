@@ -21,17 +21,17 @@
 package org.altherian.hboxd.core.model;
 
 public interface _Console extends _Device {
-   
+
    public String getAddress();
-   
+
    public Long getPort();
-   
+
    public String getProtocol();
-   
+
    public boolean isEnable();
-   
+
    public void setEnable(boolean isEnable);
-   
+
    public boolean isActive();
-   
+
 }

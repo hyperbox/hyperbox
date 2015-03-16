@@ -37,11 +37,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class ConnectorSummaryViewer implements _Refreshable, _ConnectorReceiver {
-   
+
    private String conId;
-   
+
    private ServerViewer srvView;
-   
+
    private JLabel labelLabel;
    private JTextField labelValue;
    private JLabel addressLabel;
@@ -50,17 +50,17 @@ public class ConnectorSummaryViewer implements _Refreshable, _ConnectorReceiver 
    private JTextField backendValue;
    private JLabel stateLabel;
    private JTextField stateValue;
-   
+
    private JPanel conPanel;
    private JPanel panel;
-   
+
    public ConnectorSummaryViewer(ConnectorOutput conOut) {
       this.conId = conOut.getId();
       labelLabel = new JLabel("Label");
       addressLabel = new JLabel("Address");
       backendLabel = new JLabel("Backend");
       stateLabel = new JLabel("State");
-      
+
       labelValue = new JTextField();
       labelValue.setEditable(false);
       addressValue = new JTextField();
@@ -69,9 +69,9 @@ public class ConnectorSummaryViewer implements _Refreshable, _ConnectorReceiver 
       backendValue.setEditable(false);
       stateValue = new JTextField();
       stateValue.setEditable(false);
-      
+
       srvView = new ServerViewer();
-      
+
       conPanel = new JPanel(new MigLayout());
       conPanel.setBorder(BorderFactory.createTitledBorder("Connector"));
       conPanel.add(labelLabel);
@@ -82,21 +82,21 @@ public class ConnectorSummaryViewer implements _Refreshable, _ConnectorReceiver 
       conPanel.add(backendValue, "growx,pushx,wrap");
       conPanel.add(stateLabel);
       conPanel.add(stateValue, "growx,pushx,wrap");
-      
+
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(conPanel, "growx, pushx, wrap");
       panel.add(srvView.getComponent(), "growx, pushx, wrap");
       srvView.getComponent().setVisible(true);
-      
+
       update(conOut);
       ViewEventManager.register(this);
    }
-   
+
    @Override
    public void refresh() {
       ConnectorGetWorker.execute(this, conId);
    }
-   
+
    protected void update(ConnectorOutput conOut) {
       labelValue.setText(conOut.getLabel());
       addressValue.setText(conOut.getAddress());
@@ -109,33 +109,33 @@ public class ConnectorSummaryViewer implements _Refreshable, _ConnectorReceiver 
          srvView.getComponent().setVisible(false);
       }
    }
-   
+
    public JComponent getComponent() {
       return panel;
    }
-   
+
    @Handler
    protected void putConnectorEvent(ConnectorEvent ev) {
       if (ev.getConnector().getId().equals(conId)) {
          refresh();
       }
    }
-   
+
    @Override
    public void loadingStarted() {
       // stub
    }
-   
+
    @Override
    public void loadingFinished(boolean isSuccessful, String message) {
       if (!isSuccessful) {
          labelValue.setText(message);
       }
    }
-   
+
    @Override
    public void put(ConnectorOutput conOut) {
       update(conOut);
    }
-   
+
 }

@@ -29,34 +29,34 @@ import org.altherian.hboxc.front.gui.worker.receiver._TaskListReceiver;
 import java.util.List;
 
 public class TaskListWorker extends AxSwingWorker<_TaskListReceiver, Void, TaskOut> {
-   
+
    private String srvId;
-   
+
    public TaskListWorker(_TaskListReceiver recv, String srvId) {
       super(recv);
       this.srvId = srvId;
    }
-   
+
    @Override
    protected Void doInBackground() throws Exception {
       for (TaskOut tOut : Gui.getServer(srvId).listTasks()) {
          publish(tOut);
       }
-      
+
       return null;
    }
-   
+
    @Override
    protected void process(List<TaskOut> tOutList) {
       getReceiver().add(tOutList);
    }
-   
+
    public static void execute(_TaskListReceiver recv, ServerOut srvOut) {
       (new TaskListWorker(recv, srvOut.getId())).execute();
    }
-   
+
    public static void execute(_TaskListReceiver recv, String srvId) {
       (new TaskListWorker(recv, srvId)).execute();
    }
-   
+
 }

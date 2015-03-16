@@ -21,13 +21,13 @@
 package org.altherian.hbox.comm.io.factory;
 
 public class Machine {
-   
+
    private Machine() {
       // only static
    }
-   
+
    public static String getId(String serverId, String uuid) {
       return serverId + "|" + uuid;
    }
-   
+
 }

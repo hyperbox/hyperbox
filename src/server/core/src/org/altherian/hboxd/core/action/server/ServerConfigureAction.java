@@ -34,27 +34,27 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ServerConfigureAction extends ServerAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.ServerConfigure.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    protected void run(Request request, _Hyperbox hbox, _Server srv) {
       ServerIn srvIn = request.get(ServerIn.class);
-      
+
       Logger.debug("Available settings :");
       for (SettingIO set : srvIn.listSettings()) {
          Logger.debug(set.getName());
       }
       Logger.debug("--------------------");
-      
+
       if (srvIn.hasSetting(ServerAttribute.Name)) {
          Logger.debug("Setting new name: " + srvIn.getSetting(ServerAttribute.LogLevel).getString());
          srv.setName(srvIn.getSetting(ServerAttribute.Name).getString());
@@ -65,5 +65,5 @@ public class ServerConfigureAction extends ServerAction {
       }
       srv.save();
    }
-   
+
 }

@@ -37,22 +37,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NetAdaptorGetAction extends ServerAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.NetAdaptorGet.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    protected void run(Request request, _Hyperbox hbox, _Server srv) {
       NetAdaptorIn adaptIn = request.get(NetAdaptorIn.class);
       _NetAdaptor adapt = srv.getHypervisor().getNetAdaptor(adaptIn.getModeId(), adaptIn.getId());
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, NetAdaptorOut.class, NetAdaptorIoFactory.get(adapt)));
    }
-   
+
 }

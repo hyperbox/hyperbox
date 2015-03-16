@@ -27,37 +27,37 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class EasyPreparedStatement {
-   
+
    private Integer count = 1;
    private PreparedStatement stmt;
-   
+
    public EasyPreparedStatement(PreparedStatement stmt) {
       setPreparedStatement(stmt);
    }
-   
+
    public void setPreparedStatement(PreparedStatement stmt) {
       this.stmt = stmt;
       resetCount();
    }
-   
+
    public PreparedStatement getPreparedStatement() {
       return stmt;
    }
-   
+
    public void resetCount() {
       count = 1;
    }
-   
+
    public void setBytes(byte[] bytes) throws SQLException {
       stmt.setBytes(count, bytes);
       count++;
    }
-   
+
    public void setChars(char[] chars) throws SQLException {
       stmt.setString(count, String.copyValueOf(chars));
       count++;
    }
-   
+
    public void setBoolean(Boolean b) throws SQLException {
       if (b == null) {
          stmt.setNull(count, java.sql.Types.INTEGER);
@@ -66,7 +66,7 @@ public class EasyPreparedStatement {
       }
       count++;
    }
-   
+
    public void setInt(Integer i) throws SQLException {
       if (i == null) {
          stmt.setNull(count, java.sql.Types.INTEGER);
@@ -75,7 +75,7 @@ public class EasyPreparedStatement {
       }
       count++;
    }
-   
+
    public void setString(Object o) throws SQLException {
       if (o == null) {
          stmt.setNull(count, java.sql.Types.VARCHAR);
@@ -84,7 +84,7 @@ public class EasyPreparedStatement {
       }
       count++;
    }
-   
+
    public void setFloat(Float f) throws SQLException {
       if (f == null) {
          stmt.setNull(count, java.sql.Types.FLOAT);
@@ -93,7 +93,7 @@ public class EasyPreparedStatement {
       }
       count++;
    }
-   
+
    public void setDouble(Double d) throws SQLException {
       if (d == null) {
          stmt.setNull(count, java.sql.Types.DOUBLE);
@@ -102,7 +102,7 @@ public class EasyPreparedStatement {
       }
       count++;
    }
-   
+
    public void setLong(Long l) throws SQLException {
       if (l == null) {
          stmt.setNull(count, java.sql.Types.DOUBLE);
@@ -111,7 +111,7 @@ public class EasyPreparedStatement {
       }
       count++;
    }
-   
+
    public void setDate(Date d) throws SQLException {
       if (d == null) {
          stmt.setNull(count, java.sql.Types.DATE);
@@ -120,7 +120,7 @@ public class EasyPreparedStatement {
       }
       count++;
    }
-   
+
    public void setDate(Long l) throws SQLException {
       if (l == null) {
          stmt.setNull(count, java.sql.Types.DATE);
@@ -129,32 +129,32 @@ public class EasyPreparedStatement {
       }
       count++;
    }
-   
+
    public void setNull(int type) throws SQLException {
       stmt.setNull(count, type);
       count++;
    }
-   
+
    public Boolean execute() throws SQLException {
       resetCount();
       Logger.sql("SQL Query : " + stmt.toString());
       return stmt.execute();
    }
-   
+
    public Integer executeUpdate() throws SQLException {
       resetCount();
       Logger.sql("SQL Query : " + stmt.toString());
       this.stmt.getConnection().setAutoCommit(true);
       return stmt.executeUpdate();
    }
-   
+
    public ResultSet executeQuery() throws SQLException {
       resetCount();
       Logger.sql("SQL Query : " + stmt.toString());
       this.stmt.getConnection().setAutoCommit(true);
       return stmt.executeQuery();
    }
-   
+
    /**
     * Supported types :
     * <ul>
@@ -188,7 +188,7 @@ public class EasyPreparedStatement {
          }
       }
    }
-   
+
    public void addBatch() throws SQLException {
       if (stmt.getConnection().getAutoCommit()) {
          stmt.getConnection().setAutoCommit(false);
@@ -196,7 +196,7 @@ public class EasyPreparedStatement {
       stmt.addBatch();
       resetCount();
    }
-   
+
    public int[] executeBatch() throws SQLException {
       resetCount();
       int[] returnValue = stmt.executeBatch();
@@ -206,9 +206,9 @@ public class EasyPreparedStatement {
       }
       return returnValue;
    }
-   
+
    public void close() throws SQLException {
       stmt.close();
    }
-   
+
 }

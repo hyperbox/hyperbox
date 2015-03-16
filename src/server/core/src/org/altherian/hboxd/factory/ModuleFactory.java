@@ -41,11 +41,11 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class ModuleFactory {
-   
+
    private ModuleFactory() {
       throw new RuntimeException("Not allowed");
    }
-   
+
    public static _Module get(File descriptorFile) {
       // TODO put the hardcoded values into config variables
       try {
@@ -55,7 +55,7 @@ public class ModuleFactory {
          dBuilder = dbFactory.newDocumentBuilder();
          Document doc = dBuilder.parse(descriptorFile);
          doc.getDocumentElement().normalize();
-         
+
          XPath xPath = XPathFactory.newInstance().newXPath();
          if (!"module".equals(doc.getDocumentElement().getNodeName())) {
             throw new ModuleInvalidDescriptorFileException("Invalid module descriptor file, invalid root tag: " + doc.getDocumentElement().getNodeName());
@@ -88,7 +88,7 @@ public class ModuleFactory {
                }
             }
             Logger.debug("providers done.");
-            
+
             File modPath = new File(AxStrings.isEmpty(path) ? id : path);
             Logger.debug("mod raw path: " + path);
             Logger.debug("mod path: " + modPath.getAbsolutePath());
@@ -100,7 +100,7 @@ public class ModuleFactory {
             if (!modPath.canRead()) {
                throw new ModuleInvalidDescriptorFileException("Module base path is not readable: " + modPath.getAbsolutePath());
             }
-            
+
             Logger.debug("Found a valid module for " + descriptorFile.getAbsolutePath());
             Logger.debug("End Module creation.");
             return new Module(id, descriptorFile, modPath, name, version, vendor, desc, url, providers);
@@ -115,5 +115,5 @@ public class ModuleFactory {
          throw new ModuleInvalidDescriptorFileException("Error when reading/parsing " + descriptorFile.getAbsolutePath() + ": " + e.getMessage());
       }
    }
-   
+
 }

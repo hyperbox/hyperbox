@@ -33,20 +33,20 @@ import org.virtualbox_4_3.VirtualBoxManager;
       product = VirtualBox.PRODUCT,
       schemes = { VirtualBox.ID.MSCOM_4_3 })
 public class VBoxMscomHypervisor extends VBoxHypervisor {
-   
+
    @Override
    protected VirtualBoxManager connect(String options) {
       return VirtualBoxManager.createInstance(null);
    }
-   
+
    @Override
    protected void disconnect() {
       System.gc();
    }
-   
+
    @Override
    protected ISession getSession() {
       return getMgr().getSessionObject();
    }
-   
+
 }

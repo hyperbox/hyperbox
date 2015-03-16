@@ -25,19 +25,19 @@ import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.event.server.ServerEvent;
 
 public class ModuleEvent extends ServerEvent {
-   
+
    public ModuleEvent(Enum<?> eventId, ServerOut srvOut, ModuleOut objOut) {
       super(eventId, srvOut);
       set(ModuleOut.class, objOut);
    }
-   
+
    public ModuleOut getModule() {
       return get(ModuleOut.class);
    }
-   
+
    @Override
    public String toString() {
       return "Event ID " + getEventId() + " for Module " + getModule().getId() + " on Server " + getServer().getId() + " occured @ " + getTime();
    }
-   
+
 }

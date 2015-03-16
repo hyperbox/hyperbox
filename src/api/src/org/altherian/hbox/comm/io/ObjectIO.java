@@ -21,25 +21,25 @@
 package org.altherian.hbox.comm.io;
 
 public class ObjectIO {
-   
+
    private String id;
-   
+
    public ObjectIO() {
-      
+
    }
-   
+
    public ObjectIO(String id) {
       setId(id);
    }
-   
+
    public void setId(String id) {
       this.id = id;
    }
-   
+
    public String getId() {
       return id;
    }
-   
+
    @Override
    public int hashCode() {
       final int prime = 31;
@@ -47,7 +47,7 @@ public class ObjectIO {
       result = (prime * result) + ((id == null) ? 0 : id.hashCode());
       return result;
    }
-   
+
    @Override
    public boolean equals(Object obj) {
       if (this == obj) {
@@ -69,5 +69,5 @@ public class ObjectIO {
       }
       return true;
    }
-   
+
 }

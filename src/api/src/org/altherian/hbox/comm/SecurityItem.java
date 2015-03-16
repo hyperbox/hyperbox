@@ -21,31 +21,31 @@
 package org.altherian.hbox.comm;
 
 public enum SecurityItem {
-   
+
    Any,
-   
+
    Server,
    Host,
    Hypervisor,
    Machine,
    Device,
    Setting,
-   
+
    Snapshot,
    Medium,
-   
+
    OsType,
    AdapterType,
    AttachMode,
    AttachName,
-   
+
    OsTemplate,
    MachineTemplate,
-   
+
    Service,
    Module,
    User,
    Store,
    Permission
-   
+
 }

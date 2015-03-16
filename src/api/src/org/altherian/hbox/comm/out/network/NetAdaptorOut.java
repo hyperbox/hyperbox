@@ -24,16 +24,16 @@ import org.altherian.hbox.comm.out.ObjectOut;
 import org.altherian.hbox.constant.EntityType;
 
 public class NetAdaptorOut extends ObjectOut {
-   
+
    private String label;
    private String modeId;
    private boolean isEnabled;
    private boolean hasServices;
-   
+
    protected NetAdaptorOut() {
       // Serialization
    }
-   
+
    public NetAdaptorOut(String id, String label, String modeId, boolean isEnabled, boolean hasServices) {
       super(EntityType.NetAdaptor, id);
       this.label = label;
@@ -41,21 +41,21 @@ public class NetAdaptorOut extends ObjectOut {
       this.isEnabled = isEnabled;
       this.hasServices = hasServices;
    }
-   
+
    public String getLabel() {
       return label;
    }
-   
+
    public String getMode() {
       return modeId;
    }
-   
+
    public boolean isEnabled() {
       return isEnabled;
    }
-   
+
    public boolean hasServices() {
       return hasServices;
    }
-   
+
 }

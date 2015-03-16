@@ -24,13 +24,13 @@ import org.altherian.hbox.comm.out.security.UserOut;
 import org.altherian.hboxd.security._User;
 
 public class UserIoFactory {
-   
+
    private UserIoFactory() {
       // static only class
    }
-   
+
    public static UserOut get(_User user) {
       return new UserOut(user.getId(), user.getName(), user.getDomain());
    }
-   
+
 }

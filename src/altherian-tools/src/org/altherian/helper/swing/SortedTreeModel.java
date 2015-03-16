@@ -26,26 +26,26 @@ import javax.swing.tree.TreeNode;
 
 @SuppressWarnings("serial")
 public class SortedTreeModel extends DefaultTreeModel {
-   
+
    public static final int ASCENDING = -1;
    public static final int DESCENDING = 1;
    public static final int UNSORTED = 0;
-   
+
    private int sorting = ASCENDING;
-   
+
    public SortedTreeModel(TreeNode root) {
       super(root);
    }
-   
+
    public SortedTreeModel(TreeNode root, int sorting) {
       this(root);
       setSorting(sorting);
    }
-   
+
    public SortedTreeModel(TreeNode root, boolean asksAllowsChildren) {
       super(root, asksAllowsChildren);
    }
-   
+
    public void insertNode(DefaultMutableTreeNode newChild, DefaultMutableTreeNode parent) {
       int insertIndex = parent.getChildCount();
       if (sorting != UNSORTED) {
@@ -60,13 +60,13 @@ public class SortedTreeModel extends DefaultTreeModel {
       }
       insertNodeInto(newChild, parent, insertIndex);
    }
-   
+
    public void setSorting(int sorting) {
       this.sorting = sorting;
    }
-   
+
    public int getSorting() {
       return sorting;
    }
-   
+
 }

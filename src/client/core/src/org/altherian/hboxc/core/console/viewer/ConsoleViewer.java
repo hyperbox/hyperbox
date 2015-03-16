@@ -29,13 +29,13 @@ import org.altherian.hboxc.event.consoleviewer.ConsoleViewerModifiedEvent;
 import java.io.File;
 
 public class ConsoleViewer implements _ConsoleViewer {
-   
+
    private String id;
    private String hypervisorId;
    private String moduleId;
    private File viewerPath;
    private String args;
-   
+
    public ConsoleViewer(String id, String hypervisorId, String moduleId, String viewerPath, String args) {
       this.id = id;
       this.hypervisorId = hypervisorId;
@@ -43,57 +43,57 @@ public class ConsoleViewer implements _ConsoleViewer {
       this.viewerPath = new File(viewerPath);
       this.args = args;
    }
-   
+
    @Override
    public String getId() {
       return id;
    }
-   
+
    @Override
    public String getHypervisorId() {
       return hypervisorId;
    }
-   
+
    @Override
    public String getModuleId() {
       return moduleId;
    }
-   
+
    @Override
    public String getViewerPath() {
       return viewerPath.getAbsolutePath();
    }
-   
+
    @Override
    public String getArgs() {
       return args;
    }
-   
+
    @Override
    public void setHypervisorId(String hypervisorId) {
       this.hypervisorId = hypervisorId;
    }
-   
+
    @Override
    public void setModuleId(String moduleId) {
       this.moduleId = moduleId;
    }
-   
+
    @Override
    public void setViewer(String viewerPath) {
       this.viewerPath = new File(viewerPath);
    }
-   
+
    @Override
    public void setArgs(String args) {
       this.args = args;
    }
-   
+
    @Override
    public void remove() {
       // nothing to do for now
    }
-   
+
    @Override
    public void save() {
       if (!viewerPath.exists()) {
@@ -105,8 +105,8 @@ public class ConsoleViewer implements _ConsoleViewer {
       if (!viewerPath.isFile()) {
          throw new HyperboxRuntimeException(viewerPath + " is not a file");
       }
-      
+
       EventManager.get().post(new ConsoleViewerModifiedEvent(ConsoleViewerIoFactory.getOut(this)));
    }
-   
+
 }

@@ -26,28 +26,28 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 
 public class GuiEventManager extends DefaultEventManager {
-   
+
    public GuiEventManager(String string) {
       super(string);
-      
+
    }
-   
+
    @Override
    public void start() throws HyperboxException {
       super.start();
       eventBus.addErrorHandler(new ErrorDisplay());
    }
-   
+
    @Override
    protected void publish(final Object event) throws InterruptedException, InvocationTargetException {
       SwingUtilities.invokeLater(new Runnable() {
-         
+
          @Override
          public void run() {
             GuiEventManager.this.send(event);
          }
-         
+
       });
    }
-   
+
 }

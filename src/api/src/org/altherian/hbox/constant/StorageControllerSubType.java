@@ -21,7 +21,7 @@
 package org.altherian.hbox.constant;
 
 public enum StorageControllerSubType {
-   
+
    LsiLogic(StorageControllerType.SCSI),
    BusLogi(StorageControllerType.SCSI),
    IntelAhci(StorageControllerType.SATA),
@@ -30,19 +30,19 @@ public enum StorageControllerSubType {
    ICH6(StorageControllerType.IDE),
    I82078(StorageControllerType.Floppy),
    LsiLogicSas(StorageControllerType.SAS);
-   
+
    private StorageControllerType type;
-   
+
    private StorageControllerSubType(StorageControllerType type) {
       this.type = type;
    }
-   
+
    public StorageControllerType getParentType() {
       return type;
    }
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

@@ -24,22 +24,22 @@ import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hboxd.server._Server;
 
 public class ServerPropertyChangedEvent extends ServerEvent {
-   
+
    private Object property;
    private Object newValue;
-   
+
    public ServerPropertyChangedEvent(_Server srv, Object property, Object newValue) {
       super(HyperboxEvents.ServerPropertyChanged, srv);
       this.property = property;
       this.newValue = newValue;
    }
-   
+
    public Object getProperty() {
       return property;
    }
-   
+
    public Object getValue() {
       return newValue;
    }
-   
+
 }

@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.setting.StringSetting;
 
 public class NicAdapterTypeSetting extends StringSetting {
-   
+
    public NicAdapterTypeSetting(String adapterType) {
       super(NetworkInterfaceAttribute.AdapterType, adapterType);
    }
-   
+
 }

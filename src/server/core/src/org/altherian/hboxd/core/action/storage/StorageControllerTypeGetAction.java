@@ -37,27 +37,27 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class StorageControllerTypeGetAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.StorageControllerTypeGet.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       if (!request.has(StorageControllerTypeIn.class)) {
          throw new HyperboxCommunicationException(StorageControllerTypeIn.class.getSimpleName() + " is missing");
       }
-      
+
       StorageControllerTypeIn sctIn = request.get(StorageControllerTypeIn.class);
       _RawStorageControllerType sctType = hbox.getHypervisor().getStorageControllerType(sctIn.getId());
       StorageControllerTypeOut sctOut = StorageControllerTypeIoFactory.get(sctType);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, sctOut));
    }
-   
+
 }

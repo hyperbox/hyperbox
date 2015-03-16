@@ -21,10 +21,10 @@
 package org.altherian.hboxc.controller;
 
 public enum ClientTasks {
-   
+
    ServerGet,
    ServerList,
-   
+
    ConnectorList,
    ConnectorGet,
    ConnectorAdd,
@@ -32,22 +32,22 @@ public enum ClientTasks {
    ConnectorRemove,
    ConnectorConnect,
    ConnectorDisconnect,
-   
+
    ConsoleViewerGet,
    ConsoleViewerList,
    ConsoleViewerAdd,
    ConsoleViewerModify,
    ConsoleViewerRemove,
    ConsoleViewerUse,
-   
+
    BackendList,
    BackendGet,
    BackendAdd,
    BackendModify,
    BackendRemove,
-   
+
    NotificationClose,
-   
+
    Exit,
-   
+
 }

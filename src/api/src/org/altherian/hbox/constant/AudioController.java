@@ -21,13 +21,13 @@
 package org.altherian.hbox.constant;
 
 public enum AudioController {
-   
+
    AC97,
    SB16,
    HDA;
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

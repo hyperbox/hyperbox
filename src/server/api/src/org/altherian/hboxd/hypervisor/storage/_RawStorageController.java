@@ -25,60 +25,60 @@ import java.util.Set;
 
 // TODO use _Setting
 public interface _RawStorageController extends _RawItem {
-   
+
    public String getMachineUuid();
-   
+
    public String getName();
-   
+
    public void setName(String name);
-   
+
    /**
     * IDE, SATA, ...
     * 
     * @return ID for the type
     */
    public String getType();
-   
+
    /**
     * AHCI, etc
     * 
     * @return ID for the precise type
     */
    public String getSubType();
-   
+
    /**
     * AHCI, etc
     * 
     * @param subType ID for the precise type
     */
    public void setSubType(String subType);
-   
+
    public long getPortCount();
-   
+
    public void setPortCount(long portCount);
-   
+
    public long getMaxPortCount();
-   
+
    public long getMinPortCount();
-   
+
    public long getMaxDeviceCount();
-   
+
    public void attachDevice(String devType, long portNb, long deviceNb);
-   
+
    public void detachDevice(long portNb, long deviceNb);
-   
+
    public Set<_RawMedium> listMedium();
-   
+
    public Set<_RawMediumAttachment> listMediumAttachment();
-   
+
    public _RawMediumAttachment getMediumAttachment(long portNb, long deviceNb);
-   
+
    public void attachMedium(_RawMedium medium);
-   
+
    public void attachMedium(_RawMedium medium, long portNb, long deviceNb);
-   
+
    public void detachMedium(_RawMedium medium);
-   
+
    /**
     * Will force if the media is locked
     * 
@@ -86,7 +86,7 @@ public interface _RawStorageController extends _RawItem {
     * @param deviceNb the device number to use
     */
    public void detachMedium(long portNb, long deviceNb);
-   
+
    public boolean isSlotTaken(long portNb, long deviceNb);
-   
+
 }

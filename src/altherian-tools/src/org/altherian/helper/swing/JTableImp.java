@@ -27,28 +27,28 @@ import javax.swing.table.TableModel;
 
 @SuppressWarnings("serial")
 public class JTableImp extends JTable implements FocusListener {
-   
+
    private Boolean clearOnFocusLost = true;
-   
+
    public JTableImp(TableModel m) {
       super(m);
       init();
    }
-   
+
    private void init() {
       addFocusListener(this);
    }
-   
+
    @Override
    public void focusGained(FocusEvent e) {
       // not used
    }
-   
+
    @Override
    public void focusLost(FocusEvent e) {
       if (e.getOppositeComponent() instanceof JTable)
          if (clearOnFocusLost)
             clearSelection();
    }
-   
+
 }

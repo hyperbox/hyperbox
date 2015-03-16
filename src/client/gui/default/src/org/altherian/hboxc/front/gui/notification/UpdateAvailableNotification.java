@@ -33,25 +33,25 @@ import java.net.URL;
 
 @SuppressWarnings("serial")
 public class UpdateAvailableNotification extends NotificationInfo {
-   
+
    private URL downloadUrl;
-   
+
    public UpdateAvailableNotification(_Release release) {
       downloadUrl = release.getDownloadURL();
       setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
       setText("New update available: " + release.getVersion() + "." + release.getRevision() + " - " + downloadUrl);
       addMouseListener(new MouseListener());
    }
-   
+
    private class MouseListener extends MouseAdapter {
-      
+
       @Override
       public void mouseClicked(MouseEvent ev) {
          if ((ev.getButton() == MouseEvent.BUTTON1) && (ev.getClickCount() == 1)) {
             if (!Desktop.isDesktopSupported() || !Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                Gui.showCopyPasteHelper("Browsing is not supported, please copy and paste the download URL in your browser", downloadUrl.toExternalForm());
             }
-            
+
             try {
                Desktop.getDesktop().browse(downloadUrl.toURI());
             } catch (IOException e) {
@@ -64,5 +64,5 @@ public class UpdateAvailableNotification extends NotificationInfo {
          }
       }
    }
-   
+
 }

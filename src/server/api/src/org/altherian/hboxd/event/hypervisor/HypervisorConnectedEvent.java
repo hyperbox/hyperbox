@@ -25,9 +25,9 @@ import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 
 public class HypervisorConnectedEvent extends HypervisorEvent {
-   
+
    public HypervisorConnectedEvent(_Hypervisor hyp) {
       super(HyperboxEvents.HypervisorConnected, hyp);
    }
-   
+
 }

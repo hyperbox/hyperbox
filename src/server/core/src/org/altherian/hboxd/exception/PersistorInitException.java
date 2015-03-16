@@ -23,9 +23,9 @@ package org.altherian.hboxd.exception;
 
 @SuppressWarnings("serial")
 public class PersistorInitException extends PersistorException {
-   
+
    public PersistorInitException(String s, Throwable e) {
       super(s, e);
    }
-   
+
 }

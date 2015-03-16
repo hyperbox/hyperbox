@@ -24,14 +24,14 @@ import org.altherian.hbox.event.Event;
 import org.altherian.hboxd.module._Module;
 
 public abstract class ModuleEvent extends Event {
-   
+
    public ModuleEvent(Enum<?> eventId, _Module mod) {
       super(eventId);
       set(_Module.class, mod);
    }
-   
+
    public _Module getModule() {
       return get(_Module.class);
    }
-   
+
 }

@@ -23,17 +23,17 @@ package org.altherian.hboxd.core.model;
 import org.altherian.hboxd.hypervisor._RawItem;
 
 public interface _Motherboard extends _RawItem {
-   
+
    public boolean isAcpiEnabled();
-   
+
    public void setAcpi(boolean isEnabled);
-   
+
    public boolean isIoApicEnabled();
-   
+
    public void setIoApic(boolean isEnabled);
-   
+
    public String getHardwareUuid();
-   
+
    public void setHardwareUuid(String uuid);
-   
+
 }

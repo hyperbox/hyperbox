@@ -31,15 +31,15 @@ import org.altherian.hboxc.server._GuestReader;
 import org.altherian.hboxc.server._Server;
 
 public class GuestReader implements _GuestReader {
-   
+
    private _Server srv;
    private String machineUuid;
-   
+
    public GuestReader(_Server srv, String machineUuid) {
       this.srv = srv;
       this.machineUuid = machineUuid;
    }
-   
+
    @Override
    public GuestNetworkInterfaceOut findNetworkInterface(String macAddress) {
       Request req = new Request(Command.VBOX, HypervisorTasks.GuestNetworkInterfaceFind);
@@ -48,5 +48,5 @@ public class GuestReader implements _GuestReader {
       Transaction t = srv.sendRequest(req);
       return t.extractItem(GuestNetworkInterfaceOut.class);
    }
-   
+
 }

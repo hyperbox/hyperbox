@@ -22,18 +22,18 @@
 package org.altherian.hbox.constant;
 
 public enum Unit {
-   
+
    B,
    KB,
    MB,
    GB,
    TB,
-   
+
    bps,
    kbps,
    mbps,
    gpps,
-   
+
    ms,
    sec,
    min,
@@ -42,5 +42,5 @@ public enum Unit {
    week,
    month,
    year,
-   
+
 }

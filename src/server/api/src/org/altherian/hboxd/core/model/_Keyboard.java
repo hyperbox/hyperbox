@@ -24,11 +24,11 @@ import org.altherian.hbox.constant.KeyboardMode;
 import org.altherian.hboxd.hypervisor._RawItem;
 
 public interface _Keyboard extends _RawItem {
-   
+
    public String getMode();
-   
+
    public void setMode(String mode);
-   
+
    public void setMode(KeyboardMode mode);
-   
+
 }

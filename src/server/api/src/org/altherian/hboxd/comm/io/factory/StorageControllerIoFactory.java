@@ -31,26 +31,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class StorageControllerIoFactory {
-   
+
    private StorageControllerIoFactory() {
       // Static class - cannot be instantiated
    }
-   
+
    public static StorageControllerOut get(_StorageController sc) {
       List<SettingIO> settingsOut = SettingIoFactory.getList(sc.getSettings());
-      
+
       List<StorageDeviceAttachmentOut> attachmentsOut = new ArrayList<StorageDeviceAttachmentOut>();
       for (_MediumAttachment attachment : sc.listMediumAttachment()) {
          attachmentsOut.add(MediumAttachmentIoFactory.get(attachment));
       }
-      
+
       StorageControllerOut scIo = new StorageControllerOut(sc.getMachineUuid(), sc.getId(), settingsOut, attachmentsOut);
       return scIo;
    }
-   
+
    public static StorageControllerOut get(_RawStorageController sc) {
       StorageControllerOut scIo = new StorageControllerOut(sc.getMachineUuid(), sc.getName(), SettingIoFactory.getList(sc.listSettings()));
       return scIo;
    }
-   
+
 }

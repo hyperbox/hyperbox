@@ -25,28 +25,28 @@ import org.virtualbox_4_4.IVirtualBox;
 import org.virtualbox_4_4.VirtualBoxManager;
 
 public class VBox {
-   
+
    private static VirtualBoxManager mgr;
-   
+
    public static void set(VirtualBoxManager mgr) {
-      
+
       VBox.mgr = mgr;
    }
-   
+
    public static IVirtualBox get() {
       return mgr.getVBox();
    }
-   
+
    public static ISession getSession() {
       return mgr.getSessionObject();
    }
-   
+
    public static VirtualBoxManager getManager() {
       return mgr;
    }
-   
+
    public static void unset() {
       mgr = null;
    }
-   
+
 }

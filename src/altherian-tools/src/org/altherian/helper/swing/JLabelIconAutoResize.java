@@ -28,29 +28,29 @@ import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
 public class JLabelIconAutoResize extends JLabel {
-   
+
    public JLabelIconAutoResize() {
       super();
       setMinimumSize(new Dimension(1, 1));
    }
-   
+
    @Override
    protected void paintComponent(Graphics g) {
       super.paintComponents(g);
-      
+
       ImageIcon icon = (ImageIcon) getIcon();
       if (icon != null) {
          int iconWidth = icon.getIconWidth();
          int iconHeight = icon.getIconHeight();
-         
+
          double iconAspect = (double) iconHeight / iconWidth;
-         
+
          int w = getWidth();
          int h = getHeight();
          double canvasAspect = (double) h / w;
-         
+
          int x = 0, y = 0;
-         
+
          // Maintain aspect ratio.
          if (iconAspect < canvasAspect) {
             // Drawing space is taller than image.
@@ -63,7 +63,7 @@ public class JLabelIconAutoResize extends JLabel {
             w = (int) (h / iconAspect);
             x = (x - w) / 2; // center it along horizontal
          }
-         
+
          Image img = icon.getImage();
          g.drawImage(img, x, y, (w + x), (h + y), 0, 0, iconWidth, iconHeight, null);
          setMinimumSize(new Dimension(1, 1));

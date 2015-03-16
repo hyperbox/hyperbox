@@ -39,27 +39,27 @@ import javax.swing.Timer;
 import javax.swing.event.AncestorEvent;
 
 public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
-   
+
    private Timer timer;
    private boolean isVisible;
-   
+
    private JPanel panel;
    private JLabelIconAutoResize screenlabel;
    private JLabel statusLabel;
    private MachineOut mOut;
-   
+
    private boolean isDisplayAvailable() {
       return ((mOut != null) && mOut.getState().equalsIgnoreCase("running"));
    }
-   
+
    public VmConsoleView() {
       screenlabel = new JLabelIconAutoResize();
       statusLabel = new JLabel("No output available");
       statusLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
-      
+
       panel = new JPanel(new MigLayout("ins 0"));
       panel.addAncestorListener(new AncestorAdaptor() {
-         
+
          @Override
          public void ancestorAdded(AncestorEvent event) {
             isVisible = true;
@@ -67,53 +67,53 @@ public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
                start();
             }
          }
-         
+
          @Override
          public void ancestorRemoved(AncestorEvent event) {
             isVisible = false;
             stop();
          }
       });
-      
+
       panel.add(statusLabel, "center,growx,pushx,wrap");
       panel.add(screenlabel, "dock center,grow");
       timer = new Timer(3000, new RefreshAction(this));
    }
-   
+
    private void start() {
-      
+
       if (isVisible) {
          timer.start();
          refresh();
       }
    }
-   
+
    private void stop() {
-      
+
       timer.stop();
       screenlabel.setIcon(null);
    }
-   
+
    public void show(MachineOut mOut) {
       this.mOut = mOut;
       if (isDisplayAvailable()) {
          start();
       }
    }
-   
+
    public JComponent getComponent() {
       return panel;
    }
-   
+
    public void clear() {
       mOut = null;
       stop();
       panel.validate();
    }
-   
+
    @Override
    public void refresh() {
-      
+
       if (isDisplayAvailable()) {
          MachineGetScreenshotWorker.execute(this, mOut);
       } else {
@@ -122,16 +122,16 @@ public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
       }
       panel.validate();
    }
-   
+
    public void loadingEnded() {
       panel.validate();
    }
-   
+
    @Override
    public void loadingStarted() {
       statusLabel.setText("Refreshing...");
    }
-   
+
    @Override
    public void loadingFinished(boolean isSuccessful, String message) {
       statusLabel.setText(message);
@@ -139,10 +139,10 @@ public class VmConsoleView implements _Refreshable, _MachineScreenshotReceiver {
          stop();
       }
    }
-   
+
    @Override
    public void put(ScreenshotOut scrOut) {
       screenlabel.setIcon(new ImageIcon(scrOut.getData()));
    }
-   
+
 }

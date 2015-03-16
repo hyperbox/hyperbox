@@ -21,11 +21,11 @@
 package org.altherian.hbox.constant.security;
 
 public enum Server {
-   
+
    Get,
    Add,
    Modify,
    Remove,
    ListVM,
-   
+
 }

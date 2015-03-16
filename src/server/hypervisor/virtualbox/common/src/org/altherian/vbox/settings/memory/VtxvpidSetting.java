@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public class VtxvpidSetting extends BooleanSetting {
-   
+
    public VtxvpidSetting(boolean isEnabled) {
       super(MachineAttribute.Vtxvpid, isEnabled);
    }
-   
+
 }

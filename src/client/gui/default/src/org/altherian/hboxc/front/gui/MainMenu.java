@@ -29,47 +29,47 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 public final class MainMenu {
-   
+
    private JMenuBar menuBar;
-   
+
    private JMenu fileMenu;
    private JMenuItem exitMenuItem;
-   
+
    private JMenu editMenu;
    private JMenuItem settingsMenuItem;
-   
+
    private JMenu srvMenu;
    private JMenuItem srvConnectMenuItem;
-   
+
    private JMenu helpMenu;
    private JMenuItem aboutItem;
-   
+
    public MainMenu() {
       exitMenuItem = new JMenuItem(new ClientExitAction());
       fileMenu = new JMenu("File");
       fileMenu.add(exitMenuItem);
-      
+
       settingsMenuItem = new JMenuItem(new SettingsShowAction());
       editMenu = new JMenu("Edit");
       editMenu.add(settingsMenuItem);
-      
+
       srvConnectMenuItem = new JMenuItem(new ConnectorAddAction());
       srvMenu = new JMenu("Server");
       srvMenu.add(srvConnectMenuItem);
-      
+
       aboutItem = new JMenuItem(new AboutAction());
       helpMenu = new JMenu("Help");
       helpMenu.add(aboutItem);
-      
+
       menuBar = new JMenuBar();
       menuBar.add(fileMenu);
       menuBar.add(editMenu);
       menuBar.add(srvMenu);
       menuBar.add(helpMenu);
    }
-   
+
    public JMenuBar getComponent() {
       return menuBar;
    }
-   
+
 }

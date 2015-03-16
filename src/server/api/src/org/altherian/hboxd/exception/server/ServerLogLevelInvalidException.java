@@ -24,13 +24,13 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 
 @SuppressWarnings("serial")
 public class ServerLogLevelInvalidException extends HyperboxRuntimeException {
-   
+
    public ServerLogLevelInvalidException(String message, String logLevel) {
       super(message + ": " + logLevel);
    }
-   
+
    public ServerLogLevelInvalidException(String logLevel) {
       this("Invalid Log Level", logLevel);
    }
-   
+
 }

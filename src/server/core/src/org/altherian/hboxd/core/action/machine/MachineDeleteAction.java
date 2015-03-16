@@ -30,21 +30,21 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class MachineDeleteAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.MachineDelete.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       MachineIn mIn = request.get(MachineIn.class);
       hbox.getServer(mIn.getServerId()).deleteMachine(mIn.getUuid());
    }
-   
+
 }

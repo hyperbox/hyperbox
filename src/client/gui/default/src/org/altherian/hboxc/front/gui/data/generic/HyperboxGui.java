@@ -24,19 +24,19 @@ import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.front.gui.data.EntityGui;
 
 public class HyperboxGui extends EntityGui {
-   
+
    public HyperboxGui() {
       super(EntityType.Hyperbox.getId(), EntityType.Hyperbox.getId(), true);
    }
-   
+
    @Override
    public String toString() {
       return EntityType.Hyperbox.getId();
    }
-   
+
    @Override
    public boolean isLeaf() {
       return false;
    }
-   
+
 }

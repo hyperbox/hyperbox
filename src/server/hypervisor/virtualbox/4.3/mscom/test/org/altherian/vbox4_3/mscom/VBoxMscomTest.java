@@ -26,13 +26,13 @@ import org.altherian.hboxd.hypervisor.HypervisorTest;
 import org.junit.BeforeClass;
 
 public class VBoxMscomTest extends HypervisorTest {
-   
+
    @BeforeClass
    public static void beforeClass() throws HyperboxException {
       hypervisor = new VBoxMscomHypervisor();
       hypervisor.setEventManager(new DummyEventManager());
-      
+
       HypervisorTest.init();
    }
-   
+
 }

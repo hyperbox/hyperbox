@@ -35,38 +35,38 @@ import org.junit.Rule;
 import org.junit.rules.TestName;
 
 public abstract class CoreTest {
-   
+
    @Rule
    public TestName name = new TestName();
-   
+
    private static _Core core;
-   
+
    public static void init(_Core coreToTest, ServerIn sInToTest, UserIn uInToTest) throws HyperboxException {
       Logger.setLevel(LogLevel.Tracking);
-      
+
       core = coreToTest;
       assertTrue(core.getCoreState().equals(CoreState.Stopped));
       core.start();
       assertTrue(core.getCoreState().equals(CoreState.Started));
-      
+
       assertNotNull(core.getCoreState());
-      
+
       // Validate connection & deconnection before going further
    }
-   
+
    @Before
    public void before() throws HyperboxException {
       System.out.println("-----------------------------------------------------------------");
       System.out.println(name.getMethodName());
       System.out.println("-----------------------------------------------------------------");
    }
-   
+
    @After
    public void after() {
       System.out.println("-----------------------------------------------------------------");
       System.out.println();
    }
-   
+
    /*
    @Test
    public void vmListAndGetTest() {
@@ -178,12 +178,12 @@ public abstract class CoreTest {
       core.getServer().sendRequest(new Request(Command.VBOX, VirtualboxTasks.MachineModify, mIn), RequestProcessType.WaitForTask);
    }
     */
-   
+
    @AfterClass
    public static void afterClass() {
       if (core.getCoreState().equals(CoreState.Started)) {
          core.stop();
       }
    }
-   
+
 }

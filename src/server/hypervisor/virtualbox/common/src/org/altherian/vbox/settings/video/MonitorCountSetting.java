@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.PositiveNumberSetting;
 
 public class MonitorCountSetting extends PositiveNumberSetting {
-   
+
    public MonitorCountSetting(long monitorCount) {
       super(MachineAttribute.MonitorCount, monitorCount);
    }
-   
+
 }

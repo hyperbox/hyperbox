@@ -24,9 +24,9 @@ import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hboxd.hypervisor._Hypervisor;
 
 public class NetAdaptorRemovedEvent extends NetAdaptorEvent {
-   
+
    public NetAdaptorRemovedEvent(_Hypervisor hyp, String modeId, String adaptorId) {
       super(HyperboxEvents.NetAdaptorRemoved, hyp, modeId, adaptorId);
    }
-   
+
 }

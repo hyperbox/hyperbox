@@ -32,7 +32,7 @@ import org.altherian.hboxd.core.model._Machine;
  */
 // TODO implement all normal & IO objects
 public class ActionUtils {
-   
+
    /**
     * Get the machine referenced from the request message contained into the ClientRequest object.<br/>
     * This method does not validate the presence of the MachineIO.class object)
@@ -44,9 +44,9 @@ public class ActionUtils {
    public static _Machine extractMachine(_Hyperbox core, Request req) {
       return null;
    }
-   
+
    public static MachineIn extractMachineInput(_Hyperbox core, Request req) {
       return req.get(MachineIn.class);
    }
-   
+
 }

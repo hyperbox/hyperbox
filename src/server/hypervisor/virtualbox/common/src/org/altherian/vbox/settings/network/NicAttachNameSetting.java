@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.setting.StringSetting;
 
 public class NicAttachNameSetting extends StringSetting {
-   
+
    public NicAttachNameSetting(String attachName) {
       super(NetworkInterfaceAttribute.AttachName, attachName);
    }
-   
+
 }

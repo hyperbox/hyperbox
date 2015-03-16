@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MediumAttribute;
 import org.altherian.setting.StringSetting;
 
 public class MediumLocationSetting extends StringSetting {
-   
+
    public MediumLocationSetting(String path) {
       super(MediumAttribute.Location, path);
    }
-   
+
 }

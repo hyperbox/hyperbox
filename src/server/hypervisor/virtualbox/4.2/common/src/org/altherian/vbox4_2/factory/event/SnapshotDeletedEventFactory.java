@@ -30,23 +30,23 @@ import org.virtualbox_4_2.ISnapshotDeletedEvent;
 import org.virtualbox_4_2.VBoxEventType;
 
 public class SnapshotDeletedEventFactory implements _PreciseEventFactory {
-   
+
    @Override
    public VBoxEventType getType() {
       return VBoxEventType.OnSnapshotDeleted;
    }
-   
+
    @Override
    public ISnapshotDeletedEvent getRaw(IEvent vbEvent) {
-      
+
       return ISnapshotDeletedEvent.queryInterface(vbEvent);
    }
-   
+
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      
+
       ISnapshotDeletedEvent snapEv = (ISnapshotDeletedEvent) vbEvent;
-      
+
       /*
        * Generic event might be used due to Webservices bug, depending on revision - See {@link HyperboxEvents.MachineSnapshotDataChange}
        * This revision is only valid for 4.2 branch
@@ -57,5 +57,5 @@ public class SnapshotDeletedEventFactory implements _PreciseEventFactory {
          return new MachineSnapshotDataChangedEvent(snapEv.getMachineId());
       }
    }
-   
+
 }

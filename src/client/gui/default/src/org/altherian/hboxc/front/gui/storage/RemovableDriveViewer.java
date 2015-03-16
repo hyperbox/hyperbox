@@ -21,7 +21,7 @@
 package org.altherian.hboxc.front.gui.storage;
 
 public final class RemovableDriveViewer extends StorageDeviceViewer {
-   
+
    // TODO complete
-   
+
 }

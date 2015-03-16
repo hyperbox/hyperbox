@@ -37,28 +37,28 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 public class HypervisorConfigureDialog implements _Saveable, _Cancelable {
-   
+
    private _GlobalConfigureView configView;
    private JButton saveButton;
    private JButton cancelButton;
    private JPanel buttonPanel;
    private JDialog dialog;
-   
+
    private String srvId;
    private HypervisorIn hypIn;
-   
+
    private HypervisorConfigureDialog(String srvId) {
       this.srvId = srvId;
-      
+
       saveButton = new JButton(new SaveAction(this));
       cancelButton = new JButton(new CancelAction(this));
       buttonPanel = new JPanel(new MigLayout("ins 0"));
       buttonPanel.add(saveButton);
       buttonPanel.add(cancelButton);
-      
+
       dialog = JDialogBuilder.get("Hypervisor Configuration Editor", IconBuilder.getEntityType(EntityType.Server).getImage(), saveButton);
    }
-   
+
    private HypervisorIn getInternalInput() {
       try {
          // TODO Use Swing worker
@@ -75,20 +75,20 @@ public class HypervisorConfigureDialog implements _Saveable, _Cancelable {
       }
       return hypIn;
    }
-   
+
    @Override
    public void cancel() {
       dialog.setVisible(false);
    }
-   
+
    @Override
    public void save() {
       hypIn = configView.getUserInput();
       dialog.setVisible(false);
    }
-   
+
    public static HypervisorIn getInput(String srvId) {
       return (new HypervisorConfigureDialog(srvId)).getInternalInput();
    }
-   
+
 }

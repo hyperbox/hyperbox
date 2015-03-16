@@ -25,17 +25,17 @@ import org.altherian.hbox.states.MachineStates;
 import org.altherian.tool.AxStrings;
 
 public class MachineGui extends EntityGui {
-   
+
    private boolean isAvailable = false;
    private String name;
    private String state;
-   
+
    private SnapshotGui currSnap;
-   
+
    public MachineGui(MachineOut mOut) {
       super(mOut.getEntityTypeId(), mOut.getId());
       isAvailable = mOut.isAvailable();
-      
+
       if (isAvailable) {
          name = mOut.getName();
          state = mOut.getState();
@@ -44,12 +44,12 @@ public class MachineGui extends EntityGui {
          state = MachineStates.Inaccessible.getId();
       }
    }
-   
+
    public MachineGui(MachineOut mOut, SnapshotGui snapGui) {
       this(mOut);
       setCurrentSnapshot(snapGui);
    }
-   
+
    @Override
    public String toString() {
       StringBuilder label = new StringBuilder();
@@ -59,47 +59,47 @@ public class MachineGui extends EntityGui {
       }
       return label.toString();
    }
-   
+
    /**
     * @return the name
     */
    public String getName() {
       return name;
    }
-   
+
    /**
     * @param name the name to set
     */
    public void setName(String name) {
       this.name = name;
    }
-   
+
    /**
     * @return the state
     */
    public String getState() {
       return state;
    }
-   
+
    /**
     * @param state the state to set
     */
    public void setState(String state) {
       this.state = state;
    }
-   
+
    /**
     * @return the currSnap
     */
    public SnapshotGui getCurrentSnapshot() {
       return currSnap;
    }
-   
+
    /**
     * @param currSnap the currSnap to set
     */
    public void setCurrentSnapshot(SnapshotGui currSnap) {
       this.currSnap = currSnap;
    }
-   
+
 }

@@ -37,26 +37,26 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MachineGetAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.MachineGet.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       ServerIn srvIn = request.get(ServerIn.class);
       MachineIn mIn = request.get(MachineIn.class);
-      
+
       _Machine vm = hbox.getServer(srvIn.getId()).getMachine(mIn.getUuid());
-      
+
       MachineOut mOut = MachineIoFactory.get(vm);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, mOut));
    }
-   
+
 }

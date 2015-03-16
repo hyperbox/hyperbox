@@ -26,11 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class StoreItemIoFactory {
-   
+
    public static StoreItemOut get(_StoreItem si) {
       return new StoreItemOut(si.getStore().getId(), si.getName(), si.getPath(), si.getSize(), si.isContainer());
    }
-   
+
    public static List<StoreItemOut> get(List<_StoreItem> siList) {
       List<StoreItemOut> siOutList = new ArrayList<StoreItemOut>();
       for (_StoreItem si : siList) {
@@ -38,5 +38,5 @@ public final class StoreItemIoFactory {
       }
       return siOutList;
    }
-   
+
 }

@@ -21,10 +21,10 @@
 package org.altherian.hbox.states;
 
 public enum ProgressTrackerState {
-   
+
    Running,
    Succeeded,
    Failed,
    Canceled
-   
+
 }

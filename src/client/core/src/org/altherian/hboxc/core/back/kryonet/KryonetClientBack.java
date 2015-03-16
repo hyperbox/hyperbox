@@ -46,19 +46,19 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
 public final class KryonetClientBack implements _Backend {
-   
+
    private Map<String, _AnswerReceiver> ansReceivers;
    private Client client;
    private volatile BackendStates state = BackendStates.Stopped;
    private volatile BackendConnectionState connState = BackendConnectionState.Disconnected;
-   
+
    @Override
    public String getId() {
       return "Kryonet";
    }
-   
+
    private void setState(BackendStates state) {
-      
+
       if ((state != null) && !this.state.equals(state)) {
          this.state = state;
          EventManager.post(new BackendStateEvent(this, state));
@@ -66,9 +66,9 @@ public final class KryonetClientBack implements _Backend {
          Logger.debug("Got a null state or state matches current one");
       }
    }
-   
+
    private void setState(BackendConnectionState connState) {
-      
+
       if ((connState != null) && !this.connState.equals(connState)) {
          this.connState = connState;
          EventManager.post(new BackendConnectionStateEvent(this, connState));
@@ -76,10 +76,10 @@ public final class KryonetClientBack implements _Backend {
          Logger.debug("Got a null state or state matches current one");
       }
    }
-   
+
    @Override
    public void start() throws HyperboxException {
-      
+
       setState(BackendStates.Starting);
       try {
          Logger.info("Backend Init Sequence started");
@@ -101,18 +101,18 @@ public final class KryonetClientBack implements _Backend {
       } catch (Throwable e) {
          stop(e);
       }
-      
+
    }
-   
+
    private void stop(Throwable e) throws HyperboxException {
       Logger.error("Backend Init Sequence failed");
       stop();
       throw new HyperboxException("Unable to connect to init Kryonet backend : " + e.getMessage());
    }
-   
+
    @Override
    public void stop() {
-      
+
       setState(BackendStates.Stopping);
       disconnect();
       if (client != null) {
@@ -120,21 +120,21 @@ public final class KryonetClientBack implements _Backend {
       }
       setState(BackendStates.Stopped);
    }
-   
+
    @Override
    public void setAnswerReceiver(String requestId, _AnswerReceiver ar) {
       ansReceivers.put(requestId, ar);
    }
-   
+
    @Override
    public void connect(String address) throws HyperboxException {
-      
+
       if (!state.equals(BackendStates.Started)) {
          throw new HyperboxException("Backend is not initialized");
       }
-      
+
       setState(BackendConnectionState.Connecting);
-      
+
       String[] options = address.split(":", 2);
       String host = options[0];
       Integer port = options.length == 2 ? Integer.parseInt(options[1]) : Integer.parseInt(KryonetDefaultSettings.CFGVAL_KRYO_NET_TCP_PORT);
@@ -145,7 +145,7 @@ public final class KryonetClientBack implements _Backend {
             throw new HyperboxException("Invalid port number: " + options[1]);
          }
       }
-      
+
       try {
          client.connect(5000, host, port);
          client.getUpdateThread().setUncaughtExceptionHandler(new KryoUncaughtExceptionHandler());
@@ -161,30 +161,30 @@ public final class KryonetClientBack implements _Backend {
          throw new HyperboxException(message, e);
       }
    }
-   
+
    @Override
    public void disconnect() {
-      
+
       if ((client != null) && client.isConnected()) {
          setState(BackendConnectionState.Disconnecting);
          client.close();
       }
       setState(BackendConnectionState.Disconnected);
    }
-   
+
    @Override
    public boolean isConnected() {
       return (client != null) && client.isConnected();
    }
-   
+
    @Override
    public void putRequest(Request req) {
-      
+
       if (!isConnected()) {
          Logger.debug("Tried to send a message but client is not connected");
          throw new HyperboxRuntimeException("Client is not connected to a server");
       }
-      
+
       try {
          Logger.debug("Sending request");
          client.sendTCP(req);
@@ -193,16 +193,16 @@ public final class KryonetClientBack implements _Backend {
          Logger.exception(t);
       }
    }
-   
+
    private class MainListener extends Listener {
-      
+
       @Override
       public void connected(Connection connection) {
-         
+
          Logger.info(connection.getRemoteAddressTCP().getAddress() + " connected.");
          setState(BackendConnectionState.Connected);
       }
-      
+
       @Override
       public void received(Connection connection, Object object) {
          if (object.getClass().equals(Answer.class)) {
@@ -221,13 +221,13 @@ public final class KryonetClientBack implements _Backend {
             EventManager.get().post(object);
          }
       }
-      
+
       @Override
       public void disconnected(Connection connection) {
-         
+
          Logger.info("Disconnected from Hyperbox server");
          disconnect();
       }
    }
-   
+
 }

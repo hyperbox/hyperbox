@@ -27,12 +27,12 @@ import org.altherian.hboxc.front.gui.utils.ObjectOutputTableModel;
 
 @SuppressWarnings("serial")
 public class ConsoleViewerTableModel extends ObjectOutputTableModel<ConsoleViewerOutput> {
-   
+
    @Override
    protected void addColumns() {
       addColumn("Hypervisor", ConsoleViewerAttributes.HypervisorTypeId);
       addColumn("Module", ConsoleViewerAttributes.ModuleId);
       addColumn("Viewer", ConsoleViewerAttributes.ViewerPath);
    }
-   
+
 }

@@ -25,14 +25,14 @@ import org.altherian.hbox.states.ServiceState;
 import org.altherian.hboxd.service._Service;
 
 public class ServiceStateEvent extends ServiceEvent {
-   
+
    public ServiceStateEvent(_Service service, ServiceState state) {
       super(HyperboxEvents.ServiceState, service);
       set(ServiceState.class, state);
    }
-   
+
    public ServiceState getState() {
       return get(ServiceState.class);
    }
-   
+
 }

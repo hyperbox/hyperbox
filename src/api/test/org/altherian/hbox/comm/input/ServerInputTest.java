@@ -26,15 +26,15 @@ import org.altherian.hbox.comm.in.ServerIn;
 import org.junit.Test;
 
 public class ServerInputTest {
-   
+
    @Test
    public void basicTest() {
       ServerIn srvIn = new ServerIn();
       assertNotNull(srvIn.getId());
-      
+
       srvIn = new ServerIn("test");
       assertFalse(srvIn.getId().isEmpty());
-      
+
    }
-   
+
 }

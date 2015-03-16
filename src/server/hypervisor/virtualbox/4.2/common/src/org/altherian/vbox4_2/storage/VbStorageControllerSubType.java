@@ -23,7 +23,7 @@ package org.altherian.vbox4_2.storage;
 import org.altherian.hboxd.hypervisor.storage._RawStorageControllerSubType;
 
 public enum VbStorageControllerSubType implements _RawStorageControllerSubType {
-   
+
    LsiLogic(VbStorageControllerType.SCSI),
    BusLogic(VbStorageControllerType.SCSI),
    IntelAhci(VbStorageControllerType.SATA),
@@ -32,21 +32,21 @@ public enum VbStorageControllerSubType implements _RawStorageControllerSubType {
    ICH6(VbStorageControllerType.IDE),
    I82078(VbStorageControllerType.Floppy),
    LsiLogicSas(VbStorageControllerType.SAS);
-   
+
    private VbStorageControllerType type;
-   
+
    private VbStorageControllerSubType(VbStorageControllerType type) {
       this.type = type;
    }
-   
+
    @Override
    public String getParentType() {
       return type.getId();
    }
-   
+
    @Override
    public String getId() {
       return toString();
    }
-   
+
 }

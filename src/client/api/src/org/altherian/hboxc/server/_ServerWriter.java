@@ -32,33 +32,33 @@ import org.altherian.hboxc.comm.utils.Transaction;
 import org.altherian.hboxc.exception.ServerDisconnectedException;
 
 public interface _ServerWriter {
-   
+
    public Transaction sendRequest(Request req) throws ServerDisconnectedException;
-   
+
    public Transaction sendRequest(Request req, RequestProcessType type) throws ServerDisconnectedException;
-   
+
    public MachineOut createMachine(MachineIn mIn);
-   
+
    public MachineOut registerMachine(MachineIn mIn);
-   
+
    public MachineOut modifyMachine(MachineIn mIn);
-   
+
    public MachineOut unregisterMachine(MachineIn mIn);
-   
+
    public MachineOut deleteMachine(MachineIn mIn);
-   
+
    public void startMachine(MachineIn mIn);
-   
+
    public void stopMachine(MachineIn mIn);
-   
+
    public void acpiPowerMachine(MachineIn mIn);
-   
+
    public UserOut addUser(UserIn uIn);
-   
+
    public UserOut modifyUser(UserIn uIn);
-   
+
    public UserOut deleteUser(UserIn uIn);
-   
+
    public SessionOut closeSession(SessionIn sIn);
-   
+
 }

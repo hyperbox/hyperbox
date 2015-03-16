@@ -23,11 +23,11 @@ package org.altherian.hboxc.event;
 import org.altherian.hbox.comm.out.event.EventOut;
 
 public interface _EventWorker {
-   
+
    public String getId();
-   
+
    public String getEventId();
-   
+
    public void work(EventOut evOut);
-   
+
 }

@@ -21,7 +21,7 @@
 package org.altherian.hboxc.server;
 
 public interface _Console extends _Device {
-   
+
    // stub
-   
+
 }

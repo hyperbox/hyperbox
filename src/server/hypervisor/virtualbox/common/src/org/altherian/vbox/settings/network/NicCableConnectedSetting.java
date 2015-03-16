@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.NetworkInterfaceAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public class NicCableConnectedSetting extends BooleanSetting {
-   
+
    public NicCableConnectedSetting(boolean isConnected) {
       super(NetworkInterfaceAttribute.CableConnected, isConnected);
    }
-   
+
 }

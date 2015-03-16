@@ -29,25 +29,25 @@ import org.virtualbox_4_2.IMachine;
 import org.virtualbox_4_2.LockType;
 
 public class IoAPICSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.IoAPIC.toString();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       machine.getBIOSSettings().setIOAPICEnabled(((BooleanSetting) setting).getValue());
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new IoAPICSetting(machine.getBIOSSettings().getIOAPICEnabled());
    }
-   
+
 }

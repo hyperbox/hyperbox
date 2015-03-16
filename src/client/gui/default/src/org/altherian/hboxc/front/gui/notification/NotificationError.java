@@ -22,7 +22,7 @@ package org.altherian.hboxc.front.gui.notification;
 
 @SuppressWarnings("serial")
 public class NotificationError extends Notification {
-   
+
    // stub
-   
+
 }

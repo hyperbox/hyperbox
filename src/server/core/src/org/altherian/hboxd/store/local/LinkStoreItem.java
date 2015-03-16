@@ -30,39 +30,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LinkStoreItem implements _StoreItem {
-   
+
    private _Store store;
    private File location;
-   
+
    public LinkStoreItem(_Store store, File path) {
       if (!path.isAbsolute()) {
          throw new HyperboxRuntimeException(path + " must be a full path");
       }
-      
+
       this.store = store;
       location = new File(path.getAbsolutePath());
    }
-   
+
    @Override
    public String getName() {
       return location.getName();
    }
-   
+
    @Override
    public boolean isContainer() {
       return true;
    }
-   
+
    @Override
    public String getPath() {
       return location.getAbsolutePath();
    }
-   
+
    @Override
    public long getSize() {
       return 0;
    }
-   
+
    @Override
    public List<_StoreItem> listItems() {
       try {
@@ -83,12 +83,12 @@ public class LinkStoreItem implements _StoreItem {
       } catch (IOException e) {
          throw new StoreException(e);
       }
-      
+
    }
-   
+
    @Override
    public _Store getStore() {
       return store;
    }
-   
+
 }

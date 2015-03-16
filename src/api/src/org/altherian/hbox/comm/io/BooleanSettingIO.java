@@ -26,7 +26,7 @@ package org.altherian.hbox.comm.io;
  * @author noteirak
  */
 public final class BooleanSettingIO extends SettingIO {
-   
+
    /**
     * Empty constructor for serialisation classes.<br/>
     * <ul>
@@ -35,9 +35,9 @@ public final class BooleanSettingIO extends SettingIO {
     */
    @SuppressWarnings("unused")
    private BooleanSettingIO() {
-      
+
    }
-   
+
    /**
     * Constructor for a new boolean setting, with the given name and value
     * 
@@ -47,7 +47,7 @@ public final class BooleanSettingIO extends SettingIO {
    public BooleanSettingIO(Object name, Boolean value) {
       super(name, value);
    }
-   
+
    /**
     * Get the boolean value of this setting
     * 
@@ -56,10 +56,10 @@ public final class BooleanSettingIO extends SettingIO {
    public boolean getValue() {
       return (Boolean) getRawValue();
    }
-   
+
    @Override
    public Boolean getBoolean() {
       return (Boolean) getRawValue();
    }
-   
+
 }

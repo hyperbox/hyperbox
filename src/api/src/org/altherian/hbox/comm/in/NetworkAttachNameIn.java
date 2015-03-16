@@ -23,13 +23,13 @@ package org.altherian.hbox.comm.in;
 import org.altherian.hbox.constant.EntityType;
 
 public class NetworkAttachNameIn extends ObjectIn<EntityType> {
-   
+
    public NetworkAttachNameIn() {
       super(EntityType.NetworkAttachName);
    }
-   
+
    public NetworkAttachNameIn(String id) {
       super(EntityType.NetworkAttachName, id);
    }
-   
+
 }

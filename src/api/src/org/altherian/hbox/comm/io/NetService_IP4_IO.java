@@ -24,57 +24,57 @@ import org.altherian.hbox.constant.NetServiceType;
 import org.altherian.hbox.hypervisor.net._NetService_IP4;
 
 public class NetService_IP4_IO extends NetServiceIO implements _NetService_IP4 {
-   
+
    private String ip;
    private String mask;
    private String gw;
-   
+
    protected NetService_IP4_IO() {
       // serial
    }
-   
+
    public NetService_IP4_IO(NetService_IP4_IO svc) {
       this(svc.isEnabled(), svc.getAddress(), svc.getMask());
    }
-   
+
    public NetService_IP4_IO(boolean enabled) {
       super(NetServiceType.IPv4.getId(), enabled);
    }
-   
+
    public NetService_IP4_IO(boolean enabled, String ip, String mask) {
       this(enabled);
       setIP(ip);
       setMask(mask);
    }
-   
+
    @Override
    public String getAddress() {
       return ip;
    }
-   
+
    @Override
    public String getMask() {
       return mask;
    }
-   
+
    @Override
    public String getGateway() {
       return gw;
    }
-   
+
    @Override
    public void setIP(String ip) {
       this.ip = ip;
    }
-   
+
    @Override
    public void setMask(String mask) {
       this.mask = mask;
    }
-   
+
    @Override
    public void setGateway(String gw) {
       this.gw = gw;
    }
-   
+
 }

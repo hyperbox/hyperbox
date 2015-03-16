@@ -25,23 +25,23 @@ import org.altherian.hboxd.security.User;
 import org.altherian.hboxd.security._User;
 
 public class SecurityUserFactory {
-   
+
    private SecurityUserFactory() {
       throw new RuntimeException("Not allowed");
    }
-   
+
    public static _User get(String userId, String username) {
       return new User(userId, username);
    }
-   
+
    public static _User get(String userId, String userName, String userDomain) {
       return new User(userId, userName, userDomain);
    }
-   
+
    public static _User get(String userId, String userName, String userDomain, String salt) {
       _User user = get(userId, userName, userDomain);
       user.setSalt(salt);
       return user;
    }
-   
+
 }

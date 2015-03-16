@@ -31,22 +31,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SnapshotRestoreAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.SnapshotRestore.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       MachineIn mIn = request.get(MachineIn.class);
       SnapshotIn snapIn = request.get(SnapshotIn.class);
       hbox.getHypervisor().getMachine(mIn.getUuid()).restoreSnapshot(snapIn.getUuid());
    }
-   
+
 }

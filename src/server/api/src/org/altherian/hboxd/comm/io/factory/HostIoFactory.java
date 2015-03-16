@@ -28,11 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HostIoFactory {
-   
+
    private HostIoFactory() {
       // static class, cannot be instantiated
    }
-   
+
    public static HostOut get(_Host host) {
       List<SettingIO> sIoList = new ArrayList<SettingIO>();
       sIoList.add(new SettingIO(HostAttribute.Hostname, host.getHostname()));
@@ -42,5 +42,5 @@ public class HostIoFactory {
       sIoList.add(new SettingIO(HostAttribute.MemoryAvailable, host.getMemoryAvailable()));
       return new HostOut(sIoList);
    }
-   
+
 }

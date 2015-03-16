@@ -29,25 +29,25 @@ import org.virtualbox_4_4.IMachine;
 import org.virtualbox_4_4.LockType;
 
 public class MonitorCountSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.MonitorCount.toString();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       machine.setMonitorCount(((PositiveNumberSetting) setting).getValue());
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new MonitorCountSetting(machine.getMonitorCount());
    }
-   
+
 }

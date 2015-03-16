@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.StringSetting;
 
 public class ChipsetSetting extends StringSetting {
-   
+
    public ChipsetSetting(String s) {
       super(MachineAttribute.Chipset, s);
    }
-   
+
 }

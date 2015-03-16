@@ -34,19 +34,19 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class ModuleUnloadAction extends AbstractAction {
-   
+
    private _ModuleSelector selector;
-   
+
    public ModuleUnloadAction(_ModuleSelector selector) {
       super("Unload", IconBuilder.getTask(HyperboxTasks.ModuleUnload));
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       for (ModuleOut mod : selector.getModuleSelection()) {
          Gui.post(new Request(Command.HBOX, HyperboxTasks.ModuleUnload, new ServerIn(selector.getServerId()), new ModuleIn(mod.getId())));
       }
    }
-   
+
 }

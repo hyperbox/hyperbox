@@ -32,17 +32,17 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class ModuleRefreshAction extends AbstractAction {
-   
+
    private _ModuleSelector selector;
-   
+
    public ModuleRefreshAction(_ModuleSelector selector) {
       super("Refresh", IconBuilder.getTask(HyperboxTasks.ModuleRefresh));
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       Gui.post(new Request(Command.HBOX, HyperboxTasks.ModuleRefresh, new ServerIn(selector.getServerId())));
    }
-   
+
 }

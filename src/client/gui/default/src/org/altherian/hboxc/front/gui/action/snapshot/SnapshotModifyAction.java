@@ -27,17 +27,17 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class SnapshotModifyAction extends AbstractAction {
-   
+
    private _SnapshotSelector selector;
-   
+
    public SnapshotModifyAction(_SnapshotSelector selector) {
       this.selector = selector;
       putValue(SHORT_DESCRIPTION, "View/edit details of the selected snapshot");
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       SnapshotModifyDialog.show(selector.getMachine(), selector.getSelection().get(0));
    }
-   
+
 }

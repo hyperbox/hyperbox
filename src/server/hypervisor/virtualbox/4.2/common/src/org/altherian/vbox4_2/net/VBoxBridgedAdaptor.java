@@ -27,14 +27,14 @@ import org.virtualbox_4_2.HostNetworkInterfaceStatus;
 import org.virtualbox_4_2.IHostNetworkInterface;
 
 public class VBoxBridgedAdaptor extends VBoxAdaptor {
-   
+
    public VBoxBridgedAdaptor(IHostNetworkInterface nic) {
       super(nic.getId(), nic.getName(), VBoxNetMode.Bridged, nic.getStatus().equals(HostNetworkInterfaceStatus.Up));
    }
-   
+
    @Override
    protected void process(_NetService service) {
       throw new HyperboxRuntimeException(service.getType() + " is not supported by Bridged adaptor");
    }
-   
+
 }

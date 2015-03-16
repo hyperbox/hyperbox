@@ -29,25 +29,25 @@ import org.virtualbox_4_4.IMachine;
 import org.virtualbox_4_4.LockType;
 
 public class VrdeAuthTimeoutSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.VrdeAuthTimeout.getId();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       machine.getVRDEServer().setAuthTimeout(setting.getNumber());
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new PositiveNumberSetting(MachineAttribute.VrdeAuthTimeout, machine.getVRDEServer().getAuthTimeout());
    }
-   
+
 }

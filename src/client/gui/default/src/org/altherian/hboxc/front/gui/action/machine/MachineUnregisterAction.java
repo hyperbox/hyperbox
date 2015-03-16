@@ -33,20 +33,20 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public final class MachineUnregisterAction extends AbstractAction {
-   
+
    private _MachineSelector selector;
-   
+
    public MachineUnregisterAction(_MachineSelector selector) {
       super("Unregister", IconBuilder.getTask(HypervisorTasks.MachineUnregister));
       setEnabled(true);
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ev) {
       for (MachineOut mOut : selector.getMachines()) {
          Gui.post(new Request(Command.VBOX, HypervisorTasks.MachineUnregister, new MachineIn(mOut)));
       }
    }
-   
+
 }

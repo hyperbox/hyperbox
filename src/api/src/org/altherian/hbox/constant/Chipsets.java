@@ -26,19 +26,19 @@ package org.altherian.hbox.constant;
  * @author noteirak
  */
 public enum Chipsets {
-   
+
    /**
     * ICH9 chipset
     */
    ICH9,
-   
+
    /**
     * PIIX3 chipset
     */
    PIIX3;
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

@@ -37,20 +37,20 @@ import org.altherian.hbox.comm.AnswerType;
  * @author noteirak
  */
 public abstract class ASingleTaskAction extends AbstractHyperboxAction {
-   
+
    @Override
    public AnswerType getStartReturn() {
       return AnswerType.STARTED;
    }
-   
+
    @Override
    public AnswerType getFinishReturn() {
       return AnswerType.SUCCESS;
    }
-   
+
    @Override
    public AnswerType getFailReturn() {
       return AnswerType.FAILED;
    }
-   
+
 }

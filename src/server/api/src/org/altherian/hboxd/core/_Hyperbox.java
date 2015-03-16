@@ -25,13 +25,13 @@ import org.altherian.hboxd.front._RequestReceiver;
 import org.altherian.hboxd.server._ServerManager;
 
 public interface _Hyperbox extends _HyperboxManipulator, _ServerManager {
-   
+
    public void init() throws HyperboxException;
-   
+
    public void start() throws HyperboxException;
-   
+
    public _RequestReceiver getReceiver();
-   
+
    public void stop();
-   
+
 }

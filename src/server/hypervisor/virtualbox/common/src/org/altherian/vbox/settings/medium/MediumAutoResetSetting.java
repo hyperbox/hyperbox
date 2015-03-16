@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MediumAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public class MediumAutoResetSetting extends BooleanSetting {
-   
+
    public MediumAutoResetSetting(boolean isAutoReset) {
       super(MediumAttribute.AutoReset, isAutoReset);
    }
-   
+
 }

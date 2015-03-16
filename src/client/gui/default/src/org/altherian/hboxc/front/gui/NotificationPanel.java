@@ -32,15 +32,15 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class NotificationPanel extends JPanel {
-   
+
    private volatile Map<Enum<?>, Component> notifications = new HashMap<Enum<?>, Component>();
-   
+
    public NotificationPanel() {
       super(new MigLayout("ins 0"));
       ViewEventManager.register(this);
       setVisible(false);
    }
-   
+
    @Handler
    private void putUpdateAvailableEvent(UpdaterUpdateAvailableEvent ev) {
       if (notifications.containsKey(ev.getEventId())) {
@@ -54,5 +54,5 @@ public class NotificationPanel extends JPanel {
          }
       }
    }
-   
+
 }

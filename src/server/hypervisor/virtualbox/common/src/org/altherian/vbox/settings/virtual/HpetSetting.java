@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public class HpetSetting extends BooleanSetting {
-   
+
    public HpetSetting(boolean isEnabled) {
       super(MachineAttribute.HPET, isEnabled);
    }
-   
+
 }

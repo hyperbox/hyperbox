@@ -24,9 +24,9 @@ import org.altherian.hbox.comm.out.ModuleOut;
 import java.util.List;
 
 public interface _ModuleSelector {
-   
+
    public String getServerId();
-   
+
    public List<ModuleOut> getModuleSelection();
-   
+
 }

@@ -27,18 +27,18 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class ConnectorAddAction extends AbstractAction {
-   
+
    public ConnectorAddAction() {
       this("Add");
    }
-   
+
    public ConnectorAddAction(String label) {
       super(label);
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       ConnectorEditorDialog.add();
    }
-   
+
 }

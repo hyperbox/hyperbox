@@ -38,83 +38,83 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 public class MachineNATRulesDialog implements _Saveable, _Cancelable, _Refreshable {
-   
+
    private String srvId;
    private String vmId;
    private String adaptId;
-   
+
    private JDialog dialog;
    private NATRulesView ip4;
-   
+
    private JPanel buttonPanel;
    private JButton saveButton;
    private JButton cancelButton;
-   
+
    private NetService_NAT_IO rules;
-   
+
    public static List<NetService_NAT_IO> getInput(String srvId, String vmId, String adaptId) {
       return (new NATNetworkNATRulesDialog(srvId, vmId, adaptId)).getInput();
    }
-   
+
    public MachineNATRulesDialog(String srvId, String vmId, String adaptId) {
       this.srvId = srvId;
       this.vmId = vmId;
       this.adaptId = adaptId;
-      
+
       ip4 = new NATRulesView();
       RefreshUtil.set(ip4.getComponent(), new _Refreshable() {
-         
+
          @Override
          public void refresh() {
             refresh();
          }
-         
+
       });
-      
+
       saveButton = new JButton(new SaveAction(this));
       cancelButton = new JButton(new CancelAction(this));
       buttonPanel = new JPanel(new MigLayout("ins 0"));
       buttonPanel.add(saveButton);
       buttonPanel.add(cancelButton);
-      
+
       dialog = JDialogBuilder.get("NAT Rules", saveButton);
       dialog.add(ip4.getComponent(), "grow,push,wrap");
       dialog.add(buttonPanel, "growx,pushx,center");
    }
-   
+
    public NetService_NAT_IO getInput() {
       refresh();
-      
+
       dialog.setSize(538, 278);
       dialog.setLocationRelativeTo(dialog.getParent());
       dialog.setVisible(true);
-      
+
       return rules;
    }
-   
+
    public void hide() {
       dialog.setVisible(false);
    }
-   
+
    @Override
    public void cancel() {
       rules = null;
       hide();
    }
-   
+
    @Override
    public void save() throws HyperboxRuntimeException {
       rules = new NetService_NAT_IP4_IO(true);
       for (_NATRule rule : ip4.getRules()) {
          rules.addRule(rule);
       }
-      
+
       hide();
    }
-   
+
    @Override
    public void refresh() {
       // TODO
    }
-   
+
 }

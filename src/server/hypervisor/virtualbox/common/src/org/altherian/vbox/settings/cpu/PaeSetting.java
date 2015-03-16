@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public class PaeSetting extends BooleanSetting {
-   
+
    public PaeSetting(boolean isEnabled) {
       super(MachineAttribute.PAE, isEnabled);
    }
-   
+
 }

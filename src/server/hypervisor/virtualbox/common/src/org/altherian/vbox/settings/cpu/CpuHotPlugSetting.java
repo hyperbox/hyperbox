@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public class CpuHotPlugSetting extends BooleanSetting {
-   
+
    public CpuHotPlugSetting(boolean isEnabled) {
       super(MachineAttribute.CpuHotPlug, isEnabled);
    }
-   
+
 }

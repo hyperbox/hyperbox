@@ -30,103 +30,103 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Logger {
-   
+
    private static String logFileName;
-   
+
    private static LogLevel maxLevel = LogLevel.Info;
    private static Boolean printSql;
-   
+
    private static SimpleDateFormat formater;
-   
+
    private static PrintStream output = System.out;
-   
+
    static {
       printSql = false;
       formater = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss.SSS");
    }
-   
+
    private Logger() {
       // static methods only
    }
-   
+
    public static void setLevel(LogLevel level) {
       if (level != maxLevel) {
          maxLevel = level;
          debug("Changed LogLevel to " + maxLevel);
       }
    }
-   
+
    public static LogLevel getLevel() {
       return maxLevel;
    }
-   
+
    public static boolean isLevel(LogLevel level) {
       return (maxLevel == null) || (level.getLevel() <= maxLevel.getLevel());
    }
-   
+
    public static void track() {
       put("", LogLevel.Tracking);
    }
-   
+
    public static void verbose(Object o) {
       put(o, LogLevel.Verbose);
    }
-   
+
    public static void sql(String query) {
       if (printSql) {
          put(query, LogLevel.Verbose);
       }
    }
-   
+
    public static void debug(Object o) {
       put(o, LogLevel.Debug);
    }
-   
+
    public static void debug(Object o, Throwable t) {
       put(o, LogLevel.Debug);
       t.printStackTrace(output);
    }
-   
+
    public static void warning(Object o) {
       put(o, LogLevel.Warning);
    }
-   
+
    public static void warning(Object o, Throwable t) {
       put(o, LogLevel.Warning);
       t.printStackTrace(output);
    }
-   
+
    public static void info(Object o) {
       put(o, LogLevel.Info);
    }
-   
+
    public static void exception(Throwable e) {
       put(e, LogLevel.Exception);
       e.printStackTrace(output);
    }
-   
+
    public static void fatalException(Object o) {
       put(o, LogLevel.FatalException);
    }
-   
+
    public static void error(Object o) {
       put(o, LogLevel.Error);
    }
-   
+
    public static void error(Object o, Throwable t) {
       put(o, LogLevel.Error);
       t.printStackTrace(output);
    }
-   
+
    public static void raw(Object o) {
       put(o, LogLevel.Raw);
    }
-   
+
    public static void log(String fileName) throws IOException {
       if (fileName != null) {
          System.out.println("Configure filename: " + fileName);
          logFileName = fileName;
-         
+
          File file = new File(logFileName);
          if (!file.exists()) {
             if (!file.getParentFile().exists() && !file.getParentFile().mkdirs()) {
@@ -134,19 +134,19 @@ public class Logger {
             }
             file.createNewFile();
          }
-         
+
          try {
             file.setReadable(true, false);
          } catch (SecurityException e) {
             throw new IOException("Unable to set read permission to everyone on the log file");
          }
-         
+
          try {
             file.getParentFile().setReadable(true, false);
          } catch (SecurityException e) {
             throw new IOException("Unable to set read permission to everyone on the log folder");
          }
-         
+
          Calendar now = new GregorianCalendar();
          FileOutputStream fos = new FileOutputStream(file, true);
          output = new PrintStream(fos);
@@ -155,14 +155,14 @@ public class Logger {
          output.println("+============================================================================+");
          output.flush();
       }
-      
+
    }
-   
+
    public static void log(String fileName, int history) throws IOException {
       if (history < 1) {
          throw new IllegalArgumentException("History count must be greater than 0");
       }
-      
+
       for (int i = history; i > 0; i--) {
          File log = new File(fileName + "." + i);
          if (log.exists()) {
@@ -174,21 +174,21 @@ public class Logger {
             }
          }
       }
-      
+
       File log = new File(fileName);
       if (log.exists()) {
          log.renameTo(new File(fileName + ".1"));
       }
-      
+
       log(fileName);
    }
-   
+
    private static void put(Object o, LogLevel type) {
       if (isLevel(type)) {
          if (o == null) {
             o = new String("[ ! [NULL] ! ]");
          }
-         
+
          String time = formater.format(new Date());
          String output = "";
          switch (type) {
@@ -222,15 +222,15 @@ public class Logger {
             default:
                output = time + " | UNKNWON | " + o;
          }
-         
+
          put(output);
       }
    }
-   
+
    private static void put(String s) {
       output.println(s);
    }
-   
+
    private static String getCalling(boolean methodName) {
       int depth = 4;
       if (methodName) {
@@ -248,11 +248,11 @@ public class Logger {
          return sun.reflect.Reflection.getCallerClass(depth + 1).getSimpleName();
       }
    }
-   
+
    public static void destroy() {
       if (logFileName != null) {
          Logger.output.close();
       }
    }
-   
+
 }

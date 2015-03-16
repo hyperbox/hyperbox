@@ -22,9 +22,9 @@ package org.altherian.hboxc.exception;
 
 @SuppressWarnings("serial")
 public class UpdaterScheduleException extends UpdaterException {
-   
+
    public UpdaterScheduleException(String s) {
       super(s);
    }
-   
+
 }

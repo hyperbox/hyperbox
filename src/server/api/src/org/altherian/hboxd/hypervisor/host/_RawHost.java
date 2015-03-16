@@ -21,15 +21,15 @@
 package org.altherian.hboxd.hypervisor.host;
 
 public interface _RawHost {
-   
+
    public String getHostname();
-   
+
    public String getOSName();
-   
+
    public String getOSVersion();
-   
+
    public long getMemorySize();
-   
+
    public long getMemoryAvailable();
-   
+
 }

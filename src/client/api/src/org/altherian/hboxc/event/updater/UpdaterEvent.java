@@ -23,9 +23,9 @@ package org.altherian.hboxc.event.updater;
 import org.altherian.hbox.event.Event;
 
 public abstract class UpdaterEvent extends Event {
-   
+
    public UpdaterEvent(Enum<?> eventId) {
       super(eventId);
    }
-   
+
 }

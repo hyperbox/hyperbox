@@ -21,7 +21,7 @@
 package org.altherian.hbox.comm;
 
 public interface _AnswerReceiver {
-   
+
    public void putAnswer(Answer ans);
-   
+
 }

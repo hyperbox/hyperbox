@@ -35,14 +35,14 @@ import java.util.Set;
  * @author noteirak
  */
 public interface _Server {
-   
+
    public static final String CFGKEY_SRV_ID = "server.id";
    public static final String CFGKEY_SRV_NAME = "server.name";
    public static final String CFGKEY_CORE_HYP_ID = "core.hypervisor.id";
    public static final String CFGKEY_CORE_HYP_OPTS = "core.hypervisor.options";
    public static final String CFGKEY_CORE_HYP_AUTO = "core.hypervisor.autoconnect";
    public static final String CFGKEY_CORE_PERSISTOR_CLASS = "core.persistor.class";
-   
+
    /**
     * Get this server unique ID, by default a randomly generated UUID.<br>
     * This must be unique in an organisation structure.
@@ -50,7 +50,7 @@ public interface _Server {
     * @return The unique ID as String
     */
    public String getId();
-   
+
    /**
     * Get the server defined name, which is by default the hostname of the machine.<br>
     * This does not have to be unique in an organisation/cluster but should be to avoid user mistakes.
@@ -58,14 +58,14 @@ public interface _Server {
     * @return The name as String
     */
    public String getName();
-   
+
    /**
     * Change the server name to another value.
     * 
     * @param newName The new name as String
     */
    public void setName(String newName);
-   
+
    /**
     * Get the type of server this is.
     * 
@@ -74,46 +74,46 @@ public interface _Server {
     * @see ServerType
     */
    public ServerType getType();
-   
+
    public String getVersion();
-   
+
    public String getLogLevel();
-   
+
    public Set<String> listLogLevel();
-   
+
    public void setLogLevel(String logLevel) throws ServerLogLevelInvalidException;
-   
+
    public void connect(String hypervisorId, String options);
-   
+
    public void disconnect();
-   
+
    public boolean isConnected();
-   
+
    public _Host getHost();
-   
+
    public _Hypervisor getHypervisor();
-   
+
    public List<Class<? extends _Hypervisor>> listHypervisors();
-   
+
    public List<_Machine> listMachines();
-   
+
    public _Machine getMachine(String id);
-   
+
    public _Machine findMachine(String idOrName);
-   
+
    public void unregisterMachine(String id);
-   
+
    public void deleteMachine(String id);
-   
+
    public _Medium createMedium(String location, String format, Long logicalSize);
-   
+
    public _Medium createMedium(String vmId, String filename, String format, Long logicalSize);
-   
+
    public _Medium getMedium(String medId);
-   
+
    /**
     * Force save all current settings to the persistence layer.
     */
    public void save();
-   
+
 }

@@ -37,27 +37,27 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class MediumAttachmentListAction extends AbstractHyperboxMultiTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.StorageControllerMediumAttachmentList.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       if (request.has(StorageControllerIn.class)) {
          StorageControllerIn scIn = request.get(StorageControllerIn.class);
          _RawStorageController sc = hbox.getHypervisor().getMachine(scIn.getMachineUuid()).getStorageController(scIn.getId());
-         
+
          for (_RawMediumAttachment ma : sc.listMediumAttachment()) {
             SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, MediumAttachmentIoFactory.get(ma)));
          }
-         
+
       } else {
          MachineIn mIn = request.get(MachineIn.class);
          for (_RawStorageController sc : hbox.getHypervisor().getMachine(mIn.getUuid()).listStoroageControllers()) {

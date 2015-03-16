@@ -22,21 +22,21 @@ package org.altherian.hbox.exception;
 
 @SuppressWarnings("serial")
 public class ObjectNotFoundException extends HyperboxRuntimeException {
-   
+
    public ObjectNotFoundException() {
       super("Object was not found");
    }
-   
+
    public ObjectNotFoundException(String s) {
       super(s);
    }
-   
+
    public ObjectNotFoundException(Throwable t) {
       super(t);
    }
-   
+
    public ObjectNotFoundException(String s, Throwable t) {
       super(s, t);
    }
-   
+
 }

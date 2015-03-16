@@ -26,83 +26,83 @@ import java.util.HashSet;
 import java.util.Set;
 
 public final class UserIn extends ObjectIn<EntityType> {
-   
+
    private String domain;
    private String username;
    private char[] password;
    private Set<PermissionIn> perms = new HashSet<PermissionIn>();
-   
+
    public UserIn() {
       super(EntityType.User);
    }
-   
+
    public UserIn(String id) {
       super(EntityType.User, id);
    }
-   
+
    public UserIn(UserOut usrOut) {
       this(usrOut.getId());
    }
-   
+
    public UserIn(String username, char[] password) {
       this("", username, password);
    }
-   
+
    public UserIn(String domain, String username, char[] password) {
       this();
       setDomain(domain);
       setUsername(username);
       setPassword(password);
    }
-   
+
    /**
     * @return the domain
     */
    public String getDomain() {
       return domain;
    }
-   
+
    /**
     * @param domain the domain to set
     */
    public void setDomain(String domain) {
       this.domain = domain;
    }
-   
+
    /**
     * @return the username
     */
    public String getUsername() {
       return username;
    }
-   
+
    /**
     * @param username the username to set
     */
    public void setUsername(String username) {
       this.username = username;
    }
-   
+
    /**
     * @return the password
     */
    public char[] getPassword() {
       return password;
    }
-   
+
    /**
     * @param password the password to set
     */
    public void setPassword(char[] password) {
       this.password = password;
    }
-   
+
    public void addPermission(PermissionIn permIn) {
       perms.add(permIn);
    }
-   
+
    public void removePermission(PermissionIn permIn) {
       perms.remove(permIn);
    }
-   
+
 }

@@ -27,16 +27,16 @@ import java.util.Properties;
 import java.util.Set;
 
 public class HyperboxAPI {
-   
+
    private static Properties buildProperties;
    private static Version version;
    private static Version protocolVersion;
-   
+
    private static void failedToLoad(Exception e) {
       Logger.error("Unable to access or read the api.build.properties ressource: " + e.getMessage());
       Logger.error("API version and revision may not be accurate");
    }
-   
+
    static {
       buildProperties = new Properties();
       try {
@@ -45,7 +45,7 @@ public class HyperboxAPI {
          if (!version.isValid()) {
             version = Version.UNKNOWN;
          }
-         
+
          protocolVersion = new Version(buildProperties.getProperty("protocol", Version.UNKNOWN.toString()));
          if (!protocolVersion.isValid()) {
             protocolVersion = Version.UNKNOWN;
@@ -58,15 +58,15 @@ public class HyperboxAPI {
          failedToLoad(e);
       }
    }
-   
+
    public static Version getVersion() {
       return version;
    }
-   
+
    public static Version getProtocolVersion() {
       return protocolVersion;
    }
-   
+
    public static void processArgs(Set<String> args) {
       if (args.contains("--apiversion")) {
          System.out.println(getVersion());
@@ -77,7 +77,7 @@ public class HyperboxAPI {
          System.exit(0);
       }
    }
-   
+
    public static String getLogHeader(String fullVersion) {
       StringBuilder header = new StringBuilder();
       header.append("Hyperbox " + fullVersion);
@@ -88,5 +88,5 @@ public class HyperboxAPI {
       header.append(System.getProperty("os.name") + " " + System.getProperty("os.version") + " " + System.getProperty("os.arch"));
       return header.toString();
    }
-   
+
 }

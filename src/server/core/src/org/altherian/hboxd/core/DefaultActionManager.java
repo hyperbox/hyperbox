@@ -33,12 +33,12 @@ import java.util.Map;
 import java.util.Set;
 
 public class DefaultActionManager implements _ActionManager {
-   
+
    private Map<String, _HyperboxAction> actions = new HashMap<String, _HyperboxAction>();;
-   
+
    @Override
    public void start() throws HyperboxException {
-      
+
       Set<_HyperboxAction> subTypes = HBoxServer.getAtLeastOneOrFail(_HyperboxAction.class);
       for (_HyperboxAction action : subTypes) {
          List<String> mappings = action.getRegistrations();
@@ -52,12 +52,12 @@ public class DefaultActionManager implements _ActionManager {
          }
       }
    }
-   
+
    @Override
    public _HyperboxAction get(Request req) {
       return get(req.getCommand() + req.getName());
    }
-   
+
    @Override
    public _HyperboxAction get(String id) {
       if (actions.containsKey(id)) {
@@ -68,11 +68,11 @@ public class DefaultActionManager implements _ActionManager {
          throw new HyperboxCommunicationException("No matching action for " + id);
       }
    }
-   
+
    @Override
    public void stop() {
-      
+
       actions.clear();
    }
-   
+
 }

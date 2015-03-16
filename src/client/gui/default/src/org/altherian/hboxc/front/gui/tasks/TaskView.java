@@ -36,10 +36,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class TaskView implements _Cancelable {
-   
+
    private TaskOut tskOut;
    private String srvName;
-   
+
    private JDialog dialog;
    private JLabel idLabel;
    private JTextField idField;
@@ -63,44 +63,44 @@ public class TaskView implements _Cancelable {
    private JTextField endField;
    private JLabel errorLabel;
    private JTextField errorField;
-   
+
    private TaskView() {
       idLabel = new JLabel("ID");
       idField = JTextFieldUtils.createNonEditable();
-      
+
       srvLabel = new JLabel("Server");
       srvField = JTextFieldUtils.createNonEditable();
-      
+
       actionLabel = new JLabel("Action");
       actionField = JTextFieldUtils.createNonEditable();
-      
+
       reqIdLabel = new JLabel("Request ID");
       reqIdField = JTextFieldUtils.createNonEditable();
-      
+
       stateLabel = new JLabel("State");
       stateField = JTextFieldUtils.createNonEditable();
-      
+
       userLabel = new JLabel("User");
       userField = JTextFieldUtils.createNonEditable();
-      
+
       createLabel = new JLabel("Created at");
       createField = JTextFieldUtils.createNonEditable();
-      
+
       queueLabel = new JLabel("Queued at");
       queueField = JTextFieldUtils.createNonEditable();
-      
+
       startLabel = new JLabel("Started at");
       startField = JTextFieldUtils.createNonEditable();
-      
+
       endLabel = new JLabel("Ended at");
       endField = JTextFieldUtils.createNonEditable();
-      
+
       errorLabel = new JLabel("Error");
       errorField = JTextFieldUtils.createNonEditable();
-      
+
       dialog = JDialogBuilder.get(IconBuilder.getEntityType(EntityType.Task).getImage());
       dialog.getContentPane().setLayout(new MigLayout());
-      
+
       dialog.add(idLabel);
       dialog.add(idField, "growx, pushx, wrap");
       dialog.add(srvLabel);
@@ -123,37 +123,37 @@ public class TaskView implements _Cancelable {
       dialog.add(endField, "growx, pushx, wrap");
       dialog.add(errorLabel, "hidemode 3");
       dialog.add(errorField, "growx,pushx, wrap, hidemode 3");
-      
+
       CancelableUtils.set(this, dialog.getRootPane());
-      
+
       dialog.pack();
       dialog.setSize(453, dialog.getHeight());
       dialog.setLocationRelativeTo(dialog.getParent());
    }
-   
+
    private void display(TaskOut tskOut) {
       this.tskOut = tskOut;
       dialog.setTitle("Task Details");
       TaskGetWorker.execute(new TaskReceiver(), tskOut);
       dialog.setVisible(true);
    }
-   
+
    public static void show(TaskOut tOut) {
       new TaskView().display(tOut);
    }
-   
+
    @Override
    public void cancel() {
       dialog.setVisible(false);
    }
-   
+
    private class TaskReceiver implements _TaskReceiver {
-      
+
       @Override
       public void loadingStarted() {
          dialog.setTitle("Task Details - Loading");
       }
-      
+
       @Override
       public void loadingFinished(boolean isSuccessful, String message) {
          if (isSuccessful) {
@@ -185,10 +185,10 @@ public class TaskView implements _Cancelable {
                errorField.setText("N/A");
             }
             idField.setText(tskOut.getId());
-            
+
             reqIdField.setText(tskOut.getRequestId());
             srvField.setText(srvName);
-            
+
             stateField.setText(tskOut.getState().getId());
             userField.setText(tskOut.getUser().getDomainLogonName());
          } else {
@@ -196,13 +196,13 @@ public class TaskView implements _Cancelable {
             errorField.setText(message);
          }
       }
-      
+
       @Override
       public void put(TaskOut tskOut) {
          TaskView.this.tskOut = tskOut;
          TaskView.this.srvName = Gui.getServer(tskOut.getServerId()).getName();
       }
-      
+
    }
-   
+
 }

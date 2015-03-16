@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.StringSetting;
 
 public class LocationSetting extends StringSetting {
-   
+
    public LocationSetting(String location) {
       super(MachineAttribute.Location, location);
    }
-   
+
 }

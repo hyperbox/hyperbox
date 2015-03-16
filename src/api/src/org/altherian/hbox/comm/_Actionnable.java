@@ -23,9 +23,9 @@ package org.altherian.hbox.comm;
 import org.altherian.hbox.comm.in.Action;
 
 public interface _Actionnable {
-   
+
    public Action getAction();
-   
+
    public void setAction(Action a);
-   
+
 }

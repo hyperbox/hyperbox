@@ -33,17 +33,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class NetworkAttachModeListAction extends AbstractHyperboxMultiTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.NetworkAttachModeList.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       List<String> attachModesId = hbox.getHypervisor().listNicAttachModes();
@@ -52,5 +52,5 @@ public final class NetworkAttachModeListAction extends AbstractHyperboxMultiTask
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, namOut));
       }
    }
-   
+
 }

@@ -58,111 +58,111 @@ import java.util.List;
 import java.util.Set;
 
 public interface _ServerReader {
-   
+
    public String getId();
-   
+
    public String getName();
-   
+
    public String getType();
-   
+
    public String getVersion();
-   
+
    public String getProtocolVersion();
-   
+
    public String getLogLevel();
-   
+
    public _GuestReader getGuest(String vmId);
-   
+
    public MachineOut getMachine(MachineIn mIn);
-   
+
    public MachineOut getMachine(String vmId);
-   
+
    public _Machine getMachineReader(String id);
-   
+
    public MediumOut getMedium(MediumIn mIn);
-   
+
    public SessionOut getSession(SessionIn sIn);
-   
+
    public StorageControllerSubTypeOut getStorageControllerSubType(StorageControllerSubTypeIn scstIn);
-   
+
    public StorageControllerTypeOut getStorageControllerType(StorageControllerTypeIn sctIn);
-   
+
    public StoreOut getStore(StoreIn sIn);
-   
+
    public StoreItemOut getStoreItem(StoreItemIn siIn);
-   
+
    public TaskOut getTask(TaskIn tIn);
-   
+
    public UserOut getUser(UserIn uIn);
-   
+
    public List<StorageDeviceAttachmentOut> listAttachments(StorageControllerIn scIn);
-   
+
    public List<StorageDeviceAttachmentOut> listAttachments(String machineUuid);
-   
+
    public List<String> listKeyboardMode(MachineIn mIn);
-   
+
    public List<MachineOut> listMachines();
-   
+
    public List<MediumOut> listMediums();
-   
+
    public List<NetworkInterfaceOut> listNetworkInterfaces(MachineIn mIn);
-   
+
    public List<NetworkAttachModeOut> listNetworkAttachModes();
-   
+
    public List<NetworkAttachNameOut> listNetworkAttachNames(NetworkAttachModeIn namIn);
-   
+
    public List<NetworkInterfaceTypeOut> listNetworkInterfaceTypes();
-   
+
    public List<String> listMouseMode(MachineIn mIn);
-   
+
    public List<OsTypeOut> listOsType();
-   
+
    public List<OsTypeOut> listOsType(MachineIn mIn);
-   
+
    public List<SessionOut> listSessions();
-   
+
    public List<StorageControllerSubTypeOut> listStorageControllerSubType(StorageControllerTypeIn sctIn);
-   
+
    public List<StorageControllerTypeOut> listStorageControllerType();
-   
+
    public List<StoreItemOut> listStoreItems(StoreIn sIn);
-   
+
    public List<StoreItemOut> listStoreItems(StoreIn sIn, StoreItemIn siIn);
-   
+
    public List<StoreOut> listStores();
-   
+
    public List<TaskOut> listTasks();
-   
+
    public List<UserOut> listUsers();
-   
+
    public List<PermissionOut> listPermissions(UserIn usrIn);
-   
+
    public SnapshotOut getRootSnapshot(String vmId);
-   
+
    public SnapshotOut getSnapshot(String vmId, String snapUuid);
-   
+
    public SnapshotOut getSnapshot(MachineIn mIn, SnapshotIn snapIn);
-   
+
    public SnapshotOut getCurrentSnapshot(String vmId);
-   
+
    public SnapshotOut getCurrentSnapshot(MachineIn mIn);
-   
+
    public boolean isHypervisorConnected();
-   
+
    public _Hypervisor getHypervisor();
-   
+
    public ScreenshotOut getScreenshot(MachineIn mIn);
-   
+
    public List<HypervisorLoaderOut> listHypervisors();
-   
+
    public HostOut getHost();
-   
+
    public List<ModuleOut> listModules();
-   
+
    public ModuleOut getModule(String modId);
-   
+
    public Set<String> listLogLevel();
-   
+
    public _Task getTask(String id);
-   
+
 }

@@ -22,9 +22,9 @@ package org.altherian.hbox.exception;
 
 @SuppressWarnings("serial")
 public class ServiceException extends HyperboxException {
-   
+
    public ServiceException(String s) {
       super(s);
    }
-   
+
 }

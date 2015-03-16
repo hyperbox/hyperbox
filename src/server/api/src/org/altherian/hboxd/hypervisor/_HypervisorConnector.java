@@ -22,17 +22,17 @@
 package org.altherian.hboxd.hypervisor;
 
 public interface _HypervisorConnector {
-   
+
    public String getHypervisorId();
-   
+
    public String getOptions();
-   
+
    public Boolean isAutoConnect();
-   
+
    public void setHypervisorId(String hypervisorId);
-   
+
    public void setOptions(String options);
-   
+
    public void setAutoConnect(Boolean autoConnect);
-   
+
 }

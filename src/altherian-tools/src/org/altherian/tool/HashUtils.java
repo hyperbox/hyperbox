@@ -24,7 +24,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class HashUtils {
-   
+
    public static String sha1(byte[] input) throws NoSuchAlgorithmException {
       MessageDigest mDigest = MessageDigest.getInstance("SHA1");
       byte[] result = mDigest.digest(input);
@@ -32,8 +32,8 @@ public class HashUtils {
       for (byte element : result) {
          sb.append(Integer.toString((element & 0xff) + 0x100, 16).substring(1));
       }
-      
+
       return sb.toString();
    }
-   
+
 }

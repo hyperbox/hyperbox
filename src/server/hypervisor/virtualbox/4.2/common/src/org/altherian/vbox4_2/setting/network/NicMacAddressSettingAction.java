@@ -28,25 +28,25 @@ import org.virtualbox_4_2.INetworkAdapter;
 import org.virtualbox_4_2.LockType;
 
 public class NicMacAddressSettingAction implements _NetworkInterfaceSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return NetworkInterfaceAttribute.MacAddress.toString();
    }
-   
+
    @Override
    public void set(INetworkAdapter nic, _Setting setting) {
       nic.setMACAddress(setting.getValue().toString());
    }
-   
+
    @Override
    public _Setting get(INetworkAdapter nic) {
       return new StringSetting(NetworkInterfaceAttribute.MacAddress, nic.getMACAddress());
    }
-   
+
 }

@@ -21,9 +21,9 @@
 package org.altherian.hbox.comm.io;
 
 public interface _ObjectIO {
-   
+
    public String getId();
-   
+
    public _ObjectIO getIO();
-   
+
 }

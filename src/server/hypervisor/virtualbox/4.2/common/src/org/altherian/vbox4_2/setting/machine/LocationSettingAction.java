@@ -30,25 +30,25 @@ import org.virtualbox_4_2.IMachine;
 import org.virtualbox_4_2.LockType;
 
 public class LocationSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Shared;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.Location.getId();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       throw new ConfigurationException("Read-only attribute: " + getSettingName());
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new LocationSetting(new File(machine.getSettingsFilePath()).getParentFile().getAbsolutePath());
    }
-   
+
 }

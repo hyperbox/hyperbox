@@ -24,13 +24,13 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 
 @SuppressWarnings("serial")
 public class ConnectorNotFoundException extends HyperboxRuntimeException {
-   
+
    public ConnectorNotFoundException() {
       this("Connector not found");
    }
-   
+
    public ConnectorNotFoundException(String s) {
       super(s);
    }
-   
+
 }

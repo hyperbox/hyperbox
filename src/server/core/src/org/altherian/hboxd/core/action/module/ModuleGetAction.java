@@ -36,17 +36,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ModuleGetAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.ModuleGet.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       ModuleIn modIn = request.get(ModuleIn.class);
@@ -54,5 +54,5 @@ public class ModuleGetAction extends ASingleTaskAction {
       ModuleOut modOut = ModuleIoFactory.get(mod);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, modOut));
    }
-   
+
 }

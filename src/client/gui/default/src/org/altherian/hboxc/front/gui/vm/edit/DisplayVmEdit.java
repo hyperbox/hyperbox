@@ -35,10 +35,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public final class DisplayVmEdit {
-   
+
    private MachineIn mIn;
    private MachineOut mOut;
-   
+
    private JPanel panel;
    private JLabel vramLabel;
    private JLabel monitorCountLabel;
@@ -48,7 +48,7 @@ public final class DisplayVmEdit {
    private JTextField monitorCountField;
    private JCheckBox accel2dBox;
    private JCheckBox accel3dBox;
-   
+
    public DisplayVmEdit() {
       vramLabel = new JLabel("VRAM");
       vramField = new JTextField();
@@ -58,7 +58,7 @@ public final class DisplayVmEdit {
       accel2dBox = new JCheckBox();
       accel3dLabel = new JLabel("3D Acceleration");
       accel3dBox = new JCheckBox();
-      
+
       JPanel gfxPanel = new JPanel(new MigLayout());
       gfxPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY), "Graphics"));
       gfxPanel.add(vramLabel);
@@ -69,25 +69,25 @@ public final class DisplayVmEdit {
       gfxPanel.add(accel2dBox, "growx,pushx,wrap");
       gfxPanel.add(accel3dLabel);
       gfxPanel.add(accel3dBox, "growx,pushx,wrap");
-      
+
       panel = new JPanel(new MigLayout());
       panel.add(gfxPanel, "growx,pushx,wrap");
    }
-   
+
    public Component getComp() {
       return panel;
    }
-   
+
    public void update(MachineOut mOut, MachineIn mIn) {
       this.mIn = mIn;
       this.mOut = mOut;
-      
+
       vramField.setText(mOut.getSetting(MachineAttribute.VRAM).getString());
       monitorCountField.setText(mOut.getSetting(MachineAttribute.MonitorCount).getString());
       accel2dBox.setSelected(mOut.getSetting(MachineAttribute.Accelerate2dVideo).getBoolean());
       accel3dBox.setSelected(mOut.getSetting(MachineAttribute.Accelerate3d).getBoolean());
    }
-   
+
    public void save() {
       if (!mOut.getSetting(MachineAttribute.VRAM).getString().contentEquals(vramField.getText())) {
          mIn.setSetting(new PositiveNumberSettingIO(MachineAttribute.VRAM, Long.parseLong(vramField.getText())));
@@ -102,5 +102,5 @@ public final class DisplayVmEdit {
          mIn.setSetting(new BooleanSettingIO(MachineAttribute.Accelerate3d, accel3dBox.isSelected()));
       }
    }
-   
+
 }

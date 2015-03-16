@@ -25,9 +25,9 @@ import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hboxd.security._User;
 
 public class UserAddedEvent extends UserEvent {
-   
+
    public UserAddedEvent(_User usr) {
       super(HyperboxEvents.UserAdded, usr);
    }
-   
+
 }

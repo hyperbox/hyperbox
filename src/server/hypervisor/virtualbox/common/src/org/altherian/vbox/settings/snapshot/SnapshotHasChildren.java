@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public class SnapshotHasChildren extends BooleanSetting {
-   
+
    public SnapshotHasChildren(Boolean hasChildren) {
       super(SnapshotAttribute.HasChildren, hasChildren);
    }
-   
+
 }

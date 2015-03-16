@@ -21,19 +21,19 @@
 package org.altherian.hbox.comm.out;
 
 public class HelloOut extends ObjectOut {
-   
+
    private String protocolVersion = "";
-   
+
    protected HelloOut() {
       // used for (de)serialisation
    }
-   
+
    public HelloOut(String protocolVersion) {
       this.protocolVersion = protocolVersion;
    }
-   
+
    public String getProtocolVersion() {
       return protocolVersion;
    }
-   
+
 }

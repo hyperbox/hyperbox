@@ -24,14 +24,14 @@ import org.altherian.hbox.event.Event;
 import org.altherian.hboxc.state.CoreState;
 
 public class CoreStateEvent extends Event {
-   
+
    public CoreStateEvent(CoreState state) {
       super(ClientEventTypes.CoreState);
       set(state);
    }
-   
+
    public CoreState getState() {
       return get(CoreState.class);
    }
-   
+
 }

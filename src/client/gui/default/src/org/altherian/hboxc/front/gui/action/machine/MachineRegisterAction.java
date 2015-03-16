@@ -36,18 +36,18 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public final class MachineRegisterAction extends AbstractAction {
-   
+
    private _SingleServerSelector select;
-   
+
    public MachineRegisterAction(_SingleServerSelector select, String label) {
       super(label, IconBuilder.getTask(HypervisorTasks.MachineRegister));
       this.select = select;
    }
-   
+
    public MachineRegisterAction(_SingleServerSelector select) {
       this(select, "Register");
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       StoreItemOut vboxFilePathOut = StoreItemChooser.getExisitingFile(select.getServer().getId());
@@ -56,5 +56,5 @@ public final class MachineRegisterAction extends AbstractAction {
          Gui.post(new Request(Command.VBOX, HypervisorTasks.MachineRegister, new ServerIn(select.getServer().getId()), vboxFilePathIn));
       }
    }
-   
+
 }

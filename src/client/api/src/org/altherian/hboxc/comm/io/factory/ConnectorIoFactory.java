@@ -32,7 +32,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class ConnectorIoFactory {
-   
+
    public static ConnectorOutput get(_Connector conn) {
       List<SettingIO> settings = new ArrayList<SettingIO>();
       settings.add(new StringSettingIO(ConnectorAttributes.Label, conn.getLabel()));
@@ -48,7 +48,7 @@ public class ConnectorIoFactory {
       ConnectorOutput srvOut = new ConnectorOutput(conn.getId(), settings);
       return srvOut;
    }
-   
+
    public static List<ConnectorOutput> getList(Collection<_Connector> objList) {
       List<ConnectorOutput> listOut = new ArrayList<ConnectorOutput>();
       for (_Connector obj : objList) {
@@ -56,5 +56,5 @@ public class ConnectorIoFactory {
       }
       return listOut;
    }
-   
+
 }

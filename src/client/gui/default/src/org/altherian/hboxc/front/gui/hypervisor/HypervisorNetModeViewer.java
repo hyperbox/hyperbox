@@ -40,12 +40,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class HypervisorNetModeViewer implements _Refreshable, _NetAdaptorListReceiver {
-   
+
    private String srvId;
    private NetModeOut mode;
-   
+
    private JPanel panel = new JPanel(new MigLayout());
-   
+
    public HypervisorNetModeViewer(String srvId, NetModeOut mode) {
       Logger.warning("Creating new net mode viewer");
       this.srvId = srvId;
@@ -53,16 +53,16 @@ public class HypervisorNetModeViewer implements _Refreshable, _NetAdaptorListRec
       ViewEventManager.register(this);
       refresh();
    }
-   
+
    @Override
    public void refresh() {
       NetAdaptorListWorker.execute(this, srvId, mode.getId());
    }
-   
+
    public JComponent getComponent() {
       return panel;
    }
-   
+
    @Handler
    private void putNetAdaptorEvent(NetAdaptorEventOut ev) {
       if (mode.getId().equals(ev.getNetMode())) {
@@ -72,14 +72,14 @@ public class HypervisorNetModeViewer implements _Refreshable, _NetAdaptorListRec
          Logger.debug(mode.getId() + " is not " + ev.getNetMode() + " - skipping refresh...");
       }
    }
-   
+
    @Override
    public void loadingStarted() {
       panel.removeAll();
       panel.revalidate();
       panel.repaint();
    }
-   
+
    @Override
    public void loadingFinished(boolean isSuccessful, String message) {
       if (!isSuccessful) {
@@ -96,7 +96,7 @@ public class HypervisorNetModeViewer implements _Refreshable, _NetAdaptorListRec
       panel.revalidate();
       panel.repaint();
    }
-   
+
    @Override
    public void add(List<NetAdaptorOut> adaptOutList) {
       for (NetAdaptorOut adapt : adaptOutList) {
@@ -109,5 +109,5 @@ public class HypervisorNetModeViewer implements _Refreshable, _NetAdaptorListRec
          }
       }
    }
-   
+
 }

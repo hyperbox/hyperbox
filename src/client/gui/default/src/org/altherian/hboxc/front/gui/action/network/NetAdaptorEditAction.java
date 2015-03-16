@@ -34,18 +34,18 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class NetAdaptorEditAction extends AbstractAction {
-   
+
    private String srvId;
    private String modeId;
    private String adaptId;
-   
+
    public NetAdaptorEditAction(String srvId, String modeId, String adaptId) {
       super("Edit", IconBuilder.getTask(HypervisorTasks.NetAdaptorModify));
       this.srvId = srvId;
       this.modeId = modeId;
       this.adaptId = adaptId;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       NetAdaptorIn adaptIn = NetAdaptorDialog.getInput(srvId, modeId, adaptId);
@@ -57,5 +57,5 @@ public class NetAdaptorEditAction extends AbstractAction {
          Logger.debug("Net Adaptor creation: null input returned");
       }
    }
-   
+
 }

@@ -21,12 +21,12 @@
 package org.altherian.hbox.constant.security;
 
 public enum Machine {
-   
+
    List,
    Get,
    Modify,
    Register,
    Unregister,
    Delete,
-   
+
 }

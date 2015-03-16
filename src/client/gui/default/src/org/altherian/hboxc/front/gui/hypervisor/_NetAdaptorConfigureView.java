@@ -25,11 +25,11 @@ import org.altherian.hbox.comm.out.network.NetAdaptorOut;
 import javax.swing.JComponent;
 
 public interface _NetAdaptorConfigureView {
-   
+
    public JComponent getComponent();
-   
+
    public void update(NetAdaptorOut nicOut);
-   
+
    public NetAdaptorIn getInput();
-   
+
 }

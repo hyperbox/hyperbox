@@ -26,28 +26,28 @@ package org.altherian.hbox.constant;
  * @author noteirak
  */
 public enum MouseMode {
-   
+
    None,
-   
+
    /**
     * PS/2 mouse mode
     */
    Ps2,
-   
+
    /**
     * Normal USB mouse
     */
    Usb,
-   
+
    /**
     * Pointing device mouse
     */
    UsbTablet,
-   
+
    ComboMouse;
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

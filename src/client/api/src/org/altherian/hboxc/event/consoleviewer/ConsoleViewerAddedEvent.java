@@ -25,9 +25,9 @@ import org.altherian.hboxc.comm.output.ConsoleViewerOutput;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class ConsoleViewerAddedEvent extends ConsoleViewerEvent {
-   
+
    public ConsoleViewerAddedEvent(ConsoleViewerOutput data) {
       super(ClientEvents.ConsoleViewerAdd, data);
    }
-   
+
 }

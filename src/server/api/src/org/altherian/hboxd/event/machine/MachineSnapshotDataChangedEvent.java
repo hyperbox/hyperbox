@@ -24,9 +24,9 @@ package org.altherian.hboxd.event.machine;
 import org.altherian.hbox.event.HyperboxEvents;
 
 public class MachineSnapshotDataChangedEvent extends MachineEvent {
-   
+
    public MachineSnapshotDataChangedEvent(String uuid) {
       super(HyperboxEvents.MachineSnapshotDataChange, uuid);
    }
-   
+
 }

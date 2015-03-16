@@ -27,22 +27,22 @@ import org.virtualbox_4_3.ISessionStateChangedEvent;
 import org.virtualbox_4_3.VBoxEventType;
 
 public class MachineSessionStateEventFactory implements _PreciseEventFactory {
-   
+
    @Override
    public VBoxEventType getType() {
       return VBoxEventType.OnSessionStateChanged;
    }
-   
+
    @Override
    public ISessionStateChangedEvent getRaw(IEvent vbEvent) {
-      
+
       return ISessionStateChangedEvent.queryInterface(vbEvent);
    }
-   
+
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      
+
       return null;
    }
-   
+
 }

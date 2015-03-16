@@ -24,47 +24,47 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class BiEnumMap<K extends Enum<K>, V extends Enum<V>> {
-   
+
    private Map<K, V> keyMap;
    private Map<V, K> valueMap;
-   
+
    public BiEnumMap(Class<K> keyClass, Class<V> valueClass) {
       keyMap = new EnumMap<K, V>(keyClass);
       valueMap = new EnumMap<V, K>(valueClass);
    }
-   
+
    public void clear() {
       keyMap.clear();
       valueMap.clear();
    }
-   
+
    public boolean contains(K arg) {
       return keyMap.containsKey(arg);
    }
-   
+
    public boolean containsReverse(V arg) {
       return valueMap.containsKey(arg);
    }
-   
+
    public V get(K arg0) {
       return keyMap.get(arg0);
    }
-   
+
    public K getReverse(V arg0) {
       return valueMap.get(arg0);
    }
-   
+
    public boolean isEmpty() {
       return keyMap.isEmpty();
    }
-   
+
    public void put(K arg0, V arg1) {
       keyMap.put(arg0, arg1);
       valueMap.put(arg1, arg0);
    }
-   
+
    public int size() {
       return keyMap.size();
    }
-   
+
 }

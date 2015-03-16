@@ -29,25 +29,25 @@ import org.virtualbox_4_4.IMachine;
 import org.virtualbox_4_4.LockType;
 
 public class VrdeModuleSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Shared;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.VrdeModule.getId();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       machine.getVRDEServer().setVRDEExtPack(setting.getString());
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new StringSetting(MachineAttribute.VrdeModule, machine.getVRDEServer().getVRDEExtPack());
    }
-   
+
 }

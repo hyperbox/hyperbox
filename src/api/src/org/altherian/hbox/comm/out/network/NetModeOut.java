@@ -25,7 +25,7 @@ import org.altherian.hbox.constant.EntityType;
 import java.util.List;
 
 public class NetModeOut extends ObjectOut {
-   
+
    private String label;
    private List<String> netServices;
    private boolean canLinkAdaptor;
@@ -33,11 +33,11 @@ public class NetModeOut extends ObjectOut {
    private boolean canRemoveAdaptor;
    private boolean canLinkNetworkName;
    private boolean canRenameAdaptor;
-   
+
    protected NetModeOut() {
       // Serialization
    }
-   
+
    public NetModeOut(String id, String label, List<String> netServices, boolean canLinkAdaptor, boolean canAddAdaptor, boolean canRemoveAdaptor,
          boolean canLinkNetworkName, boolean canRenameAdaptor) {
       super(EntityType.NetMode, id);
@@ -49,33 +49,33 @@ public class NetModeOut extends ObjectOut {
       this.canLinkNetworkName = canLinkNetworkName;
       this.canRenameAdaptor = canRenameAdaptor;
    }
-   
+
    public String getLabel() {
       return label;
    }
-   
+
    public List<String> getNetServices() {
       return netServices;
    }
-   
+
    public boolean canLinkAdaptor() {
       return canLinkAdaptor;
    }
-   
+
    public boolean canAddAdaptor() {
       return canAddAdaptor;
    }
-   
+
    public boolean canRemoveAdaptor() {
       return canRemoveAdaptor;
    }
-   
+
    public boolean canLinkNetworkName() {
       return canLinkNetworkName;
    }
-   
+
    public boolean canRenameAdaptor() {
       return canRenameAdaptor;
    }
-   
+
 }

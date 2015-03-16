@@ -71,70 +71,70 @@ import java.util.Set;
  * 
  */
 public interface _Module {
-   
+
    /**
     * Return this module's ID.
     * 
     * @return a String uniquely identifying the module.
     */
    public String getId();
-   
+
    /**
     * Return this module's Name, which is used for display purpose.
     * 
     * @return a String for this module name, or null/empty String if none was given.
     */
    public String getName();
-   
+
    /**
     * Return this module file descriptor absolute path.
     * 
     * @return the absolute path to the file descriptor as String
     */
    public String getDescriptor();
-   
+
    /**
     * Return this module location, either base path or single file.
     * 
     * @return The absolute path to this module file(s)..
     */
    public String getLocation();
-   
+
    /**
     * Return the module version. The format will solely depend on the module.
     * 
     * @return version as String.
     */
    public String getVersion();
-   
+
    /**
     * Return the module's vendor given in the Descriptor File.
     * 
     * @return String of the module vendor, or null/empty String if none was provided.
     */
    public String getVendor();
-   
+
    /**
     * Return the module's website given in the Descriptor File.
     * 
     * @return String of the module's website or null/empty String if none was provided.
     */
    public String getUrl();
-   
+
    /**
     * Return the resources that compose this module.
     * 
     * @return {@link Set} of {@link URL} pointing to the Java code for this module.
     */
    public Set<URL> getRessources();
-   
+
    /**
     * Return the set of providers type this module offers.
     * 
     * @return a {@link Set} of {@link URL} for the generic type of providers.
     */
    public Set<Class<?>> getTypes();
-   
+
    /**
     * Return the specific provider for the generic type.
     * 
@@ -143,7 +143,7 @@ public interface _Module {
     * @throws ModuleException If an error occurred during Class initialisation.
     */
    public Class<?> getProvider(Class<?> type) throws ModuleException;
-   
+
    /**
     * Return an object instance of the provider for the given generic type using the {@link _ModuleClassLoader} within this module instance.
     * 
@@ -152,52 +152,52 @@ public interface _Module {
     * @throws ModuleException If an error occurred during the instance creation.
     */
    public Object buildProvider(Class<?> type) throws ModuleException;
-   
+
    /**
     * Load this module, generating the provider type's classes and the provider's classes.
     * 
     * @throws ModuleException If an error occurred during the load process.
     */
    public void load() throws ModuleException;
-   
+
    /**
     * Unload the module.
     * 
     * @throws ModuleException If an error occurred during unload or if the module does not support it.
     */
    public void unload() throws ModuleException;
-   
+
    /**
     * Indicates if the module is loaded.
     * 
     * @return true if the module is loaded, else false.
     */
    public boolean isLoaded();
-   
+
    /**
     * Enable this module.
     * 
     * @throws ModuleException If an error occurred.
     */
    public void enable() throws ModuleException;
-   
+
    /**
     * Disable this module. This will unload the module if it is loaded.
     */
    public void disable();
-   
+
    /**
     * Indicates if the module is enabled.
     * 
     * @return true if the module is enabled, else false.
     */
    public boolean isEnabled();
-   
+
    /**
     * Indicates if the module is enabled, loaded and ready for usage.
     * 
     * @return true if the module is ready, else false.
     */
    public boolean isReady();
-   
+
 }

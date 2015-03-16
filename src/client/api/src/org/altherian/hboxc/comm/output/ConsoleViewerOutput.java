@@ -28,7 +28,7 @@ import org.altherian.hboxc.constant.ConsoleViewerAttributes;
 import org.altherian.hboxc.core._ConsoleViewerReader;
 
 public class ConsoleViewerOutput extends ObjectOut implements _ConsoleViewerReader {
-   
+
    public ConsoleViewerOutput(String id, String hypervisorId, String moduleId, String viewerPath, String args) {
       super(ClientEntity.ConsoleViewer, id);
       setSetting(new StringSettingIO(ConsoleViewerAttributes.HypervisorTypeId, hypervisorId));
@@ -36,25 +36,25 @@ public class ConsoleViewerOutput extends ObjectOut implements _ConsoleViewerRead
       setSetting(new StringSettingIO(ConsoleViewerAttributes.ViewerPath, viewerPath));
       setSetting(new StringSettingIO(ConsoleViewerAttributes.Args, args));
    }
-   
+
    @Override
    public String getHypervisorId() {
       return getSetting(ConsoleViewerAttributes.HypervisorTypeId).getString();
    }
-   
+
    @Override
    public String getModuleId() {
       return getSetting(ConsoleViewerAttributes.ModuleId).getString();
    }
-   
+
    @Override
    public String getViewerPath() {
       return getSetting(ConsoleViewerAttributes.ViewerPath).getString();
    }
-   
+
    @Override
    public String getArgs() {
       return getSetting(ConsoleViewerAttributes.Args).getString();
    }
-   
+
 }

@@ -27,18 +27,18 @@ import org.altherian.hbox.comm.out.storage.StorageControllerOut;
 import java.util.Date;
 
 public abstract class StorageControllerEventOut extends MachineEventOut {
-   
+
    protected StorageControllerEventOut() {
       // Used for serialization
    }
-   
+
    public StorageControllerEventOut(Date time, Enum<?> id, ServerOut srvOut, MachineOut vmOut, StorageControllerOut stoOut) {
       super(time, id, srvOut, vmOut);
       set(StorageControllerOut.class, stoOut);
    }
-   
+
    public StorageControllerOut getStorageController() {
       return get(StorageControllerOut.class);
    }
-   
+
 }

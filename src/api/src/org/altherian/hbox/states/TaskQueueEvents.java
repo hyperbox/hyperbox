@@ -21,8 +21,8 @@
 package org.altherian.hbox.states;
 
 public enum TaskQueueEvents {
-   
+
    TaskAdded,
    TaskRemoved,
-   
+
 }

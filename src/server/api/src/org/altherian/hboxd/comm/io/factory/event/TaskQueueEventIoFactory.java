@@ -31,17 +31,17 @@ import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.tool.logging.Logger;
 
 public final class TaskQueueEventIoFactory implements _EventIoFactory {
-   
+
    @Override
    public Enum<?>[] getHandles() {
       return new Enum<?>[] {
             HyperboxEvents.TaskQueue
       };
    }
-   
+
    @Override
    public EventOut get(_Hyperbox hbox, _Event ev) {
-      
+
       switch ((HyperboxEvents) ev.getEventId()) {
          case TaskQueue:
             Logger.debug("Creating a new TaskQueueEvent of type " + ev.get(TaskQueueEvents.class));
@@ -50,5 +50,5 @@ public final class TaskQueueEventIoFactory implements _EventIoFactory {
             return null;
       }
    }
-   
+
 }

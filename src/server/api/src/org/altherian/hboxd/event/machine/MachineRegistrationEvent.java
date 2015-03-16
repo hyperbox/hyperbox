@@ -23,14 +23,14 @@ package org.altherian.hboxd.event.machine;
 import org.altherian.hbox.event.HyperboxEvents;
 
 public class MachineRegistrationEvent extends MachineEvent {
-   
+
    private Boolean isRegistered;
-   
+
    public MachineRegistrationEvent(String id, Boolean isRegistrated) {
       super(HyperboxEvents.MachineRegistration, id);
       this.isRegistered = isRegistrated;
    }
-   
+
    public Boolean isRegistrated() {
       return isRegistered;
    }

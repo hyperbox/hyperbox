@@ -31,17 +31,17 @@ import org.virtualbox_4_3.LockType;
 import org.virtualbox_4_3.VBoxException;
 
 public class NicCableConnectedSettingAction implements _NetworkInterfaceSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Shared;
    }
-   
+
    @Override
    public String getSettingName() {
       return NetworkInterfaceAttribute.CableConnected.getId();
    }
-   
+
    @Override
    public void set(INetworkAdapter nic, _Setting setting) {
       try {
@@ -50,10 +50,10 @@ public class NicCableConnectedSettingAction implements _NetworkInterfaceSettingA
          throw new ConfigurationException(e.getMessage());
       }
    }
-   
+
    @Override
    public _Setting get(INetworkAdapter nic) {
       return new NicCableConnectedSetting(nic.getCableConnected());
    }
-   
+
 }

@@ -23,59 +23,59 @@ package org.altherian.hboxd.core.model;
 import java.util.Set;
 
 public interface _StorageController extends _Device {
-   
+
    @Override
    public String getId();
-   
+
    public String getMachineUuid();
-   
+
    public String getName();
-   
+
    public void setName(String name);
-   
+
    /**
     * IDE, SATA, ...
     * 
     * @return ID for the type
     */
    public String getControllerType();
-   
+
    /**
     * AHCI, etc
     * 
     * @return ID for the precise type
     */
    public String getControllerSubType();
-   
+
    /**
     * AHCI, etc
     * 
     * @param subType ID for the precise type
     */
    public void setSubType(String subType);
-   
+
    public long getPortCount();
-   
+
    public void setPortCount(long portCount);
-   
+
    public long getMaxPortCount();
-   
+
    public long getMaxDeviceCount();
-   
+
    public void attachDevice(String deviceId, long portNb, long deviceNb);
-   
+
    public void detachDevice(long portNb, long deviceNb);
-   
+
    public Set<_Medium> listMedium();
-   
+
    public Set<_MediumAttachment> listMediumAttachment();
-   
+
    public void attachMedium(_Medium medium);
-   
+
    public void attachMedium(_Medium medium, long portNb, long deviceNb);
-   
+
    public void detachMedium(_Medium medium);
-   
+
    /**
     * Will force if the media is locked
     * 
@@ -83,9 +83,9 @@ public interface _StorageController extends _Device {
     * @param deviceNb the device number to use
     */
    public void detachMedium(long portNb, long deviceNb);
-   
+
    public boolean isSlotTaken(long portNb, long deviceNb);
-   
+
    public _MediumAttachment getMediumAttachment(long portNb, long deviceNb);
-   
+
 }

@@ -35,7 +35,7 @@ import java.sql.SQLException;
 import org.h2.jdbcx.JdbcDataSource;
 
 public class H2SqlPersistor extends SqlPersistor {
-   
+
    public static final String CFGKEY_H2_DATA_FOLDER = "core.persistance.h2.data.folder";
    public static final String CFGVAL_H2_DATA_FOLDER = "data";
    public static final String CFGKEY_H2_DATA_FILE = "core.persistance.h2.data.file";
@@ -48,31 +48,31 @@ public class H2SqlPersistor extends SqlPersistor {
    public static final String CFGVAL_H2_USER = "hyperbox";
    public static final String CFGKEY_H2_PASS = "core.persistance.h2.connect.pass";
    public static final String CFGVAL_H2_PASS = "hyperbox";
-   
+
    private Connection conn;
-   
+
    @Override
    public void init() throws PersistorException {
       // stub
    }
-   
+
    @Override
    public void destroy() {
-      
+
       try {
          conn.commit();
       } catch (SQLException e) {
          Logger.warning("Error when trying to commit the H2 engine connection: " + e.getMessage());
       }
-      
+
       try {
          conn.close();
       } catch (SQLException e) {
          Logger.warning("Error when trying to close the H2 engine connection: " + e.getMessage());
       }
-      
+
    }
-   
+
    @Override
    public Connection getConn() {
       try {
@@ -84,12 +84,12 @@ public class H2SqlPersistor extends SqlPersistor {
                         Configuration.getSetting(CFGKEY_H2_DATA_FILE, CFGVAL_H2_DATA_FILE);
             String user = Configuration.getSetting(CFGKEY_H2_USER, CFGVAL_H2_USER);
             String pass = Configuration.getSetting(CFGKEY_H2_PASS, CFGVAL_H2_PASS);
-            
+
             JdbcDataSource ds = new JdbcDataSource();
             ds.setURL(connectString);
             ds.setUser(user);
             ds.setPassword(pass);
-            
+
             conn = ds.getConnection();
          }
          return conn;
@@ -97,5 +97,5 @@ public class H2SqlPersistor extends SqlPersistor {
          throw new HyperboxRuntimeException("Unable to get H2 connection", e);
       }
    }
-   
+
 }

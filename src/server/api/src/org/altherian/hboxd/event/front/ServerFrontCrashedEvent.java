@@ -25,9 +25,9 @@ import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hboxd.front._Front;
 
 public class ServerFrontCrashedEvent extends ServerFrontEvent {
-   
+
    public ServerFrontCrashedEvent(_Front front) {
       super(HyperboxEvents.ServerFrontCrashed, front);
    }
-   
+
 }

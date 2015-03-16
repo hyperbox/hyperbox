@@ -37,19 +37,19 @@ import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public class SnapshotDeleteAction extends AbstractAction {
-   
+
    private _SnapshotSelector selector;
-   
+
    public SnapshotDeleteAction(String label, Icon icon, String toolTip, _SnapshotSelector selector) {
       super(label, icon);
       putValue(SHORT_DESCRIPTION, toolTip);
       this.selector = selector;
    }
-   
+
    public SnapshotDeleteAction(_SnapshotSelector selector) {
       this(null, IconBuilder.getTask(HypervisorTasks.SnapshotDelete), "Delete the selected snapshot(s)", selector);
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       if (selector.getSelection().size() > 0) {
@@ -70,5 +70,5 @@ public class SnapshotDeleteAction extends AbstractAction {
          }
       }
    }
-   
+
 }

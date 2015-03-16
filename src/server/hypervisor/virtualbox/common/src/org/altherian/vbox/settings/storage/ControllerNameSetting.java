@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.setting.StringSetting;
 
 public class ControllerNameSetting extends StringSetting {
-   
+
    public ControllerNameSetting(String name) {
       super(StorageControllerAttribute.Name, name);
    }
-   
+
 }

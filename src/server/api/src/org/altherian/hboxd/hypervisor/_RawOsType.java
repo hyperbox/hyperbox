@@ -21,11 +21,11 @@
 package org.altherian.hboxd.hypervisor;
 
 public interface _RawOsType {
-   
+
    public String getId();
-   
+
    public String getName();
-   
+
    public long getBitness();
-   
+
 }

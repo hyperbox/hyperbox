@@ -23,23 +23,23 @@ package org.altherian.hboxd.core.model;
 import org.altherian.hboxd.hypervisor._RawItem;
 
 public interface _Display extends _RawItem {
-   
+
    /**
     * Get the amount of video memory
     * 
     * @return in MB (megabytes)
     */
    public long getVideoMemoryAmount();
-   
+
    /**
     * Change the Video memory amount
     * 
     * @param amount in MB (megabytes)
     */
    public void setVideoMemoryAmount(long amount);
-   
+
    public long getMonitorCount();
-   
+
    public void setMonitorCount(long monitor);
-   
+
 }

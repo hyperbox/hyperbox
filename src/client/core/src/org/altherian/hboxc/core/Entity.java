@@ -27,52 +27,52 @@ import java.util.List;
 import java.util.Set;
 
 public class Entity implements _Entity {
-   
+
    private String id;
    private SettingManager mgr = new SettingManager();
-   
+
    public Entity(String id) {
       this.id = id;
    }
-   
+
    @Override
    public List<_Setting> getSettings() {
       return mgr.list();
    }
-   
+
    @Override
    public _Setting getSetting(String settingId) {
       return mgr.get(settingId);
    }
-   
+
    @Override
    public void setSetting(_Setting setting) {
       mgr.set(setting);
    }
-   
+
    @Override
    public void setSetting(List<_Setting> settings) {
       mgr.set(settings);
    }
-   
+
    @Override
    public boolean hasSetting(String settingId) {
       return mgr.has(settingId);
    }
-   
+
    @Override
    public void unsetSetting(String id) {
       mgr.unset(id);
    }
-   
+
    @Override
    public void unsetSettings(Set<String> ids) {
       mgr.unset(new ArrayList<String>(ids));
    }
-   
+
    @Override
    public String getId() {
       return id;
    }
-   
+
 }

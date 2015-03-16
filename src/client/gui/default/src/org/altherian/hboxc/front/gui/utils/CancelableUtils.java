@@ -28,22 +28,22 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 public class CancelableUtils {
-   
+
    private CancelableUtils() {
       // static only
    }
-   
+
    private static final String cancelAction = "cancel";
    private static KeyStroke escapeKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
-   
+
    public static void set(_Cancelable c, JComponent comp) {
       comp.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escapeKeyStroke, cancelAction);
       comp.getActionMap().put(cancelAction, new CancelAction(c));
    }
-   
+
    public static void unset(JComponent comp) {
       comp.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).remove(escapeKeyStroke);
       comp.getActionMap().remove(cancelAction);
    }
-   
+
 }

@@ -27,11 +27,11 @@ import org.altherian.hboxc.core.back.kryonet.KryonetClientBack;
 import org.junit.BeforeClass;
 
 public class KryonetClientBackTest extends BackendTest {
-   
+
    @BeforeClass
    public static void beforeClass() throws HyperboxException {
       ServerIn srvIn = new ServerIn();
       BackendTest.init(new KryonetClientBack(), srvIn);
    }
-   
+
 }

@@ -29,39 +29,39 @@ import java.util.List;
 import java.util.Map;
 
 public class NetService_NAT_IO extends NetServiceIO implements _NetService_NAT {
-   
+
    private Map<String, _NATRule> rules = new HashMap<String, _NATRule>();
-   
+
    protected NetService_NAT_IO() {
-      
+
    }
-   
+
    public NetService_NAT_IO(NetService_NAT_IO io) {
       super(io);
    }
-   
+
    public NetService_NAT_IO(String type, boolean isEnabled) {
       super(type, isEnabled);
    }
-   
+
    @Override
    public List<_NATRule> getRules() {
       return new ArrayList<_NATRule>(rules.values());
    }
-   
+
    @Override
    public void addRule(_NATRule rule) {
       rules.put(rule.getId(), rule);
    }
-   
+
    @Override
    public _NATRule getRule(String id) throws ObjectNotFoundException {
       return rules.get(id);
    }
-   
+
    @Override
    public void removeRule(String id) throws ObjectNotFoundException {
       rules.remove(id);
    }
-   
+
 }

@@ -21,7 +21,7 @@
 package org.altherian.hbox.comm;
 
 public interface _RequestReceiver {
-   
+
    public void putRequest(Request request);
-   
+
 }

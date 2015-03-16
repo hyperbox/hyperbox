@@ -39,17 +39,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class MachineCreateAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.MachineCreate.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       MachineIn mIn = request.get(MachineIn.class);
@@ -57,14 +57,14 @@ public final class MachineCreateAction extends ASingleTaskAction {
       if (request.has(ServerIn.class)) {
          serverId = request.get(ServerIn.class).getId();
       }
-      
+
       String osTypeId = mIn.hasSetting(MachineAttribute.OsType) ? mIn.getSetting(MachineAttribute.OsType).getString() : null;
       Machine settingTemplate = hbox.getHypervisor().getMachineSettings(osTypeId);
       _RawVM newVm = hbox.getHypervisor().createMachine(mIn.getUuid(), mIn.getName(), osTypeId);
       newVm.applyConfiguration(settingTemplate);
-      
+
       _Machine vm = hbox.getServer(serverId).getMachine(newVm.getUuid());
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, MachineIoFactory.get(vm)));
    }
-   
+
 }

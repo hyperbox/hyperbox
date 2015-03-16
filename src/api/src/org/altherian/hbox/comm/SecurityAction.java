@@ -21,9 +21,9 @@
 package org.altherian.hbox.comm;
 
 public enum SecurityAction {
-   
+
    Any,
-   
+
    List,
    Get,
    /**
@@ -43,7 +43,7 @@ public enum SecurityAction {
     * Remove and delete an existing item
     */
    Delete,
-   
+
    Start,
    Stop,
    Pause,
@@ -51,8 +51,8 @@ public enum SecurityAction {
    Reset,
    Restart,
    Resume,
-   
+
    Connect,
    Disconnect,
-   
+
 }

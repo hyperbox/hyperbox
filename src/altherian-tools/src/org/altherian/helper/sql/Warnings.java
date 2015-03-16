@@ -25,11 +25,11 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 
 public class Warnings {
-   
+
    public static String extract(Statement stmt) throws SQLException {
       return extract(stmt.getWarnings());
    }
-   
+
    public static String extract(SQLWarning warning) {
       StringBuilder warnings = new StringBuilder();
       while (warning != null) {
@@ -38,5 +38,5 @@ public class Warnings {
       }
       return warnings.toString();
    }
-   
+
 }

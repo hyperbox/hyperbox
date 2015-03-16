@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Module implements _Module {
-   
+
    private String id;
    private String descFile;
    private String base;
@@ -43,11 +43,11 @@ public class Module implements _Module {
    private String vendor;
    private String website;
    private Map<String, String> providers = new HashMap<String, String>();
-   
+
    private _ModuleClassLoader loader;
    private boolean isEnabled = true;
    private Map<Class<?>, Class<?>> providerClasses;
-   
+
    public Module(String id, File descFile, File base, String name, String version, String vendor, String desc, String website,
          Map<String, String> providers) {
       this.id = id;
@@ -58,47 +58,47 @@ public class Module implements _Module {
       this.website = website;
       this.providers = providers == null ? this.providers : providers;
    }
-   
+
    @Override
    public String getId() {
       return id;
    }
-   
+
    @Override
    public String getDescriptor() {
       return descFile;
    }
-   
+
    @Override
    public String getName() {
       return name;
    }
-   
+
    @Override
    public String getLocation() {
       return base;
    }
-   
+
    @Override
    public String getVersion() {
       return version;
    }
-   
+
    @Override
    public String getVendor() {
       return vendor;
    }
-   
+
    @Override
    public String getUrl() {
       return website;
    }
-   
+
    @Override
    public String toString() {
       return "Module ID " + getId() + " (" + getName() + ")";
    }
-   
+
    @Override
    public void enable() {
       if (!isEnabled()) {
@@ -106,24 +106,24 @@ public class Module implements _Module {
          EventManager.post(new ModuleEnabledEvent(this));
       }
    }
-   
+
    @Override
    public void disable() {
       if (isEnabled()) {
          if (isLoaded()) {
             unload();
          }
-         
+
          isEnabled = false;
          EventManager.post(new ModuleDisabledEvent(this));
       }
    }
-   
+
    @Override
    public boolean isEnabled() {
       return isEnabled;
    }
-   
+
    @Override
    public void load() throws ModuleException {
       if (isLoaded()) {
@@ -132,10 +132,10 @@ public class Module implements _Module {
       if (!isEnabled()) {
          throw new ModuleException("Module must be enabled to be loaded");
       }
-      
+
       loader = new ModuleClassLoader();
       loader.load(getLocation());
-      
+
       try {
          Map<Class<?>, Class<?>> providersRaw = new HashMap<Class<?>, Class<?>>();
          for (String typeName : providers.keySet()) {
@@ -147,15 +147,15 @@ public class Module implements _Module {
       } catch (Throwable t) {
          throw new ModuleException("Unable to create provider classes: " + t.getClass().getSimpleName() + ": " + t.getMessage());
       }
-      
+
       HBoxServer.reload(getRessources(), loader.getClassLoader());
       EventManager.post(new ModuleLoadedEvent(this));
    }
-   
+
    @Override
    public final void unload() {
       throw new ModuleException("This module cannot be unloaded: Not implemented");
-      
+
       /*
        * There is currently a leak with ModuleClassLoader: unloaded modules are not being GC.
        * Until fix, we do not allow unloading in the default implementation.
@@ -173,54 +173,54 @@ public class Module implements _Module {
       }
        */
    }
-   
+
    @Override
    public boolean isLoaded() {
       return (loader != null) && (providers != null);
    }
-   
+
    @Override
    public boolean isReady() {
       return isEnabled() && isLoaded();
    }
-   
+
    @Override
    public Set<URL> getRessources() {
       if (!isReady()) {
          throw new ModuleException("Module must be enabled and loaded before retrieving list of ressources");
       }
-      
+
       return loader.getRessources();
    }
-   
+
    @Override
    public Set<Class<?>> getTypes() {
       if (!isReady()) {
          throw new ModuleException("Module is not ready");
       }
-      
+
       return new HashSet<Class<?>>(providerClasses.keySet());
    }
-   
+
    @Override
    public Class<?> getProvider(Class<?> type) throws ModuleException {
       if (!isReady()) {
          throw new ModuleException("Module is not ready");
       }
-      
+
       if (!providerClasses.containsKey(type)) {
          throw new ModuleException("No such provider type found: " + type.getName());
       }
-      
+
       return providerClasses.get(type);
    }
-   
+
    @Override
    public Object buildProvider(Class<?> type) throws ModuleException {
       if (!isReady()) {
          throw new ModuleException("Module is not ready");
       }
-      
+
       try {
          return getProvider(type).newInstance();
       } catch (InstantiationException e) {
@@ -229,5 +229,5 @@ public class Module implements _Module {
          throw new ModuleException("Couldn't create an instance: " + e.getMessage());
       }
    }
-   
+
 }

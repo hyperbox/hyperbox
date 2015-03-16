@@ -49,23 +49,23 @@ import org.altherian.vbox4_3.data.Mappings;
 import org.virtualbox_4_3.IGuestOSType;
 
 public final class OsTypeFactory {
-   
+
    private OsTypeFactory() {
       // class is static
    }
-   
+
    public static _RawOsType get(IGuestOSType guestOs) {
       return new VBoxOsType(guestOs);
    }
-   
+
    public static Machine getSettings(IGuestOSType guestOs) {
       Machine vm = new Machine();
-      
+
       vm.setSetting(SettingIoFactory.get(new Accelerate2dVideoSetting(guestOs.getRecommended2DVideoAcceleration())));
       vm.setSetting(SettingIoFactory.get(new Accelerate3dSetting(guestOs.getRecommended3DAcceleration())));
       // TODO settings.add(new AudioControllerSetting(guestOs.getRecommendedAudioController()));
       vm.setSetting(SettingIoFactory.get(new ChipsetSetting(guestOs.getRecommendedChipset().toString())));
-      
+
       vm.setSetting(SettingIoFactory.get(new PaeSetting(guestOs.getRecommendedPAE())));
       vm.setSetting(SettingIoFactory.get(new MemorySetting(guestOs.getRecommendedRAM())));
       // TODO add RTCuseUTC
@@ -81,21 +81,21 @@ public final class OsTypeFactory {
       vm.setSetting(SettingIoFactory.get(new FirmwareSetting(Mappings.get(guestOs.getRecommendedFirmware()))));
       vm.setSetting(SettingIoFactory.get(new HpetSetting(guestOs.getRecommendedHPET())));
       vm.setSetting(SettingIoFactory.get(new HwVirtExExclSetting(guestOs.getRecommendedVirtEx())));
-      
+
       if (guestOs.getRecommendedFloppy()) {
          Device dev = new Device();
          dev.setTypeId(EntityType.StorageController.getId());
          dev.setSetting(SettingIoFactory.get(new StringSetting(StorageControllerAttribute.Type, StorageControllerType.Floppy.getId())));
          vm.addDevice(dev);
       }
-      
+
       Device dvdStorCtrl = new Device(EntityType.DvdDrive.getId());
       dvdStorCtrl.setTypeId(EntityType.DvdDrive.getId());
       dvdStorCtrl.setSetting(SettingIoFactory.get(new StringSetting(StorageControllerAttribute.Type, guestOs.getRecommendedDVDStorageBus().toString())));
       dvdStorCtrl.setSetting(SettingIoFactory
             .get(new StringSetting(StorageControllerAttribute.SubType, guestOs.getRecommendedDVDStorageController().toString())));
       vm.addDevice(dvdStorCtrl);
-      
+
       Device hddStorCtrl = new Device(EntityType.DiskDrive.getId());
       hddStorCtrl.setTypeId(EntityType.DiskDrive.getId());
       hddStorCtrl.setSetting(SettingIoFactory.get(new MediumSizeSetting(guestOs.getRecommendedHDD())));
@@ -103,12 +103,12 @@ public final class OsTypeFactory {
       hddStorCtrl.setSetting(SettingIoFactory
             .get(new StringSetting(StorageControllerAttribute.SubType, guestOs.getRecommendedHDStorageController().toString())));
       vm.addDevice(hddStorCtrl);
-      
+
       Device networkDevice = new Device();
       networkDevice.setTypeId(EntityType.Network.getId());
       networkDevice.setSetting(SettingIoFactory.get(new NicAdapterTypeSetting(guestOs.getAdapterType().toString())));
-      
+
       return vm;
    }
-   
+
 }

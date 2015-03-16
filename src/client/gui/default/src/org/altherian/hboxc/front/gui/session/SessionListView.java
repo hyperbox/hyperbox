@@ -31,37 +31,37 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public final class SessionListView {
-   
+
    private ServerOut srvOut;
    private JPanel panel;
    private SessionListTableModel sessionListModel;
    private JTable sessionList;
-   
+
    public void init() throws HyperboxException {
-      
+
       sessionListModel = new SessionListTableModel();
       sessionList = new JTable(sessionListModel);
       sessionList.setFillsViewportHeight(true);
-      
+
       JScrollPane scrollPane = new JScrollPane(sessionList);
-      
+
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(scrollPane, "grow,push");
-      
+
       ViewEventManager.register(this);
    }
-   
+
    public JComponent getComponent() {
       return panel;
    }
-   
+
    private void update() {
       sessionListModel.put(Gui.getServer(srvOut).listSessions());
    }
-   
+
    public void update(ServerOut srvOut) {
       this.srvOut = srvOut;
       update();
    }
-   
+
 }

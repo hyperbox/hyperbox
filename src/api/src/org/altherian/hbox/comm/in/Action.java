@@ -21,10 +21,10 @@
 package org.altherian.hbox.comm.in;
 
 public enum Action {
-   
+
    Create,
    Modify,
    Replace,
    Delete
-   
+
 }

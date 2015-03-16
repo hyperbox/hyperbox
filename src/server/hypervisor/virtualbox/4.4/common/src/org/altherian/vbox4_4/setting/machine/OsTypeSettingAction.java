@@ -28,26 +28,26 @@ import org.virtualbox_4_4.IMachine;
 import org.virtualbox_4_4.LockType;
 
 public class OsTypeSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.OsType.toString();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       String osType = setting.getValue().toString();
       machine.setOSTypeId(osType);
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new OsTypeSetting(machine.getOSTypeId());
    }
-   
+
 }

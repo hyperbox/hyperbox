@@ -24,7 +24,7 @@ package org.altherian.hboxc.front.gui.connector;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
 
 public interface _SingleConnectorSelector {
-   
+
    public ConnectorOutput getConnector();
-   
+
 }

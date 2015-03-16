@@ -25,19 +25,19 @@ import org.altherian.hbox.comm._RequestReceiver;
 import org.altherian.hbox.exception.HyperboxException;
 
 public interface _Backend extends _RequestReceiver {
-   
+
    public String getId();
-   
+
    public void start() throws HyperboxException;
-   
+
    public void stop();
-   
+
    public void setAnswerReceiver(String requestId, _AnswerReceiver arRcv);
-   
+
    public void connect(String address) throws HyperboxException;
-   
+
    public void disconnect();
-   
+
    public boolean isConnected();
-   
+
 }

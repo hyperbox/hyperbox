@@ -25,32 +25,32 @@ import org.altherian.hbox.comm.out.event.EventOut;
 import java.util.Date;
 
 public abstract class NetAdaptorEventOut extends EventOut {
-   
+
    private String hypId;
    private String netModeId;
    private String netAdaptorId;
-   
+
    protected NetAdaptorEventOut() {
       // Used for (de)serialization
    }
-   
+
    public NetAdaptorEventOut(Date time, Enum<?> id, ServerOut srvOut, String hypId, String netModeId, String netAdaptorId) {
       super(time, id, srvOut);
       this.hypId = hypId;
       this.netModeId = netModeId;
       this.netAdaptorId = netAdaptorId;
    }
-   
+
    public String getHypervisor() {
       return hypId;
    }
-   
+
    public String getNetMode() {
       return netModeId;
    }
-   
+
    public String getNetAdaptor() {
       return netAdaptorId;
    }
-   
+
 }

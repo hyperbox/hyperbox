@@ -26,7 +26,7 @@ import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
 
 public enum HyperboxTasks {
-   
+
    /**
     * Retrieve the list of servers managed by the one we are connected to.
     * <p>
@@ -50,7 +50,7 @@ public enum HyperboxTasks {
    ServerConfigure,
    ServerShutdown,
    ServerLogLevelList,
-   
+
    /**
     * Connect a server to an hypervisor.
     * <p>
@@ -62,7 +62,7 @@ public enum HyperboxTasks {
     * </p>
     */
    ServerConnectHypervisor,
-   
+
    /**
     * Disconnect the server from its hypervisor.
     * <p>
@@ -72,7 +72,7 @@ public enum HyperboxTasks {
     * </p>
     */
    ServerDisconnectHypervisor,
-   
+
    HypervisorList,
    HypervisorGet,
    HypervisorAdd,
@@ -80,21 +80,21 @@ public enum HyperboxTasks {
    HypervisorConfigure,
    HypervisorConnect,
    HypervisorDisconnect,
-   
+
    HostGet,
-   
+
    Login,
    Logout,
-   
+
    StoreList,
    StoreGet,
    StoreCreate,
    StoreModify,
    StoreDelete,
-   
+
    StoreRegister,
    StoreUnregister,
-   
+
    /**
     * Not implemented
     */
@@ -123,31 +123,31 @@ public enum HyperboxTasks {
     * Not implemented
     */
    StoreItemUpload,
-   
+
    SessionList,
    SessionGet,
    SessionClose,
-   
+
    TaskList,
    TaskGet,
    TaskCancel,
    TaskPause,
    TaskStart,
-   
+
    UserList,
    UserGet,
    UserCreate,
    UserModify,
    UserDelete,
-   
+
    GuestRestart,
    GuestShutdown,
-   
+
    PermissionSet,
    PermissionDelete,
    PermissionList,
    PermissionGet,
-   
+
    ModuleRefresh,
    ModuleList,
    ModuleGet,
@@ -157,11 +157,11 @@ public enum HyperboxTasks {
    ModuleDisable,
    ModuleLoad,
    ModuleUnload,
-   
+
    Hello;
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

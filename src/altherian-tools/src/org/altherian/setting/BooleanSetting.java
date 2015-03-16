@@ -21,13 +21,13 @@
 package org.altherian.setting;
 
 public class BooleanSetting extends BasicSetting<Boolean> {
-   
+
    public BooleanSetting(String name, boolean value) {
       super(name, value);
    }
-   
+
    public BooleanSetting(Enum<?> setting, boolean value) {
       super(setting, value);
    }
-   
+
 }

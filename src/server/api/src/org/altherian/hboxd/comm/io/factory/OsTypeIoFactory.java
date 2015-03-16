@@ -24,10 +24,10 @@ import org.altherian.hbox.comm.out.hypervisor.OsTypeOut;
 import org.altherian.hboxd.hypervisor._RawOsType;
 
 public class OsTypeIoFactory {
-   
+
    public static OsTypeOut get(_RawOsType osType) {
       OsTypeOut osTypeIo = new OsTypeOut(osType.getId(), osType.getName(), osType.getBitness());
       return osTypeIo;
    }
-   
+
 }

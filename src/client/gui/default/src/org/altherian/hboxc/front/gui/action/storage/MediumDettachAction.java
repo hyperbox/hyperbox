@@ -35,21 +35,21 @@ import javax.swing.ImageIcon;
 
 @SuppressWarnings("serial")
 public class MediumDettachAction extends AbstractAction {
-   
+
    private String serverId;
    private StorageDeviceAttachmentOut sdaOut;
-   
+
    public MediumDettachAction(String serverId, StorageDeviceAttachmentOut sdaOut, boolean isEnabled) {
       this(serverId, sdaOut, "Detach Medium", IconBuilder.getTask(HypervisorTasks.MediumUnmount), isEnabled);
    }
-   
+
    public MediumDettachAction(String serverId, StorageDeviceAttachmentOut sdaOut, String label, ImageIcon icon, boolean isEnabled) {
       super(label, icon);
       setEnabled(isEnabled);
       this.serverId = serverId;
       this.sdaOut = sdaOut;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       Request req = new Request(Command.VBOX, HypervisorTasks.MediumUnmount);
@@ -58,5 +58,5 @@ public class MediumDettachAction extends AbstractAction {
       req.set(new StorageDeviceAttachmentIn(sdaOut.getControllerName(), sdaOut.getPortId(), sdaOut.getDeviceId()));
       Gui.post(req);
    }
-   
+
 }

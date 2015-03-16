@@ -25,10 +25,10 @@ import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 import java.util.Comparator;
 
 public class MachineOutputComparator implements Comparator<MachineOut> {
-   
+
    @Override
    public int compare(MachineOut obj1, MachineOut obj2) {
       return obj1.getName().compareToIgnoreCase(obj2.getName());
    }
-   
+
 }

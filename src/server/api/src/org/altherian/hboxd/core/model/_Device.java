@@ -24,11 +24,11 @@ import org.altherian.hbox.constant.EntityType;
 import org.altherian.setting._Settable;
 
 public interface _Device extends _Settable {
-   
+
    public _Machine getMachine();
-   
+
    public String getId();
-   
+
    public EntityType getType();
-   
+
 }

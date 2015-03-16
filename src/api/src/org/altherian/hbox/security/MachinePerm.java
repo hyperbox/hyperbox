@@ -21,7 +21,7 @@
 package org.altherian.hbox.security;
 
 public enum MachinePerm {
-   
+
    List,
    Get,
    Start,
@@ -29,11 +29,11 @@ public enum MachinePerm {
    Reset,
    Pause,
    Resume,
-   
+
    Create,
    Delete,
-   
+
    Register,
    Unregister,
-   
+
 }

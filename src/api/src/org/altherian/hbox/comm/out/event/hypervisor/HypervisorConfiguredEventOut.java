@@ -27,18 +27,18 @@ import org.altherian.hbox.event.HyperboxEvents;
 import java.util.Date;
 
 public class HypervisorConfiguredEventOut extends HypervisorEventOut {
-   
+
    protected HypervisorConfiguredEventOut() {
       // Used for serialization
    }
-   
+
    public HypervisorConfiguredEventOut(Date time, ServerOut srvOut, HypervisorOut hypOut) {
       super(time, HyperboxEvents.HypervisorConfigured, srvOut, hypOut);
    }
-   
+
    @Override
    public String toString() {
       return "Hypervisor " + getHypervisor().getId() + " on Server " + getServer().getName() + " was configured @ " + getTime();
    }
-   
+
 }

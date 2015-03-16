@@ -27,14 +27,14 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class SettingsShowAction extends AbstractAction {
-   
+
    public SettingsShowAction() {
       super("Settings...");
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       SettingsManager.show();
    }
-   
+
 }

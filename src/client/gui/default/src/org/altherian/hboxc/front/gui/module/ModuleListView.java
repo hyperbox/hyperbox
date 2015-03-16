@@ -49,25 +49,25 @@ import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 
 public class ModuleListView implements _ModuleSelector, _Refreshable, _ModuleListReceiver {
-   
+
    private String srvId;
-   
+
    private JProgressBar refreshProgress;
    private ModuleListTableModel itemListModel;
    private JTable itemList;
    private JScrollPane scrollPane;
-   
+
    private JButton refreshButton;
    private JButton registerButton;
    private JPanel buttonPanel;
-   
+
    private JPanel panel;
-   
+
    public ModuleListView() {
-      
+
       refreshProgress = new JProgressBar();
       refreshProgress.setVisible(false);
-      
+
       itemListModel = new ModuleListTableModel();
       itemList = new JTable(itemListModel);
       itemList.setAutoCreateRowSorter(true);
@@ -76,21 +76,21 @@ public class ModuleListView implements _ModuleSelector, _Refreshable, _ModuleLis
       itemList.addMouseListener(new ItemListMouseListener());
       scrollPane = new JScrollPane(itemList);
       MouseWheelController.install(scrollPane);
-      
+
       refreshButton = new JButton(new ModuleRefreshAction(this));
       registerButton = new JButton(new ModuleRegisterAction(this));
       buttonPanel = new JPanel(new MigLayout("ins 0"));
       buttonPanel.add(refreshButton);
       buttonPanel.add(registerButton);
-      
+
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(refreshProgress, "hidemode 3, growx, pushx, wrap");
       panel.add(buttonPanel, "hidemode 3, growx, pushx, wrap");
       panel.add(scrollPane, "hidemode 3, grow, push, wrap");
-      
+
       ViewEventManager.register(this);
    }
-   
+
    public void show(ServerOut srvOut) {
       if (srvOut == null) {
          itemListModel.clear();
@@ -99,17 +99,17 @@ public class ModuleListView implements _ModuleSelector, _Refreshable, _ModuleLis
          refresh();
       }
    }
-   
+
    @Override
    public void refresh() {
       ModuleListWorker.execute(this, srvId);
    }
-   
+
    @Override
    public String getServerId() {
       return srvId;
    }
-   
+
    @Override
    public List<ModuleOut> getModuleSelection() {
       List<ModuleOut> listSelectedItems = new ArrayList<ModuleOut>();
@@ -118,11 +118,11 @@ public class ModuleListView implements _ModuleSelector, _Refreshable, _ModuleLis
       }
       return listSelectedItems;
    }
-   
+
    public JComponent getComponent() {
       return panel;
    }
-   
+
    @Override
    public void loadingStarted() {
       itemListModel.clear();
@@ -130,28 +130,28 @@ public class ModuleListView implements _ModuleSelector, _Refreshable, _ModuleLis
       refreshProgress.setIndeterminate(true);
       refreshProgress.setVisible(true);
    }
-   
+
    @Override
    public void loadingFinished(boolean isSuccessful, String message) {
       refreshProgress.setIndeterminate(false);
       refreshProgress.setVisible(false);
       itemList.setEnabled(true);
    }
-   
+
    @Override
    public void add(List<ModuleOut> objOutList) {
       itemListModel.add(objOutList);
    }
-   
+
    @Handler
    public void putModuleEvent(ModuleEvent ev) {
       if (srvId.equals(ev.getServer().getId())) {
          refresh();
       }
    }
-   
+
    private class ItemListMouseListener extends MouseAdapter {
-      
+
       private void showPopup(MouseEvent ev) {
          if (ev.isPopupTrigger() && (itemList.getSelectedRow() > -1)) {
             JPopupMenu actions = PopupMenuBuilder.get(ModuleListView.this,
@@ -159,17 +159,17 @@ public class ModuleListView implements _ModuleSelector, _Refreshable, _ModuleLis
             actions.show(ev.getComponent(), ev.getX(), ev.getY());
          }
       }
-      
+
       @Override
       public void mouseReleased(MouseEvent ev) {
          showPopup(ev);
       }
-      
+
       @Override
       public void mousePressed(MouseEvent ev) {
          showPopup(ev);
       }
-      
+
       @Override
       public void mouseClicked(MouseEvent ev) {
          if ((ev.getButton() == MouseEvent.BUTTON1) && (itemList.rowAtPoint(ev.getPoint()) == -1)) {
@@ -180,7 +180,7 @@ public class ModuleListView implements _ModuleSelector, _Refreshable, _ModuleLis
             showPopup(ev);
          }
       }
-      
+
    }
-   
+
 }

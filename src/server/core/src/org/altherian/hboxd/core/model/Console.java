@@ -26,35 +26,35 @@ import org.altherian.setting._Setting;
 import java.util.List;
 
 public class Console implements _Console {
-   
+
    private _Machine machine;
    private _RawConsole console;
-   
+
    public Console(_Machine machine, _RawConsole console) {
       this.machine = machine;
       this.console = console;
    }
-   
+
    @Override
    public List<_Setting> getSettings() {
       return console.listSettings();
    }
-   
+
    @Override
    public _Setting getSetting(String settingId) {
       return console.getSetting(settingId);
    }
-   
+
    @Override
    public void setSetting(_Setting setting) {
       console.setSetting(setting);
    }
-   
+
    @Override
    public void setSetting(List<_Setting> settings) {
       console.setSetting(settings);
    }
-   
+
    @Override
    public boolean hasSetting(String settingId) {
       try {
@@ -65,50 +65,50 @@ public class Console implements _Console {
          return false;
       }
    }
-   
+
    @Override
    public String getAddress() {
       return console.getAddress();
    }
-   
+
    @Override
    public Long getPort() {
       return console.getPort();
    }
-   
+
    @Override
    public String getProtocol() {
       return console.getProtocol();
    }
-   
+
    @Override
    public boolean isEnable() {
       return console.isEnabled();
    }
-   
+
    @Override
    public void setEnable(boolean isEnable) {
       console.setEnabled(isEnable);
    }
-   
+
    @Override
    public boolean isActive() {
       return console.isActive();
    }
-   
+
    @Override
    public _Machine getMachine() {
       return machine;
    }
-   
+
    @Override
    public String getId() {
       return EntityType.Console.getId();
    }
-   
+
    @Override
    public EntityType getType() {
       return EntityType.Console;
    }
-   
+
 }

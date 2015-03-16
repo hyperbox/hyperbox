@@ -33,20 +33,20 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class MachineSaveStateAction extends AbstractAction {
-   
+
    private _MachineSelector selector;
-   
+
    public MachineSaveStateAction(_MachineSelector selector) {
       super("Save State", IconBuilder.getTask(HypervisorTasks.MachineSaveState));
       setEnabled(true);
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ev) {
       for (MachineOut mOut : selector.getMachines()) {
          Gui.post(new Request(Command.VBOX, HypervisorTasks.MachineSaveState, new MachineIn(mOut)));
       }
    }
-   
+
 }

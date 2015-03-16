@@ -21,7 +21,7 @@
 package org.altherian.hboxc.front.gui.action.hypervisor;
 
 public interface _HypervisorSelector extends _SingleHypervisorSelector {
-   
+
    // stub
-   
+
 }

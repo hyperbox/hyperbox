@@ -34,14 +34,14 @@ import java.util.UUID;
 import org.junit.Test;
 
 public final class StorageControllerOutputTest {
-   
+
    @Test
    public void basicTest() {
       String id = "Test";
       SettingIO name = new StringSettingIO(StorageControllerAttribute.Name, "Test");
       SettingIO type = new StringSettingIO(StorageControllerAttribute.Type, StorageControllerType.SATA.toString());
       SettingIO subType = new StringSettingIO(StorageControllerAttribute.SubType, StorageControllerSubType.IntelAhci.toString());
-      
+
       StorageControllerOut scOut = new StorageControllerOut(UUID.randomUUID().toString(), id, Arrays.asList(name, type, subType));
       validateSimple(scOut);
       assertTrue(scOut.getId().contentEquals(id));
@@ -52,7 +52,7 @@ public final class StorageControllerOutputTest {
       assertTrue(scOut.getSetting(StorageControllerAttribute.SubType).getString().contentEquals(subType.getString()));
       assertTrue(scOut.getSubType().contentEquals(subType.getString()));
    }
-   
+
    public static void validateSimple(StorageControllerOut scOut) {
       assertNotNull(scOut);
       assertNotNull(scOut.getId());
@@ -60,7 +60,7 @@ public final class StorageControllerOutputTest {
       assertNotNull(scOut.getName());
       assertFalse(scOut.getName().isEmpty());
    }
-   
+
    public static void validateFull(StorageControllerOut scOut) {
       validateSimple(scOut);
       assertNotNull(scOut.getType());
@@ -72,5 +72,5 @@ public final class StorageControllerOutputTest {
       assertTrue(scOut.getMinPortCount() >= 0);
       assertTrue(scOut.getMaxPortCount() >= scOut.getMinPortCount());
    }
-   
+
 }

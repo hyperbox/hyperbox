@@ -25,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 import org.altherian.hbox.comm.out.storage.StorageControllerTypeOut;
 
 public final class StorageControllerTypeOutputTest {
-   
+
    public static void validate(StorageControllerTypeOut sctOut) {
       assertFalse(sctOut.getId().isEmpty());
       assertFalse(sctOut.getMinPort() <= 0);
@@ -33,12 +33,12 @@ public final class StorageControllerTypeOutputTest {
       assertFalse(sctOut.getMinPort() > sctOut.getMaxPort());
       assertFalse(sctOut.getMaxDevicePerPort() <= 0);
    }
-   
+
    public static void compare(StorageControllerTypeOut sctOut1, StorageControllerTypeOut sctOut2) {
       assertTrue(sctOut1.getId().contentEquals(sctOut2.getId()));
       assertTrue(sctOut1.getMinPort() == sctOut2.getMinPort());
       assertTrue(sctOut1.getMaxPort() == sctOut2.getMaxPort());
       assertTrue(sctOut1.getMaxDevicePerPort() == sctOut2.getMaxDevicePerPort());
    }
-   
+
 }

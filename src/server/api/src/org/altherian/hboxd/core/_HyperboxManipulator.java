@@ -31,23 +31,23 @@ import org.altherian.hboxd.store._StoreManager;
 import org.altherian.hboxd.task._TaskManager;
 
 public interface _HyperboxManipulator {
-   
+
    public _ServerManager getServerManager();
-   
+
    public _TaskManager getTaskManager();
-   
+
    public _SessionManager getSessionManager();
-   
+
    public _SecurityManager getSecurityManager();
-   
+
    public _ActionManager getActionManager();
-   
+
    public _StoreManager getStoreManager();
-   
+
    public _ModuleManager getModuleManager();
-   
+
    public _Persistor getPersistor();
-   
+
    public _Hypervisor getHypervisor();
-   
+
 }

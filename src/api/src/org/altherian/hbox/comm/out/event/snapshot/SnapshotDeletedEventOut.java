@@ -27,14 +27,14 @@ import org.altherian.hbox.event.HyperboxEvents;
 import java.util.Date;
 
 public class SnapshotDeletedEventOut extends SnapshotEventOut {
-   
+
    @SuppressWarnings("unused")
    private SnapshotDeletedEventOut() {
       // Used for serialization
    }
-   
+
    public SnapshotDeletedEventOut(Date time, ServerOut srvOut, MachineOut mOut, SnapshotOut snapOut) {
       super(time, HyperboxEvents.SnapshotDeleted, srvOut, mOut, snapOut);
    }
-   
+
 }

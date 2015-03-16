@@ -27,22 +27,22 @@ import org.virtualbox_4_2.IEventSourceChangedEvent;
 import org.virtualbox_4_2.VBoxEventType;
 
 public class EventSourceEventFactory implements _PreciseEventFactory {
-   
+
    @Override
    public VBoxEventType getType() {
       return VBoxEventType.OnEventSourceChanged;
    }
-   
+
    @Override
    public IEvent getRaw(IEvent vbEvent) {
-      
+
       return IEventSourceChangedEvent.queryInterface(vbEvent);
    }
-   
+
    @Override
    public _Event getEvent(IEvent vbEvent) {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
 }

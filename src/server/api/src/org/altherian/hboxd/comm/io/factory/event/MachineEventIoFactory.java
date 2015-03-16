@@ -39,7 +39,7 @@ import org.altherian.hboxd.event.machine.MachineRegistrationEvent;
 import org.altherian.hboxd.event.machine.MachineStateEvent;
 
 public final class MachineEventIoFactory implements _EventIoFactory {
-   
+
    private MachineOut getObjOut(String id) {
       try {
          return MachineIoFactory.get(HBoxServer.get().getMachine(id));
@@ -47,7 +47,7 @@ public final class MachineEventIoFactory implements _EventIoFactory {
          return MachineIoFactory.get(id, MachineStates.Unknown.getId());
       }
    }
-   
+
    @Override
    public Enum<?>[] getHandles() {
       return new Enum<?>[] {
@@ -57,12 +57,12 @@ public final class MachineEventIoFactory implements _EventIoFactory {
             HyperboxEvents.MachineSnapshotDataChange
       };
    }
-   
+
    @Override
    public EventOut get(_Hyperbox hbox, _Event ev) {
       MachineEvent mEv = (MachineEvent) ev;
       MachineOut mOut = getObjOut(mEv.getMachineId());
-      
+
       switch ((HyperboxEvents) ev.getEventId()) {
          case MachineState:
             return new MachineStateEventOut(mEv.getTime(), ServerIoFactory.get(), mOut, ((MachineStateEvent) ev).getState());
@@ -77,5 +77,5 @@ public final class MachineEventIoFactory implements _EventIoFactory {
             return null;
       }
    }
-   
+
 }

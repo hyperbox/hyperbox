@@ -35,7 +35,7 @@ import org.altherian.hboxd.core._Hyperbox;
 import org.altherian.hboxd.event.hypervisor.HypervisorEvent;
 
 public class HypervisorIoEvent implements _EventIoFactory {
-   
+
    @Override
    public Enum<?>[] getHandles() {
       return new Enum<?>[] {
@@ -44,7 +44,7 @@ public class HypervisorIoEvent implements _EventIoFactory {
             HyperboxEvents.HypervisorDisconnected
       };
    }
-   
+
    @Override
    public EventOut get(_Hyperbox hbox, _Event ev) {
       if (ev instanceof HypervisorEvent) {
@@ -65,5 +65,5 @@ public class HypervisorIoEvent implements _EventIoFactory {
          return null;
       }
    }
-   
+
 }

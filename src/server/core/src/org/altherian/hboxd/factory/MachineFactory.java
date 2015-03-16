@@ -27,14 +27,14 @@ import org.altherian.hboxd.hypervisor.vm._RawVM;
 import org.altherian.hboxd.server._Server;
 
 public class MachineFactory {
-   
+
    private MachineFactory() {
       throw new RuntimeException("Not allowed");
-      
+
    }
-   
+
    public static _Machine get(_Server server, _Hypervisor hypervisor, _RawVM rawVm) {
       return new Machine(server, hypervisor, rawVm);
    }
-   
+
 }

@@ -20,12 +20,11 @@
 
 package org.altherian.hboxc.front.gui.notification;
 
-
 @SuppressWarnings("serial")
 public class NotificationInfo extends Notification {
-   
+
    public NotificationInfo() {
-      
+
    }
-   
+
 }

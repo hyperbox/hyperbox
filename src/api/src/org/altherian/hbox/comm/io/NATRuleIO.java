@@ -23,7 +23,7 @@ package org.altherian.hbox.comm.io;
 import org.altherian.hbox.hypervisor.net._NATRule;
 
 public class NATRuleIO extends ObjectIO implements _NATRule {
-   
+
    private boolean enabled;
    private String name;
    private String comment;
@@ -32,11 +32,11 @@ public class NATRuleIO extends ObjectIO implements _NATRule {
    private String publicPort;
    private String privateIp;
    private String privatePort;
-   
+
    public NATRuleIO() {
-      
+
    }
-   
+
    public NATRuleIO(String name, String protocol, String publicIp, String publicPort, String privateIp, String privatePort) {
       setName(name);
       setProtocol(protocol);
@@ -45,7 +45,7 @@ public class NATRuleIO extends ObjectIO implements _NATRule {
       setPrivateIp(privateIp);
       setPrivatePort(privatePort);
    }
-   
+
    /**
     * @return the enabled
     */
@@ -53,14 +53,14 @@ public class NATRuleIO extends ObjectIO implements _NATRule {
    public boolean isEnabled() {
       return enabled;
    }
-   
+
    /**
     * @param enabled the enabled to set
     */
    public void setEnabled(boolean enabled) {
       this.enabled = enabled;
    }
-   
+
    /**
     * @return the name
     */
@@ -68,7 +68,7 @@ public class NATRuleIO extends ObjectIO implements _NATRule {
    public String getName() {
       return name;
    }
-   
+
    /**
     * @param name the name to set
     */
@@ -76,7 +76,7 @@ public class NATRuleIO extends ObjectIO implements _NATRule {
    public void setName(String name) {
       this.name = name;
    }
-   
+
    /**
     * @return the comment
     */
@@ -84,7 +84,7 @@ public class NATRuleIO extends ObjectIO implements _NATRule {
    public String getComment() {
       return comment;
    }
-   
+
    /**
     * @param comment the comment to set
     */
@@ -92,17 +92,17 @@ public class NATRuleIO extends ObjectIO implements _NATRule {
    public void setComment(String comment) {
       this.comment = comment;
    }
-   
+
    @Override
    public String getProtocol() {
       return protocol;
    }
-   
+
    @Override
    public void setProtocol(String protocol) {
       this.protocol = protocol;
    }
-   
+
    /**
     * @return the publicIp
     */
@@ -110,7 +110,7 @@ public class NATRuleIO extends ObjectIO implements _NATRule {
    public String getPublicIp() {
       return publicIp;
    }
-   
+
    /**
     * @param publicIp the publicIp to set
     */
@@ -118,7 +118,7 @@ public class NATRuleIO extends ObjectIO implements _NATRule {
    public void setPublicIp(String publicIp) {
       this.publicIp = publicIp;
    }
-   
+
    /**
     * @return the publicPort
     */
@@ -126,7 +126,7 @@ public class NATRuleIO extends ObjectIO implements _NATRule {
    public String getPublicPort() {
       return publicPort;
    }
-   
+
    /**
     * @param publicPort the publicPort to set
     */
@@ -134,7 +134,7 @@ public class NATRuleIO extends ObjectIO implements _NATRule {
    public void setPublicPort(String publicPort) {
       this.publicPort = publicPort;
    }
-   
+
    /**
     * @return the privateIp
     */
@@ -142,7 +142,7 @@ public class NATRuleIO extends ObjectIO implements _NATRule {
    public String getPrivateIp() {
       return privateIp;
    }
-   
+
    /**
     * @param privateIp the privateIp to set
     */
@@ -150,7 +150,7 @@ public class NATRuleIO extends ObjectIO implements _NATRule {
    public void setPrivateIp(String privateIp) {
       this.privateIp = privateIp;
    }
-   
+
    /**
     * @return the privatePort
     */
@@ -158,7 +158,7 @@ public class NATRuleIO extends ObjectIO implements _NATRule {
    public String getPrivatePort() {
       return privatePort;
    }
-   
+
    /**
     * @param privatePort the privatePort to set
     */
@@ -166,10 +166,10 @@ public class NATRuleIO extends ObjectIO implements _NATRule {
    public void setPrivatePort(String privatePort) {
       this.privatePort = privatePort;
    }
-   
+
    @Override
    public _ObjectIO getIO() {
       return this;
    }
-   
+
 }

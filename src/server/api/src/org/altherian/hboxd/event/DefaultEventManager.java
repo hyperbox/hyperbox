@@ -30,29 +30,29 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public final class DefaultEventManager implements _EventManager, Runnable {
-   
+
    private BlockingQueue<_Event> eventsQueue;
    private MBassador<_Event> eventBus;
    private boolean running = false;
    private Thread worker;
-   
+
    @Override
    public void start() throws HyperboxException {
-      
+
       Logger.debug("Event Manager Starting");
       eventBus = new MBassador<_Event>(BusConfiguration.Default());
       eventsQueue = new LinkedBlockingQueue<_Event>();
       worker = new Thread(this, "EvMgrWT");
       worker.setDaemon(true);
       SecurityContext.addAdminThread(worker);
-      
+
       worker.start();
       Logger.verbose("Event Manager Started");
    }
-   
+
    @Override
    public void stop() {
-      
+
       Logger.debug("Event Manager Stopping");
       running = false;
       if (worker != null) {
@@ -66,33 +66,33 @@ public final class DefaultEventManager implements _EventManager, Runnable {
       eventsQueue = null;
       Logger.verbose("Event Manager Stopped");
    }
-   
+
    @Override
    public void register(Object o) {
-      
+
       eventBus.subscribe(o);
       Logger.debug(o + " has registered for all events.");
    }
-   
+
    @Override
    public void unregister(Object o) {
-      
+
       eventBus.unsubscribe(o);
       Logger.debug(o + " has unregistered for all events.");
    }
-   
+
    @Override
    public void post(_Event ev) {
-      
+
       Logger.debug("Received Event ID [" + ev.getEventId() + "] fired @ " + ev.getTime());
       if ((eventsQueue != null) && !eventsQueue.offer(ev)) {
          Logger.error("Event queue is full (" + eventsQueue.size() + "), cannot add " + ev.getEventId());
       }
    }
-   
+
    @Override
    public void run() {
-      
+
       Logger.verbose("Event Manager Worker Started");
       running = true;
       while (running) {
@@ -110,5 +110,5 @@ public final class DefaultEventManager implements _EventManager, Runnable {
       }
       Logger.verbose("Event Manager Worker halted.");
    }
-   
+
 }

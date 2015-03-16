@@ -22,9 +22,9 @@ package org.altherian.hboxd.exception;
 
 @SuppressWarnings("serial")
 public class SessionException extends RuntimeException {
-   
+
    public SessionException(String s) {
       super(s);
    }
-   
+
 }

@@ -33,20 +33,20 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class MachinePauseAction extends AbstractAction {
-   
+
    private _MachineSelector selector;
-   
+
    public MachinePauseAction(_MachineSelector selector) {
       super("Pause", IconBuilder.getTask(HypervisorTasks.MachinePause));
       setEnabled(true);
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ev) {
       for (MachineOut mOut : selector.getMachines()) {
          Gui.post(new Request(Command.VBOX, HypervisorTasks.MachinePause, new MachineIn(mOut)));
       }
    }
-   
+
 }

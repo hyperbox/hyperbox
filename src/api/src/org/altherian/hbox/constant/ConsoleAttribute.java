@@ -22,12 +22,12 @@
 package org.altherian.hbox.constant;
 
 public enum ConsoleAttribute {
-   
+
    AuthType,
    AuthLibrary,
    AuthTimeout,
    Enabled,
    MultiConnection,
    ReuseSingleConnection,
-   
+
 }

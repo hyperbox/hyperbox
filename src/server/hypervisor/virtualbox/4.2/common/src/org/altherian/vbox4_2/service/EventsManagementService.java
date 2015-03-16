@@ -42,23 +42,23 @@ import org.virtualbox_4_2.VBoxException;
  * @author noteirak
  */
 public final class EventsManagementService extends SimpleLoopService {
-   
+
    private _EventManager evMgr;
    private IEventListener el;
-   
+
    public EventsManagementService(_EventManager evMgr) {
       this.evMgr = evMgr;
    }
-   
+
    @Override
    protected void beforeLooping() {
       setSleepingTime(0);
-      
+
       el = VBox.get().getEventSource().createListener();
       VBox.get().getEventSource().registerListener(el, Arrays.asList(VBoxEventType.Any), false);
       Logger.debug("Virtualbox Event Manager Server started.");
    }
-   
+
    @Override
    protected void afterLooping() throws HyperboxRuntimeException {
       if (el != null) {
@@ -67,7 +67,7 @@ public final class EventsManagementService extends SimpleLoopService {
       }
       Logger.debug("Virtualbox Event Manager Server stopped.");
    }
-   
+
    @Override
    protected void doLoop() {
       try {
@@ -102,10 +102,10 @@ public final class EventsManagementService extends SimpleLoopService {
          stop();
       }
    }
-   
+
    @Override
    public String getId() {
       return "vbox-4.2-EventMgmtSvc";
    }
-   
+
 }

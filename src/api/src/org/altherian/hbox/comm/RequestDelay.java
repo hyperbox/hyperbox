@@ -21,11 +21,11 @@
 package org.altherian.hbox.comm;
 
 public enum RequestDelay {
-   
+
    Default,
    Immediate,
    Queue,
    Schedule,
    Trigger,
-   
+
 }

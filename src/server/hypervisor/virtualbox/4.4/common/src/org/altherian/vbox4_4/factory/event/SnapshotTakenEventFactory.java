@@ -30,23 +30,23 @@ import org.virtualbox_4_4.ISnapshotTakenEvent;
 import org.virtualbox_4_4.VBoxEventType;
 
 public class SnapshotTakenEventFactory implements _PreciseEventFactory {
-   
+
    @Override
    public VBoxEventType getType() {
       return VBoxEventType.OnSnapshotTaken;
    }
-   
+
    @Override
    public ISnapshotTakenEvent getRaw(IEvent vbEvent) {
-      
+
       return ISnapshotTakenEvent.queryInterface(vbEvent);
    }
-   
+
    @Override
    public _Event getEvent(IEvent vbEvent) {
-      
+
       ISnapshotTakenEvent snapEv = (ISnapshotTakenEvent) vbEvent;
-      
+
       // Generic event might be used due to Webservices bug, depending on revision - See Javadoc of HyperboxEvents.MachineSnapshotDataChange
       // This revision is only valid for 4.2 branch
       if (VBox.get().getRevision() >= 90983) {
@@ -55,5 +55,5 @@ public class SnapshotTakenEventFactory implements _PreciseEventFactory {
          return new MachineSnapshotDataChangedEvent(snapEv.getMachineId());
       }
    }
-   
+
 }

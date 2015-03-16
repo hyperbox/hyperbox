@@ -43,21 +43,21 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class ConsoleViewersSettingsViewer implements _ConsoleViewerSelector {
-   
+
    private JPanel panel;
-   
+
    private ConsoleViewerTableModel consViewerTableModel;
    private JTable consViewerTable;
    private JScrollPane consViewerTablePane;
-   
+
    private JButton addButton;
    private JButton remButton;
    private JPanel buttonPanel;
-   
+
    public ConsoleViewersSettingsViewer() {
-      
+
       ViewEventManager.register(this);
-      
+
       consViewerTableModel = new ConsoleViewerTableModel();
       consViewerTable = new JTable(consViewerTableModel);
       consViewerTable.addMouseListener(new BrowseMouseListener());
@@ -65,24 +65,24 @@ public class ConsoleViewersSettingsViewer implements _ConsoleViewerSelector {
       consViewerTable.setFillsViewportHeight(true);
       consViewerTable.setAutoCreateRowSorter(true);
       consViewerTablePane = new JScrollPane(consViewerTable);
-      
+
       addButton = new JButton(new ConsoleViewerCreateAction());
       remButton = new JButton(new ConsoleViewerRemoveAction(this));
       buttonPanel = new JPanel(new MigLayout("ins 0"));
       buttonPanel.add(addButton);
       buttonPanel.add(remButton);
-      
+
       panel = new JPanel(new MigLayout());
       panel.add(consViewerTablePane, "grow,push,wrap");
       panel.add(buttonPanel, "growx,pushx,wrap");
    }
-   
+
    public JComponent getComponet() {
       return panel;
    }
-   
+
    private class BrowseMouseListener extends MouseAdapter {
-      
+
       private ConsoleViewerOutput getSelection() {
          if (consViewerTable.getSelectedRow() == -1) {
             return null;
@@ -90,10 +90,10 @@ public class ConsoleViewersSettingsViewer implements _ConsoleViewerSelector {
             return consViewerTableModel.getObjectAtRowId(consViewerTable.convertRowIndexToModel(consViewerTable.getSelectedRow()));
          }
       }
-      
+
       @Override
       public void mouseClicked(MouseEvent ev) {
-         
+
          if (ev.getClickCount() == 2) {
             ConsoleViewerOutput cvOut = getSelection();
             if (cvOut != null) {
@@ -102,12 +102,12 @@ public class ConsoleViewersSettingsViewer implements _ConsoleViewerSelector {
          }
       }
    }
-   
+
    public void load() {
-      
+
       consViewerTableModel.put(Gui.getReader().listConsoleViewers());
    }
-   
+
    @Override
    public List<ConsoleViewerOutput> getConsoleViewers() {
       List<ConsoleViewerOutput> listOut = new ArrayList<ConsoleViewerOutput>();
@@ -116,10 +116,10 @@ public class ConsoleViewersSettingsViewer implements _ConsoleViewerSelector {
       }
       return listOut;
    }
-   
+
    @Handler
    public void putConsoleViewerEvent(ConsoleViewerEvent ev) {
       load();
    }
-   
+
 }

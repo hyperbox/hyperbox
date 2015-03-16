@@ -24,14 +24,14 @@ import org.altherian.hbox.comm.out.ObjectOut;
 import org.altherian.hbox.constant.EntityType;
 
 public final class NetworkInterfaceTypeOut extends ObjectOut {
-   
+
    @SuppressWarnings("unused")
    private NetworkInterfaceTypeOut() {
       // Used for serialization
    }
-   
+
    public NetworkInterfaceTypeOut(String id) {
       super(EntityType.NetworkInterfaceType, id);
    }
-   
+
 }

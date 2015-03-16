@@ -26,18 +26,18 @@ import org.altherian.hboxd.comm.io.factory.TaskIoFactory;
 import org.altherian.hboxd.task._Task;
 
 public abstract class TaskEvent extends Event {
-   
+
    public TaskEvent(Enum<?> id, _Task t) {
       super(id);
       set(TaskOut.class, TaskIoFactory.get(t));
    }
-   
+
    public String getTaskId() {
       return getTask().getId();
    }
-   
+
    public TaskOut getTask() {
       return get(TaskOut.class);
    }
-   
+
 }

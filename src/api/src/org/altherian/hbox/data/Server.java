@@ -26,40 +26,40 @@ import java.util.List;
 import java.util.Map;
 
 public class Server {
-   
+
    private Map<String, Machine> vmMap = new HashMap<String, Machine>();
    private Map<String, Task> taskMap = new HashMap<String, Task>();
-   
+
    public void addMachine(Machine vm) {
       vmMap.put(vm.getUuid(), vm);
    }
-   
+
    public void removeMachine(String uuid) {
       vmMap.remove(uuid);
    }
-   
+
    public void updateMachine(Machine vm) {
       addMachine(vm);
    }
-   
+
    public List<Machine> listMachines() {
       return new ArrayList<Machine>(vmMap.values());
    }
-   
+
    public void addTask(Task t) {
       taskMap.put(t.getId(), t);
    }
-   
+
    public void removeTask(String id) {
       taskMap.remove(id);
    }
-   
+
    public void updateTask(Task t) {
       addTask(t);
    }
-   
+
    public List<Task> listTasks() {
       return new ArrayList<Task>(taskMap.values());
    }
-   
+
 }

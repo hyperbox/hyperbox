@@ -25,28 +25,28 @@ import org.virtualbox_4_2.IVirtualBox;
 import org.virtualbox_4_2.VirtualBoxManager;
 
 public class VBox {
-   
+
    private static VBoxHypervisor hyp;
-   
+
    public static void set(VBoxHypervisor hyp) {
-      
+
       VBox.hyp = hyp;
    }
-   
+
    public static void unset() {
       hyp = null;
    }
-   
+
    public static VirtualBoxManager getManager() {
       return hyp.getMgr();
    }
-   
+
    public static IVirtualBox get() {
       return getManager().getVBox();
    }
-   
+
    public static ISession getSession() {
       return hyp.getSession();
    }
-   
+
 }

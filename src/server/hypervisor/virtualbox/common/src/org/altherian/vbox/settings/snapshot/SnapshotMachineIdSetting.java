@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.SnapshotAttribute;
 import org.altherian.setting.StringSetting;
 
 public class SnapshotMachineIdSetting extends StringSetting {
-   
+
    public SnapshotMachineIdSetting(String id) {
       super(SnapshotAttribute.MachineID, id);
    }
-   
+
 }

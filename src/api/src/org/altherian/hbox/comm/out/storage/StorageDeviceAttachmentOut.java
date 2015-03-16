@@ -24,19 +24,19 @@ import org.altherian.hbox.comm.out.ObjectOut;
 import org.altherian.hbox.constant.EntityType;
 
 public class StorageDeviceAttachmentOut extends ObjectOut {
-   
+
    private String machineUuid;
    private String controllerName;
    private String mediumUuid;
    private long portId;
    private long deviceId;
    private String deviceType;
-   
+
    @SuppressWarnings("unused")
    private StorageDeviceAttachmentOut() {
       // Used for serialization
    }
-   
+
    public StorageDeviceAttachmentOut(String machineUuid, String controllerName, String mediumUuid, long portId, long deviceId, String deviceType) {
       super(EntityType.StorageAttachment, machineUuid + "|" + controllerName + "|" + portId + "|" + deviceId);
       this.machineUuid = machineUuid;
@@ -46,21 +46,21 @@ public class StorageDeviceAttachmentOut extends ObjectOut {
       this.deviceId = deviceId;
       this.deviceType = deviceType;
    }
-   
+
    /**
     * @return the machineUuid
     */
    public String getMachineUuid() {
       return machineUuid;
    }
-   
+
    /**
     * @return the controllerName
     */
    public String getControllerName() {
       return controllerName;
    }
-   
+
    /**
     * @return the mediumUuid or null if no medium is present
     * @see #hasMediumInserted()
@@ -68,32 +68,32 @@ public class StorageDeviceAttachmentOut extends ObjectOut {
    public String getMediumUuid() {
       return mediumUuid;
    }
-   
+
    /**
     * @return the portId
     */
    public long getPortId() {
       return portId;
    }
-   
+
    /**
     * @return the deviceId
     */
    public long getDeviceId() {
       return deviceId;
    }
-   
+
    /**
     * @return the deviceType
     */
    public String getDeviceType() {
       return deviceType;
    }
-   
+
    public boolean hasMediumInserted() {
       return (getMediumUuid() != null);
    }
-   
+
    @Override
    public String toString() {
       if (hasMediumInserted()) {
@@ -102,5 +102,5 @@ public class StorageDeviceAttachmentOut extends ObjectOut {
          return getDeviceType() + " Drive";
       }
    }
-   
+
 }

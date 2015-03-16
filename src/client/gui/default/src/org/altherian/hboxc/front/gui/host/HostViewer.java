@@ -39,9 +39,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class HostViewer implements _Refreshable, _HostReceiver {
-   
+
    private final String srvId;
-   
+
    private JLabel hostnameLabel;
    private JTextField hostnameValue;
    private JLabel memPercLabel;
@@ -52,26 +52,26 @@ public class HostViewer implements _Refreshable, _HostReceiver {
    private JTextField memFreeValue;
    private JLabel memTotalLabel;
    private JTextField memTotalValue;
-   
+
    private JLabel status;
    private JPanel dataPanel;
    private JPanel panel;
-   
+
    public HostViewer(String srvId) {
       this.srvId = srvId;
-      
+
       hostnameLabel = new JLabel("Hostname");
       memPercLabel = new JLabel("Memory Usage");
       memUsedLabel = new JLabel("Memory Used");
       memFreeLabel = new JLabel("Memory Free");
       memTotalLabel = new JLabel("Memory Total");
-      
+
       hostnameValue = JTextFieldUtils.createNonEditable();
       memPercValue = new JProgressBar(SwingConstants.HORIZONTAL, 0, 10000);
       memUsedValue = JTextFieldUtils.createNonEditable();
       memFreeValue = JTextFieldUtils.createNonEditable();
       memTotalValue = JTextFieldUtils.createNonEditable();
-      
+
       dataPanel = new JPanel(new MigLayout("ins 0"));
       dataPanel.add(hostnameLabel);
       dataPanel.add(hostnameValue, "growx,pushx,wrap");
@@ -83,24 +83,24 @@ public class HostViewer implements _Refreshable, _HostReceiver {
       dataPanel.add(memFreeValue, "growx,pushx,wrap");
       dataPanel.add(memTotalLabel);
       dataPanel.add(memTotalValue, "growx,pushx,wrap");
-      
+
       status = new JLabel();
       status.setVisible(false);
-      
+
       panel = new JPanel(new MigLayout());
       panel.add(status, "growx, pushx, wrap, hidemode 3");
       panel.add(dataPanel, "grow, push, wrap, hidemode 3");
-      
+
       RefreshUtil.set(panel, this);
       refresh();
       ViewEventManager.register(this);
    }
-   
+
    @Override
    public void refresh() {
       HostGetWorker.execute(this, srvId);
    }
-   
+
    private void clear() {
       hostnameValue.setText(null);
       memPercValue.setValue(0);
@@ -110,11 +110,11 @@ public class HostViewer implements _Refreshable, _HostReceiver {
       memFreeValue.setText(null);
       memTotalValue.setText(null);
    }
-   
+
    public JComponent getComponent() {
       return panel;
    }
-   
+
    @Override
    public void loadingStarted() {
       clear();
@@ -122,45 +122,45 @@ public class HostViewer implements _Refreshable, _HostReceiver {
       dataPanel.setVisible(false);
       status.setText("Loading...");
    }
-   
+
    @Override
    public void loadingFinished(boolean isSuccessful, String message) {
       setDataVisible(isSuccessful);
       status.setText(message);
    }
-   
+
    @Override
    public void put(HostOut hostOut) {
       Long memUsed = hostOut.getMemorySize() - hostOut.getMemoryAvailable();
       hostnameValue.setText(hostOut.getHostname());
       memPercValue.setStringPainted(true);
       memPercValue.setValue((int) Math.ceil(((1 - (hostOut.getMemoryAvailable().doubleValue() / hostOut.getMemorySize().doubleValue())) * 10000)));
-      
+
       memPercValue.setString(memUsed + "MB / " + hostOut.getMemorySize() + " MB (" + memPercValue.getString() + ")");
       memUsedValue.setText(memUsed.toString() + " MB");
       memFreeValue.setText(hostOut.getMemoryAvailable().toString() + " MB");
       memTotalValue.setText(hostOut.getMemorySize().toString() + " MB");
    }
-   
+
    @Handler
    public void putHypervisorConnected(HypervisorConnectedEventOut ev) {
       if (srvId.contentEquals(ev.getServerId())) {
          refresh();
       }
    }
-   
+
    @Handler
    public void putHypervisorDisconnected(HypervisorDisconnectedEventOut ev) {
       if (srvId.contentEquals(ev.getServerId())) {
          refresh();
       }
    }
-   
+
    private void setDataVisible(boolean isVisible) {
       status.setVisible(!isVisible);
       status.setEnabled(!isVisible);
       dataPanel.setVisible(isVisible);
       dataPanel.setEnabled(isVisible);
    }
-   
+
 }

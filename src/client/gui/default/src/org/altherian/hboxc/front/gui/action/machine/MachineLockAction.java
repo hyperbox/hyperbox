@@ -33,20 +33,20 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class MachineLockAction extends AbstractAction {
-   
+
    private _MachineSelector selector;
-   
+
    public MachineLockAction(_MachineSelector selector) {
       super("Lock", IconBuilder.getTask(HypervisorTasks.MachineLock));
       setEnabled(true);
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ev) {
       for (MachineOut mOut : selector.getMachines()) {
          Gui.post(new Request(Command.VBOX, HypervisorTasks.MachineLock, new MachineIn(mOut)));
       }
    }
-   
+
 }

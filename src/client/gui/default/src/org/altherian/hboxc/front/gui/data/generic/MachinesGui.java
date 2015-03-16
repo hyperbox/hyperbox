@@ -24,16 +24,16 @@ import org.altherian.hbox.constant.EntityType;
 import org.altherian.hboxc.front.gui.data.EntityGui;
 
 public class MachinesGui extends EntityGui {
-   
+
    public final static String id = "Machines";
-   
+
    public MachinesGui() {
       super(EntityType.Machine.getId(), id, true);
    }
-   
+
    @Override
    public String toString() {
       return id;
    }
-   
+
 }

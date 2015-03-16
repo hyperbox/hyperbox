@@ -38,20 +38,20 @@ import javax.swing.AbstractAction;
  * @author noteirak
  */
 public abstract class AbstractHyperboxMultiTaskAction extends AbstractHyperboxAction {
-   
+
    @Override
    public AnswerType getStartReturn() {
       return AnswerType.STARTED;
    }
-   
+
    @Override
    public AnswerType getFinishReturn() {
       return AnswerType.COMPLETED;
    }
-   
+
    @Override
    public AnswerType getFailReturn() {
       return AnswerType.FAILED;
    }
-   
+
 }

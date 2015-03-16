@@ -27,46 +27,46 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SettingSQL {
-   
+
    public static final String TABLE = "settings";
-   
+
    public static final String NAME = "settingName";
    public static final String VALUE = "settingValue";
-   
+
    public static void init(SqlPersistor sql) throws SQLException {
-      
+
       createTables(sql);
    }
-   
+
    public static void createTables(SqlPersistor sql) throws SQLException {
-      
+
       sql.getConn()
             .createStatement()
             .executeUpdate(
                   "CREATE TABLE IF NOT EXISTS `" + TABLE + "` (`" + NAME
                         + "` VARCHAR(255) NOT NULL,`" + VALUE + "` VARCHAR(255),PRIMARY KEY (`" + NAME + "`))");
    }
-   
+
    public static String getSetSettingQuery() {
       return "MERGE INTO " + TABLE + " (" + NAME + "," + VALUE + ") VALUES (?,?)";
    }
-   
+
    public static void populateSetSettingQuery(EasyPreparedStatement stmt, String name, String value) throws SQLException {
       Logger.debug("Saving setting " + name + " with value " + value);
       stmt.setString(name);
       stmt.setString(value);
    }
-   
+
    public static String getLoadSettingQuery() {
       return "SELECT * FROM " + TABLE + " WHERE settingName = ?";
    }
-   
+
    public static void populateLoadSettingQuery(EasyPreparedStatement stmt, String name) throws SQLException {
       stmt.setString(name);
    }
-   
+
    public static String extractSetting(ResultSet rSet) throws SQLException {
       return rSet.getString(VALUE);
    }
-   
+
 }

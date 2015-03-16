@@ -37,26 +37,26 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SnapshotGetRootAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.SnapshotGetRoot.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       MachineIn mIn = request.get(MachineIn.class);
-      
+
       _RawVM rawVM = hbox.getHypervisor().getMachine(mIn.getUuid());
       _RawSnapshot rawSnap = rawVM.getRootSnapshot();
-      
+
       SnapshotOut snapOut = SnapshotIoFactory.get(rawSnap);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, snapOut));
    }
-   
+
 }

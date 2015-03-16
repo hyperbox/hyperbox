@@ -22,55 +22,55 @@
 package org.altherian.hbox.comm.out.hypervisor;
 
 public class HypervisorLoaderOut {
-   
+
    private String vendor;
    private String product;
    private String typeId;
    private String hypervisorId;
-   
+
    @SuppressWarnings("unused")
    private HypervisorLoaderOut() {
-      
+
    }
-   
+
    public HypervisorLoaderOut(String vendor, String product, String typeId, String hypervisorId) {
       this.vendor = vendor;
       this.product = product;
       this.typeId = typeId;
       this.hypervisorId = hypervisorId;
    }
-   
+
    /**
     * @return the vendor
     */
    public String getVendor() {
       return vendor;
    }
-   
+
    /**
     * @return the product
     */
    public String getProduct() {
       return product;
    }
-   
+
    /**
     * @return the typeId
     */
    public String getTypeId() {
       return typeId;
    }
-   
+
    /**
     * @return the hypervisorId
     */
    public String getHypervisorId() {
       return hypervisorId;
    }
-   
+
    @Override
    public String toString() {
       return vendor + " " + product + " - " + hypervisorId;
    }
-   
+
 }

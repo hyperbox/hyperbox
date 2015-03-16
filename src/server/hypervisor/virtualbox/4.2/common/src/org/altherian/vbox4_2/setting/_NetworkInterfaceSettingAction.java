@@ -25,13 +25,13 @@ import org.virtualbox_4_2.INetworkAdapter;
 import org.virtualbox_4_2.LockType;
 
 public interface _NetworkInterfaceSettingAction {
-   
+
    public LockType getLockType();
-   
+
    public String getSettingName();
-   
+
    public void set(INetworkAdapter nic, _Setting setting);
-   
+
    public _Setting get(INetworkAdapter nic);
-   
+
 }

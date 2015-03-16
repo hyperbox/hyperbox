@@ -21,7 +21,7 @@
 package org.altherian.hbox.constant;
 
 public enum SnapshotAttribute {
-   
+
    Uuid,
    Name,
    Description,
@@ -30,9 +30,9 @@ public enum SnapshotAttribute {
    HasParent,
    HasChildren,
    IsOnline;
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

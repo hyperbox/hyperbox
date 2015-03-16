@@ -26,14 +26,14 @@ import org.altherian.hboxc.event.ClientEvents;
 import org.altherian.hboxc.state.ConnectionState;
 
 public class ConnectorDisconnectedEvent extends ConnectorStateChangedEvent {
-   
+
    public ConnectorDisconnectedEvent(ConnectorOutput conOut) {
       super(ClientEvents.ConnectorDisconnected, conOut, ConnectionState.Disconnected);
    }
-   
+
    @Override
    public String toString() {
       return "Connector " + getConnector().getLabel() + " disconnected @ " + getTime();
    }
-   
+
 }

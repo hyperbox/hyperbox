@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.PositiveNumberSetting;
 
 public class CpuCountSetting extends PositiveNumberSetting {
-   
+
    public CpuCountSetting(long cpuCount) {
       super(MachineAttribute.CpuCount, cpuCount);
    }
-   
+
 }

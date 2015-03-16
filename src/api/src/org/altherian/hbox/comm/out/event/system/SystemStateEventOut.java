@@ -33,9 +33,9 @@ import java.util.Date;
  * @author noteirak
  */
 public class SystemStateEventOut extends EventOut {
-   
+
    private ServerState ss;
-   
+
    /**
     * Used for serialisation, do not use!
     */
@@ -43,7 +43,7 @@ public class SystemStateEventOut extends EventOut {
    private SystemStateEventOut() {
       // Used for serialization
    }
-   
+
    /**
     * Create a new System Event comm message with the given state.
     * 
@@ -55,7 +55,7 @@ public class SystemStateEventOut extends EventOut {
       super(time, HyperboxEvents.SystemState, srvOut);
       this.ss = ss;
    }
-   
+
    /**
     * Get the system state stored in this event comm message.
     * 
@@ -64,10 +64,10 @@ public class SystemStateEventOut extends EventOut {
    public ServerState getState() {
       return ss;
    }
-   
+
    @Override
    public String toString() {
       return "Systeam state changed to " + ss + " @ " + TimeFormater.get(getTime());
    }
-   
+
 }

@@ -30,7 +30,7 @@ import org.altherian.hbox.comm.out.event.EventOut;
  * @author noteirak
  */
 public interface _Client extends _AnswerReceiver {
-   
+
    /**
     * Get a unique identifier for the client.<br/>
     * This unique ID will typically be the username, or the IP:Port of the connection.<br/>
@@ -39,9 +39,9 @@ public interface _Client extends _AnswerReceiver {
     * @return a String holding the unique ID for this client
     */
    public String getId();
-   
+
    public String getAddress();
-   
+
    /**
     * Allow to send an event to this particular client.<br/>
     * If you wish to broadcast an event to every client, use _Front.broadcast() in the Hyperbox Server API.
@@ -49,5 +49,5 @@ public interface _Client extends _AnswerReceiver {
     * @param evOut The Event object to be send
     */
    public void post(EventOut evOut);
-   
+
 }

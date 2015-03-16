@@ -33,19 +33,19 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class ConsoleViewerRemoveAction extends AbstractAction {
-   
+
    private _ConsoleViewerSelector selector;
-   
+
    public ConsoleViewerRemoveAction(_ConsoleViewerSelector selector) {
       super("-");
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       for (ConsoleViewerOutput cvOut : selector.getConsoleViewers()) {
          Gui.post(new MessageInput(new Request(ClientTasks.ConsoleViewerRemove, new ConsoleViewerInput(cvOut.getId()))));
       }
    }
-   
+
 }

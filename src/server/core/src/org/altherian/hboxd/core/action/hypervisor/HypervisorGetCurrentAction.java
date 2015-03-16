@@ -35,21 +35,21 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HypervisorGetCurrentAction extends AbstractHyperboxMultiTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.HypervisorGet.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox modules) {
       HypervisorOut hypOut = HypervisorIoFactory.getOut(modules.getServer().getHypervisor());
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, hypOut));
    }
-   
+
 }

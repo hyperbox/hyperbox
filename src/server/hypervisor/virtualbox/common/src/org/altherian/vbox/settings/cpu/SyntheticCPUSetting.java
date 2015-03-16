@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.BooleanSetting;
 
 public class SyntheticCPUSetting extends BooleanSetting {
-   
+
    public SyntheticCPUSetting(boolean isEnabled) {
       super(MachineAttribute.SyntheticCPU, isEnabled);
    }
-   
+
 }

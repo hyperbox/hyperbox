@@ -21,10 +21,10 @@
 package org.altherian.hboxc.front.gui.snapshot;
 
 public class CurrentState {
-   
+
    @Override
    public String toString() {
       return "Current State";
    }
-   
+
 }

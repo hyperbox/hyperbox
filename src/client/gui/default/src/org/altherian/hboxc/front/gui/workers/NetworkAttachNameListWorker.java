@@ -28,32 +28,32 @@ import org.altherian.hboxc.front.gui.worker.receiver._NetworkAttachNameReceiver;
 import java.util.List;
 
 public class NetworkAttachNameListWorker extends AxSwingWorker<_NetworkAttachNameReceiver, Void, NetworkAttachNameOut> {
-   
+
    private String srvId;
    private String netAttachModeId;
-   
+
    public NetworkAttachNameListWorker(_NetworkAttachNameReceiver recv, String srvId, String netAttachModeId) {
       super(recv);
       this.srvId = srvId;
       this.netAttachModeId = netAttachModeId;
    }
-   
+
    @Override
    protected Void doInBackground() throws Exception {
       for (NetworkAttachNameOut nanOut : Gui.getServer(srvId).listNetworkAttachNames(new NetworkAttachModeIn(netAttachModeId))) {
          publish(nanOut);
       }
-      
+
       return null;
    }
-   
+
    @Override
    protected void process(List<NetworkAttachNameOut> nanOut) {
       getReceiver().add(nanOut);
    }
-   
+
    public static void execute(_NetworkAttachNameReceiver recv, String srvId, String netAttachModeId) {
       (new NetworkAttachNameListWorker(recv, srvId, netAttachModeId)).execute();
    }
-   
+
 }

@@ -27,17 +27,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 public enum VBoxNetMode implements _NetMode {
-   
+
    Bridged(true, false, false, false, false),
-   
+
    Generic(false, true, false, false, false),
-   
+
    HostOnly(true, false, true, true, false, NetServiceType.IPv4, NetServiceType.IPv6, NetServiceType.DHCP_IPv4),
-   
+
    Internal(false, true, false, false, false),
-   
+
    NAT(false, false, false, false, false, NetServiceType.NAT_IPv4),
-   
+
    NATNetwork(true, false, true, true, true,
          NetServiceType.IPv4_NetCIDR,
          NetServiceType.DHCP_IPv4,
@@ -45,7 +45,7 @@ public enum VBoxNetMode implements _NetMode {
          NetServiceType.IPv6_Gateway,
          NetServiceType.NAT_IPv6,
          NetServiceType.NAT_IPv4);
-   
+
    protected String id;
    protected String label;
    protected Set<String> services = new HashSet<String>();
@@ -54,7 +54,7 @@ public enum VBoxNetMode implements _NetMode {
    protected boolean canAddAdaptor;
    protected boolean canRemoveAdaptor;
    protected boolean canRenameAdaptor;
-   
+
    private VBoxNetMode(boolean canUseAdaptor, boolean canUseNetworkName, boolean canAddAdaptor, boolean canRemoveAdaptor, boolean canRenameAdaptor,
          NetServiceType... services) {
       for (NetServiceType type : services) {
@@ -66,47 +66,47 @@ public enum VBoxNetMode implements _NetMode {
       this.canRemoveAdaptor = canRemoveAdaptor;
       this.canRenameAdaptor = canRenameAdaptor;
    }
-   
+
    @Override
    public String getId() {
       return toString();
    }
-   
+
    @Override
    public String getLabel() {
       return toString();
    }
-   
+
    @Override
    public Set<String> getSupportedServices() {
       return new HashSet<String>(services);
    }
-   
+
    @Override
    public boolean canUseAdaptor() {
       return canUseAdaptor;
    }
-   
+
    @Override
    public boolean canUseNetworkName() {
       return canUseNetworkName;
    }
-   
+
    @Override
    public boolean canAddAdaptor() {
       return canAddAdaptor;
    }
-   
+
    @Override
    public boolean canRemoveAdaptor() {
       return canRemoveAdaptor;
    }
-   
+
    @Override
    public boolean canRenameAdaptor() {
       return canRenameAdaptor;
    }
-   
+
    public static VBoxNetMode getEnum(String modeId) {
       try {
          return VBoxNetMode.valueOf(modeId);
@@ -114,7 +114,7 @@ public enum VBoxNetMode implements _NetMode {
          throw new InvalidNetworkModeException(modeId);
       }
    }
-   
+
    public boolean is(String modeId) {
       try {
          return getId().contentEquals(modeId);
@@ -122,5 +122,5 @@ public enum VBoxNetMode implements _NetMode {
          return false;
       }
    }
-   
+
 }

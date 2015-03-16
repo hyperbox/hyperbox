@@ -31,22 +31,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ModuleUnregisterAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.ModuleUnregister.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       ModuleIn modIn = request.get(ModuleIn.class);
       _Module mod = hbox.getModuleManager().getModule(modIn.getId());
       hbox.getModuleManager().unregisterModule(mod);
    }
-   
+
 }

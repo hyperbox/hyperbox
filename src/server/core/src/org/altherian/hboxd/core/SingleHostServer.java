@@ -93,9 +93,9 @@ import java.util.UUID;
 import com.google.common.io.Files;
 
 public class SingleHostServer implements _Hyperbox, _Server {
-   
+
    private ServerState state;
-   
+
    private _SessionManager sessMgr;
    private _SecurityManager secMgr;
    private _ActionManager actionMgr;
@@ -103,66 +103,66 @@ public class SingleHostServer implements _Hyperbox, _Server {
    private _StoreManager storeMgr;
    private _Persistor persistor;
    private _ModuleManager modMgr;
-   
+
    private Map<String, Class<? extends _Hypervisor>> hypervisors;
    private _Hypervisor hypervisor;
-   
+
    private _Client system = new SystemClient();
-   
+
    private String id;
    private String name;
-   
+
    private void setState(ServerState state) {
       if (this.state != state) {
          this.state = state;
          EventManager.post(new SystemStateEvent(state));
       }
    }
-   
+
    public ServerState getState() {
       return state;
    }
-   
+
    private void loadPersistors() throws HyperboxException {
-      
+
       persistor = HBoxServer.loadClass(_Persistor.class, Configuration.getSetting(CFGKEY_CORE_PERSISTOR_CLASS, H2SqlPersistor.class.getName()));
       persistor.init();
    }
-   
+
    @Override
    public void init() throws HyperboxException {
-      
+
       SessionContext.setClient(system);
-      
+
       HBoxServer.initServer(this);
-      
+
       EventManager.start();
       EventManager.register(this);
-      
+
       loadPersistors();
-      
+
       secMgr = SecurityManagerFactory.get();
       SecurityContext.setAdminUser(secMgr.init(persistor));
-      
+
       actionMgr = new DefaultActionManager();
       taskMgr = new TaskManager();
-      
+
       storeMgr = new StoreManager();
       storeMgr.init(persistor);
-      
+
       sessMgr = new SessionManager();
-      
+
       modMgr = ModuleManagerFactory.get();
    }
-   
+
    @Override
    public void start() throws HyperboxException {
-      
+
       setState(ServerState.Starting);
-      
+
       persistor.start();
       HBoxServer.initPersistor(persistor);
-      
+
       if (!HBoxServer.hasSetting(CFGKEY_SRV_ID)) {
          Logger.verbose("Generating new Server ID");
          HBoxServer.setSetting(CFGKEY_SRV_ID, UUID.randomUUID());
@@ -171,14 +171,14 @@ public class SingleHostServer implements _Hyperbox, _Server {
       }
       id = HBoxServer.getSettingOrFail(CFGKEY_SRV_ID);
       name = HBoxServer.getSettingOrFail(CFGKEY_SRV_NAME);
-      
+
       Logger.info("Server ID: " + id);
       Logger.info("Server Name: " + name);
-      
+
       actionMgr.start();
       secMgr.start();
       SecurityContext.initSecurityManager(secMgr);
-      
+
       //FIXME Changes the admin password
       if (Arrays.asList(Hyperbox.getArgs()).contains("--reset-admin-pass")) {
          boolean next = false;
@@ -196,17 +196,17 @@ public class SingleHostServer implements _Hyperbox, _Server {
             Logger.error("You should give the new password after the '--reset-admin-pass' parameter.");
             System.exit(1);
          }
-         
+
          System.exit(0);
       }
-      
+
       taskMgr.start(this);
       sessMgr.start(this);
       storeMgr.start();
       modMgr.start();
-      
+
       loadHypervisors();
-      
+
       if (HBoxServer.hasSetting(CFGKEY_CORE_HYP_ID)) {
          Logger.info("Loading Hypervisor configuration");
          HypervisorIn in = new HypervisorIn(HBoxServer.getSetting(CFGKEY_CORE_HYP_ID));
@@ -224,17 +224,17 @@ public class SingleHostServer implements _Hyperbox, _Server {
       } else {
          Logger.info("No Hypervisor configuration found, skipping");
       }
-      
+
       setState(ServerState.Running);
    }
-   
+
    @Override
    public void stop() {
-      
+
       secMgr.authorize(SecurityItem.Server, SecurityAction.Stop);
-      
+
       setState(ServerState.Stopping);
-      
+
       if (modMgr != null) {
          modMgr.stop();
       }
@@ -244,7 +244,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
       if (taskMgr != null) {
          taskMgr.stop();
       }
-      
+
       if (isConnected()) {
          disconnect();
       }
@@ -257,94 +257,94 @@ public class SingleHostServer implements _Hyperbox, _Server {
       if (storeMgr != null) {
          storeMgr.stop();
       }
-      
+
       if (persistor != null) {
          persistor.stop();
       }
-      
+
       hypervisors = null;
       setState(ServerState.Stopped);
       EventManager.stop();
    }
-   
+
    @Override
    public _RequestReceiver getReceiver() {
       return sessMgr;
    }
-   
+
    @Override
    public _TaskManager getTaskManager() {
       return taskMgr;
    }
-   
+
    @Override
    public _SessionManager getSessionManager() {
       return sessMgr;
    }
-   
+
    @Override
    public _SecurityManager getSecurityManager() {
       return secMgr;
    }
-   
+
    @Override
    public _ActionManager getActionManager() {
       return actionMgr;
    }
-   
+
    @Override
    public _StoreManager getStoreManager() {
       return storeMgr;
    }
-   
+
    @Override
    public _ModuleManager getModuleManager() {
       return modMgr;
    }
-   
+
    @Override
    public _ServerManager getServerManager() {
       return this;
    }
-   
+
    @Override
    public _Persistor getPersistor() {
       return persistor;
    }
-   
+
    @Override
    public String getId() {
       return id;
    }
-   
+
    @Override
    public String getName() {
       return name;
    }
-   
+
    @Override
    public void setName(String name) {
-      
+
       HBoxServer.setSetting(CFGKEY_SRV_NAME, name);
       this.name = name;
       EventManager.post(new ServerPropertyChangedEvent(this, ServerAttribute.Name, name));
    }
-   
+
    @Override
    public ServerType getType() {
       return ServerType.Host;
    }
-   
+
    @Override
    public String getVersion() {
       return Hyperbox.getVersion().toString();
    }
-   
+
    private void loadHypervisors() throws HyperboxException {
-      
+
       Map<String, Class<? extends _Hypervisor>> hyps = new HashMap<String, Class<? extends _Hypervisor>>();
       Set<Class<? extends _Hypervisor>> subTypes = HBoxServer.getAnnotatedSubTypes(_Hypervisor.class, Hypervisor.class);
-      
+
       for (Class<? extends _Hypervisor> hypLoader : subTypes) {
          for (String scheme : hypLoader.getAnnotation(Hypervisor.class).schemes()) {
             try {
@@ -355,18 +355,18 @@ public class SingleHostServer implements _Hyperbox, _Server {
             }
          }
       }
-      
+
       hypervisors = hyps;
    }
-   
+
    @Override
    public void connect(String hypervisorId, String options) {
       secMgr.authorize(SecurityItem.Hypervisor, SecurityAction.Connect);
-      
+
       if (!hypervisors.containsKey(hypervisorId)) {
          throw new HyperboxRuntimeException("No Hypervisor is registered under this ID: " + hypervisorId);
       }
-      
+
       try {
          Class<? extends _Hypervisor> hypClass = hypervisors.get(hypervisorId);
          Logger.debug("Loading " + hypClass.getName() + " using " + hypClass.getClassLoader().getClass().getName());
@@ -388,37 +388,37 @@ public class SingleHostServer implements _Hyperbox, _Server {
          throw new HyperboxRuntimeException("Hypervisor cannot be loaded due to bad format: " + e.getMessage(), e);
       }
    }
-   
+
    @Override
    public void disconnect() {
       secMgr.authorize(SecurityItem.Hypervisor, SecurityAction.Disconnect);
-      
+
       if (isConnected()) {
          hypervisor.stop();
          hypervisor = null;
          EventManager.post(new ServerConnectionStateEvent(this, ServerConnectionState.Disconnected));
       }
    }
-   
+
    @Override
    public boolean isConnected() {
       return ((hypervisor != null) && hypervisor.isRunning());
    }
-   
+
    @Override
    public _Hypervisor getHypervisor() {
       if (!isConnected()) {
          throw new HypervisorNotConnectedException();
       }
-      
+
       return hypervisor;
    }
-   
+
    @Override
    public _Server getServer() {
       return this;
    }
-   
+
    @Override
    public _Server getServer(String uuid) {
       if (!uuid.contentEquals(getId())) {
@@ -426,78 +426,78 @@ public class SingleHostServer implements _Hyperbox, _Server {
       }
       return this;
    }
-   
+
    @Override
    public List<_Server> listServer() {
       return Arrays.asList((_Server) this);
    }
-   
+
    @Override
    public List<Class<? extends _Hypervisor>> listHypervisors() {
       return new ArrayList<Class<? extends _Hypervisor>>(hypervisors.values());
    }
-   
+
    private class SystemClient implements _Client {
-      
+
       @Override
       public void putAnswer(Answer ans) {
          // we ignore this
       }
-      
+
       @Override
       public String getId() {
          return "System";
       }
-      
+
       @Override
       public String getAddress() {
          return "";
       }
-      
+
       @Override
       public void post(EventOut evOut) {
          Logger.verbose("[ Event ] " + evOut);
       }
-      
+
    }
-   
+
    @Override
    public List<_Machine> listMachines() {
       if (!isConnected()) {
          throw new HyperboxRuntimeException("Server is not connected");
       }
-      
+
       List<_Machine> vms = new ArrayList<_Machine>();
       for (_RawVM rawVm : hypervisor.listMachines()) {
          if (secMgr.isAuthorized(SecurityItem.Machine, SecurityAction.List, rawVm.getUuid())) {
             vms.add(MachineFactory.get(this, hypervisor, rawVm));
          }
       }
-      
+
       return vms;
    }
-   
+
    @Override
    public _Machine getMachine(String id) {
       secMgr.authorize(SecurityItem.Machine, SecurityAction.Get, id);
       return MachineFactory.get(this, hypervisor, hypervisor.getMachine(id));
    }
-   
+
    @Override
    public _Machine findMachine(String idOrName) {
       return getMachine(idOrName);
    }
-   
+
    @Override
    public void unregisterMachine(String id) {
       hypervisor.unregisterMachine(id);
    }
-   
+
    @Override
    public void deleteMachine(String id) {
       hypervisor.deleteMachine(id);
    }
-   
+
    @Override
    public _Medium createMedium(String location, String format, Long logicalSize) {
       Logger.debug("Creating a new hard disk at location [" + location + "] with format [" + format + "] and size ["
@@ -513,7 +513,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
       _Medium med = new Medium(this, hypervisor, rawMed);
       return med;
    }
-   
+
    @Override
    public _Medium createMedium(String vmId, String filename, String format, Long logicalSize) {
       if (!new File(filename).isAbsolute()) {
@@ -521,33 +521,33 @@ public class SingleHostServer implements _Hyperbox, _Server {
       }
       return createMedium(filename, format, logicalSize);
    }
-   
+
    @Override
    public _Medium getMedium(String medId) {
       return new Medium(this, hypervisor, hypervisor.getMedium(medId));
    }
-   
+
    @Override
    public _Host getHost() {
       if (!isConnected()) {
          throw new HyperboxRuntimeException("Hypervisor is not connected - cannot retrieve host information");
       }
-      
+
       return new Host(hypervisor.getHost());
    }
-   
+
    @Handler
    protected void putHypervisorDisconnectEvent(HypervisorDisconnectedEvent ev) {
-      
+
       if (ev.getHypervisor().equals(hypervisor) && isConnected()) {
          Logger.debug("Hypervisor disconnected, cleaning up");
          disconnect();
       }
    }
-   
+
    @Handler
    protected void putModuleEvent(ModuleEvent ev) {
-      
+
       try {
          loadHypervisors();
       } catch (HyperboxException e) {
@@ -555,12 +555,12 @@ public class SingleHostServer implements _Hyperbox, _Server {
          Logger.exception(e);
       }
    }
-   
+
    @Override
    public String getLogLevel() {
       return Logger.getLevel().toString();
    }
-   
+
    @Override
    public Set<String> listLogLevel() {
       Set<String> levels = new HashSet<String>();
@@ -569,7 +569,7 @@ public class SingleHostServer implements _Hyperbox, _Server {
       }
       return levels;
    }
-   
+
    @Override
    public void setLogLevel(String logLevel) throws ServerLogLevelInvalidException {
       try {
@@ -579,10 +579,10 @@ public class SingleHostServer implements _Hyperbox, _Server {
          throw new ServerLogLevelInvalidException(logLevel);
       }
    }
-   
+
    @Override
    public void save() {
       // stub, nothing to save for now
    }
-   
+
 }

@@ -28,18 +28,18 @@ import org.altherian.hboxc.server._Server;
 import org.altherian.hboxc.server.task._Task;
 
 public class Task implements _Task {
-   
+
    private _Server srv;
    private String taskId;
-   
+
    public Task(_Server srv, String taskId) {
       this.srv = srv;
       this.taskId = taskId;
    }
-   
+
    @Override
    public void cancel() {
       srv.sendRequest(new Request(Command.HBOX, HyperboxTasks.TaskCancel, new TaskIn(taskId)));
    }
-   
+
 }

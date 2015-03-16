@@ -24,7 +24,7 @@ package org.altherian.hboxc.front.gui.worker.receiver;
 import org.altherian.hbox.comm.out.hypervisor.MachineOut;
 
 public interface _MachineReceiver extends _WorkerDataReceiver {
-   
+
    public void put(MachineOut mOut);
-   
+
 }

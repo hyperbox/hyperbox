@@ -29,26 +29,26 @@ import org.virtualbox_4_2.IStorageController;
 import org.virtualbox_4_2.LockType;
 
 public class ControllerPortCountSettingAction implements _StorageControllerSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return StorageControllerAttribute.PortCount.toString();
    }
-   
+
    @Override
    public void set(IStorageController sct, _Setting setting) {
       long portCount = ((PositiveNumberSetting) setting).getValue();
       sct.setPortCount(portCount);
    }
-   
+
    @Override
    public _Setting get(IStorageController sct) {
       return new ControllerPortCountSetting(sct.getPortCount());
    }
-   
+
 }

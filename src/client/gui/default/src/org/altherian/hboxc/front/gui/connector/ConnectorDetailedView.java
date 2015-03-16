@@ -45,39 +45,39 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingWorker;
 
 public class ConnectorDetailedView implements _Refreshable {
-   
+
    private String conId;
    private JTabbedPane tabs;
    private JLabel loadingLabel;
    private JPanel panel;
-   
+
    private ConnectorSummaryViewer summaryView;
    private StoreListView storeView;
    private UserListView userView;
    private ModuleListView modView;
-   
+
    public ConnectorDetailedView(ConnectorOutput conOut) {
       this.conId = conOut.getId();
       summaryView = new ConnectorSummaryViewer(conOut);
       storeView = new StoreListView();
       userView = new UserListView();
       modView = new ModuleListView();
-      
+
       tabs = new JTabbedPane();
       tabs.addTab("Summary", IconBuilder.getEntityType(EntityType.Server), summaryView.getComponent());
-      
+
       loadingLabel = new JLabel("Loading...");
       loadingLabel.setVisible(false);
-      
+
       panel = new JPanel(new MigLayout("ins 0"));
       panel.add(loadingLabel, "growx,pushx,wrap,hidemode 3");
       panel.add(tabs, "grow,push,wrap");
-      
+
       RefreshUtil.set(panel, this);
       refresh();
       ViewEventManager.register(this);
    }
-   
+
    private void update(ConnectorOutput conOut) {
       tabs.setSelectedComponent(summaryView.getComponent());
       if (conOut.isConnected()) {
@@ -101,17 +101,17 @@ public class ConnectorDetailedView implements _Refreshable {
          }
       }
    }
-   
+
    @Override
    public void refresh() {
-      
+
       new SwingWorker<ConnectorOutput, Void>() {
-         
+
          @Override
          protected ConnectorOutput doInBackground() throws Exception {
             return Gui.getReader().getConnector(conId);
          }
-         
+
          @Override
          protected void done() {
             try {
@@ -122,19 +122,19 @@ public class ConnectorDetailedView implements _Refreshable {
                Gui.showError(e.getCause());
             }
          }
-         
+
       }.execute();
    }
-   
+
    public JComponent getComponent() {
       return panel;
    }
-   
+
    @Handler
    private void putConnectorStateEvent(ConnectorStateChangedEvent ev) {
       if (conId.equals(ev.getConnector().getId())) {
          refresh();
       }
    }
-   
+
 }

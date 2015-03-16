@@ -31,17 +31,17 @@ import org.virtualbox_4_2.NetworkAdapterPromiscModePolicy;
 import org.virtualbox_4_2.VBoxException;
 
 public class NicPromiscuousModeSettingAction implements _NetworkInterfaceSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Shared;
    }
-   
+
    @Override
    public String getSettingName() {
       return NetworkInterfaceAttribute.PromiscuousMode.getId();
    }
-   
+
    @Override
    public void set(INetworkAdapter nic, _Setting setting) {
       try {
@@ -52,12 +52,12 @@ public class NicPromiscuousModeSettingAction implements _NetworkInterfaceSetting
       } catch (IllegalArgumentException e) {
          throw new ConfigurationException("Unkown Promiscuous mode: " + setting.getString());
       }
-      
+
    }
-   
+
    @Override
    public _Setting get(INetworkAdapter nic) {
       return new NicPromiscuousModeSetting(nic.getPromiscModePolicy().toString());
    }
-   
+
 }

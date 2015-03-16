@@ -22,8 +22,8 @@
 package org.altherian.hbox.constant;
 
 public enum HyperboxServerType {
-   
+
    Controller,
    Manager,
-   
+
 }

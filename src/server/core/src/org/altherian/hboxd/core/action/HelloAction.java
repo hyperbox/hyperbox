@@ -33,21 +33,21 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class HelloAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.Hello.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       // TODO give more info
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, new HelloOut(HyperboxAPI.getProtocolVersion().toString())));
    }
-   
+
 }

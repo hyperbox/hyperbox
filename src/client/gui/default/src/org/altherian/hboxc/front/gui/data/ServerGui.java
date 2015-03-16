@@ -25,19 +25,19 @@ import org.altherian.hboxc.comm.output.ConnectorOutput;
 import org.altherian.tool.AxStrings;
 
 public class ServerGui extends EntityGui {
-   
+
    private String address;
    private String name;
    private String label;
    private String state;
-   
+
    public ServerGui(ConnectorOutput conOut, ServerOut srvOut) {
       super(srvOut.getEntityTypeId(), conOut.getId());
       address = conOut.getAddress();
       label = conOut.getLabel();
       name = srvOut.getName();
    }
-   
+
    @Override
    public String toString() {
       if (!AxStrings.isEmpty(label)) {
@@ -50,61 +50,61 @@ public class ServerGui extends EntityGui {
          return super.toString();
       }
    }
-   
+
    /**
     * @return the address
     */
    public String getAddress() {
       return address;
    }
-   
+
    /**
     * @param address the address to set
     */
    public void setAddress(String address) {
       this.address = address;
    }
-   
+
    /**
     * @return the name
     */
    public String getName() {
       return name;
    }
-   
+
    /**
     * @param name the name to set
     */
    public void setName(String name) {
       this.name = name;
    }
-   
+
    /**
     * @return the label
     */
    public String getLabel() {
       return label;
    }
-   
+
    /**
     * @param label the label to set
     */
    public void setLabel(String label) {
       this.label = label;
    }
-   
+
    /**
     * @return the state
     */
    public String getState() {
       return state;
    }
-   
+
    /**
     * @param state the state to set
     */
    public void setState(String state) {
       this.state = state;
    }
-   
+
 }

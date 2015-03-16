@@ -62,11 +62,11 @@ import java.util.List;
 import java.util.Map;
 
 public class ClientCore implements _Core {
-   
+
    private class ConnectorIdGenerator {
-      
+
       private Integer id = 1;
-      
+
       public String getId() {
          while (conns.containsKey(id.toString())) {
             id++;
@@ -74,21 +74,21 @@ public class ClientCore implements _Core {
          return id.toString();
       }
    }
-   
+
    private volatile CoreState state = CoreState.Stopped;
-   
+
    private _CoreStorage storage;
-   
+
    private ConnectorIdGenerator connectIdGen = new ConnectorIdGenerator();
-   
+
    private Map<String, _ConsoleViewer> consoleViewers;
    private Map<String, _Connector> conns;
    private Map<String, _Server> servers;
-   
+
    private _Updater updater;
-   
+
    private void setState(CoreState state) {
-      
+
       if (!this.state.equals(state)) {
          Logger.verbose("Changing Core State to " + state);
          this.state = state;
@@ -97,10 +97,10 @@ public class ClientCore implements _Core {
          Logger.debug("Ignoring new state, same as old: " + state);
       }
    }
-   
+
    private void loadViewers() throws HyperboxException {
       consoleViewers.clear();
-      
+
       Collection<_ConsoleViewer> viewers = new ArrayList<_ConsoleViewer>();
       if (storage.hasConsoleViewers()) {
          viewers.addAll(storage.loadViewers());
@@ -114,10 +114,10 @@ public class ClientCore implements _Core {
          consoleViewers.put(viewer.getId(), viewer);
       }
    }
-   
+
    private void loadConnectors() throws HyperboxException {
       conns.clear();
-      
+
       if (storage.hasConnectors()) {
          for (_Connector conn : storage.loadConnectors()) {
             if (conns.containsKey(conn.getId())) {
@@ -128,45 +128,45 @@ public class ClientCore implements _Core {
          }
       }
    }
-   
+
    @Override
    public void init() throws HyperboxException {
       EventManager.get().register(this);
-      
+
       storage = new UserProfileCoreStorage();
       storage.init();
-      
+
       updater = UpdaterFactory.get();
    }
-   
+
    @Override
    public void start() throws HyperboxException {
-      
+
       setState(CoreState.Starting);
-      
+
       consoleViewers = new HashMap<String, _ConsoleViewer>();
       conns = new HashMap<String, _Connector>();
       servers = new HashMap<String, _Server>();
-      
+
       try {
          storage.start();
-         
+
          loadViewers();
          loadConnectors();
-         
+
          setState(CoreState.Started);
       } catch (Throwable e) {
          stop();
          throw new HyperboxRuntimeException(e.getMessage(), e);
       }
    }
-   
+
    @Override
    public void stop() {
-      
+
       if (getCoreState().equals(CoreState.Started) || getCoreState().equals(CoreState.Starting)) {
          setState(CoreState.Stopping);
-         
+
          for (String connId : conns.keySet()) {
             try {
                disconnect(connId);
@@ -174,43 +174,43 @@ public class ClientCore implements _Core {
                Logger.warning("Failed to disconnect servers during client shutdown: " + t.getMessage());
             }
          }
-         
+
          if (storage != null) {
             storage.storeViewers(consoleViewers.values());
             storage.storeConnectors(conns.values());
-            
+
             storage.stop();
             storage = null;
          }
-         
+
          if (updater != null) {
             updater.stop();
             updater = null;
          }
-         
+
          setState(CoreState.Stopped);
       }
    }
-   
+
    @Override
    public void destroy() {
       storage.destroy();
    }
-   
+
    @Override
    public CoreState getCoreState() {
       return state;
    }
-   
+
    @Override
    public _ConsoleViewer getConsoleViewer(String id) {
       if (!consoleViewers.containsKey(id)) {
          throw new ConsoleViewerNotFound();
       }
-      
+
       return consoleViewers.get(id);
    }
-   
+
    @Override
    public List<_ConsoleViewer> listConsoleViewer() {
       List<_ConsoleViewer> listOut = new ArrayList<_ConsoleViewer>();
@@ -219,7 +219,7 @@ public class ClientCore implements _Core {
       }
       return listOut;
    }
-   
+
    @Override
    public List<_ConsoleViewer> listConsoleViewer(String hypervisorTypeId) {
       List<_ConsoleViewer> listOut = new ArrayList<_ConsoleViewer>();
@@ -230,36 +230,36 @@ public class ClientCore implements _Core {
       }
       return listOut;
    }
-   
+
    @Override
    public _ConsoleViewer addConsoleViewer(String hypervisorId, String moduleId, String viewerPath, String viewerArgs) {
-      
+
       String id = hypervisorId + moduleId;
       if (consoleViewers.containsKey(id)) {
          throw new HyperboxRuntimeException("Console viewer already exist for this Hypervisor and Module");
       }
-      
+
       _ConsoleViewer conView = ConsoleViewerFactory.get(hypervisorId, moduleId, viewerPath, viewerArgs);
       conView.save();
-      
+
       storage.storeViewers(consoleViewers.values());
       consoleViewers.put(conView.getId(), conView);
-      
+
       EventManager.post(new ConsoleViewerAddedEvent(ConsoleViewerIoFactory.getOut(conView)));
-      
+
       return conView;
    }
-   
+
    @Override
    public void removeConsoleViewer(String id) {
-      
+
       _ConsoleViewer viewer = getConsoleViewer(id);
       viewer.remove();
       consoleViewers.remove(id);
-      
+
       EventManager.post(new ConsoleViewerAddedEvent(ConsoleViewerIoFactory.getOut(viewer)));
    }
-   
+
    @Override
    public _ConsoleViewer findConsoleViewer(String hypervisorId, String moduleId) {
       for (_ConsoleViewer conViewer : consoleViewers.values()) {
@@ -267,10 +267,10 @@ public class ClientCore implements _Core {
             return conViewer;
          }
       }
-      
+
       throw new ConsoleViewerNotFoundForType(hypervisorId, moduleId);
    }
-   
+
    @Override
    public _Server getServer(String id) {
       if (!servers.containsKey(id)) {
@@ -278,12 +278,12 @@ public class ClientCore implements _Core {
       }
       return servers.get(id);
    }
-   
+
    @Override
    public List<_Connector> listConnector() {
       return new ArrayList<_Connector>(conns.values());
    }
-   
+
    @Override
    public _Connector getConnector(String id) {
       if (!conns.containsKey(id)) {
@@ -291,20 +291,20 @@ public class ClientCore implements _Core {
       }
       return conns.get(id);
    }
-   
+
    @Override
    public _Backend getBackend(String id) {
       return BackendFactory.get(id);
    }
-   
+
    @Override
    public List<String> listBackends() {
       return BackendFactory.list();
    }
-   
+
    @Override
    public _Connector addConnector(ConnectorInput conIn, UserIn usrIn) {
-      
+
       _Connector conn = ConnectorFactory.get(connectIdGen.getId(), conIn.getLabel(), conIn.getAddress(), usrIn.getUsername(), conIn.getBackendId());
       storage.storeConnectorCredentials(conn.getId(), usrIn);
       conns.put(conn.getId(), conn);
@@ -312,10 +312,10 @@ public class ClientCore implements _Core {
       EventManager.post(new ConnectorAddedEvent(ConnectorIoFactory.get(conn)));
       return conn;
    }
-   
+
    @Override
    public _Connector modifyConnector(ConnectorInput conIn, UserIn usrIn) {
-      
+
       _Connector conn = getConnector(conIn.getId());
       ConnectorFactory.update(conn, conIn);
       if (usrIn != null) {
@@ -326,56 +326,56 @@ public class ClientCore implements _Core {
       EventManager.post(new ConnectorModifiedEvent(ConnectorIoFactory.get(conn)));
       return conn;
    }
-   
+
    @Override
    public _Connector connect(String id) {
-      
+
       _Connector conn = getConnector(id);
       UserIn usrIn = storage.loadConnectorCredentials(conn.getId());
       _Server srv = conn.connect(usrIn);
       servers.put(srv.getId(), srv);
       return conn;
    }
-   
+
    @Override
    public void disconnect(String id) {
-      
+
       _Connector conn = getConnector(id);
       conn.disconnect();
    }
-   
+
    @Override
    public void removeConnector(String id) {
-      
+
       disconnect(id);
-      
+
       _Connector conn = conns.remove(id);
       storage.storeConnectors(conns.values());
       storage.removeConnectorCredentials(id);
       EventManager.post(new ConnectorRemovedEvent(ConnectorIoFactory.get(conn)));
    }
-   
+
    @Handler
    private void putConnectorConnected(ConnectorStateChangedEvent ev) {
       if (ev.getState().equals(ConnectionState.Connected)) {
          servers.put(ev.getConnector().getServerId(), getConnector(ev.getConnector().getId()).getServer());
       }
    }
-   
+
    @Handler
    protected void putServerDisconnected(ServerDisconnectedEvent ev) {
-      
+
       servers.remove(ev.getServer().getId());
    }
-   
+
    @Handler
    private void putStarted(CoreStateEvent ev) {
-      
+
       if (CoreState.Started.equals(ev.getState())) {
          updater.start();
       }
    }
-   
+
    @Override
    public _Connector getConnectorForServer(String serverId) {
       for (_Connector con : conns.values()) {
@@ -385,12 +385,12 @@ public class ClientCore implements _Core {
       }
       throw new HyperboxRuntimeException("No connected server was found under ID " + serverId);
    }
-   
+
    @Override
    public void launchConsoleViewer(_Machine machine) {
       launchConsoleViewer(machine.getServer().getId(), machine.getId());
    }
-   
+
    @Override
    public void launchConsoleViewer(String serverId, String machineId) {
       _Server srv = getServer(serverId);
@@ -401,7 +401,7 @@ public class ClientCore implements _Core {
          address = getConnectorForServer(srv.getId()).getAddress();
       }
       String port = m.getSetting(MachineAttribute.VrdePort).getString();
-      
+
       String arg = cView.getArgs();
       arg = arg.replace("%SA%", address);
       arg = arg.replace("%SP%", port);
@@ -412,12 +412,12 @@ public class ClientCore implements _Core {
       } catch (Throwable t) {
          throw new HyperboxRuntimeException("Couldn't launch Console Viewer", t);
       }
-      
+
    }
-   
+
    @Override
    public _Updater getUpdater() {
       return updater;
    }
-   
+
 }

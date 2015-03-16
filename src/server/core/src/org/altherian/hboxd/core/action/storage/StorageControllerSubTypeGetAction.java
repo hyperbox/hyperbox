@@ -36,17 +36,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class StorageControllerSubTypeGetAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.StorageControllerSubTypeGet.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       StorageControllerSubTypeIn scstIn = request.get(StorageControllerSubTypeIn.class);
@@ -54,5 +54,5 @@ public final class StorageControllerSubTypeGetAction extends ASingleTaskAction {
       StorageControllerSubTypeOut scstOut = StorageControllerSubTypeIoFactory.get(scst);
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, scstOut));
    }
-   
+
 }

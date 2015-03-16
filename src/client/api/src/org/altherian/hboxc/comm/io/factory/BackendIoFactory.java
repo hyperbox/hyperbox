@@ -27,19 +27,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BackendIoFactory {
-   
+
    private BackendIoFactory() {
       // static only
    }
-   
+
    public static BackendOutput get(String id) {
       return new BackendOutput(id);
    }
-   
+
    public static BackendOutput get(_Backend back) {
       return get(back.getId());
    }
-   
+
    public static List<BackendOutput> getList(List<_Backend> backList) {
       List<BackendOutput> listOut = new ArrayList<BackendOutput>();
       for (_Backend back : backList) {
@@ -47,7 +47,7 @@ public class BackendIoFactory {
       }
       return listOut;
    }
-   
+
    public static List<BackendOutput> getListId(List<String> backIdList) {
       List<BackendOutput> listOut = new ArrayList<BackendOutput>();
       for (String id : backIdList) {
@@ -55,5 +55,5 @@ public class BackendIoFactory {
       }
       return listOut;
    }
-   
+
 }

@@ -21,7 +21,7 @@
 package org.altherian.hbox.event;
 
 public enum EventType {
-   
+
    Starting,
    Started,
    Stopping,
@@ -31,5 +31,5 @@ public enum EventType {
    Destroyed,
    Opened,
    Closed;
-   
+
 }

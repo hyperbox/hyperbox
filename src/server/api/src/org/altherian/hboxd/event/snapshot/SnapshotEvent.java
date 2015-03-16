@@ -23,17 +23,17 @@ package org.altherian.hboxd.event.snapshot;
 import org.altherian.hboxd.event.machine.MachineEvent;
 
 public abstract class SnapshotEvent extends MachineEvent {
-   
+
    private String snapUuid;
-   
+
    public SnapshotEvent(Enum<?> id, String machineUuid, String snapUuid) {
       super(id, machineUuid);
       this.snapUuid = snapUuid;
       snapUuid.isEmpty();
    }
-   
+
    public String getSnapshotUuid() {
       return snapUuid;
    }
-   
+
 }

@@ -33,33 +33,33 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class VBoxDisplay implements _RawDisplay {
-   
+
    private VBoxMachine machine;
-   
+
    public VBoxDisplay(VBoxMachine machine) {
       this.machine = machine;
    }
-   
+
    @Override
    public long getVideoMemoryAmount() {
       return ((PositiveNumberSetting) getSetting(MachineAttribute.VRAM)).getValue();
    }
-   
+
    @Override
    public void setVideoMemoryAmount(long amount) {
       setSetting(new VRamSetting(amount));
    }
-   
+
    @Override
    public long getMonitorCount() {
       return ((PositiveNumberSetting) getSetting(MachineAttribute.MonitorCount)).getValue();
    }
-   
+
    @Override
    public void setMonitorCount(long monitor) {
       setSetting(new MonitorCountSetting(monitor));
    }
-   
+
    @Override
    public List<_Setting> listSettings() {
       List<_Setting> settings = new ArrayList<_Setting>();
@@ -70,20 +70,20 @@ public final class VBoxDisplay implements _RawDisplay {
       }
       return settings;
    }
-   
+
    @Override
    public _Setting getSetting(Object getName) {
       return VBoxSettingManager.get(machine, getName);
    }
-   
+
    @Override
    public void setSetting(_Setting s) {
       VBoxSettingManager.set(machine, Arrays.asList(s));
    }
-   
+
    @Override
    public void setSetting(List<_Setting> s) {
       VBoxSettingManager.set(machine, s);
    }
-   
+
 }

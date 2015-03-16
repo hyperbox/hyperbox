@@ -30,22 +30,22 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class UserSetPasswordAction extends AbstractAction {
-   
+
    private _UserSelector selector;
-   
+
    public UserSetPasswordAction(_UserSelector selector) {
       this(selector, "Reset Password");
    }
-   
+
    public UserSetPasswordAction(_UserSelector selector, String label) {
       super(label, IconBuilder.getTask(HyperboxTasks.UserModify));
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       selector.getServerId();
       throw new FeatureNotImplementedException("Feature is currently not implemented");
    }
-   
+
 }

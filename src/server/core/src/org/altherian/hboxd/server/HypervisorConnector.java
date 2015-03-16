@@ -24,45 +24,45 @@ package org.altherian.hboxd.server;
 import org.altherian.hboxd.hypervisor._HypervisorConnector;
 
 public class HypervisorConnector implements _HypervisorConnector {
-   
+
    private String hypervisorId;
    private String options;
    private Boolean autoConnect;
-   
+
    public HypervisorConnector(String hypId, String options, Boolean autoConn) {
       setHypervisorId(hypId);
       setOptions(options);
       setAutoConnect(autoConn);
    }
-   
+
    @Override
    public String getHypervisorId() {
       return hypervisorId;
    }
-   
+
    @Override
    public String getOptions() {
       return options;
    }
-   
+
    @Override
    public Boolean isAutoConnect() {
       return autoConnect;
    }
-   
+
    @Override
    public void setHypervisorId(String hypervisorId) {
       this.hypervisorId = hypervisorId;
    }
-   
+
    @Override
    public void setOptions(String options) {
       this.options = options;
    }
-   
+
    @Override
    public void setAutoConnect(Boolean autoConnect) {
       this.autoConnect = autoConnect;
    }
-   
+
 }

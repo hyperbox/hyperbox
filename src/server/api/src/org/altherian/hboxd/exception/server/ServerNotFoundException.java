@@ -25,13 +25,13 @@ import org.altherian.hboxd.server._Server;
 
 @SuppressWarnings("serial")
 public final class ServerNotFoundException extends HyperboxRuntimeException {
-   
+
    public ServerNotFoundException(String id) {
       super("Server [" + id + "] was not found");
    }
-   
+
    public ServerNotFoundException(_Server s) {
       this(s.getId());
    }
-   
+
 }

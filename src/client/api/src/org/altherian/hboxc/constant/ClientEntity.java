@@ -21,9 +21,9 @@
 package org.altherian.hboxc.constant;
 
 public enum ClientEntity {
-   
+
    Backend,
    Connector,
    ConsoleViewer
-   
+
 }

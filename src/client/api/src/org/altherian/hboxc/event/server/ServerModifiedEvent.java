@@ -25,9 +25,9 @@ import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class ServerModifiedEvent extends ServerEvent {
-   
+
    public ServerModifiedEvent(ServerOut srv) {
       super(ClientEvents.ServerModified, srv);
    }
-   
+
 }

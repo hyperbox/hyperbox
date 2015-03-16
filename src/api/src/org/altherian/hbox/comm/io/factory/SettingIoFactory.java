@@ -34,7 +34,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class SettingIoFactory {
-   
+
    public static SettingIO get(_Setting s) {
       if (s instanceof StringSetting) {
          return new StringSettingIO(s.getName(), ((StringSetting) s).getValue());
@@ -47,7 +47,7 @@ public class SettingIoFactory {
          return new StringSettingIO(s.getName(), s.getValue().toString());
       }
    }
-   
+
    public static _Setting get(SettingIO sIo) {
       if (sIo instanceof StringSettingIO) {
          return new StringSetting(sIo.getName(), sIo.getString());
@@ -60,7 +60,7 @@ public class SettingIoFactory {
          return new StringSetting(sIo.getName(), sIo.getRawValue().toString());
       }
    }
-   
+
    public static List<_Setting> getListIo(Collection<SettingIO> listIo) {
       List<_Setting> listSettings = new ArrayList<_Setting>();
       for (SettingIO settingIo : listIo) {
@@ -68,11 +68,11 @@ public class SettingIoFactory {
       }
       return listSettings;
    }
-   
+
    public static List<SettingIO> getList(_Settable s) {
       return getList(s.getSettings());
    }
-   
+
    public static List<SettingIO> getList(Collection<_Setting> settings) {
       List<SettingIO> settingsIo = new ArrayList<SettingIO>();
       for (_Setting setting : settings) {
@@ -82,5 +82,5 @@ public class SettingIoFactory {
       }
       return settingsIo;
    }
-   
+
 }

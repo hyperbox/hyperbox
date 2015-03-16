@@ -24,19 +24,19 @@ package org.altherian.hbox.comm.out.hypervisor;
 import org.altherian.hbox.comm.out.ObjectOut;
 
 public class ScreenshotOut extends ObjectOut {
-   
+
    private byte[] screenData;
-   
+
    protected ScreenshotOut() {
       // Used for serialization
    }
-   
+
    public ScreenshotOut(byte[] data) {
       screenData = data;
    }
-   
+
    public byte[] getData() {
       return screenData;
    }
-   
+
 }

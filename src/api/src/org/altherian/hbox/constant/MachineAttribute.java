@@ -29,18 +29,18 @@ package org.altherian.hbox.constant;
  */
 // TODO should be separated into devices
 public enum MachineAttribute {
-   
+
    ServerId(EntityType.Machine),
    IsAccessible(EntityType.Machine),
    Location(EntityType.Machine),
-   
+
    // ////////////////////////////////////
    // Audio Settings
    // ////////////////////////////////////
    AudioController(EntityType.Audio),
    AudioDriver(EntityType.Audio),
    AudioEnable(EntityType.Audio),
-   
+
    // /////////////////////////////////////
    // CPU Settings
    // /////////////////////////////////////
@@ -60,7 +60,7 @@ public enum MachineAttribute {
     * Set if Virtualbox should show virtual CPU to the guest, or give the host's CPU information.
     */
    SyntheticCPU(EntityType.CPU),
-   
+
    // /////////////////////////////////////
    // General settings
    // /////////////////////////////////////
@@ -76,13 +76,13 @@ public enum MachineAttribute {
     * Open description about the VM
     */
    Description(EntityType.Machine),
-   
+
    // /////////////////////////////////////
    // Keyboard Settings
    // /////////////////////////////////////
-   
+
    KeyboardMode(EntityType.Keyboard),
-   
+
    // /////////////////////////////////////
    // Memory Settings
    // /////////////////////////////////////
@@ -110,7 +110,7 @@ public enum MachineAttribute {
     * Ballon size in Mega Bytes
     */
    GuestMemoryBalloon(EntityType.Memory),
-   
+
    // /////////////////////////////////////
    // Motherboard settings
    // /////////////////////////////////////
@@ -140,12 +140,12 @@ public enum MachineAttribute {
     */
    // TODO implement
    HardwareUuid(EntityType.Motherboard),
-   
+
    // /////////////////////////////////////
    // Mouse
    // /////////////////////////////////////
    MouseMode(EntityType.Mouse),
-   
+
    // /////////////////////////////////////
    // USB settings
    // /////////////////////////////////////
@@ -159,7 +159,7 @@ public enum MachineAttribute {
     */
    // TODO implement
    UsbEhci(EntityType.USB),
-   
+
    // /////////////////////////////////////
    // Video settings
    // /////////////////////////////////////
@@ -179,7 +179,7 @@ public enum MachineAttribute {
     * Enable 3D acceleration
     */
    Accelerate3d(EntityType.Display),
-   
+
    // /////////////////////////////////////
    // Virtualisation specific settings
    // /////////////////////////////////////
@@ -203,14 +203,14 @@ public enum MachineAttribute {
     * Set if there should be an exclusive use of VT-x/AMD-V
     */
    HwVirtExExcl(EntityType.Machine),
-   
+
    // /////////////////////////////////////
    // Snapshot infos
    // /////////////////////////////////////
    RootSnapshotUuid(EntityType.Machine),
    CurrentSnapshotUuid(EntityType.Machine),
    HasSnapshot(EntityType.Machine),
-   
+
    /*
     * VRDE settings
     */
@@ -222,19 +222,19 @@ public enum MachineAttribute {
    VrdeAddress(EntityType.Console),
    VrdePort(EntityType.Console),
    VrdeModule(EntityType.Console);
-   
+
    private EntityType dt;
-   
+
    private MachineAttribute(EntityType type) {
       dt = type;
    }
-   
+
    public EntityType getDeviceType() {
       return dt;
    }
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

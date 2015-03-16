@@ -33,10 +33,10 @@ import org.altherian.tool.logging.Logger;
  * @author noteirak
  */
 public class SettingIO {
-   
+
    private String name;
    private Object value;
-   
+
    /**
     * Empty constructor for serialisation classes.<br/>
     * <ul>
@@ -45,7 +45,7 @@ public class SettingIO {
     */
    protected SettingIO() {
    }
-   
+
    /**
     * Constructor for a new setting, with the given name and an object as value
     * 
@@ -56,7 +56,7 @@ public class SettingIO {
       this.name = Settings.getUniqueId(name);
       this.value = value;
    }
-   
+
    /**
     * Get the name (also considered ID) of this setting
     * 
@@ -65,7 +65,7 @@ public class SettingIO {
    public String getName() {
       return name;
    }
-   
+
    /**
     * Get the raw value of this setting. Other methods can be used to get a more specific value.
     * 
@@ -77,7 +77,7 @@ public class SettingIO {
    public Object getRawValue() {
       return value;
    }
-   
+
    /**
     * <p>
     * Get a boolean out of the stored raw setting value.
@@ -90,7 +90,7 @@ public class SettingIO {
       Logger.debug(value);
       return value == null ? null : Boolean.parseBoolean(value.toString());
    }
-   
+
    /**
     * <p>
     * Return a text value out of the stored raw setting value.<br/>
@@ -102,7 +102,7 @@ public class SettingIO {
    public String getString() {
       return value == null ? null : value.toString();
    }
-   
+
    /**
     * Try to get a Long out of the string representation of the stored raw setting value.
     * 
@@ -113,5 +113,5 @@ public class SettingIO {
    public Long getNumber() {
       return value == null ? null : Long.parseLong(value.toString());
    }
-   
+
 }

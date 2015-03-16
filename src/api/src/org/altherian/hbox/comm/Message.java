@@ -35,18 +35,18 @@ import java.util.Map;
  * @author noteirak
  */
 public class Message implements _Container {
-   
+
    private String name = "";
    private Date time;
    private Map<String, Object> data = new HashMap<String, Object>();
-   
+
    /**
     * Create an empty message without a task. This should be not be used except by serializers.
     */
    protected Message() {
       // serializors only.
    }
-   
+
    /**
     * Create a message with the given name.
     * 
@@ -56,7 +56,7 @@ public class Message implements _Container {
       time = new Date();
       this.name = name;
    }
-   
+
    /**
     * Create a message with the given name and the given object
     * 
@@ -67,47 +67,47 @@ public class Message implements _Container {
       this(name);
       set(o);
    }
-   
+
    public String getName() {
       return name;
    }
-   
+
    public Date getTime() {
       return time;
    }
-   
+
    @Override
    public void set(String label, Object object) {
       data.put(label, object);
    }
-   
+
    @Override
    public void set(Enum<?> e, Object object) {
       data.put(e.toString(), object);
    }
-   
+
    @Override
    public void set(Class<?> c, Object object) {
       data.put(c.getName(), object);
    }
-   
+
    @Override
    public void set(Object object) {
       set(object.getClass().getName(), object);
    }
-   
+
    @SuppressWarnings("unchecked")
    @Override
    public <T> T get(Class<T> c) {
       return (T) data.get(c.getName());
    }
-   
+
    @SuppressWarnings("unchecked")
    @Override
    public <T> T get(Class<?> label, Class<T> type) {
       return (T) data.get(label.getName());
    }
-   
+
    /**
     * Return the object mapped under the label given, or null if no object was included in this message.
     * 
@@ -119,7 +119,7 @@ public class Message implements _Container {
    public Object get(String s) {
       return data.get(s);
    }
-   
+
    /**
     * Return the object mapped under this enum string representation, or null if no object was included in this message.
     * 
@@ -131,7 +131,7 @@ public class Message implements _Container {
    public Object get(Enum<?> e) {
       return data.get(e.toString());
    }
-   
+
    /**
     * Checks if an object mapped to the given label is included in this message.
     * 
@@ -142,7 +142,7 @@ public class Message implements _Container {
    public boolean has(String s) {
       return data.containsKey(s);
    }
-   
+
    /**
     * Checks if an object mapped under the given class name is included in this message.
     * 
@@ -153,15 +153,15 @@ public class Message implements _Container {
    public boolean has(Class<?> c) {
       return has(c.getName());
    }
-   
+
    @Override
    public boolean has(Enum<?> e) {
       return has(e.toString());
    }
-   
+
    @Override
    public boolean hasData() {
       return !data.isEmpty();
    }
-   
+
 }

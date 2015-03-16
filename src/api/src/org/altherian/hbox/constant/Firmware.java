@@ -26,7 +26,7 @@ package org.altherian.hbox.constant;
  * @author noteirak
  */
 public enum Firmware {
-   
+
    /**
     * BIOS
     */
@@ -43,11 +43,11 @@ public enum Firmware {
     * EFI 64 bits
     */
    Efi64,
-   
+
    EfiDual;
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

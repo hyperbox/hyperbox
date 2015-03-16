@@ -25,29 +25,29 @@ import java.util.Date;
 import java.util.List;
 
 public interface _RawSnapshot extends _RawItem {
-   
+
    public String getUuid();
-   
+
    public String getMachineId();
-   
+
    public String getName();
-   
+
    public void setName(String name);
-   
+
    public String getDescription();
-   
+
    public void setDescription(String description);
-   
+
    public Date getCreationTime();
-   
+
    public boolean isOnline();
-   
+
    public boolean hasParent();
-   
+
    public _RawSnapshot getParent();
-   
+
    public boolean hasChildren();
-   
+
    public List<_RawSnapshot> getChildren();
-   
+
 }

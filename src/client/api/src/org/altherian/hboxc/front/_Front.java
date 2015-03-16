@@ -25,21 +25,21 @@ import org.altherian.hbox.exception.HyperboxException;
 import org.altherian.hboxc.core._CoreReader;
 
 public interface _Front {
-   
+
    public void setRequestReceiver(_RequestReceiver reqRec);
-   
+
    public void setCoreReader(_CoreReader reader);
-   
+
    public void start() throws HyperboxException;
-   
+
    public void stop();
-   
+
    public void postError(Throwable t);
-   
+
    public void postError(String s);
-   
+
    public void postError(Throwable t, String s);
-   
+
    public void postError(String s, Throwable t);
-   
+
 }

@@ -36,12 +36,12 @@ import org.altherian.hboxc.core.connector._Connector;
 import org.altherian.hboxc.front._Front;
 
 public class ConnectorAddAction extends AbstractClientControllerSingleAction {
-   
+
    @Override
    public Enum<?> getRegistration() {
       return ClientTasks.ConnectorAdd;
    }
-   
+
    @Override
    public void run(_Core core, _Front view, Request req, _AnswerReceiver recv) throws HyperboxException {
       ConnectorInput conIn = req.get(ConnectorInput.class);
@@ -49,5 +49,5 @@ public class ConnectorAddAction extends AbstractClientControllerSingleAction {
       _Connector conn = core.addConnector(conIn, usrIn);
       recv.putAnswer(new Answer(req, AnswerType.DATA, ConnectorIoFactory.get(conn)));
    }
-   
+
 }

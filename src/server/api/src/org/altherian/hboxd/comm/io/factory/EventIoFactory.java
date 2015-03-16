@@ -34,13 +34,13 @@ import java.util.Map;
 import java.util.Set;
 
 public final class EventIoFactory {
-   
+
    private static Map<Enum<?>, _EventIoFactory> factories;
-   
+
    private EventIoFactory() {
       // static class, cannot be instantiated
    }
-   
+
    static {
       factories = new HashMap<Enum<?>, _EventIoFactory>();
       try {
@@ -54,12 +54,12 @@ public final class EventIoFactory {
          throw new HyperboxRuntimeException(e);
       }
    }
-   
+
    private static EventOut getUnknown(_Event ev) {
       Logger.debug("Creating Unknown Event for ID " + ev.getEventId() + " @ " + ev.getTime() + ": " + ev);
       return new UnknownEventOut(ev.getTime(), ev.getEventId(), ServerIoFactory.get(HBoxServer.get()));
    }
-   
+
    public static EventOut get(_Hyperbox hbox, _Event ev) {
       try {
          if (factories.containsKey(ev.getEventId())) {
@@ -73,7 +73,7 @@ public final class EventIoFactory {
          Logger.error("Error while trying to Get EventOutput : " + t.getMessage());
          Logger.exception(t);
       }
-      
+
       Logger.warning("No factory for Event ID " + ev.getEventId() + ", sending " + UnknownEventOut.class.getName() + " instead");
       return getUnknown(ev);
    }

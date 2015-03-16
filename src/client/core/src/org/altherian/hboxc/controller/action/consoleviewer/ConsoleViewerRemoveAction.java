@@ -31,16 +31,16 @@ import org.altherian.hboxc.core._Core;
 import org.altherian.hboxc.front._Front;
 
 public class ConsoleViewerRemoveAction extends AbstractClientControllerSingleAction {
-   
+
    @Override
    public Enum<?> getRegistration() {
       return ClientTasks.ConsoleViewerRemove;
    }
-   
+
    @Override
    public void run(_Core core, _Front view, Request req, _AnswerReceiver recv) throws HyperboxException {
       ConsoleViewerInput coreViewInput = req.get(ConsoleViewerInput.class);
       core.removeConsoleViewer(coreViewInput.getId());
    }
-   
+
 }

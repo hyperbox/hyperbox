@@ -31,17 +31,17 @@ import org.virtualbox_4_2.NetworkAdapterType;
 import org.virtualbox_4_2.VBoxException;
 
 public class NicAdapterTypeSettingAction implements _NetworkInterfaceSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return NetworkInterfaceAttribute.AdapterType.getId();
    }
-   
+
    @Override
    public void set(INetworkAdapter nic, _Setting setting) {
       try {
@@ -52,10 +52,10 @@ public class NicAdapterTypeSettingAction implements _NetworkInterfaceSettingActi
          throw new ConfigurationException("Unkown adapter type [" + setting.getValue().toString() + "]");
       }
    }
-   
+
    @Override
    public _Setting get(INetworkAdapter nic) {
       return new NicAdapterTypeSetting(nic.getAdapterType().toString());
    }
-   
+
 }

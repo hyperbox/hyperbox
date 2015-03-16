@@ -41,26 +41,26 @@ import java.util.zip.ZipException;
 // TODO Use the urlList as cache to avoid scanning the file system everytime.
 // TODO do the same for resource (if possible?)
 public class ModuleClassLoader extends ClassLoader implements _ModuleClassLoader {
-   
+
    private File basePathFile;
    private Set<URL> urlList = new HashSet<URL>();
    private Map<URL, ProtectionDomain> protectionDomains = new HashMap<URL, ProtectionDomain>();
-   
+
    private URL getURL(File jar, JarEntry element) throws MalformedURLException {
       String sep = element.getName().startsWith("/") ? "!" : "!/";
       return new URL("jar:" + jar.toURI() + sep + element.getName());
    }
-   
+
    private ProtectionDomain getDomain(URL url) {
       if (!protectionDomains.containsKey(url)) {
          CodeSource source = new CodeSource(url, new Certificate[] {});
          ProtectionDomain pd = new ProtectionDomain(source, null, this, null);
          protectionDomains.put(url, pd);
       }
-      
+
       return protectionDomains.get(url);
    }
-   
+
    // TODO use for the cache, not for every call
    private Class<?> findClassInDir(File path, String className) throws ClassNotFoundException {
       for (File item : path.listFiles()) {
@@ -76,7 +76,7 @@ public class ModuleClassLoader extends ClassLoader implements _ModuleClassLoader
       }
       throw new ClassNotFoundException();
    }
-   
+
    // TODO use for the cache, not for every call
    private Class<?> findClassInFile(File path, String className) throws ClassNotFoundException {
       JarFile jar = null;
@@ -95,7 +95,7 @@ public class ModuleClassLoader extends ClassLoader implements _ModuleClassLoader
             nextValue = is.read();
          }
          is.close();
-         
+
          byte classByte[] = byteStream.toByteArray();
          return defineClass(className, classByte, 0, classByte.length, getDomain(path.toURI().toURL()));
       } catch (ZipException e) {
@@ -113,7 +113,7 @@ public class ModuleClassLoader extends ClassLoader implements _ModuleClassLoader
          }
       }
    }
-   
+
    @Override
    protected Class<?> findClass(String className) throws ClassNotFoundException {
       try {
@@ -122,12 +122,12 @@ public class ModuleClassLoader extends ClassLoader implements _ModuleClassLoader
          if (basePathFile == null) {
             throw new RuntimeException("Not ready, use load() first");
          }
-         
+
          return findClassInDir(basePathFile, className);
       }
-      
+
    }
-   
+
    // TODO use for the cache, not for every call
    private URL findRessource(File path, String ressource) {
       if (path.isDirectory()) {
@@ -135,9 +135,9 @@ public class ModuleClassLoader extends ClassLoader implements _ModuleClassLoader
       } else {
          return findRessourceInFile(path, ressource);
       }
-      
+
    }
-   
+
    // TODO use for the cache, not for every call
    private URL findRessourceInDir(File path, String ressource) {
       for (File item : path.listFiles()) {
@@ -152,7 +152,7 @@ public class ModuleClassLoader extends ClassLoader implements _ModuleClassLoader
       }
       return null;
    }
-   
+
    // TODO use for the cache, not for every call
    private URL findRessourceInFile(File path, String ressource) {
       JarFile jar = null;
@@ -179,7 +179,7 @@ public class ModuleClassLoader extends ClassLoader implements _ModuleClassLoader
          }
       }
    }
-   
+
    // TODO use for the cache, not for every call
    private void generateClassPath(File path, Set<URL> list) {
       if (path.isDirectory()) {
@@ -199,18 +199,18 @@ public class ModuleClassLoader extends ClassLoader implements _ModuleClassLoader
          }
       }
    }
-   
+
    @Override
    protected URL findResource(String ressource) {
       if (basePathFile == null) {
          throw new RuntimeException("Not ready, use load() first");
       }
-      
+
       Logger.debug("Trying to find ressource for: " + ressource);
       URL url = getParent().getResource(ressource);
       return url == null ? findRessource(basePathFile, ressource) : url;
    }
-   
+
    @Override
    public void load(String basePath) {
       File baseFile = new File(basePath);
@@ -220,31 +220,31 @@ public class ModuleClassLoader extends ClassLoader implements _ModuleClassLoader
       if (!baseFile.canRead()) {
          throw new RuntimeException("Path is not readable: " + basePath);
       }
-      
+
       basePathFile = baseFile;
       generateClassPath(basePathFile, urlList);
    }
-   
+
    @Override
    public void unload() {
       basePathFile = null;
       urlList.clear();
       protectionDomains.clear();
    }
-   
+
    @Override
    public Set<URL> getRessources() {
       return new HashSet<URL>(urlList);
    }
-   
+
    @Override
    public ClassLoader getClassLoader() {
       return this;
    }
-   
+
    @Override
    public Class<?> createClass(String name) throws ClassNotFoundException {
       return findClass(name);
    }
-   
+
 }

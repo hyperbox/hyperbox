@@ -23,7 +23,7 @@ package org.altherian.hboxc.server;
 import org.altherian.hbox.comm.out.hypervisor.GuestNetworkInterfaceOut;
 
 public interface _GuestReader {
-   
+
    public GuestNetworkInterfaceOut findNetworkInterface(String macAddress);
-   
+
 }

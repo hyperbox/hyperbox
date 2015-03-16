@@ -30,25 +30,25 @@ import org.virtualbox_4_3.IMachine;
 import org.virtualbox_4_3.LockType;
 
 public class VtxvpidSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.Vtxvpid.toString();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       machine.setHWVirtExProperty(HWVirtExPropertyType.VPID, ((BooleanSetting) setting).getValue());
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new VtxvpidSetting(machine.getHWVirtExProperty(HWVirtExPropertyType.VPID));
    }
-   
+
 }

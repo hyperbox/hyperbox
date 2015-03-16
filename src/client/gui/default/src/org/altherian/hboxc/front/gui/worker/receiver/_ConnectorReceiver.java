@@ -23,7 +23,7 @@ package org.altherian.hboxc.front.gui.worker.receiver;
 import org.altherian.hboxc.comm.output.ConnectorOutput;
 
 public interface _ConnectorReceiver extends _WorkerDataReceiver {
-   
+
    public void put(ConnectorOutput conOut);
-   
+
 }

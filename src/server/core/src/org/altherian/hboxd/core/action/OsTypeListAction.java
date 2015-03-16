@@ -33,22 +33,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OsTypeListAction extends AbstractHyperboxMultiTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.OsTypeList.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       for (_RawOsType os : hbox.getHypervisor().listOsTypes()) {
          SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, OsTypeIoFactory.get(os)));
       }
    }
-   
+
 }

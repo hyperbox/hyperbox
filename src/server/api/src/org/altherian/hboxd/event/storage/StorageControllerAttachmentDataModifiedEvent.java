@@ -23,13 +23,13 @@ package org.altherian.hboxd.event.storage;
 import org.altherian.hbox.event.HyperboxEvents;
 
 public class StorageControllerAttachmentDataModifiedEvent extends StorageControllerEvent {
-   
+
    public StorageControllerAttachmentDataModifiedEvent(String vmId, String controllerId) {
       super(HyperboxEvents.StorageControllerAttachmentDataModified, vmId, controllerId);
    }
-   
+
    public StorageControllerAttachmentDataModifiedEvent(Enum<?> eventId, String vmId, String controllerId) {
       super(eventId, vmId, controllerId);
    }
-   
+
 }

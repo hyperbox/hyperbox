@@ -33,23 +33,23 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HypervisorConfigureAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.HypervisorConfigure.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       ServerIn srvIn = request.get(ServerIn.class);
       HypervisorIn hypIn = request.get(HypervisorIn.class);
-      
+
       hbox.getServer(srvIn.getId()).getHypervisor().configure(SettingIoFactory.getListIo(hypIn.listSettings()));
    }
-   
+
 }

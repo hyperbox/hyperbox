@@ -28,7 +28,7 @@ import org.altherian.vbox4_2.vm.VBoxMachine;
 import org.virtualbox_4_2.IMediumAttachment;
 
 public final class VirtualboxMediumAttachment implements _RawMediumAttachment {
-   
+
    private VBoxMachine machine;
    private VirtualboxMedium medium;
    private VirtualboxStorageController controller;
@@ -36,7 +36,7 @@ public final class VirtualboxMediumAttachment implements _RawMediumAttachment {
    private long deviceId;
    private String deviceType;
    private boolean passThrough;
-   
+
    public VirtualboxMediumAttachment(String machineUuid, IMediumAttachment medAttach) {
       machine = new VBoxMachine(machineUuid);
       if (medAttach.getMedium() != null) { // can be null for removable devices, see IMediumAttachment::medium
@@ -48,45 +48,45 @@ public final class VirtualboxMediumAttachment implements _RawMediumAttachment {
       deviceType = medAttach.getType().toString();
       passThrough = medAttach.getPassthrough();
    }
-   
+
    @Override
    public _RawVM getMachine() {
       return machine;
    }
-   
+
    @Override
    public _RawMedium getMedium() {
       return medium;
    }
-   
+
    @Override
    public _RawStorageController getController() {
       return controller;
    }
-   
+
    @Override
    public long getPortId() {
       return portId;
    }
-   
+
    @Override
    public long getDeviceId() {
       return deviceId;
    }
-   
+
    @Override
    public String getDeviceType() {
       return deviceType;
    }
-   
+
    @Override
    public boolean isPassThrough() {
       return passThrough;
    }
-   
+
    @Override
    public boolean hasMedium() {
       return medium != null;
    }
-   
+
 }

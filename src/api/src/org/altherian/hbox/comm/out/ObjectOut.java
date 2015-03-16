@@ -35,53 +35,53 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class ObjectOut {
-   
+
    private String entityTypeId;
    private String id;
    private Map<String, SettingIO> settingsMap = new HashMap<String, SettingIO>(5);
-   
+
    private void setEntityTypeId(String entityTypeId) {
       this.entityTypeId = entityTypeId;
    }
-   
+
    private void setEntityTypeId(Enum<?> entityTypeId) {
       this.entityTypeId = entityTypeId.toString();
    }
-   
+
    protected void setSetting(SettingIO sIo) {
       settingsMap.put(sIo.getName(), sIo);
    }
-   
+
    protected void setSetting(Collection<SettingIO> sIoList) {
       for (SettingIO set : sIoList) {
          setSetting(set);
       }
    }
-   
+
    protected ObjectOut() {
       setEntityTypeId(EntityType.Unknown);
    }
-   
+
    public ObjectOut(String entityTypeId, String id) {
       setEntityTypeId(entityTypeId);
       this.id = id;
    }
-   
+
    public ObjectOut(Enum<?> entityTypeId, String id) {
       setEntityTypeId(entityTypeId);
       this.id = id;
    }
-   
+
    public ObjectOut(String entityTypeId, String id, Collection<SettingIO> settings) {
       this(entityTypeId, id);
       setSetting(settings);
    }
-   
+
    public ObjectOut(Enum<?> entityTypeId, String id, Collection<SettingIO> settings) {
       this(entityTypeId, id);
       setSetting(settings);
    }
-   
+
    /**
     * See {@link EntityType} for natives values
     *
@@ -90,11 +90,11 @@ public abstract class ObjectOut {
    public String getEntityTypeId() {
       return entityTypeId;
    }
-   
+
    public String getId() {
       return id;
    }
-   
+
    public SettingIO getSetting(String name) {
       if (name.equalsIgnoreCase("id")) {
          return new StringSettingIO(name, id);
@@ -105,7 +105,7 @@ public abstract class ObjectOut {
       }
       return settingsMap.get(name);
    }
-   
+
    /**
     * Retrieve the setting linked to the given name.
     *
@@ -115,15 +115,15 @@ public abstract class ObjectOut {
    public SettingIO getSetting(Object name) {
       return getSetting(Settings.getUniqueId(name));
    }
-   
+
    public boolean hasSetting(Object name) {
       if (name.toString().equalsIgnoreCase("id")) {
          return true;
       }
-      
+
       return settingsMap.containsKey(Settings.getUniqueId(name));
    }
-   
+
    /**
     * This return the list of settings names in this IO object
     *
@@ -133,11 +133,11 @@ public abstract class ObjectOut {
    public Set<String> listSettingsId() {
       return new HashSet<String>(settingsMap.keySet());
    }
-   
+
    public List<SettingIO> listSettings() {
       return new ArrayList<SettingIO>(settingsMap.values());
    }
-   
+
    @Override
    public int hashCode() {
       final int prime = 31;
@@ -145,7 +145,7 @@ public abstract class ObjectOut {
       result = (prime * result) + ((id == null) ? 0 : id.hashCode());
       return result;
    }
-   
+
    @Override
    public boolean equals(Object obj) {
       if (this == obj) {
@@ -170,5 +170,5 @@ public abstract class ObjectOut {
       }
       return true;
    }
-   
+
 }

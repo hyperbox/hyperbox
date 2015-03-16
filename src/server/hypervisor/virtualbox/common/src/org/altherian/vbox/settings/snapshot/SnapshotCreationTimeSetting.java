@@ -25,9 +25,9 @@ import org.altherian.setting.PositiveNumberSetting;
 import java.util.Date;
 
 public class SnapshotCreationTimeSetting extends PositiveNumberSetting {
-   
+
    public SnapshotCreationTimeSetting(Date time) {
       super(SnapshotAttribute.CreationTime, time.getTime());
    }
-   
+
 }

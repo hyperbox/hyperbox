@@ -29,21 +29,21 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public final class MachineCreateAction extends AbstractAction {
-   
+
    private _SingleServerSelector select;
-   
+
    public MachineCreateAction(_SingleServerSelector select, String label) {
       super(label, IconBuilder.getTask(HypervisorTasks.MachineCreate));
       this.select = select;
    }
-   
+
    public MachineCreateAction(_SingleServerSelector select) {
       this(select, "Create");
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       VmCreateDialog.show(select.getServer());
    }
-   
+
 }

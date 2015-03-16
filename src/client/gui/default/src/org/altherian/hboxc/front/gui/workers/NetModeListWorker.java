@@ -28,34 +28,34 @@ import org.altherian.hboxc.front.gui.worker.receiver._NetModeListReceiver;
 import java.util.List;
 
 public class NetModeListWorker extends AxSwingWorker<_NetModeListReceiver, Void, NetModeOut> {
-   
+
    private String srvId;
-   
+
    public NetModeListWorker(_NetModeListReceiver recv, String srvId) {
       super(recv);
       this.srvId = srvId;
    }
-   
+
    @Override
    protected Void doInBackground() throws Exception {
       if (!Gui.getServer(srvId).isHypervisorConnected()) {
          throw new HypervisorNotConnectedException();
       }
-      
+
       for (NetModeOut mode : Gui.getServer(srvId).getHypervisor().listNetworkModes()) {
          publish(mode);
       }
-      
+
       return null;
    }
-   
+
    @Override
    protected void process(List<NetModeOut> modes) {
       getReceiver().add(modes);
    }
-   
+
    public static void execute(_NetModeListReceiver recv, String srvId) {
       (new NetModeListWorker(recv, srvId)).execute();
    }
-   
+
 }

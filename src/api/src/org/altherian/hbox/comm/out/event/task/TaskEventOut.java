@@ -26,22 +26,22 @@ import org.altherian.hbox.comm.out.event.EventOut;
 import java.util.Date;
 
 public abstract class TaskEventOut extends EventOut {
-   
+
    protected TaskEventOut() {
       // Used for serialization
    }
-   
+
    public TaskEventOut(Date time, Enum<?> id, ServerOut srvOut, TaskOut tOut) {
       super(time, id, srvOut);
       set(TaskOut.class, tOut);
    }
-   
+
    public TaskOut getTask() {
       return get(TaskOut.class);
    }
-   
+
    public String getTaskId() {
       return getTask().getId();
    }
-   
+
 }

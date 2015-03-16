@@ -24,7 +24,7 @@ import org.altherian.hbox.comm.out.network.NetworkAttachModeOut;
 import java.util.List;
 
 public interface _NetworkAttachModeReceiver extends _WorkerDataReceiver {
-   
+
    public void add(List<NetworkAttachModeOut> objOutList);
-   
+
 }

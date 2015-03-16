@@ -21,20 +21,20 @@
 package org.altherian.tool;
 
 public class FileSizeNumber {
-   
+
    private long byteSize;
    private long humanSize;
    private String humanUnit;
-   
+
    public FileSizeNumber(long byteSize) {
       this.byteSize = byteSize;
       evaluate();
    }
-   
+
    public FileSizeNumber(String byteSize) {
       this(Long.parseLong(byteSize));
    }
-   
+
    private void evaluate() {
       if (byteSize >= 1125899906842624l) {
          humanUnit = "PB";
@@ -61,13 +61,13 @@ public class FileSizeNumber {
          humanSize = byteSize;
       }
    }
-   
+
    public long getHumanSize() {
       return humanSize;
    }
-   
+
    public String getHumanUnit() {
       return humanUnit;
    }
-   
+
 }

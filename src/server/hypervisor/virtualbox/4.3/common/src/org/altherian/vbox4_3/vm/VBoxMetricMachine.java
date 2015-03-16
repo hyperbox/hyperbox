@@ -26,33 +26,33 @@ import org.altherian.hboxd.hypervisor.vm._RawVM;
 import java.util.Date;
 
 public class VBoxMetricMachine implements _RawMetricMachine {
-   
+
    public VBoxMetricMachine(String string, Integer integer, Long long1, String string2) {
       // TODO Auto-generated constructor stub
    }
-   
+
    @Override
    public _RawMetric getMetric() {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
    @Override
    public String getValue() {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
    @Override
    public Date getTime() {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
    @Override
    public _RawVM getMachine() {
       // TODO Auto-generated method stub
       return null;
    }
-   
+
 }

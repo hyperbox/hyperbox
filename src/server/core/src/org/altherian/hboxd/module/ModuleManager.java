@@ -39,11 +39,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class ModuleManager implements _ModuleManager {
-   
+
    private boolean isStarted = false;
    private String[] baseDirs = new String[0];
    private Map<String, _Module> modules = new HashMap<String, _Module>();
-   
+
    @Override
    public void start() {
       baseDirs = Configuration.getSetting(CFGKEY_MODULE_BASEPATH, CFGVAL_MODULE_BASEPATH).split(File.pathSeparator);
@@ -52,7 +52,7 @@ public class ModuleManager implements _ModuleManager {
       EventManager.register(this);
       Logger.verbose("Module Manager has started");
    }
-   
+
    @Override
    public void stop() {
       EventManager.unregister(this);
@@ -62,11 +62,11 @@ public class ModuleManager implements _ModuleManager {
       modules.clear();
       Logger.verbose("Module manager has stopped");
    }
-   
+
    @Override
    public void refreshModules() {
       Logger.info("Refreshing modules...");
-      
+
       Logger.debug("Number of base module directories: " + baseDirs.length);
       for (String baseDir : baseDirs) {
          File baseDirFile = new File(baseDir).getAbsoluteFile();
@@ -93,7 +93,7 @@ public class ModuleManager implements _ModuleManager {
                   Logger.verbose(file.getAbsolutePath() + " is already registered as " + modules.get(file.getAbsolutePath()));
                   continue;
                }
-               
+
                Logger.verbose("Usable module descriptor file detected: " + file.getAbsolutePath());
                try {
                   registerModule(file.getAbsolutePath());
@@ -107,10 +107,10 @@ public class ModuleManager implements _ModuleManager {
       }
       Logger.info("Finished refreshing modules.");
    }
-   
+
    @Override
    public void unregisterModules() {
-      
+
       // needed not to cause an Exception
       for (_Module mod : new ArrayList<_Module>(modules.values())) {
          try {
@@ -119,13 +119,13 @@ public class ModuleManager implements _ModuleManager {
          } catch (ModuleException e) {
             Logger.warning("Couldn't unload " + mod + ": " + e.getMessage());
          }
-         
+
       }
    }
-   
+
    @Override
    public void setModuleBasedir(String... basedir) {
-      
+
       baseDirs = basedir;
       Logger.verbose("Module Base Dirs has been set to:");
       for (String s : basedir) {
@@ -136,12 +136,12 @@ public class ModuleManager implements _ModuleManager {
          refreshModules();
       }
    }
-   
+
    @Override
    public Set<_Module> listModules() {
       return new HashSet<_Module>(modules.values());
    }
-   
+
    @Override
    public Set<_Module> listModules(Class<?> type) {
       Set<_Module> mods = new HashSet<_Module>();
@@ -152,38 +152,38 @@ public class ModuleManager implements _ModuleManager {
       }
       return mods;
    }
-   
+
    @Override
    public _Module getModule(String moduleId) {
       return modules.get(moduleId);
    }
-   
+
    @Override
    public boolean isRegistered(String idOrDescriptorPath) {
       return modules.containsKey(idOrDescriptorPath) || modules.containsKey(new File(idOrDescriptorPath).getAbsolutePath());
    }
-   
+
    protected boolean isRegistered(_Module mod) {
       return isRegistered(mod.getId()) || isRegistered(mod.getDescriptor());
    }
-   
+
    @Override
    public _Module registerModule(String moduleDescFile) {
-      
+
       Logger.info("Attempting to add module with descriptor file: " + moduleDescFile);
       File xmlFile = new File(moduleDescFile);
       _Module mod = ModuleFactory.get(xmlFile);
-      
+
       if (isRegistered(mod.getId()) || isRegistered(mod.getDescriptor())) {
          throw new ModuleAlreadyRegisteredException(mod.getId());
       }
-      
+
       modules.put(mod.getId(), mod);
       modules.put(mod.getDescriptor(), mod);
-      
+
       Logger.info("Module ID " + mod.getId() + " (" + mod.getName() + ") was successfully registered");
       EventManager.post(new ModuleRegisteredEvent(mod));
-      
+
       if (AxBooleans.get(Configuration.getSetting(CFGKEY_MODULE_AUTOLOAD, CFGVAL_MODULE_AUTOLOAD))) {
          try {
             mod.load();
@@ -192,23 +192,23 @@ public class ModuleManager implements _ModuleManager {
             Logger.warning("Module ID " + mod.getId() + " (" + mod.getName() + ") failed to autoload: " + e.getMessage());
          }
       }
-      
+
       return mod;
    }
-   
+
    @Override
    public void unregisterModule(_Module mod) {
-      
+
       mod = getModule(mod.getId());
       mod.unload();
-      
+
       modules.remove(mod.getId());
       modules.remove(mod.getDescriptor());
-      
+
       EventManager.post(new ModuleUnregisteredEvent(mod.getId()));
       Logger.info("Module ID " + mod.getId() + " (" + mod.getName() + ") was successfully unregistered");
    }
-   
+
    @Override
    public _Module reloadModule(_Module mod) {
       if (isRegistered(mod)) {
@@ -219,19 +219,19 @@ public class ModuleManager implements _ModuleManager {
          return getModule(mod.getId());
       }
    }
-   
+
    @Handler
    protected void putModuleEvent(ModuleUnloadedEvent ev) {
-      
+
       Logger.debug("Calling GC to release any ressources of the module");
       System.gc();
    }
-   
+
    @Handler
    protected void putModuleEvent(ModuleUnregisteredEvent ev) {
-      
+
       Logger.debug("Calling GC to release any ressources of the module");
       System.gc();
    }
-   
+
 }

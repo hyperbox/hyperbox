@@ -28,24 +28,24 @@ import org.altherian.hboxd.security._User;
 import java.util.Date;
 
 public interface _Session extends Runnable, _RequestReceiver {
-   
+
    public void close();
-   
+
    public String getId();
-   
+
    public Date getCreateTime();
-   
+
    public SessionStates getState();
-   
+
    public _User getUser();
-   
+
    @Override
    public void putRequest(Request r);
-   
+
    public void post(EventOut evOut);
-   
+
    public void login();
-   
+
    public void logout();
-   
+
 }

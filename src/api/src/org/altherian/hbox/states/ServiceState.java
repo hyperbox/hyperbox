@@ -21,12 +21,12 @@
 package org.altherian.hbox.states;
 
 public enum ServiceState {
-   
+
    Stopped,
    Starting,
    Running,
    Stopping,
    Paused,
    Unknown
-   
+
 }

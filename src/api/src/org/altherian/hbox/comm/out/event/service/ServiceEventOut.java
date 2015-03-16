@@ -26,18 +26,18 @@ import org.altherian.hbox.comm.out.event.server.ServerEventOut;
 import java.util.Date;
 
 public class ServiceEventOut extends ServerEventOut {
-   
+
    protected ServiceEventOut() {
       // Used for (de)serialization
    }
-   
+
    public ServiceEventOut(Date time, Enum<?> id, ServerOut srvOut, ServiceOut svcOut) {
       super(time, id, srvOut);
       set(ServiceOut.class, svcOut);
    }
-   
+
    public ServiceOut getService() {
       return get(ServiceOut.class);
    }
-   
+
 }

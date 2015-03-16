@@ -22,7 +22,7 @@
 package org.altherian.hbox.constant;
 
 public enum HypervisorAttribute {
-   
+
    Type,
    Vendor,
    Product,
@@ -32,5 +32,5 @@ public enum HypervisorAttribute {
    ConnectorType,
    ConnectorOptions,
    ConnectorAuto,
-   
+
 }

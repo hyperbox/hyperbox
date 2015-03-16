@@ -25,21 +25,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TimeFormater {
-   
+
    private static String timeFormat = "yy-MM-dd HH:mm:ss";
    private static SimpleDateFormat formater = new SimpleDateFormat(timeFormat);
-   
+
    private TimeFormater() {
       // not used
    }
-   
+
    public static void setDefaultFormat(String format) {
       timeFormat = format;
       formater = new SimpleDateFormat(timeFormat);
    }
-   
+
    public static String get(Date date) {
       return formater.format(date);
    }
-   
+
 }

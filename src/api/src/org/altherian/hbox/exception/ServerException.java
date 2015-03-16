@@ -22,9 +22,9 @@ package org.altherian.hbox.exception;
 
 @SuppressWarnings("serial")
 public abstract class ServerException extends HyperboxRuntimeException {
-   
+
    public ServerException(String s) {
       super(s);
    }
-   
+
 }

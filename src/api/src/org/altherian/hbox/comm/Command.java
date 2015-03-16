@@ -27,7 +27,7 @@ package org.altherian.hbox.comm;
  * @author noteirak
  */
 public enum Command {
-   
+
    /**
     * Perform the given Security task (authenticate, authorise, etc)
     */
@@ -52,9 +52,9 @@ public enum Command {
     * Reserved
     */
    SERVICE;
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

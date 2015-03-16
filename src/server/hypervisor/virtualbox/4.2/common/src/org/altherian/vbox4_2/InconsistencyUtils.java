@@ -26,7 +26,7 @@ package org.altherian.vbox4_2;
  * @author noteirak
  */
 public class InconsistencyUtils {
-   
+
    /**
     * <p>
     * Workaround for Bug Ticket <a href="https://www.virtualbox.org/ticket/11316">#11316</a>
@@ -41,7 +41,7 @@ public class InconsistencyUtils {
     */
    public static Integer getAndTruncate(long value) {
       Integer finalInt = 0;
-      
+
       if (value < Integer.MIN_VALUE) {
          finalInt = Integer.MIN_VALUE;
       } else if (value > Integer.MAX_VALUE) {
@@ -49,8 +49,8 @@ public class InconsistencyUtils {
       } else {
          finalInt = (int) value;
       }
-      
+
       return finalInt;
    }
-   
+
 }

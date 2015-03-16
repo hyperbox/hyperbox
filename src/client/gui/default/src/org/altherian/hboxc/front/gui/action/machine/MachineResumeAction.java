@@ -33,20 +33,20 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class MachineResumeAction extends AbstractAction {
-   
+
    private _MachineSelector selector;
-   
+
    public MachineResumeAction(_MachineSelector selector) {
       super("Resume", IconBuilder.getTask(HypervisorTasks.MachineResume));
       setEnabled(true);
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ev) {
       for (MachineOut mOut : selector.getMachines()) {
          Gui.post(new Request(Command.VBOX, HypervisorTasks.MachineResume, new MachineIn(mOut)));
       }
    }
-   
+
 }

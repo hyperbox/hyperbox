@@ -32,17 +32,17 @@ import org.virtualbox_4_4.IMachine;
 import org.virtualbox_4_4.LockType;
 
 public final class AudioDriverSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.AudioDriver.toString();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       String rawDriver = ((StringSetting) setting).getValue();
@@ -50,10 +50,10 @@ public final class AudioDriverSettingAction implements _MachineSettingAction {
       AudioDriverType driverType = Mappings.get(driver);
       machine.getAudioAdapter().setAudioDriver(driverType);
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new AudioDriverSetting(Mappings.get(machine.getAudioAdapter().getAudioDriver()));
    }
-   
+
 }

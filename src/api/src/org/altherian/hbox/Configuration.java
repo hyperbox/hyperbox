@@ -37,18 +37,18 @@ import java.util.Properties;
  * @author noteirak
  */
 public class Configuration {
-   
+
    public static final String CFG_SEPARATOR = ".";
    public static final String CFG_ENV_PREFIX = "HBOX";
    public static final String CFG_ENV_SEPERATOR = "_";
    public static final String CFGKEY_CONF_USER_DATA_PATH = "conf.user.data.location";
    private static Map<String, String> settings = new HashMap<String, String>();
    private static Properties properties = new Properties();
-   
+
    private Configuration() {
       // static only
    }
-   
+
    public static String getUserDataPath() throws HyperboxException {
       if (hasSetting(CFGKEY_CONF_USER_DATA_PATH)) {
          return getSetting(CFGKEY_CONF_USER_DATA_PATH);
@@ -58,11 +58,11 @@ public class Configuration {
          return getUserDataPathLinux();
       }
    }
-   
+
    private static String getUserDataPathLinux() throws HyperboxException {
       return System.getProperty("user.home") + File.separator + ".hbox";
    }
-   
+
    private static String getUserDataPathWin() throws HyperboxException {
       if (new File(System.getenv("APPDATA")).exists()) {
          return System.getenv("APPDATA") + File.separator + "Hyperbox";
@@ -72,22 +72,22 @@ public class Configuration {
          return System.getProperty("user.home") + File.separator + "Hyperbox";
       }
    }
-   
+
    private static String getEnvVarName(String key) {
       return CFG_ENV_PREFIX + CFG_ENV_SEPERATOR + key.toUpperCase().replace(CFG_SEPARATOR, CFG_ENV_SEPERATOR);
    }
-   
+
    public static void init(String settingsFilePath) throws HyperboxException {
       File settingsFile = new File(settingsFilePath).getAbsoluteFile();
       Logger.debug("Configured config file: " + settingsFile.getAbsolutePath());
-      
+
       if (!settingsFile.isFile()) {
          throw new HyperboxException("Configuration file: not a file");
       }
       if (!settingsFile.canRead()) {
          throw new HyperboxException("Configuration file: cannot read");
       }
-      
+
       try {
          properties.load(new FileReader(settingsFile));
       } catch (FileNotFoundException e) {
@@ -96,56 +96,56 @@ public class Configuration {
          throw new HyperboxException("Configuration file: cannot read - " + e.getMessage());
       }
    }
-   
+
    public static String getSetting(String key, Object defaultValue) {
       return getSetting(key, defaultValue.toString());
    }
-   
+
    public static String getSetting(String key, String defaultValue) {
       Logger.debug("Trying to get setting " + key + " with default value " + defaultValue);
-      
+
       Logger.debug("settings.containsKey(" + key + "): " + settings.containsKey(key));
       if (settings.containsKey(key)) {
          Logger.debug("Returning config value");
          return settings.get(key);
       }
-      
+
       Logger.debug("System.getProperty(" + key + ") != null: " + (System.getProperty(key) != null));
       if (System.getProperty(key) != null) {
          Logger.debug("Returning system property");
          return System.getProperty(key);
       }
-      
+
       Logger.debug("System.getenv().containsKey(" + getEnvVarName(key) + "): " + System.getenv().containsKey(getEnvVarName(key)));
       if (System.getenv().containsKey(getEnvVarName(key))) {
          Logger.debug("Returning environment value");
          return System.getenv(getEnvVarName(key));
       }
-      
+
       Logger.debug("properties.containsKey(" + key + "): " + properties.containsKey(key));
       if (properties.containsKey(key)) {
          Logger.debug("Returning properties value");
          return properties.getProperty(key);
       }
-      
+
       return defaultValue;
    }
-   
+
    public static String getSetting(String key) {
       return getSetting(key, null);
    }
-   
+
    public static boolean hasSetting(String key) {
       return settings.containsKey(key) || System.getenv().containsKey(getEnvVarName(key)) || properties.containsKey(key);
    }
-   
+
    public static String getSettingOrFail(String key) throws ConfigurationException {
       if (!hasSetting(key)) {
          throw new ConfigurationException("Key is not defined in configuration: " + key);
       }
       return getSetting(key);
    }
-   
+
    /**
     * Insert the defined value for the given key to the configuration
     * 
@@ -155,5 +155,5 @@ public class Configuration {
    public static void setSetting(String key, Object value) {
       settings.put(key, value.toString());
    }
-   
+
 }

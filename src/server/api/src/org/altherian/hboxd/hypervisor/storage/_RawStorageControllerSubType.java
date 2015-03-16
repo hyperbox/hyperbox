@@ -21,9 +21,9 @@
 package org.altherian.hboxd.hypervisor.storage;
 
 public interface _RawStorageControllerSubType {
-   
+
    public String getId();
-   
+
    public String getParentType();
-   
+
 }

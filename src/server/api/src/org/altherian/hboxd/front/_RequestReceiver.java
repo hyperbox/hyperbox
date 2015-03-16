@@ -24,11 +24,11 @@ import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._Client;
 
 public interface _RequestReceiver {
-   
+
    public void register(_Client client);
-   
+
    public void postRequest(_Client client, Request req);
-   
+
    public void unregister(_Client client);
-   
+
 }

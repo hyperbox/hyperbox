@@ -24,7 +24,7 @@ import org.altherian.hbox.comm.out.network.NetModeOut;
 import java.util.List;
 
 public interface _NetModeListReceiver extends _WorkerDataReceiver {
-   
+
    public void add(List<NetModeOut> netModes);
-   
+
 }

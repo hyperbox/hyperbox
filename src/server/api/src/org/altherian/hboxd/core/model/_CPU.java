@@ -23,9 +23,9 @@ package org.altherian.hboxd.core.model;
 import org.altherian.hboxd.hypervisor._RawItem;
 
 public interface _CPU extends _RawItem {
-   
+
    public long getAmount();
-   
+
    public void setAmount(long amount);
-   
+
 }

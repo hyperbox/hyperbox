@@ -26,19 +26,19 @@ import org.altherian.hbox.event.HyperboxEvents;
 import java.util.Date;
 
 public final class MachineDataChangeEventOut extends MachineEventOut {
-   
+
    @SuppressWarnings("unused")
    private MachineDataChangeEventOut() {
       // Used for serialization
    }
-   
+
    public MachineDataChangeEventOut(Date time, ServerOut srvOut, MachineOut mOut) {
       super(time, HyperboxEvents.MachineDataChange, srvOut, mOut);
    }
-   
+
    @Override
    public String toString() {
       return "Data changed for Machine ID #" + getUuid() + " on Server ID " + getServerId() + " @ " + getTime();
    }
-   
+
 }

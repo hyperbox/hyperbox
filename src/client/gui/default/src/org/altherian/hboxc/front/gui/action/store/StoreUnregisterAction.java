@@ -35,18 +35,18 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class StoreUnregisterAction extends AbstractAction {
-   
+
    private _StoreSelector selector;
-   
+
    public StoreUnregisterAction(_StoreSelector selector) {
       this(selector, "Unregister");
    }
-   
+
    public StoreUnregisterAction(_StoreSelector selector, String label) {
       super(label, IconBuilder.getTask(HyperboxTasks.StoreUnregister));
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       List<String> selection = selector.getSelection();
@@ -56,5 +56,5 @@ public class StoreUnregisterAction extends AbstractAction {
          }
       }
    }
-   
+
 }

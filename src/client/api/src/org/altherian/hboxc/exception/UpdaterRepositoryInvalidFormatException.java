@@ -22,21 +22,21 @@ package org.altherian.hboxc.exception;
 
 @SuppressWarnings("serial")
 public class UpdaterRepositoryInvalidFormatException extends UpdaterException {
-   
+
    public UpdaterRepositoryInvalidFormatException() {
       super("Repository is using an invalid format");
    }
-   
+
    public UpdaterRepositoryInvalidFormatException(String s) {
       super(s);
    }
-   
+
    public UpdaterRepositoryInvalidFormatException(Throwable t) {
       super(t);
    }
-   
+
    public UpdaterRepositoryInvalidFormatException(String s, Throwable t) {
       super(s, t);
    }
-   
+
 }

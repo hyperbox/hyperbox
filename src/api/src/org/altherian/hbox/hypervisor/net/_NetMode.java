@@ -23,46 +23,46 @@ package org.altherian.hbox.hypervisor.net;
 import java.util.Set;
 
 public interface _NetMode {
-   
+
    public String getId();
-   
+
    public String getLabel();
-   
+
    public Set<String> getSupportedServices();
-   
+
    /**
     * Does this network mode support using adaptors?
     *
     * @return true if yes, false if not
     */
    public boolean canUseAdaptor();
-   
+
    /**
     * Can we add a new adaptor for this network mode?
     *
     * @return true if yes, false if not
     */
    public boolean canAddAdaptor();
-   
+
    /**
     * Can we remove an existing adaptor for this network mode?
     *
     * @return true if yes, false if not
     */
    public boolean canRemoveAdaptor();
-   
+
    /**
     * Does this network mode supports renaming adaptors?
     *
     * @return true if yes, false if not
     */
    public boolean canRenameAdaptor();
-   
+
    /**
     * Does this network mode support arbitrary network names?
     *
     * @return true if yes, false if not
     */
    public boolean canUseNetworkName();
-   
+
 }

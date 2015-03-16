@@ -23,13 +23,13 @@ package org.altherian.hbox.exception;
 
 @SuppressWarnings("serial")
 public class MachineDisplayNotAvailableException extends MachineException {
-   
+
    public MachineDisplayNotAvailableException() {
       super("Machine Display is not available at this time.");
    }
-   
+
    public MachineDisplayNotAvailableException(String s) {
       super(s);
    }
-   
+
 }

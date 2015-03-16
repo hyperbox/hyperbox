@@ -26,13 +26,13 @@ import org.altherian.hbox.event.HyperboxEvents;
 import java.util.Date;
 
 public class ModuleDisabledEventOut extends ModuleEventOut {
-   
+
    protected ModuleDisabledEventOut() {
       // Used for serialization
    }
-   
+
    public ModuleDisabledEventOut(Date time, ServerOut srvOut, ModuleOut modOut) {
       super(time, HyperboxEvents.ModuleDisabled, srvOut, modOut);
    }
-   
+
 }

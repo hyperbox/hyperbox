@@ -22,17 +22,17 @@ package org.altherian.hbox.exception;
 
 @SuppressWarnings("serial")
 public class HyperboxRuntimeException extends RuntimeException {
-   
+
    public HyperboxRuntimeException(String s) {
       super(s);
    }
-   
+
    public HyperboxRuntimeException(Throwable t) {
       super(t);
    }
-   
+
    public HyperboxRuntimeException(String s, Throwable t) {
       super(s, t);
    }
-   
+
 }

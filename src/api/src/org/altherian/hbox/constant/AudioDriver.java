@@ -26,7 +26,7 @@ package org.altherian.hbox.constant;
  * @author noteirak
  */
 public enum AudioDriver {
-   
+
    Null,
    WinMM,
    OSS,
@@ -35,9 +35,9 @@ public enum AudioDriver {
    CoreAudio,
    Pulse,
    SolAudio;
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

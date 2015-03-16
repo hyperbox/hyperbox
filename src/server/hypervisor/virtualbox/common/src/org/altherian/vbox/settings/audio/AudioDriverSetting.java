@@ -25,13 +25,13 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.StringSetting;
 
 public class AudioDriverSetting extends StringSetting {
-   
+
    public AudioDriverSetting(AudioDriver driver) {
       this(driver.getId());
    }
-   
+
    public AudioDriverSetting(String value) {
       super(MachineAttribute.AudioDriver, value);
    }
-   
+
 }

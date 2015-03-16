@@ -27,16 +27,16 @@ import org.altherian.hbox.event.HyperboxEvents;
 import java.util.Date;
 
 public class MachineSnapshotDataChangedEventOut extends MachineEventOut {
-   
+
    @SuppressWarnings("unused")
    private MachineSnapshotDataChangedEventOut() {
       // Used for serialization
    }
-   
+
    public MachineSnapshotDataChangedEventOut(Date time, ServerOut srvOut, MachineOut mOut) {
       super(time, HyperboxEvents.MachineSnapshotDataChange, srvOut, mOut);
    }
-   
+
    // Nothing to put here
-   
+
 }

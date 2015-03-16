@@ -29,26 +29,26 @@ import org.virtualbox_4_4.IMachine;
 import org.virtualbox_4_4.LockType;
 
 public class VrdeAuthTypeSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Shared;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.VrdeAuthType.getId();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       AuthType authType = AuthType.valueOf(setting.getString());
       machine.getVRDEServer().setAuthType(authType);
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new StringSetting(MachineAttribute.VrdeAuthType, machine.getVRDEServer().getAuthType().toString());
    }
-   
+
 }

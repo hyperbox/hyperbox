@@ -32,22 +32,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class MachineAcpiPowerAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.VBOX.getId() + HypervisorTasks.MachineAcpiPowerButton.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return true;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       MachineIn mIn = request.get(MachineIn.class);
       _Machine machine = hbox.getServer(mIn.getServerId()).getMachine(mIn.getUuid());
       machine.sendAcpi(ACPI.PowerButton);
    }
-   
+
 }

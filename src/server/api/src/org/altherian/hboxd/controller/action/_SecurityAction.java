@@ -25,7 +25,7 @@ import org.altherian.hbox.comm._Client;
 import org.altherian.hboxd.core._Hyperbox;
 
 public interface _SecurityAction {
-   
+
    public void run(_Hyperbox core, Request req, _Client client);
-   
+
 }

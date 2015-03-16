@@ -22,18 +22,18 @@ package org.altherian.hbox.exception;
 
 @SuppressWarnings("serial")
 public class HypervisorException extends HyperboxRuntimeException {
-   
+
    public HypervisorException(String s) {
       super(s);
    }
-   
+
    public HypervisorException(Throwable t) {
       super(t);
       ;
    }
-   
+
    public HypervisorException(String s, Throwable t) {
       super(s, t);
    }
-   
+
 }

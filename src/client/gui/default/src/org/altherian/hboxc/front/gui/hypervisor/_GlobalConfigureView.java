@@ -25,11 +25,11 @@ import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
 import javax.swing.JComponent;
 
 public interface _GlobalConfigureView {
-   
+
    public JComponent getComponent();
-   
+
    public void update(HypervisorOut hypOut);
-   
+
    public HypervisorIn getUserInput();
-   
+
 }

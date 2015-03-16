@@ -26,19 +26,19 @@ import org.altherian.hboxd.core.model._Medium;
 import org.altherian.hboxd.hypervisor.storage._RawMedium;
 
 public class MediumIoFactory {
-   
+
    private MediumIoFactory() {
       // static class
    }
-   
+
    public static MediumOut get(_RawMedium m) {
       MediumOut mIo = new MediumOut(m.getUuid(), SettingIoFactory.getList(m.listSettings()));
       return mIo;
    }
-   
+
    public static MediumOut get(_Medium m) {
       MediumOut mIo = new MediumOut(m.getUuid(), SettingIoFactory.getList(m.getSettings()));
       return mIo;
    }
-   
+
 }

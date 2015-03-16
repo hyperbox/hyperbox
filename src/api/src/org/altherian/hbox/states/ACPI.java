@@ -26,19 +26,19 @@ package org.altherian.hbox.states;
  * @author noteirak
  */
 public enum ACPI {
-   
+
    /**
     * Like pressing the Power Button
     */
    PowerButton,
-   
+
    /**
     * Like pressing the Sleep button
     */
    SleepButton;
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

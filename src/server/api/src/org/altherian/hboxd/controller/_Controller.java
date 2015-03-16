@@ -23,9 +23,9 @@ package org.altherian.hboxd.controller;
 import org.altherian.hbox.exception.HyperboxException;
 
 public interface _Controller {
-   
+
    public void start(String[] args) throws HyperboxException;
-   
+
    public void stop();
-   
+
 }

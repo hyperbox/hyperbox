@@ -28,20 +28,20 @@ import org.altherian.vbox4_2.setting._MediumSettingAction;
 import org.virtualbox_4_2.IMedium;
 
 public class MediumVariantSettingAction implements _MediumSettingAction {
-   
+
    @Override
    public String getSettingName() {
       return MediumAttribute.Variant.toString();
    }
-   
+
    @Override
    public void set(IMedium medium, _Setting setting) {
       throw new HyperboxRuntimeException("Read-only setting");
    }
-   
+
    @Override
    public _Setting get(IMedium medium) {
       return new PositiveNumberSetting(MediumAttribute.Variant, medium.getVariant());
    }
-   
+
 }

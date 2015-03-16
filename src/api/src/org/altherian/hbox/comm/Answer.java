@@ -30,11 +30,11 @@ package org.altherian.hbox.comm;
  * @see Request
  */
 public final class Answer extends Message {
-   
+
    private String exchangeId;
    private Command command;
    private AnswerType type;
-   
+
    /**
     * <b>DO NOT USE</b> - <b><i>only for serializers</i></b>
     */
@@ -42,7 +42,7 @@ public final class Answer extends Message {
    private Answer() {
       // DO NOT USE!
    }
-   
+
    /**
     * Build an Answer object from the given request and with the given type.
     * 
@@ -58,7 +58,7 @@ public final class Answer extends Message {
       command = request.getCommand();
       this.type = type;
    }
-   
+
    /**
     * Build an Answer object from the given request and with the given type and attach the given object
     * 
@@ -73,11 +73,11 @@ public final class Answer extends Message {
       this(request, type);
       set(o);
    }
-   
+
    public Answer(Request request, AnswerType type, Throwable e) {
       this(request, type, Exception.class, e.getMessage());
    }
-   
+
    /**
     * Build an Answer object from the given request and with the given type and attach the given object under the given label.
     * 
@@ -93,17 +93,17 @@ public final class Answer extends Message {
       this(request, type);
       set(label, o);
    }
-   
+
    public Answer(Request request, AnswerType type, Enum<?> label, Object o) {
       this(request, type);
       set(label, o);
    }
-   
+
    public Answer(Request request, AnswerType type, Class<?> label, Object o) {
       this(request, type);
       set(label, o);
    }
-   
+
    /**
     * Get the unique identifier for this message and the following one(s).
     * 
@@ -112,7 +112,7 @@ public final class Answer extends Message {
    public String getExchangeId() {
       return exchangeId;
    }
-   
+
    /**
     * Get the type of answer this message is
     * 
@@ -122,7 +122,7 @@ public final class Answer extends Message {
    public AnswerType getType() {
       return type;
    }
-   
+
    /**
     * Get the command associated with this answer.
     * 
@@ -132,7 +132,7 @@ public final class Answer extends Message {
    public Command getCommand() {
       return command;
    }
-   
+
    /**
     * Check if this message conclude an exchange between the client and the server based on the type of answer.<br/>
     * For more information on which type concludes an an exchange, refer to the ActionType doc.
@@ -145,19 +145,19 @@ public final class Answer extends Message {
    public boolean isExchangedFinished() {
       return type.isFinishing();
    }
-   
+
    public boolean isExchangeStarted() {
       return type.isStarting();
    }
-   
+
    public boolean isExchangeInProgress() {
       return type.isInProgress();
    }
-   
+
    public boolean hasFailed() {
       return type.isFailing();
    }
-   
+
    // TODO toString()
-   
+
 }

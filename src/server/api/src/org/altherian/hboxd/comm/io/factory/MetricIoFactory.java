@@ -24,9 +24,9 @@ import org.altherian.hbox.comm.out.MachineMetricOut;
 import org.altherian.hboxd.core.model._MachineMetric;
 
 public class MetricIoFactory {
-   
+
    public static MachineMetricOut get(_MachineMetric metric) {
       return new MachineMetricOut(metric.getMachineUuid(), metric.getTime(), metric.getValue());
    }
-   
+
 }

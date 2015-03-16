@@ -22,13 +22,13 @@ package org.altherian.hboxc.exception;
 
 @SuppressWarnings("serial")
 public class UpdaterNotEnabledException extends UpdaterException {
-   
+
    public UpdaterNotEnabledException() {
       super("Updater Scheduled checks are not enabled");
    }
-   
+
    public UpdaterNotEnabledException(String s) {
       super(s);
    }
-   
+
 }

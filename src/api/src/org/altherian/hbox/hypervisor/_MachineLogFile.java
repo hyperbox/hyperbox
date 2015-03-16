@@ -23,11 +23,11 @@ package org.altherian.hbox.hypervisor;
 import java.util.List;
 
 public interface _MachineLogFile {
-   
+
    public String getId();
-   
+
    public List<String> getLog();
-   
+
    public String getFileName();
-   
+
 }

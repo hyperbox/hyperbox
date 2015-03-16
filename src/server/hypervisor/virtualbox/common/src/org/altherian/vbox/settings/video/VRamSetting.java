@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.PositiveNumberSetting;
 
 public final class VRamSetting extends PositiveNumberSetting {
-   
+
    public VRamSetting(long memoryMb) {
       super(MachineAttribute.VRAM, memoryMb);
    }
-   
+
 }

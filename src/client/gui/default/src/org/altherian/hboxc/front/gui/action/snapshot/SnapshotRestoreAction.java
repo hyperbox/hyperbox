@@ -32,14 +32,14 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class SnapshotRestoreAction extends AbstractAction {
-   
+
    private _SnapshotSelector selector;
-   
+
    public SnapshotRestoreAction(_SnapshotSelector selector) {
       this.selector = selector;
       putValue(SHORT_DESCRIPTION, "Restore the machine state to the selected snapshot");
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       Request req = new Request(Command.VBOX, HypervisorTasks.SnapshotRestore);
@@ -47,5 +47,5 @@ public class SnapshotRestoreAction extends AbstractAction {
       req.set(new SnapshotIn(selector.getSelection().get(0).getUuid()));
       Gui.post(req);
    }
-   
+
 }

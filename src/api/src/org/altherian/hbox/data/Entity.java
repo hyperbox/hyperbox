@@ -29,42 +29,42 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Entity {
-   
+
    private String id = "";
    private Map<String, SettingIO> settings = new HashMap<String, SettingIO>();
-   
+
    public Entity() {
-      
+
    }
-   
+
    public Entity(String id) {
       this.id = id;
    }
-   
+
    public Entity(List<SettingIO> settings) {
       setSetting(settings);
    }
-   
+
    public Entity(String id, List<SettingIO> settings) {
       this(id);
       setSetting(settings);
    }
-   
+
    @Override
    public String toString() {
       return getId();
    }
-   
+
    public String getId() {
       return id;
    }
-   
+
    public void setSetting(List<SettingIO> settings) {
       for (SettingIO setting : settings) {
          setSetting(setting);
       }
    }
-   
+
    /**
     * Change this object config data according to the setting given.
     * 
@@ -73,7 +73,7 @@ public abstract class Entity {
    public void setSetting(SettingIO sIo) {
       settings.put(sIo.getName(), sIo);
    }
-   
+
    /**
     * Retrieve the setting linked to the given name.
     * 
@@ -88,7 +88,7 @@ public abstract class Entity {
       }
       return settings.get(name);
    }
-   
+
    /**
     * Retrieve the setting for the given machine settings name.
     * 
@@ -100,25 +100,25 @@ public abstract class Entity {
    public SettingIO getSetting(Enum<?> name) {
       return getSetting(name.toString());
    }
-   
+
    public boolean hasSetting(String name) {
       return settings.containsKey(name);
    }
-   
+
    public boolean hasSetting(Enum<?> name) {
       return hasSetting(name.toString());
    }
-   
+
    public void removeSetting(String name) {
       settings.remove(name);
    }
-   
+
    public void removeSetting(Enum<?> name) {
       removeSetting(name.toString());
    }
-   
+
    public List<SettingIO> listSettings() {
       return new ArrayList<SettingIO>(settings.values());
    }
-   
+
 }

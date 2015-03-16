@@ -25,21 +25,21 @@ import org.altherian.hbox.states.ServerConnectionState;
 import org.altherian.hboxc.event.ClientEvents;
 
 public class ServerConnectionStateEvent extends ServerEvent {
-   
+
    private ServerConnectionState state;
-   
+
    public ServerConnectionStateEvent(ServerOut srv, ServerConnectionState state) {
       super(ClientEvents.ServerConnectionState, srv);
       this.state = state;
    }
-   
+
    public ServerConnectionState getState() {
       return state;
    }
-   
+
    @Override
    public String toString() {
       return "Server ID " + getServer().getId() + " change connection state to " + getState() + " @ " + getTime();
    }
-   
+
 }

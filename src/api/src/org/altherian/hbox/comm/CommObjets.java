@@ -21,8 +21,8 @@
 package org.altherian.hbox.comm;
 
 public enum CommObjets {
-   
+
    KeyboardMode,
    MouseMode
-   
+
 }

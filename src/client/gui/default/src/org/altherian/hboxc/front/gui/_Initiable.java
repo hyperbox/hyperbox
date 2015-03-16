@@ -23,7 +23,7 @@ package org.altherian.hboxc.front.gui;
 import org.altherian.hbox.exception.HyperboxException;
 
 public interface _Initiable {
-   
+
    public void init() throws HyperboxException;
-   
+
 }

@@ -37,14 +37,14 @@ import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public class ServerShutdownAction extends AbstractAction {
-   
+
    private _ServerSelector selector;
-   
+
    public ServerShutdownAction(_ServerSelector selector) {
       super("Shutdown");
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ae) {
       Logger.verbose("Will send shutdown signal to " + selector.getServers().size() + " servers");
@@ -71,5 +71,5 @@ public class ServerShutdownAction extends AbstractAction {
          }
       }
    }
-   
+
 }

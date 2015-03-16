@@ -24,15 +24,15 @@ import org.altherian.hbox.event._Event;
 import org.altherian.hbox.exception.HyperboxException;
 
 public interface _EventManager {
-   
+
    public void start() throws HyperboxException;
-   
+
    public void stop();
-   
+
    public void register(Object o);
-   
+
    public void unregister(Object o);
-   
+
    public void post(_Event ev);
-   
+
 }

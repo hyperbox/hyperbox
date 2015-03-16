@@ -22,11 +22,11 @@
 package org.altherian.hboxc.constant;
 
 public enum ConsoleViewerAttributes {
-   
+
    Id,
    HypervisorTypeId,
    ModuleId,
    ViewerPath,
    Args,
-   
+
 }

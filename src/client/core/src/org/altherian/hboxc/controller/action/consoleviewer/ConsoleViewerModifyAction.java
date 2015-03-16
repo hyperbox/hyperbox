@@ -35,22 +35,22 @@ import org.altherian.hboxc.event.consoleviewer.ConsoleViewerModifiedEvent;
 import org.altherian.hboxc.front._Front;
 
 public class ConsoleViewerModifyAction extends AbstractClientControllerSingleAction {
-   
+
    @Override
    public Enum<?> getRegistration() {
       return ClientTasks.ConsoleViewerModify;
    }
-   
+
    @Override
    public void run(_Core core, _Front view, Request req, _AnswerReceiver recv) throws HyperboxException {
       ConsoleViewerInput coreViewInput = req.get(ConsoleViewerInput.class);
       _ConsoleViewer viewer = core.getConsoleViewer(coreViewInput.getId());
-      
+
       viewer.setViewer(coreViewInput.getViewerPath());
       viewer.setArgs(coreViewInput.getArgs());
       viewer.save();
-      
+
       EventManager.post(new ConsoleViewerModifiedEvent(ConsoleViewerIoFactory.getOut(viewer)));
    }
-   
+
 }

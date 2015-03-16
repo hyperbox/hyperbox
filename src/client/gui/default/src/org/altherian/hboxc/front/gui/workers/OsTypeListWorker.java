@@ -30,30 +30,30 @@ import org.altherian.hboxc.front.gui.worker.receiver._OsTypeListReceiver;
 import java.util.List;
 
 public class OsTypeListWorker extends AxSwingWorker<_OsTypeListReceiver, Void, OsTypeOut> {
-   
+
    private MachineOut mOut;
-   
+
    public OsTypeListWorker(_OsTypeListReceiver recv, MachineOut mOut) {
       super(recv);
       this.mOut = mOut;
    }
-   
+
    @Override
    protected Void doInBackground() throws Exception {
       for (OsTypeOut ostOut : Gui.getServer(mOut.getServerId()).listOsType(new MachineIn(mOut))) {
          publish(ostOut);
       }
-      
+
       return null;
    }
-   
+
    @Override
    protected void process(List<OsTypeOut> ostOutList) {
       getReceiver().add(ostOutList);
    }
-   
+
    public static void execute(_OsTypeListReceiver recv, MachineOut mOut) {
       new OsTypeListWorker(recv, mOut).execute();
    }
-   
+
 }

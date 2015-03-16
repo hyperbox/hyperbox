@@ -24,7 +24,7 @@ package org.altherian.hboxc.front.gui.server;
 import org.altherian.hbox.comm.out.ServerOut;
 
 public interface _SingleServerSelector {
-   
+
    public ServerOut getServer();
-   
+
 }

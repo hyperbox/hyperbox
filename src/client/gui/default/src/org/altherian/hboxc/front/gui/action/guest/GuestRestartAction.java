@@ -32,20 +32,20 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class GuestRestartAction extends AbstractAction {
-   
+
    private _MachineSelector selector;
-   
+
    public GuestRestartAction(_MachineSelector selector) {
       super("Restart");
       setEnabled(true);
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent ev) {
       for (MachineOut mOut : selector.getMachines()) {
          Gui.post(new Request(Command.HBOX, HyperboxTasks.GuestRestart, new MachineIn(mOut)));
       }
    }
-   
+
 }

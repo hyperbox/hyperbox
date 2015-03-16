@@ -32,21 +32,21 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class NetworkInterfaceSummary extends JPanel implements _GuestNetworkInterfaceReceiver {
-   
+
    private static final long serialVersionUID = -9083225380488179517L;
-   
+
    private String srvId;
    private String vmId;
    private NetworkInterfaceOut nicOut;
    private JTextField nicValue;
    private JTextField ipv4Value;
-   
+
    public NetworkInterfaceSummary(String srvId, String vmId, NetworkInterfaceOut nicOut) {
       super(new MigLayout("ins 0"));
       this.srvId = srvId;
       this.vmId = vmId;
       this.nicOut = nicOut;
-      
+
       nicValue = JTextFieldUtils.createAsLabel(nicOut.getAdapterType() + " using " + nicOut.getAttachMode()
             + (AxStrings.isEmpty(nicOut.getAttachName()) ? "" : " on " + nicOut.getAttachName()));
       ipv4Value = JTextFieldUtils.createAsLabel(nicOut.getMacAddress());
@@ -57,11 +57,11 @@ public class NetworkInterfaceSummary extends JPanel implements _GuestNetworkInte
       add(ipv4Value, "wrap");
       refresh();
    }
-   
+
    private void refresh() {
       GuestNetworkInterfaceWorker.execute(this, srvId, vmId, nicOut);
    }
-   
+
    @Override
    public void put(GuestNetworkInterfaceOut gNicOut) {
       if (gNicOut != null) {
@@ -70,17 +70,17 @@ public class NetworkInterfaceSummary extends JPanel implements _GuestNetworkInte
          ipv4Value.setText(nicOut.getMacAddress() + " | IP information is not available");
       }
    }
-   
+
    @Override
    public void loadingStarted() {
       ipv4Value.setText(nicOut.getMacAddress() + " | Loading...");
    }
-   
+
    @Override
    public void loadingFinished(boolean isSuccessful, String message) {
       if (!isSuccessful) {
          ipv4Value.setText(nicOut.getMacAddress() + " | Error: " + message);
       }
    }
-   
+
 }

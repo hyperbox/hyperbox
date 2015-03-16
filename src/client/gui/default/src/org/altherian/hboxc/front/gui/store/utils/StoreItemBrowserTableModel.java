@@ -27,11 +27,11 @@ import org.altherian.hboxc.front.gui.utils.ObjectOutputTableModel;
 
 @SuppressWarnings("serial")
 public class StoreItemBrowserTableModel extends ObjectOutputTableModel<StoreItemOut> {
-   
+
    @Override
    protected void addColumns() {
       addColumn("Name", StoreItemAttribute.Name);
       addColumn("Size", StoreItemAttribute.Size);
    }
-   
+
 }

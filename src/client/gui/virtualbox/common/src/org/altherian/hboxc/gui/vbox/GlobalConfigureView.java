@@ -30,37 +30,37 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class GlobalConfigureView implements _GlobalConfigureView {
-   
+
    private JLabel machineFolderLabel;
    private JTextField machineFolderValue;
    private JLabel consoleModuleLabel;
    private JTextField consoleModuleValue;
    private JPanel panel;
-   
+
    public GlobalConfigureView() {
       machineFolderLabel = new JLabel("Default Machine Folder");
       consoleModuleLabel = new JLabel("Default Extention Pack");
-      
+
       machineFolderValue = new JTextField();
       consoleModuleValue = new JTextField();
-      
+
       panel.add(machineFolderLabel);
       panel.add(machineFolderValue, "growx, pushx, wrap");
       panel.add(consoleModuleLabel);
       panel.add(consoleModuleValue, "growx, pushx, wrap");
    }
-   
+
    @Override
    public JComponent getComponent() {
       return panel;
    }
-   
+
    @Override
    public void update(HypervisorOut hypOut) {
       machineFolderValue.setText(hypOut.getSetting("vbox.global.machineFolder").getString());
       consoleModuleValue.setText(hypOut.getSetting("vbox.global.consoleModule").getString());
    }
-   
+
    @Override
    public HypervisorIn getUserInput() {
       HypervisorIn hypIn = new HypervisorIn();
@@ -68,5 +68,5 @@ public class GlobalConfigureView implements _GlobalConfigureView {
       hypIn.setSetting(new StringSettingIO("vbox.global.consoleModule", consoleModuleValue.getText()));
       return hypIn;
    }
-   
+
 }

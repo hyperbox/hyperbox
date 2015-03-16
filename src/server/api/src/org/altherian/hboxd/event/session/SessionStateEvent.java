@@ -25,14 +25,14 @@ import org.altherian.hbox.states.SessionStates;
 import org.altherian.hboxd.session._Session;
 
 public final class SessionStateEvent extends SessionEvent {
-   
+
    public SessionStateEvent(_Session s) {
       super(HyperboxEvents.SessionState, s);
       set(s.getState());
    }
-   
+
    public SessionStates getState() {
       return get(SessionStates.class);
    }
-   
+
 }

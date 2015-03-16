@@ -35,22 +35,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class TaskGetAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.TaskGet.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void run(Request request, _Hyperbox hbox) {
       TaskIn tIn = request.get(TaskIn.class);
       _Task t = hbox.getTaskManager().get(tIn.getId());
       SessionContext.getClient().putAnswer(new Answer(request, AnswerType.DATA, TaskIoFactory.get(t)));
    }
-   
+
 }

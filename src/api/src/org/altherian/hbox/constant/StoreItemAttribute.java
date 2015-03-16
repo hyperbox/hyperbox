@@ -21,11 +21,11 @@
 package org.altherian.hbox.constant;
 
 public enum StoreItemAttribute {
-   
+
    Name,
    Path,
    StoreId,
    Size,
    IsContainer
-   
+
 }

@@ -24,11 +24,11 @@ import org.altherian.setting._Setting;
 import org.virtualbox_4_3.IMedium;
 
 public interface _MediumSettingAction {
-   
+
    public String getSettingName();
-   
+
    public void set(IMedium medium, _Setting setting);
-   
+
    public _Setting get(IMedium medium);
-   
+
 }

@@ -21,44 +21,44 @@
 package org.altherian.hboxd.task;
 
 public interface _ProgressTracker {
-   
+
    public String getId();
-   
+
    public String getType();
-   
+
    public String getState();
-   
+
    public String getDescription();
-   
+
    public boolean isCancelable();
-   
+
    public long getPercent();
-   
+
    /**
     * In seconds
     * 
     * @return seconds remaining
     */
    public long timeRemaining();
-   
+
    public boolean isRunning();
-   
+
    public boolean hasBeenCanceled();
-   
+
    public long returnCode();
-   
+
    public boolean hasFailed();
-   
+
    public long getErrorCode();
-   
+
    public String getError();
-   
+
    public long getOperationCount();
-   
+
    public long getCurrentOperation();
-   
+
    public String getOperationDescription();
-   
+
    public long getOperationPercent();
-   
+
 }

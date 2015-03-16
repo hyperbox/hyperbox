@@ -26,13 +26,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class StreamDumper extends Thread {
-   
+
    private InputStream s;
-   
+
    public StreamDumper(InputStream s) {
       this.s = s;
    }
-   
+
    @Override
    public void run() {
       BufferedReader r = new BufferedReader(new InputStreamReader(s));
@@ -51,5 +51,5 @@ public class StreamDumper extends Thread {
          }
       }
    }
-   
+
 }

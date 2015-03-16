@@ -23,22 +23,22 @@ package org.altherian.hboxd.session;
 import org.altherian.hbox.comm._Client;
 
 public final class SessionContext {
-   
+
    private static ThreadLocal<_Client> clientHolder = new ThreadLocal<_Client>();
-   
+
    private SessionContext() {
       // we don't want instances.
    }
-   
+
    public static void setClient(_Client c) {
       if (clientHolder.get() == null) {
          clientHolder.set(c);
       }
    }
-   
+
    public static _Client getClient() {
       return clientHolder.get();
-      
+
    }
-   
+
 }

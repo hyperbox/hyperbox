@@ -45,15 +45,15 @@ import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
 public class HostOnlyNicEditor implements _NetAdaptorConfigureView {
-   
+
    private String srvId;
    private String modeId;
    private String adaptId;
-   
+
    private JTabbedPane tabs;
    private JPanel ipPanel;
    private JPanel dhcpPanel;
-   
+
    private JLabel ip4AddrLabel;
    private JLabel ip4NetmaskLabel;
    private JLabel ip6addrLabel;
@@ -63,7 +63,7 @@ public class HostOnlyNicEditor implements _NetAdaptorConfigureView {
    private JLabel dhcpMaskLabel;
    private JLabel startAddrLabel;
    private JLabel endAddrLabel;
-   
+
    private JTextField ip4AddrValue;
    private JTextField ip4NetmaskValue;
    private JTextField ip6addrValue;
@@ -73,14 +73,14 @@ public class HostOnlyNicEditor implements _NetAdaptorConfigureView {
    private JTextField dhcpMaskValue;
    private JTextField startAddrValue;
    private JTextField endAddrValue;
-   
+
    private boolean ip6Supported = false;
-   
+
    public HostOnlyNicEditor(String srvId, String modeId, String adaptId) {
       this.srvId = srvId;
       this.modeId = modeId;
       this.adaptId = adaptId;
-      
+
       ip4AddrLabel = new JLabel("IPv4 Address:");
       ip4NetmaskLabel = new JLabel("IPv4 Netmask:");
       ip6addrLabel = new JLabel("IPv6 Address:");
@@ -90,7 +90,7 @@ public class HostOnlyNicEditor implements _NetAdaptorConfigureView {
       dhcpMaskLabel = new JLabel("Server Mask");
       startAddrLabel = new JLabel("Start Address");
       endAddrLabel = new JLabel("End Address");
-      
+
       ip4AddrValue = new JTextFieldShadow("1.2.3.4");
       ip4AddrValue.setColumns(16);
       ip4NetmaskValue = new JTextFieldShadow("a.b.c.d");
@@ -108,9 +108,9 @@ public class HostOnlyNicEditor implements _NetAdaptorConfigureView {
       startAddrValue.setColumns(16);
       endAddrValue = new JTextField();
       endAddrValue.setColumns(16);
-      
+
       JCheckBoxUtils.link(dhcpEnableValue, dhcpAddrValue, dhcpMaskValue, startAddrValue, endAddrValue);
-      
+
       ipPanel = new JPanel(new MigLayout());
       ipPanel.add(ip4AddrLabel);
       ipPanel.add(ip4AddrValue, "growx, pushx, wrap");
@@ -120,7 +120,7 @@ public class HostOnlyNicEditor implements _NetAdaptorConfigureView {
       ipPanel.add(ip6addrValue, "growx, pushx, wrap");
       ipPanel.add(ip6maskLabel);
       ipPanel.add(ip6maskValue, "growx, pushx, wrap");
-      
+
       dhcpPanel = new JPanel(new MigLayout());
       dhcpPanel.add(dhcpEnableLabel);
       dhcpPanel.add(dhcpEnableValue, "growx, pushx, wrap");
@@ -132,26 +132,26 @@ public class HostOnlyNicEditor implements _NetAdaptorConfigureView {
       dhcpPanel.add(startAddrValue, "growx, pushx, wrap");
       dhcpPanel.add(endAddrLabel);
       dhcpPanel.add(endAddrValue, "growx, pushx, wrap");
-      
+
       tabs = new JTabbedPane();
       tabs.addTab("Adapter", ipPanel);
       tabs.addTab("DHCP Server", dhcpPanel);
    }
-   
+
    @Override
    public JComponent getComponent() {
       return tabs;
    }
-   
+
    @Override
    public void update(NetAdaptorOut nicOut) {
       new SwingWorker<NetService_IP4_IO, Void>() {
-         
+
          @Override
          protected NetService_IP4_IO doInBackground() throws Exception {
             return (NetService_IP4_IO) Gui.getServer(srvId).getHypervisor().getNetService(modeId, adaptId, NetServiceType.IPv4.getId());
          }
-         
+
          @Override
          protected void done() {
             try {
@@ -164,16 +164,16 @@ public class HostOnlyNicEditor implements _NetAdaptorConfigureView {
                Gui.showError(e.getCause());
             }
          }
-         
+
       }.execute();
-      
+
       new SwingWorker<NetService_IP6_IO, Void>() {
-         
+
          @Override
          protected NetService_IP6_IO doInBackground() throws Exception {
             return (NetService_IP6_IO) Gui.getServer(srvId).getHypervisor().getNetService(modeId, adaptId, NetServiceType.IPv6.getId());
          }
-         
+
          @Override
          protected void done() {
             try {
@@ -191,16 +191,16 @@ public class HostOnlyNicEditor implements _NetAdaptorConfigureView {
                Gui.showError(e.getCause());
             }
          }
-         
+
       }.execute();
-      
+
       new SwingWorker<NetService_DHCP_IP4_IO, Void>() {
-         
+
          @Override
          protected NetService_DHCP_IP4_IO doInBackground() throws Exception {
             return (NetService_DHCP_IP4_IO) Gui.getServer(srvId).getHypervisor().getNetService(modeId, adaptId, NetServiceType.DHCP_IPv4.getId());
          }
-         
+
          @Override
          protected void done() {
             try {
@@ -218,15 +218,15 @@ public class HostOnlyNicEditor implements _NetAdaptorConfigureView {
                Gui.showError(e.getCause());
             }
          }
-         
+
       }.execute();
-      
+
    }
-   
+
    @Override
    public NetAdaptorIn getInput() {
       NetAdaptorIn naIn = new NetAdaptorIn(modeId, adaptId);
-      
+
       NetService_IP4_IO ip4 = new NetService_IP4_IO(true, ip4AddrValue.getText(), ip4NetmaskValue.getText());
       if (JTextFieldUtils.hasValue(ip6addrValue, ip6maskValue)) {
          NetService_IP6_IO ip6 = new NetService_IP6_IO(true, ip6addrValue.getText(), Long.parseLong(ip6maskValue.getText()));
@@ -238,8 +238,8 @@ public class HostOnlyNicEditor implements _NetAdaptorConfigureView {
       dhcp.setStartAddress(startAddrValue.getText());
       dhcp.setEndAddress(endAddrValue.getText());
       naIn.setServices(new ArrayList<NetServiceIO>(Arrays.asList(ip4, dhcp)));
-      
+
       return naIn;
    }
-   
+
 }

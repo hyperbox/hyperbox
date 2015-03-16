@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.StringSetting;
 
 public class RootSnapshotSetting extends StringSetting {
-   
+
    public RootSnapshotSetting(String uuid) {
       super(MachineAttribute.RootSnapshotUuid, uuid);
    }
-   
+
 }

@@ -26,30 +26,30 @@ import org.altherian.hbox.states.TaskState;
 import java.util.Date;
 
 public class TaskOut extends ObjectOut {
-   
+
    private String serverId;
    private String actionId;
    private String requestId;
    private UserOut uOut;
-   
+
    private TaskState state;
-   
+
    private Date createTime;
    private Date queueTime;
    private Date startTime;
    private Date endTime;
    private ExceptionOut error;
-   
+
    @SuppressWarnings("unused")
    private TaskOut() {
       // used for (de)serialisation
    }
-   
+
    public TaskOut(String serverId, String taskId) {
       super(EntityType.Task, taskId);
       this.serverId = serverId;
    }
-   
+
    public TaskOut(String serverId, String taskId, String actionId, String requestId, TaskState state, UserOut uOut, Date createTime,
          Date queueTime,
          Date startTime, Date endTime, ExceptionOut error) {
@@ -64,45 +64,45 @@ public class TaskOut extends ObjectOut {
       this.endTime = endTime;
       this.error = error;
    }
-   
+
    public String getServerId() {
       return serverId;
    }
-   
+
    public UserOut getUser() {
       return uOut;
    }
-   
+
    public TaskState getState() {
       return state;
    }
-   
+
    public String getActionId() {
       return actionId;
    }
-   
+
    public String getRequestId() {
       return requestId;
    }
-   
+
    public Date getCreateTime() {
       return createTime;
    }
-   
+
    public Date getQueueTime() {
       return queueTime;
    }
-   
+
    public Date getStartTime() {
       return startTime;
    }
-   
+
    public Date getStopTime() {
       return endTime;
    }
-   
+
    public ExceptionOut getError() {
       return error;
    }
-   
+
 }

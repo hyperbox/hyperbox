@@ -23,15 +23,15 @@ package org.altherian.setting;
 import java.util.List;
 
 public interface _Settable {
-   
+
    public List<_Setting> getSettings();
-   
+
    public _Setting getSetting(String settingId);
-   
+
    public void setSetting(_Setting setting);
-   
+
    public void setSetting(List<_Setting> settings);
-   
+
    public boolean hasSetting(String settingId);
-   
+
 }

@@ -36,31 +36,31 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PermissionListAction extends ASingleTaskAction {
-   
+
    @Override
    public List<String> getRegistrations() {
       return Arrays.asList(Command.HBOX.getId() + HyperboxTasks.PermissionList.getId());
    }
-   
+
    @Override
    public boolean isQueueable() {
       return false;
    }
-   
+
    @Override
    public void process(Request request, _Hyperbox hbox) {
       List<_ActionPermission> actionPermList = new ArrayList<_ActionPermission>();
       List<_ItemPermission> itemPermList = new ArrayList<_ItemPermission>();
       _User usr = SecurityContext.getUser();
-      
+
       if (request.has(UserIn.class)) {
          UserIn usrIn = request.get(UserIn.class);
          usr = hbox.getSecurityManager().getUser(usrIn.getId());
-         
+
          actionPermList.addAll(hbox.getSecurityManager().listActionPermissions(usr));
          itemPermList.addAll(hbox.getSecurityManager().listItemPermissions(usr));
       }
-      
+
       for (_ActionPermission perm : actionPermList) {
          send(PermissionIoFactory.get(usr, perm));
       }
@@ -68,5 +68,5 @@ public class PermissionListAction extends ASingleTaskAction {
          send(PermissionIoFactory.get(usr, perm));
       }
    }
-   
+
 }

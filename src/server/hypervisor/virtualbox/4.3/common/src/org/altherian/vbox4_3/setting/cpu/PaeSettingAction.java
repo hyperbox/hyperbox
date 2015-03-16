@@ -30,25 +30,25 @@ import org.virtualbox_4_3.IMachine;
 import org.virtualbox_4_3.LockType;
 
 public final class PaeSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.PAE.toString();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       machine.setCPUProperty(CPUPropertyType.PAE, ((BooleanSetting) setting).getValue());
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new PaeSetting(machine.getCPUProperty(CPUPropertyType.PAE));
    }
-   
+
 }

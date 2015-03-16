@@ -24,9 +24,9 @@ import org.altherian.hbox.event.HyperboxEvents;
 import org.altherian.hboxd.module._Module;
 
 public class ModuleUnloadedEvent extends ModuleEvent {
-   
+
    public ModuleUnloadedEvent(_Module mod) {
       super(HyperboxEvents.ModuleUnloaded, mod);
    }
-   
+
 }

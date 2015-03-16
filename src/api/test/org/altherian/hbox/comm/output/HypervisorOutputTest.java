@@ -26,7 +26,7 @@ import static org.junit.Assert.assertNotNull;
 import org.altherian.hbox.comm.out.hypervisor.HypervisorOut;
 
 public class HypervisorOutputTest {
-   
+
    public static void validateFull(HypervisorOut hypOut) {
       assertFalse(hypOut.getId().isEmpty());
       assertNotNull(hypOut.getVendor());
@@ -34,5 +34,5 @@ public class HypervisorOutputTest {
       assertNotNull(hypOut.getVersion());
       assertNotNull(hypOut.getRevision());
    }
-   
+
 }

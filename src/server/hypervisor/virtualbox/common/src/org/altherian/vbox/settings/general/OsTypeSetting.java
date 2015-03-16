@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.StringSetting;
 
 public final class OsTypeSetting extends StringSetting {
-   
+
    public OsTypeSetting(String s) {
       super(MachineAttribute.OsType, s);
    }
-   
+
 }

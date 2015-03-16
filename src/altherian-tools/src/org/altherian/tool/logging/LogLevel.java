@@ -21,7 +21,7 @@
 package org.altherian.tool.logging;
 
 public enum LogLevel {
-   
+
    Raw(0, false),
    FatalException(10, true),
    Exception(20, true),
@@ -31,21 +31,21 @@ public enum LogLevel {
    Verbose(60, false),
    Debug(70, false),
    Tracking(80, false);
-   
+
    private Integer level;
    private Boolean isError;
-   
+
    private LogLevel(Integer level, Boolean isError) {
       this.level = level;
       this.isError = isError;
    }
-   
+
    public Integer getLevel() {
       return level;
    }
-   
+
    public Boolean isError() {
       return isError;
    }
-   
+
 }

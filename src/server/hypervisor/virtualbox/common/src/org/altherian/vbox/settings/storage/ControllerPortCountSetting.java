@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.StorageControllerAttribute;
 import org.altherian.setting.PositiveNumberSetting;
 
 public class ControllerPortCountSetting extends PositiveNumberSetting {
-   
+
    public ControllerPortCountSetting(long portCount) {
       super(StorageControllerAttribute.PortCount, portCount);
    }
-   
+
 }

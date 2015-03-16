@@ -25,13 +25,13 @@ import org.altherian.hbox.event.HyperboxEvents;
 import java.util.Date;
 
 public class NetAdaptorAddedEventOut extends NetAdaptorEventOut {
-   
+
    protected NetAdaptorAddedEventOut() {
       // Used for (de)serialization
    }
-   
+
    public NetAdaptorAddedEventOut(Date time, ServerOut srvOut, String hypId, String netModeId, String netAdaptorId) {
       super(time, HyperboxEvents.NetAdaptorAdded, srvOut, hypId, netModeId, netAdaptorId);
    }
-   
+
 }

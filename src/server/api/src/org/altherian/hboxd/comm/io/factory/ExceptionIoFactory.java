@@ -25,16 +25,16 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 public class ExceptionIoFactory {
-   
+
    private ExceptionIoFactory() {
       // static class
    }
-   
+
    public static ExceptionOut get(Throwable t) {
       StringWriter writer = new StringWriter();
       t.printStackTrace(new PrintWriter(writer));
       ExceptionOut error = new ExceptionOut("0", t.getMessage(), writer.toString());
       return error;
    }
-   
+
 }

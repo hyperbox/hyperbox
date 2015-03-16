@@ -21,32 +21,32 @@
 package org.altherian.hboxd.store;
 
 public interface _Store {
-   
+
    /**
     * Get the Unique ID for the store for this server
     * 
     * @return a String containing the ID
     */
    public String getId();
-   
+
    public String getType();
-   
+
    /**
     * Get the label assigned to this store
     * 
     * @return a String for this store's label
     */
    public String getLabel();
-   
+
    public String getLocation();
-   
+
    /**
     * Get the root container for this store
     * 
     * @return a StoreItem that is a container, at the root of the store
     */
    public _StoreItem getContainer();
-   
+
    public _StoreItem getItem(String path);
-   
+
 }

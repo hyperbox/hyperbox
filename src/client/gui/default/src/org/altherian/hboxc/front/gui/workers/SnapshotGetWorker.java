@@ -27,30 +27,30 @@ import org.altherian.hboxc.front.gui.worker.receiver._SnapshotGetReceiver;
 import java.util.concurrent.ExecutionException;
 
 public class SnapshotGetWorker extends AxSwingWorker<_SnapshotGetReceiver, SnapshotOut, Void> {
-   
+
    private String srvId;
    private String vmId;
    private String snapId;
-   
+
    public SnapshotGetWorker(_SnapshotGetReceiver recv, String srvId, String vmId, String snapId) {
       super(recv);
       this.srvId = srvId;
       this.vmId = vmId;
       this.snapId = snapId;
    }
-   
+
    @Override
    protected SnapshotOut doInBackground() throws Exception {
       return Gui.getServer(srvId).getSnapshot(vmId, snapId);
    }
-   
+
    @Override
    protected void innerDone() throws InterruptedException, ExecutionException {
       getReceiver().put(srvId, vmId, get());
    }
-   
+
    public static void execute(_SnapshotGetReceiver recv, String srvId, String vmId, String snapId) {
       (new SnapshotGetWorker(recv, srvId, vmId, snapId)).execute();
    }
-   
+
 }

@@ -26,19 +26,19 @@ import org.altherian.hbox.event.HyperboxEvents;
 import java.util.Date;
 
 public class ServerShutdownEventOut extends ServerEventOut {
-   
+
    @SuppressWarnings("unused")
    private ServerShutdownEventOut() {
       // Used for serialization
    }
-   
+
    public ServerShutdownEventOut(Date time, ServerOut srvOut) {
       super(time, HyperboxEvents.ServerShutdown, srvOut);
    }
-   
+
    @Override
    public String toString() {
       return "Server " + getServer().getName() + " (" + getServer().getId() + ") is shutting down @ " + getTime();
    }
-   
+
 }

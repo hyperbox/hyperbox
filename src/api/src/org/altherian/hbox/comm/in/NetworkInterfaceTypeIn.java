@@ -23,13 +23,13 @@ package org.altherian.hbox.comm.in;
 import org.altherian.hbox.constant.EntityType;
 
 public class NetworkInterfaceTypeIn extends ObjectIn<EntityType> {
-   
+
    public NetworkInterfaceTypeIn() {
       super(EntityType.NetworkInterfaceType);
    }
-   
+
    public NetworkInterfaceTypeIn(String id) {
       super(EntityType.NetworkInterfaceType, id);
    }
-   
+
 }

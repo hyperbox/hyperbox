@@ -28,57 +28,57 @@ import org.altherian.hbox.constant.ModuleAttribute;
 import java.util.List;
 
 public class ModuleIn extends ObjectIn<EntityType> {
-   
+
    public ModuleIn() {
       super(EntityType.Module);
    }
-   
+
    public ModuleIn(String id) {
       super(EntityType.Module, id);
    }
-   
+
    public ModuleIn(String id, List<SettingIO> settings) {
       super(EntityType.Module, id, settings);
    }
-   
+
    public String getDescriptorFile() {
       return getSetting(ModuleAttribute.DescriptorFile).getString();
    }
-   
+
    public void setDescriptorFile(String filePath) {
       setSetting(new StringSettingIO(ModuleAttribute.DescriptorFile, filePath));
    }
-   
+
    public String getName() {
       return getSetting(ModuleAttribute.Name).getString();
    }
-   
+
    public void setName(String name) {
       setSetting(new StringSettingIO(ModuleAttribute.Name, name));
    }
-   
+
    public String getVersion() {
       return getSetting(ModuleAttribute.Version).getString();
    }
-   
+
    public void setVersion(String version) {
       setSetting(new StringSettingIO(ModuleAttribute.Version, version));
    }
-   
+
    public boolean isEnabled() {
       return getSetting(ModuleAttribute.isEnabled).getBoolean();
    }
-   
+
    public void setEnabled(boolean isEnabled) {
       setSetting(new BooleanSettingIO(ModuleAttribute.isEnabled, isEnabled));
    }
-   
+
    public boolean isLoaded() {
       return getSetting(ModuleAttribute.isLoaded).getBoolean();
    }
-   
+
    public void setLoaded(boolean isLoaded) {
       setSetting(new BooleanSettingIO(ModuleAttribute.isLoaded, isLoaded));
    }
-   
+
 }

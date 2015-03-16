@@ -24,13 +24,13 @@ import org.altherian.hbox.comm.out.SessionOut;
 import org.altherian.hboxd.session._Session;
 
 public class SessionIoFactory {
-   
+
    private SessionIoFactory() {
       // static only class
    }
-   
+
    public static SessionOut get(_Session sess) {
       return new SessionOut(sess.getId(), UserIoFactory.get(sess.getUser()), sess.getState().toString(), sess.getCreateTime());
    }
-   
+
 }

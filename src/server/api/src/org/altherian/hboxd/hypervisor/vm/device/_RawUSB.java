@@ -24,13 +24,13 @@ import org.altherian.hboxd.hypervisor._RawItem;
 
 // TODO add filters
 public interface _RawUSB extends _RawItem {
-   
+
    public boolean isEnabled();
-   
+
    public void setEnabled(boolean isEnabled);
-   
+
    public boolean isEhciEnabled();
-   
+
    public void setEhciEnabled(boolean isEnabled);
-   
+
 }

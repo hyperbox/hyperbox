@@ -26,58 +26,58 @@ import org.altherian.hbox.comm.out.ObjectOut;
 import org.altherian.hbox.constant.PermissionAttribute;
 
 public class PermissionOut extends ObjectOut {
-   
+
    private String userId;
-   
+
    protected PermissionOut() {
       // used for (de)serialisation
    }
-   
+
    public PermissionOut(String userId, String itemTypeId, String actionId, boolean isAllowed) {
       this.userId = userId;
       setSetting(new StringSettingIO(PermissionAttribute.ItemType, itemTypeId));
       setSetting(new StringSettingIO(PermissionAttribute.Action, actionId));
       setSetting(new BooleanSettingIO(PermissionAttribute.IsGranted, isAllowed));
    }
-   
+
    public PermissionOut(String userId, String itemTypeId, String actionId, String itemId, boolean isAllowed) {
       this(userId, itemTypeId, actionId, isAllowed);
       setSetting(new StringSettingIO(PermissionAttribute.Item, itemId));
    }
-   
+
    /**
     * @return the userId
     */
    public String getUserId() {
       return userId;
    }
-   
+
    /**
     * @return the itemTypeId
     */
    public String getItemTypeId() {
       return getSetting(PermissionAttribute.ItemType).getString();
    }
-   
+
    /**
     * @return the actionId
     */
    public String getActionId() {
       return getSetting(PermissionAttribute.Action).getString();
    }
-   
+
    /**
     * @return the itemId
     */
    public String getItemId() {
       return getSetting(PermissionAttribute.Item).getString();
    }
-   
+
    /**
     * @return the isAllowed
     */
    public boolean isAllowed() {
       return getSetting(PermissionAttribute.IsGranted).getBoolean();
    }
-   
+
 }

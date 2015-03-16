@@ -22,7 +22,7 @@
 package org.altherian.hboxc.front.gui;
 
 public interface _Refreshable {
-   
+
    public void refresh();
-   
+
 }

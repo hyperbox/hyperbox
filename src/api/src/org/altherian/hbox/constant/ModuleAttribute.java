@@ -21,12 +21,12 @@
 package org.altherian.hbox.constant;
 
 public enum ModuleAttribute {
-   
+
    DescriptorFile,
    Name,
    Version,
    isEnabled,
    isLoaded,
    Ressources,
-   
+
 }

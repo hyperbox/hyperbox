@@ -34,19 +34,19 @@ import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
 public class ModuleEnableAction extends AbstractAction {
-   
+
    private _ModuleSelector selector;
-   
+
    public ModuleEnableAction(_ModuleSelector selector) {
       super("Enable", IconBuilder.getTask(HyperboxTasks.ModuleEnable));
       this.selector = selector;
    }
-   
+
    @Override
    public void actionPerformed(ActionEvent e) {
       for (ModuleOut mod : selector.getModuleSelection()) {
          Gui.post(new Request(Command.HBOX, HyperboxTasks.ModuleEnable, new ServerIn(selector.getServerId()), new ModuleIn(mod.getId())));
       }
    }
-   
+
 }

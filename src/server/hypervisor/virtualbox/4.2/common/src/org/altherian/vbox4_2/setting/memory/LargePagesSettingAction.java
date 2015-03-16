@@ -30,26 +30,26 @@ import org.virtualbox_4_2.IMachine;
 import org.virtualbox_4_2.LockType;
 
 public class LargePagesSettingAction implements _MachineSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Write;
    }
-   
+
    @Override
    public String getSettingName() {
       return MachineAttribute.LargePages.toString();
    }
-   
+
    @Override
    public void set(IMachine machine, _Setting setting) {
       // TODO check if nested paging & 64 bits is on
       machine.setHWVirtExProperty(HWVirtExPropertyType.LargePages, ((BooleanSetting) setting).getValue());
    }
-   
+
    @Override
    public _Setting get(IMachine machine) {
       return new LargePagesSetting(machine.getHWVirtExProperty(HWVirtExPropertyType.LargePages));
    }
-   
+
 }

@@ -23,9 +23,9 @@ package org.altherian.hboxd.core.model;
 import org.altherian.hboxd.hypervisor._RawItem;
 
 public interface _Mouse extends _RawItem {
-   
+
    public String getMode();
-   
+
    public void setMode(String modeId);
-   
+
 }

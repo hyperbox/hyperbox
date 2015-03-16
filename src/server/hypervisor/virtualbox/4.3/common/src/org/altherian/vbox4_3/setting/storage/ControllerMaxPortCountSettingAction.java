@@ -29,27 +29,27 @@ import org.virtualbox_4_3.IStorageController;
 import org.virtualbox_4_3.LockType;
 
 public final class ControllerMaxPortCountSettingAction implements _StorageControllerSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Shared;
    }
-   
+
    @Override
    public String getSettingName() {
       return StorageControllerAttribute.MaxPortCount.toString();
    }
-   
+
    @Override
    public void set(IStorageController sct, _Setting setting) {
       if (setting.getNumber() != get(sct).getNumber()) {
          throw new HyperboxRuntimeException("Read-only setting");
       }
    }
-   
+
    @Override
    public _Setting get(IStorageController sct) {
       return new ControllerMaxPortCountSetting(sct.getMaxPortCount());
    }
-   
+
 }

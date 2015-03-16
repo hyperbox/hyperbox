@@ -27,19 +27,19 @@ import org.altherian.hboxd.HBoxServer;
 import org.altherian.hboxd.task._Task;
 
 public class TaskIoFactory {
-   
+
    private TaskIoFactory() {
       // will not be used
    }
-   
+
    public static TaskOut get(_Task t) {
       UserOut uOut = UserIoFactory.get(t.getUser());
-      
+
       ExceptionOut eOut = null;
       if (t.getError() != null) {
          eOut = ExceptionIoFactory.get(t.getError());
       }
-      
+
       TaskOut tOut = new TaskOut(
             HBoxServer.get().getId(),
             t.getId(),
@@ -52,8 +52,8 @@ public class TaskIoFactory {
             t.getStartTime(),
             t.getStopTime(),
             eOut);
-      
+
       return tOut;
    }
-   
+
 }

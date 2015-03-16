@@ -29,27 +29,27 @@ import org.virtualbox_4_2.ISnapshot;
 import org.virtualbox_4_2.LockType;
 
 public class SnapshotUuidSettingAction implements _SnapshotSettingAction {
-   
+
    @Override
    public LockType getLockType() {
       return LockType.Shared;
    }
-   
+
    @Override
    public String getSettingName() {
       return SnapshotAttribute.Uuid.getId();
    }
-   
+
    @Override
    public void set(ISnapshot snap, _Setting setting) {
       if (!setting.getString().contentEquals(snap.getId())) {
          throw new ConfigurationException("Read-only setting [" + setting.getName() + "]");
       }
    }
-   
+
    @Override
    public _Setting get(ISnapshot snap) {
       return new SnapshotUuidSetting(snap.getId());
    }
-   
+
 }

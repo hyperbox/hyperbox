@@ -27,11 +27,11 @@ import org.altherian.hboxc.server._Server;
 import java.util.List;
 
 public interface _Manager {
-   
+
    public void init() throws HyperboxException;
-   
+
    public List<_Server> listServers();
-   
+
    public _Server getServer(ServerIn srvIn);
-   
+
 }

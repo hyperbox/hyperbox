@@ -54,7 +54,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class VmEditDialog {
-   
+
    private final String GENERAL = "General";
    private final String SYSTEM = "System";
    private final String CONSOLE = "Console";
@@ -62,25 +62,25 @@ public class VmEditDialog {
    private final String STORAGE = "Storage";
    private final String AUDIO = "Audio";
    private final String NETWORK = "Network";
-   
+
    private JDialog mainDialog;
    private JProgressBar refreshProgress;
-   
+
    private JSplitPane split;
-   
+
    private JPanel buttonsPanel;
    private JButton saveButton;
    private JButton cancelButton;
-   
+
    private JScrollPane leftPane;
    private JScrollPane rightPane;
-   
+
    private DefaultListModel listModel;
    private JList itemList;
-   
+
    private JPanel sectionPanels;
    private CardLayout layout;
-   
+
    private GeneralVmEdit generalEdit;
    private SystemVmEdit systemEdit;
    private ConsoleVmEdit consoleEdit;
@@ -88,9 +88,9 @@ public class VmEditDialog {
    private StorageVmEdit storageEdit;
    private AudioVmEdit audioEdit;
    private NetworkVmEdit networkEdit;
-   
+
    private MachineIn mIn;
-   
+
    public VmEditDialog() {
       generalEdit = new GeneralVmEdit();
       systemEdit = new SystemVmEdit();
@@ -99,15 +99,15 @@ public class VmEditDialog {
       storageEdit = new StorageVmEdit();
       audioEdit = new AudioVmEdit();
       networkEdit = new NetworkVmEdit();
-      
+
       mainDialog = new JDialog(MainView.getMainFrame());
       mainDialog.setIconImage(IconBuilder.getTask(HypervisorTasks.MachineModify).getImage());
       mainDialog.setModalityType(ModalityType.DOCUMENT_MODAL);
       mainDialog.setSize(1000, 600);
-      
+
       layout = new CardLayout();
       sectionPanels = new JPanel(layout);
-      
+
       sectionPanels.add(generalEdit.getComp(), GENERAL);
       sectionPanels.add(systemEdit.getComp(), SYSTEM);
       sectionPanels.add(consoleEdit.getComp(), CONSOLE);
@@ -115,7 +115,7 @@ public class VmEditDialog {
       sectionPanels.add(storageEdit.getComp(), STORAGE);
       sectionPanels.add(audioEdit.getComp(), AUDIO);
       sectionPanels.add(networkEdit.getComp(), NETWORK);
-      
+
       listModel = new DefaultListModel();
       listModel.addElement(GENERAL);
       listModel.addElement(SYSTEM);
@@ -124,7 +124,7 @@ public class VmEditDialog {
       listModel.addElement(STORAGE);
       listModel.addElement(AUDIO);
       listModel.addElement(NETWORK);
-      
+
       itemList = new JList(listModel);
       itemList.setCellRenderer(new LabelCellRenderer());
       itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -132,31 +132,31 @@ public class VmEditDialog {
       if (!listModel.isEmpty()) {
          itemList.setSelectedValue(listModel.getElementAt(0), true);
       }
-      
+
       leftPane = new JScrollPane(itemList);
       leftPane.setMinimumSize(new Dimension(100, 50));
       rightPane = new JScrollPane(sectionPanels);
       rightPane.setMinimumSize(new Dimension(300, 100));
-      
+
       split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPane, rightPane);
       split.setBorder(null);
-      
+
       saveButton = new JButton(new SaveAction());
       cancelButton = new JButton(new CancelAction());
       refreshProgress = new JProgressBar();
       refreshProgress.setVisible(false);
-      
+
       buttonsPanel = new JPanel(new MigLayout());
       buttonsPanel.add(saveButton);
       buttonsPanel.add(cancelButton);
       buttonsPanel.add(refreshProgress, "growx,pushx");
-      
+
       mainDialog.getContentPane().setLayout(new MigLayout());
       mainDialog.getContentPane().add(split, "grow,push,wrap");
       mainDialog.getContentPane().add(buttonsPanel, "grow x");
-      
+
    }
-   
+
    private void show(MachineOut mOut) {
       mIn = new MachineIn(mOut);
       MachineGetWorker.execute(new MachineReceiver(), mOut);
@@ -164,18 +164,18 @@ public class VmEditDialog {
       mainDialog.setLocationRelativeTo(mainDialog.getParent());
       mainDialog.setVisible(true);
    }
-   
+
    public static void edit(MachineOut mOut) {
       new VmEditDialog().show(mOut);
    }
-   
+
    private void hide() {
       itemList.clearSelection();
       mainDialog.setVisible(false);
       mainDialog.dispose();
       mIn = null;
    }
-   
+
    public void save() {
       generalEdit.save();
       systemEdit.save();
@@ -184,64 +184,64 @@ public class VmEditDialog {
       storageEdit.save();
       audioEdit.save();
       networkEdit.save();
-      
+
       Gui.post(new Request(Command.VBOX, HypervisorTasks.MachineModify, mIn));
-      
+
       hide();
    }
-   
+
    public void cancel() {
       hide();
    }
-   
+
    @SuppressWarnings("serial")
    private class SaveAction extends AbstractAction {
-      
+
       public SaveAction() {
          super("Save");
          setEnabled(true);
       }
-      
+
       @Override
       public void actionPerformed(ActionEvent arg0) {
          VmEditDialog.this.save();
       }
-      
+
    }
-   
+
    @SuppressWarnings("serial")
    private class CancelAction extends AbstractAction {
-      
+
       public CancelAction() {
          super("Cancel");
          setEnabled(true);
       }
-      
+
       @Override
       public void actionPerformed(ActionEvent e) {
          VmEditDialog.this.cancel();
       }
-      
+
    }
-   
+
    private class ListSelect implements ListSelectionListener {
-      
+
       @Override
       public void valueChanged(ListSelectionEvent lsEv) {
          if (itemList.getSelectedValue() != null) {
             layout.show(sectionPanels, itemList.getSelectedValue().toString());
          }
       }
-      
+
    }
-   
+
    @SuppressWarnings("serial")
    private class LabelCellRenderer extends DefaultListCellRenderer {
-      
+
       @Override
       public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
          JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-         
+
          if (label.getText() == GENERAL) {
             label.setIcon(IconBuilder.getEntityType(EntityType.Machine));
          } else if (label.getText() == SYSTEM) {
@@ -259,31 +259,31 @@ public class VmEditDialog {
          } else {
             label.setIcon(null);
          }
-         
+
          return label;
       }
-      
+
    }
-   
+
    private class MachineReceiver implements _MachineReceiver {
-      
+
       @Override
       public void loadingStarted() {
          refreshProgress.setIndeterminate(true);
          refreshProgress.setVisible(true);
       }
-      
+
       @Override
       public void loadingFinished(boolean isFinished, String message) {
          refreshProgress.setVisible(false);
          refreshProgress.setIndeterminate(false);
       }
-      
+
       @Override
       public void put(final MachineOut mOut) {
          if (!SwingUtilities.isEventDispatchThread()) {
             SwingUtilities.invokeLater(new Runnable() {
-               
+
                @Override
                public void run() {
                   put(mOut);
@@ -298,9 +298,9 @@ public class VmEditDialog {
             audioEdit.update(mOut, mIn);
             networkEdit.update(mOut, mIn);
          }
-         
+
       }
-      
+
    }
-   
+
 }

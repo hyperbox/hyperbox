@@ -24,7 +24,7 @@ import org.altherian.hbox.comm.out.network.NetworkAttachNameOut;
 import java.util.List;
 
 public interface _NetworkAttachNameReceiver extends _WorkerDataReceiver {
-   
+
    public void add(List<NetworkAttachNameOut> objOutList);
-   
+
 }

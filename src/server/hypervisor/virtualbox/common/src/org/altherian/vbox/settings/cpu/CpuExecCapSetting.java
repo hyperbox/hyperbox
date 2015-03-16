@@ -24,9 +24,9 @@ import org.altherian.hbox.constant.MachineAttribute;
 import org.altherian.setting.PositiveNumberSetting;
 
 public class CpuExecCapSetting extends PositiveNumberSetting {
-   
+
    public CpuExecCapSetting(long execCap) {
       super(MachineAttribute.CpuExecCap, execCap);
    }
-   
+
 }

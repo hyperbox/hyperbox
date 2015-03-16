@@ -21,9 +21,9 @@
 package org.altherian.hboxd.security;
 
 public interface _UserPermission extends _EntityPermission {
-   
+
    public String getUserId();
-   
+
    public boolean isAllowed();
-   
+
 }

@@ -21,15 +21,15 @@
 package org.altherian.hbox.constant;
 
 public enum StorageControllerType {
-   
+
    Floppy,
    IDE,
    SATA,
    SCSI,
    SAS;
-   
+
    public String getId() {
       return toString();
    }
-   
+
 }

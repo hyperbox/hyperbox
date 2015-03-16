@@ -28,7 +28,7 @@ import org.altherian.tool.TimeFormater;
 
 @SuppressWarnings("serial")
 public final class TaskListTableModel extends AbstractOutputListTableModel<TaskOut> {
-   
+
    private final String SERVER = "Server";
    private final String ID = "ID";
    private final String TASK = "Task";
@@ -37,7 +37,7 @@ public final class TaskListTableModel extends AbstractOutputListTableModel<TaskO
    private final String Q_TIME = "Queue Time";
    private final String S_TIME = "Start Time";
    private final String F_TIME = "Finish Time";
-   
+
    @Override
    protected void addColumns() {
       addColumn(SERVER);
@@ -50,7 +50,7 @@ public final class TaskListTableModel extends AbstractOutputListTableModel<TaskO
       addColumn(S_TIME);
       addColumn(F_TIME);
    }
-   
+
    @Override
    protected Object getValueAt(TaskOut tOut, String columnLabel) {
       if (columnLabel == SERVER) {
@@ -62,38 +62,38 @@ public final class TaskListTableModel extends AbstractOutputListTableModel<TaskO
             return tOut.getServerId();
          }
       }
-      
+
       if (columnLabel == ID) {
          return tOut.getId();
       }
-      
+
       if (columnLabel == TASK) {
          return tOut.getActionId();
       }
-      
+
       if (columnLabel == USER) {
          return tOut.getUser().getDomainLogonName();
       }
-      
+
       if (columnLabel == STATUS) {
          return tOut.getState().getId();
       }
-      
+
       if (columnLabel == Q_TIME) {
          return tOut.getQueueTime() != null ? TimeFormater.get(tOut.getQueueTime()) : "N/A";
       }
-      
+
       if (columnLabel == S_TIME) {
          return tOut.getStartTime() != null ? TimeFormater.get(tOut.getStartTime()) : "N/A";
       }
-      
+
       if (columnLabel == F_TIME) {
          return tOut.getStopTime() != null ? TimeFormater.get(tOut.getStopTime()) : "N/A";
       }
-      
+
       return null;
    }
-   
+
    public void removeServer(String serverId) {
       for (TaskOut tskOut : list()) {
          if (tskOut.getServerId().equals(serverId)) {
@@ -101,5 +101,5 @@ public final class TaskListTableModel extends AbstractOutputListTableModel<TaskO
          }
       }
    }
-   
+
 }

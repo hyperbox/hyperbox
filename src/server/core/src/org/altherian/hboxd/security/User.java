@@ -24,38 +24,38 @@ import org.altherian.hbox.exception.HyperboxRuntimeException;
 import org.altherian.tool.AxStrings;
 
 public class User implements _User {
-   
+
    private String id;
    private String name;
    private String domain;
    private String salt;
-   
+
    public User(String id, String name) {
       this.id = id;
       setName(name);
       setSalt(name);
    }
-   
+
    public User(String id, String name, String domain) {
       this(id, name);
       setDomain(domain);
    }
-   
+
    @Override
    public String getId() {
       return id;
    }
-   
+
    @Override
    public String getName() {
       return name;
    }
-   
+
    @Override
    public String getDomain() {
       return domain;
    }
-   
+
    @Override
    public String getDomainLogonName() {
       if ((getDomain() != null) && !getDomain().isEmpty()) {
@@ -63,34 +63,34 @@ public class User implements _User {
       } else {
          return getName();
       }
-      
+
    }
-   
+
    @Override
    public boolean isAnnonyomous() {
       return false;
    }
-   
+
    @Override
    public void setName(String name) {
       this.name = name;
    }
-   
+
    @Override
    public void setDomain(String domain) {
       this.domain = domain;
    }
-   
+
    @Override
    public String getSalt() {
       return salt;
    }
-   
+
    @Override
    public void setSalt(String salt) {
       this.salt = salt;
    }
-   
+
    @Override
    public void save() {
       if (AxStrings.isEmpty(getId())) {
@@ -100,12 +100,12 @@ public class User implements _User {
          throw new HyperboxRuntimeException("Name cannot be empty");
       }
    }
-   
+
    @Override
    public void delete() {
       if (getId().contentEquals("0")) {
          throw new HyperboxRuntimeException("Cannot delete the default admin account");
       }
    }
-   
+
 }
