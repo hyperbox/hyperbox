@@ -266,6 +266,24 @@
 		<fileset dir="${client.gui.vbox.lib.dir}" includes="**/*.jar"/>
 	</path>
 	
+	<path id="client.gui.vbox.4_2.classpath">
+		<path refid="vbox.api.classpath"/>
+		<path refid="client.api.classpath"/>
+		<path refid="client.gui.classpath"/>
+		<path refid="client.gui.vbox.classpath"/>
+		<pathelement location="${client.gui.vbox.4_2.classes.dir}"/>
+		<fileset dir="${client.gui.vbox.4_2.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<path id="client.gui.vbox.4_3.classpath">
+		<path refid="vbox.api.classpath"/>
+		<path refid="client.api.classpath"/>
+		<path refid="client.gui.classpath"/>
+		<path refid="client.gui.vbox.classpath"/>
+		<pathelement location="${client.gui.vbox.4_3.classes.dir}"/>
+		<fileset dir="${client.gui.vbox.4_3.lib.dir}" includes="**/*.jar"/>
+	</path>
+	
 	<condition property="isWin">
 		<os family="windows" />
 	</condition>
@@ -629,7 +647,8 @@
         </jar>
     </target>
 	
-	<target name="client.gui.vbox.compile" depends="client.gui.compile">
+	<!-- Client GUI - VirtualBox Common code -->
+	<target name="client.gui.vbox.compile" depends="vbox.api.compile, client.gui.compile">
 		<mkdir dir="${client.gui.vbox.classes.dir}" />
 		<javac source="1.6" target="1.6" debug="on" includeantruntime="false" srcdir="${client.gui.vbox.src.dir}" destdir="${client.gui.vbox.classes.dir}" classpathref="client.gui.vbox.classpath" />
 	</target>
@@ -637,6 +656,7 @@
 	<target name="client.gui.vbox.jar" depends="client.gui.vbox.compile">
         <jar destfile="${client.gui.vbox.jar.dir}/${client.gui.vbox.id}.jar">
         	<fileset dir="${client.gui.vbox.classes.dir}" />
+			<fileset dir="${vbox.api.classes.dir}" />
         </jar>
     </target>
 	
@@ -646,6 +666,47 @@
 		</copy>
 		<copy file="${client.gui.vbox.jar.dir}/${client.gui.vbox.id}.jar" tofile="${client.out.dir}/modules/${client.gui.vbox.id}.jar" />
 	</target>
+	<!-- ################################### -->
+	
+	<!-- Client GUI - VirtualBox 4.2 code -->
+	<target name="client.gui.vbox.4_2.compile" depends="vbox.api.compile, client.gui.compile">
+		<mkdir dir="${client.gui.vbox.4_2.classes.dir}" />
+		<javac source="1.6" target="1.6" debug="on" includeantruntime="false" srcdir="${client.gui.vbox.4_2.src.dir}" destdir="${client.gui.vbox.4_2.classes.dir}" classpathref="client.gui.vbox.4_2.classpath" />
+	</target>
+	
+	<target name="client.gui.vbox.4_2.jar" depends="client.gui.vbox.4_2.compile">
+        <jar destfile="${client.gui.vbox.4_2.jar.dir}/${client.gui.vbox.4_2.id}.jar">
+        	<fileset dir="${client.gui.vbox.4_2.classes.dir}" />
+        </jar>
+    </target>
+	
+	<target name="client.gui.vbox.4_2.deploy" depends="client.gui.vbox.4_2.jar, client.gui.deploy">
+		<copy todir="${client.out.dir}/lib" flatten="true">
+			<fileset dir="${client.gui.vbox.4_2.lib.dir}" includes="**/*.jar" />
+		</copy>
+		<copy file="${client.gui.vbox.4_2.jar.dir}/${client.gui.vbox.4_2.id}.jar" tofile="${client.out.dir}/modules/${client.gui.vbox.4_2.id}.jar" />
+	</target>
+	<!-- ################################ -->
+	
+	<!-- Client GUI - VirtualBox 4.3 code -->
+	<target name="client.gui.vbox.4_3.compile" depends="vbox.api.compile, client.gui.compile">
+		<mkdir dir="${client.gui.vbox.4_3.classes.dir}" />
+		<javac source="1.6" target="1.6" debug="on" includeantruntime="false" srcdir="${client.gui.vbox.4_3.src.dir}" destdir="${client.gui.vbox.4_3.classes.dir}" classpathref="client.gui.vbox.4_3.classpath" />
+	</target>
+	
+	<target name="client.gui.vbox.4_3.jar" depends="client.gui.vbox.4_3.compile">
+        <jar destfile="${client.gui.vbox.4_3.jar.dir}/${client.gui.vbox.4_3.id}.jar">
+        	<fileset dir="${client.gui.vbox.4_3.classes.dir}" />
+        </jar>
+    </target>
+	
+	<target name="client.gui.vbox.4_3.deploy" depends="client.gui.vbox.4_3.jar, client.gui.deploy">
+		<copy todir="${client.out.dir}/lib" flatten="true">
+			<fileset dir="${client.gui.vbox.4_3.lib.dir}" includes="**/*.jar" />
+		</copy>
+		<copy file="${client.gui.vbox.4_3.jar.dir}/${client.gui.vbox.4_3.id}.jar" tofile="${client.out.dir}/modules/${client.gui.vbox.4_3.id}.jar" />
+	</target>
+	<!-- ################################ -->
 	
 	<target name="client.build.win" depends="client.deploy, client.jar" if="isWin">
 		<launch4j configFile="scripts/client/launch4j/main.xml" outfile="${client.out.dir}/${client.out.exe}" />
@@ -656,7 +717,7 @@
 		<chmod file="${client.out.dir}/hyperbox" perm="u+rx,g+rx,o+rx"/>
 	</target>
 	
-	<extension-point name="client.build" depends="client.build.linux, client.build.win, client.gui.jar, client.gui.vbox.deploy, kryo.api.client.deploy" />
+	<extension-point name="client.build" depends="client.build.linux, client.build.win, client.gui.jar, client.gui.vbox.deploy, client.gui.vbox.4_2.deploy, client.gui.vbox.4_3.deploy, kryo.api.client.deploy" />
 	
 	<target name="server.build.win" depends="server.jar, server.deploy" if="isWin">
 		<launch4j configFile="scripts/server/launch4j/main.xml" outfile="${server.out.dir}/${server.out.exe}" />
