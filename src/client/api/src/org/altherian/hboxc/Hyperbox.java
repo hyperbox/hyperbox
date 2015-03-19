@@ -34,7 +34,7 @@ import java.util.Set;
 public class Hyperbox {
 
    private static Properties buildProperties;
-   private static Version version;
+   private static Version version = Version.UNKNOWN;
 
    public static String getConfigFilePath() throws HyperboxException {
       return Configuration.getUserDataPath() + File.separator + "main.cfg";
@@ -49,15 +49,17 @@ public class Hyperbox {
       buildProperties = new Properties();
       try {
          buildProperties.load(Hyperbox.class.getResourceAsStream("/client.build.properties"));
+         Version rawVersion = new Version(buildProperties.getProperty("version"));
+         if (rawVersion.isValid()) {
+            version = rawVersion;
+         } else {
+            Logger.error("Invalid client version in properties: " + rawVersion);
+            Logger.error("Failing back to " + version);
+         }
       } catch (IOException e) {
          failedToLoad(e);
       } catch (NullPointerException e) {
          failedToLoad(e);
-      } finally {
-         version = new Version(buildProperties.getProperty("version", Version.UNKNOWN.toString()));
-         if (!version.isValid()) {
-            version = Version.UNKNOWN;
-         }
       }
    }
 
