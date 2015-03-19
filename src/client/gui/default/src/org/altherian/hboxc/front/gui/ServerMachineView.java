@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,6 +21,7 @@
 package org.altherian.hboxc.front.gui;
 
 import net.engio.mbassy.listener.Handler;
+import net.miginfocom.swing.MigLayout;
 import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm.out.ServerOut;
 import org.altherian.hbox.comm.out.event.hypervisor.HypervisorConnectionStateEventOut;
@@ -86,8 +87,6 @@ import javax.swing.tree.TreePath;
 
 public final class ServerMachineView implements _MachineSelector, _ServerSelector, _ConnectorSelector, _Refreshable {
 
-   private static final JPanel EmptyPanel = new JPanel();
-
    private Map<String, DefaultMutableTreeNode> conNodes = new HashMap<String, DefaultMutableTreeNode>();
    private Map<String, Map<String, DefaultMutableTreeNode>> entities;
    private Map<String, DefaultMutableTreeNode> srvNodes = new HashMap<String, DefaultMutableTreeNode>();
@@ -101,6 +100,7 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
    private Map<String, Map<String, DefaultMutableTreeNode>> vmNodes = new HashMap<String, Map<String, DefaultMutableTreeNode>>();
 
    private JSplitPane vSplit;
+   private JPanel rightPanel = new JPanel(new MigLayout("ins 0"));
 
    public ServerMachineView() {
 
@@ -119,7 +119,7 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
       treeView = new JScrollPane(tree);
       treeView.setBorder(BorderFactory.createEmptyBorder());
 
-      vSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, EmptyPanel);
+      vSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView, rightPanel);
       vSplit.setResizeWeight(0);
       vSplit.setDividerLocation(Integer.parseInt(PreferencesManager.get().getProperty(JSplitPane.DIVIDER_LOCATION_PROPERTY, "168")));
       vSplit.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY, new PropertyChangeListener() {
@@ -537,24 +537,22 @@ public final class ServerMachineView implements _MachineSelector, _ServerSelecto
 
       @Override
       public void valueChanged(TreeSelectionEvent ev) {
+         rightPanel.removeAll();
          if (ev.getNewLeadSelectionPath() != null) {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) ev.getNewLeadSelectionPath().getLastPathComponent();
 
             if (node != null) {
                if (node.getUserObject() instanceof MachineOut) {
-                  vSplit.setRightComponent(new JScrollPane(new VmDetailedView((MachineOut) node.getUserObject()).getComponent()));
+                  rightPanel.add(new JScrollPane(new VmDetailedView((MachineOut) node.getUserObject()).getComponent()), "grow,push");
                }
                if (node.getUserObject() instanceof ConnectorOutput) {
-                  vSplit.setRightComponent(new JScrollPane(new ConnectorDetailedView((ConnectorOutput) node.getUserObject()).getComponent()));
+                  rightPanel.add(new JScrollPane(new ConnectorDetailedView((ConnectorOutput) node.getUserObject()).getComponent()), "grow,push");
                }
-            } else {
-               vSplit.setRightComponent(EmptyPanel);
             }
-         } else {
-            vSplit.setRightComponent(EmptyPanel);
          }
+         rightPanel.revalidate();
+         rightPanel.repaint();
       }
-
    }
 
    private class MachineListReceiver extends WorkerDataReceiver implements _MachineListReceiver {
