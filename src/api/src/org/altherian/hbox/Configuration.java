@@ -1,19 +1,19 @@
 /*
  * Hyperbox - Enterprise Virtualization Manager
  * Copyright (C) 2013 Maxime Dor
- * 
+ *
  * http://hyperbox.altherian.org
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -33,7 +33,7 @@ import java.util.Properties;
 
 /**
  * To be used by any class that require a configuration file based on a namespace.
- * 
+ *
  * @author noteirak
  */
 public class Configuration {
@@ -103,26 +103,21 @@ public class Configuration {
 
    public static String getSetting(String key, String defaultValue) {
       Logger.debug("Trying to get setting " + key + " with default value " + defaultValue);
-
-      Logger.debug("settings.containsKey(" + key + "): " + settings.containsKey(key));
       if (settings.containsKey(key)) {
          Logger.debug("Returning config value");
          return settings.get(key);
       }
 
-      Logger.debug("System.getProperty(" + key + ") != null: " + (System.getProperty(key) != null));
       if (System.getProperty(key) != null) {
          Logger.debug("Returning system property");
          return System.getProperty(key);
       }
 
-      Logger.debug("System.getenv().containsKey(" + getEnvVarName(key) + "): " + System.getenv().containsKey(getEnvVarName(key)));
       if (System.getenv().containsKey(getEnvVarName(key))) {
          Logger.debug("Returning environment value");
          return System.getenv(getEnvVarName(key));
       }
 
-      Logger.debug("properties.containsKey(" + key + "): " + properties.containsKey(key));
       if (properties.containsKey(key)) {
          Logger.debug("Returning properties value");
          return properties.getProperty(key);
@@ -148,7 +143,7 @@ public class Configuration {
 
    /**
     * Insert the defined value for the given key to the configuration
-    * 
+    *
     * @param key a String value for the key
     * @param value String value of the object, obtained using <code>toString()</code>
     */
