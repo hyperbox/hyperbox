@@ -26,10 +26,12 @@ import org.altherian.tool.AxStrings;
 import org.altherian.tool.logging.Logger;
 import org.altherian.vbox.VirtualBox;
 import org.altherian.vbox4_3.VBoxHypervisor;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.WeakHashMap;
+
 import org.virtualbox_4_3.ISession;
 import org.virtualbox_4_3.VBoxException;
 import org.virtualbox_4_3.VirtualBoxManager;
@@ -135,5 +137,11 @@ public final class VBoxWSHypervisor extends VBoxHypervisor {
       sessions.put(session, mgr);
       return session;
    }
+
+@Override
+public void importAppliance(String applianceFile) {
+	// TODO Auto-generated method stub
+	
+}
 
 }

@@ -166,5 +166,7 @@ public interface _Hypervisor {
    public List<String> getLogFileList(String vmId);
 
    public _MachineLogFile getLogFile(String vmId, long logid);
+   
+   public void importAppliance(String applianceFile);
 
 }
