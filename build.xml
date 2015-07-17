@@ -1,0 +1,77 @@
+﻿<!--
+ * 
+ * Hyperbox - Virtual Infrastructure Manager
+ * Copyright (C) 2015 Maxime Dor
+ * 
+ * http://kamax.io/hbox/
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or 
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  
+-->
+
+<project name="Hyperbox" default="compile">
+	
+	<property file="build.properties" />
+
+	<property name="hbox.api.base.dir"											location="../api" />
+	<property name="hbox.client.base.dir"										location="../client" />
+	<property name="hbox.server.base.dir"										location="../server" />
+	
+	<property file="${hbox.api.base.dir}/global.properties" />
+	
+	<property name="hbox.out.dir" 												location="${out.dirname}" />
+	<property name="hbox.api.out.dir"											location="${out.dirname}" />
+	
+	<property name="hbox.client.out.dir"										location="${out.dirname}" />
+	<property name="hbox.client.out.bin.dir"									location="${hbox.client.out.dir}/${bin.dirname}/${client.name}" />
+	<property name="hbox.client.module.deploy.dir"								location="${hbox.client.out.bin.dir}/${module.dirname}" />
+	
+	<property name="hbox.server.out.dir"										location="${out.dirname}" />
+	<property name="hbox.server.out.bin.dir"									location="${hbox.server.out.dir}/${bin.dirname}/${server.name}" />
+	<property name="hbox.server.module.deploy.dir"								location="${hbox.server.out.bin.dir}/${module.dirname}" />
+	
+	<property name="vbox.4_2.base.dir"											location="../vbox-4.2" />
+	<property name="vbox.4_3.base.dir"											location="../vbox-4.3" />
+	<property name="vbox.5_0.base.dir"											location="../vbox-5.0" />
+	
+	<include file="${hbox.api.base.dir}/build.xml" as="hbox.api" />
+	<include file="${hbox.client.base.dir}/build.xml" as="hbox.client" />
+	<include file="${hbox.server.base.dir}/build.xml" as="hbox.server" />
+	
+	<include file="${vbox.4_2.base.dir}/build.xml" as="vbox.4_2" />
+	<include file="${vbox.4_3.base.dir}/build.xml" as="vbox.4_3" />
+	<include file="${vbox.5_0.base.dir}/build.xml" as="vbox.5_0" />
+	
+	<target name="clean">
+		<delete dir="${out.dirname}"/>
+		
+		<echoproperties>
+			<propertyset>
+				<propertyref prefix="hbox."/>
+				<propertyref prefix="vbox."/>
+				<propertyref prefix="tools."/>
+				<propertyref prefix="platform"/>
+			</propertyset>
+		</echoproperties>
+	</target>
+	
+	<extension-point name="compile" depends="hbox.api.compile, hbox.client.compile, hbox.server.compile, vbox.4_2.compile, vbox.4_3.compile, vbox.5_0.compile" />
+	
+	<extension-point name="build" depends="compile, hbox.api.build, hbox.client.build, hbox.server.build, vbox.4_2.build, vbox.4_3.build, vbox.5_0.build" />
+	
+	<extension-point name="deploy" depends="build, hbox.api.deploy, hbox.client.deploy, hbox.server.deploy, vbox.4_2.deploy, vbox.4_3.deploy, vbox.5_0.deploy" />
+	
+	<extension-point name="dist" depends="deploy, hbox.api.dist, hbox.client.dist, hbox.server.dist" />
+
+</project>
