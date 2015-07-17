@@ -1,0 +1,33 @@
+#!/bin/bash -e
+BASE_DIR=$(dirname $0)
+
+cd "$BASE_DIR/.."
+echo "Fetching API repo"
+git clone https://github.com/hyperbox/api.git
+echo
+
+echo "Fetching Client repo"
+git clone https://github.com/hyperbox/client.git
+echo
+
+echo "Fetching Server repo"
+git clone https://github.com/hyperbox/server.git
+echo
+
+echo "Fetching VirtualBox common repo"
+git clone https://github.com/hyperbox/vbox-common.git
+echo
+
+echo "Fetching VirtualBox 4.2 repo"
+git clone https://github.com/hyperbox/vbox-4.2.git
+echo
+
+echo "Fetching VirtualBox 4.3 repo"
+git clone https://github.com/hyperbox/vbox-4.3.git
+echo
+
+echo "Fetching VirtualBox 5.0 repo"
+git clone https://github.com/hyperbox/vbox-5.0.git
+echo
+
+cd "$BASE_DIR"
