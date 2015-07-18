@@ -20,7 +20,7 @@
  *  
 -->
 
-<project name="Hyperbox" default="compile">
+<project name="Hyperbox" default="deploy">
 	
 	<property file="build.properties" />
 
