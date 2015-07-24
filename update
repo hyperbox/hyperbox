@@ -1,0 +1,7 @@
+#!/bin/bash -e
+cd ..
+for dir in $(ls -d */); do
+	cd $dir
+	git pull --rebase
+	cd -
+done
