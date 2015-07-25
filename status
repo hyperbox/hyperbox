@@ -1,0 +1,10 @@
+#!/bin/bash -e
+cd ..
+for dir in $(ls -d */); do
+	cd $dir
+	echo $dir
+	echo -------------
+	git status
+	echo
+	cd - > /dev/null
+done
