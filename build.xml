@@ -20,7 +20,7 @@
  *  
 -->
 
-<project name="Hyperbox" default="deploy">
+<project name="Hyperbox" default="help">
 	
 	<property file="build.properties" />
 
@@ -41,6 +41,7 @@
 	<property name="hbox.server.out.bin.dir"									location="${hbox.server.out.dir}/${bin.dirname}/${server.name}" />
 	<property name="hbox.server.module.deploy.dir"								location="${hbox.server.out.bin.dir}/${module.dirname}" />
 	
+	<property name="vbox.common.base.dir"										location="../vbox-common" />
 	<property name="vbox.4_2.base.dir"											location="../vbox-4.2" />
 	<property name="vbox.4_3.base.dir"											location="../vbox-4.3" />
 	<property name="vbox.5_0.base.dir"											location="../vbox-5.0" />
@@ -49,6 +50,7 @@
 	<include file="${hbox.client.base.dir}/build.xml" as="hbox.client" />
 	<include file="${hbox.server.base.dir}/build.xml" as="hbox.server" />
 	
+	<include file="${vbox.common.base.dir}/build.xml" as="vbox.common" />
 	<include file="${vbox.4_2.base.dir}/build.xml" as="vbox.4_2" />
 	<include file="${vbox.4_3.base.dir}/build.xml" as="vbox.4_3" />
 	<include file="${vbox.5_0.base.dir}/build.xml" as="vbox.5_0" />
@@ -66,12 +68,20 @@
 		</echoproperties>
 	</target>
 	
-	<extension-point name="compile" depends="hbox.api.compile, hbox.client.compile, hbox.server.compile, vbox.4_2.compile, vbox.4_3.compile, vbox.5_0.compile" />
+	<extension-point name="compile" depends="hbox.api.compile, hbox.client.compile, hbox.server.compile, vbox.common.compile, vbox.4_2.compile, vbox.4_3.compile, vbox.5_0.compile" />
 	
-	<extension-point name="build" depends="compile, hbox.api.build, hbox.client.build, hbox.server.build, vbox.4_2.build, vbox.4_3.build, vbox.5_0.build" />
+	<extension-point name="build" depends="compile, hbox.api.build, hbox.client.build, hbox.server.build, vbox.common.build, vbox.4_2.build, vbox.4_3.build, vbox.5_0.build" />
 	
-	<extension-point name="deploy" depends="build, hbox.api.deploy, hbox.client.deploy, hbox.server.deploy, vbox.4_2.deploy, vbox.4_3.deploy, vbox.5_0.deploy" />
+	<extension-point name="deploy" depends="build, hbox.api.deploy, hbox.client.deploy, hbox.server.deploy, vbox.common.deploy, vbox.4_2.deploy, vbox.4_3.deploy, vbox.5_0.deploy" />
 	
 	<extension-point name="dist" depends="deploy, hbox.api.dist, hbox.client.dist, hbox.server.dist" />
+	
+	<target name="help">
+		<java classname="org.apache.tools.ant.Main">
+			<arg value="-projecthelp" />
+			<arg value="-buildfile" />
+			<arg value="${ant.file}" />
+		</java>
+	</target>
 
 </project>
