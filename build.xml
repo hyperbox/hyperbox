@@ -56,14 +56,14 @@
 	<include file="${vbox.5_0.base.dir}/build.xml" as="vbox.5_0" />
 	
 	<target name="clean">
-		<delete dir="${out.dirname}"/>
+		<delete dir="${out.dirname}" />
 		
 		<echoproperties>
 			<propertyset>
-				<propertyref prefix="hbox."/>
-				<propertyref prefix="vbox."/>
-				<propertyref prefix="tools."/>
-				<propertyref prefix="platform"/>
+				<propertyref prefix="hbox." />
+				<propertyref prefix="vbox." />
+				<propertyref prefix="tools." />
+				<propertyref prefix="platform" />
 			</propertyset>
 		</echoproperties>
 	</target>
