@@ -1,2 +1,2 @@
 default:
-	ant
+	ant deploy
