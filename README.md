@@ -22,10 +22,12 @@ You will then find the Client and Server binaries for Linux ready to be run as-i
 
 To start the server in foreground interactive mode, log to console:
 
-	cd out/bin/server
+	cd out/bin/linux_amd64/server
 	./hyperbox
 
 To start the GUI client:
 
-	cd out/bin/client
+	cd out/bin/linux_amd64/client
 	./hyperbox
+
+Replace `linux_amd64` by `linux_x86` is you are running a 32 bits OS

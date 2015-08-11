@@ -27,24 +27,17 @@
 	<property name="hbox.api.base.dir"											location="../api" />
 	<property name="hbox.client.base.dir"										location="../client" />
 	<property name="hbox.server.base.dir"										location="../server" />
+	<property name="vbox.common.base.dir"										location="../vbox-common" />
+	<property name="vbox.4_2.base.dir"											location="../vbox-4.2" />
+	<property name="vbox.4_3.base.dir"											location="../vbox-4.3" />
+	<property name="vbox.5_0.base.dir"											location="../vbox-5.0" />
 	
 	<property file="${hbox.api.base.dir}/global.properties" />
 	
 	<property name="hbox.out.dir" 												location="${out.dirname}" />
 	<property name="hbox.api.out.dir"											location="${out.dirname}" />
-	
 	<property name="hbox.client.out.dir"										location="${out.dirname}" />
-	<property name="hbox.client.out.bin.dir"									location="${hbox.client.out.dir}/${bin.dirname}/${client.name}" />
-	<property name="hbox.client.module.deploy.dir"								location="${hbox.client.out.bin.dir}/${module.dirname}" />
-	
 	<property name="hbox.server.out.dir"										location="${out.dirname}" />
-	<property name="hbox.server.out.bin.dir"									location="${hbox.server.out.dir}/${bin.dirname}/${server.name}" />
-	<property name="hbox.server.module.deploy.dir"								location="${hbox.server.out.bin.dir}/${module.dirname}" />
-	
-	<property name="vbox.common.base.dir"										location="../vbox-common" />
-	<property name="vbox.4_2.base.dir"											location="../vbox-4.2" />
-	<property name="vbox.4_3.base.dir"											location="../vbox-4.3" />
-	<property name="vbox.5_0.base.dir"											location="../vbox-5.0" />
 	
 	<include file="${hbox.api.base.dir}/build.xml" as="hbox.api" />
 	<include file="${hbox.client.base.dir}/build.xml" as="hbox.client" />
@@ -54,9 +47,17 @@
 	<include file="${vbox.4_2.base.dir}/build.xml" as="vbox.4_2" />
 	<include file="${vbox.4_3.base.dir}/build.xml" as="vbox.4_3" />
 	<include file="${vbox.5_0.base.dir}/build.xml" as="vbox.5_0" />
-	
+		
 	<target name="clean">
 		<delete dir="${out.dirname}" />
+	</target>
+	
+	<target name="configure" depends="hbox.api.configure">
+		<property name="hbox.client.out.bin.dir"									location="${hbox.client.out.dir}/${bin.dirname}/${platform}/${client.name}" />
+		<property name="hbox.client.module.deploy.dir"								location="${hbox.client.out.bin.dir}/${module.dirname}" />
+		
+		<property name="hbox.server.out.bin.dir"									location="${hbox.server.out.dir}/${bin.dirname}/${platform}/${server.name}" />
+		<property name="hbox.server.module.deploy.dir"								location="${hbox.server.out.bin.dir}/${module.dirname}" />
 		
 		<echoproperties>
 			<propertyset>
@@ -68,7 +69,7 @@
 		</echoproperties>
 	</target>
 	
-	<extension-point name="compile" depends="hbox.api.compile, hbox.client.compile, hbox.server.compile, vbox.common.compile, vbox.4_2.compile, vbox.4_3.compile, vbox.5_0.compile" />
+	<extension-point name="compile" depends="configure, hbox.api.compile, hbox.client.compile, hbox.server.compile, vbox.common.compile, vbox.4_2.compile, vbox.4_3.compile, vbox.5_0.compile" />
 	
 	<extension-point name="build" depends="compile, hbox.api.build, hbox.client.build, hbox.server.build, vbox.common.build, vbox.4_2.build, vbox.4_3.build, vbox.5_0.build" />
 	
