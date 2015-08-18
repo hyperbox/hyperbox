@@ -1,0 +1,95 @@
+#!/bin/bash -e
+BASE_DIR=$(dirname $0)
+RELEASE_DIR="$PWD/$BASE_DIR/releases"
+
+getCommit() {
+	echo "Looking up $1 release..."
+	cd "../$1"
+
+	set +e
+	r=$(git describe 2> /dev/null)
+	if [ $? -ne 0 ]; then
+		rm "$RELEASE_FILE"
+		echo "Failed to looking up $1 release. Did you forget to tag?"
+		exit 1
+	fi
+	set -e
+	echo  "$2_COMMIT=$r" >> "$RELEASE_FILE"
+
+	cd - > /dev/null
+	
+}
+
+setCommit() {
+	cd "../$1"
+	git checkout "$2"
+	cd - > /dev/null
+}
+
+if [ $# -le 0 ]; then
+	echo "Usage: $0 create|build"
+	exit 1
+fi
+
+if [ $1 == "create" ]; then
+	if [ -z "$2" ]; then
+		echo "Please provide a version"
+		exit 1
+	fi
+
+	RELEASE_FILE="$RELEASE_DIR/$2"
+	
+	if ! [ -d "$RELEASE_DIR" ]; then
+		mkdir "$RELEASE_DIR"
+	fi
+
+	if [ -f "$RELEASE_FILE" ]; then
+		echo "Release already exists"
+		exit 1
+	else
+		> "$RELEASE_FILE"
+	fi
+
+	getCommit api API
+	getCommit client CLIENT
+	getCommit server SERVER
+	getCommit vbox-common VBOX_COMMON
+	getCommit vbox-4.2 VBOX_4_2
+	getCommit vbox-4.3 VBOX_4_3
+	getCommit vbox-5.0 VBOX_5_0
+
+elif [ $1 == "build" ]; then
+	RELEASE_FILE="$RELEASE_DIR/$2"
+
+	if ! [ -f "$RELEASE_FILE" ]; then
+		echo "No configuration file exists for $2"
+		exit 1
+	fi
+
+	set +e
+	. "$RELEASE_DIR/$2"
+	setCommit api "$API_COMMIT"
+	setCommit client "$CLIENT_COMMIT"
+	setCommit server "$SERVER_COMMIT"
+	setCommit vbox-common "$VBOX_COMMON_COMMIT"
+	setCommit vbox-4.2 "$VBOX_4_2_COMMIT"
+	setCommit vbox-4.3 "$VBOX_4_3_COMMIT"
+	setCommit vbox-5.0 "$VBOX_5_0_COMMIT"
+
+	ant dist
+	if [ $? -eq 0 ]; then
+		git tag -a -m "Hyperbox $2"
+	fi
+
+	setCommit api master
+	setCommit client master
+	setCommit server master
+	setCommit vbox-common master
+	setCommit vbox-4.2 master
+	setCommit vbox-4.3 master
+	setCommit vbox-5.0 master
+	set -e
+else
+	echo "Unknown command: $1"
+	exit 1
+fi
