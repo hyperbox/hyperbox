@@ -98,7 +98,7 @@ elif [ $1 == "build" ]; then
 	setCommit vbox-4.3 "$VBOX_4_3_COMMIT"
 	setCommit vbox-5.0 "$VBOX_5_0_COMMIT"
 
-	ant dist
+	ant clean dist
 
 	setCommit api master
 	setCommit client master
