@@ -99,9 +99,6 @@ elif [ $1 == "build" ]; then
 	setCommit vbox-5.0 "$VBOX_5_0_COMMIT"
 
 	ant dist
-	if [ $? -eq 0 ]; then
-		git tag -a -m "Hyperbox $2" "$2"
-	fi
 
 	setCommit api master
 	setCommit client master
