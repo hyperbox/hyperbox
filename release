@@ -100,7 +100,7 @@ elif [ $1 == "build" ]; then
 
 	ant dist
 	if [ $? -eq 0 ]; then
-		git tag -a -m "Hyperbox $2"
+		git tag -a -m "Hyperbox $2" "$2"
 	fi
 
 	setCommit api master
