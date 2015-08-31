@@ -81,6 +81,11 @@ if [ $1 == "create" ]; then
 	getCommit vbox-5.0 VBOX_5_0
 
 elif [ $1 == "build" ]; then
+	if [ -z "$2" ]; then
+		echo "Please provide a release version"
+		exit 1
+	fi
+
 	RELEASE_FILE="$RELEASE_DIR/$2"
 
 	if ! [ -f "$RELEASE_FILE" ]; then
