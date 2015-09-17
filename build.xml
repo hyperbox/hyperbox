@@ -61,6 +61,7 @@
 		
 		<echoproperties>
 			<propertyset>
+				<propertyref prefix="if" />
 				<propertyref prefix="hbox." />
 				<propertyref prefix="vbox." />
 				<propertyref prefix="tools." />
