@@ -30,4 +30,6 @@ To start the GUI client:
 	cd out/bin/linux_amd64/client
 	./hyperbox
 
-Replace `linux_amd64` by `linux_x86` is you are running a 32 bits OS
+Replace `linux_amd64` by `linux_x86` is you are running a 32 bits OS.
+
+You can then follow the regular instructions in the [user manual](https://kamax.io/hbox/manual/#il-fl).
