@@ -1,3 +1,7 @@
+api/
+client/
+server/
+vbox-*/
 out/
 data/
 build.properties

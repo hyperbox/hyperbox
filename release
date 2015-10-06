@@ -26,7 +26,7 @@ RELEASE_DIR="$PWD/$BASE_DIR/releases"
 
 getCommit() {
 	echo "Looking up $1 release..."
-	cd "../$1"
+	cd "$BASE_DIR/src/$1"
 
 	set +e
 	r=$(git describe 2> /dev/null)
@@ -43,7 +43,7 @@ getCommit() {
 }
 
 setCommit() {
-	cd "../$1"
+	cd "$BASE_DIR/src/$1"
 	git checkout "$2"
 	cd - > /dev/null
 }

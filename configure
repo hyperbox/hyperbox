@@ -24,11 +24,11 @@
 
 PKG_BASE="io/kamax"
 
-SRV_BASE_DIR="../server"
+SRV_BASE_DIR="src/server"
 SRV_BASE_SRC_DIR="$SRV_BASE_DIR/src"
 SRV_PKG_BASE_NAME="hboxd"
 
-CLT_BASE_DIR="../client"
+CLT_BASE_DIR="src/client"
 CLT_BASE_SRC_DIR="$CLT_BASE_DIR/src"
 
 CLT_API_BASE_DIR="$CLT_BASE_SRC_DIR/api"

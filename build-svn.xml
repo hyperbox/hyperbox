@@ -24,14 +24,14 @@
 	
 	<property file="build.properties" />
 
-	<property name="hbox.api.base.dir"											location="../api" />
-	<property name="hbox.client.base.dir"										location="../client" />
-	<property name="hbox.server.base.dir"										location="../server" />
-	<property name="vbox.common.base.dir"										location="../vbox-common" />
-	<property name="vbox.4_2.base.dir"											location="../vbox-4.2" />
-	<property name="vbox.4_3.base.dir"											location="../vbox-4.3" />
-	<property name="vbox.5_0.base.dir"											location="../vbox-5.0" />
-	<property name="vbox.svn.base.dir"											location="../vbox-svn" />
+	<property name="hbox.api.base.dir"											location="src/api" />
+	<property name="hbox.client.base.dir"										location="src/client" />
+	<property name="hbox.server.base.dir"										location="src/server" />
+	<property name="vbox.common.base.dir"										location="src/vbox-common" />
+	<property name="vbox.4_2.base.dir"											location="src/vbox-4.2" />
+	<property name="vbox.4_3.base.dir"											location="src/vbox-4.3" />
+	<property name="vbox.5_0.base.dir"											location="src/vbox-5.0" />
+	<property name="vbox.svn.base.dir"											location="src/vbox-svn" />
 	
 	<property file="${hbox.api.base.dir}/global.properties" />
 	

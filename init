@@ -21,9 +21,12 @@
 #
 ###########################################################################
 
+CURRENT_DIR=$(pwd)
 BASE_DIR=$(dirname $0)
+SRC_DIR="$BASE_DIR/src"
 
-cd "$BASE_DIR/.."
+mkdir -p "$SRC_DIR"
+cd "$SRC_DIR"
 echo "Fetching API repo"
 git clone https://github.com/hyperbox/api.git
 echo
@@ -52,4 +55,4 @@ echo "Fetching VirtualBox 5.0 repo"
 git clone https://github.com/hyperbox/vbox-5.0.git
 echo
 
-cd "$BASE_DIR"
+cd $CURRENT_DIR
