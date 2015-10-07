@@ -21,8 +21,11 @@
 #
 ###########################################################################
 
-cd ..
-for dir in $(ls -d */); do
+CURRENT_DIR=$(pwd)
+BASE_DIR=$(dirname $0)
+SRC_DIR="$BASE_DIR/src"
+
+for dir in "$BASE_DIR" $(ls -d $SRC_DIR/*); do
 	cd $dir
 	echo $dir
 	echo -------------
