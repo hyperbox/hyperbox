@@ -4,7 +4,7 @@
 Requirements:
 - Git
 - Ant
-- Java JDK >= 1.6
+- Java JDK >= 1.7
 
 On Debian/Ubuntu:
 
