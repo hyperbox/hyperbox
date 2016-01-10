@@ -1,5 +1,5 @@
 # Hyperbox
-
+[![Build Status](https://travis-ci.org/hyperbox/hyperbox.svg?branch=master)](https://travis-ci.org/hyperbox/hyperbox)
 ## Quick Start
 Requirements:
 - Git
