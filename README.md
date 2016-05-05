@@ -6,7 +6,7 @@ Requirements:
 - Ant
 - Java JDK >= 1.7
 
-On Debian/Ubuntu:
+On Debian Jessie/Ubuntu 14.04:
 
 	$ sudo apt-get install git default-jdk ant
 
