@@ -79,6 +79,7 @@ if [ $1 == "create" ]; then
 	getCommit vbox-4.2 VBOX_4_2
 	getCommit vbox-4.3 VBOX_4_3
 	getCommit vbox-5.0 VBOX_5_0
+	getCommit vbox-5.1 VBOX_5_1
 
 elif [ $1 == "build" ]; then
 	if [ -z "$2" ]; then
@@ -102,6 +103,7 @@ elif [ $1 == "build" ]; then
 	setCommit vbox-4.2 "$VBOX_4_2_COMMIT"
 	setCommit vbox-4.3 "$VBOX_4_3_COMMIT"
 	setCommit vbox-5.0 "$VBOX_5_0_COMMIT"
+	setCommit vbox-5.1 "$VBOX_5_1_COMMIT"
 
 	ant clean dist
 
@@ -112,6 +114,7 @@ elif [ $1 == "build" ]; then
 	setCommit vbox-4.2 master
 	setCommit vbox-4.3 master
 	setCommit vbox-5.0 master
+	setCommit vbox-5.1 master
 	set -e
 else
 	echo "Unknown command: $1"
