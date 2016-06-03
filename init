@@ -55,4 +55,7 @@ echo "Fetching VirtualBox 5.0 repo"
 git clone https://github.com/hyperbox/vbox-5.0.git
 echo
 
+echo "Fetching VirtualBox 5.1 repo"
+git clone https://github.com/hyperbox/vbox-5.1.git
+
 cd $CURRENT_DIR

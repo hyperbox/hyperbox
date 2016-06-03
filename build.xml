@@ -31,6 +31,7 @@
 	<property name="vbox.4_2.base.dir"											location="src/vbox-4.2" />
 	<property name="vbox.4_3.base.dir"											location="src/vbox-4.3" />
 	<property name="vbox.5_0.base.dir"											location="src/vbox-5.0" />
+	<property name="vbox.5_1.base.dir"											location="src/vbox-5.1" />
 	
 	<property file="${hbox.api.base.dir}/global.properties" />
 	
@@ -47,6 +48,7 @@
 	<include file="${vbox.4_2.base.dir}/build.xml" as="vbox.4_2" />
 	<include file="${vbox.4_3.base.dir}/build.xml" as="vbox.4_3" />
 	<include file="${vbox.5_0.base.dir}/build.xml" as="vbox.5_0" />
+	<include file="${vbox.5_1.base.dir}/build.xml" as="vbox.5_1" />
 		
 	<target name="clean">
 		<delete dir="${out.dirname}" />
@@ -70,11 +72,11 @@
 		</echoproperties>
 	</target>
 	
-	<extension-point name="compile" depends="configure, hbox.api.compile, hbox.client.compile, hbox.server.compile, vbox.common.compile, vbox.4_2.compile, vbox.4_3.compile, vbox.5_0.compile" />
+	<extension-point name="compile" depends="configure, hbox.api.compile, hbox.client.compile, hbox.server.compile, vbox.common.compile, vbox.4_2.compile, vbox.4_3.compile, vbox.5_0.compile, vbox.5_1.compile" />
 	
-	<extension-point name="build" depends="compile, hbox.api.build, hbox.client.build, hbox.server.build, vbox.common.build, vbox.4_2.build, vbox.4_3.build, vbox.5_0.build" />
+	<extension-point name="build" depends="compile, hbox.api.build, hbox.client.build, hbox.server.build, vbox.common.build, vbox.4_2.build, vbox.4_3.build, vbox.5_0.build, vbox.5_1.build" />
 	
-	<extension-point name="deploy" depends="build, hbox.api.deploy, hbox.client.deploy, hbox.server.deploy, vbox.common.deploy, vbox.4_2.deploy, vbox.4_3.deploy, vbox.5_0.deploy" />
+	<extension-point name="deploy" depends="build, hbox.api.deploy, hbox.client.deploy, hbox.server.deploy, vbox.common.deploy, vbox.4_2.deploy, vbox.4_3.deploy, vbox.5_0.deploy, vbox.5_1.deploy" />
 	
 	<extension-point name="dist" depends="deploy, hbox.api.dist, hbox.client.dist, hbox.server.dist" />
 	
