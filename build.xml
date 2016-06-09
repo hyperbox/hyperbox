@@ -72,11 +72,11 @@
 		</echoproperties>
 	</target>
 	
-	<extension-point name="compile" depends="configure, hbox.api.compile, hbox.client.compile, hbox.server.compile, vbox.common.compile, vbox.4_2.compile, vbox.4_3.compile, vbox.5_0.compile, vbox.5_1.compile" />
+	<extension-point name="compile" depends="configure, hbox.api.compile, hbox.client.compile, hbox.server.compile, vbox.common.compile, vbox.4_3.compile, vbox.5_0.compile, vbox.5_1.compile" />
 	
-	<extension-point name="build" depends="compile, hbox.api.build, hbox.client.build, hbox.server.build, vbox.common.build, vbox.4_2.build, vbox.4_3.build, vbox.5_0.build, vbox.5_1.build" />
+	<extension-point name="build" depends="compile, hbox.api.build, hbox.client.build, hbox.server.build, vbox.common.build, vbox.4_3.build, vbox.5_0.build, vbox.5_1.build" />
 	
-	<extension-point name="deploy" depends="build, hbox.api.deploy, hbox.client.deploy, hbox.server.deploy, vbox.common.deploy, vbox.4_2.deploy, vbox.4_3.deploy, vbox.5_0.deploy, vbox.5_1.deploy" />
+	<extension-point name="deploy" depends="build, hbox.api.deploy, hbox.client.deploy, hbox.server.deploy, vbox.common.deploy, vbox.4_3.deploy, vbox.5_0.deploy, vbox.5_1.deploy" />
 	
 	<extension-point name="dist" depends="deploy, hbox.api.dist, hbox.client.dist, hbox.server.dist" />
 	
