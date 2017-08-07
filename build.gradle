@@ -9,22 +9,42 @@ String getBuildFile(String module) {
     return "${gradle.modDir}/${module}/${gradle.buildFileCommon}"
 }
 
+task apiBuild(type: GradleBuild) {
+    buildFile = getBuildFile('api')
+    tasks = ['install']
+}
+
 task clientBuild(type: GradleBuild) {
+    dependsOn apiBuild
+
     buildFile = getBuildFile('client')
-    tasks = ['distBinLinux']
+    tasks = ['install', 'distBinLinux']
 }
 
 task serverBuild(type: GradleBuild) {
+    dependsOn apiBuild
+
     buildFile = getBuildFile('server')
-    tasks = ['distBinLinux']
+    tasks = ['install', 'distBinLinux']
+}
+
+task vboxBuild(type: GradleBuild) {
+    dependsOn clientBuild, serverBuild
+
+    buildFile = getBuildFile('vbox-common')
+    tasks = ['install']
 }
 
 task vbox5_0(type: GradleBuild) {
+    dependsOn vboxBuild
+
     buildFile = getBuildFile('vbox-5.0')
     tasks = ['distBin']
 }
 
 task vbox5_1(type: GradleBuild) {
+    dependsOn vboxBuild
+
     buildFile = getBuildFile('vbox-5.1')
     tasks = ['distBin']
 }
@@ -70,5 +90,5 @@ task serverBin {
 }
 
 build {
-    dependsOn clientBin, serverBin
+    dependsOn apiBuild, clientBin, serverBin
 }

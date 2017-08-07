@@ -14,3 +14,11 @@
 	path = modules/vbox-5.1
 	url = https://github.com/hyperbox/vbox-5.1.git
 	branch = gradle-build
+[submodule "modules/api"]
+	path = modules/api
+	url = https://github.com/hyperbox/api.git
+	branch = gradle-build
+[submodule "modules/vbox-common"]
+	path = modules/vbox-common
+	url = https://github.com/hyperbox/vbox-common.git
+	branch = gradle-build
