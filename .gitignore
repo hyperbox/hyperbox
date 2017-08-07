@@ -1,7 +1,7 @@
-api/
-client/
-server/
-vbox-*/
+# IDEs
+.idea/
+
+# Build
+.gradle/
+build/
 out/
-data/
-build.properties

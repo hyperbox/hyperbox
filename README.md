@@ -3,33 +3,29 @@
 ## Quick Start
 Requirements:
 - Git
-- Ant
 - Java JDK >= 1.7
 
-On Debian Jessie/Ubuntu 14.04:
+On Debian/Ubuntu:
 
-	$ sudo apt-get install git default-jdk ant
+	$ sudo apt-get install git default-jdk
 
-To build Hyperbox with client, server and all VirtualBox modules:
+To build Hyperbox with client, server and all supported VirtualBox modules:
 
 	git clone https://github.com/hyperbox/hyperbox.git
 	cd hyperbox
 	./init
-	./configure
-	ant deploy
+	./gradlew build
 	
-You will then find the Client and Server binaries for Linux ready to be run as-is in the `./out/bin` directory.
+You will then find the Client and Server binaries for Linux ready to be run as-is in the `./build/bin` directory.
 
 To start the server in foreground interactive mode, log to console:
 
-	cd out/bin/linux_amd64/server
+	cd build/bin/server
 	./hyperbox
 
 To start the GUI client:
 
-	cd out/bin/linux_amd64/client
+	cd build/bin/client
 	./hyperbox
-
-Replace `linux_amd64` by `linux_x86` is you are running a 32 bits OS.
 
 You can then follow the regular instructions in the [user manual](https://kamax.io/hbox/manual/#il-fl).

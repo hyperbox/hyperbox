@@ -1,0 +1,74 @@
+apply plugin: 'base'
+
+gradle.ext.buildFileCommon = 'build.gradle'
+gradle.ext.modDir = 'modules'
+gradle.ext.clientBinDir = 'build/bin/client'
+gradle.ext.serverBinDir = 'build/bin/server'
+
+String getBuildFile(String module) {
+    return "${gradle.modDir}/${module}/${gradle.buildFileCommon}"
+}
+
+task clientBuild(type: GradleBuild) {
+    buildFile = getBuildFile('client')
+    tasks = ['distBinLinux']
+}
+
+task serverBuild(type: GradleBuild) {
+    buildFile = getBuildFile('server')
+    tasks = ['distBinLinux']
+}
+
+task vbox5_0(type: GradleBuild) {
+    buildFile = getBuildFile('vbox-5.0')
+    tasks = ['distBin']
+}
+
+task vbox5_1(type: GradleBuild) {
+    buildFile = getBuildFile('vbox-5.1')
+    tasks = ['distBin']
+}
+
+task clientBase(type: Copy) {
+    dependsOn clientBuild
+
+    from project.file("${gradle.modDir}/client/build/bin/linux")
+    into project.file(gradle.clientBinDir)
+}
+
+task clientModules(type: Copy) {
+    dependsOn vbox5_0, vbox5_1
+
+    from project.file("${gradle.modDir}/vbox-5.0/modules/client/gui/build/bin")
+    from project.file("${gradle.modDir}/vbox-5.1/modules/client/gui/build/bin")
+    into project.file("${gradle.clientBinDir}/modules")
+}
+
+task clientBin {
+    dependsOn clientBase, clientModules
+}
+
+task serverBase(type: Copy) {
+    dependsOn serverBuild
+
+    from project.file("${gradle.modDir}/server/build/bin/linux")
+    into project.file(gradle.serverBinDir)
+}
+
+task serverModules(type: Copy) {
+    dependsOn vbox5_0, vbox5_1
+
+    from project.file("${gradle.modDir}/vbox-5.0/modules/server/ws/build/bin")
+    from project.file("${gradle.modDir}/vbox-5.0/modules/server/xpcom/build/bin")
+    from project.file("${gradle.modDir}/vbox-5.1/modules/server/ws/build/bin")
+    from project.file("${gradle.modDir}/vbox-5.1/modules/server/xpcom/build/bin")
+    into project.file("${gradle.serverBinDir}/modules")
+}
+
+task serverBin {
+    dependsOn serverBase, serverModules
+}
+
+build {
+    dependsOn clientBin, serverBin
+}
