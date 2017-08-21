@@ -1,24 +1,12 @@
 [submodule "modules/client"]
 	path = modules/client
 	url = https://github.com/hyperbox/client.git
-	branch = gradle-build
 [submodule "modules/server"]
 	path = modules/server
 	url = https://github.com/hyperbox/server.git
-	branch = gradle-build
 [submodule "modules/vbox-5.0"]
 	path = modules/vbox-5.0
 	url = https://github.com/hyperbox/vbox-5.0.git
-	branch = gradle-build
 [submodule "modules/vbox-5.1"]
 	path = modules/vbox-5.1
 	url = https://github.com/hyperbox/vbox-5.1.git
-	branch = gradle-build
-[submodule "modules/api"]
-	path = modules/api
-	url = https://github.com/hyperbox/api.git
-	branch = gradle-build
-[submodule "modules/vbox-common"]
-	path = modules/vbox-common
-	url = https://github.com/hyperbox/vbox-common.git
-	branch = gradle-build
