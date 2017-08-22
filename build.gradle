@@ -1,0 +1,126 @@
+apply plugin: 'base'
+
+gradle.ext.buildFileCommon = 'build.gradle'
+gradle.ext.modDir = 'modules'
+gradle.ext.clientDir = project.file('build/client').toString()
+gradle.ext.serverDir = project.file('build/server').toString()
+gradle.ext.clientBinDir = "${gradle.clientDir}/bin"
+gradle.ext.serverBinDir = "${gradle.serverDir}/bin"
+gradle.ext.clientDistDir = "${gradle.clientDir}/dist"
+gradle.ext.serverDistDir = "${gradle.serverDir}/dist"
+
+Map<String,String> properties = new HashMap<>()
+properties.put('client.build.bin', gradle.clientBinDir.toString())
+properties.put('client.build.bin.modules', "${gradle.clientBinDir}/common/${gradle.modDir}")
+properties.put('client.build.bin.linux.modules', "${gradle.clientBinDir}/linux/${gradle.modDir}")
+properties.put('client.build.bin.win.modules', "${gradle.clientBinDir}/win/${gradle.modDir}")
+properties.put('server.build.bin', gradle.serverBinDir.toString())
+properties.put('server.build.bin.modules', "${gradle.serverBinDir}/common/${gradle.modDir}")
+properties.put('server.build.bin.linux.modules', "${gradle.serverBinDir}/linux/${gradle.modDir}")
+properties.put('server.build.bin.win.modules', "${gradle.serverBinDir}/win/${gradle.modDir}")
+properties.put('client.build.dist', gradle.clientDistDir.toString())
+properties.put('server.build.dist', gradle.serverDistDir.toString())
+
+String getBuildFile(String module) {
+    return "${gradle.modDir}/${module}/${gradle.buildFileCommon}"
+}
+
+task clientBase(type: GradleBuild) {
+    buildFile = getBuildFile('client')
+    tasks = ['binCommon']
+    startParameter.setSystemPropertiesArgs(properties)
+}
+
+task serverBase(type: GradleBuild) {
+    buildFile = getBuildFile('server')
+    tasks = ['binCommon']
+    startParameter.setSystemPropertiesArgs(properties)
+}
+
+task vbox5_0Base(type: GradleBuild) {
+    buildFile = getBuildFile('vbox-5.0')
+    tasks = ['distBin']
+    startParameter.setSystemPropertiesArgs(properties)
+}
+
+task vbox5_1Base(type: GradleBuild) {
+    buildFile = getBuildFile('vbox-5.1')
+    tasks = ['distBin']
+    startParameter.setSystemPropertiesArgs(properties)
+}
+
+task clientBuild(type: GradleBuild) {
+    buildFile = getBuildFile('client')
+    tasks = ['binLinux', 'binWin']
+    startParameter.setSystemPropertiesArgs(properties)
+}
+
+task serverBuild(type: GradleBuild) {
+    buildFile = getBuildFile('server')
+    tasks = ['binLinux', 'binWin']
+    startParameter.setSystemPropertiesArgs(properties)
+}
+
+task vbox5_0Build(type: GradleBuild) {
+    buildFile = getBuildFile('vbox-5.0')
+    tasks = ['distBinLinux', 'distBinWin']
+    startParameter.setSystemPropertiesArgs(properties)
+}
+
+task vbox5_1Build(type: GradleBuild) {
+    buildFile = getBuildFile('vbox-5.1')
+    tasks = ['distBinLinux', 'distBinWin']
+    startParameter.setSystemPropertiesArgs(properties)
+}
+
+task buildBase() {
+    dependsOn clientBase, serverBase, vbox5_0Base, vbox5_1Base
+}
+
+build() {
+    dependsOn buildBase, clientBuild, serverBuild, vbox5_0Build, vbox5_1Build
+}
+
+task clientDistLinux(type: GradleBuild) {
+    buildFile = getBuildFile('client')
+    tasks = ['distLinux']
+    startParameter.setSystemPropertiesArgs(properties)
+}
+
+task clientDistWin(type: GradleBuild) {
+    buildFile = getBuildFile('client')
+    tasks = ['distWin']
+    startParameter.setSystemPropertiesArgs(properties)
+}
+
+task clientDistAll() {
+    dependsOn clientDistLinux, clientDistWin
+}
+
+task serverDistLinux(type: GradleBuild) {
+    buildFile = getBuildFile('server')
+    tasks = ['distLinux']
+    startParameter.setSystemPropertiesArgs(properties)
+}
+
+task serverDistWin(type: GradleBuild) {
+    buildFile = getBuildFile('server')
+    tasks = ['distWin']
+    startParameter.setSystemPropertiesArgs(properties)
+}
+
+task serverDistAll() {
+    dependsOn serverDistLinux, serverDistWin
+}
+
+task distLinux() {
+    dependsOn clientDistLinux, serverDistLinux
+}
+
+task distWin() {
+    dependsOn clientDistWin, serverDistWin
+}
+
+task distAll() {
+    dependsOn distLinux, distWin
+}

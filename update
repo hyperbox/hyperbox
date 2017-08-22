@@ -4,7 +4,7 @@
 # Hyperbox - Virtual Infrastructure Manager
 # Copyright (C) 2015 Maxime Dor
 #
-# http://kamax.io/hbox/
+# https://kamax.io/hbox/
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,13 +21,4 @@
 #
 ###########################################################################
 
-CURRENT_DIR=$(pwd)
-BASE_DIR=$(dirname $0)
-SRC_DIR="$BASE_DIR/src"
-
-for dir in "$BASE_DIR" $(ls -d $SRC_DIR/*); do
-	echo "Updating $dir"
-	cd $dir
-	git pull --rebase
-	cd - > /dev/null
-done
+git submodule foreach --recursive git pull origin master
