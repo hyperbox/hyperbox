@@ -21,15 +21,24 @@
 #
 ###########################################################################
 
-CURRENT_DIR=$(pwd)
-BASE_DIR=$(dirname $0)
-SRC_DIR="$BASE_DIR/modules"
+# check status of parent directory
+PWD=$(pwd)
+echo "parent: $(basename $PWD)"
+echo "------------------------"
+git status
+echo
 
-for dir in "$BASE_DIR" $(ls -d $SRC_DIR/*); do
-	cd $dir
-	echo $dir
-	echo -------------
-	git status
-	echo
-	cd - > /dev/null
-done
+
+# determine the set of modules in the repository
+MODULES=$(grep path .gitmodules | sed  's/.*= //')
+
+# check status of each submodule
+while read -r module; do
+    echo "module: $module"
+    echo "------------------------"
+    pushd $module > /dev/null
+    git status    
+    echo 
+    popd > /dev/null
+done <<< "$MODULES"
+
