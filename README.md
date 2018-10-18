@@ -4,11 +4,20 @@
 ## Quick Start
 Requirements:
 - Git
-- Java JDK >= 1.8
+- Java JDK 1.8.
+- [Launch4j](https://sourceforge.net/projects/launch4j/)
 
-On Debian/Ubuntu:
+**NOTE:** Current version does not work on Java SE 9 or newer versions.
+
+On Debian/Ubuntu, you may install Git and Java using `apt-get`.
 ```
-$ sudo apt-get install git default-jdk
+$ sudo apt-get install git openjdk-8-jdk
+```
+
+If you have not installed Launch4j, you must download the software and install it in the `/opt` directory.
+```
+$ wget http://sourceforge.net/projects/launch4j/files/launch4j-3/3.12/launch4j-3.12-linux-x64.tgz/download?source=files -O ~/launch4j-3.12-linux-x64.tgz
+$ sudo tar xf ~/launch4j-3.12-linux-x64.tgz -C /opt
 ```
 
 To build Hyperbox binaries with client, server and all supported VirtualBox modules:
