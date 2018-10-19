@@ -26,15 +26,16 @@ echo ""
 
 # show usage information
 show_usage() {
-    echo "usage:  fork [--org <organization>]"
+    echo "usage:  fork [--org <organization>] [--create]"
     echo "        fork -h" 
     echo ""
     echo "Forks all the hyperbox repositories into new repositories in a Github user or organization."
-    echo "By default, the fork repositories are cretaed in the current hub user"
+    echo "By default, the fork repositories are configured and created in the current hub user"
     echo 
-    echo "  -o | --org <organization>    Create the forks in a organization"
-    echo "  -h                           Show usage"
-    echo ""
+    echo "  -o | --org <organization>  Configure the forks in a organization"
+    echo "  -c | --create              Create the forks in Github"
+    echo "  -h                         Show usage"
+    echo 
     exit 1
 }
 
@@ -46,33 +47,85 @@ die() {
 
 # function to fork the repository in the current folder
 fork_current_repo () {
-    # fork the repository in Github
-    if [ -z $ORGNAME ]; then
-        hub fork
+    if [ "$CREATE" == "0" ]; then
+        # add the new remote
+        # delete the remote if exists, because hub may fail
+        if [ -z $ORGNAME ]; then
+            local USERNAME="$(git config user.name)"
+            if [ ! -z "$(git config remote.$USERNAME.url)" ]; then
+                echo "removing $USERNAME remote"
+                git remote remove $USERNAME
+                sleep .5
+            fi
+            echo "creating $USERNAME remote"
+            hub remote add origin
+
+        else
+            if [ ! -z "$(git config remote.$ORGNAME.url)" ]; then
+                echo "removing $ORGNAME remote"
+                git remote remove $ORGNAME
+                sleep .5
+            fi
+            echo "creating $ORGNAME remote"
+            hub remote add $ORGNAME
+        fi
+        sleep .5
+
     else
-        hub fork --org=$ORGNAME
+        # fork the repository in Github
+        if [ -z $ORGNAME ]; then
+            hub fork
+        else
+            hub fork --org=$ORGNAME
+        fi
     fi
 }
 
+
+CREATE=0
+ORGNAME=""
+
 # show usage information
-if [ "$1" = "-h" ]; then
+if [ -z "$1" -o  "$1" = "-h" ]; then
     show_usage
     die
 fi
 
-# determine organization name if it is provided
-ORGNAME=""
-if [ "$1" = "--org" -o "$1" = "-o" ]; then
-    if [ "$2" ]; then
-        ORGNAME=$2
-    else
-        die 'ERROR: "--org" requires a non-empty organization name'
-    fi
-fi
+# process parameters
+while :; do
+    if [ -z "$1" ]; then
+        break
+    fi   
+    case $1 in
+        -o|--org)
+            if [ ! -z "$ORGNAME"]; then
+                die "ERROR: you cannot provide two organization names"
+            fi
+            if [ "$2" ]; then
+                ORGNAME=$2
+                shift
+            else
+                die 'ERROR: "--org" requires a non-empty option'
+            fi
+            ;;
+         -c|--create)
+            CREATE=1
+            ;;
+         *) 
+            echo 'ERROR: wrong parameters'
+            show_usage
+            die
+            ;; 
+    esac
+    shift
+done
+
 
 # check if hub is installed
 if [ ! -x "$(command -v hub)" ]; then
-    die "ERROR: the 'hub' command is not installed. Please check https://github.com/github/hub"
+    echo "ERROR: the 'hub' command is not installed."
+    echo "You may get more information at https://github.com/github/hub"
+    die
 fi
 
 
@@ -97,7 +150,7 @@ while read -r module; do
     echo
     echo "forking module: $module"
     pushd $module > /dev/null
-    fork_current_repo
+    fork_current_repo 
     popd > /dev/null
 done <<< "$MODULES"
 
