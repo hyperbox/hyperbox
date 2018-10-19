@@ -26,12 +26,14 @@ echo ""
 
 # show usage information
 show_usage() {
-    echo "usage:  fork [-org <organization>] [--create] <username>" 
+    echo "usage:  fork [--org <organization>]"
+    echo "        fork -h" 
     echo ""
-    echo "Forks all the hyperbox repositories into new repositories in a Github user or organization"
-    echo "  <username>                   Github username"
-    echo "  -o | --org <organization>    Create the forks in a organization instead of the username"
-    echo "  -c | --create                Ask for a password and create the forks in Github"
+    echo "Forks all the hyperbox repositories into new repositories in a Github user or organization."
+    echo "By default, the fork repositories are cretaed in the current hub user"
+    echo 
+    echo "  -o | --org <organization>    Create the forks in a organization"
+    echo "  -h                           Show usage"
     echo ""
     exit 1
 }
@@ -44,107 +46,55 @@ die() {
 
 # function to fork the repository in the current folder
 fork_current_repo () {
-    local PWD="$(pwd)"
-    local REPONAME="$(basename $PWD)"
-    local REPOURL="https://github.com/$ORGNAME/$REPONAME"
-
-    # rename origin to upstream if upstream does not exist
-    if [ -z "$(git config remote.upstream.url)" ]; then
-        echo "    renaming origin remote to upstream"
-        git remote rename origin upstream
-    fi
-
-    # remove origin if it exists
-    if [ ! -z "$(git config remote.origin.url)" ]; then
-        echo "    removing origin remote"
-        git remote remove origin
-    fi
-    # add the origin to the new repository
-    echo "    adding the new origin remote: $REPOURL.git"
-    git remote add origin $REPOURL.git
-
-    # create the repository in Github if it does not exist
-    if [ "$CREATE" == "1" ]; then
-        if [ ! "$(curl -s --head GET $REPOURL 2>&1 | grep 404 | wc -l)" == "0" ]; then
-            echo "    creating fork-repository $REPOURL in Github"
-            if [ ! "$ORGNAME" == "$USERNAME" ]; then
-                curl -s "https://api.github.com/repos/hyperbox/$REPONAME/forks" -d "{"\""organization"\"":"\""$ORGNAME"\""}" -K- <<< "user="\""$USERNAME:$PASSWD"\"""  > /dev/null
-            else
-                curl -s "https://api.github.com/repos/hyperbox/$REPONAME/forks"  -d '' -K- <<< "user="\""$USERNAME:$PASSWD"\""" > /dev/null
-            fi 
-        else
-            echo "    fork-repository $REPOURL already exists in Github"
-        fi
+    # fork the repository in Github
+    if [ -z $ORGNAME ]; then
+        hub fork
+    else
+        hub fork --org=$ORGNAME
     fi
 }
 
-CREATE=0
-USERNAME=""
-ORGNAME=""
-
-# show usage information if not parameter is given
-if [ -z "$1" ]; then
+# show usage information
+if [ "$1" = "-h" ]; then
     show_usage
     die
 fi
 
-# process parameters
-while :; do
-    if [ -z "$1" ]; then
-        break
-    fi   
-    case $1 in
-        -o|--org)
-            if [ "$2" ]; then
-                ORGNAME=$2
-                shift
-            else
-                die 'ERROR: "--org" requires a non-empty option'
-            fi
-            ;;
-         -c|--create)
-            CREATE=1
-            ;;
-         *) 
-            if [ -z "$USERNAME" ]; then
-                USERNAME=$1
-            else
-                die 'ERROR: you cannot provide two usernames'
-            fi
-            ;; 
-    esac
-    shift
-done
-
-if [ -z "$USERNAME" ]; then
-    die 'ERROR: you must  provide a username'
-fi 
-if [ -z "$ORGNAME" ]; then
-    ORGNAME=$USERNAME
+# determine organization name if it is provided
+ORGNAME=""
+if [ "$1" = "--org" -o "$1" = "-o" ]; then
+    if [ "$2" ]; then
+        ORGNAME=$2
+    else
+        die 'ERROR: "--org" requires a non-empty organization name'
+    fi
 fi
 
-# check if the modules have been initialized
-if [ ! -f "./modules/client/.gitignore" ]; then
-    die "ERROR: you must initialize the submodules first. Run the init script"
+# check if hub is installed
+if [ ! -x "$(command -v hub)" ]; then
+    die "ERROR: the 'hub' command is not installed. Please check https://github.com/github/hub"
 fi
 
-# Read the password to be used to create the repositories in Github
-if [ "$CREATE" == "1" ]; then
-    echo "Github password (used to create the forks):"
-    read -s PASSWD
-    echo
-    CURL_AUTH="$USERNAME:$PASSWD"
-fi
 
 # determine the set of modules in the repository
 MODULES=$(grep path .gitmodules | sed  's/.*= //')
+
+# check if the modules have been initialized
+while read -r module; do
+    pushd $module > /dev/null
+    if [ ! -f ".gitignore" ]; then
+        die "ERROR: $module has been not initialized. You must run the 'init' script before."
+    fi
+    popd > /dev/null
+done <<< "$MODULES"
 
 # fork the main repository
 echo "forking parent repository"
 fork_current_repo 
 
-# fork each submodule
+# for each submodule
 while read -r module; do
+    echo
     echo "forking module: $module"
     pushd $module > /dev/null
     fork_current_repo
