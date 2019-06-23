@@ -79,16 +79,18 @@ task buildBase() {
 }
 
 build() {
-    dependsOn buildBase, clientBuild, vbox5_2Build, vbox6_0Build
+    dependsOn buildBase, clientBuild, serverBase, serverBuild, vbox5_2Build, vbox6_0Build
 }
 
 task clientDistLinux(type: GradleBuild) {
+    dependsOn build
     buildFile = getBuildFile('client')
     tasks = ['distLinux']
     startParameter.setSystemPropertiesArgs(properties)
 }
 
 task clientDistWin(type: GradleBuild) {
+    dependsOn build
     buildFile = getBuildFile('client')
     tasks = ['distWin']
     startParameter.setSystemPropertiesArgs(properties)
@@ -99,12 +101,14 @@ task clientDistAll() {
 }
 
 task serverDistLinux(type: GradleBuild) {
+    dependsOn build
     buildFile = getBuildFile('server')
     tasks = ['distLinux']
     startParameter.setSystemPropertiesArgs(properties)
 }
 
 task serverDistWin(type: GradleBuild) {
+    dependsOn build
     buildFile = getBuildFile('server')
     tasks = ['distWin']
     startParameter.setSystemPropertiesArgs(properties)
