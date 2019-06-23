@@ -4,14 +4,12 @@
 ## Quick Start
 Requirements:
 - Git
-- Java JDK 1.8.
+- Java JDK 8+
 - [Launch4j](https://sourceforge.net/projects/launch4j/)
-
-**NOTE:** Current version does not work on Java SE 9 or newer versions.
 
 On Debian/Ubuntu, you may install Git and Java using `apt-get`.
 ```
-$ sudo apt-get install git openjdk-8-jdk
+$ sudo apt-get install git default-jdk-headless
 ```
 
 If you have not installed Launch4j, you must download the software and install it in the `/opt` directory.
