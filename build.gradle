@@ -1,4 +1,5 @@
 apply plugin: 'base'
+apply plugin: 'idea'
 
 gradle.ext.buildFileCommon = 'build.gradle'
 gradle.ext.modDir = 'modules'
@@ -37,20 +38,14 @@ task serverBase(type: GradleBuild) {
     startParameter.setSystemPropertiesArgs(properties)
 }
 
-task vbox5_0Base(type: GradleBuild) {
-    buildFile = getBuildFile('vbox-5.0')
-    tasks = ['distBin']
-    startParameter.setSystemPropertiesArgs(properties)
-}
-
-task vbox5_1Base(type: GradleBuild) {
-    buildFile = getBuildFile('vbox-5.1')
-    tasks = ['distBin']
-    startParameter.setSystemPropertiesArgs(properties)
-}
-
 task vbox5_2Base(type: GradleBuild) {
     buildFile = getBuildFile('vbox-5.2')
+    tasks = ['distBin']
+    startParameter.setSystemPropertiesArgs(properties)
+}
+
+task vbox6_0Base(type: GradleBuild) {
+    buildFile = getBuildFile('vbox-6.0')
     tasks = ['distBin']
     startParameter.setSystemPropertiesArgs(properties)
 }
@@ -67,30 +62,24 @@ task serverBuild(type: GradleBuild) {
     startParameter.setSystemPropertiesArgs(properties)
 }
 
-task vbox5_0Build(type: GradleBuild) {
-    buildFile = getBuildFile('vbox-5.0')
-    tasks = ['distBinLinux', 'distBinWin']
-    startParameter.setSystemPropertiesArgs(properties)
-}
-
-task vbox5_1Build(type: GradleBuild) {
-    buildFile = getBuildFile('vbox-5.1')
-    tasks = ['distBinLinux', 'distBinWin']
-    startParameter.setSystemPropertiesArgs(properties)
-}
-
 task vbox5_2Build(type: GradleBuild) {
     buildFile = getBuildFile('vbox-5.2')
     tasks = ['distBinLinux', 'distBinWin']
     startParameter.setSystemPropertiesArgs(properties)
 }
 
+task vbox6_0Build(type: GradleBuild) {
+    buildFile = getBuildFile('vbox-6.0')
+    tasks = ['distBinLinux', 'distBinWin']
+    startParameter.setSystemPropertiesArgs(properties)
+}
+
 task buildBase() {
-    dependsOn clientBase, serverBase, vbox5_0Base, vbox5_1Base, vbox5_2Base
+    dependsOn clientBase, serverBase, vbox5_2Base, vbox6_0Base
 }
 
 build() {
-    dependsOn buildBase, clientBuild, serverBuild, vbox5_0Build, vbox5_1Build, vbox5_2Build
+    dependsOn buildBase, clientBuild, vbox5_2Build, vbox6_0Build
 }
 
 task clientDistLinux(type: GradleBuild) {
