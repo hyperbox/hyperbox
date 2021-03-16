@@ -4,9 +4,9 @@
 [submodule "modules/server"]
 	path = modules/server
 	url = https://github.com/hyperbox/server.git
-[submodule "modules/vbox-5.2"]
-	path = modules/vbox-5.2
-	url = https://github.com/hyperbox/vbox-5.2.git
 [submodule "modules/vbox-6.0"]
 	path = modules/vbox-6.0
 	url = https://github.com/hyperbox/vbox-6.0.git
+[submodule "modules/vbox-6.1"]
+	path = modules/vbox-6.1
+	url = https://github.com/hyperbox/vbox-6.1.git

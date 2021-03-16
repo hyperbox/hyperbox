@@ -5,17 +5,23 @@
 Requirements:
 - Git
 - Java JDK 8+
+
+Extra build requirements for Linux packages:
+- makeself
+
+Extra build requirements for Windows packages:
+- nsis
 - [Launch4j](https://sourceforge.net/projects/launch4j/)
 
-On Debian/Ubuntu, you may install Git and Java using `apt-get`.
+On Debian/Ubuntu, you may install all requirements except launch4j with:
 ```
-$ sudo apt-get install git default-jdk-headless
+$ sudo apt-get install git default-jdk-headless makeself nsis
 ```
 
 If you have not installed Launch4j, you must download the software and install it in the `/opt` directory.
 ```
-$ wget http://sourceforge.net/projects/launch4j/files/launch4j-3/3.12/launch4j-3.12-linux-x64.tgz/download?source=files -O ~/launch4j-3.12-linux-x64.tgz
-$ sudo tar xf ~/launch4j-3.12-linux-x64.tgz -C /opt
+$ wget http://sourceforge.net/projects/launch4j/files/launch4j-3/3.14/launch4j-3.14-linux-x64.tgz/download?source=files -O ~/launch4j-linux-x64.tgz
+$ sudo tar xf ~/launch4j-linux-x64.tgz -C /opt
 ```
 
 To build Hyperbox binaries with client, server and all supported VirtualBox modules:
