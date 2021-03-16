@@ -38,14 +38,14 @@ task serverBase(type: GradleBuild) {
     startParameter.setSystemPropertiesArgs(properties)
 }
 
-task vbox5_2Base(type: GradleBuild) {
-    buildFile = getBuildFile('vbox-5.2')
+task vbox6_0Base(type: GradleBuild) {
+    buildFile = getBuildFile('vbox-6.0')
     tasks = ['distBin']
     startParameter.setSystemPropertiesArgs(properties)
 }
 
-task vbox6_0Base(type: GradleBuild) {
-    buildFile = getBuildFile('vbox-6.0')
+task vbox6_1Base(type: GradleBuild) {
+    buildFile = getBuildFile('vbox-6.1')
     tasks = ['distBin']
     startParameter.setSystemPropertiesArgs(properties)
 }
@@ -62,24 +62,24 @@ task serverBuild(type: GradleBuild) {
     startParameter.setSystemPropertiesArgs(properties)
 }
 
-task vbox5_2Build(type: GradleBuild) {
-    buildFile = getBuildFile('vbox-5.2')
-    tasks = ['distBinLinux', 'distBinWin']
-    startParameter.setSystemPropertiesArgs(properties)
-}
-
 task vbox6_0Build(type: GradleBuild) {
     buildFile = getBuildFile('vbox-6.0')
     tasks = ['distBinLinux', 'distBinWin']
     startParameter.setSystemPropertiesArgs(properties)
 }
 
+task vbox6_1Build(type: GradleBuild) {
+    buildFile = getBuildFile('vbox-6.1')
+    tasks = ['distBinLinux', 'distBinWin']
+    startParameter.setSystemPropertiesArgs(properties)
+}
+
 task buildBase() {
-    dependsOn clientBase, serverBase, vbox5_2Base, vbox6_0Base
+    dependsOn clientBase, serverBase, vbox6_0Base, vbox6_1Base
 }
 
 build() {
-    dependsOn buildBase, clientBuild, serverBase, serverBuild, vbox5_2Build, vbox6_0Build
+    dependsOn buildBase, clientBuild, serverBase, serverBuild, vbox6_0Build, vbox6_1Build
 }
 
 task clientDistLinux(type: GradleBuild) {
