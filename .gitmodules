@@ -1,12 +1,6 @@
 [submodule "modules/client"]
 	path = modules/client
-	url = https://github.com/hyperbox/client.git
+	url = https://gitlab.com/kamax-io/software/hyperbox/client.git
 [submodule "modules/server"]
 	path = modules/server
-	url = https://github.com/hyperbox/server.git
-[submodule "modules/vbox-6.0"]
-	path = modules/vbox-6.0
-	url = https://github.com/hyperbox/vbox-6.0.git
-[submodule "modules/vbox-6.1"]
-	path = modules/vbox-6.1
-	url = https://github.com/hyperbox/vbox-6.1.git
+	url = https://gitlab.com/kamax-io/software/hyperbox/server.git
