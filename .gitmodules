@@ -1,6 +1,9 @@
 [submodule "modules/client"]
 	path = modules/client
-	url = https://gitlab.com/kamax-io/software/hyperbox/client.git
+	url = ../client
 [submodule "modules/server"]
 	path = modules/server
-	url = https://gitlab.com/kamax-io/software/hyperbox/server.git
+	url = ../server
+[submodule "modules/api"]
+	path = modules/api
+	url = ../api
