@@ -1,3 +1,6 @@
+[submodule "api"]
+	path = modules/api
+	url = ../api.git
 [submodule "client"]
 	path = modules/client
 	url = ../client.git
