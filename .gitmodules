@@ -1,9 +1,6 @@
-[submodule "modules/client"]
+[submodule "client"]
 	path = modules/client
-	url = ../client
-[submodule "modules/server"]
+	url = ../client.git
+[submodule "server"]
 	path = modules/server
-	url = ../server
-[submodule "modules/api"]
-	path = modules/api
-	url = ../api
+	url = ../server.git
