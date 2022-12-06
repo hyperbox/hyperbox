@@ -35,4 +35,4 @@ Output files can be found in `./build/distribution/`
 
 ## Getting Started
 
-You can then follow the regular instructions in the [user manual](https://kamax.io/hbox/manual/#il-fl).
+You can then follow the regular instructions in the [user manual](https://apps.kamax.lu/hyperbox/manual/#il-fl).
